@@ -12,6 +12,23 @@
 - HTTP API 鉴权（防止其他进程误调用）
 - 多控制器切换支持
 
+## [0.1.1] — 2026-06-09
+
+bug 修复版本。
+
+### 修复
+
+- **TrimHistory 边界 bug**：当用户单次输入触发多个连续工具调用时，最近窗口里可能没有任何 plain-text user 消息（全是 assistant/tool_use/tool_result 对）。旧逻辑会让搜索循环跑到列表末尾，只保留最后一条消息（通常是 `user(tool_result)`），导致对应的 `tool_use` 孤立 → API BadRequest: `tool_use_id found in tool_result blocks`。新逻辑在找不到合适裁剪点时**跳过本次裁剪**，保留全部历史 —— 临时 token 超限远比 BadRequest 容易处理。
+
+### 文档
+
+- README 加入智谱 GLM（`GLM-5.1`、`GLM-5`）的 Anthropic 兼容端点配置说明
+- README 加入「Skill 数据初始化（首次使用必读）」小节
+- README 加入「为什么是 MCP 风格而非真正的 MCP」项目演进说明
+- 顶部加入 8 个 badges（license / version / .NET / platform / MotionPerfect / API 格式 / Release / stars）
+
+
+
 ## [0.1] — 2026-06-08
 
 首个公开版本。
@@ -49,5 +66,6 @@
 - 破坏性操作 UI 二次确认
 - 写操作自动备份
 
-[Unreleased]: https://github.com/lfmmd/TrioAI/compare/v0.1...HEAD
+[Unreleased]: https://github.com/lfmmd/TrioAI/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/lfmmd/TrioAI/releases/tag/v0.1.1
 [0.1]: https://github.com/lfmmd/TrioAI/releases/tag/v0.1
