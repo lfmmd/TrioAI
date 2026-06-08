@@ -73,6 +73,30 @@ If you only have an OpenAI-compatible API, consider using a proxy like [LiteLLM]
 
 Config file location: `%APPDATA%\TrioAI\config.json`
 
+### Skill data initialization (read this on first use)
+
+TrioAI ships with a ~1 MB TrioBASIC command reference. The AI uses the `lookup_command` tool to verify command syntax in real time and avoid hallucination. **This data must be initialized manually before first use:**
+
+1. Open the AI assistant panel → click the settings icon at the top
+2. Find the **"Initialize Skill Data"** button (only visible when not yet initialized; orange)
+3. Click → wait a few seconds; a "Initialization complete" dialog appears
+4. The button auto-hides
+
+**What initialization does:**
+- Copies `skills\triobasic\` (`index.json` + `skills.json`, ~1 MB) from the plugin directory to `%APPDATA%\TrioAI\skills\`
+- Deploys `AI_INSTRUCTIONS.md` (created on first run; user edits preserved afterward)
+- Sets `skillsInitialized=true` in config.json
+
+**What happens without initialization:**
+- AI calls to `lookup_command` get no reference → may hallucinate non-existent TrioBASIC commands
+- No crash, but code quality drops significantly
+
+**Re-initialize (restore defaults):**
+- Click "Initialize Skill Data" again in the settings panel (visible until initialized)
+- Or delete `%APPDATA%\TrioAI\skills\` and restart MP
+
+**After upgrading the .MPPlugin to a new version:** the plugin auto-overwrites local skill data with the new `skills/` (preserves your `AI_INSTRUCTIONS.md` customizations).
+
 ## Usage
 
 ### AI chat
