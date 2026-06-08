@@ -147,7 +147,7 @@ namespace TrioAI.MPPlugIn
         }
 
         // ---- Source Code ----
-        public static object ReadSource(string name)
+        public static object ReadSource(string name, Dictionary<string, object> body = null)
         {
             var item = FindItem(name);
             if (item == null) return Error($"Program not found: {name}");
@@ -155,7 +155,56 @@ namespace TrioAI.MPPlugIn
             var textItem = item as TextProjectItemBase;
             if (textItem == null) return Error($"Program is not a text item: {name}");
 
-            return new { sourceCode = textItem.LoadSourceCode() };
+            var source = textItem.LoadSourceCode();
+            var lines = source.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            int totalLines = lines.Length;
+
+            int? startOpt = body != null ? GetInt(body, "startLine") : null;
+            int? endOpt = body != null ? GetInt(body, "endLine") : null;
+
+            // 显式分页：返回指定行范围
+            if (startOpt.HasValue || endOpt.HasValue)
+            {
+                int start = Math.Max(1, startOpt ?? 1);
+                if (start > totalLines) return Error($"startLine {start} exceeds total lines {totalLines}");
+                int end = Math.Min(totalLines, endOpt ?? totalLines);
+                if (end < start) end = start;
+                var slice = string.Join("\n", lines.Skip(start - 1).Take(end - start + 1));
+                return new
+                {
+                    sourceCode = slice,
+                    startLine = start,
+                    endLine = end,
+                    totalLines,
+                    truncated = false
+                };
+            }
+
+            // 无分页参数：完整返回。但若文件特别大，自动截到前 200 行或 8000 字符（避免触发 MaxToolResultLen），并提示 AI 用 startLine 分页
+            const int AutoPageLines = 200;
+            const int AutoPageChars = 8000;
+            if (totalLines > AutoPageLines || source.Length > AutoPageChars)
+            {
+                int end = Math.Min(AutoPageLines, totalLines);
+                int charCount = 0;
+                for (int i = 0; i < end; i++)
+                {
+                    charCount += lines[i].Length + 1;
+                    if (charCount > AutoPageChars) { end = i; break; }
+                }
+                var slice = string.Join("\n", lines.Take(end));
+                return new
+                {
+                    sourceCode = slice,
+                    startLine = 1,
+                    endLine = end,
+                    totalLines,
+                    truncated = true,
+                    hint = $"Large file ({totalLines} lines, {source.Length} chars). To read the next chunk, call read_source with startLine={end + 1}."
+                };
+            }
+
+            return new { sourceCode = source, totalLines };
         }
 
         public static object OpenProgram(string name)

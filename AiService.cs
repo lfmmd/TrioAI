@@ -891,7 +891,7 @@ namespace TrioAI.MPPlugIn
             {
                 case "get_status": return Handlers.GetStatus();
                 case "list_programs": return Handlers.ListPrograms();
-                case "read_source": return Handlers.ReadSource(GetStr(input, "name"));
+                case "read_source": return Handlers.ReadSource(GetStr(input, "name"), input);
                 case "write_source": return Handlers.WriteSource(GetStr(input, "name"), input);
                 case "patch_source": return Handlers.PatchSource(GetStr(input, "name"), input);
                 case "read_vr": return Handlers.ReadVR(GetInt(input, "address"), GetInt(input, "count"));
@@ -1086,7 +1086,11 @@ namespace TrioAI.MPPlugIn
             {
                 Tool("get_status", "Get controller connection status, product name, firmware version, project name", NoParams()),
                 Tool("list_programs", "List all programs in the current MotionPerfect project", NoParams()),
-                Tool("read_source", "Read source code of a program", Props("name", "Program name")),
+                Tool("read_source", "Read source code of a program. For files >200 lines or >8000 chars, auto-returns first chunk + totalLines + hint; use startLine/endLine to paginate subsequent chunks.", Props(
+                    ("name", "Program name", false),
+                    ("startLine", "Starting 1-based line number (optional, for pagination)", true),
+                    ("endLine", "Ending 1-based line number (optional)", true)
+                )),
                 Tool("write_source", "Write full source code to a program (auto-backup, requires confirmation)", Props(
                     ("name", "Program name", false),
                     ("sourceCode", "Full source code to write", false)

@@ -139,8 +139,28 @@ These are the tools exposed to the AI model via Anthropic-style `tool_use`. The 
 ### Program source
 
 #### `read_source`
+**Description:** Read source code of a program. Auto-paginates for large files (>200 lines or >8000 chars) by returning the first chunk + `totalLines` + a `hint` telling you the next `startLine` to use.
 **Parameters:**
 - `name` (string, required) — Program name
+- `startLine` (integer, optional) — 1-based starting line for pagination
+- `endLine` (integer, optional) — Ending line for pagination
+
+**Returns (full):**
+```json
+{"sourceCode": "...", "totalLines": 50}
+```
+
+**Returns (large file, auto-paginated):**
+```json
+{
+  "sourceCode": "first 200 lines or 8000 chars...",
+  "startLine": 1,
+  "endLine": 200,
+  "totalLines": 500,
+  "truncated": true,
+  "hint": "Large file (500 lines, 15000 chars). To read the next chunk, call read_source with startLine=201."
+}
+```
 
 #### `write_source` [confirm]
 **Parameters:**
