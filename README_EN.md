@@ -139,6 +139,20 @@ Buttons are on the left side of the panel, far from the bottom-right "Send/Stop"
 
 The plugin embeds an HTTP server listening on `http://localhost:9090`. Callable from external Python, Node.js, curl scripts for automation.
 
+### Why "MCP-style" rather than true MCP?
+
+Project evolution:
+
+1. **Initial direction**: build an HTTP interface for "external AI tools to operate MotionPerfect via curl" — following the philosophy of [MCP (Model Context Protocol)](https://modelcontextprotocol.io): expose IDE capabilities as a standard interface so any AI client can connect
+2. **Realized problem**: this workflow forces users to switch between an external AI assistant (Claude Desktop, Cursor, Claude Code, etc.) and MotionPerfect — the workflow is split. And if you go this route, users might as well use a mature agent like Claude Code directly; wrapping it again adds little value
+3. **Refactor**: embed the AI assistant directly inside MotionPerfect — all tools called from one chat panel, seamlessly integrated within the programming IDE
+
+**The current HTTP API is a "legacy" of the first-version architecture.** Technically it's not a strict MCP implementation (MCP uses JSON-RPC; we use REST), but it retains the "let external scripts/agents call the IDE via a standard interface" capability:
+
+- ✅ Still suitable for automation testing, CI integration, batch scripts
+- ✅ Still works for external AI clients (not MCP protocol, but the interface is stable and usable)
+- ❌ Not directly pluggable into MCP-native apps like Claude Desktop (would require an MCP→HTTP adapter layer)
+
 ### Quick examples
 
 ```bash
