@@ -537,25 +537,29 @@ namespace TrioAI.MPPlugIn
                 return;
 
             int start = _conversationHistory.Count - MaxRecentKeep;
-            if (start < 0) start = 0;
+            if (start < 1) start = 1;
 
             // 裁剪起点必须是 plain-text user 消息：
             // - 不能从 assistant(tool_use) 起 — 会让上一轮的 tool_result 孤立
-            // - 不能从 user(tool_result) 起 — 会让本轮 tool_use 缺失
-            // 跳过这些消息，直到找到下一条 plain-text user
-            while (start < _conversationHistory.Count - 1)
+            // - 不能从 user(tool_result) 起 — 它对应的 tool_use 在前一条 assistant，会被丢掉
+            int found = -1;
+            for (int i = start; i < _conversationHistory.Count; i++)
             {
-                var msg = _conversationHistory[start];
+                var msg = _conversationHistory[i];
                 if (GetStringValue(msg, "role") == "user" && msg["content"] is string)
+                {
+                    found = i;
                     break;
-                start++;
+                }
             }
 
-            if (start <= 0)
+            // 找不到合适的裁剪点 — 跳过本次裁剪。
+            // token 超限远比 BadRequest（破坏 tool 配对）好处理。
+            if (found <= 0)
                 return;
 
             var trimmed = new List<Dictionary<string, object>>(
-                _conversationHistory.GetRange(start, _conversationHistory.Count - start));
+                _conversationHistory.GetRange(found, _conversationHistory.Count - found));
             _conversationHistory.Clear();
             _conversationHistory.AddRange(trimmed);
         }
