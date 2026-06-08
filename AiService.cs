@@ -32,7 +32,7 @@ namespace TrioAI.MPPlugIn
 
         private const int MaxHistoryKeep = 30;
         private const int MaxRecentKeep = 20;
-        private const int MaxToolResultLen = 2000;
+        private const int MaxToolResultLen = 10000;
         private const int DefaultMaxTokens = 8192;
         private const int EscalatedMaxTokens = 64000;
         private int _currentMaxTokens = DefaultMaxTokens;
