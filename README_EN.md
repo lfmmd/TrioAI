@@ -1,5 +1,14 @@
 # TrioAI — MotionPerfect AI Assistant Plugin
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-0.1-blue.svg)](https://github.com/lfmmd/TrioAI/releases)
+[![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-blue.svg)](https://dotnet.microsoft.com/)
+[![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
+[![MotionPerfect](https://img.shields.io/badge/MotionPerfect-V5.6+-orange.svg)](https://www.triomotion.com/)
+[![API: Anthropic Messages](https://img.shields.io/badge/API-Anthropic%20Messages%20%2Fv1%2Fmessages-ff6b6b.svg)](https://docs.anthropic.com/en/api/messages)
+[![GitHub Release](https://img.shields.io/github/v/release/lfmmd/TrioAI?include_prereleases)](https://github.com/lfmmd/TrioAI/releases)
+[![GitHub stars](https://img.shields.io/github/stars/lfmmd/TrioAI?style=social)](https://github.com/lfmmd/TrioAI/stargazers)
+
 An AI programming assistant plugin for the Trio MotionPerfect motion controller IDE. AI directly reads/writes programs, interacts with the controller, and queries TrioBASIC command references via tool calls — enabling natural-language-driven motion-control development.
 
 ## Features
