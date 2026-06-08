@@ -15,7 +15,7 @@
 
 - **嵌入式 AI 助手面板**：在 MotionPerfect 内嵌对话式 AI 助手，原生 UI，无外部依赖
 - **24 个 AI 工具**：覆盖程序读写、控制器交互、VR/TABLE 数据、TrioBASIC 命令查询等
-- **HTTP API 服务器**：内置 `localhost:9090` HTTP API，可被外部脚本/工具调用
+- **HTTP API 服务器（MCP 风格集成端点）**：内置 `localhost:9090` HTTP API，提供类似 [MCP（Model Context Protocol）](https://modelcontextprotocol.io)的工具接入能力 —— 让外部 AI 应用、自动化脚本、其他 LLM agent（如 Claude Desktop、Cursor、自研 client）能通过标准 HTTP 接口调用 MotionPerfect 的全部功能（程序读写、控制器交互、VR/TABLE 数据等）
 - **API 兼容格式**：[Anthropic Messages API](https://docs.anthropic.com/en/api/messages)（端点 `/v1/messages`，请求体/响应/SSE 流式事件均遵循 Anthropic 规范）。**不兼容 OpenAI Chat Completions 格式**。支持 DeepSeek（`/anthropic` 端点）、Anthropic 官方、以及任何兼容 Anthropic Messages API 的代理或第三方服务
 - **流式响应**：实时显示 AI 思考与工具调用过程
 - **二次确认机制**：所有破坏性操作（写、删除、运行、停止）需用户在 UI 中点确认

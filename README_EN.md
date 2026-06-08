@@ -15,7 +15,7 @@ An AI programming assistant plugin for the Trio MotionPerfect motion controller 
 
 - **Embedded AI assistant panel** — native WPF UI inside MotionPerfect, no external dependencies
 - **24 AI tools** — covering program read/write, controller interaction, VR/TABLE data, TrioBASIC lookup, etc.
-- **HTTP API server** — built-in `localhost:9090` HTTP API, callable from external scripts/tools
+- **HTTP API server (MCP-style integration endpoint)** — built-in `localhost:9090` HTTP API, providing [MCP (Model Context Protocol)](https://modelcontextprotocol.io)-like tool access — lets external AI apps, automation scripts, and other LLM agents (Claude Desktop, Cursor, custom clients) invoke MotionPerfect's full functionality (program read/write, controller interaction, VR/TABLE data, etc.) via standard HTTP
 - **API format**: [Anthropic Messages API](https://docs.anthropic.com/en/api/messages) (endpoint `/v1/messages`; request body, response, and SSE streaming events all follow the Anthropic spec). **NOT compatible with OpenAI Chat Completions format**. Works with DeepSeek (`/anthropic` endpoint), Anthropic official, and any Anthropic-Messages-API-compatible proxy or third-party service
 - **Streaming responses** — real-time view of AI reasoning and tool execution
 - **Two-step confirmation** — all destructive operations (writes, deletes, run, stop) require explicit user approval in the UI
