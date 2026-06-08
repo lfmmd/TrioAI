@@ -16,7 +16,7 @@
 - **嵌入式 AI 助手面板**：在 MotionPerfect 内嵌对话式 AI 助手，原生 UI，无外部依赖
 - **24 个 AI 工具**：覆盖程序读写、控制器交互、VR/TABLE 数据、TrioBASIC 命令查询等
 - **HTTP API 服务器（MCP 风格集成端点）**：内置 `localhost:9090` HTTP API，提供类似 [MCP（Model Context Protocol）](https://modelcontextprotocol.io)的工具接入能力 —— 让外部 AI 应用、自动化脚本、其他 LLM agent（如 Claude Desktop、Cursor、自研 client）能通过标准 HTTP 接口调用 MotionPerfect 的全部功能（程序读写、控制器交互、VR/TABLE 数据等）
-- **API 兼容格式**：[Anthropic Messages API](https://docs.anthropic.com/en/api/messages)（端点 `/v1/messages`，请求体/响应/SSE 流式事件均遵循 Anthropic 规范）。**不兼容 OpenAI Chat Completions 格式**。支持 DeepSeek（`/anthropic` 端点）、Anthropic 官方、以及任何兼容 Anthropic Messages API 的代理或第三方服务
+- **API 兼容格式**：[Anthropic Messages API](https://docs.anthropic.com/en/api/messages)（端点 `/v1/messages`，请求体/响应/SSE 流式事件均遵循 Anthropic 规范）。**不兼容 OpenAI Chat Completions 格式**。支持智谱 GLM（`GLM-5.1`、`GLM-5`）、DeepSeek、Anthropic 官方、以及任何兼容 Anthropic Messages API 的代理或第三方服务
 - **流式响应**：实时显示 AI 思考与工具调用过程
 - **二次确认机制**：所有破坏性操作（写、删除、运行、停止）需用户在 UI 中点确认
 - **TrioBASIC 严格语法约束**：内置命令参考库，AI 写代码前自动查证，避免幻觉
@@ -60,6 +60,7 @@
 
 | 平台 | API URL（base_url） | 模型示例 | 申请入口 |
 |------|---------------------|----------|----------|
+| **智谱 GLM** | `https://open.bigmodel.cn/api/anthropic` | `GLM-5.1`、`GLM-5`、`GLM-4.6` | https://bigmodel.cn |
 | **DeepSeek** | `https://api.deepseek.com/anthropic` | `deepseek-v4-pro`、`deepseek-v4-flash`、`deepseek-chat`、`deepseek-reasoner` | https://platform.deepseek.com |
 | **Anthropic 官方** | `https://api.anthropic.com` | `claude-sonnet-4-5`、`claude-opus-4-7`、`claude-haiku-4-5` | https://console.anthropic.com |
 | 任意 Anthropic 兼容代理 | 你的代理 base URL | 代理支持的模型名 | 代理服务商 |
