@@ -33,6 +33,9 @@ namespace TrioAI.MPPlugIn
         private const int MaxHistoryKeep = 30;
         private const int MaxRecentKeep = 20;
         private const int MaxToolResultLen = 2000;
+        private const int DefaultMaxTokens = 8192;
+        private const int EscalatedMaxTokens = 64000;
+        private int _currentMaxTokens = DefaultMaxTokens;
 
         // ---- Perf diagnostics (remove after diagnosis) ----
         private static readonly Stopwatch _perfSw = Stopwatch.StartNew();
@@ -431,6 +434,16 @@ namespace TrioAI.MPPlugIn
                     return;
                 }
 
+                // Escalate: 输出被 max_tokens 截断 → 升级到 64000 重试本次（不前进 turn）
+                // 适用场景：AI 在 write_source 写大程序被切；agentic loop 输出超长
+                if (result.StopReason == "max_tokens" && _currentMaxTokens < EscalatedMaxTokens)
+                {
+                    OnSystemMessage?.Invoke($"⚠ 输出被 max_tokens={_currentMaxTokens} 截断，升级到 {EscalatedMaxTokens} 重试...");
+                    _currentMaxTokens = EscalatedMaxTokens;
+                    turn--;  // 不算这一轮
+                    continue;
+                }
+
                 _conversationHistory.Add(new Dictionary<string, object>
                 {
                     { "role", "assistant" },
@@ -442,7 +455,11 @@ namespace TrioAI.MPPlugIn
                     .ToList();
 
                 if (toolUseBlocks.Count == 0 || result.StopReason != "tool_use")
+                {
+                    if (result.StopReason == "max_tokens")
+                        OnSystemMessage?.Invoke($"⚠ 即使 max_tokens={_currentMaxTokens} 仍被截断。建议改用 patch_source 分批写入（每个 operation 仅一行变更，几乎不受 token 限制）。");
                     return;
+                }
 
                 var toolResults = new List<Dictionary<string, object>>();
                 foreach (var toolBlock in toolUseBlocks)
@@ -485,7 +502,7 @@ namespace TrioAI.MPPlugIn
             var body = new Dictionary<string, object>
             {
                 { "model", _model },
-                { "max_tokens", 4096 },
+                { "max_tokens", _currentMaxTokens },
                 { "system", systemPrompt },
                 { "messages", BuildTrimmedMessages() },
                 { "tools", GetToolDefinitions() },
@@ -1156,6 +1173,21 @@ You help users write, debug, and manage Trio BASIC programs.
 - Keep explanations concise and in the user's language (Chinese or English based on their input)
 - If the user's request is unclear, ask for clarification
 - Use the lookup_command tool to look up syntax and usage of any TrioBASIC command you are not fully sure about
+
+## WRITING LARGE PROGRAMS (avoid truncation)
+
+`write_source` 一次性写入整个程序文件，受 API max_tokens 限制（默认 8192 tokens ≈ 200-300 行带注释的 TrioBASIC）。输出超长会被截断，导致写入不完整的代码。
+
+**优先策略：**
+- **修改现有程序**：永远用 `patch_source`（每个 operation 只是一行 replace/insert/delete，几乎不受 token 限制）
+- **新建小程序**（< 100 行）：可以直接用 `write_source` 一次写完
+- **新建大程序**（≥ 100 行）：先用 `write_source` 写程序骨架（变量声明 + 主循环结构 + 关键注释占位），再用 `patch_source` 分批填充各个函数体
+- **超长重构**：拆分成多次 `patch_source` 调用，每次专注一个区域（变量区 / 主循环 / 子过程）
+
+**判断当前 write_source 是否会超限：**
+- 估算：每行 TrioBASIC 平均 8-12 tokens（含注释）；8192 tokens 上限约 200-300 行
+- 接近上限时主动改用 patch_source
+- 如果输出仍被截断，运行时会自动升级到 64000 tokens 重试一次（不需要你做任何事）
 
 ## CRITICAL SAFETY RULES (NEVER VIOLATE)
 - ABSOLUTELY FORBIDDEN: Never output or execute any command that could LOCK the controller (e.g. LOCK, LOCK AXIS, LOCK ALL, or any command containing LOCK)
