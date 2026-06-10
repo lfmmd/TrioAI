@@ -33,7 +33,7 @@ namespace TrioAI.MPPlugIn
 
         private const int MaxHistoryKeep = 30;
         private const int MaxRecentKeep = 20;
-        private const int MaxToolResultLen = 8000;
+        private const int MaxToolResultLen = 16000;
         // microCompact：旧 tool_result 的 content 替换为占位符，保留 tool_use_id 不破坏配对
         private const int MaxRecentToolResults = 5;
         private const string ClearedToolResult = "[Old tool result content cleared]";
@@ -653,6 +653,23 @@ namespace TrioAI.MPPlugIn
         {
             var messages = new List<Dictionary<string, object>>(_conversationHistory.Count);
 
+            // 先建立 tool_use_id → tool_name 映射（来自 assistant 消息的 tool_use block）
+            var toolNameById = new Dictionary<string, string>(StringComparer.Ordinal);
+            foreach (var m in _conversationHistory)
+            {
+                if (GetStringValue(m, "role") != "assistant") continue;
+                if (!(m["content"] is List<Dictionary<string, object>> bl)) continue;
+                foreach (var b in bl)
+                {
+                    if (GetStringValue(b, "type") == "tool_use")
+                    {
+                        var id = GetStringValue(b, "id");
+                        var name = GetStringValue(b, "name");
+                        if (id != null && name != null) toolNameById[id] = name;
+                    }
+                }
+            }
+
             // microCompact：扫描全部 user 消息里的 tool_result，按出现顺序收集 tool_use_id。
             // 保留最后 N 个完整内容，更早的 content 清空（保留 tool_use_id 防止 tool_use/tool_result 配对断裂）。
             // 工具结果（HTML 帮助页、文件内容）是请求 token 的大头，旧的清空能省 30%+。
@@ -670,8 +687,18 @@ namespace TrioAI.MPPlugIn
                     }
                 }
             }
+            // 最近 N 个 ∪ lookup_command 的所有结果（参考类命令文档，AI 写代码时会反复引用，
+            // 清空会导致它再查一次浪费 API + 中断代码连贯性）
             var keepRecent = new HashSet<string>(
                 allToolResultIds.Skip(Math.Max(0, allToolResultIds.Count - MaxRecentToolResults)));
+            foreach (var id in allToolResultIds)
+            {
+                if (toolNameById.TryGetValue(id, out var name)
+                    && string.Equals(name, "lookup_command", StringComparison.OrdinalIgnoreCase))
+                {
+                    keepRecent.Add(id);
+                }
+            }
 
             // 找到历史里最后一条 assistant 消息的下标，给它打 cache_control。
             // 这样下一轮请求时，前缀 [system + tools + history up to last assistant] 命中缓存。

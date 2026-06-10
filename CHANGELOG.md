@@ -13,6 +13,15 @@
 - 多控制器切换支持
 - IEC 断点的 line→CodeElement 反推（目前 SetBreakpoint 需在 MP UI 中手动设置）
 
+## [0.1.7] — 2026-06-10
+
+代码质量回归修复版本（v0.1.5 的 token 优化过于激进）。
+
+### 修复
+
+- **MaxToolResultLen 8000 → 16000** — 8000 截断了 11% 的 HTML 命令文档（共 98 个 > 8KB），其中全是高频复杂命令（FRAME 119KB, ETHERCAT 51KB, REGIST 47KB, MS_BUS 47KB, MODBUS 38KB, CAMBOX 35KB, PRINT 33KB）。截断后 AI 只看到命令简介，参数表/示例全丢，凭印象写参数 → 编译错。
+- **microCompact 永不清空 lookup_command 结果** — 之前保留最近 5 个 tool_result，但复杂程序常用 10+ 个命令，5 个之外的语法被清空成 `[Old tool result content cleared]`。AI 写代码时找不到精确语法，且常被迫重复查询浪费 API。现在 lookup_command 的 tool_result 永久保留，仅清空 Read 大文件/WebFetch 等一次性结果。
+
 ## [0.1.6] — 2026-06-10
 
 safe-coding 强制嵌入版本。
