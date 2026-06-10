@@ -1,0 +1,873 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ROBOTSTATUS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ROBOTSTATUS">
+</head>
+<body>
+<h1>ROBOTSTATUS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+The ROBOTSATUS axis parameter may be used to check various robot
+status bits held for each axis fitted:
+</p>
+<h2>Value:</h2>
+<p>
+12 bit value, each bit represents a different status state. 
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+char
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Recovery Action
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_FS_LIMIT active
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+a
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jog away from limit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_RS_LIMIT active
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+b
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jog away from limit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ROBOT_FS_LIMIT active
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+c
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jog away from limit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ROBOT_RS_LIMIT active
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+d
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jog away from limit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TCP_FS_LIMIT active
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+e
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jog away from limit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TCP_RS_LIMIT active
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+f
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jog away from limit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot following error warning range
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+g
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot following error exceeds limit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+128
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+h
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use command DATUM(0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Wrist singularity
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+256
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+i
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jog joint away from singularity point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Alignment singularity
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+512
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+j
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jog joint away from singularity point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Elbow singularity
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1024
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+k
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jog joint away from singularity point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Max speed limit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2048
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+l
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use command DATUM(0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Collision
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4096
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+m
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use command DATUM(0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+13
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Not in position
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8192
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+n
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use command DATUM(0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+14
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Elbow closed to singularity
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16384
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+o
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jog joint away from singularity point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Disallow jog
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32768
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+p
+</p>
+
+  
+</td>
+<td width="204" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Put robot in manual mode to allow jogging
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip" style="margin-left:0cm">
+&nbsp;
+</p>
+<p class="tip" style="margin-left:0cm">
+Motion Perfect uses the characters to
+display the error in the Axis Parameters window. 
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_Reference_12_Errors.html">RPS Errors</a>
+</p>
+</body>
+</html>

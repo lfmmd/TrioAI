@@ -1,0 +1,267 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NUM_TO_STRING</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NUM_TO_STRING">
+</head>
+<body>
+<h1><a name="_Toc317749395"></a>
+<a name="O_3246"></a>
+NUM_TO_STRING</h1>
+<p class="Category">
+Function
+</p>
+<p>
+Converts a number into string value.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input number.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WIDTH
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Width for the output string (see remarks)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DIGITS
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of digits after decimal point
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+STRING
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value converted to string.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+This function converts any numerical value to a string.
+Unlike the ANY_TO_STRING function, it allows you to specify an overall width and
+the number of fractional digits.
+</p>
+<p>
+If WIDTH is 0, the string is formatted with the necessary
+length.
+</p>
+<p>
+If WIDTH is greater than 0, the string is completed with
+heading blank characters to match the value of WIDTH.
+</p>
+<p>
+If WIDTH is greater than 0, the string is completed with
+trailing blank characters to match the absolute value of WIDTH.
+</p>
+<p>
+If DIGITS is 0 then neither decimal part nor point are
+added.
+</p>
+<p>
+If DIGITS is greater than 0, the corresponding number of
+decimal digits are added. '0' digits are added if necessary
+</p>
+<p>
+If the value is too long for the specified width, then the
+string is filled with '*' characters.
+</p>
+<h2>Examples</h2>
+<p class="codeexample">
+Q := NUM_TO_STRING (123.4, 8, 2);        (* Q is ' 
+123.40' *)
+</p>
+<p class="codeexample">
+Q := NUM_TO_STRING (123.4, -8, 2);       (* Q is '123.40 
+' *)
+</p>
+<p class="codeexample">
+Q := NUM_TO_STRING (1.333333, 0, 2);     (* Q is '1.33' *)
+</p>
+<p class="codeexample">
+Q := NUM_TO_STRING (1234, 3, 0);         (* Q is '***' *)
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

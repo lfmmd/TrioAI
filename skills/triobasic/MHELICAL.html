@@ -1,0 +1,421 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MHELICAL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MHELICAL">
+</head>
+<body>
+<h1>MHELICAL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MHELICAL(end1, end2, centre1, centre2, direction, distance3 [,mode])
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+MH()
+</p>
+<h2>Description:</h2>
+<p>
+Performs a helical move.
+</p>
+<p>
+Moves 2 orthogonal axes in such a way as to produce a
+circular arc at the tool point with a simultaneous linear move on a third axis.
+The first 5 parameters are like those of an 
+<a href="MOVECIRC.html">MOVECIRC</a>
+
+command. The sixth parameter defines the simultaneous linear movement normal to
+the plane of the circle (the helical component).
+</p>
+<p class="note">
+Multi-axis interpolation uses the UNITS, SPEED, ACCEL and DECEL
+of the BASE axis.  For correct XYZ vector operation, the UNITS of all 3 axes
+must be the same.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end1:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position on 
+<a href="BASE.html">BASE</a>
+ axis to finish
+  at. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end2:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position on next axis in 
+<a href="BASE.html">BASE</a>
+
+  array to finish at. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centre1:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position on 
+<a href="BASE.html">BASE</a>
+ axis about
+  which to move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centre2:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position on next axis in 
+<a href="BASE.html">BASE</a>
+
+  array about which to move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+direction:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Arc is interpolated in an anti-clockwise direction
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Arc is interpolated in a clockwise direction
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance3:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The distance to move on the third axis in the 
+<a href="BASE.html">BASE</a>
+ array axis in user units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Interpolate the 3rd axis with the main 2 axes when
+  calculating path speed. (True helical path)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Interpolate only the first 2 axes for path speed, but
+  move the 3rd axis in coordination with the other 2 axes. (Circular path with
+  following 3rd axis)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The first 4 distance parameters are scaled according to the
+current unit conversion factor for the 
+<a href="BASE.html">BASE</a>
+ axis.  The
+sixth parameter uses its own axis units. 
+</p>
+<h2>Examples:</h2>
+<h3>Example1:</h3>
+<p>
+The command sequence follows a rounded rectangle path with
+axis 1 and 2.  Axis 3 is the tool rotation so that the tool is always
+perpendicular to the product. The 
+<a href="UNITS.html">UNITS</a>
+ for axis 3 are
+set such that the axis is calibrated in degrees.
+</p>
+<p>
+<img border="0" width="576" height="336" id="Picture 1" src="MHELICAL_files/image001.png">
+</p>
+<p class="codeexample">
+REP_DIST AXIS(3) = 360
+</p>
+<p class="codeexample">
+REP_OPTION AXIS(3) = ON 'All 3 axes must be homed before
+starting
+</p>
+<p class="codeexample">
+MERGE = ON
+</p>
+<p class="codeexample">
+MOVEABS(360) AXIS(3) 'Point axis 3 in correct starting
+direction
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(3)
+</p>
+<p class="codeexample">
+MOVE(0, 12)
+</p>
+<p class="codeexample">
+MHELICAL(3, 3, 3, 0, 1, 90)
+</p>
+<p class="codeexample">
+MOVE(16, 0)
+</p>
+<p class="codeexample">
+MHELICAL(3, -3, 0, -3, 1, 90)
+</p>
+<p class="codeexample">
+MOVE(0, -6)
+</p>
+<p class="codeexample">
+MHELICAL(-3, -3, -3, 0, 1, 90)
+</p>
+<p class="codeexample">
+MOVE(-2, 0)
+</p>
+<p class="codeexample">
+MHELICAL(-3, 3, 0, 3, 1, 90)
+</p>
+<h3>Exapmle 2:</h3>
+<p>
+A PVC cutter uses 2 axis like an XY plotter, a third axis is
+used to control the cutting angle of the knife. To keep the resultant cutting
+speed for the x and y axis the same when cutting curves, mode 1 is applied to
+the helical command.
+</p>
+<p>
+<img border="0" width="576" height="336" id="Picture 2" src="MHELICAL_files/image002.jpg">
+</p>
+<p class="codeexample">
+BASE(0, 1, 2)
+</p>
+<p class="codeexample">
+MERGE = ON           'Merge moves into one continuous
+movement
+</p>
+<p class="codeexample">
+MOVE(50, 0)
+</p>
+<p class="codeexample">
+MHELICAL(0, -6, 0, -3, 1, 180, 1)
+</p>
+<p class="codeexample">
+MOVE(-22, 0)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+MOVE(-90) AXIS(2)    'Rotate the knife after stopping at
+corner
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(2)
+</p>
+<p class="codeexample">
+MOVE(0, -50)
+</p>
+<p class="codeexample">
+MHELICAL(-6, 0, -3, 0, 1, 180, 1)
+</p>
+<p class="codeexample">
+MOVE(0, 50)
+</p>
+<p class="codeexample">
+WAIT IDLE            'Pause again to rotate the knife
+</p>
+<p class="codeexample">
+MOVE(-90) AXIS(2)
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(2)
+</p>
+<p class="codeexample">
+MOVE(-22, 0)
+</p>
+<p class="codeexample">
+MHELICAL(0, 6, 0, 3, 1, 180, 1)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+, 
+<a href="MOVECIRC.html">MOVECIRC</a>
+, 
+<a href="MOVECIRCSP.html">MOVECIRCSP</a>
+<span class="MsoHyperlink">, </span><a href="MHELICALSP.html">MHELICALSP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

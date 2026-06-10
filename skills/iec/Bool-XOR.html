@@ -1,0 +1,391 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>XOR XORN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="XOR XORN">
+</head>
+<body>
+<h1><a name="_Toc317749363"></a>
+<a name="O_1875"></a>
+XOR XORN</h1>
+<p class="Category">
+Operator
+</p>
+<p>
+Performs an exclusive OR of all inputs.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+IN1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+First Boolean input.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+IN2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Second Boolean input.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Exclusive OR of all inputs.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Truth table</h2>
+<table class="tablegrid">
+
+ 
+<thead>
+<tr>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+IN1
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+IN2
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Q
+</p>
+
+   
+</td>
+</tr>
+</thead>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+The block is called =1 in FBD and LD languages. In IL
+language, the XOR instruction performs an exclusive OR between the current
+result and the operand. The current result must be boolean. The XORN instruction
+performs an exclusive between the current result and the boolean negation of
+the operand.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+Q := IN1 XOR IN2;
+<br>
+
+Q := IN1 XOR IN2 XOR IN3;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="250" height="85" src="Bool-XOR_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+First input is the rung. The rung is the output:
+<br>
+<img width="221" height="75" src="Bool-XOR_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Bool-AND.html">AND</a>
+<a name="H_923"></a>
+</p>
+<p>
+<a href="Bool-OR.html">OR</a>
+<a name="H_1134"></a>
+</p>
+<p>
+<a href="Bool-NOT.html">NOT</a>
+<a name="H_1126"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

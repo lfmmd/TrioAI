@@ -1,0 +1,219 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>RNDF</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="RNDF">
+</head>
+
+
+
+<body>
+<h1>RNDF</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = RNDF
+</p>
+<p class="fixed">
+value = RNDF(upper-limit)
+</p>
+<p class="fixed">
+value = RNDF(lower-limit, upper-limit)
+</p>
+<h2>Description:</h2>
+<p>
+The RNDF function returns a pseudo-random floating-point
+value.
+</p>
+<p>
+Without parameters, it returns a value from 0 to just less
+than 1, i.e. 0 &#8804; value &lt; 1, or [0, 1).
+</p>
+<p>
+When an upper limit alone is specified, it returns a value
+from 0 to just less than the limit, i.e.
+0&nbsp;&#8804;&nbsp;value&nbsp;&lt;&nbsp;upper&#8209;limit
+</p>
+<p>
+When a lower and an upper limit are specified, it returns a
+value from the lower limit to just less than the upper limit, i.e. lower&#8209;limit&nbsp;&#8804;&nbsp;value&nbsp;&lt;&nbsp;upper&#8209;limit.
+</p>
+<p class="tip">
+Note that the sequence generated varies with each program
+execution, which is usually desirable, but if you require the same sequence
+generated then use the RANDOMIZE command
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A pseudo-random floating-point value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+lower-limit:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The lowest value that the value returned may take (this
+  can only be specified when an upper limit is specified)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+upper-limit:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The highest value that the value returned may approach,
+  i.e. up to this value but excluding this value
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print some random numbers between 0 and 1 exclusive on the
+command line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RNDF
+</p>
+<p class="codeexample">
+0.4055
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RNDF
+</p>
+<p class="codeexample">
+0.6248
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RNDF
+</p>
+<p class="codeexample">
+0.7969
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Print a random number from 0 to 100 exclusive on the command
+line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RNDF(100)
+</p>
+<p class="codeexample">
+95.5165
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RNDF(100)
+</p>
+<p class="codeexample">
+13.1009
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RNDF(100)
+</p>
+<p class="codeexample">
+24.2894
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p>
+Print a random number from -0.5 to 0.5 exclusive on the
+command line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RNDF(-0.5, 0.5)
+</p>
+<p class="codeexample">
+-0.4366
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RNDF(-0.5, 0.5)
+</p>
+<p class="codeexample">
+0.2732
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RNDF(-0.5, 0.5)
+</p>
+<p class="codeexample">
+-0.1176
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See also:</h2>
+<p>
+<a href="RANDOMIZE.html">RANDOMIZE</a>
+, 
+<a href="RND.html">RND</a>
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

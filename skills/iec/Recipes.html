@@ -1,0 +1,426 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Editing Recipes</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Recipes</h1>
+<p>
+A recipe is a list of variables completed
+with one or more predefined sets of values. It is a powerful way of applying
+multiple values to variables at once at runtime. It can be used at startup to
+initialize complex variables or to load different profiles on some condition.
+</p>
+<p>
+Recipes are displayed in the tree view,
+along with programs and other task/library items.
+</p>
+<h2><img width="204" height="83" src="Recipes_files/image001.png" alt="A screenshot of a cell phone&#10;&#10;Description automatically generated">
+<br clear="ALL">
+Adding a recipe to the task/library</h2>
+<p>
+There are two ways to add a recipe
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+1.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create new empty recipe
+</p>
+<p>
+To create an empty recipe, right-click on
+the selected task/library and select the command “Add New Recipe”. 
+<i>Motion</i>
+Perfect will prompt for the name of the recipe. Recipe names follow the same
+rules as program name rules – it must start with a letter or an underscore and
+may contain only letters, digits or underscores. 
+</p>
+<p class="note">
+Note: A csv extension will be automatically
+added to the name!
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+2.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Import an existing csv file with values
+</p>
+<p>
+To import an existing csv file with values,
+right-click on the selected task/library and select the command “Import
+Recipe”. Motion Perfect will prompt for the file name to import.
+</p>
+<p>
+The file format is comma separated values.
+Every line in the file begins with the name (or path) to a variable, then come
+values separated by commas.
+</p>
+<p>
+Example: A csv file with two variables OP0
+and OP1, containing two values per variable
+</p>
+<p class="codeexample">
+OP0;FALSE;TRUE
+</p>
+<p class="codeexample">
+OP1;FALSE;TRUE
+</p>
+<h2>Editing a recipe</h2>
+<p>
+After a recipe is created or imported it
+can be edited with the recipe editor. To open a recipe, double-click on it in
+the tree view or right-click on it and select “Edit” command.
+</p>
+<p>
+<img width="274" height="151" src="Recipes_files/image002.png" alt="A screenshot of a cell phone&#10;&#10;Description automatically generated">
+<br clear="ALL">
+</p>
+<p>
+The recipe editor is a table with every row
+being an entry in the recipe. The first column is the path to the variable.
+Consecutive columns are values of the variable that could be applied with the
+function 
+<strong>
+<span style='font-family:"Calibri",sans-serif'>ApplyRecipeColumn</span></strong>
+</p>
+<p>
+To add a new row to the recipe, click at
+the bottom empty row’s first column. This will add a new entry to the recipe
+and will display the selection dialog for selecting a variable.
+</p>
+<p>
+To change a recipe entry, click on the
+corresponding cell in the table.
+</p>
+<p>
+The table editor provides several commands:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Command
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Select Variable
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Select a variable from existing
+  variables to add to the recipe or to change an existing entry
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cut
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cut selected row/cell and put it in
+  the clipboard
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Copy
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Copy selected row/cell to clipboard
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Paste
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Paste clipboard contents to selected
+  row/cell
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Find
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open the find tool
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Find in project
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open the find in project tool
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Replace
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open the replace tool
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Select All
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Select everything
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Add New Column
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Add new column for values
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rename Column
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rename the selected column. Applicable
+  only for value columns
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Delete Column
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Delete the selected column. Applicable
+  only for value columns and only when number of value columns is greater than
+  1
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Applying a recipe at runtime</h2>
+<p>
+Recipe columns are applied with the
+function 
+<strong>
+<span style='font-family:"Calibri",sans-serif'>ApplyRecipeColumn</span></strong>
+. This function expects two arguments
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Recipe name (as it appears in the tree view)
+</li>
+<li class="indent-list-last">
+Column index (zero based)
+</li>
+</ul>
+<p>
+Example:
+</p>
+<p>
+The above recipe (InitialValues) with two
+rows containing values for variables OP0 and OP1 are applied at startup of the
+task with 
+<strong>
+<span style='font-family:"Calibri",sans-serif'>ApplyRecipeColumn</span></strong>
+ function.
+</p>
+<p>
+In the 
+<a href="GlobalDefines.html">Defines editor</a>
+ there is a line added
+that installs a handler for the 
+<strong>
+<span style='font-family:"Calibri",sans-serif'>#OnStartup</span></strong>
+ event
+</p>
+<p class="codeexample">
+#OnStartup OnStartUp
+</p>
+<p>
+<strong>
+<span style='font-family:"Calibri",sans-serif'>OnStartUp</span></strong>
+ is a main program, that contains initialization code for the task
+that is executed on startup.
+</p>
+<p>
+One of the tasks that are performed is
+applying the initial values for variables OP0 and OP1.
+</p>
+<p class="codeexample">
+ApplyRecipeColumn('InitialValues.csv',0);
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

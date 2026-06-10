@@ -1,0 +1,115 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>WAIT/WAIT_TIME</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="_Toc317749350"></a>
+<a name="O_3256"></a>
+WAIT/WAIT_TIME</h1>
+<p class="Category">
+Statement
+</p>
+<p>
+Suspend the execution of a ST program.
+</p>
+<h2>Syntax</h2>
+<p class="fixed">
+WAIT &lt;BOOL expression&gt;;
+</p>
+<p class="fixed">
+&nbsp;
+</p>
+<p class="fixed">
+WAIT_TIME &lt;TIME expression&gt;;
+</p>
+<h2>Remarks</h2>
+<p>
+The WAIT statement checks the attached Boolean expression
+and does the following:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+If the expression is TRUE, the program continues normally.
+</li>
+<li class="indent-list-last">
+If the expression is FALSE, then the execution of the program is
+suspended up to the next PLC cycle. The Boolean expression will be checked
+again during next cycles until it becomes TRUE. The execution of other programs
+is not affected.
+</li>
+</ul>
+<p>
+The WAIT_TIME statement suspends the execution of the
+program for the specified duration. The execution of other programs is not
+affected.
+</p>
+<p>
+These instructions are available in ST language only and has
+no correspondence in other languages. These instructions cannot be called in a
+User Defined Function Block (UDFB). The use of WAIT or WAIT_TIME in a UDFB
+provokes a compile error.
+</p>
+<p>
+WAIT and WAIT_TIME instructions can be called in a sub-program.
+However, this may lead to some unsafe situation if the same sub program is
+called from various programs. Re-entrancy is not supported by WAIT and
+WAIT_TIME instructions. Avoiding this situation is the responsibility of the
+programmer. The compiler outputs some warning messages if a sub-program
+containing a WAIT or WAIT_TIME instruction is called from more than one
+program.
+</p>
+<p>
+These instructions should not be called from ST parts of SFC
+programs. This makes no sense as SFC is already a state machine. The use of
+WAIT or WAIT_TME in SFC or in a sub-program called from SFC provokes a compile
+error.
+</p>
+<p>
+These instructions are not available when the code is
+compiled through a &quot;C&quot; compiler. Using &quot;C&quot; code generation
+with a program containing a WAIT or WAIT_TIME instruction provokes an error
+during post-compiling.
+</p>
+<p>
+These statements are extensions to the standard and are not
+IEC 61131-3 compliant.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+<span class="CodeComment">(*
+use of WAIT with different kinds of BOOL expressions *)</span><br>
+
+WAIT BoolVariable;
+<br>
+
+WAIT (diLevel &gt; 100) AND NOT bAlarm;
+</p>
+<p class="codeexample">
+WAIT SubProgCall ();
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+<span class="CodeComment">(*
+use of WAIT_TIME with different kinds of TIME expressions *)</span><br>
+
+WAIT_TIME t#2s;
+<br>
+
+WAIT_TIME TimeVariable;
+</p>
+<p class="VBATemplate">
+&nbsp;
+</p>
+<p class="VBATemplate">
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

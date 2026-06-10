@@ -1,0 +1,237 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DAC_SCALE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DAC_SCALE">
+</head>
+<body>
+<h1>DAC_SCALE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+DAC_SCALE is an integer that is multiplied to the output of
+the closed loop algorithm. You can use it to reverse the polarity of the demand
+value or to scale it so to effectively reduce the resolution of the closed loop
+algorithm. 
+</p>
+<p class="note">
+As it is applied to the output of the closed loop algorithm it is
+not applied to position based axis. 
+</p>
+<h2>Value:</h2>
+<p>
+Can be a positive or negative integer. The default values
+are shown in the following table:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC464 Ethercat
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC464 SERCOS
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC464 FlexAxis
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC464 Panasonic
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC464 SLM
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC405
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC403
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+To obtain the highest possible resolution of your system
+DAC_SCALE should be set to 1 or -1.
+</p>
+<p class="warning">
+To avoid problems with the multiply by 16, DAC_SCALE should be
+set to 1 for an SLM axis
+</p>
+<h2>Example:</h2>
+<h3>Example 1:</h3>
+<p>
+The FlexAxis uses a 16bit DAC.  To make it compatible with
+the gain settings used on older 12 bit DACs, DAC_SCALE is set to 16.
+</p>
+<p>
+The max output from closed loop algorithm is 2048 (for a
+12bit system)
+</p>
+<p>
+The max output from a 16bit DAC is 32768 which is 2048
+multiplied by 16
+</p>
+<h3>Example 2:</h3>
+<p>
+Set up an axis to work in the reverse direction.  For a
+servo axis, both the DAC_SCALE and the ENCODER_RATIO must be set to minus
+values.
+</p>
+<p class="codeexample">
+BASE(2) ' set axis 2 to work in reverse direction
+</p>
+<p class="codeexample">
+DAC_SCALE = -1
+</p>
+<p class="codeexample">
+ENCODER_RATIO(-1,1)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DAC.html">DAC</a>
+, 
+<a href="DAC_OUT.html">DAC_OUT</a>
+<span class="MsoHyperlink">, </span><a href="ENCODER_RATIO.html">ENCODER_RATIO</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

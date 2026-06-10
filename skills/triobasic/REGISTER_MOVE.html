@@ -1,0 +1,517 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REGISTER_MOVE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REGISTER_MOVE">
+</head>
+<body>
+<h1>REGISTER_MOVE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Open Architecture Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+REGISTER_MOVE(moveName, minAxes, maxAxis, posPerAxis, optParams)
+</p>
+<h2>Description:</h2>
+<p>
+This command registers a keyword as a part of the TrioBASIC
+language. Each move requires two BASIC functions to implement the move, one to
+load the move and the other to implement motion. It enables users to extend
+functionality of the controller using their own keywords.
+</p>
+<p>
+Note that a new move name cannot be the same as an existing move
+name.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="94" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+moveName: 
+</p>
+
+  
+</td>
+<td width="497" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of your move. This cannot the same as any other
+  system keyword
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="94" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+minAxes: 
+</p>
+
+  
+</td>
+<td width="497" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Minimum number of axes for this move
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="94" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+maxAxes: 
+</p>
+
+  
+</td>
+<td width="497" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Maximum number of axes for this move
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="94" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+posPerAxis:
+</p>
+
+  
+</td>
+<td width="497" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of position parameters per axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="94" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+optParams
+</p>
+
+  
+</td>
+<td width="497" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of optional parameters
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h3>Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+Register a move that moves one axis in forward direction and
+another in negative by the same amount.
+</p>
+<p>
+<b>In MC_CONFIG :</b></p>
+<p>
+<span class="codeexampleChar">REGISTER_MOVE(&quot;MOVE_PATTERN&quot;,
+2, 2, 1, 1)<br>
+
+</span><br>
+<b>In TEST_LIB.BAL</b> <b>:</b> </p>
+<p class="codeexample">
+' This function is called to load your move into the move
+buffer
+<br>
+
+' Please perform calculations and call the 'LOAD_OPEN_MOVE' function to load a
+move into the buffer.
+<br>
+
+
+FUNCTION
+ move_pattern_load(baseaxis 
+AS
+ INTEGER
+,
+posdemand 
+AS
+ FLOAT
+(),
+optparams 
+AS
+ FLOAT
+())
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+DIM
+ movedata 
+AS
+ FLOAT
+(
+10
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+DIM
+ movedist 
+AS
+ FLOAT
+(
+10
+)
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;movedist = posdemand(
+0
+)
++ posdemand(
+1
+) ' units
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;movedata(
+0
+) =
+posdemand(
+0
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;movedata(
+1
+) =
+posdemand(
+1
+)
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ (movedist(
+0
+) &lt; 
+5
+) 
+THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+THROW_ERROR
+(
+&quot;Move distance too short&quot;
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ELSE
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+LOAD_OPEN_MOVE
+(movedist,
+movedata)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ENDIF
+<br>
+
+
+ENDFUNC
+<br>
+
+
+<br>
+
+' This function is called in real-time when performing your move.
+<br>
+
+' f is a factor that goes from 0 to 1. 0 being the start of the move and 1
+being the end.
+<br>
+
+'&nbsp;This factor comes directly from the VPU.
+<br>
+
+' Note : Please keep this function as small as possible to reduce system load.
+<br>
+
+
+FUNCTION
+ move_pattern_servo(f 
+AS
+ FLOAT
+,
+baseaxis, currentaxis 
+AS
+ INTEGER
+, movedata 
+AS
+
+
+FLOAT
+())
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;p = f * (movedata(
+0
+))
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;q = f * (-movedata(
+0
+))
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+OPEN_MOVE_DEBUG_A
+
+
+AXIS
+(baseaxis) = f
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ currentaxis =
+baseaxis 
+THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+UPDATE_OPEN_MOVE_POS
+(baseaxis,
+p)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ELSE
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+UPDATE_OPEN_MOVE_POS
+(currentaxis,
+q)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ENDIF
+<br>
+
+
+ENDFUNC
+</p>
+<p>
+<span style='font-family:"Courier New"'><br>
+
+</span><b>In TEST.BAS : </b></p>
+<p class="codeexample">
+FOR
+ i = 
+0
+ TO
+ 2
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+BASE
+(i)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+UNITS
+ = 
+2 
+^ 
+23
+ / 
+360
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+SPEED
+ = 
+10
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+FE_LIMIT
+ = 
+10
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ACC
+(
+100
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+SERVO
+ = 
+1
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+DEFPOS
+(
+0
+)
+<br>
+
+
+NEXT
+ i
+<br>
+
+
+<br>
+
+
+DIM
+ p 
+AS
+ FLOAT
+(
+5
+)
+<br>
+
+
+DIM
+ p2 
+AS
+ FLOAT
+(
+2
+)
+<br>
+
+p(
+0
+) = 
+0
+<br>
+
+p(
+1
+) = 
+10
+<br>
+
+p(
+2
+) = 
+20
+<br>
+
+
+WDOG
+ = 
+1
+<br>
+
+
+BASE
+(
+0
+)
+<br>
+
+
+DEFPOS
+(
+0
+, 
+0
+)
+<br>
+
+
+WAIT
+ UNTIL
+ DPOS
+ AXIS
+(
+0
+) = 
+0
+<br>
+
+
+MOVE_PATTERN
+(
+100
+,
+
+1
+) 
+' Move 100
+units, with an amplitude of 5 units and a repeat distance of 2 units
+<br>
+
+
+TRIGGER
+</p>
+</body>
+</html>

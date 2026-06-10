@@ -1,0 +1,155 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IP_MEMORY_CONFIG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IP_MEMORY_CONFIG">
+</head>
+<body>
+<h1>IP_MEMORY_CONFIG</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG) 
+</p>
+<h2>Description:</h2>
+<p>
+The MC464 Ethernet port has memory allocated to buffer the
+incoming and outgoing data telegrams. Each buffer page uses 1600 bytes of
+memory. If some ports are turned off using IP_PROTOCOL_CONFIG, then
+IP_MEMORY_CONFIG may be used to re-allocate the unused memory and give a larger
+buffer size to the incoming and outgoing data. 
+</p>
+<p>
+By default, there are 2 x 1600 bytes allocated to Tx and 2 x
+1600 allocated to Rx. The value of IP_MEMORY_CONFIG is $22 (or 2 + 32 in
+decimal), and in most networks this buffer size is enough to handle all the
+network traffic.
+</p>
+<h2>Value:</h2>
+<p class="note">
+The IP_MEMORY_CONFIG is a byte which is split into 2 nibbles.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bits
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0 - 3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Size of Rx buffer; number of 1600 byte pages.
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+$01 to $09
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+4 - 7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Size of Tx buffer; number of 1600 byte pages.
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+$10 to $90
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+Do not set either nibble to less than 1 otherwise there will
+be no memory allocated and Motion Perfect will not be usable. 
+</p>
+<h2>Example:</h2>
+<p>
+Allocate more buffer space for incoming Rx Ethernet traffic
+to cope with frequent broadcast telegrams on a busy network. 
+</p>
+<p class="codeexample">
+'Disable Ethernet IP and text file loader ports
+</p>
+<p class="codeexample">
+IP_PROTOCOL_CONFIG = $37
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Allocate the freed memory space to Rx net-buffer 
+</p>
+<p class="codeexample">
+IP_MEMORY_CONFIG = $29
+</p>
+</body>
+</html>

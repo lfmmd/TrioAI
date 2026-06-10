@@ -1,0 +1,210 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVEABSSP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVEABSSP">
+</head>
+<body>
+<h1>MOVEABSSP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVEABSSP(position1[, position2[, position3[, position4, …]]])
+</p>
+<h2>Description:</h2>
+<p>
+Works as 
+<a href="MOVEABS.html">MOVEABS</a>
+ and additionally
+allows vector speed to be changed when using multiple moves in the look ahead
+buffer when 
+<a href="MERGE.html">MERGE</a>
+<span class="MsoHyperlink"> </span>= 
+<a href="ON.html">ON</a>
+, using additional parameters 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+,
+
+<a href="ENDMOVE_SPEED.html">ENDMOVE_SPEED</a>
+ and 
+<a href="STARTMOVE_SPEED.html">STARTMOVE_SPEED</a>
+.
+</p>
+<p class="note">
+Multi-axis interpolation uses the UNITS, SPEED, ACCEL and DECEL
+of the BASE axis.  For correct XYZ vector operation, the UNITS of all 3 axes
+must be the same.
+</p>
+<p class="tip">
+If an axis needs to be 
+<u>not</u> included in the vector speed
+calculation, then 
+<a href="INTERP_FACTOR.html">INTERP_FACTOR</a>
+ can be set to
+0 for that axis.
+</p>
+<p>
+The values specified are scaled using the unit conversion
+factor axis parameter; 
+<a href="UNITS.html">UNITS</a>
+.  Therefore if, for
+example, an axis has 400&nbsp;encoder&nbsp;edges/mm the 
+<a href="UNITS.html">UNITS</a>
+
+for that axis is 400. The command MOVEABS(6) would then move to a position 6&nbsp;mm
+from the zero position. When 
+<a href="MERGE.html">MERGE</a>
+ is set to 
+<a href="ON.html">ON</a>
+, absolute and relative moves are merged together to make
+a continuous path movement.
+</p>
+<p class="note">
+Absolute moves are converted to incremental moves as they enter
+the buffer. This is essential as the vector length is required to calculate the
+start of deceleration. It should be noted that if any move in the buffer is
+cancelled by the programmer, the absolute position will not be achieved.
+</p>
+<p class="warning">
+If the number of axes in the move that follows on from the
+previous move are different, then they will not MERGE. Likewise, a FORWARD,
+REVERSE or any linked move (e.g. MOVELINK) will not MERGE with a MOVESP or
+MOVEABSSP. The MOVEABSSP will go to the wrong endpoint.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position to move to on base axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position to move to on next axis in 
+<a href="BASE.html">BASE</a>
+
+  array.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position3:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position to move to on next axis in 
+<a href="BASE.html">BASE</a>
+
+  array.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position4:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position to move to on next axis in 
+<a href="BASE.html">BASE</a>
+
+  array
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The maximum number of parameters is the number of axes available
+on the controller.
+</p>
+<h2>Example:</h2>
+<p>
+In a series of buffered moves with 
+<a href="MERGE.html">MERGE</a>
+<span class="MsoHyperlink"> </span>= 
+<a href="ON.html">ON</a>
+, an absolute move is
+required where the incoming vector speed is 40&nbsp;units/second and the
+finishing vector speed is 20&nbsp;units/second.           
+</p>
+<p class="codeexample">
+FORCE_SPEED = 40
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 20
+</p>
+<p class="codeexample">
+MOVEABSSP(100, 100)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MOVEABS.html">MOVEABS</a>
+<span class="MsoHyperlink">, </span><a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+</p>
+</body>
+</html>

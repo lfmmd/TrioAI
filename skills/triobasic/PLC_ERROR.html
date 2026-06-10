@@ -1,0 +1,120 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PLC_ERROR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PLC_ERROR">
+</head>
+<body>
+<h1>PLC_ERROR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+PLC_ERROR shows a bit pattern to indicate which processes in
+the multitasking system, which are running IEC61131-3 PLC tasks, have raised a
+run-time error flag. There is one bit per PLC task running in the 
+<i>Motion
+Coordinator</i>.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+The PLC task running on process 
+<i>n </i>has a run-time
+  error. 
+</p>
+
+  
+</td>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+In a MC464, IEC61131-3 PLC tasks are set to run on Processes
+21 and 20. In the command line terminal, check the value of PLC_ERROR. The IEC
+PLC task on process 20 has a run-time error.
+</p>
+<p class="codeexample">
+&gt;&gt;?HEX(PLC_ERROR)
+</p>
+<p class="codeexample">
+100000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="note">
+Checking the value in Hexadecimal shows the bit positions mor clearly
+than decimal.  $100000 shows that bit 20 is set. If preferred, the value can be
+shown in decimal by leaving off the HEX modifier, and in this case the value 1048576
+will be returned.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

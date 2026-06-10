@@ -1,0 +1,106 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NTYPE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NTYPE">
+</head>
+<body>
+<h1>NTYPE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+This parameter holds the type of the first buffered move.
+</p>
+<p class="tip">
+The NTYPE buffer can be cleared using 
+<a href="CANCEL.html">CANCEL</a>
+(1)
+</p>
+<h2>Value:</h2>
+<p>
+The numerical value of the move type
+</p>
+<p class="note">
+See 
+<a href="MTYPE.html">MTYPE</a>
+ for a list of return values.
+</p>
+<h2>Example:</h2>
+<h3>Example 1:</h3>
+<p>
+If the first move buffer (NTYPE) is empty apply another move
+from a table
+</p>
+<p class="codeexample">
+IF NTYPE = 0 THEN
+</p>
+<p class="codeexample">
+  MOVE( TABLE(count))
+</p>
+<p class="codeexample">
+  count = count + 1
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p>
+In the MC4/5/6 ranges, the preferred axis parameter is 
+<a href="LOADED.html">LOADED</a>
+.  The example below will work more reliably than
+by using NTYPE.
+</p>
+<p class="codeexample">
+IF LOADED THEN
+</p>
+<p class="codeexample">
+  MOVE( TABLE(count))
+</p>
+<p class="codeexample">
+  count = count + 1
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+In the command line (Terminal #0) check the status of MTYPE,
+NTYPE and PMOVE of process 14.
+</p>
+<p class="codeexample">
+&gt;&gt;?NTYPE
+</p>
+<p class="codeexample">
+2
+</p>
+<p class="codeexample">
+&gt;&gt;?MTYPE
+</p>
+<p class="codeexample">
+1
+</p>
+<p class="codeexample">
+&gt;&gt;?PMOVE PROC(14)
+<br>
+
+0
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MTYPE.html">MTYPE</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="PMOVE.html">PMOVE</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="IDLE.html">IDLE</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="LOADED.html">LOADED</a>
+</p>
+</body>
+</html>

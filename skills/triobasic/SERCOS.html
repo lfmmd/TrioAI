@@ -1,0 +1,1966 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SERCOS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SERCOS">
+</head>
+<body>
+<h1>SERCOS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+SERCOS(function#, slot, {parameters})
+</p>
+<h2>Description:</h2>
+<p>
+This function allows the Sercos ring to be controlled from
+the TrioBASIC programming system. A Sercos ring consists of a single master and
+1 or more slaves daisy-chained together using fibre-optic cable. During
+initialisation the ring passes through several ‘communication phases’ before
+entering the final cyclic deterministic phase in which motion control is
+possible. In the final phase, the master transmits control information and the
+slaves transmit status feedback information every cycle time.
+</p>
+<p>
+Once the Sercos ring is running in CP4, the standard
+TrioBASIC motion commands can be used.
+</p>
+<p>
+The 
+<i>Motion Coordinator</i> Sercos hardware uses the
+Sercon 816 Sercos interface chip which allows connection speeds up to 16&nbsp;Mhz.
+This chip can be programmed at a register level using the Sercos command if
+necessary. To program in this way it is necessary to obtain a copy of the chip
+data sheet.
+</p>
+<p>
+The Sercos command provides access to 10 separate functions:
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="11" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+function:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_0:">0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read Sercos ASIC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_1:">1</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write Sercos ASIC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_2:">2</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initialise command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_3:">3</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Link Sercos drive to Axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_4:">4</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_5:">5</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_6:">6</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Run Sercos procedure command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_7:">7</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Check for drive present
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_8:">8</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Print network parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_10:">10</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos ring status
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot number is in the range 0 to 6 and specifies
+  the master module location.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_0:"></a>
+Function = 0:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SERCOS(0, slot, ram/reg, address)
+</p>
+<h3>Description:</h3>
+<p>
+This function reads a value from the Sercos ASIC.
+</p>
+<p class="warning">
+Do not use this function without referencing the Sercon 816
+data sheet.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The module slot in which the Sercos is fitted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ram/reg:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+read value from RAM
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+read value from register.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The index address in RAM or register.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="codeexample">
+&gt;&gt;?SERCOS(0, 0, 1, $0c)
+</p>
+<h2><a name="_Function_=_1:"></a>
+Function = 1:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SERCOS(1, slot, ram/reg, address, value)
+</p>
+<h3>Description:</h3>
+<p>
+This function writes a value to the Sercos ASIC 
+</p>
+<p class="warning">
+Do not use this function without referencing the Sercon 816
+data sheet.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The module slot in which the Sercos is fitted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ram/reg:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+write value to RAM
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+write value to register.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The index address in RAM or register.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Date to be written
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_2:"></a>
+Function = 2:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SERCOS(2, slot[, intensity[, baudrate[, period]]])
+</p>
+<h3>Description:</h3>
+<p>
+This function initialises the parameters used for
+communications on the Sercos ring.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The module slot in which the Sercos is fitted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+intensity:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Light transmission intensity (1 to 6). Default value is
+  3.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+baudrate:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Communication data rate. Set to 2, 4, 6, 8 or 16.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+period:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos cycle time in microseconds. Accepted values are
+  2000, 1000, 500 and 250&nbsp;µs.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="codeexample">
+&gt;&gt;SERCOS(2, 3, 4, 16, 500)
+</p>
+<h2><a name="_Function_=_3:"></a>
+Function = 3:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SERCOS(3, slot, slave_address, axis[, slave_drive_type])
+</p>
+<h3>Description:</h3>
+<p>
+This function links a Sercos drive (slave) to an axis.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The module slot in which the Sercos is fitted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slave address of drive to be linked to an axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number which will be used to control this drive.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_drive_type:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameter to set the slave drive type. All
+  standard Sercos drives require the GENERIC setting. The other options below
+  are only required when the drive is using non-standard Sercos functions.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Generic Drive
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sanyo-Denki
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Yaskawa + Trio P730
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PacSci
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Kollmorgen
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="fixed">
+&gt;&gt; SERCOS(3, 1, 3, 5, 0)  'Links drive at address 3 to
+axis 5
+</p>
+<h2><a name="_Function_=_4:"></a>
+Function = 4:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SERCOS(4, slot, slave_address, parameter_ID [, parameter_size[,
+element_type [, list_length_offset, [VR_start_index]]])
+</p>
+<h3>Description:</h3>
+<p>
+This function reads a parameter value from a drive
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The module slot in which the Sercos is fitted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos address of drive to be read.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter_ID:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos parameter IDN
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter_size:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Size of parameter data expected:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2-byte parameter (default).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4-byte parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+list of parameter IDs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ASCII string
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="8" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+element_type:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos element type in the data block:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ID number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Attribute
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Minimum Input value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Maximum Input value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Operational data (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+list_length_offset:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameter to offset the list length. For
+  drives that return 2 extra bytes, use -2.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR_start_index:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Beginning of VR array where list will be stored.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+This function returns the value of 2- and 4-byte parameters but
+prints lists to the terminal in Motion Perfect unless VR start index is
+defined.
+</p>
+<h3>Example:</h3>
+<p class="codeexample">
+&gt;&gt; SERCOS(4, 0, 5, 140, 7) 'request “controller
+type”
+</p>
+<p class="codeexample">
+&gt;&gt; SERCOS(4, 0, 5, 129) 'request manufacturer class
+1 diagnostic
+</p>
+<h2><a name="_Function_=_5:"></a>
+Function = 5:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SERCOS(5, slot, slave_address, parameter_ID, parameter_size,
+parameter_value[, parameter_value, ...])
+</p>
+<h3>Description:</h3>
+<p>
+This function writes one or more parameter values to a
+drive.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The module slot in which the Sercos is fitted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_address:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos address of drive to be written.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter_ID:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos parameter IDN
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter_size:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Size of parameter data to be written. 2, 4, or 6.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter_value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enter one parameter for size 2 and size 4. Enter 2 to 7
+  parameters for size 6 (list).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="codeexample">
+&gt;&gt; SERCOS(5, 1, 7, 2, 2, 1000)      'Set Sercos cycle
+time
+</p>
+<p class="codeexample">
+&gt;&gt; SERCOS(5, 0, 2, 16, 6, 51, 130)  'Set IDN 16
+position feedback
+</p>
+<h2><a name="_Function_=_6:"></a>
+Function = 6:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SERCOS(6, slot, slave_address, parameter_ID[, timeout[, command_type]])
+</p>
+<h3>Description:</h3>
+<p>
+This function runs a Sercos procedure on a drive.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The communication slot in which the Sercos interface is
+  fitted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos address of drive.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter_ID:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos procedure command IDN.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+timeout:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional time out setting (ms).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+command_type:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameter to define the operation:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Run &amp; cancel operation (default value)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancel command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Run command
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="codeexample">
+&gt;&gt; SERCOS(6, 0, 2, 99)  'Clear drive errors
+</p>
+<h2><a name="_Function_=_7:"></a>
+Function = 7:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SERCOS(7, slot, slave_address)
+</p>
+<h3>Description:</h3>
+<p>
+This function is used to detect the presence of a drive at a
+given Sercos slave address.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The module slot in which the Sercos interface is
+  fitted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_addr:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos address of drive.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Returns 1 if drive detected, -1 if not detected.
+</p>
+<h3>Example:</h3>
+<p class="codeexample">
+IF SERCOS(7, 2, 3) &lt; 0 THEN
+</p>
+<p class="codeexample">
+  PRINT#5, &quot;Drive 3 on slot 2 not detected&quot;
+</p>
+<p class="codeexample">
+END IF
+</p>
+<h2><a name="_Function_=_8:"></a>
+Function = 8:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SERCOS(8, slot, required_parameter)
+</p>
+<h3>Description:</h3>
+<p>
+This function is used to print a Sercos network parameter.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The module slot in which the Sercos is fitted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+required_parameter:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This function will print the required network
+  parameter, where the possible.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+to print a semi-colon delimited list of ‘slave Id, axis
+  number’  pairs for the registered network configuration (as defined using
+  function 3). Used in Phase 1: Returns 1 if a drive is detected, 0 if no drive
+  detected.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+to print the baud rate (either 2, 4, 6, or 8), and 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+to print the intensity (a number between 0 and 6).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="codeexample">
+&gt;&gt;?SERCOS(8, 0, 1)
+</p>
+<h2><a name="_Function_=_10:"></a>
+Function = 10:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SERCOS(10, &lt;slot&gt;)
+</p>
+<h3>Description:</h3>
+<p>
+This function checks whether the fibre optic loop is closed
+in phase 0. Return value is 1 if network is closed, -1 if it is open, and -2 if
+there is excessive distortion on the network.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The module slot in which the Sercos is fitted.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="codeexample">
+&gt;&gt;?SERCOS(10, 1)
+</p>
+<p class="codeexample">
+IF SERCOS(10, 0) &lt;&gt; 1 THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Sercos ring is open or distorted&quot;
+</p>
+<p class="codeexample">
+END IF
+</p>
+</body>
+</html>

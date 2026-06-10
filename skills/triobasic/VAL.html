@@ -1,0 +1,108 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VAL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VAL">
+</head>
+<body>
+<h1>VAL</h1>
+<h2>Type:</h2>
+<p class="Category">
+String Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = VAL(string)
+</p>
+<h2>Description:</h2>
+<p>
+Converts a string to a numerical value. If the string is not
+a numerical value, then VAL returns 0. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+string:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+String to be converted
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Pre-define a variable of type string and then later, convert
+its current value to a numerical value stored in a VR. The resulting number in
+the VR is -132.456.
+</p>
+<p class="codeexample">
+DIM str1 AS STRING(20)
+</p>
+<p class="codeexample">
+str1 = &quot;-123.456&quot;
+</p>
+<p class="codeexample">
+VR(100) = VAL(str1)
+</p>
+<h3>Example 2:</h3>
+<p>
+Pre-define a variable of type string and then later, convert
+its current value to an integer numerical value stored in a local variable. The
+resulting number in the local variable is 1110.
+</p>
+<p class="codeexample">
+DIM str2 AS STRING(10)
+</p>
+<p class="codeexample">
+DIM number AS INTEGER
+</p>
+<p class="codeexample">
+str2 = &quot;987&quot;
+</p>
+<p class="codeexample">
+number = INT(VAL(str2)) + 123
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CHR.html">CHR</a>
+, 
+<a href="STR.html">STR</a>
+, 
+<a href="LEN.html">LEN</a>
+, 
+<a href="LEFT.html">LEFT,</a>
+<a href="RIGHT.html">RIGHT</a>
+,
+
+<a href="MID.html">MID</a>
+, 
+<a href="LCASE.html">LCASE</a>
+, 
+<a href="UCASE.html">UCASE</a>
+,
+
+<a href="INSTR.html">INSTR</a>
+<span class="MsoHyperlink">, </span><a href="ASC.html">ASC</a>
+</p>
+</body>
+</html>

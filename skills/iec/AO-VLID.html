@@ -1,0 +1,212 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VLID</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VLID">
+</head>
+<body>
+<h1><a name="_Toc317749522"></a>
+<a name="O_1864"></a>
+VLID</h1>
+<p class="Category">
+Function
+</p>
+<p>
+Get the identifier of an embedded list of variables.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FILE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+STRING
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pathname of the list file (.SPL or .TXT) - must be a
+  constant value!
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ID
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ID of the list - to be passed to other blocks.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+Some blocks have arguments that refer to a list of
+variables. For all these blocks, the list argument is materialized by a
+numerical identifier. This function enables you to get the identifier of a list
+of variables.
+</p>
+<p>
+Embedded lists of variables can be:
+</p>
+<p class="MsoListBullet">
+<span style='font-family:"Wingdings 3"'>&#132;<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span>Watch lists created
+with the Workbench. Such files are suffixed with 
+<span class="Folder">.SPL</span>.
+</p>
+<p class="MsoListBullet">
+<span style='font-family:"Wingdings 3"'>&#132;<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span>Simple 
+<span class="Folder">.TXT</span> text files with one variable name per line.
+</p>
+<p>
+Lists must contain single variables only. Items of arrays
+and structures must be specified one by one. The length of the list is not
+limited by the system.
+</p>
+<p class="warning">
+List files are read at compiling time and are embedded into
+the downloaded application code. This implies that a modification performed in
+the list file after downloading will not be taken into account by the
+application.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+ID := VLID ('MyFile.spl');
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="164" height="61" src="AO-VLID_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The function is executed only if EN is TRUE.
+<br>
+<img width="255" height="80" src="AO-VLID_files/image002.gif">
+</p>
+<h2>IL Language</h2>
+<p class="codeexample">
+Op1: LD&nbsp;&nbsp;&nbsp;'MyFile.spl'
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; VLID COL
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp;&nbsp; ID
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,205 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXIS_OFFSET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXIS_OFFSET">
+</head>
+<body>
+<h1>AXIS_OFFSET</h1>
+<h2>Type:</h2>
+<p class="Category">
+Slot Parameter (MC_CONFIG only / FLASH)
+</p>
+<h2>Description:</h2>
+<p>
+AXIS_OFFSET is the first axis number that a slot tries to
+assign its axis to. If the axis is already being used (its 
+<a href="ATYPE.html">ATYPE</a>
+
+is non zero) then the axis is assigned to the next free axis. The controller
+will assign the axis depending on their 
+<a href="SLOT.html">SLOT</a>
+s and the
+module type as per the following sequence:
+</p>
+<ol style="list_style_type:decimal">
+<li class="indent-list-first">
+EtherCAT
+and Panasonic axis will be assigned by 
+<a href="SLOT.html">SLOT</a>
+ to the
+first available axis starting at AXIS_OFFSET (plus node address -1 for
+Ethercat)
+</li>
+<li class="indent-list-middle">
+Then
+FlexAxis will be assigned by SLOT to the first available axis starting at
+AXIS_OFFSET
+</li>
+<li class="indent-list-middle">
+The
+built in axis is assigned to the first available axis starting at AXIS_OFFSET
+</li>
+<li class="indent-list-last">
+Finally
+any BASIC axis are assigned as per the BASIC program. This includes SLM and
+SERCOS as well as any EtherCAT or Panasonic axis that is configured in BASIC. 
+</li>
+</ol>
+<p class="note">
+The axis assignment is only performed on power up. AXIS_OFFSET
+should be put in the MC_CONFIG script to take effect immediately. 
+</p>
+<h2>Value:</h2>
+<p>
+The first axis that the module tries to assign its axis to,
+range = 0 to max axis, default = 0.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+SLOT -1 = built in, AXIS_OFFSET=0
+<br>
+
+SLOT 0 = EtherCAT, 4 axis, no node addresses set, AXIS_OFFSET=0
+<br>
+
+AXIS(0-3) Ethercat
+<br>
+
+AXIS(4) Built in
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(0) = 0
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(-1) = 0 
+</p>
+<p class="note">
+This is the default case. 
+</p>
+<h3>Example 2:</h3>
+<p>
+SLOT -1 = built in, AXIS_OFFSET=2
+<br>
+
+SLOT 0 = EtherCAT, 4 axis, no node addresses set, AXIS_OFFSET=0
+<br>
+
+AXIS(0-3) Ethercat
+<br>
+
+AXIS(4) Built in 
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(0) = 0
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(-1) = 2 
+</p>
+<p class="note">
+The built in is still last as it is assigned last, the controller
+tries to assign the built in axis to the 
+<b>first</b> available axis from 2
+which is 4. 
+</p>
+<h3>Example 3:</h3>
+<p>
+SLOT -1 = built in, AXIS_OFFSET=0
+<br>
+
+SLOT 0 = EtherCAT, 4 axis, no node addresses set, AXIS_OFFSET=1
+<br>
+
+AXIS(0) Built in 
+<br>
+
+AXIS(1-4) Ethercat
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(0) = 1
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(-1) = 0 
+</p>
+<p class="note">
+The offset pushes the Ethercat out one axis so AXIS(0) is still
+spare when the built in axis is assigned
+</p>
+<h3>Example 4:</h3>
+<p>
+SLOT -1 = built in, AXIS_OFFSET=0
+<br>
+
+SLOT 0 = EtherCAT, 4 axis, node switches on the drives set to 2, 3, 4, 5,
+AXIS_OFFSET=0
+<br>
+
+AXIS(0) Built in 
+<br>
+
+AXIS(1-4) Ethercat
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(0) = 0
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(-1) = 0 
+</p>
+<p class="note">
+The EtherCAT axis are set from their node address-1+AXIS_OFFSET
+</p>
+<h3>Example 5:</h3>
+<p>
+SLOT -1 = built in, AXIS_OFFSET=0
+<br>
+
+SLOT 0 = EtherCAT, 4 axis, nodes set to 2, 3, 4, 5, AXIS_OFFSET=1
+<br>
+
+AXIS(0) Built in 
+<br>
+
+AXIS(2-5) Ethercat
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(0) = 1
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(-1) = 0
+</p>
+<p class="note">
+The EtherCAT axis are set from their node address-1+AXIS_OFFSET
+</p>
+<h3>Example 6:</h3>
+<p>
+SLOT -1 = built in, AXIS_OFFSET=0
+<br>
+
+SLOT 0 = FlexAxis, 8 axis module, AXIS_OFFSET=1
+<br>
+
+AXIS(0) Built in 
+<br>
+
+AXES(1-8) FlexAxis
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(-1) = 0 
+</p>
+<p class="codeexample">
+AXIS_OFFSET SLOT(0) = 1
+</p>
+<p class="note">
+The built-in axis would normally be put after the Flexaxis.  Here
+the Flexaxis is forced to start at axis 1, therefore the built-in axis can take
+axis 0.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SLOT.html">SLOT</a>
+</p>
+</body>
+</html>

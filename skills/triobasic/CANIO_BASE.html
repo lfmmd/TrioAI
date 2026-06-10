@@ -1,0 +1,440 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CANIO_BASE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CANIO_BASE">
+</head>
+<body>
+<h1>CANIO_BASE</h1>
+<h2>Type: </h2>
+<p class="Category">
+I/O Parameter (MC_CONFIG only)
+</p>
+<h2>Description:</h2>
+<p>
+This parameter sets the start address of any CAN module I/O
+channels. Together with 
+<a href="MODULEIO_BASE.html">MODULEIO_BASE</a>
+, 
+<a href="DRIVEIO_BASE.html">DRIVEIO_BASE</a>
+ and 
+<a href="NODE_IO.html">NODE_IO</a>
+
+the I/O allocation scheme can replace and expand the behaviour of 
+<a href="MODULE_IO_MODE.html">MODULE_IO_MODE</a>
+, however 
+<a href="MODULE_IO_MODE.html">MODULE_IO_MODE</a>
+ takes precedence if its value has
+been changed to 2 (CANIO followed by MODULEIO).
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No effect (CANIO should be disabled using
+  CANIO_ADDRESS)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CAN I/O allocated automatically (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&gt;= 8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CAN I/O is located at this I/O point address, truncated
+  to the nearest multiple of 8
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+A system with MC464, a Panasonic module (slot 0) and a CANIO
+Module will have the following I/O assignment:
+</p>
+<p>
+CANIO_BASE=0 + 
+<a href="DRIVEIO_BASE.html">DRIVEIO_BASE</a>
+=0
++ 
+<a href="MODULEIO_BASE.html">MODULEIO_BASE</a>
+=0
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0-7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Built in inputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8-15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Built in bi-directional I/O
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16-23 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Panasonic module inputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+24-39
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANIO bi-directional I/O
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+40-47
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Panasonic drive inputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+48-1023
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Virtual I/O
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+CANIO_BASE = 100 + 
+<a href="DRIVEIO_BASE.html">DRIVEIO_BASE</a>
+
+= 0 + 
+<a href="MODULEIO_BASE.html">MODULEIO_BASE</a>
+ = 0
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0-7  
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Built in inputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8-15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Built in bi-directional I/O
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16-23
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Panasonic module inputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+24-31
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Panasonic drive inputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32-95
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Virtual I/O
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+96-103
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANIO bi-directional I/O
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+104-1023
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Virtual I/O
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MODULEIO_BASE.html">MODULEIO_BASE</a>
+, 
+<a href="DRIVEIO_BASE.html">DRIVEIO_BASE</a>
+, 
+<a href="NODE_IO.html">NODE_IO</a>
+, 
+<a href="MODULE_IO_MODE.html">MODULE_IO_MODE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

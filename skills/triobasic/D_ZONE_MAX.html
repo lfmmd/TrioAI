@@ -1,0 +1,55 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>D_ZONE_MAX</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="D_ZONE_MAX">
+</head>
+<body>
+<h1>D_ZONE_MAX</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Working in conjunction with 
+<a href="D_ZONE_MIN.html">D_ZONE_MIN</a>
+,
+D_ZONE_MAX defines a DAC dead band. This clamps the DAC output to zero when the
+demand movement is complete and the magnitude of the following error is less
+than the D_
+<a href="D_ZONE_MIN.html">ZONE</a>
+_MIN value. The servo loop will be
+reactivated when either the following error rises above the D_ZONE_MAX
+value, or a fresh movement is started.
+</p>
+<p class="tip">
+This can be used to prevent oscillations at static positions in
+Piezo systems.
+</p>
+<h2>Value:</h2>
+<p>
+Above this value the servo loop is reactivated when clamped
+in the dead band.
+</p>
+<h2>Example:</h2>
+<p>
+The DAC output will be clamped at zero when the movement is
+complete and the following error falls below 3. When a movement is restarted or
+if the following error rises above a value of 10, the servo loop will be
+reactivated
+</p>
+<p class="codeexample">
+D_ZONE_MIN = 3
+</p>
+<p class="codeexample">
+D_ZONE_MAX = 10
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="D_ZONE_MIN.html">D_ZONE_MIN</a>
+</p>
+</body>
+</html>

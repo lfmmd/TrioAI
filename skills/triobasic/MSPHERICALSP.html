@@ -1,0 +1,62 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MSPHERICALSP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MSPHERICALSP">
+</head>
+<body>
+<h1>MSPHERICALSP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MSPHERICAL({parameters}, mode[, gtpi[, rotau[, rotav[, rotaw]]]])
+</p>
+<h2>Description:</h2>
+<p>
+Performs a spherical move the same as 
+<a href="MSPHERICAL.html">MSPHERICAL</a>
+ and additionally allows vector speed to
+be changed when using multiple moves in the look ahead buffer when 
+<a href="MERGE.html">MERGE</a>
+=
+<a href="ON.html">ON</a>
+, using additional
+parameters 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+, 
+<a href="ENDMOVE_SPEED.html">ENDMOVE_SPEED</a>
+ and 
+<a href="STARTMOVE_SPEED.html">STARTMOVE_SPEED</a>
+</p>
+<h2>Example:</h2>
+<p>
+A move is needed that follows a spherical path which ends
+30mm up in the Z direction, the profile should decelerate from the previous
+move so that it is performed at 30&nbsp;
+<a href="UNITS.html">UNITS</a>
+/second:
+</p>
+<p class="codeexample">
+BASE(3, 4, 5)
+</p>
+<p class="codeexample">
+FORCE_SPEED = 30
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 30
+</p>
+<p class="codeexample">
+MSPHERICALSP(30, 0, 30, 8.7868, 0, 21.2132, 0)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MSPHERICAL.html">MSPHERICAL</a>
+<span class="MsoHyperlink">, </span><a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+</p>
+</body>
+</html>

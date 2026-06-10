@@ -1,0 +1,433 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_Setcom</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_Setcom">
+</head>
+<body>
+<h1>TC_Setcom</h1>
+<h2>Type:</h2>
+<p>
+System Function.
+</p>
+<h2>Function:</h2>
+<p>
+Allows the user to configure the serial port parameters and
+enable communication protocols.
+</p>
+<h2>Inputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute: BOOL;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rising edge requests execution
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Baudrate: TC_COM_BAUDRATE_T;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameters include
+<span style="font-family:SimSun">&#65306;</span>tcBaudrate1200, tcBaudrate2400,
+  tcBaudrate4800, tcBaudrate9600, tcBaudrate19200, tcBaudrate38400, tcBaudrate57600,
+  tcBaudrate115200, tcBaudrate128000, tcBaudrate153600, tcBaudrate230400
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+DataBits: TC_COM_DATABITS_T;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p>
+Optional parameters include
+<span style="font-family:SimSun">&#65306;</span></p>
+
+  
+<p class="tablecontent">
+tcData7bits, tcData8bits
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+StopBits: TC_COM_STOPBITS_T;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p>
+Optional parameters include
+<span style="font-family:SimSun">&#65306;</span></p>
+
+  
+<p class="tablecontent">
+tcStop1bit, tcStop2bits
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Parity: TC_COM_PARITY_T;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p>
+Optional parameters include
+<span style="font-family:SimSun">&#65306;</span></p>
+
+  
+<p class="tablecontent">
+tcParityNone, tcParityEven, tcParityOdd
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Port: TC_COM_PORT_T;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameters include
+<span style="font-family:SimSun">&#65306;</span>tcSerialPort1, tcSerialPort2, tcAnyBus50,
+  tcAnyBus51, tcAnyBus52, tcAnyBus53, tcAnyBus54, tcAnyBus55, tcAnyBus56,
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mode: TC_COM_MODE1_T;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p>
+Optional parameters include
+<span style="font-family:SimSun">&#65306;</span></p>
+
+  
+<p>
+tcMode0: XON/XOFF inactive;
+</p>
+
+  
+<p>
+tcMode1: XON/XOFF active
+</p>
+
+  
+<p>
+tcMode4: MODBUS protocol (16-bit Integer)
+</p>
+
+  
+<p>
+tcMode5: Hostlink Slave
+</p>
+
+  
+<p>
+tcMode6: Hostlink Master
+</p>
+
+  
+<p>
+tcMode7: MODBUS protocol (32-bit IEEE floating point)
+</p>
+
+  
+<p>
+tcMode8: Reserved mode
+</p>
+
+  
+<p>
+tcMode9: MODBUS protocol (32-bit long word integers)
+</p>
+
+  
+<p>
+tcMode11: MODBUS RTU master
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+MapTo: TC_COM_MAPTO_T;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p>
+Optional parameters include
+<span style="font-family:SimSun">&#65306;</span></p>
+
+  
+<p class="tablecontent">
+tcMbMapToTABLE, tcMbMapToVR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+LineType: TC_COM_LINETYPE1_T;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p>
+Optional parameters include
+<span style="font-family:SimSun">&#65306;</span></p>
+
+  
+<p class="tablecontent">
+SERIAL4WIRE, SERIAL2WIRE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Timeout: DINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Communications timeout in milliseconds.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done: BOOL;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when function has completed normally
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error: BOOL;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if a program error is detected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID: UINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returned error number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+When the execute input changes from FALSE to TRUE (rising
+edge), the Function Block attempts to configure the serial port parameters.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample">
+Inst_TC_Setcom(Execute:= (BOOL), Baudrate:=
+(TC_COM_BAUDRATE_T), DataBits:= (TC_COM_DATABITS_T), StopBits:=
+(TC_COM_STOPBITS_T), Parity:= (TC_COM_PARITY_T), Port:= (TC_COM_PORT_T), Mode:=
+(TC_COM_MODE1_T), MapTo:= (TC_COM_MAPTO_T), LineType:= (TC_COM_LINETYPE1_T),
+Timeout:= (DINT));
+</p>
+<p class="codeexample">
+(BOOL):=Inst_TC_Setcom.Done;
+</p>
+<p class="codeexample">
+(BOOL):=Inst_TC_Setcom.Error;
+</p>
+<p class="codeexample">
+(UINT):=Inst_TC_Setcom.ErrorID; 
+</p>
+<h2>FBD Language:</h2>
+<p align="center">
+<span style='font-family:"Microsoft YaHei",sans-serif'><img width="296" height="150" src="TC_Setcom_files/image001.png">
+</span></p>
+<h2>LD Language: </h2>
+<p align="center">
+<img width="168" height="356" id="&#22270;&#29255; 1" src="TC_Setcom_files/image002.png">
+</p>
+<h2>IL Language: </h2>
+<p>
+Not available.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBasic Error List</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

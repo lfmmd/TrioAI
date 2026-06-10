@@ -1,0 +1,138 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SCOPE_TRIGGER_POS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SCOPE_TRIGGER_POS">
+</head>
+<body>
+<h1>SCOPE_TRIGGER_POS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = SCOPE_TRIGGER_POS
+</p>
+<h2>Description:</h2>
+<p>
+SCOPE_TRIGGER_POS returns the index position of the trigger
+point when SCOPE_DELAY has been set up for pre-trigger or delayed trigger.
+</p>
+<p class="tip">
+If SCOPE_DELAY is a negative value, then pre-trigger occurs. If
+there are fewer points captured than the SCOPE_DELAY is set for, use
+SCOPE_TRIGGER_POS to find the actual trigger index in the TABLE.
+</p>
+<h2>Value:</h2>
+<p>
+The TABLE index where the most recent scope trigger point
+occurred.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set Scope to pre-trigger at 500&nbsp;ms. Print a message
+with scope completed and the trigger position to terminal #5.
+</p>
+<p class="codeexample">
+  
+'capture 1000 points on 2
+channels
+<br>
+
+  
+'pre-trigger to capture 500 points before the
+TRIGGER 
+<br>
+
+  'and 500 after TRIGGER
+<br>
+
+  
+SCOPE_DELAY 
+= -
+500
+<br>
+
+  
+SCOPE
+(
+ON
+,
+
+1
+, 
+10001
+, 
+12000
+, 
+MPOS
+ AXIS
+(
+0
+), 
+MPOS
+ AXIS
+(
+1
+))
+<br>
+
+  
+WA
+(
+320
+)
+<br>
+
+  
+TRIGGER
+<br>
+
+  
+WAIT
+ UNTIL
+
+
+SCOPE_POS 
+= 
+1000
+<br>
+
+  
+PRINT
+ #
+5
+, 
+&quot;Scope capture complete&quot;
+<br>
+
+  
+PRINT
+ #
+5
+, 
+&quot;Actual Trigger at TABLE &quot;
+; 
+10000 
++ 
+SCOPE_TRIGGER_POS
+</p>
+<p class="note">
+This deliberately does not leave enough time to capture 500
+points.  It is to show the use of SCOPE_TRIGGER_POS.
+</p>
+<h2>See also: </h2>
+<p>
+<a href="SCOPE.html">SCOPE</a>
+ , 
+<a href="SCOPE_DELAY.html">SCOPE_DELAY</a>
+
+, 
+<a href="TRIGGER.html">TRIGGER</a>
+</p>
+</body>
+</html>

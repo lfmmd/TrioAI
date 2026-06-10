@@ -1,0 +1,297 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FRAME_TRANS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FRAME_TRANS">
+</head>
+<body>
+<h1>FRAME_TRANS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p>
+FRAME_TRANS(frame, table_in, table_out, direction
+[,table_offset])
+</p>
+<h2>Description:</h2>
+<p>
+This function enables you to perform both the forward and
+inverse transformation calculations of a FRAME. One particular use is to check
+following errors in user units or to calculate positions outside of the FRAME
+working area. 
+</p>
+<p class="note">
+FRAME_TRANS requires the kinematic runtime FEC to use a FRAME 14
+and higher.
+</p>
+<p class="tip">
+The FRAME calculations are performed on raw position data. When
+using a FRAME typically the raw position data for DPOS is micrometres and the
+raw position data for MPOS is encoder counts but this can vary depending on
+which FRAME you select. 
+</p>
+<p>
+<img width="576" height="47" id="Picture 1" src="FRAME_TRANS_files/image001.png">
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+frame:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The FRAME number to run
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start position in the TABLE of the input positions
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_out
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start position in the TABLE of the generated
+  positions
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+direction
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 = AXIS_DPOS to DPOS (Forward Kinematics)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = DPOS to AXIS_DPOS (Inverse Kinematics)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_offset
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The first position in the table where the frame
+  configuration is found (default 0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Using MPOS calculate the Cartesian values so you can compare
+them to DPOS. This can be used to check the following error in the world
+coordinate system. The frame configuration is stored in the table starting at
+position 100.
+</p>
+<p>
+<img width="574" height="28" id="Picture 2" src="FRAME_TRANS_files/image002.png">
+</p>
+<p class="codeexample">
+'Load positions into the table
+<br>
+
+FOR x=0 TO 3
+</p>
+<p class="codeexample">
+BASE(x)
+</p>
+<p class="codeexample">
+TABLE(1000+x,MPOS AXIS(x)*UNITS AXIS(x))
+</p>
+<p class="codeexample">
+NEXT x
+</p>
+<p class="codeexample">
+'Calculate forward transform to see MPOS is Cartesian
+coordinates
+</p>
+<p class="codeexample">
+FRAME_TRANS(15, 1000,2000,1,100)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TABLE(3000, TABLE(2000)/ UNITS AXIS(0))
+</p>
+<p class="codeexample">
+TABLE(3001, TABLE(2001)/ UNITS AXIS(1))
+</p>
+<p class="codeexample">
+TABLE(3002, TABLE(2002)/ UNITS AXIS(2))
+</p>
+<p class="codeexample">
+PRINT &quot;DPOS IN ENCODER COUNTS&quot;,TABLE(2000),TABLE(2001),TABLE(2002)
+</p>
+<p class="codeexample">
+PRINT &quot;DPOS IN
+MM&quot;,TABLE(3000),TABLE(3001),TABLE(3002)
+</p>
+<p class="codeexample">
+PRINT &quot;FE in world x = &quot;, TABLE(3000) – DPOS AXIS(0)
+</p>
+<p class="codeexample">
+PRINT &quot;FE in world y = &quot;, TABLE(3001) – DPOS AXIS(1)
+</p>
+<p class="codeexample">
+PRINT &quot;FE in world z = &quot;, TABLE(3002) – DPOS AXIS(2)
+</p>
+<h3>Example 2:</h3>
+<p>
+Use the inverse kinematics to confirm that a demand position
+will result in an axis position that the motors can achieve. 
+</p>
+<p>
+<img width="575" height="27" id="Picture 3" src="FRAME_TRANS_files/image003.png">
+</p>
+<p class="codeexample">
+'Load positions into the table
+</p>
+<p class="codeexample">
+TABLE(5000,100*UNITS AXIS(0),200*UNITS AXIS(1),400*UNITS
+AXIS(2))
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Calculate reverse transform to see
+</p>
+<p class="codeexample">
+FRAME_TRANS(14, 5000,6000,0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Divide the result by the AXIS_UNITS to get
+</p>
+<p class="codeexample">
+'the MPOS in degrees
+</p>
+<p class="codeexample">
+TABLE(7000, TABLE(6000)/ AXIS_UNITS)
+</p>
+<p class="codeexample">
+TABLE(7001, TABLE(6001)/ AXIS_UNITS)
+</p>
+<p class="codeexample">
+TABLE(7002, TABLE(6002)/ AXIS_UNITS)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+PRINT &quot;MPOS RAW ENCODER COUNTS&quot;,
+TABLE(6000),TABLE(6001),TABLE(6002)
+</p>
+<p class="codeexample">
+PRINT &quot;MPOS degrees&quot;,
+TABLE(7000),TABLE(7001),TABLE(7002)
+</p>
+</body>
+</html>

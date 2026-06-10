@@ -1,0 +1,95 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LOCK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LOCK">
+</head>
+<body>
+<h1>LOCK</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command (command line only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+LOCK(code)
+</p>
+<h2>Description:</h2>
+<p>
+The 
+<a href="LOCK.html">LOCK</a>
+ copmmand is designed to
+prevent programs from being viewed or modified by personnel unaware of the
+security code. The lock code number is stored in the flash EPROM.
+</p>
+<p>
+When a 
+<i>Motion Coordinator</i> is locked, it is not
+possible to view, edit or save any programs and command line instructions are
+limited to those required to execute the program. The 
+<a href="CONTROL.html">CONTROL</a>
+
+value has 1000 added to it when the controller is LOCKed.
+</p>
+<p class="tip">
+You should use Motion Perfect to LOCK and UNLOCK your controller.
+</p>
+<p>
+To unlock the 
+<i>Motion Coordinator</i>, the UNLOCK command
+should be entered using the same lock code number which was used originally to LOCK
+it.
+</p>
+<p>
+The lock code number may be any integer and is held in
+encoded form. Once LOCKed, the only way to gain full access to the 
+<i>Motion
+Coordinator</i> is to 
+<a href="UNLOCK.html">UNLOCK</a>
+ it with the correct
+code.  For best security the lock number should be 7 digits.   
+</p>
+<p class="warning">
+It is possible to compromise the security of the lock system.
+Users must consider if the level of security is sufficient to protect their
+programs. If you want better security consider encrypting your project.
+</p>
+<p class="note">
+If you forget the security code number, the Motion Coordinator
+may have to be returned to your supplier to be unlocked.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+code:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ Any 7 digit integer number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See Also:</h2>
+<p>
+<a href="UNLOCK.html">UNLOCK</a>
+</p>
+</body>
+</html>

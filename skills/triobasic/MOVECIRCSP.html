@@ -1,0 +1,74 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVECIRCSP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVECIRCSP">
+</head>
+<body>
+<h1>MOVECIRCSP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax: </h2>
+<p class="fixed">
+MOVECIRCSP(end1, end2, centre1, centre2, direction[, ta[,
+output]])
+</p>
+<h2>Description:</h2>
+<p>
+Works as 
+<a href="MOVECIRC.html">MOVECIRC</a>
+ and
+additionally allows vector speed to be changed when using multiple moves in the
+look ahead buffer when 
+<a href="MERGE.html">MERGE</a>
+=
+<a href="ON.html">ON</a>
+,
+using additional parameters 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+ and 
+<a href="ENDMOVE_SPEED.html">ENDMOVE_SPEED</a>
+. 
+</p>
+<p>
+Optional parameters ta and output allow the use of
+transition curves.  See 
+<a href="MOVECIRC.html">MOVECIRC</a>
+.
+</p>
+<h2>Example:</h2>
+<p>
+In a series of buffered moves using the look ahead buffer
+with 
+<a href="MERGE.html">MERGE</a>
+<span class="MsoHyperlink"> </span>= 
+<a href="ON.html">ON</a>
+, a circular move is required where the incoming vector
+speed is 40&nbsp;units/second and the finishing vector speed is 20&nbsp;units/second.
+</p>
+<p class="codeexample">
+FORCE_SPEED = 40
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 20
+</p>
+<p class="codeexample">
+MOVECIRCSP(100, 100, 0, 100, 1)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+, 
+<a href="MOVECIRC.html">MOVECIRC</a>
+<span class="MsoHyperlink">, </span><a href="MHELICAL.html">MHELICAL</a>
+<span class="MsoHyperlink"> </span><a href="MHELICALSP.html">MHELICALSP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

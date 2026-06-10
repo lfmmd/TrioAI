@@ -1,0 +1,182 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>GOSUB..RETURN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="GOSUB RETURN">
+</head>
+<body>
+<h1>GOSUB..RETURN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Structure
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+GOSUB label
+</p>
+<p class="fixed">
+…
+</p>
+<p class="fixed">
+label:
+</p>
+<p class="fixed">
+  commands
+</p>
+<p class="fixed">
+RETURN
+</p>
+<h2>Description:</h2>
+<p>
+Stores the position of the line after the GOSUB command and
+then branches to the label specified. Upon reaching the RETURN statement,
+control is returned to the stored line. 
+</p>
+<p class="note">
+GOSUB..RETURN loops can be nested up to 8 deep in each program.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+commands: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC statements that you wish to execute
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+label:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A valid label that occurs in the program. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If the label does not exist an error message will be displayed at
+run time and the program execution halted.
+</p>
+<p class="note">
+You must not execute a RETURN without a GOSUB as a runtime error
+will be displayed and your program will stop. 
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Display positions using subroutine calls.
+</p>
+<p class="codeexample">
+WHILE machine_active
+</p>
+<p class="codeexample">
+  GOSUB routine1
+</p>
+<p class="codeexample">
+  GOSUB routine2
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+STOP 'prevents running into subroutines when machine
+stopped.
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+routine1:
+</p>
+<p class="codeexample">
+  PRINT &quot;Measured Position=&quot;; MPOS; CHR(13);
+</p>
+<p class="codeexample">
+  RETURN
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+routine2:
+</p>
+<p class="codeexample">
+  PRINT &quot;Demand Position=&quot;; DPOS; CHR(13);
+</p>
+<p class="codeexample">
+  
+RETURN
+</p>
+<h3>Example 2:</h3>
+<p>
+Calculate a value using a subroutine.
+</p>
+<p class="codeexample">
+y = 1
+</p>
+<p class="codeexample">
+z = 4
+</p>
+<p class="codeexample">
+GOSUB calc
+</p>
+<p class="codeexample">
+PRINT &quot;New value = &quot;; x
+</p>
+<p class="codeexample">
+STOP
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+calc:
+</p>
+<p class="codeexample">
+  x = y + z / 2
+</p>
+<p class="codeexample">
+RETURN
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="GOTO.html">GOTO</a>
+, 
+<a href="ON_GO.html">ON ..
+GOSUB</a>
+</p>
+</body>
+</html>

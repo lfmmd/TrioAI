@@ -1,0 +1,92 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PWM_MARK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PWM_MARK">
+</head>
+<body>
+<h1>PWM_MARK</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+PWM_MARK = value
+</p>
+<h2>Description:</h2>
+<p>
+Defines the number of ON clocks in the mark, using the
+internal 20MHz clock (Maximum value 65535).  See 
+<a href="PWM_CONTROL.html">PWM_CONTROL</a>
+
+for mode setting information.
+</p>
+<p class="note">
+A 20MHz clock is used as the base clock for the PWM generation.
+</p>
+<p>
+<img border="0" width="396" height="256" src="PWM_MARK_files/image001.png">
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of internal counts defining the ON part of the
+  PWM
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set 25% ON at 20 kHz.
+</p>
+<p class="codeexample">
+PWM_CYCLE = 1000
+</p>
+<p class="codeexample">
+PWM_MARK = 250
+</p>
+<h3>Example 2:</h3>
+<p>
+Set 60% ON at 10 kHz.
+</p>
+<p class="codeexample">
+PWM_CYCLE = 2000
+</p>
+<p class="codeexample">
+PWM_MARK = 1200
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See also: </h2>
+<p>
+<a href="PWM_CONTROL.html">PWM_CONTROL</a>
+, 
+<a href="PWM_CYCLE.html">PWM_CYCLE</a>
+</p>
+</body>
+</html>

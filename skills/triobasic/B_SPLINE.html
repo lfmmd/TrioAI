@@ -1,0 +1,599 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>B_SPLINE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="B_SPLINE">
+</head>
+<body>
+<h1>B_SPLINE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+B_SPLINE(mode, {parameters})
+</p>
+<h2>Description:</h2>
+<p>
+This function expands data to generate higher resolution
+motion profiles. It operates in two modes using either B-Spline or Non-Uniform
+Rational B-Spline (NURBS) mathematical methods.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_1:">1</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Standard B-Spline
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_2:">2</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Non-uniform Rational B-Spline
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Mode_=_1:"></a>
+Mode = 1:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+B_SPLINE(1, data-in, points, data-out, expansion-ratio)
+</p>
+<h3>Description:</h3>
+<p>
+Expands an existing profile stored in the 
+<a href="TABLE.html">TABLE</a>
+ area using the B Spline mathematical function. The
+expansion factor is configurable and the B_SPLINE stores the expanded profile
+to another area in the 
+<a href="TABLE.html">TABLE</a>
+. 
+</p>
+<p class="tip">
+This is ideally used where the source 
+<a href="CAM.html">CAM</a>
+
+profile is too coarse and needs to be extrapolated into a greater number of
+points.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data-in:
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Location in the 
+<a href="TABLE.html">TABLE</a>
+ where
+  the source profile is stored.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+points:
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of points in the source profile.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data-out:
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Location in the 
+<a href="TABLE.html">TABLE</a>
+ where
+  the expanded profile will be stored.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expansion-ratio:
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The expansion ratio of the B_SPLINE function.
+</p>
+
+  
+<p class="tablecontent">
+Total output points = (number of points + 1) *
+  expansion
+</p>
+
+  
+<p class="tablecontent">
+(i.e. if the source profile is 100 points and the
+  expansion ratio is set to 10 the  resulting profile will be 1010 point ((100 +
+  1) * 10).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Expands a 10 point profile in 
+<a href="TABLE.html">TABLE</a>
+
+locations 0 to 9 to a larger 110 point profile starting at TABLE address 200.
+</p>
+<p class="codeexample">
+B_SPLINE(1, 0, 10, 200, 10)
+</p>
+<h2><a name="_Mode_=_2:"></a>
+Mode = 2:</h2>
+<h3>Syntax: </h3>
+<p class="fixed">
+B_SPLINE(2, dimensions, curve-type, weight-op, points, knots,
+expansion, in-data, out-data)
+</p>
+<h3>Description: </h3>
+<p>
+Non-Uniform Rational B-Splines, commonly referred to as
+NURBS, have become the industry standard way of representing geometric surface
+information designed by a CAD system
+</p>
+<p>
+NURBS provide a unified mathematical basis for representing
+analytic shapes such as conic sections and quadratic surfaces, as well as free
+form entities, such as car bodies and ship hulls. 
+</p>
+<p>
+NURBS are small for data portability and can be scaled to
+increase the number of target points along a curve, increasing accuracy. A
+series of NURBS are used to describe a complex shape or surface.
+</p>
+<p>
+NURBS are represented as a series of XYZ points with knots +
+weightings of the knots.
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+dimensions:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Defines the number of axes. 
+</p>
+
+  
+<p class="tablecontent">
+Reserved for future use must be 3.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+curve-type:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Classification of the type of NURBS curve.
+</p>
+
+  
+<p class="tablecontent">
+Reserved for future use must be 3.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+weight-op:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sets the weighting of the knots
+</p>
+
+  
+<p class="tablecontent">
+0 = All weighting set to 1.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+knots:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of knots defined.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+points:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of data points.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expansion:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Defines the number of points the expanded curve will
+  have in the table.
+</p>
+
+  
+<p class="tablecontent">
+Total output points = Number of points * expansion. 
+  Minimum value = 3.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+in-data:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Location of input data.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+out-data:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table start location for output points stored X0, Y0,
+  Z0 etc.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Starting with 9 sets of X Y Z data point and expanding by 5,
+resulting with 45 sets of X Y Z data points (135 table points). The profile is
+then split from the XYZ groups into separate axis so that the profiles can be
+executed using 
+<a href="CAMBOX.html">CAMBOX</a>
+.
+</p>
+<p class="codeexample">
+weight_op = 0    '0 sets all weights to 1.0
+</p>
+<p class="codeexample">
+points = 9       'number of data points
+</p>
+<p class="codeexample">
+knots = 13       'number of knots
+</p>
+<p class="codeexample">
+expansion = 5    'expansion factor
+</p>
+<p class="codeexample">
+in_data = 100    'data points
+</p>
+<p class="codeexample">
+out_data = 1000  'table location to construct output
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Data Points:
+</p>
+<p class="codeexample">
+TABLE(100, 150.709, 353.8857, 0)
+</p>
+<p class="codeexample">
+TABLE(103, 104.5196, 337.7142, 0)
+</p>
+<p class="codeexample">
+TABLE(106, 320.1131, 499.4647, 0)
+</p>
+<p class="codeexample">
+TABLE(109, 449.4824, 396.4945, 0)
+</p>
+<p class="codeexample">
+TABLE(112, 595.3350, 136.4910, 0)
+</p>
+<p class="codeexample">
+TABLE(115, 156.816, 96.3351, 0)
+</p>
+<p class="codeexample">
+TABLE(118, 429.4556, 313.7982, 0)
+</p>
+<p class="codeexample">
+TABLE(121, 213.3019, 375.8004, 0)
+</p>
+<p class="codeexample">
+TABLE(124, 150.709, 353.8857, 0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Knots:
+</p>
+<p class="codeexample">
+TABLE(127, 0, 0, 0, 0, 146.8154, 325.6644, 536.0555, 763.4151,
+910.1338, 1109.0886)
+</p>
+<p class="codeexample">
+TABLE(137, 1109.0886, 1109.0886, 1109.0886)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Expand the curve, generate 5*9=45 XYZ points or 135 table
+locations
+</p>
+<p class="codeexample">
+B_SPLINE(2, 3, 3, weight_op, points, knots, expansion, in_data,
+out_data)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Split the profile into X Y Z 
+</p>
+<p class="codeexample">
+FOR p = 0 TO 44
+</p>
+<p class="codeexample">
+    TABLE(8000 + p, TABLE(1000 + (p * 3) + 0))
+</p>
+<p class="codeexample">
+    TABLE(10000 + p, TABLE(1000 + (p * 3) + 1))
+</p>
+<p class="codeexample">
+    TABLE(12000 + p, TABLE(1000 + (p * 3) + 2))
+</p>
+<p class="codeexample">
+NEXT p
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Execute the profile using CAMBOX, synchronised using axis
+4
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+DEFPOS(0, 0, 0, 0)
+</p>
+<p class="codeexample">
+CAMBOX(8000, 8044, 1, 100, 4)
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+CAMBOX(10000, 10044, 1, 100, 4)
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+CAMBOX(12000, 12044, 1, 100, 4)
+</p>
+<p class="codeexample">
+BASE(4)
+</p>
+<p class="codeexample">
+MOVE(100)
+</p>
+</body>
+</html>

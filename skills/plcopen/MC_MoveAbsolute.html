@@ -1,0 +1,1130 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MC_MoveAbsolute</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MC_MoveAbsolute">
+</head>
+
+
+
+<body>
+<h1>MC_MoveAbsolute</h1>
+<p>
+Commands a controlled motion to a specified absolute
+position.
+</p>
+<p>
+<img width="458" height="257" src="MC_MoveAbsolute_files/image001.png">
+</p>
+<h2>Description:</h2>
+<p>
+MC_MoveAbsolute commands a controlled motion to a specified
+absolute position. This action completes with velocity zero if no further
+actions are pending.
+</p>
+<p>
+If the command is aborted, the untraveled distance will be
+abandoned.
+</p>
+<p>
+If input ‘Velocity’ is set to zero, FB will report an error.
+</p>
+<p>
+If input ‘Acceleration’, ‘Deceleration’, and ‘Jerk’ are
+zero, these values will be set to maximum value. 
+</p>
+<p>
+Input parameter ‘Jerk’ can be used to accelerate or
+decelerate smoothly.
+</p>
+<p class="TableText">
+The following figure demonstrates the
+chronological sequence of 3 different ‘BufferMode’ setup on 2 MC_MoveAbsolute
+connection:
+</p>
+<p class="TableText">
+<img width="311" height="370" id="&#22270;&#29255; 414" src="MC_MoveAbsolute_files/image002.jpg">
+</p>
+<p class="TableText">
+<img width="576" height="423" src="MC_MoveAbsolute_files/image003.png">
+</p>
+<ol style="list_style_type:decimal">
+<li class="indent-list-first">
+‘BufferMode’
+= mcAborting: the left part of timing diagram illustrates the case if the 2nd
+move FB starts the execution while the 1st one is still executing. In this case
+the 1
+<sup>st</sup> motion is interrupted and aborted by the ‘Test’ signal
+during the constant velocity of the 1
+<sup>st</sup> FB. The 2
+<sup>nd</sup> FB
+moves directly to position 10000 although the position of 6000 is not yet
+reached.
+</li>
+<li class="indent-list-middle">
+‘BufferMode’
+= mcBuffered: the middle part of the timing diagram illustrates the case if the
+2
+<sup>nd</sup> move FB starts the execution while the 1
+<sup>st</sup> one is
+still executing. In this case, the 1
+<sup>st</sup> motion will not be interrupted.
+The 2
+<sup>nd</sup> motion should be waiting for execution until the 1
+<sup>st</sup>
+motion completed the position 6000 with velocity zero.
+</li>
+<li class="indent-list-last">
+‘BufferMode’
+= BlendingLow: the right part of the timing diagram illustrates the case if the
+2
+<sup>nd</sup> move FB starts the execution while the 1
+<sup>st</sup> one is
+still executing. In this case, the 1
+<sup>st</sup> motion will not be
+interrupted. The 2
+<sup>nd</sup> motion should be waiting for execution until
+the 1st motion completed the position 6000 with special velocity 2000.
+</li>
+</ol>
+<p>
+&nbsp;
+</p>
+<p class="fmbul1" align="left" style="margin-left:0cm;text-indent:0cm">
+<span style='font-family:"Calibri",sans-serif'><img width="439" height="273" src="MC_MoveAbsolute_files/image004.png">
+</span></p>
+<p class="fmbul1" align="left" style="margin-left:0cm;text-indent:0cm">
+<span style='font-family:"Calibri",sans-serif'><img width="454" height="294" src="MC_MoveAbsolute_files/image005.png">
+</span></p>
+<p>
+<img width="450" height="268" src="MC_MoveAbsolute_files/image006.png">
+</p>
+<p class="tip">
+Make sure the input and output parameters are of data type
+indicated in the table below.
+</p>
+<p class="note">
+If there is only one mathematical solution to reach the Commanded
+'Position' (as in linear systems), the value of the input ‘Direction’ is
+ignored.
+</p>
+<p class="note">
+For modulo axis, valid absolute position values are in the range
+of [0 … 360] (360 is excluded), or corresponding range. The application however
+may shift the Commanded 'Position' of MC_MoveAbsolute into the corresponding
+modulo range.
+</p>
+<p class="note">
+The Enumerated type ‘mcShortestWay’ is focused on a trajectory
+which will go through the shortest route. The decision of which direction to go
+is based on the current position where the command is issued.
+</p>
+<p class="note">
+MC_MoveAbsolute can be executed when the axis state is
+‘Synchronized Motion’, ‘Discrete Motion’, ‘Continuous Motion’, or ‘Standstill’.
+Otherwise, it will generate an error.
+</p>
+<h2>Inputs/Outputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Name</b></p>
+
+  
+</td>
+<td width="145" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="286" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>INPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start the motion at the rising edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+AXIS_REF
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+ContinuousUpdate
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+TRUE: when the function block is
+  triggered (rising ‘Execute’),  it  will - as long as it stays TRUE – make the
+  function block use the current values of the input variables and apply it to
+  the ongoing movement.
+</p>
+
+  
+<p class="tablecontent">
+FALSE: with the rising edge of the
+  ‘Execute’ input, a change in the input parameters is ignored during the whole
+  movement.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Commanded ‘Position’ for the motion
+  (negative or positive)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Velocity
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the maximum ‘Velocity’ (not
+  necessarily reached)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the ‘Acceleration’ (always
+  positive) (increasing energy of the motor) 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Deceleration
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the ‘Deceleration’ (always positive)
+  (decreasing energy of the motor)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the ‘Jerk’ (always
+  positive)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Direction
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_DIRECTION
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Enumerated type: 
+</p>
+
+  
+<p class="TableText">
+0: mcPositiveDirection
+</p>
+
+  
+<p class="TableText">
+1: mcShortestWay
+</p>
+
+  
+<p class="TableText">
+2: mcNegativeDirection
+</p>
+
+  
+<p class="tablecontent">
+3: mcCurrentDirection 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+BufferMode
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_BUFFER_MODE
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Enumerated type:
+</p>
+
+  
+<p class="TableText">
+0: mcAborting
+</p>
+
+  
+<p class="TableText">
+1: mcBuffered
+</p>
+
+  
+<p class="TableText">
+2: mcBlendingLow
+</p>
+
+  
+<p class="TableText">
+3: mcBlendingPrevious
+</p>
+
+  
+<p class="TableText">
+4: mcBlendingNext
+</p>
+
+  
+<p class="tablecontent">
+5: mcBlendingHigh 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+OUTPUTS
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Commanded position finally reached
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Busy
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+The FB is not finished and new output
+  value is to be expected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Active
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Indicates that the FB has control on the
+  axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+CommandAborted
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+‘Command’ is aborted by another command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Signals that an error has occurredwithin
+  the FunctionBlock
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORD
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Error identification
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="20" height="23" id="&#22270;&#29255; 58" src="MC_MoveAbsolute_files/image007.png">
+ Example
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+(* Example for
+  MC_MoveAbsolute in ST *)
+<br>
+
+  Inst_MC_MoveAbsolute( Axis := Axis0Ref,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute
+  := bExecute,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ContinuousUpdate
+  := bContinuousUpdate,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Position
+  := 
+LREAL#1000.0
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Velocity
+  := 
+LREAL#100.0
+,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acceleration
+  := 
+LREAL#1000.0
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration
+  := 
+LREAL#1000.0
+,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk
+  := 
+LREAL#100000
+,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Direction
+  := mcPositiveDirection,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Buffermode
+  := mcBuffered );
+<br>
+
+  bDone := Inst_MC_MoveAbsolute.Done;
+<br>
+
+  bBusy := Inst_MC_MoveAbsolute.Busy;
+<br>
+
+  bActive := Inst_MC_MoveAbsolute.Active;
+<br>
+
+  bCommAborted := Inst_MC_MoveAbsolute.CommandAborted;
+<br>
+
+  bError := Inst_MC_MoveAbsolute.Error;
+<br>
+
+  ErrorId := Inst_MC_MoveAbsolute.ErrorID; 
+</p>
+
+  
+<p class="TableText">
+&nbsp;
+</p>
+
+  
+<p class="TableText">
+(* Example for
+  MC_MoveAbsolute in LD *)
+</p>
+
+  
+<p class="TableText">
+<img width="538" height="217" id="&#22270;&#29255; 240" src="MC_MoveAbsolute_files/image008.jpg">
+</p>
+
+  
+<p class="TableText">
+&nbsp;
+</p>
+
+  
+<p class="TableText">
+(* Example for
+  MC_MoveAbsolute in FBD*)
+</p>
+
+  
+<p class="TableText">
+<img width="544" height="243" id="&#22270;&#29255; 237" src="MC_MoveAbsolute_files/image009.jpg">
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example 2:</h3>
+<p>
+A 
+feed
+shaft must move to 1 of 3 positions depending on the selection made by 1 home
+switch and 2 switches controlled by electronic cam. The options are home (1000mm),
+position 1 (2000mm), and position 2 (3000mm) where home switch on, the first
+switch on and the second switch on respectively.&nbsp; Home has priority over
+position 2, and position 2 has priority over position 1.
+</p>
+<p>
+<img width="460" height="242" src="MC_MoveAbsolute_files/image010.png">
+</p>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="20" height="23" id="&#22270;&#29255; 59" src="MC_MoveAbsolute_files/image007.png">
+ Example
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableText">
+VAR
+<br>
+
+  &nbsp;Inst_MC_Power : 
+MC_Power
+ ;
+<br>
+
+  &nbsp;refAxisFeedshaft : 
+lib:AXIS_REF
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=Axis reference for feed shaft*)
+<br>
+
+  &nbsp;bPower : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=Feed shaft axis enable variable which is bound to IN2*)
+<br>
+
+  &nbsp;&nbsp;(*$profile=IO*)
+<br>
+
+  &nbsp;&nbsp;(*$embed=(VERS=1&nbsp;&nbsp;&nbsp;&nbsp;MODE=0&nbsp;&nbsp;&nbsp;&nbsp;POINT=2)*)
+<br>
+
+  &nbsp;bPowerOn : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=Feed shaft axis power status*)
+<br>
+
+  &nbsp;Inst_MC_ReadDigitalInput : 
+MC_ReadDigitalInput
+ ;
+<br>
+
+  &nbsp;Inst_MC_ReadDigitalInput1 : 
+MC_ReadDigitalInput
+ ;
+<br>
+
+  &nbsp;Inst_MC_ReadDigitalInput2 : 
+MC_ReadDigitalInput
+ ;
+<br>
+
+  &nbsp;bReadInputs : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=Enable to read inputs for position selection*)
+<br>
+
+  &nbsp;HomSw : 
+INT
+ := 
+INT#5
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=Home switch channel number*)
+<br>
+
+  &nbsp;PositionSW1 : 
+INT
+ := 
+INT#6
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=Position 1 selection channel number*)
+<br>
+
+  &nbsp;PositionSW2 : 
+INT
+ := 
+INT#7
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=Position 2 selection channel number*)
+<br>
+
+  &nbsp;Axis2Slave : 
+lib:AXIS_REF
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=Slave axis in MC_CamIn which moving in constant
+  velocity*)
+<br>
+
+  &nbsp;PosSelect : 
+DINT
+ := 
+DINT#0
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=Position selection*)
+<br>
+
+  &nbsp;lastPosSelect : 
+DINT
+ ;
+<br>
+
+  &nbsp;Inst_MC_MoveAbsolute : 
+MC_MoveAbsolute
+ ;
+<br>
+
+  &nbsp;mDir : 
+MC_DIRECTION
+ := mcPositiveDirection ;
+<br>
+
+  &nbsp;mBufferMode : 
+MC_BUFFER_MODE
+ := mcAborting ;
+<br>
+
+  &nbsp;bDone : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=Positioning finished status*)
+<br>
+
+  &nbsp;bAbort : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;(*$desc=MC_MoveAbsolute aborted status*)
+<br>
+
+  
+END_VAR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p>
+<img width="546" height="456" id="&#22270;&#29255; 243" src="MC_MoveAbsolute_files/image011.jpg">
+<img width="546" height="229" id="&#22270;&#29255; 246" src="MC_MoveAbsolute_files/image012.jpg">
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example 3:</h3>
+<p>
+Move Axis 0 to position 1000 with speed of 10, accel/decel
+of 100, jerk 1000, positive direction. After that, move 1000 units from that
+point with the same speed, accel/decel, and jerk setup as before.
+</p>
+<p>
+<img width="576" height="508" id="Picture 1" src="MC_MoveAbsolute_files/image013.png" alt="Graphical user interface&#10;&#10;Description automatically generated">
+</p>
+<p>
+<img width="576" height="323" id="Picture 2" src="MC_MoveAbsolute_files/image014.png" alt="Graphical user interface, application, table, Excel&#10;&#10;Description automatically generated">
+</p>
+<p class="note">
+Note: MC_Power enables axis 0 and switch Master Enable (WDOG) ON
+</p>
+<h2>See also: </h2>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

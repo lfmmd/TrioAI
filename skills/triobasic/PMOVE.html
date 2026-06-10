@@ -1,0 +1,93 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PMOVE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PMOVE">
+</head>
+<body>
+<h1>PMOVE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Process Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the state of the process move buffer.
+</p>
+<p>
+When a process encounters a motion command, it loads the motion’s
+requirements into its “process move buffer”. This can hold one motion command for
+any group of axes, and when the load into the process move buffer is complete
+the PMOVE parameter becomes TRUE. When the next servo period occurs, if the
+axis move buffer for all the axes involved in the move has room, this move will
+be loaded into it. When this second transfer is complete the PMOVE parameter becomes
+FALSE.
+</p>
+<p>
+Motion can only be loaded into the process move buffer when
+PMOVE is FALSE, so execution of a motion command when PMOVE is TRUE will cause this
+command to stall until the process move buffer becomes free.
+</p>
+<p class="note">
+Each process has its own PMOVE parameter.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE (-1)
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the process move buffer is occupied
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE (0)
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the process move buffer is empty
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See Also:</h2>
+<p>
+<a href="PROC.html">PROC</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

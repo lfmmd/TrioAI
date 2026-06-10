@@ -1,0 +1,79 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>POS_DELAY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="POS_DELAY">
+</head>
+<body>
+<h1>POS_DELAY</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+POS_DELAY = delay factor
+</p>
+<h2>Description:</h2>
+<p>
+To compensate for the delay in sending data across the
+digital drive network a delay factor can be specified that adds a position
+correction to the HW_PSWITCH trigger position, proportional to the current
+measured speed.
+</p>
+<p class="tip">
+As an Axis Parameter, the syntax can take either BASE or the
+AXIS(n) modifier.
+</p>
+<p class="note">
+Requires special hardware functions in the Motion Coordinator
+FPGA.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+delay factor
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Delay time to be applied to the HW_PSWITCH position
+  value
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+For Panasonic A5N RTEX drives and the Trio MC4N-RTEX running
+with SERVO_PERIOD=1000:
+</p>
+<p class="codeexample">
+POS_DELAY AXIS(2)=2.5
+</p>
+<p class="codeexample">
+POS_DELAY AXIS(3)=2.5
+</p>
+<h2>See also: </h2>
+<p>
+<a href="HW_PSWITCH.html">HW_PSWITCH</a>
+</p>
+</body>
+</html>

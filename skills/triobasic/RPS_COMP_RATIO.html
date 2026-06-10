@@ -1,0 +1,173 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>COMP_RATIO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="COMP_RATIO">
+</head>
+<body>
+<h1>COMP_RATIO</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+COMP_RATIO(driving_axis, ratio_numerator, ratio_denominator)
+</p>
+<p class="fixed">
+COMP_RATIO(-1)
+</p>
+<h2>Description:</h2>
+<p class="MsoNoSpacing">
+This function links the DEMAND_EDGES of base axis to the
+measured movements of the driving axes to compensate mechanical parasitic
+motion. It will add the compensation pulses to demand edges. When this function
+is called, an initial compensation amount will be added to AXIS_DPOS to account
+for previous compensation. No motion will occur during this. 
+</p>
+<p class="note">
+COMP_RATIO(-1) will delete any existing COMP_RATIO applied to the
+base axis.
+</p>
+<p class="note">
+COMP_RATIO requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Delete any existing COMP_RATIO applied to base axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+driving_axis: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This parameter specifies the axis to link to.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ratio_numerator: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This parameter holds the number of edges the base axis
+  is required to move per increment of the driving axis. The ratio numerator
+  value can be either positive or negative. The ratio numerator is always
+  specified as an encoder edge ratio.  
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ratio_denominator: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This parameter holds the number of edges the base axis
+  is required to move per increment of the driving axis. The ratio denominator
+  value can be either positive or negative. The ratio denominator is always
+  specified as an encoder edge ratio.  
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The second form of the KINEMATIC_GROUP command prints the
+configuration of the kinematic group.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set compensation ratio for axis 2 with axis 3 as the driving
+axis.
+</p>
+<p class="codeexample">
+master_axis = 3
+<br>
+
+slave_axis = 2
+<br>
+
+compensation_value = -18
+<br>
+
+num = UNITS AXIS(slave_axis) * compensation_value
+<br>
+
+denom = UNITS AXIS(master_axis) * 360
+<br>
+
+
+<br>
+
+COMP_RATIO(master_axis,num,denom) AXIS(slave_axis)
+</p>
+<h2>See Also:</h2>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,149 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HMI_CONNECTIONS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HMI_CONNECTIONS">
+</head>
+<body>
+<h1>HMI_CONNECTIONS</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+HMI_CONNECTIONS
+</p>
+<h2>Description:</h2>
+<p>
+Return the connection strings for all currently connected
+clients.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+A string that contains the connection strings for all the
+  connected clients. Each connection string is on a separate line. Each line
+  has the following structure:
+</p>
+
+  
+<p>
+&lt;session&gt;;&lt;major&gt;;&lt;minor&gt;;&lt;ip&gt;;&lt;platform&gt;;&lt;osversion&gt;;&lt;window&gt;
+</p>
+
+  
+<p>
+Where:
+</p>
+
+  
+<p style="margin-left:70.9pt;text-indent:-70.9pt">
+&lt;session&gt;        is
+  the corresponding session id (0, 1, ...)
+</p>
+
+  
+<p style="margin-left:70.9pt;text-indent:-70.9pt">
+&lt;major&gt;          is
+  the major version of the HMI Client
+</p>
+
+  
+<p style="margin-left:70.9pt;text-indent:-70.9pt">
+&lt;minor&gt;          is
+  the minor version of the HMI Client
+</p>
+
+  
+<p style="margin-left:70.9pt;text-indent:-70.9pt">
+&lt;ip&gt;                 is
+  the IP address of the HMI Client
+</p>
+
+  
+<p style="margin-left:70.9pt;text-indent:-70.9pt">
+&lt;platform&gt;      is
+  the definition of the hardware the HMI Client is running on.
+</p>
+
+  
+<p style="margin-left:70.9pt;text-indent:-70.9pt">
+                        1
+  =&gt; WindowsCE
+</p>
+
+  
+<p style="margin-left:70.9pt;text-indent:-70.9pt">
+                        2
+  =&gt; Windows Desktop
+</p>
+
+  
+<p style="margin-left:70.9pt;text-indent:-70.9pt">
+&lt;osversion&gt;     is
+  the version reported by the platform. The major version number is stored in
+  the most significant byte and the minor version number is stored in the least
+  significant byte.
+</p>
+
+  
+<p style="margin-left:70.9pt;text-indent:-70.9pt">
+&lt;window&gt;       is
+  the size of the HMI Client screen. The width is stored in the most
+  significant byte and the height is stored in the least significant byte.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_3:"></a>
+Example:</h2>
+<p>
+Report the currently connected HMI Clients.
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT HMI_CONNECTIONS
+<br>
+
+0;1.22.4.502;127.0.0.1;2;60001;32001e0
+<br>
+
+1;1.22.3.500;192.168.2.53;1;50000;32001e0
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="HMI_GET_PAGE.html">HMI_GET_PAGE</a>
+, 
+<a href="HMI_GET_STATUS.html">HMI_GET_STATUS</a>
+, 
+<a href="HMI_SERVER.html">HMI_SERVER</a>
+,
+
+<a href="HMI_SET_PAGE.html">HMI_SET_PAGE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

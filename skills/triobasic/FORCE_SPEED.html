@@ -1,0 +1,116 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FORCE_SPEED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FORCE_SPEED">
+</head>
+<body>
+<h1>FORCE_SPEED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+This parameter sets the main speed for a motion command that
+supports the advanced speed control (commands ending in SP). The 
+<a href="VP_SPEED.html">VP_SPEED</a>
+ will accelerate or decelerate so that the
+profile is run at FORCE_SPEED
+</p>
+<p>
+FORCE_SPEED is loaded into the buffer at the same time as
+the move so you can set different speeds for subsequent moves.
+</p>
+<p class="note">
+<a name="_Hlk212098830">With VP_MODE = 5 and VP_MODE = 6 with
+VP_OPTIONS.1 = 1, the forced demands (those loaded with the move) are bound to
+the axis demands such that the axis demands are primed with the forced demands
+of a move when it becomes active. This binding allows the axis demands to be
+adjusted, and the changes made influence the current move’s profiling.</a>
+</p>
+<p class="note">
+FORCE_SPEED is also used to provide the speed demand to MOVEADD. 
+</p>
+<h2>Value:</h2>
+<p>
+The speed at which the SP motion command will execute, in
+user 
+<a href="UNITS.html">UNITS</a>
+. The default value is 1000 when the UNITS are
+1.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+In this example the controller will ramp the speed up to a
+speed of 30 at the end of the 
+<a href="MOVE.html">MOVE</a>
+. Then for the
+duration of the 
+<a href="MOVESP.html">MOVESP</a>
+(20) the speed will be 30,
+after which it will ramp back to a speed of 15. 
+</p>
+<p class="codeexample">
+SPEED = 15
+</p>
+<p class="codeexample">
+MOVE(100)
+</p>
+<p class="codeexample">
+FORCE_SPEED = 30
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = -1 'Disable ENDMOVE_SPEED
+</p>
+<p class="codeexample">
+MOVESP(20)
+</p>
+<p class="codeexample">
+MOVE(100)
+</p>
+<h3>Example 2:</h3>
+<p>
+Use FORCE_SPEED to slow the profile speed down during a
+corner move
+</p>
+<p class="codeexample">
+FORCE_SPEED = 100
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 50
+</p>
+<p class="codeexample">
+MOVESP(100, 0)
+</p>
+<p class="codeexample">
+FORCE_SPEED = 50
+</p>
+<p class="codeexample">
+MOVECIRCSP(100, 100, 100, 0, 1)
+</p>
+<p class="codeexample">
+FORCE_SPEED = 100
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 100
+</p>
+<p class="codeexample">
+MOVESP(0, 100)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ENDMOVE_SPEED.html">ENDMOVE_SPEED</a>
+, 
+<a href="STARTMOVE_SPEED.html">STARTMOVE_SPEED</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="FORCE_ACCEL.html">FORCE_ACCEL</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="FORCE_DECEL.html">FORCE_DECEL</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="FORCE_DWELL.html">FORCE_DWELL</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="FORCE_JERK.html">FORCE_JERK</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="FORCE_RAMP.html">FORCE_RAMP</a>
+</p>
+</body>
+</html>

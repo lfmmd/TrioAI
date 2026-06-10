@@ -1,0 +1,576 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Tool Collisions</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Tool Collisions</h1>
+<p class="MsoNoSpacing">
+The dimension of the tool collision should be taken as
+the maximum dimension that the tool can be. For example, if the tool is a
+gripper, use the gripper open dimension as described in the picture below.
+</p>
+<p class="MsoNoSpacing">
+<img width="667" height="241" id="Canvas 18" src="RPS_Reference_4_5_Tool_Collision_files/image001.png">
+</p>
+<p>
+Tool collisions are manipulated with the TOOL_COLLISION
+keyword.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+TOOL_COLLISION[(function[, identity])]
+</p>
+
+  
+<p class="codeexample">
+&nbsp;
+</p>
+
+  
+<p class="codeexample">
+TOOL_COLLISION(identity | name)
+</p>
+
+  
+<p class="codeexample">
+&nbsp;
+</p>
+
+  
+<p class="codeexample">
+TOOL_COLLISION(identity, name, x centre, y centre, z
+  centre, half distance x, half distance y, half distance z)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Parameter name can be left as an empty String. However, when not
+blank, the name must be unique. “Duplicate Identifier” run time error is thrown
+when this is not the case.
+</p>
+<p class="note">
+Tool collisions are automatically created during the creation of
+tool offsets.
+</p>
+<h2>Create or Modify a Tool Collision</h2>
+<p>
+Tool collisions are automatically created when tool offsets
+are created. They both share the identity and name parameters. Modifying name
+parameter will be reflected in both data. 
+</p>
+<p>
+Tool collisions must be created first using the corresponding
+syntax command with the desired values before using them.
+</p>
+<p>
+Existing tool collisions (except “TC_default”) can be
+modified at any time, except when the tool collision is active. To do this, use
+the same command as creating the tool collision. This will overwrite the tool
+collision with a new set of values in the same index.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+TOOL_COLLISION(identity, name, x centre, y centre, z
+  centre, half distance x, half distance y, half distance z)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Tool collision index. Value: 1..31. Index 0 is default tool
+  collision “TC_default” which cannot be modified or removed.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>name</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Name of the tool collision. It can be left blank. However,
+  if specified, the name must be unique (no duplicates); otherwise “Duplicate
+  Identifier” run time error will be thrown.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z centre</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Centre position of the tool collision </span></em>position
+  (in mm) relative to wrist coordinate system of the robot.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>half distance x,
+  y, z</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+Half distances measured in every vector of the
+<em><span style='font-family:"Calibri",sans-serif'> tool collision (</span></em>in
+  mm).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Create a tool collision of tool offset on index 1 with name
+“spike” located at (0, 0, 75) from the robot’s flange with no rotation with
+dimension of the tool bounding box of (50, 50, 150).</span></em></p>
+<p class="codeexample">
+TOOL_COLLISION(1, &quot;spike&quot;, 0, 0, 75, 25, 25, 75)
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>Create a tool collision of tool offset on index 2 with name “gripper”
+located at (0, 0, 125) from the robot’s flange with no rotation with dimension
+of the tool bounding box of (50, 50, 150).</span></em></p>
+<p class="codeexample">
+TOOL_COLLISION(2, &quot;gripper&quot;, 0, 0, 125, 25, 25, 75)
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 3</span></em></h4>
+<p class="MsoNoSpacing">
+Modify tool collision index 2 position to (0, 0, 115) and
+rename it to “gripper2”. Note: renaming tool collision will also result in
+modifying the name of the tool offset.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;tool_offset(-1) 'list all tool
+offsets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [gripper] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+3 [tc3] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+4 [gripper2] : 0.00000, 0.00000, 100.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+5 [b] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+&gt;&gt;tool_collision(-1) 'list all tool collisions
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 125.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [gripper] : 0.00000, 0.00000, 125.00000, 25.00000, 25.00000, 75.00000
+<br>
+
+3 [tc3] : 0.00000, 0.00000, 170.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+4 [gripper2] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+5 [b] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+&gt;&gt;TOOL_COLLISION(2, &quot;grippers&quot;, 0, 0, 115, 25, 25, 75)
+<br>
+
+&gt;&gt;tool_collision(-1) 'list all tool collisions
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 125.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [grippers] : 0.00000, 0.00000, 115.00000, 25.00000, 25.00000, 75.00000
+<br>
+
+3 [tc3] : 0.00000, 0.00000, 170.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+4 [gripper2] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+5 [b] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+&gt;&gt;tool_offset(-1) 'list all tool
+offsets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [grippers] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+3 [tc3] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+4 [gripper2] : 0.00000, 0.00000, 100.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+5 [b] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h2>Display Tool Collision Data</h2>
+<p>
+To display a tool collision, use function -1 followed by the
+tool collision’s index. If the index is not specified, all tool collisions will
+be displayed.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+TOOL_COLLISION(-1[, identity])
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Tool collision index. Value: 0..31. </span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+Show all existing tool collisions.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;tool_collision(-1) 'list all tool collisions
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 125.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [grippers] : 0.00000, 0.00000, 115.00000, 25.00000, 25.00000, 75.00000
+<br>
+
+3 [tc3] : 0.00000, 0.00000, 170.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+4 [gripper2] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+5 [b] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p>
+Display tool collision index 1.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;tool_collision(-1, 1)
+<br>
+
+1 [spike] : 0.00000, 0.00000, 125.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h2>Remove a Tool Collision</h2>
+<p class="MsoNoSpacing">
+To remove a tool collision, use function -2 followed by
+the tool collision’s index. If the index is not specified, all tool collisions
+will be deleted.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+TOOL_COLLISION(-2[, identity])
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Tool collision index. Value: 1..31. Index 0 is default tool
+  collision “TC_default” which cannot be modified or removed.</span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+An active tool collision cannot be modified or deleted. Trying to
+do so will throw a runtime error “TOOL cannot be modified or deleted while
+selected”.
+</p>
+<p class="note">
+Removing a tool collision will remove the relevant tool offset as
+well.
+</p>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+Remove tool collision “spike”. Note: Removing a tool
+collision will remove the relevant tool offset as well.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;tool_offset(-1) 'list all tool offsets
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [gripper] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+</p>
+<p class="codeexample">
+&gt;&gt;tool_collision(-1) 'list all tool collisions
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 75.00000, 25.00000, 25.00000, 75.00000
+<br>
+
+2 [gripper] : 0.00000, 0.00000, 125.00000, 25.00000, 25.00000, 75.00000
+<br>
+
+&gt;&gt;tool_collision(-2, 1) 'remove tool collision 1
+<br>
+
+&gt;&gt;tool_collision(-1) list all tool
+collisions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [gripper] : 0.00000, 0.00000, 125.00000, 25.00000, 25.00000, 75.00000
+</p>
+<p class="codeexample">
+&gt;&gt;tool_offset(-1) 'list all tool
+offsets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [gripper] : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p>
+Remove all tool collisions. Note: Removing all tool
+collisions will remove all tool offsets as well.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;tool_collision(-2) 'remove all tool
+collisions&nbsp;&nbsp;
+<br>
+
+&gt;&gt;tool_collision(-1) 'list all tool collisions&nbsp;&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+</p>
+<p class="codeexample">
+&gt;&gt;tool_offset(-1) 'list all tool
+offsets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h2>Select a Tool Collision</h2>
+<p>
+Selection of tool collisions is dependent on the selection
+of tool offsets. A tool collision is automatically selected when its
+corresponding tool offset is active. No arbitrary selection on tool collision
+is possible.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

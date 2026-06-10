@@ -1,0 +1,211 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STATIC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STATIC">
+</head>
+<body>
+<h1>STATIC.. AS..</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Variable
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+STATIC name AS BOOLEAN
+</p>
+<p class="fixed">
+STATIC name AS FLOAT
+</p>
+<p class="fixed">
+STATIC name AS INTEGER
+</p>
+<p class="fixed">
+STATIC name AS STRING
+</p>
+<p class="fixed">
+STATIC name AS BOOLEAN[(size1 [,size2 [,size3]])]
+</p>
+<p class="fixed">
+STATIC name AS FLOAT[(size1 [,size2 [,size3]])]
+</p>
+<p class="fixed">
+STATIC name AS INTEGER[(size1 [,size2 [,size3]])]
+</p>
+<p class="fixed">
+STATIC name AS STRING([size1 [,size2 ,]]length)
+</p>
+<h2>Description</h2>
+<p>
+Keyword STATIC (which is like Visual Basic STATIC keyword)
+has been added to allow the option of retaining the value of a function
+variable when it is called repeatedly, i.e., the variable will only be
+initialised the first time that the function is called.
+</p>
+<p>
+The following code snippet illustrates how different classes
+of variable are initialised:
+</p>
+<p class="codeexample">
+FUNCTION myfunc()
+</p>
+<p class="codeexample">
+  DIM f1 AS FLOAT 'Float variable will re-initialise to
+0.0 each call
+</p>
+<p class="codeexample">
+  STATIC f2 AS FLOAT 'Float variable will retain its value
+</p>
+<p class="codeexample">
+  DIM array1 AS INTEGER(5,10) 'Array will re-initialise to
+0 each call
+</p>
+<p class="codeexample">
+  STATIC array2 AS INTEGER(100) 'Array will retain its
+value
+</p>
+<p class="codeexample">
+...
+</p>
+<p class="codeexample">
+ENDFUNC
+</p>
+<p class="note">
+Use in Function Library only
+</p>
+<h3>Variable types:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOLEAN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1-bit binary value (
+<a href="TRUE.html">TRUE</a>
+ or 
+<a href="FALSE.html">FALSE</a>
+)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FLOAT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64-bit floating point number (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+INTEGER
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64-bit signed integer value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+STRING
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ASCII text
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Type_=_BOOLEAN:"></a>
+Examples:</h2>
+<p>
+Use a local variable as a flag to track the ok status of a
+machine. 
+</p>
+<p class="codeexample">
+FUNCTION mysum(ival AS INTEGER) AS INTEGER
+</p>
+<p class="codeexample">
+    STATIC total AS INTEGER = 1000 'total will start at
+1000 and then add ival each call
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    total = total + ival
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    RETURN total
+</p>
+<p class="codeexample">
+ENDFUNC
+</p>
+<h2><a name="_Type_=_FLOAT:"></a>
+See Also:</h2>
+<p>
+<a href="COMPILE_MODE.html">COMPILE_MODE</a>
+, 
+<a href="DIM.html">DIM</a>
+</p>
+</body>
+</html>

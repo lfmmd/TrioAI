@@ -1,0 +1,71 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FIFO_WRITE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FIFO_WRITE">
+</head>
+<body>
+<h1>FIFO_WRITE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Access Type
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+OPEN # channel AS &quot;[location:]name&quot; FOR FIFO_WRITE(length)
+</p>
+<h2>Description:</h2>
+<p>
+See 
+<a href="OPEN.html">OPEN</a>
+ for details.
+</p>
+<h2>Example&nbsp;:</h2>
+<p>
+A G-Code program has been downloaded to a file
+on an SD card.  It must be transferred to a FIFO so that it can be interpreted
+into motion.  The FIFO file will act as a buffer to smooth out variations in
+processing speed.
+</p>
+<p>
+&nbsp;
+</p>
+<p class="codeexample">
+OPEN#41 AS &quot;SD:gc_program1&quot; for
+INPUT 
+</p>
+<p class="codeexample">
+OPEN#42 AS &quot;gcodefifo&quot; for
+FIFO_WRITE(512) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WHILE KEY#41 
+</p>
+<p class="codeexample">
+  GET#41, char 
+</p>
+<p class="codeexample">
+  PRINT#42, char; 
+</p>
+<p class="codeexample">
+WEND 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+CLOSE#42 
+</p>
+<p class="codeexample">
+CLOSE#41 
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

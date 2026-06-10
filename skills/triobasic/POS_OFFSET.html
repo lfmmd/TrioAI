@@ -1,0 +1,49 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>POS_OFFSET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="POS_OFFSET">
+</head>
+<body>
+<h1>POS_OFFSET</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+For Piezo Motor Control. This sets an offset to the DAC
+output when the position loop is demanding a positive voltage output. 
+POS_OFFSET is applied after 
+<a href="DAC_SCALE.html">DAC_SCALE</a>
+ so is always
+a value appropriate to the D to A converter resolution.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+An offset of 0.1 volts is required on an axis with a 16 bit
+D to A converter.  With a 16 bit DAC, +10V is commanded with the value 32767 so
+for 0.1V need 32767 / 100.
+</p>
+<p class="codeexample">
+POS_OFFSET = 328
+</p>
+<h3>Example 2:</h3>
+<p>
+POS_OFFSET and 
+<a href="NEG_OFFSET.html">NEG_OFFSET</a>
+ are
+normally used together.  It is suggested that the offset is 65% to 70% of the
+value required to make the stage move in an open loop situation.
+</p>
+<p class="codeexample">
+POS_OFFSET = 300
+</p>
+<p class="codeexample">
+NEG_OFFSET = -270
+</p>
+</body>
+</html>

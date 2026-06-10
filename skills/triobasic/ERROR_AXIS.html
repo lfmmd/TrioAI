@@ -1,0 +1,63 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ERROR_AXIS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ERROR_AXIS">
+</head>
+<body>
+<h1>ERROR_AXIS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the number of the axis that caused the 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+. 
+</p>
+<p class="note">
+ERROR_AXIS should only be read when 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+<span class="MsoHyperlink"> </span>&lt;&gt; 0
+</p>
+<h2>Value:</h2>
+<p>
+Number of the axis that caused the 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+.
+</p>
+<p class="note">
+This default value is 0 and is reset to 0 after 
+<a href="DATUM.html">DATUM</a>
+(0)
+</p>
+<h2>Example:</h2>
+<p>
+If there is a motion error print error information.
+</p>
+<p class="codeexample">
+IF MOTION_ERROR THEN
+</p>
+<p class="codeexample">
+  PRINT#5, &quot;Axis to cause error = &quot;; ERROR_AXIS
+</p>
+<p class="codeexample">
+  PRINT#5, &quot;AXISSTATUS of ERROR_AXIS
+= &quot;; AXISSTATUS AXIS(ERROR_AXIS)
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See Also: </h2>
+<p>
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+, 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+, 
+<a href="FE_LATCH.html">FE_LATCH</a>
+</p>
+</body>
+</html>

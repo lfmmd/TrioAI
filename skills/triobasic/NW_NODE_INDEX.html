@@ -1,0 +1,152 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NW_NODE_INDEX</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NW_NODE_INDEX">
+</head>
+<body>
+<h1>NW_NODE_INDEX</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+NW_NODE_INDEX(slot, alias_address) = value
+</p>
+<h2>Description:</h2>
+<p>
+This 2D array can be used to set the pointer to a block of
+VRs used by the EtherCAT node. It can be used to define a user specific Input
+Output map from different data sources including Boolean and Integer data
+within the EtherCAT node.
+</p>
+<p>
+There is one VR mapped per PDO object, starting with the values
+from slave to master, ( eg slave actual values, DIN, status word, actual
+position etc.) then the values from master to slave ( eg slave target values,
+DOUT, control word, target position etc.)
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot number of the EtherCAT port.  (0 on MC4N, MC6N
+  and Flex-6 Nano)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+alias_address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The configured alias address of the slave device.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to 65535
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT cyclic data is mapped to a block of VRs
+  starting at this VR index. (MC664, MC6N, Flex-6 Nano)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to 4095
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT cyclic data is mapped to a block of VRs
+  starting at this VR index. (MC4N)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+A generic EtherCAT device is connected to
+the master and exchanges all its data via Vrs.  The base address of the VRs is
+50 for outputs and 100 for inputs.  The user sets the actual addresses to be
+1050 and 1100.  The device has configured alias address 4000.
+</p>
+<p class="codeexample">
+NW_NODE_INDEX(0, 4000) = 1000
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="NODE_INDEX.html">NODE_INDEX</a>
+</p>
+</body>
+</html>

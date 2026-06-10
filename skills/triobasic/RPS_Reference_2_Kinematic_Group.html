@@ -1,0 +1,381 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Kinematic Groups</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Kinematic Groups</h1>
+<p class="MsoNoSpacing">
+KINEMATIC_GROUP command activates RPS and links the
+required data to the specified robot. This command must be executed to have RPS
+set.
+</p>
+<div>
+<table>
+<tr>
+<td valign="top" align="left">
+
+  
+<div>
+<p class="Safetyinfo">
+<span style="font-family:Wingdings">M<span style='font:7.0pt "Times New Roman"'> </span></span>Although 8 kinematics can
+  be initialised on a single controller, it may not be possible to process all
+  8 within a given SERVO_PERIOD. The total number that can be run depends on
+  many factors such as, type of kinematic is selected, drive connection method,
+  if OBJECT_FRAME, ROBOT_FRAME, TOOL_OFFSET or COLLISION_OBJECT is enabled and
+  additional factory communications. 
+</p>
+</div>
+
+  
+</td>
+</tr>
+</table>
+</div>
+<p>
+&nbsp;
+</p>
+<p>
+The number of axes in the group must match the number of
+axes used by the KINEMATICS. The axes must also be ascending order though they
+do not have to be contiguous. 
+</p>
+<h2>Syntax</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="718" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+KINEMATIC_GROUP(index[, function])
+</p>
+
+  
+<p class="codeexample">
+&nbsp;
+</p>
+
+  
+<p class="codeexample">
+KINEMATIC_GROUP(index, table offset, kinematic number,
+  axis0 - axisn)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="718" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+Index: INTEGER
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Group
+  index</span></em>. Up to 8 robots can be set in the same controller. Valid
+  index: 0..7
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+(optional) function:
+  INTEGER
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>-</span></em><em><span style='font-family:"Calibri",sans-serif'>1 = disable the kinematic group
+  specified by index. All the axes in the group will be released.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+table offset: INTEGER
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Location in TABLE where the robot parameters are stored.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+kinematic number:
+  INTEGER
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>R</span></em><em><span style='font-family:"Calibri",sans-serif'>obot type as defined by FRAME. See
+  TrioBasic command FRAME for more information.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>axis0 – axisn: INTEGER</span></em></p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Axes belonging to the robot in ascending order
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="718" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<i>Returned Value:</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="718" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+Group index [table_offset] [kinematic number]: axes
+  TO={index [name] : TOOL_OFFSET parameters}  RF={index [name] : ROBOT_FRAME
+  parameters}  OB={index [name] : OBJECT_FRAME parameters}  CO{active collision
+  objects}
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>TO</span></em></p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Active Tool Offset (specified by index, name, and
+  parameters that follow)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>RF</span></em></p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Active Robot Frame (specified by index, name, and
+  parameters that follow)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>OB</span></em></p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Active Object Frame (specified by index, name, and
+  parameters that follow)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>CO</span></em></p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Total active collision objects in binary index wise. For
+  example, if there are 4 collision objects (index 0, 1, 2, 3) and only
+  collision object index 0 and 3 is active, CO will be of value 2
+<sup>1 </sup>+
+  2
+<sup>3</sup> = 2 + 8, or {10}
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The number of axes in KINEMATIC_GROUP must match the number of
+axes used by the kinematic number selected. The axes must be in ascending order
+but not necessarily contiguous. 
+</p>
+<p class="note">
+When disabling a kinematic group, all axes of the group must be
+IDLE. If not, runtime error “Operation cannot be performed until IDLE” will be
+thrown.
+</p>
+<h2>Examples</h2>
+<h3><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Check if RPS is set by displaying kinematic group index 0.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;kinematic_group(0)
+</p>
+<p class="codeexample">
+0 [0] [19] : 10, 11, 12, 13, 14, 15
+TO={0[TO_default]:0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000}
+RF={0[RF_default]:0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000}
+OF={0[OF_default]:0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000} CO{3}
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Disable kinematic_group index 1.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt; kinematic_group(0, -1)
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 3</span></em></h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Remove collision object index 1.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;collision_object(-2, 1)
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 4</span></em></h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Disable collision object index 0.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;collision_object(0, OFF)
+</p>
+<span style='font-family:"Courier New"'><br clear="all">
+
+</span><p>
+&nbsp;
+</p>
+
+
+
+</body>
+</html>

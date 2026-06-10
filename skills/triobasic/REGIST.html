@@ -1,0 +1,3268 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REGIST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REGIST">
+</head>
+<body>
+<h1>REGIST</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+REGIST(mode[, parameters])
+</p>
+<h2>Description:</h2>
+<p>
+The REGIST command initiates a capture of an axis position
+when it sees a registration input or the Z mark on the encoder. Once a
+registration event is captured 
+<a href="MARK.html">MARK</a>
+ is set and the
+position and speed at the event can be read back.
+</p>
+<p class="tip">
+See the Hardware Chapter of the manual to understand which
+registration mode your hardware supports. 
+</p>
+<p>
+Filtering can be applied to the input as well as defining a
+window of where to capture. 
+</p>
+<p>
+Hardware registration captures the encoder count against the
+registration input in hardware.
+</p>
+<p>
+Time based registration captures the time of the
+registration event and interpolates the position values being sent back from
+the drive against it.
+</p>
+<p class="warning">
+Although all modes are available for backwards compatibility
+it is recommended to use modes 20-22 for new applications. Other modes have
+been provided for compatibility with older products.
+</p>
+<p>
+The REGIST command must be re-issued for each position
+capture.
+</p>
+<p class="note">
+The captured registration position may be outside 
+<a href="REP_DIST.html">REP_DIST</a>
+. You should always check the captured
+registration position to ensure it is within your application’s usable range.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="12" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_0:">0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Cancel all Registration operations on the axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_1..4:">1..4</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Single channel hardware registration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Reserved
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_6..13:">6..13</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Dual channel hardware registration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_14..17:">14..17</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Single channel hardware registration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_20:">20</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Single channel hardware registration including Touch Probe
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_21:">21</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Single channel time interpolated registration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=22;">22</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+8 channel hardware registration (Flexaxis module only)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_23;">23</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Sets 2.4&nbsp;µs minimum pulse width
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_24:">24</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Sets 0.15&nbsp;µs minimum pulse width (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+32..39
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Rising edge on time based registration (use mode 21)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+64..71
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Falling edge on time based registration (use mode 21)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Mode_=_1..4:"></a>
+<a name="_Mode_=_0:"></a>
+Mode = 0:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+REGIST(0)
+</p>
+<h3>Description:</h3>
+<p>
+Cancels the previously set REGIST commands for the axis.
+REGIST(0) cancels all channels. If separate control for channels A and B are
+required, then use 
+<a href="REGIST_CONTROL.html">REGIST_CONTROL</a>
+.
+</p>
+<h2>Mode = 1..4:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+REGIST(mode)
+</p>
+<p>
+Where mode = 1..4
+</p>
+<h3>Description:</h3>
+<p class="warning">
+It is recommended that you use mode 20 for all new
+applications
+</p>
+<p>
+Modes 1 to 4 work with the first channel or Z mark of hardware-based
+registration.
+</p>
+<p class="note">
+You can add 256 or 768 to enable windowing. 
+</p>
+<p>
+This mode works with 
+<a href="MARK.html">MARK</a>
+, 
+<a href="REG_POS.html">REG_POS</a>
+ and 
+<a href="REGIST_SPEED.html">REGIST_SPEED</a>
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z Mark rising into 
+<a href="REG_POS.html">REG_POS</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z Mark falling into 
+<a href="REG_POS.html">REG_POS</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RA Input rising into 
+<a href="REG_POS.html">REG_POS</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RA Input falling into 
+<a href="REG_POS.html">REG_POS</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode + 256
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be inside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode + 768
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be outside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+A disc used in a laser printing process requires
+registration to the Z marker before printing can start. This routine locates to
+the Z marker, then sets that as the zero position.
+</p>
+<p>
+<img border="0" width="478" height="359" id="Picture 1" src="REGIST_files/image001.png">
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+REGIST(1
+)          
+ 'Initialise
+to Z mark
+</p>
+<p class="codeexample">
+FORWARD             'start movement
+</p>
+<p class="codeexample">
+WAIT UNTIL MARK
+</p>
+<p class="codeexample">
+CANCEL              'stops movement after Z mark
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+MOVEABS (REG_POS)   'relocate to Z mark
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+DEFPOS(0)           'set zero position
+</p>
+<h2><a name="_Mode_=_6..13:"></a>
+Mode = 6..13:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+REGIST(6..13)
+</p>
+<p>
+Where mode = 6..13
+</p>
+<h3>Description:</h3>
+<p class="warning">
+It is recommended that you use mode 20 for all new
+applications
+</p>
+<p>
+Modes 6 to 13 work with hardware-based registration but
+enable you to arm 2 registration registers at once. 
+</p>
+<p class="note">
+You can add 256 or 768 to enable windowing. 
+</p>
+<p>
+The first channel will use 
+<a href="MARK.html">MARK</a>
+, 
+<a href="REG_POS.html">REG_POS</a>
+ and 
+<a href="REGIST_SPEED.html">REGIST_SPEED</a>
+
+and the second will use 
+<a href="MARKB.html">MARKB</a>
+, 
+<a href="REG_POSB.html">REG_POSB</a>
+
+and 
+<a href="REGIST_SPEEDB.html">REGIST_SPEEDB</a>
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="10" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+RA Input rising into REG_POS &amp; Z Mark rising into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+RA Input rising into REG_POS &amp; Z Mark falling into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+ 8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+RA Input falling into REG_POS &amp; Z Mark rising into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+RA Input falling into REG_POS &amp; Z Mark falling into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+RA Input rising into REG_POS &amp; RB Input rising into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+RA Input rising into REG_POS &amp; RB Input falling into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+12
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+RA Input falling into REG_POS &amp; RB Input rising into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+13
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+RA Input falling into REG_POS &amp; RB Input falling into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+mode + 256
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Position must be inside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+mode + 768
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Position must be outside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h4>Example 1:</h4>
+<p>
+A machine adds glue to the top of a box by switching output
+8. It must detect the rising edge (appearance) of and the falling edge (end) of
+a box. Additionally, it is required that the 
+<a href="MPOS.html">MPOS</a>
+ be
+reset to zero on the detection of the Z position.
+</p>
+<p>
+<img border="0" width="514" height="385" id="Picture 2" src="REGIST_files/image002.jpg">
+</p>
+<p class="codeexample">
+reg = 6 'Select registration mode 6 (rising edge R, rising
+edge Z)
+</p>
+<p class="codeexample">
+REGIST(reg)
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<p class="codeexample">
+WHILE IN(2) = OFF
+</p>
+<p class="codeexample">
+  IF MARKB THEN  'On a Z mark MPOS is reset to zero
+</p>
+<p class="codeexample">
+    
+OFFPOS = -REG_POSB
+</p>
+<p class="codeexample">
+    REGIST(reg)
+</p>
+<p class="codeexample">
+  
+ELSEIF MARK THEN  'On R input
+output 8 is toggled
+</p>
+<p class="codeexample">
+    IF reg = 6 THEN
+</p>
+<p class="codeexample">
+      'Select registration mode 8 (falling edge R, rising
+edge Z)
+</p>
+<p class="codeexample">
+      
+reg = 8
+</p>
+<p class="codeexample">
+      OP(8, ON)
+</p>
+<p class="codeexample">
+    ELSE
+</p>
+<p class="codeexample">
+      reg = 6
+</p>
+<p class="codeexample">
+      
+OP(8, OFF)
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+    REGIST(reg)
+</p>
+<p class="codeexample">
+  
+ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+CANCEL
+</p>
+<h2><a name="_Mode_=_14..17:"></a>
+Mode = 14..17:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+REGIST(mode)
+</p>
+<p>
+Where mode = 14..17
+</p>
+<h3>Description:</h3>
+<p class="warning">
+It is recommended that you use mode 20 for all new
+applications
+</p>
+<p>
+Modes 14 to 17 work with the second channel or Z mark of hardware-based
+registration.
+</p>
+<p class="note">
+You can add 256 or 768 to enable windowing. 
+</p>
+<p>
+This mode works with 
+<a href="MARKB.html">MARKB</a>
+, 
+<a href="REG_POSB.html">REG_POSB</a>
+ and 
+<a href="REGIST_SPEEDB.html">REGIST_SPEEDB</a>
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+14
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ZB Mark rising into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ZB Mark falling into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RB Input rising into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RB Input falling into 
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode + 256
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be inside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode + 768
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be outside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h4>Example 2:</h4>
+<p>
+It is required to detect if a component is placed on a
+flighted belt, so windowing is used to avoid sensing the flights. The flights
+are at a pitch of 120&nbsp;mm and the component will be found between 30 and 90&nbsp;mm.
+If a component is found, then an actuator is fired to push it off the belt. 
+</p>
+<p>
+<img border="0" width="482" height="362" id="Picture 3" src="REGIST_files/image003.png">
+</p>
+<p class="codeexample">
+REP_DIST = 120         'sets repeat distance to pitch of
+belt flights
+</p>
+<p class="codeexample">
+REP_OPTION = ON 
+</p>
+<p class="codeexample">
+OPEN_WIN = 30          'sets window open position
+</p>
+<p class="codeexample">
+CLOSE_WIN = 90         'sets window close position
+</p>
+<p class="codeexample">
+REGIST(17 + 256)       'RB input registration with
+windowing
+</p>
+<p class="codeexample">
+FORWARD                'start the belt
+</p>
+<p class="codeexample">
+box_seen = 0
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+  WAIT UNTIL MPOS &lt; 60 'wait for centre point between
+flights
+</p>
+<p class="codeexample">
+  WAIT UNTIL MPOS &gt; 60 'so that actuator is fired
+between flights
+</p>
+<p class="codeexample">
+  IF box_seen = 1 THEN 'was a box seen on the previous
+cycle?
+</p>
+<p class="codeexample">
+    OP(8, ON)          'fire actuator
+</p>
+<p class="codeexample">
+    WA(100)
+</p>
+<p class="codeexample">
+    OP(8, OFF)         'retract actuator
+</p>
+<p class="codeexample">
+    box_seen = 0
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+  IF MARKB THEN box_seen = 1 'set “box seen” flag
+</p>
+<p class="codeexample">
+  REGIST(17 + 256)
+</p>
+<p class="codeexample">
+UNTIL IN(2) = OFF
+</p>
+<p class="codeexample">
+CANCEL                 'stop the belt
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<h2><a name="_Mode_=_20:"></a>
+Mode = 20:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+REGIST(20, channel, source, edge, window[, quantity, table_start])
+</p>
+<h3>Description:</h3>
+<p>
+Mode 20 is used to set the hardware registration inputs A or
+B. Alternatively A or B can be replaced with the Z mark. A and B are completely
+independent. 
+</p>
+<p class="note">
+The FlexAxis and all MC4/5/6 and Euro404/408 Motion Coordinators
+(except the MC664) use the 
+<a href="REG_INPUTS.html">REG_INPUTS</a>
+ command to
+select the actual input used for channel A and channel B.
+</p>
+<p class="note">
+This mode can be used instead of REGIST modes 1..4 and 14..17
+</p>
+<p>
+If the optional parameters 
+<span style='font-family:"Courier New"'>quantity</span>
+and 
+<span style='font-family:"Courier New"'>table_start</span> are used, then a
+set of registration positions can be stored in the table. 
+<a href="REG_POS.html">REG_POS
+</a>
+ and 
+<a href="REG_POSB.html">REG_POSB</a>
+ will still store the latest
+registration position. When capturing positions to the 
+<a href="TABLE.html">TABLE</a>
+,
+the 
+<a href="MARK.html">MARK</a>
+ parameter holds the count value to indicate
+how many registration events have been captured.
+</p>
+<h3>Parameters:</h3>
+<h4>Analog axis</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects channel A.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects channel B.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 .. 511
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Digital input selection when source set to 4.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16…32
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 16 to 32 to select digital input when Digital
+  Input Window enabled (window option 3 and 4)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the first 24&nbsp;V input.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the Z mark.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the second 24&nbsp;V input. (if available)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects any digital input as source, used on any axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+edge:   
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rising edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Falling edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="7" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+window:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No windowing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be inside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+<span class="MsoHyperlink">.</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be outside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+<span class="MsoHyperlink">.</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable window with 24V/Virtual input (Active High)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable window with 24V/Virtual input (Active Low)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be inside 
+<a href="OPEN_WINB.html">OPEN_WINB</a>
+..
+<a href="CLOSE_WINB.html">CLOSE_WINB</a>
+<span class="MsoHyperlink">.</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be outside 
+<a href="OPEN_WINB.html">OPEN_WINB</a>
+..
+<a href="CLOSE_WINB.html">CLOSE_WINB</a>
+<span class="MsoHyperlink">.</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+quantity
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 - 
+<a href="TSIZE.html">TSIZE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quantity of registration captures to store in the 
+<a href="TABLE.html">TABLE</a>
+<span class="MsoHyperlink">.</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_start
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 -
+<a href="TSIZE.html">TSIZE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start position in the 
+<a href="TABLE.html">TABLE</a>
+
+  for the registration positions.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If channel = 0 then 
+<a href="MARK.html">MARK</a>
+, 
+<a href="REG_POS.html">REG_POS</a>
+ and 
+<a href="REGIST_SPEED.html">REGIST_SPEED</a>
+
+are used
+<br>
+
+If channel = 1 then 
+<a href="MARKB.html">MARKB</a>
+, 
+<a href="REG_POSB.html">REG_POSB</a>
+
+and 
+<a href="REGIST_SPEEDB.html">REGIST_SPEEDB</a>
+ are used
+</p>
+<p class="note">
+If source = 4 then 
+<a href="MARKB.html">MARK</a>
+, 
+<a href="REG_POSB.html">REG_POS</a>
+ and 
+<a href="REGIST_SPEEDB.html">REGIST_SPEED</a>
+
+are used, but only values at the nearest servo period tick are captured. (not a
+true hardware registration)
+</p>
+<h4>EtherCAT Touch Probe axis</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects channel A; Touch Probe 1 or Z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects channel B; Touch Probe 2 or Z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the Touch Probe input; 1 if channel A, 2 if
+  channel B.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the Z mark.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+edge:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rising edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Falling edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="7" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+window:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No windowing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be inside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+<span class="MsoHyperlink">.</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be outside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+<span class="MsoHyperlink">.</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable window with 24V/Virtual input (Active High)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable window with 24V/Virtual input (Active Low)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be inside 
+<a href="OPEN_WINB.html">OPEN_WINB</a>
+..
+<a href="CLOSE_WINB.html">CLOSE_WINB</a>
+<span class="MsoHyperlink">.</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position must be outside 
+<a href="OPEN_WINB.html">OPEN_WINB</a>
+..
+<a href="CLOSE_WINB.html">CLOSE_WINB</a>
+<span class="MsoHyperlink">.</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+quantity
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 - 
+<a href="TSIZE.html">TSIZE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quantity of registration captures to store in the 
+<a href="TABLE.html">TABLE</a>
+<span class="MsoHyperlink">.</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_start
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 -
+<a href="TSIZE.html">TSIZE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start position in the 
+<a href="TABLE.html">TABLE</a>
+
+  for the registration positions.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The Z can be selected from either channel A or Channel B.
+The ability to detect the Z will require the motor to have an incremental
+encoder and a Z channel on the motor feedback device. Absolute axes do not
+generally have a Z capability.
+</p>
+<p class="warning">
+The calculation of Touch Probe position requires the motor
+direction to be positive.  It is not possible to reverse the direction using
+ENCODER_RATIO.  Use the direction reversal mode in the Drive.
+</p>
+<p class="note">
+Using OPEN_WIN and CLOSE_WIN with Touch Probe needs several
+EtherCAT cycles per position check. High speed axes should use REGIST(21) if
+available.
+</p>
+<h4>Example 3:</h4>
+<p>
+Configure the windowing which will be used on channel B and
+then arm both channel B and the Z mark.  Look for falling edge on channel B.
+</p>
+<p class="codeexample">
+OPEN_WIN = 200
+</p>
+<p class="codeexample">
+CLOSE_WIN = 400
+</p>
+<p class="codeexample">
+REG_INPUTS = $10 'Input 0 for first reg input, input 1 for
+second
+</p>
+<p class="codeexample">
+REGIST(20, 0, 1, 0, 0) 'Arm channel A on Z mark, no window
+</p>
+<p class="codeexample">
+REGIST(20, 1, 0, 1, 2) 'Arm channel B on 1
+<sup>st</sup>
+input, use exclusive window
+</p>
+<h4>Example 4:</h4>
+<p>
+Configure the EtherCAT axis to arm the Touch Probe 1 input
+on channel A rising edge and Touch Probe 2 on channel B falling edge. Requires
+Touch Probe CoE objects 0x60BA and 0x60BD to be in the PDO.
+</p>
+<p class="codeexample">
+REGIST(20, 0, 0, 0) 'Arm channel A on rising edge
+</p>
+<p class="codeexample">
+REGIST(20, 1, 0, 1) 'Arm channel B on falling edge
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+  IF MARK THEN
+</p>
+<p class="codeexample">
+    VR(201) = REG_POS
+<br>
+
+  ENDIF
+</p>
+<p class="codeexample">
+  IF MARKB THEN
+</p>
+<p class="codeexample">
+    VR(202) = REG_POSB
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+  WA(10) 'Check every 10 ms
+</p>
+<p class="codeexample">
+UNTIL MARK AND MARKB
+</p>
+<h2><a name="_Mode_=_21:"></a>
+Mode = 21:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+REGIST(21, channel, source, edge, window[, quantity,
+table_start])
+</p>
+<h3>Description:</h3>
+<p>
+REGIST mode 21 is used to arm the time interpolated
+registration.
+</p>
+<p class="note">
+This can be used instead of REGIST modes 32..39 and 64..71.
+</p>
+<p>
+This mode operates with the hardware registration capture
+circuit built into Motion Coordinators that have networked drive ports such as
+RTEX and EtherCAT. Parameters 
+<a href="R_MARK.html">R_MARK</a>
+(channel) , 
+<a href="R_REGPOS.html">R_REGPOS</a>
+(channel) and 
+<a href="R_REGISTSPEED.html">R_REGISTSPEED</a>
+(channel)
+are used with mode 21. The Channel number also indicates the 24V Input which is
+to be used for the registration sensor, unless this is altered by the setting
+in Source.
+</p>
+<p>
+If the optional parameters quantity and table_start are used,
+then a set of registration positions can be stored in the table. 
+<a href="R_REGPOS.html">R_ REGPOS</a>
+ will still store the latest registration
+position.
+</p>
+<p class="note">
+Virtual axes may use REGIST 21 if the axis is associated with the
+
+<a href="SLOT_NUMBER.html">SLOT_NUMBER</a>
+ of the network module or built-in
+hardware. See Example 3 in 
+<a href="SLOT_NUMBER.html">SLOT_NUMBER</a>
+.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0…7
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The registration channel to be used (range 0..7) which
+  by default is also the Input number on the Motion Coordinator
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16…32
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 16 to 32 to select digital input for gating the
+  signal when Digital Input Window is enabled (window option 3 and 4)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source:
+</p>
+
+  
+</td>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the default input set by Channel
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+256 + input_number
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+When bit 8 is set, assigns a different physical input to
+  the logical channel  (Over-rides the default input)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+edge:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+rising edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+falling edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+window:
+</p>
+
+  
+</td>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+no windowing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position must be inside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position must be outside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+enable window with 24V/Virtual input (Active High)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+enable window with 24V/Virtual input (Active Low)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a name="_Mode_=22;"></a>
+quantity
+</p>
+
+  
+</td>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 - 
+<a href="TSIZE.html">TSIZE</a>
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quantity of registration captures to store in the 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_start
+</p>
+
+  
+</td>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 -
+<a href="TSIZE.html">TSIZE</a>
+</p>
+
+  
+</td>
+<td width="452" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start position in the 
+<a href="TABLE.html">TABLE</a>
+
+  for the registration positions
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h4>Example 5:</h4>
+<p>
+Set up registration on falling edge for EtherCAT or RTEX
+axis 2 using input 7.
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+REGIST(21, 7, 0, 1, 0)
+</p>
+<p class="codeexample">
+WAIT UNTIL R_MARK(7)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h4>Example 6:</h4>
+<p>
+Set up registration on falling edge for EtherCAT or RTEX
+axis 2 using input 1, and input 3 to open enable the window.
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+input_channel = 1
+</p>
+<p class="codeexample">
+gate_input = 3
+</p>
+<p class="codeexample">
+'The window control input (gate) number is in bits 16..31
+</p>
+<p class="codeexample">
+REGIST(21, input_channel + (gate_input &lt;&lt; 16), 0, 1,
+3)
+</p>
+<p class="codeexample">
+WAIT UNTIL R_MARK(input_channel)
+</p>
+<h4>Example 7:</h4>
+<p>
+Set up registration on rising edge for virtual axis 15 using
+input 1.
+</p>
+<p class="codeexample">
+BASE(15)
+</p>
+<p class="codeexample">
+SLOT_NUMBER = 0 'Slot number of the RTEX network on MC4N
+</p>
+<p class="codeexample">
+REGIST(21, 1, 0, 0, 0) 'Input 1, rising edge
+</p>
+<p class="codeexample">
+WAIT UNTIL R_MARK(1)
+</p>
+<p class="codeexample">
+Captured_posiiton = R_REGPOS(1)
+</p>
+<p class="warning">
+Using SLOT_NUMBER in this way is only valid for virtual axes.
+Do not change the SLOT_NUMBER of a real hardware axis.
+</p>
+<h4>Example 8:</h4>
+<p>
+Set up two registration events for two different axes using
+the same physical input (input 1) on and EtherCAT system using the MC6N-ECAT.
+</p>
+<p class="codeexample">
+BASE(4)
+<br>
+
+'Set up regist channel 1 on default input
+</p>
+<p class="codeexample">
+REGIST(21, 1, 0, 0, 0)
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+BASE(5)
+</p>
+<p class="codeexample">
+'Set up regist channel 2 with Source bit 8 set to indicate
+that
+<br>
+
+'the source number is the required input
+</p>
+<p class="codeexample">
+REGIST(21, 2, 256 + 1, 0, 0) ' Source value is $101 in Hex
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+WAIT UNTIL R_MARK(1) AND R_MARK(2)
+</p>
+<h2>Mode =22;</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+REGIST(22, channel, source, edge, window[, quantity,
+table_start])
+</p>
+<h3>Description:</h3>
+<p>
+This mode allows up to 8 hardware registration inputs to be
+assigned to one axis on the P874/P879 Flexaxis module.
+</p>
+<p class="warning">
+If this mode is used then all 8 inputs are assigned to REGIST(22)
+for axis 0. You cannot mix REGIST(22) and REGIST(20) on the same axis. The
+setting for axis 0 does not affect the other axes.
+</p>
+<p>
+This mode operates with the parameters 
+<a href="R_MARK.html">R_MARK</a>
+(channel)
+, 
+<a href="R_REGPOS.html">R_REGPOS</a>
+(channel) and 
+<a href="R_REGISTSPEED.html">R_REGISTSPEED</a>
+(channel).
+</p>
+<p class="note">
+To use this mode 
+<a href="REG_INPUTS.html">REG_INPUTS</a>
+ must be
+set to $10 before you call the REGIST command.
+</p>
+<p>
+If the optional parameters quantity and table_start are used,
+then a set of registration positions can be stored in the table. 
+<a href="R_REGPOS.html">R_ REGPOS</a>
+ will still store the latest registration
+position. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0…7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This is the registration channel to be used (range
+  0..7)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16…32
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 16 to 32 to select digital input when Digital
+  Input Window enabled (window option 3 and 4)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the 24V registration input.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the Z mark.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+edge:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rising edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+falling edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+window:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+no windowing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position must be inside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position must be outside 
+<a href="OPEN_WIN.html">OPEN_WIN</a>
+..
+<a href="CLOSE_WIN.html">CLOSE_WIN</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable window with 24V/Virtual input (Active High)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable window with 24V/Virtual input (Active Low)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a name="_Mode_=_23;"></a>
+quantity
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 - 
+<a href="TSIZE.html">TSIZE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quantity of registration captures to store in the 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_start
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 -
+<a href="TSIZE.html">TSIZE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start position in the 
+<a href="TABLE.html">TABLE</a>
+
+  for the registration positions
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Mode = 23;</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+REGIST(23)
+</p>
+<h3>Description:</h3>
+<p>
+This mode assigns a 2.4&nbsp;µs minimum pulse width to the
+axis. This affects any REGIST mode that is used. 
+</p>
+<p class="note">
+The default value is 0.15&nbsp;µs.
+</p>
+<h2><a name="_Mode_=_24:"></a>
+Mode = 24:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+REGIST(24)
+</p>
+<h3>Description:</h3>
+<p>
+This mode assigns a 0.15&nbsp;µs minimum pulse width to the
+axis. This affects any REGIST mode that is used. 
+</p>
+<p class="note">
+This is the default value.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MARK.html">MARK</a>
+, 
+<a href="MARKB.html">MARKB</a>
+,
+
+<a href="R_MARK.html">R_MARK</a>
+, 
+<a href="REG_POS.html">REG_POS</a>
+, 
+<a href="REG_POSB.html">REG_POSB</a>
+, 
+<a href="R_REGPOS.html">R_REGPOS</a>
+, 
+<a href="REGIST_SPEED.html">REGIST_SPEED</a>
+, 
+<a href="REGIST_SPEEDB.html">REGIST_SPEEDB</a>
+,
+
+<a href="R_REGISTSPEED.html">R_REGISTSPEED</a>
+, 
+<a href="REGIST_DELAY.html">REGIST_DELAY</a>
+,
+
+<a href="REG_INPUTS.html">REG_INPUTS</a>
+, 
+<a href="REGIST_CONTROL.html">REGIST_CONTROL</a>
+</p>
+</body>
+</html>

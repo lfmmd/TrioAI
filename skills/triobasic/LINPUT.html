@@ -1,0 +1,128 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LINPUT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LINPUT">
+</head>
+<body>
+<h1>LINPUT</h1>
+<h2>Type:</h2>
+<p class="Category">
+File Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+LINPUT [#channel,] variable
+</p>
+<h2>Description:</h2>
+<p>
+Waits for an input string and stores the ASCII values of the
+string in an array of variables starting at a specified numbered variable. The
+string must be terminated with a carriage return &lt;CR&gt; which is also
+stored. The string is not echoed by the controller.
+</p>
+<p class="note">
+You can print the string from the 
+<a href="VR.html">VR</a>
+s using
+
+<a href="VRSTRING.html">VRSTRING</a>
+ </p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+#channel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+See # for the full channel list (default 0 if omitted)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 
+<a href="VR.html">VR</a>
+ variable to store the
+  received character
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Use LINPUT to receive a string of characters on channel 5
+and place then into a series of 
+<a href="VR.html">VR</a>
+s starting at 
+<a href="VR.html">VR</a>
+(0)
+</p>
+<p class="codeexample">
+LINPUT #5, VR(0)
+</p>
+<p>
+Now entering: START&lt;CR&gt; on channel 5 will give:
+</p>
+<p class="codeexample">
+VR(0)    83    ASCII 'S'
+</p>
+<p class="codeexample">
+VR(1)    84    ASCII 'T'
+</p>
+<p class="codeexample">
+VR(2)    65    ASCII 'A'
+</p>
+<p class="codeexample">
+VR(3)    82    ASCII 'R'
+</p>
+<p class="codeexample">
+VR(4)    84    ASCII 'T'
+</p>
+<p class="codeexample">
+VR(5)    13    ASCII carriage return
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="Hash.html">#</a>
+, 
+<a href="CHANNEL_READ.html">CHANNEL_READ</a>
+,
+
+<a href="VRSTRING.html">VRSTRING</a>
+</p>
+</body>
+</html>

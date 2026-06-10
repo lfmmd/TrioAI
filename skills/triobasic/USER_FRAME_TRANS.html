@@ -1,0 +1,521 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>USER_FRAME_TRANS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="USER_FRAME_TRANS">
+</head>
+<body>
+<h1>USER_FRAME_TRANS</h1>
+<h2>Type: </h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+USER_FRAME_TRANS(user_frame_in, user_frame_out, tool_offset_in,
+tool_offset_out, table_in,  table_out, [scale])
+</p>
+<h2>Description:</h2>
+<p>
+This function enables you to transform a set of positions
+from one frame to another. This could be used to take a set of positions from a
+vision system and transform them so that they are a set of positions relative
+to a conveyor.   
+</p>
+<p class="note">
+USER_FRAME_TRANS requires the kinematic runtime FEC
+</p>
+<p>
+It is required to set-up a 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+
+and 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ to use this function. If you do
+not wish to set up a 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+ with real axis
+you can use virtual.
+</p>
+<p class="tip">
+The 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ calculations are
+performed on raw position data which are integers. The table data is scaled by
+the scale parameter, for optimal resolution scale should be set to the 
+<a href="UNITS.html">UNITS</a>
+ of the robot.
+</p>
+<p>
+<img border="0" width="575" height="27" id="Picture 1" src="USER_FRAME_TRANS_files/image001.jpg">
+</p>
+<p class="note">
+As all the 
+<a href="USER_FRAME.html">USER_FRAME</a>
+
+transformations use the same coordinate scale it does not matter if the
+positions are supplied as raw positions or scaled by 
+<a href="UNITS.html">UNITS</a>
+.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+user_frame_in:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ identity
+  that the points are supplied in
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+user_frame_out:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ identity
+  that the points are transformed to
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+tool_offset_in:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The TOOL_OFFSET identity that the points are supplied
+  in
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+tool_offset_out:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The TOOL_OFFSET identity that the points are
+  transformed to
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start of the input positions
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_out:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start of the generated positions
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+scale:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This parameter allows you to scale the table values
+  (default 1000)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The table_in requires 12 values. Any that are not required
+should be set to zero for position and 1 for scale.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First axis position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second axis position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Third axis position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Fourth axis position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Fifth axis position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sixth axis position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First axis FRAME_SCALE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second axis FRAME_SCALE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Third axis FRAME_SCALE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Fourth axis FRAME_SCALE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Fifth axis FRAME_SCALE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_in +11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sixth axis FRAME_SCALE
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example: </h2>
+<p>
+<a href="USER_FRAME.html">USER_FRAME</a>
+(vision) has been
+configured to the vision system relative to the robot origin. The conveyor has
+been configures in 
+<a href="USER_FRAME.html">USER_FRAME</a>
+(conveyor). To use
+the vision system positions on the conveyor 
+<a href="USER_FRAME.html">USER_FRAME</a>
+
+they must be transformed through USER_FRAME_TRANS.
+</p>
+<p class="codeexample">
+USER_FRAME_TRANS(vision, conveyor, 0, 0,
+200,300)
+</p>
+</body>
+</html>

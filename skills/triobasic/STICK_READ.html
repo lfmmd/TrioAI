@@ -1,0 +1,311 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STICK_READ</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STICK_READ">
+</head>
+<body>
+<h1>STICK_READ</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = STICK_READ(flash_file, table_start [,format [,device]])
+</p>
+<h2>Description:</h2>
+<p>
+Read table data from the SD card to the controller.
+</p>
+<p class="warning">
+Any existing TABLE data will be overwritten.
+</p>
+<p class="note">
+The Binary format gives the best data precision.
+</p>
+<h2>Parameters:     </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="466" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE = the function was successful
+</p>
+
+  
+<p class="tablecontent">
+FALSE = the function was not successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+flash_file:
+</p>
+
+  
+</td>
+<td width="466" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A number which when appended to the characters “SD”
+  will form the data filename.
+</p>
+
+  
+<p class="tablecontent">
+A hardcoded string or STRING variable will form the
+  data filename.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_start:
+</p>
+
+  
+</td>
+<td width="466" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start point in the 
+<a href="TABLE.html">TABLE</a>
+
+  where the data values will be transferred to.  (Ignored when using format 2)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+format:
+</p>
+
+  
+</td>
+<td width="466" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Binary 64bit floating point format, BIN file
+  (default)
+</p>
+
+  
+<p class="tablecontent">
+1 = ASCII comma separated values, CSV
+  file, no index
+</p>
+
+  
+<p class="tablecontent">
+2 = ASCII CSV with format: Index, value &lt;CR&gt;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+device:
+<br>
+
+  (Flex-7 only)
+</p>
+
+  
+</td>
+<td width="466" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = SD card
+</p>
+
+  
+<p class="tablecontent">
+1 = USB 1 (upper)
+</p>
+
+  
+<p class="tablecontent">
+2 = USB 2 (lower)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+When storing in format=0 the data is stored in IEEE floating
+point binary format little-endian, i.e. the least significant byte first.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Read the ASCII CSV file SD001984.csv from the SD card and
+copy the data to the table memory starting at TABLE(16500)
+</p>
+<p class="codeexample">
+success = STICK_READ (1984, 16500, 1)
+</p>
+<p class="codeexample">
+IF success=TRUE THEN
+</p>
+<p class="codeexample">
+  PRINT #5,”SD card read OK”
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Read the ASCII CSV file MYDATALOG2.CSV from the SD card and
+copy the data to the table memory starting at TABLE(16500)
+</p>
+<p class="codeexample">
+success = STICK_READ (“MYDATALOG2”, 16500, 1)
+</p>
+<p class="codeexample">
+IF success=TRUE THEN
+</p>
+<p class="codeexample">
+  PRINT #5,”SD card read OK”
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Read the ASCII CSV file DATA1.CSV from the SD card and copy
+the data to the table memory using the TABLE indices in the file.  File format
+is Index, value &lt;cr&gt; as output by CAD2Motion.
+</p>
+<p class="codeexample">
+  
+DIM
+ flash_file 
+AS
+ STRING
+(
+20
+)
+<br>
+
+  
+DIM
+ s 
+AS
+ BOOLEAN
+<br>
+
+  flash_file = 
+&quot;DATA1&quot;
+</p>
+<p class="codeexample">
+<br>
+
+  s = 
+STICK_READ
+(flash_file, 
+0
+, 
+2
+)
+</p>
+<p class="codeexample">
+<br>
+
+  
+IF
+ s = 
+TRUE
+
+
+THEN
+<br>
+
+    
+PRINT
+ flash_file; 
+&quot; read OK&quot;
+<br>
+
+  
+ELSE
+<br>
+
+    
+PRINT
+ &quot;Error
+reading &quot;
+; flash_file
+<br>
+
+  
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="STICK_READVR.html">STICK_READVR</a>
+, 
+<a href="STICK_WRITE.html">STICK_WRITE</a>
+, 
+<a href="STICK_WRITEVR.html">STICK_WRITEVR</a>
+,
+
+<a href="FILE.html">FILE</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,395 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VP_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VP_MODE">
+</head>
+<body>
+<h1>VP_MODE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+VP_MODE AXIS(n) = value
+</p>
+<h2>Description:</h2>
+<p>
+Writing to this parameter allows the selection of a velocity
+profiling mode most suitable for your application. VP_MODE = 0 is the default
+setting for all Motion Coordinators.
+</p>
+<p>
+All velocity profiling modes allow the SPEED/ACCEL/DECEL
+(and JERK for modes 5 and 6) motion parameters to be changed while profiling
+non-SP move types.
+</p>
+<p>
+Velocity profiling modes 5 and 6 allow the
+SPEED/ACCEL/DECEL/JERK motion parameters to be changed while profiling SP move
+types. When an SP move becomes active, the motion parameters it was loaded with
+overwrite the axis parameters. Note that when a move that has had its motion
+parameters changed completes, the next move will use the motion parameters it
+was loaded with, so any changes may need to be reapplied for successive moves.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_VP_MODE=0:">0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Trapezoidal multi-axis interpolation (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_VP_MODE_=_5:">5</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk limited multi-axis interpolation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_VP_MODE_=_6:">6</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk limited multi-axis interpolation
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+<a name="_VP_MODE=0:"></a>
+For Motion PLC using firmware
+version 2.0342 and later, the default VP_MODE is 6.
+</p>
+<h2>VP_MODE&nbsp;=&nbsp;0:</h2>
+<p>
+Applies ACCEL and DECEL to give a trapezoidal velocity
+profile. The S profile in this mode is made by digitally filtering the velocity
+profile over a defined time (in milliseconds) set using the 
+<a href="SRAMP.html">SRAMP</a>
+
+command.
+</p>
+<p>
+Advantages:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Mathematically defined profile when SRAMP is zero
+</li>
+<li class="indent-list-last">
+Computationally efficient
+</li>
+</ul>
+<p>
+Disadvantages:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+SPEED/ACCEL/DECEL cannot be changed for SP moves
+</li>
+<li class="indent-list-middle">
+Non-zero SRAMP has limitations:
+<ul style="list_style_type:disc">
+<li class="indent-list-middle">
+Not a mathematically defined profile
+</li>
+<li class="indent-list-middle">
+Short and long moves do not suit the same SRAMP value
+</li>
+<li class="indent-list-middle">
+Can be noisy at low resolutions
+</li>
+<li class="indent-list-last">
+Slow to adapt to SRAMP value changes
+</li>
+</ul>
+</li>
+</ul>
+<h3>Example:</h3>
+<p class="codeexample">
+UNITS = 1000
+<br>
+
+SPEED = 50000
+<br>
+
+ACCEL = 140000
+<br>
+
+DECEL = 140000
+<br>
+
+SRAMP = 200
+<br>
+
+
+<br>
+
+DEFPOS(0)
+<br>
+
+VP_MODE = 0
+<br>
+
+
+<br>
+
+TRIGGER
+<br>
+
+
+<br>
+
+MOVE(50000)
+</p>
+<p>
+<img border="0" width="576" height="406" id="Picture 5" src="VP_MODE_files/image001.jpg">
+</p>
+<p class="MsoCaption">
+This Motion Perfect Oscilloscope trace shows the effect of
+SRAMP=200.
+</p>
+<h2><a name="_VP_MODE=1:"></a>
+<a name="_VP_MODE_=_5:"></a>
+VP_MODE&nbsp;=&nbsp;5:</h2>
+<p>
+Applies a fixed JERK setting. As jerk is the derivative of
+acceleration, its units are /sec/sec/sec.
+</p>
+<p>
+Advantages:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Mathematically defined profile
+</li>
+<li class="indent-list-middle">
+Applies jerk to alter acceleration and deceleration, leading to
+smooth motion
+</li>
+<li class="indent-list-last">
+Advanced speed control moves can be adjusted while profiling 
+</li>
+</ul>
+<p>
+Disadvantages:
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+<span style="font-family: Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Computationally intensive
+</p>
+<h3>Example:</h3>
+<p>
+Describe a square with rounded corners, moving at speed
+through each segment of the shape.
+</p>
+<p class="codeexample">
+LIMIT_BUFFERED = 4
+<br>
+
+
+<br>
+
+BASE(1, 2) 'Set base array
+<br>
+
+SPEED = 300 'mm/s
+<br>
+
+ACCEL = 6000 'mm/s^2
+<br>
+
+DECEL = ACCEL
+<br>
+
+FORCE_SPEED = SPEED
+<br>
+
+ENDMOVE_SPEED = SPEED
+<br>
+
+CORNER_MODE.3 = ON 'Slow on arc radius
+<br>
+
+FULL_SP_RADIUS = 10.0
+<br>
+
+VP_MODE = 5
+<br>
+
+JERK = 500000 'mm/s^3
+<br>
+
+
+<br>
+
+MERGE = ON 'Don't stop between each move
+<br>
+
+MOVEABSSP(0, 5.0)
+<br>
+
+WAIT IDLE
+<br>
+
+
+<br>
+
+TRIGGER
+<br>
+
+WA(100)
+<br>
+
+MOVESP(0, 100.0)
+<br>
+
+MOVECIRCSP(5.0, 5.0, 5.0, 0, 1)
+<br>
+
+MOVESP(100.0, 0)
+<br>
+
+MOVECIRCSP(5.0, -5.0, 0, -5.0, 1)
+<br>
+
+MOVESP(0, -100.0)
+<br>
+
+MOVECIRCSP(-5.0, -5.0, -5.0, 0, 1)
+<br>
+
+MOVESP(-100.0, 0)
+<br>
+
+MOVECIRCSP(-5.0, 5.0, 0, 5.0, 1)
+<br>
+
+WAIT IDLE
+</p>
+<p class="codeexample" style="margin-left:0cm">
+<img border="0" width="579" height="431" id="Canvas 6" src="VP_MODE_files/image002.png">
+</p>
+<h2><a name="_VP_MODE_=_6:"></a>
+VP_MODE&nbsp;=&nbsp;6:</h2>
+<p>
+This mode uses uniform jerk and combines the capabilities of
+modes 0 and 5 to allow it to be used for all motion applications.
+</p>
+<p>
+When replacing mode 0, the application will need to either
+use a very high JERK value to create trapezoidal motion, or if SRAMP is being
+used, select a value of JERK that gives a comparable rate of change of
+acceleration.
+</p>
+<p class="note">
+Using SRAMP with VP_MODE&nbsp;=&nbsp;6 is available with firmware
+version 2.0342 and later, though using JERK is recommended.
+</p>
+<p>
+When replacing mode 5, the application may need no changes
+beyond setting the VP_MODE to 6, though the setting of specific bits in
+VP_OPTIONS may be necessary when a specific mode 5 behaviour is required.
+</p>
+<p>
+Advantages:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Mathematically defined profile
+</li>
+<li class="indent-list-middle">
+Applies jerk to alter acceleration and deceleration, leading to
+smooth motion 
+</li>
+<li class="indent-list-middle">
+Can be made to behave like mode 0 or 5 using VP_OPTIONS
+</li>
+<li class="indent-list-middle">
+Enhanced flexibility to adapt to demand changes
+</li>
+<li class="indent-list-last">
+Enhanced lookahead accuracy
+</li>
+</ul>
+<p>
+Disadvantages:
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+<span style="font-family: Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Computationally expensive (more so than VP_MODE&nbsp;=&nbsp;5)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="JERK.html">JERK</a>
+, 
+<a href="SRAMP.html">SRAMP</a>
+,
+
+<a href="VP_DEMAND_ACCEL.html">VP_DEMAND_ACCEL</a>
+, 
+<a href="VP_DEMAND_DECEL.html">VP_DEMAND_DECEL</a>
+, 
+<a href="VP_DEMAND_JERK.html">VP_DEMAND_JERK</a>
+,
+
+<a href="VP_DEMAND_SPEED.html">VP_DEMAND_SPEED</a>
+, 
+<a href="VP_JERK.html">VP_JERK</a>
+<span class="MsoHyperlink">, </span><a href="VP_ACCEL.html">VP_ACCEL</a>
+<span class="MsoHyperlink">, </span><a href="VP_OPTIONS.html">VP_OPTIONS</a>
+<span class="MsoHyperlink">, </span><a href="VP_POSITION.html">VP_POSITION</a>
+</p>
+</body>
+</html>

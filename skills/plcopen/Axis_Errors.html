@@ -1,0 +1,1802 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Axis Errors</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+
+
+
+<body>
+<h1>Axis Errors</h1>
+<h2>Description:</h2>
+<p>
+Axis errors generally need to call function block MC_Reset
+to clear the errors. These errors will mostly cause axis to stop if axis is in
+motion. 
+</p>
+<p>
+Axis errors have 16-bit value (a WORD datatype) with each
+bit represents a different error state. Bit 15 is always set if an axis error
+occurs, therefore the 
+<i>ErrorID</i> of Axis Errors is greater than 0x8000. See
+table below for summary of Axis Errors:
+</p>
+<table class="tablegrid">
+
+ 
+<thead>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableHeading" style="margin-left:6.0pt">
+Bit
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableHeading" style="margin-left:6.0pt">
+Description
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableHeading" style="margin-left:6.0pt">
+Value
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+Speed limit active
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0001
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+1
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+Communications error to remote
+   drive
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0002
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+2
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+Remote drive error
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0004
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+3
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+In forward hardware limit
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0008
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+4
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+In reverse hardware limit
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0010
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+5
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+Following error exceeds limit
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0020
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+6
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+FS_LIMIT active
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0040
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+7
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+RS_LIMIT active
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0080
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+8
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+Pulse output axis overspeed
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0100
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+9
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+VOLUME_LIMIT active
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0200
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+10
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+AXIS_FS_LIMIT active
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0400
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+11
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+AXIS_RS_LIMIT active
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x0800
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+12
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+Encoder power supply overload
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x1000
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+13
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+Reserved
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x2000
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+14
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+Reserved
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x4000
+</p>
+
+   
+</td>
+</tr>
+<tr>
+<td width="49" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+15
+</p>
+
+   
+</td>
+<td width="320" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+Axis error status
+</p>
+
+   
+</td>
+<td width="68" nowrap="" class="tablegrid">
+
+   
+<p class="TableText" style="margin-left:1.05pt">
+0x8000
+</p>
+
+   
+</td>
+</tr>
+</thead>
+
+
+</table>
+<h2>ErrorID Range:</h2>
+<p>
+Axis errors have 
+<i>ErrorID</i> range of 0x8000 – 0xFFFF.
+</p>
+<h2>Details:</h2>
+<h3>Bit 0</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+Speed limit active
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The actual speed is over speed
+  limitation.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+No action
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+It may be dangerous, please check
+  the speed setting and make sure them be available.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="text-indent:48.0pt">
+<span style='font-family:"Times New Roman",serif'>&nbsp;</span></p>
+<h3>Bit 1</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+Communications
+  error to remote drive
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The communication between
+  controller and drives gets problem.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Disable axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solving the communication error.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:21.0pt">
+<b>&nbsp;</b></p>
+<h3>Bit 2 </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+Remote drive error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The controller finds remote drive
+  getting error. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+No action
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+To solve the remote drive error.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 3 </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+In forward
+  hardware limit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis’ forward hardware limit
+  was triggered.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis motion is cancled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+To check the reason and solve it.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 4 </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+In reverse
+  hardware limit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis’ reverse hardware limit
+  was triggered.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis motion is cancled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+To check the reason and solve it.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 5 </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+Following error
+  exceeds limit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Following error of the axis
+  exceeds limit because some problems.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis will be disabled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+To check the reason and solve it.
+  Make sure it is safe before next running.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 6</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+FS_LIMIT active
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis position exceeds FS_LIMIT.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis motion is cancled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+To check the reason and solve it.
+  Make sure it is safe before next running.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 7</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+RS_LIMIT active
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis position exceeds RS_LIMIT.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis motion is cancled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+To check the reason and solve it.
+  Make sure it is safe before next running.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 8 </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+Pulse output axis
+  over speed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The demand speed for the axis
+  exceeds the capability of the step pulse hardware to produce pulses.&nbsp;
+  Typical maximum pulse rates are 2&nbsp;MHz and 8&nbsp;MHz depending on
+  product.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis may work unexpected.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Make sure the demand speed for the
+  pulse output being in the capability of the pulse producer.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 9 </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+VOLUME_LIMIT
+  active
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis has 3D volumetric limits
+  set up using the VOLUME_LIMIT command and the robot end-effector position is
+  outside the set limits.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis motion is cancled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+To check the reason and solve it.
+  Make sure it is safe before next running.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 10 </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+AXIS_FS_LIMIT
+  active
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+In a robotic FRAME , AXIS_DPOS is
+  greater than AXIS_FS_LIMIT .&nbsp; This usually refers to joint angle limits.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis motion is cancled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+To check the reason and solve it.
+  Make sure it is safe before next running.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 11 </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+AXIS_RS_LIMIT
+  active
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+In a robotic FRAME , AXIS_DPOS is
+  less than AXIS_RS_LIMIT.&nbsp; This usually refers to joint angle limits.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis motion is cancled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+To check the reason and solve it.
+  Make sure it is safe before next running.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 12 </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+Encoder power
+  supply overload
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The 5&nbsp;V supply to connected
+  encoders or other hardware powered from the encoder connector has shut down
+  due to overload.&nbsp;&nbsp; There is one power source shared by all encoder
+  ports.&nbsp; 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The axis will be canceled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+To check the reason and solve it. Make
+  sure it being safe before next running.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 13</h3>
+<p>
+<b>Reserved</b></p>
+<p style="margin-left:18.0pt;text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 14</h3>
+<p>
+<b>Reserved</b></p>
+<p style="text-indent:48.2pt">
+<b><span style='font-family:"Times New Roman",serif'>&nbsp;</span></b></p>
+<h3>Bit 15</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="544" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+Axis error status
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Description:  
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+It represents axis errors have
+  occurred or not. It will be set if any axis errors have occurred, otherwise
+  it will be reset.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Reaction: 
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+The reaction is the same as axis
+  errors have occurred.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="116" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solution:
+</p>
+
+  
+</td>
+<td width="429" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Solving all axis errors those have
+  occured.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See also: </h2>
+<p>
+<a href="Error_Handling.html">Error Handling</a>
+, 
+<a href="Non_Axis_Errors.html">Non-Axis Errors</a>
+</p>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

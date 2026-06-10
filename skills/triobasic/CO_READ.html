@@ -1,0 +1,443 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CO_READ</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CO_READ">
+</head>
+<body>
+<h1>CO_READ</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CO_READ(slot, address, index, subindex, type[, vr_number])
+</p>
+<h2>Description:</h2>
+<p>
+This function gets a CANopen-over-EtherCAT (CoE) object from
+the remote drive or I/O device. The object’s index and sub-index are used to request
+a value and that value is either placed in the VR or is displayed in the Motion
+Perfect terminal if the VR number is set to -1.
+</p>
+<p>
+Refer to the remote device’s manual for a list of available
+objects. If the object value is returned successfully, the command returns TRUE
+(-1). Otherwise, in the case of an error while requesting the value, the
+command returns FALSE (0).
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="91" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot: 
+</p>
+
+  
+</td>
+<td width="499" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot number of the EtherCAT module.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="91" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+address: 
+</p>
+
+  
+</td>
+<td width="499" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Node address of the remote device on the network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="91" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index: 
+</p>
+
+  
+</td>
+<td width="499" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen Object index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="91" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+subindex: 
+</p>
+
+  
+</td>
+<td width="499" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen Object sub-index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="91" rowspan="11" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Type:
+</p>
+
+  
+</td>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Boolean
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Real 32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Real 64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+21
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="45" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+27
+</p>
+
+  
+</td>
+<td width="455" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="91" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_number: 
+</p>
+
+  
+</td>
+<td width="499" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR number between 0 and max VR where the result will be
+  stored.
+<br>
+
+  (-1 means the value will be printed to the terminal)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Function_=_2"></a>
+Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+Read the remote drive mode of operation and display to the
+terminal
+</p>
+<p class="codeexample">
+&gt;&gt;CO_READ(0, 1, $6061, 0, 2, -1)
+</p>
+<p class="codeexample">
+8
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h4>Example 2:</h4>
+<p>
+Get the remote drive interpolation time, objects $60C2
+sub-index 1 and sub-index 2, and place in VR(200) and VR(201).
+</p>
+<p class="codeexample">
+'Read object $60C2:01 unsigned 8
+</p>
+<p class="codeexample">
+CO_READ(0, 5, $60C2, 1, 5, 200)
+</p>
+<p class="codeexample">
+'Read object $60C2:02 signed 8
+</p>
+<p class="codeexample">
+CO_READ(0, 5, $60C2, 2, 2, 201)
+</p>
+<p class="codeexample">
+PRINT &quot;Drive at node 5: &quot;; VR(200)[0]; &quot;x
+10^&quot;; VR(201)[0]
+</p>
+<p class="fixed">
+&nbsp;
+</p>
+</body>
+</html>

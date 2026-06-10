@@ -92,6 +92,10 @@ namespace TrioAI.MPPlugIn
                             HandleMethod(ctx, method, "POST", () => Handlers.CreateProject());
                         else if (method == "PUT" && segments.Length == 2)
                             HandleMethod(ctx, method, "PUT", () => Handlers.SaveProject());
+                        else if (method == "POST" && segments.Length == 3 && segments[2] == "open")
+                            HandleBody(ctx, method, body => Handlers.OpenProject(body));
+                        else if (method == "GET" && segments.Length == 3 && segments[2] == "items")
+                            HandleMethod(ctx, method, "GET", () => Handlers.ListProjectItems());
                         else
                             SendJson(ctx, 404, new { error = "Not found" });
                         break;
@@ -138,6 +142,9 @@ namespace TrioAI.MPPlugIn
                                         else
                                             SendJson(ctx, 405, new { error = "Method not allowed" });
                                         break;
+                                    case "copy":
+                                        HandleBody(ctx, method, body => Handlers.CopyProgram(name, body));
+                                        break;
                                     case "upload":
                                         HandleMethod(ctx, method, "POST", () => Handlers.Upload(name));
                                         break;
@@ -158,6 +165,23 @@ namespace TrioAI.MPPlugIn
                                             HandleMethod(ctx, method, "GET", () => Handlers.GetProgramProcess(name));
                                         else if (method == "PUT")
                                             HandleBody(ctx, method, body => Handlers.SetProgramProcess(name, body));
+                                        else
+                                            SendJson(ctx, 405, new { error = "Method not allowed" });
+                                        break;
+                                    case "breakpoints":
+                                        if (method == "GET")
+                                            HandleMethod(ctx, method, "GET", () => Handlers.ListBreakpoints(name));
+                                        else if (method == "DELETE")
+                                            HandleMethod(ctx, method, "DELETE", () => Handlers.ClearAllBreakpoints(name));
+                                        else
+                                            SendJson(ctx, 405, new { error = "Method not allowed" });
+                                        break;
+                                    case "breakpoint":
+                                        if (method == "POST" || method == "PUT")
+                                            HandleBody(ctx, method, body => Handlers.SetBreakpoint(name, body));
+                                        else if (method == "DELETE")
+                                            HandleBody(ctx, method, body => Handlers.SetBreakpoint(name,
+                                                new Dictionary<string, object> { { "line", body.ContainsKey("line") ? body["line"] : 0 }, { "enable", false } }));
                                         else
                                             SendJson(ctx, 405, new { error = "Method not allowed" });
                                         break;
@@ -218,11 +242,260 @@ namespace TrioAI.MPPlugIn
                         break;
 
                     case "axes":
-                        HandleMethod(ctx, method, "GET", () => Handlers.ListAxes());
+                        if (segments.Length == 2)
+                        {
+                            HandleMethod(ctx, method, "GET", () => Handlers.ListAxes());
+                        }
+                        else if (segments.Length == 3)
+                        {
+                            int axisIndex;
+                            if (!int.TryParse(segments[2], out axisIndex))
+                            {
+                                SendJson(ctx, 400, new { error = "Invalid axis index" });
+                                return;
+                            }
+                            HandleMethod(ctx, method, "GET", () => Handlers.GetAxisDetail(axisIndex));
+                        }
+                        else
+                        {
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        }
+                        break;
+
+                    case "sysvars":
+                        if (segments.Length == 2)
+                            HandleMethod(ctx, method, "GET", () => Handlers.GetSystemVariables());
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "sysvar":
+                        if (segments.Length == 3)
+                        {
+                            var svName = Uri.UnescapeDataString(segments[2]);
+                            if (method == "GET")
+                                HandleMethod(ctx, method, "GET", () => Handlers.ReadSysVar(svName));
+                            else if (method == "PUT")
+                                HandleBody(ctx, method, body => Handlers.WriteSysVar(svName, body));
+                            else
+                                SendJson(ctx, 405, new { error = "Method not allowed" });
+                        }
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "io":
+                        if (segments.Length == 3)
+                        {
+                            if (segments[2] == "digital" && method == "GET")
+                                HandleMethod(ctx, method, "GET", () => Handlers.ListDigitalIO());
+                            else if (segments[2] == "analogue" && method == "GET")
+                                HandleMethod(ctx, method, "GET", () => Handlers.ListAnalogueIO());
+                            else
+                                SendJson(ctx, 404, new { error = "Not found" });
+                        }
+                        else if (segments.Length == 5)
+                        {
+                            int ioIndex;
+                            if (!int.TryParse(segments[4], out ioIndex))
+                            {
+                                SendJson(ctx, 400, new { error = "Invalid IO index" });
+                                return;
+                            }
+                            if (segments[2] == "digital")
+                            {
+                                if (segments[3] != "line") { SendJson(ctx, 404, new { error = "Not found" }); return; }
+                                if (method == "GET")
+                                    HandleMethod(ctx, method, "GET", () => Handlers.ReadDigitalIO(ioIndex));
+                                else if (method == "PUT")
+                                    HandleBody(ctx, method, body => Handlers.WriteDigitalIO(ioIndex, body));
+                                else
+                                    SendJson(ctx, 405, new { error = "Method not allowed" });
+                            }
+                            else if (segments[2] == "analogue")
+                            {
+                                if (segments[3] != "line") { SendJson(ctx, 404, new { error = "Not found" }); return; }
+                                if (method == "GET")
+                                    HandleMethod(ctx, method, "GET", () => Handlers.ReadAnalogueIO(ioIndex));
+                                else if (method == "PUT")
+                                    HandleBody(ctx, method, body => Handlers.WriteAnalogueIO(ioIndex, body));
+                                else
+                                    SendJson(ctx, 405, new { error = "Method not allowed" });
+                            }
+                            else
+                                SendJson(ctx, 404, new { error = "Not found" });
+                        }
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "plugins":
+                        if (segments.Length == 2 && method == "GET")
+                            HandleMethod(ctx, method, "GET", () => Handlers.ListAttachedPlugins());
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "oscilloscope":
+                        if (segments.Length == 3 && segments[2] == "open" && method == "POST")
+                            HandleMethod(ctx, method, "POST", () => Handlers.OpenOscilloscope());
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "robots":
+                        if (segments.Length == 2 && method == "GET")
+                            HandleMethod(ctx, method, "GET", () => Handlers.ListRobots());
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "recipes":
+                        if (segments.Length == 2 && method == "GET")
+                            HandleMethod(ctx, method, "GET", () => Handlers.ListRecipes());
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "alarms":
+                        if (segments.Length == 2 && method == "GET")
+                            HandleMethod(ctx, method, "GET", () => Handlers.ListAlarms());
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "remote-devices":
+                        if (segments.Length == 2 && method == "GET")
+                            HandleMethod(ctx, method, "GET", () => Handlers.ListRemoteDevices());
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "msbus":
+                        if (segments.Length == 3 && segments[2] == "scan" && method == "GET")
+                        {
+                            int slot = 0;
+                            var slotStr = ctx.Request.QueryString["slot"];
+                            if (!string.IsNullOrEmpty(slotStr)) int.TryParse(slotStr, out slot);
+                            HandleMethod(ctx, method, "GET", () => Handlers.ScanMsBus(slot));
+                        }
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "ethercat":
+                        if (segments.Length == 3 && segments[2] == "devices" && method == "GET")
+                        {
+                            int slot = 0;
+                            var slotStr = ctx.Request.QueryString["slot"];
+                            if (!string.IsNullOrEmpty(slotStr)) int.TryParse(slotStr, out slot);
+                            HandleMethod(ctx, method, "GET", () => Handlers.ScanEtherCAT(slot));
+                        }
+                        else if (segments.Length == 3 && segments[2] == "sdo")
+                        {
+                            if (method == "GET")
+                            {
+                                int ecSlot = 0; uint pos = 0, idx = 0, sub = 0;
+                                int.TryParse(ctx.Request.QueryString["slot"] ?? "0", out ecSlot);
+                                uint.TryParse(ctx.Request.QueryString["position"] ?? "0", out pos);
+                                uint.TryParse(ctx.Request.QueryString["index"] ?? "0",
+                                              System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out idx);
+                                uint.TryParse(ctx.Request.QueryString["subindex"] ?? "0", out sub);
+                                var t = ctx.Request.QueryString["type"] ?? "uint16";
+                                HandleMethod(ctx, method, "GET", () => Handlers.EtherCATReadSDO(ecSlot, pos, idx, sub, t));
+                            }
+                            else if (method == "PUT")
+                                HandleBody(ctx, method, body => Handlers.EtherCATWriteSDOFromDict(body));
+                            else
+                                SendJson(ctx, 405, new { error = "Method not allowed" });
+                        }
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        break;
+
+                    case "drive":
+                        if (segments.Length == 4 && method == "GET")
+                        {
+                            int drvAxis, drvAddr;
+                            if (!int.TryParse(segments[2], out drvAxis))
+                            {
+                                SendJson(ctx, 400, new { error = "Invalid axis" });
+                                return;
+                            }
+                            if (!TryParseAddr(segments[3], out drvAddr))
+                            {
+                                SendJson(ctx, 400, new { error = "Invalid address" });
+                                return;
+                            }
+                            var ndStr = ctx.Request.QueryString["nd"];
+                            int nd = 4;
+                            if (!string.IsNullOrEmpty(ndStr)) int.TryParse(ndStr, out nd);
+                            HandleMethod(ctx, method, "GET", () => Handlers.ReadDriveParam(drvAxis, drvAddr, nd));
+                        }
+                        else if (segments.Length == 4 && method == "PUT")
+                        {
+                            int drvAxis, drvAddr;
+                            if (!int.TryParse(segments[2], out drvAxis))
+                            {
+                                SendJson(ctx, 400, new { error = "Invalid axis" });
+                                return;
+                            }
+                            if (!TryParseAddr(segments[3], out drvAddr))
+                            {
+                                SendJson(ctx, 400, new { error = "Invalid address" });
+                                return;
+                            }
+                            HandleBody(ctx, method, body => Handlers.WriteDriveParam(drvAxis, drvAddr, body));
+                        }
+                        else
+                            SendJson(ctx, 404, new { error = "Not found" });
                         break;
 
                     case "chat":
                         HandleMethod(ctx, method, "POST", () => Handlers.OpenChat());
+                        break;
+
+                    case "search_code":
+                        if (method != "GET") { SendJson(ctx, 405, new { error = "Method not allowed" }); return; }
+                        {
+                            var queryStr = ctx.Request.QueryString["query"] ?? "";
+                            var csStr = ctx.Request.QueryString["caseSensitive"];
+                            bool cs;
+                            bool.TryParse(csStr, out cs);
+                            HandleMethod(ctx, method, "GET", () => Handlers.SearchCode(queryStr, cs));
+                        }
+                        break;
+
+                    case "events":
+                        if (method != "GET") { SendJson(ctx, 405, new { error = "Method not allowed" }); return; }
+                        long sinceTicks = 0;
+                        var sinceStr = ctx.Request.QueryString["since"];
+                        if (!string.IsNullOrEmpty(sinceStr))
+                            long.TryParse(sinceStr, out sinceTicks);
+                        HandleMethod(ctx, method, "GET", () => Handlers.GetEvents(sinceTicks));
+                        break;
+
+                    case "processes":
+                        if (segments.Length == 2 && method == "GET")
+                        {
+                            HandleMethod(ctx, method, "GET", () => Handlers.ListProcesses());
+                        }
+                        else if (segments.Length == 4 && segments[3] == "variables" && method == "GET")
+                        {
+                            int pid;
+                            if (!int.TryParse(segments[2], out pid))
+                            {
+                                SendJson(ctx, 400, new { error = "Invalid pid" });
+                                return;
+                            }
+                            var variable = ctx.Request.QueryString["name"];
+                            var program = ctx.Request.QueryString["program"];
+                            HandleMethod(ctx, method, "GET", () => Handlers.GetProcessVariable(pid, program, variable));
+                        }
+                        else
+                        {
+                            SendJson(ctx, 404, new { error = "Not found" });
+                        }
                         break;
 
                     default:
@@ -245,6 +518,20 @@ namespace TrioAI.MPPlugIn
             }
             var result = DispatcherHelper.Invoke(handler);
             SendJson(ctx, 200, result);
+        }
+
+        private static bool TryParseAddr(string s, out int value)
+        {
+            // Accept "0x4000", "0X4000", "4000" (hex), or decimal "16384"
+            if (string.IsNullOrEmpty(s)) { value = 0; return false; }
+            var str = s.Trim();
+            if (str.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                return int.TryParse(str.Substring(2), System.Globalization.NumberStyles.HexNumber,
+                                    System.Globalization.CultureInfo.InvariantCulture, out value);
+            // No prefix: try decimal first, then hex (for bare hex like "4000" interpreted as hex per TrioBASIC convention)
+            if (int.TryParse(str, out value)) return true;
+            return int.TryParse(str, System.Globalization.NumberStyles.HexNumber,
+                                System.Globalization.CultureInfo.InvariantCulture, out value);
         }
 
         private void HandleBody(HttpListenerContext ctx, string method, Func<Dictionary<string, object>, object> handler)

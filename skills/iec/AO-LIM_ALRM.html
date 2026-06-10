@@ -1,0 +1,370 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LIM_ALRM</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LIM_ALRM">
+</head>
+<body>
+<h1><a name="_Toc317749498"></a>
+<a name="O_1525"></a>
+LIM_ALRM</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+Detects High and Low limits of a signal with hysteresis.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>H</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL&nbsp;
+  &nbsp; </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the High limit.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>X</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL&nbsp;&nbsp;&nbsp;
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input signal.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>L</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL&nbsp;&nbsp;&nbsp;
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the Low limit.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>EPS</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL&nbsp;
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the hysteresis.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>QH</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL&nbsp;&nbsp;
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>TRUE</b> if the signal exceeds the High limit.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Q</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL
+  &nbsp;&nbsp; </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>TRUE</b> if the signal exceeds one of the limits
+  (equals to QH OR QL).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>QL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL&nbsp;&nbsp;
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>TRUE</b> if the signal exceeds the Low limit.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+In LD language, the input rung (EN) is used for enabling the
+block. The output rung is the QH output.
+</p>
+<h2>ST Language</h2>
+<p>
+MyAlarm is a declared instance of LIM_ALRM function block.
+</p>
+<p class="fixed">
+MyAlarm (H, X, L, EPS);
+<br>
+
+QH := MyAlarm.QH;
+<br>
+
+Q := MyAlarm.Q;
+<br>
+
+QL := MyAlarm.QL;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="159" height="102" src="AO-LIM_ALRM_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The block is not called if EN is FALSE.
+<br>
+<img width="258" height="108" src="AO-LIM_ALRM_files/image002.gif">
+</p>
+<h2>IL Language</h2>
+<p>
+MyAlarm is a declared instance of LIM_ALRM function block.
+</p>
+<p class="fixed">
+Op1: CAL MyAlarm (H, X, L, EPS)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyAlarm.QH
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; QH
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyAlarm.Q
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; Q
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyAlarm.QL
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; QL
+</p>
+<h2>See also</h2>
+<p>
+<a href="AO-ALARM_A.html">ALARM_A</a>
+<a name="H_919"></a>
+</p>
+<p>
+<a href="AO-ALARM_M.html">ALARM_M</a>
+<a name="H_920"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

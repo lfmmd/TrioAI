@@ -1,0 +1,69 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_BRAKE_OUTPUT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_BRAKE_OUTPUT">
+</head>
+
+
+
+<body>
+<h1>DRIVE_BRAKE_OUTPUT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+None
+</p>
+<h2>Description:</h2>
+<p>
+Assign the Motion Coordinator output to operate as the brake
+control.  The digital output allocated to this function will not be available
+for use in programs via OP command, PSWITCH or as a PLC output. 
+</p>
+<p>
+Brake control sequences and timing are set in the drive
+using configuration software.  For example in the Motion Perfect DX5 setup
+pages.
+</p>
+<p class="tip">
+DRIVE_BRAKE_OUTPUT supports specific EtherCAT “slim” drives where
+brake control is delegated to the EtherCAT master.
+</p>
+<h2>Value:</h2>
+<p>
+Output number within the range 0 to 1023.
+</p>
+<h2>Example:</h2>
+<p>
+Set up a 3 axis system to control the motor brakes using
+outputs 32 to 34 on a Flexslice Output module.
+</p>
+<p class="codeexample">
+DRIVE_BRAKE_OUTPUT AXIS(0) = 32
+<br>
+
+DRIVE_BRAKE_OUTPUT AXIS(1) = 33
+<br>
+
+DRIVE_BRAKE_OUTPUT AXIS(2) = 34 
+</p>
+<h2>See Also:</h2>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

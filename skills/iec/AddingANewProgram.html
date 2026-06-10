@@ -1,0 +1,452 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Adding a New Program</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Adding a New Program</h1>
+<h2>Adding via the &quot;Add New Program&quot; Menu</h2>
+<p>
+A new IEC 61131-3 program can be added to a 
+<i>Motion</i> Perfect
+project in one of two ways:
+</p>
+<ol style="list_style_type:decimal">
+<li class="indent-list-first">
+From the context menu associated with the &quot;Programs&quot; item in
+the Controller or Project tree, select “New...”
+</li>
+<li class="indent-list-last">
+From Program main menu, select “New Program...”
+</li>
+</ol>
+<p>
+The &quot;Add New Program&quot; dialog will be displayed.
+</p>
+<p>
+<img width="440" height="418" id="Picture 5" src="AddingANewProgram_files/image001.png">
+</p>
+<p>
+If 
+<b>IEC 61131 task </b>is selected, this
+will add a new empty IEC task to the project.
+</p>
+<p>
+If one of the IEC 61131 program types is
+selected the &quot;Select Task&quot; dialog is displayed.
+</p>
+<p>
+<img width="300" height="300" id="Picture 6" src="AddingANewProgram_files/image002.png">
+</p>
+<p>
+This allows the user to create the program
+on an existing task (by selecting the task from the list) or a new one (by
+clicking the &quot;Add New&quot; button).
+</p>
+<p>
+After selecting a task and closing the
+dialog, the &quot;Add Program&quot; dialog will be displayed.
+</p>
+<p>
+<img width="300" height="266" id="Picture 7" src="AddingANewProgram_files/image003.png">
+</p>
+<p>
+The fields and options in this dialog are
+as follows:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Field/Option
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the new IEC program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional. Description of the new IEC program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execution type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Main program
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The program will be called on each cycle during IEC
+  execution
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sub-program
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The program will be called by other programs in the IEC
+  task.
+</p>
+
+  
+<p class="note">
+This type of execution is not allowed for SFC programs.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+User defined function block
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The program will be custom &quot;User defined function
+  block&quot;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open variables editor when this dialog is closed
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+When checked, displays an editor for local variables
+  for the new program. This editor is also available from the context menus of
+  the program
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Adding to an existing IEC 61131-3 task</h2>
+<p>
+To add a program to an existing IEC task, right click on the
+task in the Controller or Project tree. This will display the &quot;Add
+Program&quot; dialog.
+</p>
+<p>
+<img width="300" height="317" id="Picture 1" src="AddingANewProgram_files/image004.png">
+</p>
+<p>
+The fields and options in this dialog are
+as follows:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Field / Option
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the new IEC program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional. Description of the new IEC program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Language
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The IEC 61131-3 language used for the program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execution type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Main program
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The program will be called on each cycle during IEC
+  execution
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sub-program
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The program will be called by other programs in the IEC
+  task.
+</p>
+
+  
+<p class="note">
+This type of execution is not allowed for SFC programs.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+User defined function block
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The program will be custom &quot;User defined function
+  block&quot;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open variables editor when this dialog is closed
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+When checked, displays an editor for local variables
+  for the new program. This editor is also available from the context menus of
+  the program
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

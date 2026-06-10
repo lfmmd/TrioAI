@@ -1,0 +1,429 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STACKINT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STACKINT">
+</head>
+<body>
+<h1><a name="_Toc317749517"></a>
+<a name="O_1807"></a>
+STACKINT</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+Manages a stack of DINT integers.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PUSH
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Command: when changing from FALSE to TRUE, the value of
+  IN is pushed on the stack.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+POP
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pop command: when changing from FALSE to TRUE, deletes
+  the top of the stack.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+R1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reset command: if TRUE, the stack is emptied and its
+  size is set to N.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value to be pushed on a rising pulse of PUSH.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+N
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Maximum stack size - cannot exceed 128.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EMPTY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if the stack is empty.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+OFLO
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if the stack is full.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+OUT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value at the top of the stack.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+Push and pop operations are performed on rising pulse of
+PUSH and POP inputs. In LD language, the input rung is the PUSH command. The
+output rung is the EMPTY output.
+</p>
+<p>
+The specified size (N) is used only when the R1 (reset)
+input is TRUE.
+</p>
+<h2>ST Language</h2>
+<p>
+MyStack is a declared instance of STACKINT function block.
+</p>
+<p class="codeexample">
+MyStack (PUSH, POP, R1, IN, N);
+<br>
+
+EMPTY := MyStack.EMPTY;
+<br>
+
+OFLO := MyStack.OFLO;
+<br>
+
+OUT := MyStack.OUT;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="194" height="118" src="AO-STACKINT_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+<img width="260" height="109" src="AO-STACKINT_files/image002.gif">
+</p>
+<h2>IL Language</h2>
+<p>
+MyStack is a declared instance of STACKINT function block.
+</p>
+<p class="codeexample">
+Op1: CAL MyStack (PUSH, POP, R1, IN, N)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyStack.EMPTY
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; EMPTY
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyStack.OFLO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; OFLO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyStack.OUT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; OUT
+</p>
+<h2>See also</h2>
+<p>
+<a href="AO-AVERAGE.html">AVERAGE</a>
+<a name="H_947"></a>
+</p>
+<p>
+<a href="AO-INTEGRAL.html">INTEGRAL</a>
+<a name="H_1077"></a>
+</p>
+<p>
+<a href="AO-DERIVATE.html">DERIVATE</a>
+<a name="H_1007"></a>
+</p>
+<p>
+<a href="AO-LIM_ALRM.html">LIM_ALRM</a>
+<a name="H_1091"></a>
+</p>
+<p>
+<a href="AO-HYSTER.html">HYSTER</a>
+<a name="H_1065"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

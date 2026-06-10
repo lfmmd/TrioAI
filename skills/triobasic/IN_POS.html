@@ -1,0 +1,116 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IN_POS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IN_POS">
+</head>
+<body>
+<h1>IN_POS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+&lt;value&gt; = IN_POS
+</p>
+<p class="codeexample">
+&lt;value&gt; = IN_POS AXIS(n)
+</p>
+<h2>Description:</h2>
+<p>
+This axis parameter signals that the axis move has finished
+and that the axis is in position within defined limits of following error and
+speed. The IN_POS feature simplifies the checking required at end of moves to
+ensure a motor has reached position.
+</p>
+<p>
+Using IN_POS requires parameters IN_POS_DIST and
+IN_POS_SPEED to be set up first.
+</p>
+<p class="tip">
+The IN_POS_DIST and IN_POS_SPEED default to zero. Reaching zero
+position and speed error may take considerable time or not happen, depending on
+the servo configuration. 
+</p>
+<h2>Value:</h2>
+<p>
+Returns TRUE when the following 4 conditions are all true: 
+</p>
+<p>
+- move completed (IDLE completed)
+</p>
+<p>
+- no moves are buffered (i.e. NTYPE and PMOVE are zero)
+</p>
+<p>
+- following error FE is less than IN_POS_DIST 
+</p>
+<p>
+- measured speed MSPEED is less than IN_POS_SPEED
+</p>
+<h2>Example:</h2>
+<p>
+Make a move and wait for the axis to be in position before
+continuing.
+</p>
+<p class="codeexample">
+BASE(0) 
+<br>
+
+SERVO = ON 
+<br>
+
+UNITS = 100000 
+<br>
+
+SPEED = 5 
+<br>
+
+ACCEL = 50
+<br>
+
+DECEL = 50 
+<br>
+
+
+<br>
+
+IN_POS_DIST = 0.002 
+<br>
+
+IN_POS_SPEED = 0.1 
+<br>
+
+REPEAT 
+<br>
+
+  TRIGGER 
+<br>
+
+  MOVE(1) 
+<br>
+
+  WAIT IN_POS 
+<br>
+
+  WA(50) 
+<br>
+
+UNTIL FALSE
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="IN_POS_DIST.html">IN_POS_DIST</a>
+, 
+<a href="IN_POS_SPEED.html">IN_POS_SPEED</a>
+, 
+<a href="IDLE.html">IDLE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

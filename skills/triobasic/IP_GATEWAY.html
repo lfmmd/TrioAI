@@ -1,0 +1,52 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IP_GATEWAY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IP_GATEWAY">
+</head>
+<body>
+<h1>IP_GATEWAY</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG / FLASH) 
+</p>
+<h2>Description:</h2>
+<p>
+IP_GATEWAY is used to set the Ethernet network gateway address
+of the main Ethernet port of the 
+<i>Motion Coordinator</i>. The Gateway is the
+IPv4 address of the internet access router on the factory network.  It is only
+required if the 
+<i>Motion Coordinator</i> is to be accessed via the internet. This
+parameter uses the standard dot (.) notation to define the 4 separate octets of
+the IP gateway address.
+</p>
+<p>
+The value is held in flash EPROM and can be set in the
+MC_CONFIG script. 
+</p>
+<h2>Value:</h2>
+<p>
+Network gateway address in dot (.) format.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+IP_GATEWAY = 192.168.0.254
+</p>
+<h3>Example 2:</h3>
+<p>
+Set IP gateway in the MC_CONFIG file:
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+IP_GATEWAY = 192.168.0.254
+</p>
+<p>
+<span style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+</body>
+</html>

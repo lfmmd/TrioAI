@@ -1,0 +1,140 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INPUT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INPUT">
+</head>
+<body>
+<h1>INPUT</h1>
+<h2>Type:</h2>
+<p class="Category">
+File Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+INPUT [#channel,] variable [, variable, ...]
+</p>
+<h2>Description:</h2>
+<p>
+Waits for an ASCII string to be received on the current
+input device, terminated with a carriage return &lt;CR&gt;. If the string is
+valid its numeric value is assigned to the specified variable. If an invalid
+string is entered it is ignored, an error message displayed and input repeated.
+Multiple values may be requested on one line, the values are separated by
+commas, or by carriage returns &lt;CR&gt;.
+</p>
+<p class="tip">
+Poll 
+<a href="KEY.html">KEY</a>
+ to check to if a character has
+been received before performing an INPUT.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+#channel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+See # for the full channel list (default 0 if omitted)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+variable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The variable to store the received character, this may be
+  local variable, 
+<a href="VR.html">VR</a>
+ or 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+Performing an INPUT or INPUT#0 will suspend the command line
+until a character is sent on that channel. 
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Receive a single value and store it in a local variable num
+</p>
+<p class="codeexample">
+INPUT num
+</p>
+<p class="codeexample">
+PRINT &quot;BATCH COUNT = &quot;; num[0]
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+On terminal:
+</p>
+<p class="codeexample">
+123 &lt;CR&gt;
+</p>
+<p class="codeexample">
+BATCH COUNT = 123
+</p>
+<h3>Example 2:</h3>
+<p>
+Get the length and width variables using one INPUT.
+</p>
+<p class="codeexample">
+PRINT &quot;ENTER LENGTH AND WIDTH?&quot;;
+</p>
+<p class="codeexample">
+INPUT VR(11), VR(12)
+</p>
+<p>
+This will display on terminal:
+</p>
+<p class="codeexample">
+ENTER LENGTH AND WIDTH ? 1200,
+</p>
+<p class="codeexample">
+1500 &lt;CR&gt;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="Hash.html">#</a>
+, 
+<a href="KEY.html">KEY</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,1551 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CAM</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CAM">
+</head>
+<body>
+<h1>CAM</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CAM(start point, end point, table multiplier, distance)
+</p>
+<h2>Description:</h2>
+<p>
+The CAM command is used to generate movement of an axis
+according to a table of positions which define a movement profile. The table of
+values is specified with the 
+<a href="TABLE.html">TABLE</a>
+ command. The
+movement may be defined with any number of points from 3 up to the maximum
+table size available. The controller performs linier interpolation between the
+values in the table to allow small numbers of points to define a smooth
+profile.
+</p>
+<p>
+The 
+<a href="TABLE.html">TABLE</a>
+ values are translated
+into positions by offsetting them by the first value and then multiplying them
+by the multiplier parameter. This means that a non-zero starting profile will
+be offset so that the first point is zero and then all values are scaled with
+the multiplier. These are then used as absolute positions from the start
+position.
+</p>
+<p class="tip">
+Two or more CAM commands executing simultaneously can use the same
+values in the table.
+</p>
+<p>
+The speed of the CAM profile is defined through the 
+<a href="SPEED.html">SPEED</a>
+ of the 
+<a href="BASE.html">BASE</a>
+ axis and the
+distance parameter. You can use these two values to determine the time taken to
+execute the CAM profile. 
+</p>
+<p class="note">
+As with any motion command the 
+<a href="SPEED.html">SPEED</a>
+ may
+be changed at any time to any positive value. The 
+<a href="SPEED.html">SPEED</a>
+
+is ramped up to using the current 
+<a href="ACCEL.html">ACCEL</a>
+ value.  
+</p>
+<p>
+To obtain a CAM shape where 
+<a href="ACCEL.html">ACCEL</a>
+
+has no effect the value should be set to at least 1000 times the 
+<a href="SPEED.html">SPEED</a>
+ value (assuming the default 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+ of 1ms).
+</p>
+<p>
+When the CAM command is executing, the 
+<a href="ENDMOVE.html">ENDMOVE</a>
+
+parameter is set to the end of the PREVIOUS move
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start point:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start position of the cam profile in the 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end point:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The end position of the cam profile in the 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+multiplier:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The table values are multiplied by this value to
+  generate the positions.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The distance parameter relates the speed of the axis to
+  the time taken to complete the cam profile. The time taken can be calculated
+  using the current axis speed and this distance parameter (which are in user
+  units).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+TABLE values used by the CAM command do not use UNITS. All
+points are scaled in encoder counts or stepper pulse counts.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A system is being programmed for a CAM to take 10 seconds to
+complete the profile. The axis SPEED is 200, so a distance of 2000 is calculated
+and specified. The distance parameter is NOT the distance moved by the axis. It
+is only used to determine the CAM time.
+</p>
+<p class="codeexample">
+  
+SPEED
+ = 
+200
+ 'Axis SPEED
+<br>
+
+  
+ACCEL 
+= 
+SPEED
+
+* 
+1000 
+'Axis
+to attain the SPEED in 1 ms
+<br>
+
+  
+DECEL 
+= 
+SPEED
+
+* 
+1000
+  
+</p>
+<p class="codeexample">
+  time_value = 
+10
+ 'Time to complete the profile (seconds)
+<br>
+
+  distance = 
+SPEED
+ * time_value 
+'&quot;distance&quot; parameter FOR CAM
+<br>
+
+  
+CAM
+(
+0
+, 
+100
+, 
+1
+, distance)
+</p>
+<h3>Example2:</h3>
+<p>
+Motion is required to follow the POSITION equation:
+</p>
+<p>
+t(x) = x*25 + 10000(1-cos(x))
+</p>
+<p>
+Where x is in degrees. This example table provides a simple
+oscillation superimposed with a constant speed. To load the table and cycle it
+continuously the program would be:
+</p>
+<p class="codeexample">
+  
+FOR
+ deg = 
+0
+ TO
+ 360
+ STEP
+ 20
+ 'loop to fill in the
+table
+<br>
+
+    rad = deg * 
+2
+ * 
+PI
+/
+360
+ 'convert degrees to
+radians
+<br>
+
+    x = deg * 
+25
+ + 
+10000
+
+* (
+1 
+- 
+COS
+(rad))
+<br>
+
+    
+TABLE
+(deg / 
+20
+,
+x) 
+'place value of x in table
+<br>
+
+  
+NEXT
+ deg
+<br>
+
+  
+<br>
+
+  
+WHILE
+ IN
+(
+2
+) = 
+ON
+ 'repeat cam motion while input 2 is on
+<br>
+
+    
+CAM
+(
+0
+, 
+18
+, 
+1
+, 
+200
+)
+<br>
+
+    
+WAIT
+ IDLE
+<br>
+
+  
+WEND
+</p>
+<p class="note">
+The subroutine camtable loads the data into the cam 
+<a href="TABLE.html">TABLE</a>
+, as shown in the graph below.
+</p>
+<p>
+<img border="0" width="288" height="168" id="Picture 1" src="CAM_files/image001.png">
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Table  Position
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Degrees
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+20
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1103
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+40
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3340
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+60
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6500
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+80
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10263
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+100
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+14236
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+120
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+18000
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+140
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+21160
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+160
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+23396
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+180
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+24500
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+200
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+24396
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+220
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+23160
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+240
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+21000
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+13
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+260
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+18236
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+14
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+280
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+15263
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+300
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12500
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+320
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10340
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+340
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9103
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+18
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+360
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9000
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example 3:</h3>
+<p>
+A masked wheel is used to create a stencil for a laser to
+shine through for use in a printing system for the ten numerical digits. The required
+digits are transmitted through port 1 serial port to the controller as ASCII
+text.
+</p>
+<p>
+The encoder used has 4000 edges per revolution and so must
+move 400 between each position. The cam table goes from 0 to 1, which means
+that the CAM multiplier needs to be a multiple of 400 to move between the
+positions.
+</p>
+<p>
+The wheel is required to move to the pre-set positions every
+0.25 seconds. The speed is set to 10000 edges/second, and we want the profile
+to be complete in 0.25 seconds. So multiplying the axis speed by the required
+completion time
+</p>
+<p>
+(10000 x 0.25) gives the distance parameter equals 2500. 
+</p>
+<p>
+<img border="0" width="390" height="292" id="Picture 2" src="CAM_files/image002.jpg">
+</p>
+<p class="codeexample">
+  
+GOSUB
+ profile_gen
+<br>
+
+  
+WHILE
+ IN
+(
+2
+) = 
+ON
+<br>
+
+    
+WAIT
+ UNTIL
+
+
+KEY
+#
+1
+ 'Waits for character on port 1
+<br>
+
+    
+GET
+#
+1
+, k
+<br>
+
+    
+IF
+ k &gt; 
+47
+
+
+AND
+ k &lt; 
+58
+
+
+THEN
+ 'check for
+valid ASCII character
+<br>
+
+      position = (k - 
+48
+) * 
+400
+ 'convert to absolute
+position
+<br>
+
+      multiplier = position - offset 
+'calculate
+relative movement
+<br>
+
+      
+'check if it is shorter to move in reverse
+direction
+<br>
+
+      
+IF
+ multiplier &gt; 
+2000
+ THEN
+<br>
+
+        multiplier = multiplier - 
+4000
+<br>
+
+      
+ELSEIF
+ multiplier &lt; -
+2000
+ THEN
+<br>
+
+        multiplier = multiplier + 
+4000
+<br>
+
+      
+ENDIF
+<br>
+
+      
+CAM
+(
+0
+, 
+200
+, multiplier, 
+2500
+)
+
+'set the CAM movment
+<br>
+
+      
+WAIT
+ IDLE
+<br>
+
+      
+OP
+(
+15
+, 
+ON
+) 
+'trigger the laser
+flash
+<br>
+
+      
+WA
+(
+20
+)
+<br>
+
+      
+OP
+(
+15
+, 
+OFF
+)
+<br>
+
+      offset = (k - 
+48
+) * 
+400
+ 'calculates current
+absolute position
+<br>
+
+    
+ENDIF
+<br>
+
+  
+WEND
+<br>
+
+  
+<br>
+
+
+profile_gen:
+<br>
+
+  num_p = 
+201
+<br>
+
+  scale = 
+1.0
+<br>
+
+  
+FOR
+ p = 
+0
+ TO
+ num_p - 
+1
+<br>
+
+    
+TABLE
+(p, ((-
+SIN
+(
+PI 
+* 
+2 
+* p / num_p)
+/ (
+PI 
+* 
+2
+))
++ p / num_p) * scale)
+<br>
+
+  
+NEXT
+ p
+<br>
+
+
+RETURN
+</p>
+<h3>Example 4:</h3>
+<p>
+A suction pick and place system must vary its speed
+depending on the load carried. The mechanism has a load cell which inputs to
+the controller on the analogue channel (
+<a href="AIN.html">AIN</a>
+).
+</p>
+<p>
+The move profile is fixed, but the time taken to complete
+this move must be varied depending on the 
+<a href="AIN.html">AIN</a>
+. The 
+<a href="AIN.html">AIN</a>
+ value varies from 100 to 800, which has to result in a
+move time of 1 to 8 seconds. If the speed is set to 10000 units per second and the
+required time is 1 to 8 seconds, then the distance parameter must range from
+10000 to 80000. (distance = speed x time)
+</p>
+<p>
+The return trip can be completed in 0.5 seconds and so the
+distance value of 5000 is fixed for the return movement. The Multiplier is set
+to -1 to reverse the motion. 
+</p>
+<p class="codeexample">
+  
+GOSUB
+ profile_gen
+ 'loads the cam profile into the table
+<br>
+
+  
+SPEED 
+= 
+10000
+:
+
+ACCEL 
+= 
+SPEED
+
+* 
+1000
+: 
+DECEL
+
+= 
+SPEED 
+* 
+1000
+<br>
+
+  
+WHILE
+ IN
+(
+2
+) = 
+ON
+<br>
+
+    
+OP
+(
+15
+, 
+ON
+) 'turn on suction
+<br>
+
+    load = 
+AIN
+(
+0
+)
+'capture load value
+<br>
+
+    distance = 
+100 
+* load 'calculate the
+distance parameter
+<br>
+
+    
+CAM
+(
+0
+, 
+200
+, 
+50
+, distance)
+'move 50mm forward in time calculated
+<br>
+
+    
+WAIT
+ IDLE
+<br>
+
+    
+OP
+(
+15
+, 
+OFF
+) 'turn off suction
+<br>
+
+    
+WA
+(
+100
+)
+<br>
+
+    
+CAM
+(
+0
+, 
+200
+, -
+50
+, 
+5000
+) 'move back to pick up position
+<br>
+
+  
+WEND
+<br>
+
+  
+<br>
+
+
+profile_gen:
+<br>
+
+  num_p = 
+201
+<br>
+
+  scale = 
+400
+ 'set scale so that multiplier is
+in mm
+<br>
+
+  
+FOR
+ p = 
+0
+ TO
+ num_p - 
+1
+<br>
+
+    
+TABLE
+(p, ((-
+SIN
+(
+PI 
+* 
+2 
+* p / num_p)/(
+PI 
+* 
+2
+)) + p / num_p)
+* scale)
+<br>
+
+  
+NEXT
+ p
+<br>
+
+
+RETURN
+<br>
+
+  
+</p>
+<h3>Example 5:</h3>
+<p>
+A simple sinusoidal motion is needed on an axis at 100 Hz
+frequency. Note that this will need a faster servo period than the default 1000
+µs, as each cycle takes only 0.01 seconds.
+</p>
+<p class="codeexample">
+simple_camtable:
+<br>
+
+  i = 
+100
+<br>
+
+  cam_scale = 
+UNITS
+ AXIS
+(
+1
+)
+<br>
+
+  
+FOR
+ theta = 
+0
+
+
+TO
+ INT
+(
+2
+ * 
+PI
+ * 
+100
+) 
+STEP
+ 10
+<br>
+
+    
+TABLE
+(i, cam_scale * 
+SIN
+(theta / 
+100
+))
+<br>
+
+    
+PRINT
+ i, theta, 
+TABLE
+(i)
+<br>
+
+    i = i + 
+1
+<br>
+
+  
+NEXT
+ theta
+<br>
+
+  
+TABLE
+(i, 
+0
+)
+
+'force the last position in the table
+<br>
+
+  
+PRINT
+ i, theta, 
+TABLE
+(i)
+<br>
+
+  last_cam = i
+<br>
+
+
+<br>
+
+  
+' then the CAM to run it:
+<br>
+
+
+<br>
+
+  
+BASE
+(
+1
+)
+<br>
+
+  
+' 100 Hz, each cycle is 0.01 seconds
+<br>
+
+  
+' This part sets up the cycle time NOT the actual
+speed of motion
+<br>
+
+  cycle_time = 
+0.01
+<br>
+
+  cam_factor = 
+10000
+<br>
+
+  
+SPEED 
+= cam_factor / cycle_time
+<br>
+
+  
+ACCEL 
+= 
+SPEED
+
+* 
+4000
+<br>
+
+  
+DECEL 
+= 
+SPEED
+
+* 
+4000
+<br>
+
+
+<br>
+
+  distance = 
+20
+ 'mm
+<br>
+
+  
+WHILE
+ TRUE
+<br>
+
+    
+CAM
+(
+100
+,
+last_cam, distance, cam_factor)
+<br>
+
+  
+WEND
+</p>
+</body>
+</html>

@@ -1,0 +1,216 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FOR TO BY END_FOR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FOR TO BY END_FOR">
+</head>
+<body>
+<h1><a name="_Toc317749339"></a>
+<a name="O_1479"></a>
+FOR TO BY END_FOR</h1>
+<p class="Category">
+Statement
+</p>
+<p>
+Iteration of statement execution.
+</p>
+<h2>Syntax</h2>
+<p class="fixed">
+<span class="STCodeKeyword">FOR </span>&lt;
+<span class="Buttons">index</span>&gt; := &lt;
+<span class="Buttons">minimum</span>&gt; 
+<span class="STCodeKeyword">TO </span>&lt;
+<span class="Buttons">maximum</span>&gt; 
+<span class="STCodeKeyword">BY </span>&lt;
+<span class="Buttons">step</span>&gt; 
+<span class="STCodeKeyword">DO</span><br>
+
+&nbsp;&nbsp;&nbsp; &lt;statements&gt;
+<br>
+
+
+<span class="STCodeKeyword">END_FOR</span>;
+</p>
+<p>
+Where:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Index
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+DINT internal variable used as index.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+minimum
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+DINT expression: initial value for index.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+maximum
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+DINT expression: maximum allowed value for index.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+step
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+DINT expression: increasing step of index after each
+  iteration (default is 1).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+The 
+<b>BY &lt;step&gt;</b> statement can be omitted. The
+default value for the step is 1.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+iArrayDim := 10;
+<br>
+
+
+<br>
+
+
+<span class="CodeComment">(* resets all items of
+the array to 0 *)</span><br>
+
+
+<span class="STCodeKeyword">FOR </span>iPos
+:= 0 
+<span class="STCodeKeyword">TO </span>(iArrayDim
+- 1) 
+<span class="STCodeKeyword">DO</span><br>
+
+&nbsp;&nbsp; MyArray[iPos] := 0;
+<br>
+
+
+<span class="STCodeKeyword">END_FOR</span>;
+<br>
+
+
+<br>
+
+
+<span class="CodeComment">(* set all items with
+odd index to 1 *)</span><br>
+
+
+<span class="STCodeKeyword">FOR </span>iPos
+:= 1 
+<span class="STCodeKeyword">TO </span>9
+
+<span class="STCodeKeyword">BY </span>2 
+<span class="STCodeKeyword">DO</span><br>
+
+&nbsp;&nbsp; MyArray[ipos] := 1;
+<br>
+
+
+<span class="STCodeKeyword">END_FOR</span>;
+</p>
+<h2>FBD Language</h2>
+<p>
+Not available.
+</p>
+<h2>LD Language</h2>
+<p>
+Not available.
+</p>
+<h2>See also</h2>
+<p>
+<a href="Bas-IF.html">IF</a>
+</p>
+<p>
+<a href="Bas-WHILE.html">WHILE</a>
+</p>
+<p>
+<a href="Bas-REPEAT.html">REPEAT</a>
+</p>
+<p>
+<a href="Bas-CASE.html">CASE</a>
+</p>
+<p>
+<a href="Bas-EXIT.html">EXIT</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

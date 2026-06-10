@@ -1,0 +1,793 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Introduction to TrioBASIC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Introduction to TrioBASIC </h1>
+<h2>Introduction</h2>
+<p>
+The TrioBASIC programming reference guide lists all the
+BASIC keywords used in the MC4xx range of Motion Coordinators in alphabetical
+order. A TrioBASIC keyword can be a simple parameter, or a command with a
+clearly defined function, such as FORWARD or HALT, whereas others may take one
+or more parameters which affect the operation of the command.
+</p>
+<p>
+This short introduction is intended to provide a guide to
+using the main programming reference. It identifies the concepts and some words
+and phrases which have a particular meaning within the context of this manual.
+</p>
+<h2>Command reference entry</h2>
+<p>
+Each TrioBASIC keyword is described in the technical
+reference manual using a standard format. The keyword name is given, what type
+of TrioBASIC keyword it is, an example of syntax and then a description of its
+parameters and overall operation. Finally, an example of it in a typical
+program is given when available.
+</p>
+<p>
+Here is the typical layout.
+</p>
+<p style="margin-left:36.0pt">
+<b>KEYWORD_NAME</b></p>
+<p style="margin-left:36.0pt">
+<b>Type:</b></p>
+<p style="margin-left:36.0pt">
+The keyword type, for example “System
+Parameter”.
+</p>
+<p style="margin-left:36.0pt">
+<b>Syntax:</b></p>
+<p style="margin-left:36.0pt">
+The definition of the keyword
+syntax. Where parameters are optional, they are enclosed in square brackets [].
+</p>
+<p style="margin-left:36.0pt">
+<b>Description:</b></p>
+<p style="margin-left:36.0pt">
+A brief description of command or
+parameter, informing what it does and how it may interact with other parameters
+or commands.
+</p>
+<p style="margin-left:36.0pt">
+<b>Parameters:</b></p>
+<p style="margin-left:36.0pt">
+A table of all the parameters for
+the command. If the keyword is a parameter itself, then this section will be
+missed.
+</p>
+<p style="margin-left:36.0pt">
+<b>Examples:</b></p>
+<p style="margin-left:36.0pt">
+<b><i>Example 1:</i></b></p>
+<p style="margin-left:36.0pt">
+Where available, at least one
+example will be shown. When the command is a motion command, the example may be
+a small sub-set of the sequence needed to show the command working in a
+realistic application.
+</p>
+<p style="margin-left:36.0pt">
+<b>See
+also:</b></p>
+<p style="margin-left:36.0pt">
+A list of other related keywords
+so that the reader can easily cross-reference.
+</p>
+<h2>Keyword types</h2>
+<p>
+Keywords are split into groups according to their function,
+where they may be used and where they are stored in the Motion Coordinator. A
+keyword may have more than one type. For example, a keyword can be a System
+Variable and be available for use in the MC_CONFIG initialisation program.
+</p>
+<p>
+Below is a table describing all the keyword types.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis Command
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A command sent to a particular axis. An axis command
+  will usually have one or more parameters in parentheses. It will operate on
+  the BASE axis that is set, but it can also take the AXIS modifier keyword.
+  For example:
+</p>
+
+  
+<p class="codeexample">
+MOVE(100)
+</p>
+
+  
+<p class="codeexample">
+REGIST(21, 4, 0, 1, 0) AXIS(15)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis Parameter
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A parameter which is associated with a particular axis.
+  An axis parameter will operate on the BASE axis that is set, but it can also
+  take the AXIS modifier keyword. For example:
+</p>
+
+  
+<p class="codeexample">
+P_GAIN = 1.2
+</p>
+
+  
+<p class="codeexample">
+x = MPOS AXIS(2)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Command line only
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The command or parameter may be entered in the command
+  line on Motion Perfect terminal 0. It may NOT be used within an executable TrioBASIC
+  program.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Constant
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The keyword returns a constant value. Used to make common
+  program constants more readable. For example:
+</p>
+
+  
+<p class="codeexample">
+OP(10, ON)
+</p>
+
+  
+<p class="codeexample">
+WAIT UNTIL MARK = TRUE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FLASH
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The parameter is automatically stored in the flash
+  memory and will therefore be available on the next and all subsequent power
+  ups.
+</p>
+
+  
+<p class="tablecontent">
+Note that parameters stored to Flash from the command
+  line are not referenced in the Motion Perfect project and must be documented
+  separately. For this reason, the use of MC_CONFIG is recommended even if the
+  parameter is also stored in the Flash.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mathematical Function
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The keyword is a typical TrioBASIC mathematical
+  function which can take one or more operands, and which returns a result. For
+  example:
+</p>
+
+  
+<p class="codeexample">
+x = COS(y)
+</p>
+
+  
+<p class="codeexample">
+value = ATAN2(VR(10), VR(11))
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_CONFIG
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The parameter is available for use in the MC_CONFIG
+  script which runs automatically on power up while configuring the system.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modifier
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A modifier keyword is used to modify the target axis,
+  process, port or slot that a command is sent to, or that a parameter is sent
+  to or read from. For example:
+</p>
+
+  
+<p class="codeexample">
+CONNECT(1,3) AXIS(10)
+</p>
+
+  
+<p class="codeexample">
+x = PROC_STATUS PROC(21)
+</p>
+
+  
+<p class="codeexample">
+PRINT FPGA_VERSION SLOT(2)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Process Parameter
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A parameter which gives the status of a process in the
+  multi-tasking, or which, if written to, has some control function in the
+  multi-tasking.  A process parameter operates on process 0 unless the PROC
+  modifier is used. For example:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Program Structure
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot Parameter
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A slot parameter gives some information about the
+  status of the hardware on that slot. Some slot parameters also have a control
+  function when written to. A slot parameter operates on slot 0 unless the SLOT
+  modifier is used. For example:
+</p>
+
+  
+<p class="codeexample">
+VR(10) = SERCOS_PHASE SLOT(2)
+</p>
+
+  
+<p class="codeexample">
+PRINT FPGA_VERSION SLOT(-1)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+System Command
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A command which operates on the system firmware, or on
+  a part of the Motion Coordinator hardware. A system command may have one or
+  more parameters contained within parentheses. For example:
+</p>
+
+  
+<p class="codeexample">
+AUTORUN
+</p>
+
+  
+<p class="codeexample">
+SETCOM(19200,8,1,2,2,4)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+System Parameter
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A parameter which is associated with the whole system.
+  A system parameter may control or give the status of something in the
+  operating firmware, or it may be hardware specific. For example:
+</p>
+
+  
+<p class="codeexample">
+NIO
+</p>
+
+  
+<p class="codeexample">
+TIME$
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+All functions and commands will accept an expression as well
+as a single variable. For example, a valid expression might be:
+</p>
+<p class="codeexample">
+MOVE(COS(x) * VR(1) / 100)
+</p>
+<h2>Keyword Syntax</h2>
+<p>
+Each entry in the TrioBASIC reference manual shows the
+syntax of the keyword in a standard form. Syntax, the way you use the keyword,
+appears in four ways in TrioBASIC.
+</p>
+<h3>Command</h3>
+<p>
+Commands come in two types; those which take parameters and
+those which do not. An example of a command with parameters is shown here.
+</p>
+<p class="codeexample">
+MHELICAL(end1, end2, centre1, centre2, direction,
+distance3 [,mode])
+</p>
+<p>
+Parameters are contained within parentheses (round brackets).
+If there is more than one parameter, then they are separated by a comma.
+Optional parameters are shown in the syntax description within square brackets.
+The square brackets are not used when writing the command in a program, so if
+the optional parameter is used, just insert the comma and the value or
+expression without square brackets.
+</p>
+<p>
+Commands which do not have parameters are just entered as
+the keyword with no parentheses or brackets, thus:
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<h3>Function</h3>
+<p>
+Functions can both take a value, or values, and will also
+return a value. The values given to the function are in parentheses, in the
+same way as for a command. One or more values may be passed to the function.
+Mathematical functions are typical of this syntax type.
+</p>
+<p class="codeexample">
+value = COS(expression)
+</p>
+<p class="codeexample">
+value = ABS(expression)
+</p>
+<h3>Parameter</h3>
+<p>
+A parameter carries a value and therefore works in the same
+way as a variable. A value can be assigned to a parameter, or a value can be
+read from a parameter. Some parameters are read only. This will be shown in the
+keyword type information.
+</p>
+<p>
+Some examples of parameter syntax are:
+</p>
+<p class="codeexample">
+P_GAIN = 1.0
+</p>
+<p class="codeexample">
+VR(10) = PROC_STATUS PROC(3)
+</p>
+<p class="codeexample">
+IF MPOS AXIS(10) &gt; (ENDMOVE AXIS(10) – 200) THEN
+</p>
+<p class="codeexample">
+CANIO_ADDRESS = 40
+</p>
+<h3>Constant</h3>
+<p>
+Some keywords are provided to make common constants
+available to the programmer. These are, of course, read-only. Constants, for
+the purpose of syntax, can be thought of as a sub-set of the parameter type. The
+following examples show the use of the constants PI, FALSE, TRUE, OFF and ON:
+</p>
+<p class="codeexample">
+circumference = PI * diameter
+</p>
+<p class="codeexample">
+IF result = FALSE THEN
+</p>
+<p class="codeexample">
+WHILE TRUE
+</p>
+<p class="codeexample">
+OP(30, OFF)
+</p>
+<p class="codeexample">
+bit3 = ON
+</p>
+<h2>Variables</h2>
+<p>
+Variables that may be used in expressions or as parameters
+within a command or function can be stored in volatile RAM, in non-volatile
+battery backed RAM or in non-volatile Flash memory. A variable may also be
+local or global.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Local variable
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A local variable is given a user defined name.  The
+  name can contain letters, numbers and the underscore “_” character.  It can
+  be of any length, but only the first 32 characters are used to identify the
+  unique variable name. The value of a local variable is known only to the
+  process that it was defined in.
+</p>
+
+  
+<p class="tablecontent">
+Local variables are volatile and will be lost at power
+  down. For example:
+</p>
+
+  
+<p class="codeexample">
+<span class="fixedChar">elapsed_time = -TICKS
+  / 1000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Global variables
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Global variables, otherwise known as VR variables, are
+  held in non-volatile memory.  In the MC464 this is maintained by a lithium
+  battery. In the MC403/MC405, the global variables are stored in the Flash
+  memory. Global variables can be accessed from all processes including the
+  command line in terminal 0.
+</p>
+
+  
+<p class="tablecontent">
+There are a fixed number of global variables. Each
+  variable is accessed by index number, e.g. value&nbsp;=&nbsp;VR(123). See the
+  relevant hardware manual for the highest index number. For example:
+</p>
+
+  
+<p class="codeexample">
+<span class="fixedChar">batch_size =
+  VR(101)</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TABLE values
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Another range of globally accessible values is the
+  TABLE memory. This is a large, indexed array of variables which has a special
+  purpose in some commands. It can also be used as a general memory for
+  application programs.
+</p>
+
+  
+<p class="tablecontent">
+Table memory may be either volatile or non-volatile.
+  See the appropriate hardware manual for details. For example:
+</p>
+
+  
+<p class="codeexample">
+<span class="fixedChar">TABLE(100, 1.2,
+  2.3, 4.5, 6.8, 9.0, 15.4, 23.7)</span></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Variable Syntax</h3>
+<p>
+The default data type of all variables is double precision
+float. However, the floating-point data type can also store integers up to 52
+bits plus sign. Therefore, all variables and most parameters can be referenced
+as if they are integers, without any need to create a separate integer data
+type definition.
+</p>
+<p class="codeexample">
+my_variable = 450.023 'Decimal float
+</p>
+<p class="codeexample">
+my_variable = 450 'Decimal integer
+</p>
+<p class="codeexample">
+my_variable = $FF6A 'Hexadecimal integer
+</p>
+<p class="codeexample">
+my_variable.5 = 1 'Sets bit 5 to 1
+</p>
+<p>
+Versions of firmware released after the middle of 2012 have
+more advanced data types available. For example, the STRING type can be defined
+using the DIM statement. See under 
+<a href="DIM.html">DIM</a>
+ in the TrioBASIC
+reference manual for further information.
+</p>
+<h2>Labels</h2>
+<p>
+A label is a place marker in the program. Labels are given
+user defined names. The name can contain letters, numbers and the underscore
+“_” character.  It can be of any length, but only the first 32 characters are
+used to identify the unique variable name. The label position is defined by
+putting the colon “:” character after the label name. The line containing the
+label can then be referenced within a GOTO or GOSUB command.
+</p>
+<p class="codeexample">
+start_of_program:
+</p>
+<p class="codeexample">
+  raduis1 = 123
+</p>
+<p class="codeexample">
+  GOSUB calc_circle_radius
+</p>
+<p class="codeexample">
+  PRINT #5, area1
+</p>
+<p class="codeexample">
+  WA(500)
+</p>
+<p class="codeexample">
+GOTO start_of_program
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+calc_circle_area:
+</p>
+<p class="codeexample">
+  area1 = PI * radius1 ^ 2
+</p>
+<p class="codeexample">
+RETURN
+</p>
+<h2>Examples</h2>
+<p>
+Each keyword entry shows one or more example of how to use
+the keyword in a realistic context. Sophisticated commands, like the main
+motion commands, will show a reasonably complete example with all the other
+associated commands which are required to make the core of a typical
+application.
+</p>
+<p>
+More complete programming solutions can be found in Trio’s
+wide range of application notes and programming guides.
+</p>
+</body>
+</html>

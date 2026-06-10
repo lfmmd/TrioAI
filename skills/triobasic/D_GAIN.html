@@ -1,0 +1,58 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>D_GAIN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="D_GAIN">
+</head>
+<body>
+<h1>D_GAIN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Used as part of the closed loop control, adding derivative
+gain to a system is likely to produce a smoother response and allow the use of
+a higher proportional gain than could otherwise be used. 
+</p>
+<p>
+High values may lead to oscillation. For a derivative term K
+<sub>d</sub>
+and a change in following error de the contribution to the output O
+<sub>d</sub>
+signal is:
+</p>
+<p class="Formula">
+O
+<sub>d</sub> = K
+<sub>d</sub> × &#948;
+<sub>e</sub></p>
+<h2>Value:</h2>
+<p>
+The derivative gain is a constant which is multiplied by the
+change in following error. Default value = 0
+</p>
+<h2>Example:</h2>
+<p>
+Setting the gain values as part of a STARTUP program
+</p>
+<p class="codeexample">
+P_GAIN=1
+</p>
+<p class="codeexample">
+I_GAIN=0
+</p>
+<p class="codeexample">
+D_GAIN=0.25
+</p>
+<p class="codeexample">
+OV_GAIN=0
+</p>
+<p class="codeexample">
+…
+</p>
+</body>
+</html>

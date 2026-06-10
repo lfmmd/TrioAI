@@ -1,0 +1,291 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>EX</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="EX">
+</head>
+<body>
+<h1>EX</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+EX[(mode)]
+</p>
+<h2>Description:</h2>
+<p>
+Software reset. 
+Resets the controller
+as if it were being powered up.
+</p>
+<p class="tip">
+When performing an EX on the command line you will see the
+controller start up information that provides details of your controller
+configuration.
+</p>
+<p>
+On EX the following actions occur:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+The global numbered (
+<a href="VR.html">VR</a>
+) variables remain
+in memory.
+</li>
+<li class="indent-list-middle">
+The base axis array is reset to 0,1,2... on all processes
+</li>
+<li class="indent-list-middle">
+Axis errors are cleared
+</li>
+<li class="indent-list-middle">
+Watchdog is set 
+<a href="OFF.html">OFF</a>
+</li>
+<li class="indent-list-middle">
+Programs may be run depending on 
+<a href="POWER_UP.html">POWER_UP</a>
+
+and 
+<a href="RUNTYPE.html">RUNTYPE</a>
+ settings
+</li>
+<li class="indent-list-last">
+ALL axis parameters are reset.
+</li>
+</ul>
+<p>
+EX may be included in a program. This can be useful
+following a run time error. Care must be taken to ensure it is safe to restart
+the program.
+</p>
+<p class="note">
+When running Motion Perfect executing an EX command is not
+allowed. The same effect as an EX can be obtained by using “Reset the
+controller...” under the “Controller” menu in Motion Perfect. To simply
+re-start the programs, use the 
+<a href="AUTORUN.html">AUTORUN</a>
+ command.
+</p>
+<h2>Parameter:</h2>
+<h3>Physical controllers</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 or none
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Software resets the controller and communications.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>PC-MCAT</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 or none
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Software restarts only the real-time firmware, leaving
+  the Windows service running which maintains communications.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Software stops the real-time firmware and the Windows
+  service.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Software stops the real-time firmware, stops all the Windows
+  service, and stops Windows.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Software stops the real-time firmware, stops all the
+  Windows service, and restarts Windows.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Software stops the real-time firmware and tells Windows
+  service to restart it. This is as closest approximation to the physical
+  controller EX.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+If the communications are based on Trio Firmware, it will be
+reset as well.
+</p>
+<p class="warning">
+EX(0) will maintain the communication based on the PCMCAT.DLL
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AUTORUN.html">AUTORUN</a>
+, 
+<a href="DATUM.html">DATUM(0)</a>
+,
+
+<a href="UNIT_CLEAR.html">UNIT_CLEAR</a>
+, 
+<a href="ETHERCAT.html">ETHERCAT(0,
+0)</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

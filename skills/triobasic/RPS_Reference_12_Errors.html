@@ -1,0 +1,1456 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Errors</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Errors</h1>
+<p>
+RPS programs can generate errors due to errors in the
+program structure, or type of variables used, or as the result of a command
+being unsuccessfully executed. 
+</p>
+<p>
+Most errors are reported using a channel 9 status message
+which will be displayed as an error in 
+<i>Motion</i> Perfect. Some commands
+return a value which indicates the error status. 
+</p>
+<p>
+In addition to error codes, supplementary information may be
+given in the axis status and the robot status, which are accessed using the
+AXISSTATUS and ROBOTSTATUS keywords.
+</p>
+<h2>Error Codes</h2>
+<p>
+All error codes are detailed in section 
+<a href="_Errors.html">TrioBASIC Errors</a>
+, but RPS errors are redirected to this
+page to make it easier to locate RPS specific error codes.
+</p>
+<table class="tablegrid">
+
+ 
+<thead>
+<tr>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+<span style='font-family:"Calibri",sans-serif'>Value</span></p>
+
+   
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+<span style='font-family:"Calibri",sans-serif'>Error
+   description</span></p>
+
+   
+</td>
+<td width="330" valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+<span style='font-family:"Calibri",sans-serif'>Recovery
+   Action</span></p>
+
+   
+</td>
+</tr>
+</thead>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+190
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Robot configuration cannot be changed while MOVEL
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Avoid changing robot
+  configuration during move
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+191
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+TOOL_OFFSET ID not defined
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Assign proper ID number for
+  TOOL_OFFSET
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+192
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+OBJECT_FRAME ID not defined
+</p>
+
+  
+</td>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p>
+Assign proper ID number for 
+OBJECT_FRAME
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+193
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+ROBOT_FRAME ID not defined
+</p>
+
+  
+</td>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p>
+Assign proper ID number for 
+ROBOT_FRAME
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+197
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+SINGULARITY
+</p>
+
+  
+</td>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p>
+Jog the affected joint away from
+  singularity point 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+198
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+TOOL_OFFSET
+ cannot be
+  modified or deleted while selected
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Select default TOOL_OFFSET
+first
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+199
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+OBJECT_FRAME cannot be modified or deleted while selected
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Select default OBJECT_FRAME first.
+  
+</p>
+
+  
+<p>
+If an object frame was used in ATTACH_OBJECT_FRAME
+  previously, detach object frame using command ATTACH_OBJECT_FRAME(4, &lt;of_name&gt;)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+200
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+ROBOT_FRAME cannot be modified or deleted while selected
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Select default 
+ROBOT_FRAME
+  
+first
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+201
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Robot moves cannot be performed until JOG_OPERATION is
+  disabled
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Avoid executing robot moves
+  whilst jogging is enabled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+203
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+OBJECT_FRAME already attached
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Detach object frame using
+  ATTACH_OBJECT_FRAME(4, &quot;myObjectFrame&quot;)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+204
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+OBJECT_FRAME has not been attached
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Attach Object frame first.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+205
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+OBJECT_FRAME already synced 
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+De-sync object frame using
+  SYNC_TO_OBJECT_FRAME(4, time, &quot;myObjectFrame&quot;)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+206
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Base Axis does not belong to any kinematic group
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Check if KINEMATIC_GROUP / ROBOT
+  is activated in the program using ROBOT(x) command. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+207
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Sync in progress
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Wait, or decrease sync time
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+208
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Robot program stopped (check AXIS_STATUS and ROBOT_STATUS)
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Check ROBOT_STATUS and
+  AXIS_STATUS parameters for errors. Correct the errors of the affected axes. 
+</p>
+
+  
+<p>
+Possible causes among others:
+<br>
+
+  - Singularity limit (3
+° on SCARA and 5
+° on 6-axis robot)
+</p>
+
+  
+<p>
+- Axis FS/RS Limit is reached
+</p>
+
+  
+<p>
+- Axis Max Speed is reached
+</p>
+
+  
+<p>
+- Possible collision detected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+209
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Target point not activated
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Run the GTA file, or declare a
+  GTA
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+218
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Robotics runtime limited to 1 hour (FEC 26)
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+FEC (Feature Enabled Code) 26 is required for unlimited
+  access to use of RPS commands. Purchase the code, or reset controller for
+  another hour of access.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+219
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Collision objects cannot be modified or deleted while
+  selected
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Deactivate collision object
+  first
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+220
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Too many collision objects active
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Reduce the number of collision
+  objects
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+232
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Running of RPS programs inhibited use disable robot
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Type DISABLE_ROBOT(0), or enable
+  the robot if using RPS Kernel
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+233
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+U and V orientation inhibited while wrist singularity
+</p>
+
+  
+</td>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p>
+Jog the affected joint away from
+  singularity point 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+234
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Target Point out of robot working area
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Modify the target point to be
+  within the robot working area
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+235
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Axis locked by a robot 
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Use command ROBOT(-1) first
+  before selecting base
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+236
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Robot controlled by another process
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Kill the task that is using the
+  robot or execute ROBOT(-1) from that task.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+237
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Robot not defined using a kinematic group
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Use only robots that have been properly defined by
+  KINEMATIC_GROUP command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+238
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+Command inhibited: ROBOT must be used to activate a
+  kinematic group
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Use the ROBOT command to activate the kinematic group and
+  allow use of the command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+240
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+The specified robot configuration is not allowed
+</p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Check RPS manual for allowed
+  configurations.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+250
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Target taught with another robot (change
+  ROBOT_TARGET_MODE)</span></p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Modify GTAE element rnum to suit
+  the actual robot number. See GTAE for details.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+251
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Target taught with another robot
+  configuration. Change ROBOT_TARGET_MODE)</span></p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Modify GTAE element rconf to
+  suit the actual robot configuration number. See GTAE for details.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+252
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Target taught with another tool offset (change
+  ROBOT_TARGET_MODE)</span></p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Modify GTAE element tool to suit
+  the actual tool offset number. See GTAE for details.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+253
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Target taught with another object frame (change
+  ROBOT_TARGET_MODE)</span></p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Modify GTAE element of to suit
+  the actual object frame number. See GTAE for details.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+254
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Target taught with another robot frame (change
+  ROBOT_TARGET_MODE)</span></p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Modify GTAE element rf to suit
+  the actual robot frame number. See GTAE for details.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+255
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Invalid FRAME number</span></p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Select a valid frame (see 
+<a href="FRAME.html">FRAME</a>
+).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+256
+</p>
+
+  
+</td>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Frame not supported by RPS</span></p>
+
+  
+</td>
+<td width="330" valign="bottom" class="tablegrid">
+
+  
+<p>
+Select a frame that is valid for
+  RPS (see 
+<a href="FRAME.html">FRAME</a>
+).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Axis Status</h2>
+<p>
+The axis status is a 64-bit mask where each bit has a
+distinct meaning.
+</p>
+<p>
+See 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+ for details of
+each bit’s meaning. 
+</p>
+<h2>Robot Status</h2>
+<p>
+The robot status is a 32-bit mask where each bit has a
+distinct meaning.
+</p>
+<p>
+See 
+<a href="RPS_ROBOTSTATUS.html">ROBOTSTATUS</a>
+ for
+details of each bit’s meaning. 
+</p>
+<h2>Robot Log</h2>
+<p>
+A log system is provided to store in flash events that can
+happen at any time. Up to 2048 entries are stored as a cyclic buffer.
+</p>
+<p>
+The stored data is provided along with the followings: entry
+index, date and time of the event, controller up time and message.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+ROBOT_LOG
+</p>
+
+  
+<p class="codeexample">
+ROBOT_LOG(function)
+</p>
+
+  
+<p class="codeexample">
+ROBOT_LOG(start_index[, end_index])
+</p>
+
+  
+<p class="codeexample">
+ROBOT_LOG(name)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>-1</span></em></p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+ROBOT_LOG(-1) deletes all entries
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+(optional) start_index
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Starting log index to read
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>(optional)</span></em><em><span style='font-family:"Calibri",sans-serif'> </span></em><em><span style='font-family:"Calibri",sans-serif'>end_index</span></em></p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Ending log index to read
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>(optional) name</span></em></p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Name of destination file where to store robot log messages
+  to.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Display all robot log messages on Terminal.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;robot_log    
+<br>
+
+   1 23/Jan/2018 13:15:10 [    4618.272] Wrist Singularity axis [4]
+<br>
+
+   2 23/Jan/2018 13:15:12 [    4620.961] Blend max radius reached: 89 Units
+<br>
+
+   3 23/Jan/2018 13:15:13 [    4620.963] Blend max radius reached: 121 Units
+<br>
+
+   4 23/Jan/2018 13:15:13 [    4621.130] Encompassed point:
+350,150,550,-120,16,-100
+<br>
+
+   5 23/Jan/2018 13:15:14 [    4622.739] Wrist Singularity axis [4]
+<br>
+
+   6 23/Jan/2018 13:15:14 [    4622.739] Max speed reached: 356.445313 Units/s
+in axis 5 
+<br>
+
+&lt;END OF LOG&gt;
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Display robot log messages on Terminal starting index 3.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;robot_log(3)
+<br>
+
+   3 23/Jan/2018 13:15:13 [    4620.963] Blend max radius reached: 121 Units
+<br>
+
+   4 23/Jan/2018 13:15:13 [    4621.130] Encompassed point:
+350,150,550,-120,16,-100
+<br>
+
+   5 23/Jan/2018 13:15:14 [    4622.739] Wrist Singularity axis [4]
+<br>
+
+   6 23/Jan/2018 13:15:14 [    4622.739] Max speed reached: 356.445313 Units/s
+in axis 5 
+<br>
+
+&lt;END OF LOG&gt;
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 3</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Display robot log messages on Terminal between index 3 and 5
+on Terminal.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;robot_log(3, 5)
+<br>
+
+   3 23/Jan/2018 13:15:13 [    4620.963] Blend max radius reached: 121 Units
+<br>
+
+   4 23/Jan/2018 13:15:13 [    4621.130] Encompassed point:
+350,150,550,-120,16,-100
+<br>
+
+   5 23/Jan/2018 13:15:14 [    4622.739] Wrist Singularity axis [4]
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 4</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Store robot log messages and name the file as “</span></em>My
+messages”
+<em><span style='font-family:"Calibri",sans-serif'>.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;robot_log(&quot;My messages&quot;)
+</p>
+<span style='font-family:"Courier New"'><br clear="all">
+
+</span><p>
+&nbsp;
+</p>
+
+
+
+</body>
+</html>

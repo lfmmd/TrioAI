@@ -1,0 +1,139 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FLAG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FLAG">
+</head>
+<body>
+<h1>FLAG</h1>
+<h2>Type:</h2>
+<p class="Category">
+Logical and Bitwise operator
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = FLAG(flag_no [,state])
+</p>
+<h2>Description:</h2>
+<p>
+The FLAG command is used to set and read a bank of 24 flag
+bits. 
+</p>
+<p class="note">
+The FLAG command is provided to aid compatibility with earlier
+controllers and is not recommended for new programs.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+With one parameter it returns the state of the flag
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+With 2 parameters it returns -1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+flag_no:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The flag number is a value from 0..31. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+state:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The state to set the given flag to. 
+<a href="ON.html">ON</a>
+
+  or 
+<a href="OFF.html">OFF</a>
+. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Toggle a flag depending on a 
+<a href="VR.html">VR</a>
+ value
+</p>
+<p class="codeexample">
+IF FLAG(21) and VR(100)=123 THEN
+</p>
+<p class="codeexample">
+  FLAG(21,OFF)
+</p>
+<p class="codeexample">
+ELSE IF NOT FLAG(21) and VR(100)&lt;&gt;123 THEN
+<br>
+
+  FLAG(21,ON)
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+</body>
+</html>

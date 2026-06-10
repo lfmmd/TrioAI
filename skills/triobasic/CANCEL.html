@@ -1,0 +1,394 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CANCEL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CANCEL">
+</head>
+<body>
+<h1>CANCEL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CANCEL([mode])
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+CA([mode])
+</p>
+<h2>Description:</h2>
+<p>
+Used to cancel current or buffered axis commands on an axis
+or an interpolating axis group.
+</p>
+<p>
+Velocity profiled moves, for example; 
+<a href="FORWARD.html">FORWARD</a>
+,
+
+<a href="REVERSE.html">REVERSE</a>
+, 
+<a href="MOVE.html">MOVE</a>
+, 
+<a href="MOVEABS.html">MOVEABS</a>
+, 
+<a href="MOVECIRC.html">MOVECIRC</a>
+, 
+<a href="MHELICAL.html">MHELICAL</a>
+, 
+<a href="MOVEMODIFY.html">MOVEMODIFY</a>
+,
+will be ramped down, then terminated once it comes to rest, while other move
+types will be terminated immediately.
+</p>
+<p>
+<a name="_Hlk208300587">Cancelling the current move (cancel
+modes 0 and 2) will decelerate at </a>
+<a href="FASTDEC.html">FASTDEC</a>
+ if
+specified, otherwise at 
+<a href="DECEL.html">DECEL</a>
+.
+</p>
+<p>
+Cancelling buffered moves (those that will be processed
+after the current move completes), will cause the current move to terminate
+normally at its target position (i.e. with a deceleration of 
+<a href="DECEL.html">DECEL</a>
+, as if the buffered moves had never been loaded),
+unless there is not enough room to come to rest before the current move
+completes, in which case motion will come to rest within the cancelled moves,
+after which they will be unloaded from the move buffer.
+</p>
+<p>
+Cancelling the last buffered move will cause it to be
+immediately removed from the move buffer unless its distance is required for
+motion to come to rest within, after which it will be unloaded from the move
+buffer. If no moves are buffered, the current move will be cancelled.
+</p>
+<p class="note">
+CANCEL can be called manually, but also automatically by software
+limits, hardware limits and 
+<a href="MOTION_ERROR.html">MOTION_ERRORs</a>
+. 
+</p>
+<p>
+If the axis being cancelled has an ADDAX associated with it,
+then this will remain active unless AXIS_MODE.3 is set, in which case it will
+be deactivated and will require the use of ADDAX to reactivate it.
+</p>
+<p>
+When cancelling a MOVEADD (cancel mode 5), both the MOVEADD
+and the current move on the axis will be cancelled.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="7" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 (default)
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancels the currently executing move, indicated by 
+<a href="MTYPE.html">MTYPE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancels all buffered moves, indicated by 
+<a href="NTYPE.html">NTYPE</a>
+, on the base axis (excluding 
+<a href="PMOVE.html">PMOVE</a>
+)
+  
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancels all active and buffered moves, including the 
+<a href="PMOVE.html">PMOVE</a>
+ if it is to be loaded on the 
+<a href="BASE.html">BASE</a>
+
+  axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Terminate the current move without stopping first to
+  allow following move to be merged
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Terminate the last buffered move on the base axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancels the currently executing move and the 
+<a href="MOVEADD.html">MOVEADD</a>
+ additional movement
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancels the 
+<a href="MOVEADD.html">MOVEADD</a>
+
+  additional movement
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+CANCEL(0) will only cancel the presently executing move. If
+further moves are buffered, then they will be loaded and so motion will not
+stop. Use CANCEL(2) if all motion on an axis or interpolating axis group needs
+stopping, or RAPIDSTOP(2) if all motion on all axes needs stopping.
+</p>
+<p class="note">
+CANCEL(3) will only cancel the current move at speed if a
+following move exists in the move buffer, otherwise it will perform a normal
+cancel.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Move the base axis forward at the programmed 
+<a href="SPEED.html">SPEED</a>
+, wait for 10 seconds, then slow down and stop the
+axis at the programmed 
+<a href="DECEL.html">DECEL</a>
+ rate.
+</p>
+<p>
+<img border="0" width="302" height="187" id="Picture 1" src="CANCEL_files/image001.jpg">
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<p class="codeexample">
+WA(10000)
+</p>
+<p class="codeexample">
+CANCEL 'Stop movement after 10 seconds (same as CANCEL(0))
+</p>
+<h3>Example 2:</h3>
+<p>
+A flying shear uses a sequence of 
+<a href="MOVELINK.html">MOVELINK</a>
+s
+to make the base axis follow a reference encoder on axis 4. When the shear
+returns to the top position an input is triggered, this removes the buffered 
+<a href="MOVELINK.html">MOVELINK</a>
+ and replace with a decelerating 
+<a href="MOVELINK.html">MOVELINK</a>
+ to ramp down the slave (base) axis.
+</p>
+<p class="codeexample">
+ref_axis = 4
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+  MOVELINK(100, 100, 0, 0, ref_axis)
+</p>
+<p class="codeexample">
+  WAIT LOADED 'Make sure the NTYPE buffer is empty each
+time
+</p>
+<p class="codeexample">
+UNTIL IN(5) = ON
+</p>
+<p class="codeexample">
+CANCEL(1) 'Cancel the MOVELINK in the NTYPE buffer
+</p>
+<p class="codeexample">
+MOVELINK(100, 200, 0, 200, ref_axis) 'Deceleration ramp
+</p>
+<p class="codeexample">
+CANCEL 'Cancel the main MOVELINK, this starts the deceleration
+</p>
+<h3>Example 3:</h3>
+<p>
+Two axes are connected using a ratio of 1:2. Axis 0 is
+cancelled after 1 second, then axis 1 is cancelled when the speed drops to a
+specified level (in this example, 7500). Following the first CANCEL, axis 1
+will decelerate at the 
+<a href="FASTDEC.html">DECEL</a>
+ rate until axis 1’s 
+<a href="CONNECT.html">CONNECT</a>
+ is cancelled, causing it to stop instantly.
+</p>
+<p>
+<img border="0" width="302" height="191" id="Picture 2" src="CANCEL_files/image002.jpg">
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+SPEED = 10000
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<p class="codeexample">
+CONNECT(0.5, 0) AXIS(1)
+</p>
+<p class="codeexample">
+WA(1000)
+</p>
+<p class="codeexample">
+CANCEL
+</p>
+<p class="codeexample">
+WAIT UNTIL VP_SPEED &lt;= 7500
+</p>
+<p class="codeexample">
+CANCEL AXIS(1)
+</p>
+<h2>See also:</h2>
+<p>
+<a href="FASTDEC.html">FASTDEC</a>
+, 
+<a href="FASTJERK.html">FASTJERK</a>
+,
+
+<a href="RAPIDSTOP.html">RAPIDSTOP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

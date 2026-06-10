@@ -1,0 +1,135 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INTEGER_WRITE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INTEGER_WRITE">
+</head>
+<body>
+<h1>INTEGER_WRITE</h1>
+<h2>Type: </h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+INTEGER_WRITE(destination, least_significant, most_significant)
+</p>
+<h2>Description:</h2>
+<p>
+INTEGER_WRITE performs a low-level write to a 64-bit destination
+by combining the bit patterns of two 32-bit values into a 64-bit bit pattern and
+writing this into the destination. The destination may be integer or
+floating-point, as it is the bit pattern (i.e. internal representation) that is
+written, not its value or a cast of its value.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+destination:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+64-bit value that will be written, can be 
+<a href="VR.html">VR</a>
+,
+  
+<a href="TABLE.html">TABLE</a>
+, or system variable.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+least_significant:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Least significant (rightmost) 32 bits, can be any valid
+  TrioBASIC expression.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+most_significant:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Most significant (leftmost) 32 bits, can be any valid
+  TrioBASIC expression.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1</h3>
+<p>
+Write a 64-bit integer bit pattern to a VR and then read it
+back for display on terminal 0.
+</p>
+<p class="codeexample">
+INTEGER_WRITE(VR(1), $1234, $5678)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+INTEGER_READ(VR(1), VR(4), VR(5))
+</p>
+<p class="codeexample">
+PRINT HEX(VR(4)), HEX(VR(5))
+</p>
+<h3>Example 2</h3>
+<p>
+Write the 64-bit pattern for the floating-point number
+0.9999 and display as a float.
+</p>
+<p class="codeexample">
+INTEGER_WRITE(VR(1), $48E8A71E, $3FEFFF2E)
+</p>
+<p class="codeexample">
+PRINT VR(1)
+</p>
+</body>
+</html>

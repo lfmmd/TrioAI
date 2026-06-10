@@ -1,0 +1,522 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FUNCTION</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FUNCTION">
+</head>
+<body>
+<h1>FUNCTION, RETURN, ENDFUNC</h1>
+<h2>Type:</h2>
+<p class="Category">
+Function
+</p>
+<h2>Syntax:</h2>
+<p>
+FUNCTION name([param1 AS type[, param2 AS type[, param3 AS
+type …. ]]])
+<br>
+
+….
+</p>
+<p>
+RETURN x
+<br>
+
+ENDFUNC
+</p>
+<h2>Description:</h2>
+<p>
+User defined function residing in a function library for use
+by any BASIC program in the Motion Coordinator multi-tasking system. A function
+must as a minimum have a name and finish with the ENDFUNC keyword. The contents
+of the function can take any BASIC commands so long as they work in the context
+of the required function operation. 
+</p>
+<p>
+Up to 1024 FUNCTIONs can be defined and used in firmware
+2.0301 and later. Older versions of firmware support up to 256 FUNCTIONs.
+</p>
+<p>
+FUNCTION requires a matching ENDFUNC keyword to complete a
+function definition. Parameters are optional (maximum of 16) and should be
+specified within parentheses; parameters of the same data type can be separated
+by commas. 
+</p>
+<p>
+A return parameter is also optional and should be specified
+at the end of the line.
+</p>
+<p class="warning">
+FUNCTION may be used only within a Function Library.
+</p>
+<p class="note">
+BASIC Library files support a smaller subset of commands compared
+with standard program files.  For example, GOSUB and GOTO are not supported
+within a BASIC Library file.
+</p>
+<p class="tip">
+Library functions can have a nested hierarchy of calls to other
+library functions to a maximum depth of 16 levels, the maximum number of
+parameters that can traverse through this hierarchy is 200.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+param1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First optional parameter to be passed into the function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+param2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The second parameter if required
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+param3:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The third parameter if required
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+paramN:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Up to 16 parameters may be passed
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Array parameters:</h2>
+<p>
+Support for passing arrays into functions is available and
+enabled by using optional brackets () after the parameter data type, note that
+there is no need to specify array dimensions, for example;
+</p>
+<p class="codeexample">
+FUNCTION f1(data AS INTEGER(), b AS FLOAT) AS BOOLEAN
+</p>
+<p>
+Array attributes are provided to support generic arrays. 
+Therefore a function can be re-used with arrays of varying dimensions.
+</p>
+<p>
+&lt;array name&gt;.dims – integer value indicating the
+number of array dimensions
+</p>
+<p>
+&lt;array name&gt;.dimsize(n) – integer value indicating the
+length of the specified dimension
+</p>
+<p class="note">
+Note that array attributes may be used within any program and are
+not restricted to BASIC library files.
+</p>
+<h2>Local variables:</h2>
+<p>
+Functions can declare their own local variables using DIM
+statements, for example
+</p>
+<p class="codeexample">
+FUNCTION myfunc AS INTEGER
+</p>
+<p class="codeexample">
+DIM a, b AS INTEGER
+</p>
+<p class="codeexample">
+DIM t AS TARGET
+</p>
+<p class="codeexample">
+DIM x AS FLOAT(5)
+</p>
+<p class="codeexample">
+… 
+</p>
+<p class="codeexample">
+ENDFUNC
+</p>
+<p>
+Local variable names can be reused within multiple functions
+in the same library file. A variable named xx in one function is different to
+xx in another function.
+</p>
+<h2>Process variables:</h2>
+<p>
+Variables can be declared within a library file using DIM
+statements outside of the context of FUNCTION..ENDFUNC structures, these
+variables are visible to all functions within the library but each process that
+utilises the library functions maintains its own copy. The data contained
+within the variables is persistent; hence if one function changes a variable
+then another function will also see the changed value, but only within the same
+process.
+</p>
+<h2>Returning data to the caller:</h2>
+<p>
+The keyword RETURN is not new but behaves differently within
+the context of a function. Used within a function this command returns
+execution back to the caller but is also used to return data back to the caller
+when the function has a return data type defined. Multiple RETURN statements
+are permitted within a single function definition.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Define a function to simply change the RS232 baud rate while
+leaving the bits, parity and stop bits all at constant values.
+</p>
+<p>
+Function in library:
+</p>
+<p class="codeexample">
+FUNCTION
+
+set_rs232(baudrate 
+AS
+ INTEGER
+)
+<br>
+
+    
+SETCOM
+(baudrate, 
+8
+,
+
+1
+, 
+0
+, 
+1
+, 
+0
+)
+<br>
+
+
+ENDFUNC
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+Function call in program:
+</p>
+<p class="codeexample">
+set_rs232(38400)
+<br>
+
+
+<br>
+
+
+</p>
+<h3>Example 2:</h3>
+<p>
+Define a function to calculate the minimum deceleration
+distance for a given DECEL and SPEED value.
+</p>
+<p>
+Function in library:
+</p>
+<p class="codeexample">
+  
+FUNCTION
+
+get_decel_distance(f_decel 
+AS
+ FLOAT
+, f_vel 
+AS
+ FLOAT
+) 
+AS
+ FLOAT
+<br>
+
+    
+DIM
+ dec_dist 
+AS
+
+
+FLOAT
+<br>
+
+    
+'Calculate the deceleration distance using v^2 =
+u^2 + 2as
+<br>
+
+    dec_dist = f_vel ^ 
+2
+ / (
+2
+ * f_decel)
+<br>
+
+    
+RETURN
+ dec_dist
+<br>
+
+  
+ENDFUNC
+<br>
+
+  
+</p>
+<p>
+Function call in program:
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+s_minimum = get_decel_distance(DECEL, SPEED)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p style="margin-left:0cm">
+If the axis number is between 0
+and 12, set up the axis parameters and return -1 (TRUE). Otherwise, return 0.
+</p>
+<p class="codeexample">
+FUNCTION 
+init_axis(ax 
+AS
+INTEGER
+) 
+AS INTEGER
+</p>
+<p class="codeexample">
+  IF 
+ax &gt; 
+12 
+THEN
+</p>
+<p class="codeexample">
+    RETURN 
+0
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    UNITS 
+AXIS
+(ax) = 
+200
+</p>
+<p class="codeexample">
+    SPEED 
+AXIS
+(ax) = 
+50
+</p>
+<p class="codeexample">
+    ACCEL 
+AXIS
+(ax) = 
+100
+</p>
+<p class="codeexample">
+    DECEL 
+AXIS
+(ax) = 
+100
+</p>
+<p class="codeexample">
+    RETURN 
+-
+1
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+ENDFUNC
+</p>
+<h3>Example 4:</h3>
+<p>
+Scan an array and return the value of the maximum entry.
+</p>
+<p class="codeexample">
+FUNCTION 
+max_i
+(
+data 
+AS INTEGER()) AS INTEGER
+</p>
+<p class="codeexample">
+  DIM 
+i, max 
+AS INTEGER
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  max = data(0)
+</p>
+<p class="codeexample">
+  FOR 
+i 
+= 
+1 
+TO 
+data.dimsize(0) - 1
+</p>
+<p class="codeexample">
+    IF 
+data(i) &gt; max 
+THEN
+</p>
+<p class="codeexample">
+      max = data(i)
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+  NEXT 
+i
+</p>
+<p class="codeexample">
+  RETURN 
+max
+</p>
+<p class="codeexample">
+ENDFUNC
+</p>
+<h3>Example 5:</h3>
+<p>
+Use an array to return multiple values from the function.
+</p>
+<p class="codeexample">
+'============================================================
+</p>
+<p class="codeexample">
+' Function to return multiple values in an array.
+</p>
+<p class="codeexample">
+' Call: get_multi_vr(index, number_of_values,
+array_pointer)
+</p>
+<p class="codeexample">
+' Example to get 100 VRs
+</p>
+<p class="codeexample">
+'   DIM my_array AS FLOAT(100)
+</p>
+<p class="codeexample">
+'   get_multi_vr(200, 100, my_array)
+</p>
+<p class="codeexample">
+'   PRINT my_array(54)
+</p>
+<p class="codeexample">
+'============================================================
+</p>
+<p class="codeexample">
+FUNCTION get_multi_vr(index, size AS INTEGER, return_array
+AS FLOAT())
+</p>
+<p class="codeexample">
+    DIM a_index, v_index AS INTEGER
+</p>
+<p class="codeexample">
+    a_index = 0
+</p>
+<p class="codeexample">
+    FOR v_index = index TO index + size - 1
+</p>
+<p class="codeexample">
+        return_array(a_index) = VR(v_index)
+</p>
+<p class="codeexample">
+        a_index = a_index + 1
+</p>
+<p class="codeexample">
+    NEXT v_index
+</p>
+<p class="codeexample">
+ENDFUNC
+</p>
+<h2>See also:</h2>
+<p>
+<a href="FUNCTION_LIST.html">FUNCTION_LIST</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

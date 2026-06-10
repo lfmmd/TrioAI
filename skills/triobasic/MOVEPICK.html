@@ -1,0 +1,719 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVEPICK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVEPICK">
+</head>
+<body>
+<h1>MOVEPICK</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVEPICK(mode, x, y, z, withdraw, overlap_control_a, overlap_control_b,
+u, v, w, withdraw_control, xy_control, approach_control)
+</p>
+<h2>Description:</h2>
+<p>
+MOVEPICK is a move type aimed at making it simple to program
+fast pick and place operations. Associated move type PICKLINK is a linked move
+equivalent to MOVEPICK that is linked to the measured motion on another axis in
+a similar way to MOVELINK or FLEXLINK.
+</p>
+<p>
+<img width="418" height="343" id="Picture 1" src="MOVEPICK_files/image001.png">
+</p>
+<p>
+MOVEPICK is an absolute move to a position in 3..6 axes.
+However, the motion includes an incremental “withdraw” amount and special
+controls for the move speed profile to allow fast pick and place moves.
+</p>
+<p class="note">
+Multi-axis interpolation uses the UNITS, SPEED, ACCEL and DECEL
+of the BASE axis.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specify the number of axes 0 = xyz, 1 = xyzu, 2 = xyzuv,
+  3 = xyzuvw
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+x:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target x absolute position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+y:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target y absolute position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+z:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target z absolute position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+withdraw:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Incremental withdraw distance from the start position
+  on z axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+overlap_control_a:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 .. 0.9 Specify rounding on corner A (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+overlap_control_b:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 .. 0.9 Specify rounding on corner B (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+u:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target u absolute position (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+v:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target v absolute position (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+w:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target w absolute position (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+withdraw_control:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0..1 Adjust the speed for withdraw section (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+xy_control:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0..1 Adjust the speed for xy section (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+approach_control:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0..1 Adjust the speed for approach section (optional)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Arch control parameters</h2>
+<p>
+overlap_control_a – 0 to 0.9; larger number for more
+rounding at first corner (default = 0.5)
+</p>
+<p>
+overlap_control_b – 0 to 0.9; larger number for more
+rounding at second corner (default = 0.5)
+</p>
+<p>
+<img width="576" height="307" id="Picture 2" src="MOVEPICK_files/image002.png">
+</p>
+<p>
+overlap_control_a and overlap_control_b above are 0.6, 0.6
+</p>
+<p>
+<img width="576" height="308" id="Picture 4" src="MOVEPICK_files/image003.png">
+</p>
+<p>
+overlap_control_a and overlap_control_b above are 0.0, 0.0
+</p>
+<p>
+<img width="576" height="305" id="Picture 5" src="MOVEPICK_files/image004.png">
+</p>
+<p>
+overlap_control_a and overlap_control_b above are 0.4, 0.8
+</p>
+<p class="note">
+Note that the overlap control parameters should always be less than
+1.0, and values between 0 and 0.8 are recommended.
+</p>
+<h2>Speed override control parameters</h2>
+<p>
+The following optional parameters can be used to override
+the speed in each of the 3 motion sections. A value of 1 produces the specified
+SPEED value. Lower values generate lower speeds.
+</p>
+<p>
+withdraw_control – Adjust the speed for withdraw section
+<br>
+
+xy_control – Adjust the speed for XY section
+<br>
+
+approach_control – Adjust the speed for approach section
+</p>
+<p>
+In MOVEPICK the acceleration rate is controlled by the
+length of the shortest move.  Therefore, if one of the moves is substantially
+smaller than the others it can result in high acceleration rates.  The 3
+parameters ‘withdraw_control’, ‘xy_control’, and ‘approach_control’ allow a
+slower speed to be assigned to shorter moves to allow lower acceleration rates.
+</p>
+<p class="warning">
+MOVEPICK does not currently support a lower speed at the end
+of the approach movement. This will be supported in future versions.
+</p>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+Use MOVEPICK to go to and pick-up position set in a ‘xyz’
+array and then go to a put-down position at 0,0,0.  The z axis withdraws up 500
+from each end position.
+</p>
+<p class="codeexample">
+DIM xyz AS FLOAT(3) 
+<br>
+
+
+<br>
+
+UNITS AXIS(0) = 1000 
+<br>
+
+UNITS AXIS(1) = 1000 
+<br>
+
+UNITS AXIS(2) = 1000 
+<br>
+
+
+<br>
+
+SPEED = 5000 
+<br>
+
+ACC(SPEED * 50) 
+<br>
+
+
+<br>
+
+'Absolute Positions: 
+<br>
+
+xyz(0) = -1500 
+<br>
+
+xyz(1) = 0 
+<br>
+
+xyz(2) = -100 
+<br>
+
+
+<br>
+
+overlap1 = 0.6 
+<br>
+
+overlap2 = 0.6 
+<br>
+
+
+<br>
+
+DEFPOS(0,0,0) 
+<br>
+
+
+<br>
+
+REPEAT 
+<br>
+
+    TRIGGER 
+<br>
+
+    MOVEPICK(0, xyz(0), xyz(1), xyz(2), 500, overlap1, _
+</p>
+<p class="codeexample">
+             overlap2, 0, 0, 0, 1.0, 1.0, 1.0) 
+<br>
+
+    WAIT IDLE 
+<br>
+
+    WA(500) 
+<br>
+
+    MOVEPICK(0, 0, 0, 0, 600, overlap2, overlap1, _
+</p>
+<p class="codeexample">
+             0, 0, 0, 1.0, 1.0, 1.0) 
+<br>
+
+    WAIT IDLE 
+<br>
+
+    WA(500) 
+<br>
+
+UNTIL FALSE
+</p>
+<h3>Example 2:</h3>
+<p>
+3 axis pick and place showing use of the withdraw control
+and XY control.
+</p>
+<p class="codeexample">
+  BASE(axis1, axis2, axis3)
+<br>
+
+  DEFPOS(0, 0, 50)
+<br>
+
+  SPEED = 200
+<br>
+
+  ACCEL = 5000
+<br>
+
+  DECEL = 5000
+<br>
+
+
+<br>
+
+  'Move to start position
+<br>
+
+  MOVEABS(100, 80, 50)
+<br>
+
+  WAIT IDLE
+</p>
+<p class="codeexample">
+<br>
+
+  'Set OP(16,ON) in terminal to start the repeating sequence
+<br>
+
+  WAIT UNTIL IN(16) = ON
+<br>
+
+
+<br>
+
+  first_time = TRUE
+<br>
+
+
+<br>
+
+  REPEAT
+<br>
+
+    SPEED = 500
+<br>
+
+    target_x = 150
+<br>
+
+    target_y = 100
+<br>
+
+    target_z = 20
+<br>
+
+    IF first_time THEN
+<br>
+
+      withdraw = 10
+<br>
+
+      first_time = FALSE
+<br>
+
+    ELSE
+<br>
+
+      withdraw = 50 'Relative height the Z will go to
+<br>
+
+    ENDIF
+<br>
+
+    ov_ctrl_a = 0.5 'Set between 0 and 0.9, bigger value means more curved
+withdraw
+<br>
+
+    ov_ctrl_b = 0.5 'Set between 0 and 0.9, bigger value means more curved
+approach
+<br>
+
+    wd_ctrl = 1 'Speed of withdraw, set between 0.001 and 1.0 (factors speed)
+<br>
+
+    xy_ctrl = 0.6 'Speed of XY move, set between 0.001 and 1.0
+<br>
+
+    app_ctrl = 1 'Speed of approach, set between 0.001 and 1.0
+<br>
+
+
+<br>
+
+    TRIGGER
+<br>
+
+
+<br>
+
+    MOVEPICK(0, target_x, target_y, target_z, withdraw, _
+</p>
+<p class="codeexample">
+             ov_ctrl_a, ov_ctrl_b, 0, 0, 0, _
+</p>
+<p class="codeexample">
+             wd_ctrl, xy_ctrl, app_ctrl)
+<br>
+
+    WAIT IDLE
+<br>
+
+    GOSUB pick
+<br>
+
+
+<br>
+
+    SPEED = 500
+<br>
+
+    target_x = 50
+<br>
+
+    target_y = 80
+<br>
+
+    target_z = 0
+<br>
+
+    withdraw = 30
+<br>
+
+    ov_ctrl_a = 0.5
+<br>
+
+    ov_ctrl_b = 0.5
+<br>
+
+    wd_ctrl = 0.7
+<br>
+
+    xy_ctrl = 0.6
+<br>
+
+    app_ctrl = 1
+<br>
+
+
+<br>
+
+    MOVEPICK(0, target_x, target_y, target_z, withdraw, _
+</p>
+<p class="codeexample">
+             ov_ctrl_a, ov_ctrl_b, 0, 0, 0, _
+</p>
+<p class="codeexample">
+             wd_ctrl, xy_ctrl, app_ctrl)
+<br>
+
+    WAIT IDLE
+<br>
+
+    GOSUB place
+<br>
+
+
+<br>
+
+  UNTIL IN(16) = OFF
+<br>
+
+STOP
+<br>
+
+
+<br>
+
+pick:
+<br>
+
+  WA(pick_delay)
+<br>
+
+  OP(32, ON) 'Suction on
+<br>
+
+  WA(suction_delay)
+<br>
+
+
+<br>
+
+RETURN
+<br>
+
+
+<br>
+
+
+<br>
+
+place:
+<br>
+
+  WA(place_delay)
+<br>
+
+  OP(32, OFF)
+<br>
+
+  WA(drop_delay)
+<br>
+
+
+<br>
+
+RETURN
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="PICKLINK.html">PICKLINK</a>
+</p>
+</body>
+</html>

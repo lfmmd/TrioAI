@@ -1,0 +1,767 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>C_SPLINE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="C_SPLINE">
+</head>
+<body>
+<h1>C_SPLINE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+C_SPLINE(mode, index-in, number-points, dimensions expand-ratio,
+index-out{, tension, bias})
+</p>
+<h2>Description:</h2>
+<p>
+The C_SPLINE command operates in two modes using Cubic
+Hermite splines to extend the source points into a smoother higher resolution
+profile. This can be used to smooth motion profiles which can be run in a
+sequence using MOVEABS, MOVABSSEQ or similar. 
+</p>
+<p class="note">
+The expand parameter gives the number of points that each
+position is expanded by. So the total number of output points is (((number of
+points -1) * expand) + 1)
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_1;">1</a>
+ and 
+<a href="#_Mode_=_1:">3</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Catmull Rom Spline
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Mode_=_2;">2</a>
+ and 
+<a href="#_Mode_=_2:">4</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Full cardinal spline
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+index-in
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+The location of the input points in 
+<a href="TABLE.html">TABLE</a>
+
+  memory (grouped for example x1, y1, z1, x2, y2, y3, …)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+number-points
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+The number of input points in 
+<a href="TABLE.html">TABLE</a>
+
+  memory (Each point has 2..8 dimensions)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+dimensions
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+The number of dimensions of the data (2..8)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+expand-ratio
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+The number of intermediate points generated between each
+  input point (2 to 100)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+index-out
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+The location of the output points in 
+<a href="TABLE.html">TABLE</a>
+
+  memory (Format depends on “mode”)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+tension
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Used for Cardinal splines only. (-1 to 1) -1 is “loosest”,
+  1 is “tightest”
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+bias
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Used for Cardinal splines only. (-1 to 1, normally 0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Mode_=_1:"></a>
+<a name="_Mode_=_1;"></a>
+Mode = 1; Mode = 3:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+C_SPLINE(mode, index_in, number_points, dimensions expand_ratio,
+index_out)
+</p>
+<p class="fixed">
+&nbsp;
+</p>
+<h3>Description:</h3>
+<p>
+Catmull-ROM (modes 
+<a href="#_Mode_=_1:">1</a>
+ and 
+<a href="#_Mode_=_1:">3</a>
+) is a commonly used particular case of the full
+Cardinal spline equations (modes 
+<a href="#_Mode_=_2:">2</a>
+ and 
+<a href="#_Mode_=_2:">4</a>
+). If the “tension” and “bias” parameters are set to
+zero the Cardinal spline will be the same as a Catmull-Rom.
+</p>
+<p class="note">
+Mode 3 generates points where the outputs in the different
+dimensions are grouped together. Mode 1 generates points where the outputs in
+the same dimensions are grouped together. For example, for 3 dimensions XYZ and
+points 1, 2, 3, 4. 
+</p>
+<p class="note">
+Mode 3 will therefore output data in sequence X1, Y1, Z1, X2, Y2,
+Z2, X3, Y3, Z3, X4, Y4, Z4, … 
+</p>
+<p class="note">
+Modes 1 will therefore output data in sequence X1, X2, X3, X4, Y1,
+Y2, Y3, Y4, Z1, Z2, Z3, Z4, … 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index-in:
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The location of the input points in 
+<a href="TABLE.html">TABLE</a>
+
+  memory (grouped for example x1, y1, z1, x2, y2, y3, …)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+number-points:
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of input points in 
+<a href="TABLE.html">TABLE</a>
+
+  memory (each point has 2..8 dimensions)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+dimensions:
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of dimensions of the data (2..8)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expand-ratio:
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of intermediate points generated between
+  each input point (2 to 100)
+</p>
+
+  
+<p class="tablecontent">
+Total output points = (Number of points-1) * expansion
+  + 1
+</p>
+
+  
+<p class="tablecontent">
+(i.e. if the source profile is 100 points and the
+  expansion ratio is set to 10 the resulting profile will be 1010 point ((100 -
+  1) * 10 + 1).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index-out:
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The location of the output points in TABLE memory (format
+  depends on “mode”)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Expands a 2 dimensions profile, defining 7 points in the
+controller TABLE memory at location 1000:
+</p>
+<p>
+<span style='font-family:"Courier New"'>&nbsp;</span></p>
+<p class="codeexample">
+npoints = 7 
+</p>
+<p class="codeexample">
+TABLE(1000, 0, 0) 
+</p>
+<p class="codeexample">
+TABLE(1002, 100, 0) 
+</p>
+<p class="codeexample">
+TABLE(1004, 100, 100) 
+</p>
+<p class="codeexample">
+TABLE(1006, 200, 100) 
+</p>
+<p class="codeexample">
+TABLE(1008, 300, 100) 
+</p>
+<p class="codeexample">
+TABLE(1010, 300, -100) 
+</p>
+<p class="codeexample">
+TABLE(1012, 150, -100)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+inp = 1000 
+</p>
+<p class="codeexample">
+outp = 4000 
+</p>
+<p class="codeexample">
+expand = 20 'Max 100, min 2
+</p>
+<p class="codeexample">
+ 
+</p>
+<p class="codeexample">
+'mode, index-in, number-points, dimension, expand-ratio, index-out
+
+</p>
+<p class="codeexample">
+C_SPLINE(3, inp, npoints, 2, expand, outp)
+</p>
+<h2><a name="_Mode_=_2:"></a>
+<a name="_Mode_=_2;"></a>
+Mode = 2; Mode = 4:</h2>
+<h3>Syntax: </h3>
+<p class="fixed">
+C_SPLINE(mode, index-in, number-points, dimensions expand-ratio,
+index-out, tension, bias)
+</p>
+<h3>Description: </h3>
+<p>
+Mode 2 and 4 will perform a Cubic Hermite spline over a
+multidimensional (from 2 to 8 dimensions) set of points, obtaining a smoother
+path depending on the expansion rate.
+</p>
+<p class="tip">
+This is ideally used where the source of points 
+<a href="MOVEABS.html">MOVEABS</a>
+ or 
+<a href="MOVEABSSEQ.html">MOVEABSSEQ</a>
+
+profile is too coarse and needs to be extrapolated into a greater number of
+points
+</p>
+<p class="note">
+Mode 4 generates points where the outputs in the different
+dimensions are grouped together. Mode 2 generates points where the outputs in
+the same dimensions are grouped together. For example for 3 dimensions XYZ and
+points 1,2,3,4. 
+</p>
+<p class="note">
+Mode 4 will therefore output data in sequence X1, Y1, Z1, X2, Y2,
+Z2, X3, Y3, Z3, X4, Y4, Z4, … 
+</p>
+<p class="note">
+Modes 2 will therefore output data in sequence X1, X2, X3, X4, Y1,
+Y2, Y3, Y4, Z1, Z2, Z3, Z4, … 
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p>
+index-in
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p>
+The location of the input points in 
+<a href="TABLE.html">TABLE</a>
+
+  memory (grouped for example x1, y1, z1, x2, y2, y3, …)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p>
+number-points
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p>
+The number of input points in 
+<a href="TABLE.html">TABLE</a>
+
+  memory (each point has 2..8 dimensions)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p>
+dimensions
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p>
+The number of dimensions of the data (2..8)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p>
+expand-ratio
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p>
+The number of intermediate points generated between each
+  input point (2 to 100)
+</p>
+
+  
+<p class="tablecontent">
+Total output points = (Number of points-1) * expansion
+  + 1
+</p>
+
+  
+<p>
+(i.e. if the source profile is 100 points and the
+  expansion ratio is set to 10 the resulting profile will be 1010 point ((100 -
+  1) * 10 + 1).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p>
+index-out
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p>
+The location of the output points in 
+<a href="TABLE.html">TABLE</a>
+
+  memory (format depends on “mode”)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p>
+tension
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p>
+Used for Cardinal splines only. (-1 to 1) -1 is “loosest”,
+  1 is “tightest”
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="122" valign="top" class="tablegrid">
+
+  
+<p>
+bias
+</p>
+
+  
+</td>
+<td width="712" valign="top" class="tablegrid">
+
+  
+<p>
+Used for Cardinal splines only. (-1 to 1, normally 0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="codeexample">
+  
+<br>
+
+  TABLE(1000, 136, 170)
+<br>
+
+  TABLE(1002, 136, 206)
+<br>
+
+  TABLE(1004, 150, 220)
+<br>
+
+  TABLE(1006, 152, 220)
+<br>
+
+  
+<br>
+
+  npoints = 4 'VR(1)
+<br>
+
+  inp = 1000
+<br>
+
+  outp = 2000
+<br>
+
+
+<br>
+
+  expand = 40 'Max 100, min 2
+<br>
+
+
+<br>
+
+  PRINT &quot;output x start = &quot;; outp
+<br>
+
+  PRINT &quot;output y start = &quot;; outp + (npoints - 1) * expand + 1
+<br>
+
+  PRINT &quot;number of output points = &quot;; (npoints - 1) * expand + 1
+<br>
+
+  
+<br>
+
+  'mode, index-in, number-points, dimension, expand-ratio, index-out, tension,
+bias
+</p>
+<p class="codeexample">
+  C_SPLINE(4, inp, npoints, 2, expand, outp, 0, 0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

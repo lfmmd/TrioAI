@@ -1,0 +1,264 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>RAPIDSTOP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="RAPIDSTOP">
+</head>
+<body>
+<h1>RAPIDSTOP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+RAPIDSTOP[(mode)]
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+RS
+</p>
+<h2>Description:</h2>
+<p>
+The RAPIDSTOP command operates like the 
+<a href="CANCEL.html">CANCEL</a>
+
+command but does so for all axes using a subset of cancel modes.
+</p>
+<p>
+All axes will decelerate at 
+<a href="FASTDEC.html">FASTDEC</a>
+
+if specified, otherwise at 
+<a href="DECEL.html">DECEL</a>
+.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancels axis commands from the 
+<a href="MTYPE.html">MTYPE</a>
+
+  buffers (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancels all buffered moves on all axis (excluding the 
+<a href="PMOVE.html">PMOVE</a>
+)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancels all active and buffered moves including the 
+<a href="PMOVE.html">PMOVE</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+RAPIDSTOP(0) will only cancel the presently executing moves.
+If further moves are buffered, then they will be loaded, and so motion will not
+stop.
+</p>
+<p class="warning">
+RAPIDSTOP(2) cancels all motion on all axes, including all
+MOVEADD additional movements.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Implementing a stop override button that cuts out all
+motion.
+</p>
+<p>
+<img border="0" width="466" height="327" id="Picture 2" src="RAPIDSTOP_files/image001.png">
+</p>
+<p class="codeexample">
+CONNECT(1, 0) AXIS(1) 'Axis 1 follows axis 0
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+REPAEAT
+</p>
+<p class="codeexample">
+  MOVE(1000) AXIS (0)
+</p>
+<p class="codeexample">
+  MOVE(-100000) AXIS (0)
+</p>
+<p class="codeexample">
+  MOVE(100000) AXIS (0)
+</p>
+<p class="codeexample">
+UNTIL IN(2) = OFF 'Stop button pressed?
+</p>
+<p class="codeexample">
+RAPIDSTOP(2)
+</p>
+<h3>Example 2:</h3>
+<p>
+Using RAPIDSTOP to cancel a 
+<a href="MOVE.html">MOVE</a>
+ on
+the main axis and a 
+<a href="FORWARD.html">FORWARD</a>
+ on the second axis.
+After the axes have stopped, a 
+<a href="MOVEABS.html">MOVEABS</a>
+ is applied to
+re-position the main axis.
+</p>
+<p>
+<img border="0" width="274" height="136" id="Picture 3" src="RAPIDSTOP_files/image002.png">
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+REGIST(3)
+</p>
+<p class="codeexample">
+FORWARD AXIS(1)
+</p>
+<p class="codeexample">
+MOVE(100000) 'Apply a long move
+</p>
+<p class="codeexample">
+WAIT UNTIL MARK
+</p>
+<p class="codeexample">
+RAPIDSTOP
+</p>
+<p class="codeexample">
+WAIT IDLE 'For MOVEABS to be accurate, the axis must stop
+</p>
+<p class="codeexample">
+MOVEABS(3000)
+</p>
+<h3>Example 3:</h3>
+<p>
+Using RAPIDSTOP to break a connect, and stop motion. The
+connected axis stops immediately on the RAPIDSTOP command, the forward axis
+decelerates at the FASTDEC value.
+</p>
+<p>
+<img border="0" width="282" height="254" id="Picture 4" src="RAPIDSTOP_files/image003.png">
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+CONNECT(1, 1)
+</p>
+<p class="codeexample">
+FORWARD AXIS(1)
+</p>
+<p class="codeexample">
+WAIT UNTIL VPSPEED = SPEED 'Let the axis get to full speed
+</p>
+<p class="codeexample">
+WA(1000)
+</p>
+<p class="codeexample">
+RAPIDSTOP
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(1) 'Wait for axis 1 to stop
+</p>
+<p class="codeexample">
+CONNECT(1, 1) 'Re-connect axis 0 
+</p>
+<p class="codeexample">
+REVERSE AXIS(1)
+</p>
+<p class="codeexample">
+WAIT UNTIL VP_SPEED = SPEED
+</p>
+<p class="codeexample">
+WA(1000)
+</p>
+<p class="codeexample">
+RAPIDSTOP
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(1)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CANCEL.html">CANCEL</a>
+, 
+<a href="FASTDEC.html">FASTDEC</a>
+,
+
+<a href="FASTJERK.html">FASTJERK</a>
+</p>
+</body>
+</html>

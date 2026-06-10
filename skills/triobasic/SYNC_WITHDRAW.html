@@ -1,0 +1,627 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SYNC_WITHDRAW</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SYNC_WITHDRAW">
+</head>
+<body>
+<h1>SYNC_WITHDRAW</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+SYNC_WITHDRAW AXIS(x) = 125.5 {distance in axis units}
+</p>
+<h2>Description:</h2>
+<p>
+One a set of axis parameters, including SYNC_PAUSE and
+SYNC_DWELL, which allow greater control over when the sync motion occurs during
+the sync time period.  The SYNC_WITHDRAW axis parameter allows an additional
+motion to be specified and can be used for the Z axis motion where a robot
+moves away from a conveyor or other position.
+</p>
+<h2>Value:</h2>
+<p>
+The distance for the &quot;axis withdraw&quot; motion in
+axis units.   Typically the Z axis will have the withdraw move on it.  Used in
+a XYZ pick and place situation.
+</p>
+<p>
+<img width="575" height="252" id="Picture 1" src="SYNC_WITHDRAW_files/image001.png">
+</p>
+<p>
+The SYNC_PAUSE, SYNC_DWELL and SYNC_WITHDRAW parameters are
+often set differently on each axis of the SYNC command.  For example the
+SYNC_WITHDRAW parameter may be zero on the X and Y axes of a system, but
+SYNC_WITHDRAW is set to a value on the Z axis of a system.  
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+BASE
+(
+0
+)
+<br>
+
+
+<br>
+
+
+UNITS
+ AXIS
+(
+0
+) = 
+1000
+<br>
+
+
+UNITS
+ AXIS
+(
+1
+) = 
+1000
+<br>
+
+
+UNITS
+ AXIS
+(
+2
+) = 
+1000
+<br>
+
+
+UNITS
+ AXIS
+(
+7
+) = 
+1000
+<br>
+
+
+UNITS
+ AXIS
+(
+8
+) = 
+1000
+<br>
+
+
+<br>
+
+
+ATYPE
+ AXIS
+(
+0
+) = 
+0
+<br>
+
+
+ATYPE
+ AXIS
+(
+1
+) = 
+0
+<br>
+
+
+ATYPE
+ AXIS
+(
+2
+) = 
+0
+<br>
+
+
+<br>
+
+
+SYNC
+(
+4
+, 
+100
+) 
+'Clear any previous
+sync
+<br>
+
+
+WAIT
+ UNTIL
+ SYNC_CONTROL 
+= 
+0
+<br>
+
+
+<br>
+
+overall_time = 
+600
+<br>
+
+sync_part = 
+500
+<br>
+
+flight_part = 
+50
+<br>
+
+
+<br>
+
+
+BASE
+(
+2
+) 
+'Z Axis SYNC controls:
+<br>
+
+SYNC_PAUSE = (overall_time - flight_part) / 
+2
+<br>
+
+SYNC_DWELL = (overall_time - flight_part) / 
+2
+<br>
+
+
+BASE
+(
+1
+) 
+'Y Axis SYNC controls:
+<br>
+
+SYNC_WITHDRAW = 
+0
+<br>
+
+SYNC_PAUSE = (overall_time - sync_part) / 
+2
+<br>
+
+SYNC_DWELL = (overall_time - sync_part) / 
+2
+<br>
+
+
+BASE
+(
+0
+) 
+'X Axis SYNC controls:
+<br>
+
+SYNC_WITHDRAW = 
+0
+<br>
+
+SYNC_PAUSE = (overall_time - sync_part) / 
+2
+<br>
+
+SYNC_DWELL = (overall_time - sync_part) / 
+2
+<br>
+
+
+<br>
+
+
+<br>
+
+
+DEFPOS
+(
+0
+, 
+0
+, 
+0
+)
+<br>
+
+
+SPEED
+ AXIS
+(
+7
+) = 
+100
+<br>
+
+
+SPEED
+ AXIS
+(
+8
+) = 
+100
+<br>
+
+
+DEFPOS
+(-
+200
+) 
+AXIS
+(
+7
+) 
+'Axis 7 simulates conveyor A
+<br>
+
+
+DEFPOS
+(-
+200
+) 
+AXIS
+(
+8
+) 
+'Axis 8 simulates conveyor B
+<br>
+
+
+IF
+ MTYPE
+
+
+AXIS
+(
+7
+) = 
+0
+ THEN
+ FORWARD
+ AXIS
+(
+7
+)
+<br>
+
+
+IF
+ MTYPE
+
+
+AXIS
+(
+8
+) = 
+0
+ THEN
+ FORWARD
+ AXIS
+(
+8
+)
+<br>
+
+
+<br>
+
+
+TRIGGER
+<br>
+
+
+<br>
+
+
+'These are the 2 conveyor heights:
+<br>
+
+
+<br>
+
+conveyor_a_z = 
+65
+<br>
+
+conveyor_b_z = 
+70
+<br>
+
+
+<br>
+
+
+'Sync to conveyor B from start point:
+<br>
+
+SYNC_WITHDRAW 
+AXIS
+(
+2
+)
+= 
+5
+<br>
+
+
+SYNC
+(
+1
+,
+overall_time, 
+0
+, 
+8
+,
+
+60
+, 
+115
+,
+conveyor_b_z)
+<br>
+
+
+WAIT
+ UNTIL
+ SYNC_CONTROL
+ = 
+3
+' synchronised
+<br>
+
+
+WA
+(
+150
+)
+<br>
+
+
+<br>
+
+
+FOR
+ k = 
+0
+ TO
+ 1
+<br>
+
+   
+'Sync to conveyor A from conveyor B:
+<br>
+
+   SYNC_WITHDRAW 
+AXIS
+(
+2
+) = -
+40
+<br>
+
+   
+SYNC
+(
+10
+,
+overall_time, 
+0
+, 
+7
+,
+
+60
+, -
+100
+, conveyor_a_z)
+<br>
+
+   
+WAIT
+ UNTIL
+
+
+SYNC_CONTROL
+ = 
+3
+
+'Synchronised
+<br>
+
+   
+WA
+(
+150
+)
+<br>
+
+   
+<br>
+
+   
+'Sync to conveyor B from conveyor A:
+<br>
+
+   SYNC_WITHDRAW 
+AXIS
+(
+2
+) = -
+40
+<br>
+
+   
+SYNC
+(
+10
+,
+overall_time, 
+0
+, 
+8
+,
+
+60
+, 
+115
+, conveyor_b_z)
+<br>
+
+   
+WAIT
+ UNTIL
+
+
+SYNC_CONTROL
+ = 
+3
+
+'Synchronised
+<br>
+
+   
+WA
+(
+150
+)
+<br>
+
+
+NEXT
+ k
+<br>
+
+
+<br>
+
+
+'Sync to conveyor A from conveyor B:
+<br>
+
+SYNC_WITHDRAW 
+AXIS
+(
+2
+)
+= -
+40
+<br>
+
+
+SYNC
+(
+10
+,
+overall_time, 
+0
+, 
+7
+,
+
+60
+, -
+100
+, conveyor_a_z)
+<br>
+
+
+WAIT
+ UNTIL
+ SYNC_CONTROL
+ = 
+3 
+'Synchronised
+<br>
+
+
+WA
+(
+150
+)
+<br>
+
+
+<br>
+
+
+<br>
+
+
+'De Sync from conveyor A to start point:
+<br>
+
+SYNC_WITHDRAW 
+AXIS
+(
+2
+)
+= -conveyor_a_z
+<br>
+
+
+SYNC
+(
+10
+,
+overall_time, 
+0
+, 
+9
+,
+
+0
+, 
+0
+, 
+0
+) 
+'9 is a dummy axis
+<br>
+
+
+WAIT
+ UNTIL
+ SYNC_CONTROL
+ = 
+3 
+'Synchronised
+<br>
+
+
+<br>
+
+
+STOP
+</p>
+<p>
+This program produces the 3D motion pattern in the Motion
+Perfect v4 3D scope:
+</p>
+<p>
+<span style='font-family:"Trebuchet MS",sans-serif'><img width="589" height="451" id="Picture 18" src="SYNC_WITHDRAW_files/image002.jpg">
+</span></p>
+<p>
+See Also:
+</p>
+<p>
+<a href="SYNC.html">SYNC</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="SYNC_PAUSE.html">SYNC_PAUSE</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="SYNC_DWELL.html">SYNC_DWELL</a>
+</p>
+</body>
+</html>

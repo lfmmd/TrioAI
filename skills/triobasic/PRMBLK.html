@@ -1,0 +1,603 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PRMBLK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PRMBLK">
+</head>
+<body>
+<h1>PRMBLK</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+PRMBLK(Function, Block_Number... )
+</p>
+<h2>Description:</h2>
+<p>
+Used by Motion Perfect to access multiple axis parameters in
+one Ethernet TCP/IP request.  The format of PRMBLK is to set up the block
+description and then to download the values based on a simple numerical block
+index value.
+</p>
+<p>
+PRMBLK returns TRUE (-1) if successful or FALSE (0) if it
+fails.
+</p>
+<p class="warning">
+This command must not be used while Motion Perfect is
+connected in Tool Mode or in Synchronised mode.
+</p>
+<p class="note">
+The command also exists in the TrioPC Motion ActiveX and DLL. 
+This reference may be used when developing a PC application that needs more
+efficient data transfers.
+</p>
+<h2>Parameters:</h2>
+<h3>Function 0; Define.</h3>
+<p>
+Define a block of paraemters. Up to 32 parameters may be
+added to one block but one line of BASIC cannot hold all 32.  Function 1 can
+then be used to append more parameters to the block.
+</p>
+<p class="codeexample">
+PRMBLK(0, block_number, type, list_of_parameters)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+block_number:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 .. 63
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+type:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis Parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+System Parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR Variables
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TABLE Variables
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Program local variables
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+List_of_parameters
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+List of parameter names separated by commas.  Maximum
+  number of parameters per block is 32.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Function 1; Append.</h3>
+<p>
+Append more parameters to the given block number.  The block
+must be started with a function 0 “Define” before appending more parameters.
+</p>
+<p class="codeexample">
+PRMBLK(0, block_number, type, list_of_parameters)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+block_number:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 .. 63
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+type:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis Parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+System Parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR Variables
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TABLE Variables
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Program local variables
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+List_of_parameters
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+List of parameter names separated by commas.  Maximum
+  number of parameters per block is 32.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<p>
+List of axis parameters;
+</p>
+<p class="codeexample">
+PRMBLK(0,3,0,DPOS,MPOS,MSPEED)
+</p>
+<p>
+List of system parameters;
+</p>
+<p class="codeexample">
+PRMBLK(0,3,1,FREE,WDOG,MOTION_ERROR)
+</p>
+<p>
+List of VR variables.  Ranges are defined with .. ;
+</p>
+<p class="codeexample">
+PRMBLK(0,3,2,1..5,8,12..14,55,67)
+</p>
+<p>
+List of TABLE values;
+</p>
+<p class="codeexample">
+PRMBLK(0,3,3,1..5,8,12..14,55,67)
+</p>
+<p>
+List of program local variables;
+</p>
+<p class="codeexample">
+PRMBLK(0,Block_Number,4,&quot;Program_name&quot;,Process_number,List_of_Local_Variables_Quoted)
+</p>
+<p>
+The program name and process number apply to all the
+variables in the list. If process number -1 is specified then the first running
+instance (with the lowest process number) of the program should be used.
+</p>
+<p class="codeexample">
+PRMBLK(0,3,4,&quot;PROG1&quot;,11,&quot;n&quot;,&quot;v1&quot;,&quot;v2&quot;)
+</p>
+<h3>Function 2; Get count.</h3>
+<p>
+This function returns the item (parameter) count for a
+block. If the block is empty it returns 0.
+</p>
+<p class="codeexample">
+PRMBLK(2, block_number)
+</p>
+<p>
+e.g.
+</p>
+<p class="codeexample">
+PRINT #5,PRMBLK(2, 3)
+</p>
+<h3>Function 3; Get all.</h3>
+<p>
+This function returns all item/parameter values in the order
+in which they were specified when the block was defined.  The returned data is
+in the form of a comma separated list of values.
+</p>
+<p>
+If the type is Axis Parameters (type 0) the format is:
+</p>
+<p class="codeexample">
+PRMBLK(3, block_number, axis_number)
+</p>
+<p>
+Otherwise the function is:
+</p>
+<p class="codeexample">
+PRMBLK(3, block_number)
+</p>
+<p>
+e.g.
+</p>
+<p class="codeexample">
+PRMBLK(3, 3, 4) ' get axis parameters from axis 4
+</p>
+<h3>Function 4; Get changed.</h3>
+<p>
+This function returns any item/parameter values which have
+changed since they were last read using a PRMBLK command.  The returned data is
+in the form of a comma separated list of parameter index / value pairs of the
+form: 
+</p>
+<p class="codeexample">
+&lt;Item_Index&gt;:&lt;Value&gt;
+</p>
+<p>
+The parameter index is the zero based position of the
+parameter in the block.
+</p>
+<p>
+If the type is Axis Parameters (type 0) the format is:
+</p>
+<p class="codeexample">
+PRMBLK(4, block_number, axis_number)
+</p>
+<p>
+Otherwise the function is:
+</p>
+<p class="codeexample">
+PRMBLK(4, block_number)
+</p>
+<p>
+e.g.
+</p>
+<p class="codeexample">
+PRMBLK(4, 8, 2) ' get changed axis parameters defined by
+block 8 from axis 2
+</p>
+<h3>Function 5; Get maximum data blocks.</h3>
+<p>
+This function gets the maximum number of data blocks
+available.
+</p>
+<h3>Function 6; Get maximum items per block.</h3>
+<p>
+This function gets the maximum number of items which can be
+specified in each block.
+</p>
+<h3>Function 7; List block.</h3>
+<p>
+This function lists the block type and any items currently
+in a block.
+</p>
+<p>
+The item list is returned as a comma separated list of all
+individual items (ranges are expanded).
+</p>
+<p class="codeexample">
+PRMBLK(7,&lt;Block_Number&gt;)
+</p>
+<p>
+e.g.
+</p>
+<p class="codeexample">
+PRMBLK(7,3)
+</p>
+<h3>Function 8; Delete block.</h3>
+<p>
+This function deletes the definition for a defined block.
+</p>
+<p class="codeexample">
+PRMBLK(8,&lt;Block_Number&gt;)
+</p>
+<p>
+e.g.
+</p>
+<p class="codeexample">
+PRMBLK(8,3)
+</p>
+<h3>Function 9; Delete all blocks.</h3>
+<p>
+This function deletes all the block definitions.
+</p>
+<p class="codeexample">
+PRMBLK(9)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>Example:</h2>
+<p>
+Set up axis parameters as a block that is ready to be
+downloaded for display.
+</p>
+<p class="codeexample">
+' Set up the axis parameters to be read in one block
+</p>
+<p class="codeexample">
+PRMBLK(0,3,0,ATYPE,UNITS,P_GAIN,I_GAIN,D_GAIN,OV_GAIN,VFF_GAIN,SPEED,ACCEL)
+<br>
+
+PRMBLK(1,3,0,DECEL,SRAMP,MERGE,CREEP,VP_SPEED,MSPEED,FWD_IN,REV_IN,FHOLD_IN)
+<br>
+
+PRMBLK(1,3,0,FS_LIMIT,RS_LIMIT,FE_LIMIT,FE_RANGE,DRIVE_FE_LIMIT,REP_DIST)
+<br>
+
+PRMBLK(1,3,0,REP_OPTION,DATUM_IN,MPOS,DPOS,ENDMOVE,REMAIN,ENCODER,DAC_OUT)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+' Read the parameter block from axes 0, 1, 2, 15, 21, 22
+and 23.
+<br>
+
+PRMBLK(3,3,0..2,15,21..23)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+Resulting string:
+</p>
+<p class="codeexample">
+0.00000,1.00000,0.70000,0.00000,0.00000,0.00000,0.00000,13000.00000,999999.00000,9999999.00000,0.00000,0.00000,10000.00000,0.00000,0.00000,-1.00000,-1.00000,-1.00000,400000000000.00000,-400000000000.00000,2000000.00000,1000000.00000,20000.00000,100000.00000,1.00000,-1.00000,0.00000,0.00000,0.00000,0.00000,0.000
+</p>
+<p class="codeexample">
+00,0.00000&lt;CR&gt;
+</p>
+</body>
+</html>

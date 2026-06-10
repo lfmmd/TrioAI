@@ -1,0 +1,263 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AUTO_ETHERCAT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AUTO_ETHERCAT">
+</head>
+<body>
+<h1>AUTO_ETHERCAT</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG only)
+</p>
+<h2>Description:</h2>
+<p>
+Controls the action of the system software on power up.  If
+present, the EtherCAT network is initialised automatically on power up or soft
+reset (EX). If this is not required, then setting AUTO_ETHERCAT to OFF will
+prevent the EtherCAT from being set up and it is then up to the programmer to
+start the EtherCAT network from a BASIC program.
+</p>
+<p>
+An option to set bits 4 to 7 can be used to “pause” the
+EtherCAT start-up in a lower ESM state than Operational.
+</p>
+<p class="note">
+This command should not be used in a TrioBASIC program. You must
+use it in the special MC_CONFIG script which runs automatically on power up. 
+This parameter is NOT stored in FLASH.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT network does not initialise on power up.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT network searches for slave nodes and sets up
+  the system automatically.  Going to 
+<i>Operational</i> state if that is
+  possible.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$81
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT network searches for slave nodes and sets up
+  the system automatically.  Going to 
+<i>Operational</i> state if that is
+  possible.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$41
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT network searches for slave nodes and sets up
+  the system automatically.  Going to 
+<i>Safe-Operational</i> state if that is
+  possible.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$21
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT network searches for slave nodes and sets up
+  the system automatically.  Going to 
+<i>Pre-Operational</i> state if that is
+  possible.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$11
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT network searches for slave nodes and sets up
+  the system but remains in 
+<i>Initial</i> ESM state.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+Prevent the EtherCAT system from starting on power up.
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+AUTO_ETHERCAT = OFF
+</p>
+<h3>Example 2:</h3>
+<p>
+Allow the EtherCAT network to start into Pre-Operational ESM
+state. Then set a CoE object in each node and continue the start-up to
+operational state.
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+AUTO_ETHERCAT = $21
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Initial startup BASIC program set up 6 drives
+</p>
+<p class="codeexample">
+FOR ax = 0 TO 6
+</p>
+<p class="codeexample">
+  'Set bits 5, 6 and 7 in unsigned8 object 0x607E to
+reverse
+</p>
+<p class="codeexample">
+  'the motor direction.
+</p>
+<p class="codeexample">
+  CO_WRITE_AXIS(ax, $607E, 0, 5, -1, $E0)
+</p>
+<p class="codeexample">
+NEXT ax
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Continue to Operational state (for slot 0)
+</p>
+<p class="codeexample">
+ETHERCAT($21, 0, 3)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

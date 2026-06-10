@@ -1,0 +1,834 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SCHEDULE_TYPE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SCHEDULE_TYPE">
+</head>
+<body>
+<h1>SCHEDULE_TYPE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG only)
+</p>
+<h2>Description:</h2>
+<p>
+This parameter changes the multi-tasking scheduling used
+when running programs.
+</p>
+<p>
+Bit 0 disables the scheduling algorithm that allows another
+program to run while the scheduled program is in a sleep state. A sleep state
+can be started through a pause in the program using, for example, 
+<a href="WAIT.html">WAIT UNTIL</a>
+ or 
+<a href="WA.html">WA</a>
+.
+</p>
+<p>
+When bit 1 is set and 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+
+is 2000, the firmware doubles the number of interrupts per servo cycle. This
+should be used in the MC464 when 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+
+is set to 2000&nbsp;µs and faster communications is required. The system
+process can then handshake with the communications processor every millisecond.
+</p>
+<p>
+Bit 2 can be used when evaluating the MC664-X to see how the
+axes and programs will perform on the lower cost MC664.
+</p>
+<p class="note">
+The value is saved in Flash memory in the MC464 but must be included
+in the MC_CONFIG script for all other Motion Coordinators.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Operation
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use new scheduling algorithm to make best use of CPU
+  time e.g., any program executing a 
+<a href="WA.html">WA</a>
+ command will not
+  be available for execution again until the 
+<a href="WA.html">WA</a>
+ period is
+  complete. (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Revert to old style scheduling such that any active
+  process will execute even when executing a 
+<a href="WA.html">WA</a>
+ command
+  for example.&nbsp;
+</p>
+
+  
+<p class="tip">
+This setting should only be used when upgrading projects from
+  older controllers and the scheduling system causes problems with the program
+  timings.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use standard process scheduling at 2000&nbsp;µs servo
+  period. (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+When 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+ is
+  set to 2000, schedule double processes. In the MC464 this enables
+  communications like DeviceNet to run at the same rate as it does with shorter
+  servo periods. (V2.0209 and later)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC664-X only; use full quad-core processor operation.
+  (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC664-X only; forces the MC664-X to start in single
+  core mode. This emulates the performance of the MC664 single core Motion
+  Coordinator.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TCP/IP process shares with other SYS processes.
+  (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TCP/IP process runs on second core and shares with
+  motion kernel. 
+<sup>(1)</sup></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Protocol Scheduler shares with other SYS processes.
+  (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Protocol Scheduler runs on second core and shares with
+  motion kernel. 
+<sup>(1)</sup></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT Async process shares with other SYS processes.
+  (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT Async process runs on second core and shares
+  with motion kernel. 
+<sup>(1)</sup></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 Highest numbered user processes are Fast Tasks.
+  (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+All user processes are Slow Tasks. This gives equal
+  priority to all user programs.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Uniplay HMI server runs in System Process on Core 0.
+  (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+128
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Run Uniplay HMI server on Core 1. 
+<sup>(1)</sup></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+<br>
+
+  
+<sup>(2)</sup></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Allow IEC programs to automatically enable ‘flat’
+  scheduling where there are only Slow Tasks, no Fast Tasks. (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+256
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Prevent IEC programs to automatically enable ‘flat’
+  scheduling. The 2 highest numbered user processes are Fast Tasks.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+20
+<br>
+
+  
+<sup>(3)</sup></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Process 20 runs on Core 0 (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Process 20 runs on Core 1.  This can be used to help
+  balance the processing of user programs in multi-core processors. 
+<sup>(1)</sup></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+21
+<br>
+
+  
+<sup>(3)</sup></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Process 21 runs on Core 0 (default)
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Process 21 runs on Core 1.  This can be used to help
+  balance the processing of user programs in multi-core processors. 
+<sup>(1)</sup></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+<sup>(1)</sup> Multi-core processors only, e.g. MC6N-ECAT, Flex-6
+Nano and Flex-6X Nano
+</p>
+<p class="note">
+<sup>(2)</sup> Firmware V2.0303 and later
+</p>
+<p class="note">
+<sup>(3)</sup> Firmware V2.0313 and later
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

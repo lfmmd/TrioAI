@@ -1,0 +1,71 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>JERK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="JERK">
+</head>
+<body>
+<h1>JERK</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+JERK AXIS(n) = &lt;value&gt;
+</p>
+<h2>Description:</h2>
+<p class="fixed">
+<span style='font-family:"Verdana",sans-serif'>The
+JERK axis parameter is the derivative of acceleration. JERK units are
+/sec/sec/sec and specifies the rate at which acceleration and deceleration
+should change. JERK is applied only when using </span><a href="VP_MODE.html"><span style='font-family:"Verdana",sans-serif'>VP_MODE</span></a>
+<span style='font-family:"Verdana",sans-serif'> 5 or 6, with 0 using
+SRAMP to smooth motion.</span></p>
+<p class="note">
+<a name="_Hlk213236844">As of firmware version 2.0342, the SRAMP
+keyword may be used instead of JERK, but if SRAMP is assigned a value (even 0),
+then any assignment to JERK will be ignored. </a>
+<a name="_Hlk213236965">When
+SRAMP is used, the JERK is calculated from ACCEL / SRAMP.</a>
+</p>
+<p class="warning">
+Using SRAMP with VP_MODE&nbsp;=&nbsp;6 is intended solely to
+aid portability for existing applications, and it is strongly recommended that
+new applications use JERK.
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+VP_MODE = 6
+<br>
+
+UNITS = 1000
+<br>
+
+SPEED = 50000
+<br>
+
+ACCEL = 80000
+<br>
+
+DECEL = 80000
+<br>
+
+JERK = 300000
+<br>
+
+
+<br>
+
+MOVE(50000)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SRAMP.html">SRAMP</a>
+, 
+<a href="VP_MODE.html">VP_MODE</a>
+</p>
+</body>
+</html>

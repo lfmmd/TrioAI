@@ -1,0 +1,58 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IP_MAC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IP_MAC">
+</head>
+<body>
+<h1>IP_MAC</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (FLASH / Read-only) 
+</p>
+<h2>Description:</h2>
+<p>
+IP_MAC returns the configured MAC address of the main
+Ethernet port of the Motion Coordinator. The MAC address is set once at
+manufacture and is unique to that controller.
+</p>
+<p>
+The value is held in flash EPROM and is normally read-only.
+If write access is available on older versions of firmware, do not change the
+MAC address under any circumstances without first consulting Trio. 
+</p>
+<h2>Value:</h2>
+<p>
+Ethernet MAC address as a single 48-bit number.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+&gt;&gt;PRINT IP_MAC
+</p>
+<p class="codeexample">
+27648852217.0000
+<br>
+
+&gt;&gt;
+</p>
+<h3>Example 2:</h3>
+<p>
+Get the MAC address in hexadecimal format:
+</p>
+<p class="codeexample">
+&gt;&gt;?hex(ip_mac)&nbsp;&nbsp;&nbsp;
+<br>
+
+6700000F9
+<br>
+
+&gt;&gt;
+</p>
+<p>
+Converted to the 6 Octets format this is: 00 06 70 00 00 F9.
+</p>
+</body>
+</html>

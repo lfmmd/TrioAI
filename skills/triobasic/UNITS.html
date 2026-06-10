@@ -1,0 +1,76 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>UNITS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="UNITS">
+</head>
+<body>
+<h1>UNITS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+UNITS is a conversion factor that allows the user to scale
+the edges/ stepper pulses to a more convenient scale. The motion commands to
+set speeds, acceleration and moves use the UNITS scalar to allow values to be
+entered in more convenient units e.g.: mm for a move or mm/sec for a speed. 
+</p>
+<h2>Value:</h2>
+<p>
+The number of counts per required physical unit.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A leadscrew arrangement has a 5mm pitch and a 1000 pulse/rev
+encoder.  The units should be set to allow moves to be specified in mm.
+</p>
+<p>
+The 1000 pulses/rev will generate 1000 x 4 = 4000 edges/rev
+in the controller.  One rev is equal to 5mm therefore there are 4000/5 = 800
+edges/mm.
+</p>
+<p class="codeexample">
+UNITS = 1000 * 4 / 5
+</p>
+<h3>Example 2:</h3>
+<p>
+A stepper motor has 180 pulses/rev.  There is a built in 16
+multiplier in the MC403, MC405 and Flexaxis P874, so the controller will use
+180*16 counts per revolution.  
+</p>
+<p>
+To program in revolutions the unit conversion factor will
+be:           
+</p>
+<p class="codeexample">
+UNITS AXIS(1) = 180 * 16
+</p>
+<h3>Example 3:</h3>
+<p>
+A stepper motor axis has 354.120 pulses/mm.  It is driven
+from the Trio P375 Flexslice axis module.  There is a built in 256 multiplier so
+the controller will use 354.120 * 256 counts per mm.
+</p>
+<p>
+To program in revolutions the unit conversion factor will
+be:           
+</p>
+<p class="codeexample">
+BASE(2)
+<br>
+
+UNITS = 90654.7200
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ENCODER_RATIO.html">ENCODER_RATIO</a>
+, 
+<a href="STEP_RATIO.html">STEP_RATIO</a>
+</p>
+</body>
+</html>

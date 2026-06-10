@@ -1,0 +1,93 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>BREAK_ADD</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="BREAK_ADD">
+</head>
+<body>
+<h1>BREAK_ADD</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command (command line only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+BREAK_ADD &quot;program name&quot; line_number
+</p>
+<h2>Description:</h2>
+<p>
+Used by 
+<i>Motion</i> Perfect to insert a break point into
+the specified program at the specified line number.
+</p>
+<p>
+If there is no code at the given line number BREAK_ADD will
+add the breakpoint at the next available line of code (e.g., if line 8 is empty
+but line 9 has &quot;NEXT x&quot; and a BREAK_ADD is issued for line 8, the
+break point will be added to line 9).
+</p>
+<p class="note">
+If a non-existent line number is selected (e.g., line 50 when the
+program only has 40 lines), the controller will return an error.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+program name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the name of any program existing on your controller
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+line_number:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the line umber where to insert the breakpoint
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Add a break point at line 8 of program
+&quot;simpletest&quot;
+</p>
+<p class="codeexample">
+BREAK_ADD &quot;simpletest&quot; 8
+</p>
+</body>
+</html>

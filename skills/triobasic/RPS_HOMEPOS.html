@@ -1,0 +1,224 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HOMEPOS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HOMEPOS">
+</head>
+
+
+
+<body>
+<h1>HOMEPOS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+HOMEPOS(position_1 [,position_2 [,… [,
+position_n]])
+</p>
+<h2>Description:</h2>
+<p>
+Specifies the home position of an axis. Typically, this is
+used with robot axes and the values used are supplied by the robot manufacturer
+when the robot was calibrated. 
+</p>
+<p>
+Home position is the position of a robot axis at its zero
+position, which aligns to the calibration mark of the relevant robot’s joint.
+For axes with a multi-turn encoder, this should be the position within one turn
+of the axis. 
+</p>
+<p>
+HOMEPOS calculates the difference between the actual
+position and the referenced position parameter to work out the position of the
+joint in base coordinate system. 
+</p>
+<p>
+HOMEPOS works like 
+<a href="OFFPOS.html">OFFPOS</a>
+ in the
+way that it applies the offset, but unlike OFFPOS is not incremental, so the
+same home position can be applied multiple times with the same position and
+only the first setting will have any affect.
+</p>
+<p>
+The value position is placed in 
+<a href="DPOS.html">DPOS</a>
+,
+while 
+<a href="MPOS.html">MPOS</a>
+ is adjusted to maintain the 
+<a href="FE.html">FE</a>
+
+value.  This function is completed after the next servo-cycle.  
+</p>
+<p class="note">
+Typically, HOMEPOS is used for calibration. Therefore, use
+HOMEPOS only when joints are aligned with calibration marks of the robot.
+</p>
+<p class="warning">
+Incorrect positioning of robot joints during execution of
+HOMEPOS command can result in incorrect movement of the robot.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position_1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position to set on current base axis in user units.
+  Typically, this is the encoder value at zero position of the axis. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position_2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position to set on next axis in BASE array in user
+  units. Typically, this is the encoder value at zero position of the axis. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position_n:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position to set on last axis in BASE array in user
+  units. Typically, this is the encoder value at zero position of the axis. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Axis 1 has a 23-bit-encoder connected to the motor. It has a
+gearbox ratio of 80.0057. Calibrate the position of axis 1 which has encoder
+value of 2053664 at position 0.
+</p>
+<p class="codeexample">
+BASE
+(
+1
+)
+<br>
+
+
+AXIS_UNITS
+ = (
+2
+
+^ 
+23
+) * (
+800057
+
+/ 
+10000
+) / 
+360 
+&nbsp;'Units
+in degrees
+<br>
+
+
+HOMEPOS
+(
+2053664
+)
+&nbsp;'Zero Position encoder value
+</p>
+<h3>Example 2:</h3>
+<p>
+A SCARA robot is configured to have axes 1, 3, 5 and 7 as
+its joints 1, 2, 3 and 4 respectively. Calibration values for these joints are 2053664,
+4543662, 860240 and 1635534 respectively.
+</p>
+<p class="codeexample">
+BASE
+(1, 3, 5, 7)
+<br>
+
+
+HOMEPOS
+(2053664, 4543662, 860240, 1635534)
+</p>
+<h3>Example 3:</h3>
+<p>
+Display the HOMEPOS values previously applied to axes 0, 1
+and 2.
+</p>
+<p class="codeexample">
+PRINT HOMEPOS AXIS(0)
+</p>
+<p class="codeexample">
+PRINT HOMEPOS AXIS(1)
+</p>
+<p class="codeexample">
+PRINT HOMEPOS AXIS(2)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="OFFPOS.html">OFFPOS</a>
+<span class="MsoHyperlink">, </span><a href="DEFPOS.html">DEFPOS</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

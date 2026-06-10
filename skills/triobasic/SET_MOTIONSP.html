@@ -1,0 +1,246 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SET_MOTIONSP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SET_MOTIONSP">
+</head>
+<body>
+<h1>SET_MOTIONSP</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function 
+</p>
+<h2>Syntax:</h2>
+<h2><span style='font-family:"Courier New"'>SET_MOTIONSP(axis,
+force_speed[, startmove_speed[, endmove_speed[, force_accel[, force_decel[, force_jerk[,
+force_ramp[, force_dwell]]]]]]])</span></h2>
+<h2>Description:</h2>
+<p>
+SET_MOTIONSP is used to pre-set the parameter list for a
+subsequent MOVESP, MOVEABSSP, MOVECIRCSP etc. using just one command.
+</p>
+<p class="note">
+This command requires the axis to be specified as a parameter and
+therefore does not use the current base axis, nor will it accept the AXIS
+modifier.
+</p>
+<p class="note">
+To not use a parameter, that parameter’s default value must be
+specified, which for speed, acceleration and jerk is -1, and for a ramp or
+dwell is zero.
+</p>
+<h2>Parameters:</h2>
+<p>
+Minimum of the first 2 parameters must be set.  All other
+parameters are optional.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number to be set up
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+force_speed:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value for FORCE_SPEED to be set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+startmove_speed:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The required value for STARTMOVE_SPEED
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+endmove_speed:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The required value for ENDMOVE_SPEED
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+force_accel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The required value for FORCE_ACCEL
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+force_decel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The required value for FORCE_DECEL
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+force_jerk:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The required value for FORCE_JERK
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+force_ramp:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The required value for FORCE_RAMP
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+force_dwell:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The required value for FORCE_DWELL
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See also:</h2>
+<p>
+<a href="SET_MOTION.html">SET_MOTION</a>
+</p>
+</body>
+</html>

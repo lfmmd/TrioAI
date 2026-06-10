@@ -11,6 +11,67 @@
 - 程序执行历史/审计日志
 - HTTP API 鉴权（防止其他进程误调用）
 - 多控制器切换支持
+- IEC 断点的 line→CodeElement 反推（目前 SetBreakpoint 需在 MP UI 中手动设置）
+
+## [0.1.5] — 2026-06-10
+
+Token 优化 + IEC 稳定性版本。
+
+### 新增
+
+- **microCompact 工具结果生命周期管理** — 旧 tool_result 的 content 自动清空（保留 tool_use_id 不破坏配对），保留最近 5 个完整内容。预计节省 30-60% 请求 token。
+- **token 估算触发裁剪** — `TrimHistory` 改用 chars/4 估算（30k 阈值）+ 条数兜底，而非单纯按消息条数。30 条纯对话仅 5k token，但 5 个 lookup_command 就 20k+。
+- **HTML 参考库（IEC/PLCopen）** — `lookup_command` 工具覆盖 IEC 61131-3 和 PLCopen 全部命令/功能块，AI 写代码前主动校验。
+- **prompt 缓存标记** — system prompt + tools + 最后 assistant 消息打 `cache_control`（GLM 走隐式缓存，标记无害；切换到 Anthropic 端点会生效）。
+- **智能截断** — HTML heading/table 边界处切，避免语法表被截成半句。
+
+### 修复
+
+- **IEC ST 局部变量写入静默失败** — LLM 输出 LF 行尾，但 MP 的 `STCodeGenerator.SplitCode` 内部按 `"VAR\r\n"` 匹配，必须 CRLF。在 `WriteIecSource` / `WriteIecVariables` 入口强制规范化。
+- **IEC 新建 POU 不在项目树显示** — `AddNewProgram` 的 folder 参数不能为 null，否则 `IECObjectPOU` 构造函数的 `Folder?.Add(this)` 跳过注册。改为传 `EnsureDefaultProgramFolder(false, false)`。
+- **IEC 自动创建 POU 总是追加到第一个现有 POU** — `EnsureIecPou` 不论 pouName 是否传入都返回 `TryGetFirstIecPou`。改为按 pouName 匹配，找不到才创建。
+
+### 调整
+
+- `MaxToolResultLen` 16000 → 8000（约 2000 token 上限，单条节省 50%）。
+- `BuildSkillsCatalog` 去掉每库 5 个命令示例，只列库名+条目数。
+- `BuildProjectContext` 程序列表改为数量+类型分布，不再列每个名字。
+- `max_tokens` 自动升级 8K → 64K（处理大程序生成）。
+
+## [0.1.2] — 2026-06-10
+
+控制器深度集成 + IEC 端到端支持版本。
+
+### 新增
+
+- **27 个 HTTP 路由 / AI 工具**，覆盖控制器深度操作：
+  - 轴状态/详情（`isActive` / `isInError` / `AxisStatus` / `DriveStatus`）
+  - 系统变量读写（`/sysvars`、`/sysvar/{name}`）
+  - 数字/模拟 IO 读写（`/io/digital`、`/io/analogue`）
+  - 进程列表 + 运行中变量读（`/processes`、`/processes/{pid}/variables`）
+  - 控制器事件订阅（`/events`）
+  - 驱动器参数（`/drive/{axis}/{addr}`）
+  - EtherCAT 设备扫描 + SDO 读写（`/ethercat/devices`、`/ethercat/sdo`）
+  - MS Bus 模块扫描（`/msbus/scan`）
+  - 远程设备 / 机器人 / 配方 / 报警 列表
+  - 示波器打开（`/oscilloscope/open`）
+  - 项目项列表 / 打开项目（`/project/items`、`/project/open`）
+  - 插件探测（`/plugins`）
+  - 程序复制（`/programs/{name}/copy`）
+
+### 修复
+
+- **IEC 程序完整集成**：`compile` / `run` / `stop` / `upload` / `open` / `breakpoints` 列表全部通过反射调用 `ContainerTask` 公开方法实现。`run` 内部自动 Compile + DebugManager.Start。
+- **IEC ST 编译报错 "VAR: 缺少新语句"**：根因是 `STCodeGenerator` 类的实际命名空间是 `Trio.PlugIns.IEC61131_3.Models`（不是 `CodeGenerators`），`asm.GetType()` 返回 null，导致 `SplitCode` 静默 no-op，VAR...END_VAR 块被写入 .src 文件触发语法错误。改用 `asm.GetTypes().FirstOrDefault(t => t.Name == "STCodeGenerator")` 按类名查找。
+- **IEC 程序复制**：改用 `CreateAndAddItem` + source-copy，绕过对 IEC 容器不适用的 `proj.CopyItem` 文件路径操作。
+- **search_code 路由**：补充进 `ApiServer.cs`（之前完全缺失，返回 404）。
+- **空 task 读取 IEC 源码**：返回空字符串而非抛 "IEC item has no POU"。
+- **11 个新路由的 segments.Length 偏差 1 bug**（io、plugins、robots、recipes、alarms、remote-devices、msbus、ethercat、drive、processes、oscilloscope 全部受影响）。
+
+### 已知限制
+
+- IEC 断点的 line→CodeElement 反推未实现，`POST /programs/{name}/breakpoint` 对 IEC 返回明确错误（`line→CodeElement` 反推需要 IEC 解析器集成）。请用 MP UI 设置 IEC 断点。
+- IEC `MAIN` 类型 POU 不支持 `VAR_INPUT` / `VAR_OUTPUT`（语义限制，需用 SubProgram 或 UDFB 类型）。
 
 ## [0.1.1] — 2026-06-09
 
@@ -66,6 +127,7 @@ bug 修复版本。
 - 破坏性操作 UI 二次确认
 - 写操作自动备份
 
-[Unreleased]: https://github.com/lfmmd/TrioAI/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/lfmmd/TrioAI/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/lfmmd/TrioAI/releases/tag/v0.1.2
 [0.1.1]: https://github.com/lfmmd/TrioAI/releases/tag/v0.1.1
 [0.1]: https://github.com/lfmmd/TrioAI/releases/tag/v0.1

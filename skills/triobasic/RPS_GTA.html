@@ -1,0 +1,370 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>GTA</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="GTA">
+</head>
+<body>
+<h1>GTA</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Parameter 
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+GTA(index) = x, y, z, u, v, w, name
+</p>
+<h2>Description:</h2>
+<p>
+GTA is the Global Targets Array which contains an array of
+globally available TARGET objects for use in Robotics applications.
+</p>
+<p>
+GTA variables, like GTAJ and GTAE, are global to all
+programs and their values are stored in controller’s flash and, therefore,
+retained after power cycle. For local targets, see TARGET.
+</p>
+<p>
+A GTA variable is an aggregate of multiple values, each
+value being stored in a named member as shown below.
+</p>
+<table>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Trebuchet MS",sans-serif'>Keyword</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Trebuchet MS",sans-serif'>Description</span></b></p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>x,
+  y, z, u, v, w</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+64-bit floating point number
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>id </span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+32-character string
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>active
+  </span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+Boolean
+</p>
+
+  
+</td>
+</tr>
+</table>
+<p class="MsoNoSpacing">
+Global targets may be activated or deactivated using the
+Boolean member “active”. Assigning ‘FALSE’ will erase the target (all values to
+0 and empty name) and deactivate it (not visible in any program). 
+<a name="_Hlk201905579">When a target has been deactivated, it is like it had
+never been used, so deactivating a target can be done with any of GTA, GTAJ or
+GTAE and the result will be the same.</a>
+</p>
+<p class="codeexample">
+GTA
+(
+10
+).active = 
+FALSE
+</p>
+<p class="MsoNoSpacing">
+If it is required to reset all elements of the global
+target array, then the following command can be used.
+</p>
+<p class="codeexample">
+GTA
+(
+0, GTASIZE - 1
+).active = 
+FALSE
+</p>
+<p class="MsoNoSpacing">
+A range of GTAs can be requested or assigned by
+specifying the start and end index separated by comma.
+</p>
+<p class="codeexample">
+GTA
+(
+10
+, 
+13
+) = 
+250
+, 
+0
+, 
+150
+, 
+180
+, 
+0
+, 
+180
+<br>
+
+
+PRINT
+ GTA
+(
+10
+, 
+13
+) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+Terminal:
+250.00000,0.00000,150.00000,180.00000,0.00000,180.00000,&quot;&quot;
+250.00000,0.00000,150.00000,180.00000,0.00000,180.00000,&quot;&quot; 250.00000,0.00000,150.00000,180.00000,0.00000,180.00000,&quot;&quot;
+250.00000,0.00000,150.00000,180.00000,0.00000,180.00000,&quot;&quot;
+</p>
+<p>
+<a name="_Hlk201922473">Global target members can be read from
+and written to using the ‘dot’ notation (“.”)<em><span style='font-family:"Calibri",sans-serif'>.</span></em></a>
+</p>
+<p class="codeexample">
+my_variable = 
+GTA
+(
+10
+).x
+</p>
+<p class="codeexample">
+GTA(10).x = (GTA(23).x + GTA(24).x) / 2
+</p>
+<p class="MsoNoSpacing">
+If an inactive global target array element is assigned to
+using GTA, then that element becomes a GTA, i.e. has a point type of 0, and
+must be manipulated with GTA otherwise a run-time error will be generated. It
+is also permissible to use GTAE for any point type, but it is a good general
+rule to know what the point type is for an element and to always use the
+appropriate access keyword.
+</p>
+<p class="MsoNoSpacing">
+Global target array elements may be assigned to each
+other and to and from local target variables.
+</p>
+<p class="codeexample">
+GTA
+(
+10
+) = 
+GTA
+(
+11
+)
+</p>
+<p class="codeexample">
+my_target = 
+GTA
+(
+10
+)
+</p>
+<p class="codeexample">
+GTA(12) = my_target
+</p>
+<p class="note">
+GTA requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+.
+
+</p>
+<p class="warning">
+<span class="normaltextrun">GTA,
+GTAJ, and GTAE are sharing the same allocated location of the memory. This
+means they cannot share indices. Maximum number of targets is controller
+dependent.&nbsp;</span></p>
+<p class="warning">
+<span class="normaltextrun">For
+example:</span><span class="scxw38965323">&nbsp;</span><br>
+
+
+<span class="normaltextrun">GTA(1) =&nbsp;X1, Y1,
+Z1, U1, V1, W1, “pt1”</span><span class="eop">&nbsp;</span></p>
+<p class="warning">
+<span class="normaltextrun">GTAJ(2)
+= t1, t2, t3, t4, t5, t6, “pt2”</span><span class="eop">&nbsp;</span></p>
+<p class="warning">
+<span class="normaltextrun">In
+this example, GTAJ cannot have index 1 and GTA cannot have index 2.</span><span class="eop">&nbsp;</span></p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="177" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td width="397" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+x, y, z, u, v, w:
+  Float
+</p>
+
+  
+</td>
+<td width="397" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position (mm) and orientation (degrees) in Cartesian
+  space.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+(optional) “name”:
+  String
+</p>
+
+  
+</td>
+<td width="397" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unique name for the target. Duplicated names generate a
+  compile error.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+<a name="_Hlk201918513">Name is optional but if specified must be
+unique (not used by any other GTA elements of any type).</a>
+</p>
+<p class="note">
+Name is truncated if more than 32 characters long.
+</p>
+<p class="note">
+A GTA cannot be declared using a name; instead, it must use an id
+number. If so, the run time error “ID not defined” will be thrown.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Define a global target named “Cartesian_point1”.
+</p>
+<p class="note">
+GTA
+(10) = 
+100
+, 
+0
+, 
+50
+, 
+180
+, 
+0
+, 
+180
+, &quot;Cartesian_point1&quot;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_GTA.html">GTAJ</a>
+, 
+<a href="GTASIZE.html">TARGETJ</a>
+,
+
+<a href="RPS_TARGET.html">TARGET</a>
+, 
+<a href="RPS_TARGETJ.html">TARGETJ</a>
+<a name="_Hlk201905979"></a>
+</p>
+</body>
+</html>

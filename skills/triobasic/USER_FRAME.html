@@ -1,0 +1,398 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>USER_FRAME</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="USER_FRAME">
+</head>
+<body>
+<h1>USER_FRAME</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax</h2>
+<p>
+USER_FRAME(identity [, x_offset, y_offset, z_offset [, x_rotation
+[, y_rotation [, z_rotation]]]])
+</p>
+<h2>Description:</h2>
+<p>
+The USER_FRAME allows the user to program in a different
+coordinate system. The USER_FRAME can be defined up to a 3-axis translation and
+rotation from the world coordinate origin. The rotations are applied using the
+Euler ZYX convention. This means that the z rotation is applied first, then the
+y is applied on the new coordinate system and finally the x is applied. The
+coordinate system is defined using the ‘right hand rule’ and the rotation of
+the origin is defined using the ‘right hand turn’.
+</p>
+<p class="note">
+USER_FRAME requires the kinematic runtime FEC
+</p>
+<p>
+The default coordinate system has the identity 0 and is
+equal to the world coordinate system, this cannot be modified. If you wish to
+disable the USER_FRAME select USER_FRAME(0).
+</p>
+<p>
+USER_FRAMEs are applied on the axis 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+. If no 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+
+is defined then a runtime error will be generated.
+</p>
+<p>
+Movements are loaded with the selected USER_FRAME. This
+means that you can buffer a sequence of movements on different USER_FRAMES. The
+active USER_FRAME is the one associated with the movement in the 
+<a href="MTYPE.html">MTYPE</a>
+. If the 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+
+is 
+<a href="IDLE.html">IDLE</a>
+ then the active USER_FRAME is the selected
+USER_FRAME. 
+</p>
+<p class="note">
+The USER_FRAME is applied to all the axes in the 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+. This can be the same group as used by 
+<a href="FRAME.html">FRAME</a>
+. The 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+
+does not have to be 3 axis, however the USER_FRAME will only process position
+for the axes in the 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+. It can be
+useful in a 2 axes 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+ to perform a
+USER_FRAME rotation about the third axis.
+</p>
+<p class="note">
+In certain applications involving different USER_FRAMEs,
+reverting back to USER_FRAME(0) between USER_FRAMEs is necessary. 
+</p>
+<p>
+<img border="0" width="609" height="227" id="Picture 1" src="USER_FRAME_files/image001.png">
+</p>
+<p class="tip">
+If you wish to check which USER_FRAME, TOOL_OFFSET and 
+<a href="VOLUME_LIMIT.html">VOLUME_LIMIT</a>
+ are active you can print the details
+using 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+(group). 
+</p>
+<h2>Parameters</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+identity:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0 = default group which is set to the world coordinate
+  system
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1 to 31 = Identification number for the user defined
+  frame.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+x_offset:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Offset in the x axis from the world origin to the user
+  origin.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+y_offset:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Offset in the y axis from the world origin to the user
+  origin.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+z_offset:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Offset in the z axis from the world origin to the user
+  origin.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+x_rot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Rotation about the items x axis in radians.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+y_rot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Rotation about the items y axis in radians.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+z_rot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Rotation about the items z axis in radians.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A conveyors origin is at 45degrees to the world coordinate
+(robots) origin, as shown in the image. To ease programming a USER_FRAME is
+assigned to align the x axis with the conveyor so that it is possible to
+program in the conveyor coordinate system. 
+</p>
+<p>
+<img border="0" width="239" height="239" id="Picture 11" src="USER_FRAME_files/image002.jpg" alt="1a">
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FRAME_GROUP(0,0,0,1,2)
+</p>
+<p class="codeexample">
+USER_FRAME(1,0,0,0,PI/4)
+</p>
+<h3>Example 2</h3>
+<p>
+Initialise a user coordinate system then perform a movement
+on the world coordinate system before starting a 
+<a href="FORWARD.html">FORWARD</a>
+
+on the first user coordinate system. 
+</p>
+<p class="codeexample">
+FRAME_GROUP(0,0,0,1,2)
+</p>
+<p class="codeexample">
+BASE(0,1,2)
+</p>
+<p class="codeexample">
+DEFPOS(10,20,30)
+</p>
+<p class="codeexample">
+USER_FRAME(1,10,20,30,PI/2)
+</p>
+<p class="codeexample">
+USER_FRAME(0)
+</p>
+<p class="codeexample">
+MOVEABS(100,100,50)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+USER_FRAME(1)
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<h3>Example 3</h3>
+<p>
+Initialise a user coordinate system then perform a movement
+on the world coordinate system before starting a 
+<a href="FORWARD.html">FORWARD</a>
+
+on the first user coordinate system until input 2 is on. Do this twice with a
+different USER_FRAME once input 3 is on.
+</p>
+<p class="codeexample">
+FRAME_GROUP(0,0,0,1,2)
+</p>
+<p class="codeexample">
+BASE(0,1,2)
+</p>
+<p class="codeexample">
+DEFPOS(10,20,30)
+</p>
+<p class="codeexample">
+USER_FRAME(1,10,20,30,PI/2)
+</p>
+<p class="codeexample">
+USER_FRAME(0)
+</p>
+<p class="codeexample">
+MOVEABS(100,100,50)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+USER_FRAME(1)
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(2) = ON
+</p>
+<p class="codeexample">
+RAPIDSTOP
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+USER_FRAME(0)
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(3)=ON
+</p>
+<p class="codeexample">
+USER_FRAME(2,0,0,0,PI/4)
+</p>
+<p class="codeexample">
+USER_FRAME(2)
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+, 
+<a href="FRAME.html">FRAME</a>
+, 
+<a href="VOLUME_LIMIT.html">VOLUME_LIMIT</a>
+</p>
+</body>
+</html>

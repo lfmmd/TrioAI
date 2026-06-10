@@ -1,0 +1,84 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SERVO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SERVO">
+</head>
+<body>
+<h1>SERVO</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+On a servo axis this parameter determines whether the axis
+runs under servo control or open loop. When SERVO=OFF the axis hardware will
+output demand value dependent on the DAC parameter. When SERVO=ON the axis
+hardware will output a demand value dependant on the gain settings and the
+following error.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="ON.html">ON</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+closed loop servo control enabled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="OFF.html">OFF</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+closed loop servo control disabled
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Enable axis 1 to run under closed loop control and axis 1 as
+open loop.
+</p>
+<p class="codeexample">
+SERVO AXIS(0)=ON   'Axis 0 is under servo control
+</p>
+<p class="codeexample">
+SERVO AXIS(1)=OFF  'Axis 1 is run open loop
+</p>
+</body>
+</html>

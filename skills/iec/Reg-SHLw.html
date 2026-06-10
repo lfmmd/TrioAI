@@ -1,0 +1,250 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SHLw/SHL_INT/SHL_UINT/SHL_WORD</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>SHLw/SHL_INT/SHL_UINT/SHL_WORD</h1>
+<p class="Category">
+Function
+</p>
+<p>
+Shift bits of a register to the left.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+INT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16-bit register.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+NBS
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+INT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of shifts (each shift is 1 bit).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+INT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Shifted register.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Diagram</h2>
+<p>
+<img width="179" height="62" src="Reg-SHLw_files/image001.gif">
+</p>
+<h2>Remarks</h2>
+<p>
+In LD language, the input rung (EN) enables the operation,
+and the output rung keeps the state of the input rung. In IL language, the
+first input must be loaded before the function call. The second input is the
+operand of the function.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+Q := SHLw (IN, NBS);
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="117" height="76" id="Picture 3" src="Reg-SHLw_files/image002.png">
+</p>
+<h2>LD Language</h2>
+<p>
+The shift is executed only if EN is TRUE.
+<br>
+
+ENO has the same value as EN.
+<br>
+<img width="222" height="80" id="Picture 1" src="Reg-SHLw_files/image003.png">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Reg-ROL.html">ROL</a>
+</p>
+<p>
+<a href="Reg-ROLb.html">ROLb</a>
+</p>
+<p>
+<a href="Reg-ROLw.html">ROLw</a>
+</p>
+<p>
+<a href="Reg-ROR.html">ROR</a>
+</p>
+<p>
+<a href="Reg-RORb.html">RORb</a>
+</p>
+<p>
+<a href="Reg-RORw.html">RORb</a>
+</p>
+<p>
+<a href="Reg-SHL.html">SHL</a>
+</p>
+<p>
+<a href="Reg-SHLb.html">SHLb</a>
+</p>
+<p>
+<a href="Reg-SHR.html">SHR</a>
+</p>
+<p>
+<a href="Reg-SHRb.html">SHRb</a>
+</p>
+<p>
+<a href="Reg-SHRw.html">SHRw</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

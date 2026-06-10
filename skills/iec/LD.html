@@ -1,0 +1,112 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Ladder Diagram</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="_Toc317749316"></a>
+<a name="O_1517"></a>
+Ladder Diagram (LD)</h1>
+<p>
+A Ladder Diagram is a list of rungs. Each rung represents a
+boolean data flow from a power rail on the left to a power rail on the right.
+The left power rail represents the TRUE state. The data flow must be understood
+from the left to the right. Each symbol connected to the rung either changes
+the rung state or performs an operation. Below are possible graphic items to be
+entered in LD diagrams:
+</p>
+<p>
+<a href="LD-PowerRails.html">Power Rails</a>
+<br>
+<a href="LD-Contacts.html">Contacts</a>
+<span class="HotSpot"> </span>and 
+<a href="LD-Coils.html">Coils</a>
+<span class="HotSpot"><br>
+
+</span><a href="BasicOperations.html">Operations</a>
+, 
+<a href="Bas-CallingFunction.html">Functions</a>
+ and 
+<a href="Bas-CallingFunctionBlock.html">Function blocks</a>
+, represented by
+rectangular blocks
+<br>
+<a href="Bas-Labels.html">Labels</a>
+ and 
+<a href="Bas-Jumps.html">Jumps</a>
+<br>
+<a href="ST_in_Graphic_Language.html">Use of ST instructions in graphic
+languages</a>
+<a name="H_1302"></a>
+</p>
+<p class="SectionHeading1">
+Use of the EN input and the ENO output for blocks
+</p>
+<p>
+The rung state in a LD diagram is always boolean. Blocks are
+connected to the rung with their first input and output. This implies that
+special EN and ENO input and output are added to the block if its first input
+or output is not boolean.
+</p>
+<p>
+The EN input is a condition. It means that the operation
+represented by the block is not performed if the rung state (EN) is FALSE. The
+ENO output always represents the sane status as the EN input: the rung state is
+not modified by a block having an ENO output.
+</p>
+<p>
+Below is the example of the XOR block, having boolean inputs
+and outputs, and requiring no EN or ENO pin:
+</p>
+<p class="note">
+First input is the rung. The rung ist the output.
+</p>
+<p>
+<br>
+<img border="0" width="221" height="75" src="LD_files/image001.gif">
+</p>
+<p>
+&nbsp;Below is the example of the &gt; (greater than) block,
+having non boolean inputs and a boolean output. This block has an EN input in
+LD language:
+</p>
+<p class="note">
+The comparison is executed only if EN is TRUE.
+</p>
+<p>
+<img border="0" width="220" height="82" src="LD_files/image002.gif">
+</p>
+<p>
+Below is the example of the SEL function, having a first
+boolean input, but an integer output. This block has an ENO output in LD
+language:
+</p>
+<p class="note">
+The input rung is the selector.
+</p>
+<p class="note">
+ENO has the same value as SELECT.
+</p>
+<p>
+<img border="0" width="221" height="81" src="LD_files/image003.gif">
+</p>
+<p>
+Finally, below is the example of an addition, having only
+numerical arguments. This block has both EN and ENO pins in LD language:
+</p>
+<p class="note">
+The addition is executed only if EN is TRUE.
+</p>
+<p class="note">
+ENO is equal to EN.
+</p>
+<p>
+<img border="0" width="220" height="80" src="LD_files/image004.gif">
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,114 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HMI_GET_PAGE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HMI_GET_PAGE">
+</head>
+<body>
+<h1>HMI_GET_PAGE</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = HMI_GET_PAGE[(&lt;ip&gt;)]
+</p>
+<h2>Description:</h2>
+<p>
+Return the currently selected page on the
+given HMI Client. If the IP address is not specified then the current page for
+the lowest active session will be returned.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A string that contains the name of the
+  current page on the HMI Client.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IP
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IP address of the HMI Client to which
+  this message must be sent.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_3:"></a>
+Example:</h2>
+<p>
+Automatically reset the current page on the
+HMI Client.
+</p>
+<p class="codeexample">
+WHILE(1)
+</p>
+<p class="codeexample">
+  IF VR(0)&lt;&gt;0 AND
+HMI_GET_PAGE&lt;&gt;&quot;PAGE1&quot; THEN
+</p>
+<p class="codeexample">
+    HMI_SET_PAGE(&quot;PAGE1&quot;)
+</p>
+<p class="codeexample">
+    VR(0)=0
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="HMI_CONNECTIONS.html">HMI_CONNECTIONS</a>
+,
+
+<a href="HMI_GET_STATUS.html">HMI_GET_STATUS</a>
+, 
+<a href="HMI_SERVER.html">HMI_SERVER</a>
+,
+
+<a href="HMI_SET_PAGE.html">HMI_SET_PAGE</a>
+</p>
+</body>
+</html>

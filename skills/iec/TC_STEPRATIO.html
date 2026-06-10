@@ -1,0 +1,229 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_STEPRATIO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_STEPRATIO">
+</head>
+<body>
+<h1>TC_STEPRATIO</h1>
+<h2>Type:</h2>
+<p>
+Motion Function
+</p>
+<h2>Function:</h2>
+<p>
+Issues a new STEP_RATIO motion request for the axis
+specified by 'AxisNo'.
+</p>
+<h2>Inputs:</h2>
+<p class="fixed">
+   
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EN : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE enables the function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AxisNo : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Numerator: LINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The output count 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Denominator: LINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The DPOS count (input of the function)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ENO : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when function is enabled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if a program error is detected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID : UINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returned error number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+When the EN input is TRUE, the function block applies the
+command to the axis indicated.
+</p>
+<p>
+A programming error, such as parameter out of range, will
+set the Error output and return an error ID number.  For the Error ID
+reference, see the Trio Programming error list.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample">
+MyTC_StepRatio(EN, AxisNo, Numerator, Denominator);
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+ENO := MyTC_StepRatio.ENO;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Error := MyTC_StepRatio.Error;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+ErrorID := MyTC_StepRatio.ErrorID;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>FBD Language:</h2>
+<p align="center">
+<img width="467" height="161" id="Picture 16" src="TC_STEPRATIO_files/image001.png">
+</p>
+<h2>LD Language: </h2>
+<p align="center">
+<img width="479" height="166" id="Picture 17" src="TC_STEPRATIO_files/image002.png">
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBASIC Errors</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

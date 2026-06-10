@@ -1,0 +1,93 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INTERP_FACTOR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INTERP_FACTOR">
+</head>
+<body>
+<h1>INTERP_FACTOR</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter excludes the axis from the interpolated
+motion calculations so that it will become a following axis. This means that
+you can create an interpolated XY move with Z completing its movement at the same
+time. The interpolated speed is calculated using any axes that have
+INTERP_FACTOR of 1, so at least one axis must be enabled and have a distance in
+the motion command otherwise the calculated speed will be zero and the command
+will complete immediately with no movement.
+</p>
+<p>
+The following two graphs illustrate how the SPEED is
+resolved along the path when both axes have an INTERP_FACTOR of 1, and how
+SPEED is resolved along the X axis when the Y axis has an INTERP_FACTOR of 0.
+</p>
+<p>
+<img width="576" height="336" src="INTERP_FACTOR_files/image001.png">
+<br clear="ALL">
+
+INTERP_FACTOR only operates with 
+<a href="MOVE.html">MOVE</a>
+, 
+<a href="MOVEABS.html">MOVEABS</a>
+ and 
+<a href="MHELICAL.html">MHELICAL</a>
+ (on
+the 3
+<sup>rd</sup> axis) and their SP versions. All other motion commands
+require interpolated axes and so ignore this parameter.
+</p>
+<h2>Example:</h2>
+<p>
+It is required to move a Z axis interpolated with X and Y,
+however we want the interpolated speed to only be active on the XY move. We
+disable the Z axis from the interpolation group using INTERP_FACTOR. Remember
+when the movement is complete you must enable INTERP_FACTOR again. 
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(2) = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Perform movement
+</p>
+<p class="codeexample">
+BASE(0, 1, 2)
+</p>
+<p class="codeexample">
+MOVEABS(x_offset, y_offset, z_offset)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(2) = 1
+</p>
+<h2>See also:</h2>
+<p>
+<a href="MOVE.html">MOVE</a>
+, 
+<a href="MOVEABS.html">MOVEABS</a>
+,
+
+<a href="MHELICAL.html">MHELICAL</a>
+, 
+<a href="SPEED.html">SPEED</a>
+, 
+<a href="AXIS.html">AXIS</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

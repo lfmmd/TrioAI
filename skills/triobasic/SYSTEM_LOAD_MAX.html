@@ -1,0 +1,62 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SYSTEM_LOAD_MAX</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SYSTEM_LOAD_MAX">
+</head>
+<body>
+<h1>SYSTEM_LOAD_MAX</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+SYSTEM_LOAD_MAX returns the maximum value of SYSTEM_LOAD since
+power-up, or since SYSTEM_LOAD_MAX was last set to 0.  If SYSTEM_LOAD_MAX is
+greater than 100 then at some point the firmware system and motion processing
+has overflowed the servo period.  The number of axes should be reduced or the 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+ set to a higher value.
+</p>
+<h2>Value:</h2>
+<p>
+The maximum percentage of servo period time that is used for
+system and motion processing. 
+</p>
+<h2>Example 1:</h2>
+<p>
+From the terminal 0 command line, read the max percentage of
+servo time being used by the system firmware.
+</p>
+<p class="codeexample">
+&gt;&gt;?SYSTEM_LOAD_MAX
+</p>
+<p class="codeexample">
+56.9780
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>Example 2:</h2>
+<p>
+Reset the SYSTEM_LOAD_MAX value so that it can record a new
+maximum value since reset.
+</p>
+<p class="codeexample">
+&gt;&gt;SYSTEM_LOAD_MAX = 0
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SYSTEM_LOAD.html">SYSTEM_LOAD</a>
+</p>
+</body>
+</html>

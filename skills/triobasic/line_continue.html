@@ -1,0 +1,94 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>_ (Line Continue)</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>_ (Line Continue)</h1>
+<h2>Type:</h2>
+<p class="Category">
+Special Character
+</p>
+<h2>Syntax: </h2>
+<p class="fixed">
+ExpressionStart _
+</p>
+<p class="fixed">
+ExpressionEnd
+</p>
+<h2>Description: </h2>
+<p>
+The line extension allows the user to split a long
+expression or command over more than one lines in the TrioBASIC program.
+</p>
+<p class="note">
+The split must be at the end of a parameter or keyword.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ExpressionStart:
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start of the command or expression.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ExpressionEnd:
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The end of the command or expression.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Split the 
+<a href="SERVO_READ.html">SERVO_READ</a>
+ command
+over 2 lines so you can use all 8 parameters.
+</p>
+<p class="codeexample">
+SERVO_READ(123, MPOS AXIS(0), MPOS AXIS(1),
+MPOS AXIS(2), _
+</p>
+<p class="codeexample">
+MPOS AXIS(3), MPOS AXIS(4), MPOS AXIS(5),
+MPOS AXIS(6))
+</p>
+</body>
+</html>

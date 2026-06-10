@@ -1,0 +1,236 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CONSTANT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CONSTANT">
+</head>
+<body>
+<h1>CONSTANT</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CONSTANT [&quot;name&quot;[, value]]
+</p>
+<h2>Description:</h2>
+<p>
+CONSTANTS can be declared in the controller which are then
+available to all programs. They must be declared on startup and the program
+declaring CONSTANTs must also be the ONLY process running at power-up.
+</p>
+<p class="note">
+Once a CONSTANT has been assigned it cannot be changed, even if
+you change the program that assigns it.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Model number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Max number of CONSTANTs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC464
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1024
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC403(Z), MC405, Euro404, Euro408, MC4N-ECAT, MC4N-RTEX
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4096
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC664(X), MC508, Flex-6 Nano, Flex-6X Nano, MC6N-ECAT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8192
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+While developing you may wish to clear or change a CONSTANT.
+You can clear a single CONSTANT by using the first parameter alone. All
+CONSTANTs can be cleared by issuing CONSTANT. You can view all CONSTANTS using 
+<a href="LIST_GLOBAL.html">LIST_GLOBAL</a>
+.
+</p>
+<p class="warning">
+Whenever a program is RUN, the GLOBAL and CONSTANT tables are
+searched for the names of already defined variables.  If a large number of
+GLOBAL/CONSTANT names are pre-defined, this may take several seconds.  When
+using the GLOBAL and CONSTANT system is it not advised to depend on temporarily
+running and then stopping programs.  It is best to run all the required
+programs when the machine starts and leave them in that running state.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any user-defined name containing lower case alpha,
+  numerical or underscore (_) characters.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value assigned to the name.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Declare 3 CONSTANTs and use them within the program
+</p>
+<p class="codeexample">
+CONSTANT &quot;nak&quot;,$15
+</p>
+<p class="codeexample">
+CONSTANT &quot;start_button&quot;,5
+</p>
+<p class="codeexample">
+CONSTANT &quot;led1&quot;,8
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+IF IN(start_button)=ON THEN OP(led1,ON)
+</p>
+<p class="codeexample">
+IF key_char = nak THEN GOSUB no_ack_received
+</p>
+<h3>Example 2:</h3>
+<p>
+Use the command line to clear a defined constant
+</p>
+<p class="codeexample">
+&gt;&gt;CONSTANT &quot;NAK&quot;
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p>
+Use the command line to clear all defined constants
+</p>
+<p class="codeexample">
+&gt;&gt;CONSTANT
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="GLOBAL.html">GLOBAL</a>
+, 
+<a href="LIST_GLOBAL.html">LIST_GLOBAL</a>
+</p>
+</body>
+</html>

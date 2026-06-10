@@ -1,0 +1,311 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVETEST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVETEST">
+</head>
+<body>
+<h1>MOVETEST</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVETEST(start/stop, dist0, accel0, speed0, dwell0, dist1,
+accel1, speed1, dwell1)
+</p>
+<h2>Description:</h2>
+<p>
+Start/stop a test move. This will perform a continuous cycle
+of 2 moves based on the profile parameters in the function. The axis will move
+forward and backward cyclically over the two selected distances. Each movement
+has its own acceleration and speed values which are in user units. The dwell between
+moves is in milliseconds.
+</p>
+<p>
+All motion stopping command like CANCEL, RAPIDSTOP will stop
+the motion
+</p>
+<p style="margin-left:36.0pt">
+Calling MOVETEST(1, ...) will
+start the motion
+</p>
+<p style="margin-left:36.0pt">
+Calling MOVETEST(0, ...) will
+stop the motion at the end of the second move
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start/stop:
+</p>
+
+  
+</td>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="463" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Stop the motion at the end of the second move
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="463" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start the test motion
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+dist0:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Distance to move in the forward direction.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+accel0:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration applied to the forward move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+speed0:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Speed applied to the forward move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+dwell0:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Dwell time in milliseconds after the forward movement
+  before starting the reverse move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+dist1:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Distance to move in the reverse direction.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+accel1:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration applied to the reverse move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+speed1:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Speed applied to the reverse move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+dwell1:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Dwell time in milliseconds after the reverse movement
+  before starting the next forward move.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+Set up a cyclic test move on the selected BASE axis. Move
+will go 10 turns of the motor at 1200 RPM (20 turns per second) with a dwell of
+500&nbsp;&#956;s between each move.
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+UNITS = 2 ^ 21 '21-bit encoder in use on the motor 
+</p>
+<p class="codeexample">
+MOVETEST(1, 10, 100, 20, 500, -10, 100, 20, 500) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Continue until input 5 is OFF
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(5) = OFF
+</p>
+<p class="codeexample">
+MOVETEST(0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,334 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>RAMP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="RAMP">
+</head>
+<body>
+<h1><a name="_Toc317749507"></a>
+<a name="O_1733"></a>
+RAMP</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+Limit the ascendance or descendance of a signal.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>IN</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input signal.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>ASC</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Maximum ascendance during time base.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>DSC</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Maximum descendance during time base.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>TM</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>TIME</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Time base.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>RST</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reset.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>OUT</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ramp signal.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Time diagram</h2>
+<p>
+<img width="452" height="273" src="AO-RAMP_files/image001.gif">
+</p>
+<h2>Remarks</h2>
+<p>
+Parameters are not updated constantly. They are taken into
+account when only:
+</p>
+<p class="MsoListBullet">
+<span style='font-family:"Wingdings 3"'>&#132;<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span>The first time the
+block is called.
+</p>
+<p class="MsoListBullet">
+<span style='font-family:"Wingdings 3"'>&#132;<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span>When the reset input
+(RST) is 
+<b>TRUE</b>.
+</p>
+<p>
+In these two situations, the output is set to the value of
+IN input.
+</p>
+<p>
+ASC and DSC give the maximum ascendant and descendant growth
+during the TB time base.
+<br>
+
+Both must be expressed as 
+<b>positive</b> numbers.
+</p>
+<p>
+In LD language, the operation is executed only if the input
+rung (EN) is 
+<b>TRUE</b>. The output rung (ENO) keeps the same value as the
+input rung.
+</p>
+<h2>ST Language</h2>
+<p>
+MyRamp is a declared instance of RAMP function block.
+</p>
+<p class="codeexample">
+MyRamp (IN, ASC, DSC, TM, RST);
+<br>
+
+OUT := MyRamp.OUT;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="164" height="138" src="AO-RAMP_files/image002.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The function is executed only if EN is TRUE.
+<br>
+
+ENO keeps the same value as EN.
+<br>
+<img width="257" height="157" src="AO-RAMP_files/image003.gif">
+</p>
+<h2>IL Language</h2>
+<p>
+MyRamp is a declared instance of RAMP function block.
+</p>
+<p class="codeexample">
+Op1: CAL MyRamp (IN, ASC, DSC, TM, RST)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyBlinker.OUT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; OUT
+</p>
+</body>
+</html>

@@ -1,0 +1,1123 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MC_CONFIG Program</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>MC_CONFIG Program</h1>
+<p>
+The MC_CONFIG program is a special program which can contain
+a small subset of TrioBASIC commands. It is automatically run at power-up and
+is used to set some basic configuration parameters on the controller.
+</p>
+<p class="note">
+MC_CONFIG, if present, is always run at power-up and does not
+need to be specified as an auto-run program. It is always run before user
+specified auto-run programs.
+</p>
+<p>
+If a parameter is not set in MC_CONFIG then the value in the
+controller's flash EPROM memory is used.
+</p>
+<p class="warning">
+Note that the BASE command cannot be used in MC_CONFIG, so
+axis parameters must be specified with the AXIS modifier.
+</p>
+<p class="note">
+The SLOT modifier may be used where appropriate.
+</p>
+<p>
+There are two types of command/parameter, ones that can only
+be used in MC_CONFIG and ones that are for general use but may also be used in
+MC_CONFIG. No other BASIC commands or parameters are allowed in MC_CONFIG, and use
+of a disallowed command/parameter will cause an error.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Only in MC_CONFIG</b></p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Allowed in MC_CONFIG</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="AUTOLOCK_SECONDS.html">AUTOLOCK_SECONDS</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="ATYPE.html">ATYPE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="AUTO_ETHERCAT.html">AUTO_ETHERCAT</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="AXIS_ADDRESS.html">AXIS_ADDRESS</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="AUTO_PROFINET.html">AUTO_PROFINET</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="DEBUG_LOG_MODE.html">DEBUG_LOG_MODE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="AXIS_OFFSET.html">AXIS_OFFSET</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="DRIVE_INDEX.html">DRIVE_INDEX</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="CANIO_ADDRESS.html">CANIO_ADDRESS</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="DRIVE_MODE.html">DRIVE_MODE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="CANIO_BASE.html">CANIO_BASE</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="DRIVE_PROFILE.html">DRIVE_PROFILE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="CANIO_MODE.html">CANIO_MODE</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+ECAT_FRAME_RETRY
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="COMPILE_MODE.html">COMPILE_MODE</a>
+ (and command
+  line)
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="ECAT_MODE.html">ECAT_MODE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="DRIVEIO_BASE.html">DRIVEIO_BASE</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="ENCODER_BITS.html">ENCODER_BITS</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="FLASH_DATA.html">FLASH_DATA</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+EX_DELAY
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="INTERNALIO_BASE.html">INTERNALIO_BASE</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="FLASH_TABLE_FIRST.html">FLASH_TABLE_FIRST</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="MODULEIO_BASE.html">MODULEIO_BASE</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="FLASH_TABLE_LAST.html">FLASH_TABLE_LAST</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="MODULE_IO_MODE.html">MODULE_IO_MODE</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="FLASH_VR_FIRST.html">FLASH_VR_FIRST</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+MOVEDISPENSE_BASE
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="FLASH_VR_LAST.html">FLASH_VR_LAST</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="RPS_RPS_KERNEL_V2.html">RPS_KERNEL_V2</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="HMI_PROC.html">HMI_PROC</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="SCHEDULE_TYPE.html">SCHEDULE_TYPE</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="IP_ADDRESS.html">IP_ADDRESS</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="SERVO_OFFSET.html">SERVO_OFFSET</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="IP_BIND_ADDRESS.html">IP_BIND_ADDRESS</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="IP_GATEWAY.html">IP_GATEWAY</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="SLOTn_TIME.html">SLOT0_TIME</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="IP_MEMORY_CONFIG.html">IP_MEMORY_CONFIG</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="SLOTn_TIME.html">SLOT1_TIME</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="IP_NETMASK.html">IP_NETMASK</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="SLOTn_TIME.html">SLOT2_TIME</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="IP_PROTOCOL_CONFIG.html">IP_PROTOCOL_CONFIG</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="SLOTn_TIME.html">SLOT3_TIME</a>
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="IP_PROTOCOL_CTRL.html">IP_PROTOCOL_CTRL</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="IP_TCP_TIMEOUT.html">IP_TCP_TIMEOUT</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="IP_TCP_TX_THRESHOLD.html">IP_TCP_TX_THRESHOLD</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="IP_TCP_TX_TIMEOUT.html">IP_TCP_TX_TIMEOUT</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NODE_AXIS.html">NODE_AXIS</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NODE_AXIS_COUNT.html">NODE_AXIS_COUNT</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NODE_AXIS_MAP.html">NODE_AXIS_MAP</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NODE_INDEX.html">NODE_INDEX</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NODE_IO.html">NODE_IO</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NODE_PROFILE.html">NODE_PROFILE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NW_NODE_AIO.html">NW_NODE_AIO</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+NW_NODE_AXIS
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+NW_NODE_AXIS_COUNT
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NW_NODE_AXIS_MAP.html">NW_NODE_AXIS_MAP</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+NW_NODE_CONTROLWORD
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NW_NODE_INDEX.html">NW_NODE_INDEX</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NW_NODE_IO.html">NW_NODE_IO</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NW_NODE_PROFILE.html">NW_NODE_PROFILE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+NW_NODE_STATUSWORD
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="NW_TIMEOUT.html">NW_TIMEOUT</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="PCMCAT_PROC.html">PCMCAT_PROC</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="REMOTE_PROC.html">REMOTE_PROC</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+REMOTE_PROG_VERSION
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="RPS_ROBOT_TARGET_MODE.html">ROBOT_TARGET_MODE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="TEXT_FILE_LOADER_PROC.html">TEXT_FILE_LOADER_PROC</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+TEXT_FILE_LOADER_STATUS
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="308" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="VP_MODE_PLC.html">VP_MODE_PLC</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note" style="margin-left:0cm">
+&nbsp;
+</p>
+</body>
+</html>

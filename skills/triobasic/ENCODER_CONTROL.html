@@ -1,0 +1,97 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENCODER_CONTROL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENCODER_CONTROL">
+</head>
+<body>
+<h1>ENCODER_CONTROL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Endat encoders can be set to either cyclically return their
+position, or they can be set to a parameter read/write mode.  
+</p>
+<p class="note">
+Using the 
+<a href="ENCODER_READ.html">ENCODER_READ</a>
+ or 
+<a href="ENCODER_WRITE.html">ENCODER_WRITE</a>
+ functions will set the parameter to
+1 automatically.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position return mode (default value)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+sets parameter read/write mode
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Reset ENCODER_CONTROL after an 
+<a href="ENCODER_READ.html">ENCODER_READ</a>
+
+so that the position is returned. 
+</p>
+<p class="codeexample">
+value = ENCODER_READ($A700)
+</p>
+<p class="codeexample">
+ENCODER_CONTROL = 0
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ENCODER_READ.html">ENCODER_READ</a>
+, 
+<a href="ENCODER_WRITE.html">ENCODER_WRITE</a>
+</p>
+</body>
+</html>

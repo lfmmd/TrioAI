@@ -1,0 +1,881 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MC_MoveSuperimposed</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MC_MoveSuperimposed">
+</head>
+
+
+
+<body>
+<h1>MC_MoveSuperimposed</h1>
+<p>
+Commands a controlled motion of a specified relative distance
+additional to an existing motion.
+</p>
+<p>
+<img width="424" height="236" src="MC_MoveSuperimposed_files/image001.png">
+</p>
+<h2>Description:</h2>
+<p>
+MC_MoveSuperimposed Commands a controlled motion of a
+specified relative distance additional to an existing motion. The existing
+motion is not interrupted, but superimposed by the additional motion.
+</p>
+<p>
+It is executed when ‘Execute’ changes to TRUE. 
+</p>
+<p>
+Any virtual axis can be AuxAxis. Each MC_MoveSuperimpose
+should set different AuxAxis reference. Error will be triggered (‘Error’ =
+TRUE) if the ‘AuxAxis’ has been running when ‘Execute’ changes to TRUE.
+</p>
+<p>
+If ‘ContinuousUpdate’ is enabled, axis switching and invalid
+inputs will stop the ongoing axis.
+</p>
+<p>
+Any change of input variables will be ignored when ‘ContinuousUpdate’
+is FALSE while ‘Execute’ changes to TRUE, or ‘ContinuousUpdate’ changes to
+FALSE after ‘Execute’ changes to TRUE.
+</p>
+<p>
+ ‘Distance’ can be a signed value. If the value is out of
+range, ‘Error’ will be set. The new command position will be ‘Distance’
+additional to the current set position when ‘Execute’ changes to TRUE.
+</p>
+<p>
+<img width="389" height="227" src="MC_MoveSuperimposed_files/image002.png">
+</p>
+<p>
+‘Done’ is set when the command position achieves the
+superimposed distance. It does not need to check position feedback.
+</p>
+<p>
+‘VelocityDiff’ is an unsigned value. If the value is out of
+range, ‘Error’ will be set. The new command ‘Velocity’ will be ‘VelocityDiff’
+additional to the current set velocity when ‘Execute’ changes to TRUE.
+</p>
+<p>
+The set velocity of axis does not necessarily reach the new
+command velocity.
+</p>
+<p>
+<img width="364" height="233" src="MC_MoveSuperimposed_files/image003.png">
+</p>
+<p>
+‘Acceleration’, ‘Deceleration ’and ‘Jerk’ are unsigned
+values. If any values are out of range (negative, greater than maximum
+acceleration / deceleration / jerk), ‘Error’ will be set. If any of these
+values is set to 0, the maximum value will be used.
+</p>
+<p>
+&nbsp;
+</p>
+<p class="MsoListParagraph" style="margin-left:18.0pt;text-indent:-18.0pt">
+<span style="font-family:Wingdings">§<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><b>Effect of MC_MoveSuperimposed on a slave axis</b></p>
+<p>
+Below is an example of MC_MoveSuperimposed while a slave
+axis is camming with modulo axes. The master is moving in constant velocity and
+running periodically. The slave axis follows the master axis with a sine cam
+profile. Green lines show the slave position both with and without
+MC_MoveSuperimposed.
+</p>
+<p>
+<img width="556" height="364" src="MC_MoveSuperimposed_files/image004.png">
+</p>
+<p>
+Note: at slave velocity, the double
+line shows the effect of MoveSuperimposed while in synchronized motion during camming.
+The same is valid for the related slave position.
+</p>
+<p class="MsoListParagraph" style="margin-left:18.0pt;text-indent:-18.0pt">
+<span style="font-family:Wingdings">§<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><b>Effect of MC_MoveSuperimposed on MC_MoveAbsolute</b></p>
+<p>
+Below is an example of MC_MoveSuperimposed working on
+MC_MoveAbsolute (with target position of 5000). MC_MoveSuperimposed
+(Superimposed distance = 1000) continues its movement even after the underlying
+discrete motion is finished.
+</p>
+<p>
+<img width="556" height="314" src="MC_MoveSuperimposed_files/image005.png">
+</p>
+<p>
+The ‘Done’ output will be set at position 5000, but the axis
+is not stopped due to MC_MoveSuperimposed.
+</p>
+<p class="MsoListParagraph" style="margin-left:18.0pt;text-indent:-18.0pt">
+<span style="font-family:Wingdings">§<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><b>Distance correction for products on a conveyor belt</b></p>
+<p>
+A conveyor belt consists of individual segments, each driven
+by an axis. The conveyor belt is used for transporting packages, the spacing of
+which is to be corrected. To this end a conveying segment must briefly run
+faster or slower relative to a following segment.
+</p>
+<p>
+<img width="540" height="137" src="MC_MoveSuperimposed_files/image006.png">
+</p>
+<p>
+The measured distance is 1100 mm and is to be reduced to 1000
+mm. Conveyor belt 1 should be accelerated to reduce the distance. The
+correction must be completed by the time the end of belt 1 is reached to
+prevent the package being pushed onto the slower belt 2.
+</p>
+<p>
+Since in this situation conveyer 1 must be accelerated, the
+drive system requires a velocity reserve, assumed to be 500 mm/s in this case.
+In practice this value can be determined from the difference between the
+maximum conveyor speed and the current set velocity.
+</p>
+<p>
+For parameterisation of function block MC_MoveSuperimposed, this
+means:
+</p>
+<p style="margin-left:36.0pt">
+Distance = 1100 mm - 1000 mm = 100
+mm (distance correction)
+</p>
+<p style="margin-left:36.0pt">
+VelocityDiff = 500 mm/s
+</p>
+<p>
+The system uses the internally calculated velocity as degree
+of freedom. VelocityDiff therefore is the upper limit for the velocity change
+in this case. A suitable value for input parameters must be set to complete the
+correction before the package will reach the belt 2.
+</p>
+<p>
+Alternatively, the correction could be achieved by
+decelerating belt 2. In this case Distance must be negative. The maximum
+possible velocity change ‘VelocityDiff’ corresponds to the current set
+velocity. Belt 2 could therefore be decelerated down to zero, if necessary.
+</p>
+<p class="MsoListParagraph" style="margin-left:18.0pt;text-indent:-18.0pt">
+<span style="font-family:Wingdings">§<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><b>Drilling unit</b></p>
+<p>
+A drilling unit should drill two holes in a moving
+workpiece. Synchronisation for the first hole is assumed to be achieved via the
+flying saw (MC_GearInPos) and is not considered here. After the first operation
+the device must be moved by certain distance relative to the moving workpiece.
+</p>
+<p>
+<img width="546" height="198" src="MC_MoveSuperimposed_files/image007.png">
+</p>
+<p>
+The drilling unit is to be advanced by 250 mm relative to
+the workpiece after the first hole has been drilled. From this position the
+drilling unit is once again synchronous with the workpiece and the second hole
+can be drilled.
+</p>
+<p>
+Parameterisation of MC_MoveSuperimposed:
+</p>
+<p style="margin-left:60.0pt">
+Distance = 250 mm
+</p>
+<p style="margin-left:60.0pt">
+VelocityDiff = 500 mm/s (velocity
+reserve of the drilling device)
+</p>
+<p>
+The stated value for ‘VelocityDiff’ is an upper limit that
+can be chosen freely (but not too small). Execute the FB (MC_MoveSuperimposed),
+when ‘Done’ changes to TRUE, the drilling unit is once again synchronous with
+the workpiece and the second hole can be drilled.
+</p>
+<p class="tip">
+Make sure the input and output parameters are of data type
+indicated in the table below.
+</p>
+<p class="note">
+Do not use the ‘AuxAxis’ for any other motion when it is used in
+MC_MoveSuperimposed.
+</p>
+<p class="note">
+If MC_MoveSuperimposed is active, then any other command in
+aborting mode except MC_MoveSuperimposed will abort both motion commands: both
+the MC_MoveSuperimposed and the underlying motion command. In any other mode,
+the underlying motion command is not aborted.
+</p>
+<p class="note">
+If MC_MoveSuperimposed is active and another MC_MoveSuperimposed
+is commanded, only the ongoing MC_MoveSuperimposed command is aborted, and
+replaced by the new MC_MoveSuperimposed, but not the underlying motion command.
+</p>
+<p class="note">
+MC_MoveSuperimposed causes a change of the velocity and, if
+applicable, the commanded position of an ongoing motion in all relevant states.
+</p>
+<p class="note">
+In the state ‘Standstill’, MC_MoveSuperimposed acts like
+MC_MoveRelative. When executed in state ‘Standstill’, MC_MoveSuperimposed
+brings the axis to ‘DiscreteMotion’ state. When executed in any other state,
+the axis’ state is not influenced.
+</p>
+<p class="note">
+The values of ‘Acceleration’, ‘Deceleration’, and ‘Jerk’ are
+additional values to the ongoing motion, and not absolute ones. With this, the
+underlying FB always finishes its job in the same period of time regardless of
+whether the MC_MoveSuperimposed FB takes place concurrently.
+</p>
+<p class="note">
+The output ‘Active’ has a different behaviour as in buffered FBs.
+</p>
+<h2>Inputs/Outputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Name</b></p>
+
+  
+</td>
+<td width="145" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="286" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>INPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start the motion at rising edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+AXIS_REF
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the axis which will be
+  superimposed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+AuxAxis
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+AXIS_REF
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the AuxAxis, a virtual
+  axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+ContinuousUpdate
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+TRUE:
+  when the function block is triggered (rising ‘Execute’),  it  will - as long
+  as it stays TRUE – make the function block use the current values of the
+  input variables and apply it to the ongoing movement.
+</p>
+
+  
+<p class="tablecontent">
+FALSE: with the rising edge of the
+  ‘Execute’ input, a change in the input parameters is ignored during the whole
+  movement.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Distance
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Additional distance that is to be
+  superimposed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+VelocityDiff
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the velocity difference of
+  the additional motion (not necessarily reached). It is an unsigned value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the acceleration 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Deceleration
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the deceleration 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the jerk
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+<b>OUTPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Commanded
+  position finally reached
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Busy
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+The
+  FB is not finished and new output values are to be expected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+CommandAborted
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Command
+  is aborted by another command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Signals
+  that an error has occurred within the Function Block
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Error
+  identification
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+CoveredDistance
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Displays
+  continuously the covered distance contributed by this FB since it was started
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="19" height="23" id="&#22270;&#29255; 692" src="MC_MoveSuperimposed_files/image008.png">
+ Example
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+(* Example
+  for MC_MoveSuperimposed *)
+<br>
+
+  inst_MoveSuperImposed ( Execute := bExecute,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis
+  := Axis0Ref,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AuxAxis
+  := Axis1Ref,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ContinuousUpdate:=
+  bContinuousUpdate,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Distance
+  := lrSuperImposedDistance,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VelocityDiff
+  := lrVeloDiff,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acceleration
+  := lrAccShift,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration
+  := lrDecShift,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk
+  := lrJerkShift);
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+<br>
+
+  bDone := inst_MoveSuperImposed.Done;&nbsp;
+<br>
+
+  bBusy := inst_MoveSuperImposed.Busy;&nbsp;
+<br>
+
+  bCommAborted := inst_MoveSuperImposed.CommandAborted;&nbsp;
+<br>
+
+  bError := inst_MoveSuperImposed.Error;&nbsp;
+<br>
+
+  ErrorId := inst_MoveSuperImposed.ErrorID;
+<br>
+
+  lrCoverDist := inst_MoveSuperImposed.CoveredDistance;&nbsp; 
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See also: </h2>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

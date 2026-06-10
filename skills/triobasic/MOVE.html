@@ -1,0 +1,372 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVE">
+</head>
+<body>
+<h1>MOVE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVE(distance1 [,distance2 [,distance3 [,distance4, …]]])
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+MO()
+</p>
+<h2>Description:</h2>
+<p>
+Incremental move. One axis or multiple axes move at the
+programmed speed and acceleration for a distance specified as an increment from
+the end of the last specified move. The first parameter in the list is sent to
+the 
+<a href="BASE.html">BASE</a>
+ axis, the second to the next axis in the 
+<a href="BASE.html">BASE</a>
+ array, and so on.
+</p>
+<p>
+In the multi-axis form, the speed and acceleration employed
+for the movement are taken from the first axis in the 
+<a href="BASE.html">BASE</a>
+
+group. The speeds of each axis are controlled so as to make the resulting
+vector of the movement run at the 
+<a href="SPEED.html">SPEED</a>
+ setting.
+</p>
+<p class="note">
+Multi-axis interpolation uses the UNITS, SPEED, ACCEL and DECEL
+of the BASE axis. For correct XYZ vector operation, the UNITS of all 3 axes
+must be the same.
+</p>
+<p class="tip">
+If an axis needs to be excluded in the vector speed calculation,
+then 
+<a href="INTERP_FACTOR.html">INTERP_FACTOR</a>
+ can be set to 0 for that
+axis.
+</p>
+<p>
+Uninterpolated, unsynchronised multi-axis motion can be
+achieved by simply placing MOVE commands on each axis independently. If needed,
+the target axis for an individual MOVE can be specified using the 
+<a href="AXIS.html">AXIS</a>
+ command modifier. This overrides the 
+<a href="BASE.html">BASE</a>
+ axis setting for one MOVE only. 
+</p>
+<p>
+The distance values specified are scaled using the unit
+conversion factor axis parameter; 
+<a href="UNITS.html">UNITS</a>
+. Therefore if,
+for example, an axis has 400 encoder edges/mm and 
+<a href="UNITS.html">UNITS</a>
+
+for that axis are 400, the command MOVE(12.5) would move 12.5 mm. When 
+<a href="MERGE.html">MERGE</a>
+  is set to 
+<a href="ON.html">ON</a>
+, individual
+moves in the same axis group are merged together to make a continuous path
+movement.
+</p>
+<p class="note">
+If the number of axes in the move that follows on from the
+previous move are different, then they will not MERGE. Likewise, a FORWARD or
+REVERSE will not MERGE with a MOVE or MOVEABS.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance to move on base axis from current position.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance to move on next axis in BASE array from
+  current position.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance3:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance to move on next axis in BASE array from
+  current position.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance4:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance to move on next axis in BASE array from
+  current position.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The maximum number of parameters is the number of axes available
+on the controller
+</p>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+A system is working with a unit conversion factor of 1 and
+has a 1000-line encoder. Note that a 1000-line encoder gives 4000&nbsp;edges/turn.
+</p>
+<p class="codeexample">
+MOVE(40000) 'Move 10 turns on the motor.
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Alternatively, use UNITS to calibrate the axis
+</p>
+<p class="codeexample">
+UNITS = 4000 ' number of counts per turn.
+</p>
+<p class="codeexample">
+MOVE(10)
+</p>
+<h3>Example 2:</h3>
+<p>
+Axes 3, 4 and 5 are to move independently (without
+interpolation). Each axis will move at its own programmed 
+<a href="SPEED.html">SPEED</a>
+,
+
+<a href="ACCEL.html">ACCEL</a>
+ and 
+<a href="DECEL.html">DECEL</a>
+ etc.
+</p>
+<p class="codeexample">
+'setup axis speed and enable
+</p>
+<p class="codeexample">
+BASE(3)
+</p>
+<p class="codeexample">
+SPEED = 5000
+</p>
+<p class="codeexample">
+ACCEL = 100000
+</p>
+<p class="codeexample">
+DECEL = 150000
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+BASE(4)
+</p>
+<p class="codeexample">
+SPEED = 5000 
+</p>
+<p class="codeexample">
+ACCEL = 150000
+</p>
+<p class="codeexample">
+DECEL = 560000
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+BASE(5)
+</p>
+<p class="codeexample">
+SPEED = 2000
+</p>
+<p class="codeexample">
+ACCEL = 320000
+</p>
+<p class="codeexample">
+DECEL = 352000
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+WDOG=ON
+</p>
+<p class="codeexample">
+MOVE(10) AXIS(5)     'start moves
+</p>
+<p class="codeexample">
+MOVE(10) AXIS(4)
+</p>
+<p class="codeexample">
+MOVE(10) AXIS(3)
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(5)    'wait for moves to finish
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(4)
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(3)
+</p>
+<h3>Example 3:</h3>
+<p>
+An X-Y plotter can write text at any position within its
+working envelope. Individual characters are defined as a sequence of moves
+relative to a start point so that the same commands may be used regardless of
+the plot origin. The command subroutine for the letter ‘M’ might be:           
+</p>
+<p>
+<img border="0" width="109" height="128" id="Picture 3" src="MOVE_files/image001.png">
+</p>
+<p class="codeexample">
+write_m:
+</p>
+<p class="codeexample">
+  MOVE(0, 12)  'Move A &gt;  B
+</p>
+<p class="codeexample">
+  MOVE(3, -6)  'Move B &gt;  C
+</p>
+<p class="codeexample">
+  MOVE(3, 6)   'Move C &gt;  D
+</p>
+<p class="codeexample">
+  MOVE(0, -12) 'Move D &gt; E
+</p>
+<p class="codeexample">
+  RETURN
+</p>
+<h3>Example 4:</h3>
+<p>
+Axes 1, 6 and 7 are to move together. The SPEED setting on
+the BASE axis is to be the speed of axis 1. The other 2 axes will run at speeds
+that will make all 3 axes stop at the same time. The accelerations and
+decelerations of axes 6 and 7 will be proportional to the axis 1 values.
+</p>
+<p class="codeexample">
+'setup axis speed and enable
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(1) = 1
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(6) = 0
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(7) = 0
+</p>
+<p class="codeexample">
+BASE(1, 6, 7)
+</p>
+<p class="codeexample">
+SPEED = 70 'mm / second
+</p>
+<p class="codeexample">
+ACCEL = 350 '0.2 second ramp
+</p>
+<p class="codeexample">
+DECEL = 700 '0.1 second ramp
+</p>
+<p class="codeexample">
+MOVE(199.5, 81.53, 120) 'start moves
+</p>
+<p class="codeexample">
+WAIT IDLE 'wait for moves to end
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+All the axes will finish their moves in 3.0&nbsp;seconds. The
+constant speed part is 189&nbsp;mm on axis 1 and takes 2.7&nbsp;seconds.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MOVESP.html">MOVESP</a>
+<span class="MsoHyperlink">, </span><a href="MOVEABS.html">MOVEABS</a>
+<span class="MsoHyperlink">, </span><a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="MERGE.html">MERGE</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="INTERP_FACTOR.html">INTERP_FACTOR</a>
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+</body>
+</html>

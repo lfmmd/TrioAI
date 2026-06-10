@@ -1,0 +1,87 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IS_NAN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IS_NAN">
+</head>
+<body>
+<h1>IS_NAN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = IS_NAN(expression)
+</p>
+<h2>Description:</h2>
+<p>
+Check an expression to test if it is a NaN (not a number, a bit
+pattern that does not represent a valid floating-point value).
+</p>
+<p class="tip">
+If a battery backed memory loses its battery power, the bit
+pattern will be random and the NaN will cause a BASIC error.
+</p>
+<p class="tip">
+NaN values can also be set from an external source like a PC or
+PLC setting values over a fieldbus.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid numeric expression
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Check all the VRs in a MC464 and set any that are NaN to 0.
+</p>
+<p class="codeexample">
+FOR i = 0 TO 65535
+</p>
+<p class="codeexample">
+    IF IS_NAN(VR(i)) THEN
+</p>
+<p class="codeexample">
+        VR(i) = 0
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+NEXT i
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See also: </h2>
+<p>
+<a href="IS_INF.html">IS_INF</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,135 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_FE_LIMIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_FE_LIMIT">
+</head>
+
+
+
+<body>
+<h1>DRIVE_FE_LIMIT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+None
+</p>
+<h2>Description:</h2>
+<p>
+This is the maximum allowable following error applied to the
+DRIVE_FE value, i.e., the actual following error in a remote drive which is
+received via a fieldbus such as EtherCAT. When exceeded the controller will
+generate an 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+ error, by default this
+will also generate a 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+.  The 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+ will disable the 
+<a href="WDOG.html">WDOG</a>
+
+relay thus stopping further motor operation. 
+</p>
+<p class="tip">
+This limit may be used to guard against fault conditions such as
+mechanical lock-up, loss of encoder feedback, etc.
+</p>
+<p class="warning">
+When either DRIVE_FE_LIMIT or FE_LIMIT is exceeded, bit 8 of
+AXISSTATUS is set. 
+</p>
+<p>
+DRIVE_FE_LIMIT is required when an EtherCAT remote drive is
+running in position (CSP) mode and the PDO cyclic data includes the Following
+Error Actual value from the drive. For example, when DRIVE_PROFILE is set to 1
+or 2 in the MC_CONFIG the profile includes the DRIVE_FE value.
+</p>
+<p class="tip">
+
+
+
+<table>
+<tr>
+<td width="31" height="0">
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+<img width="265" height="338" src="DRIVE_FE_LIMIT_files/image001.jpg">
+</td>
+</tr>
+</table>
+
+
+
+<br clear="ALL">
+
+Axis Parameters in Motion Perfect may be configured to show the values of
+DRIVE_FE and DRIVE_FE_LIMIT.
+</p>
+<h2>Value:</h2>
+<p>
+The maximum allowable following error in user units. The
+default value is 20000 encoder edges.
+</p>
+<h2>Example:</h2>
+<p>
+Initialise the axis as part of a STARTUP routine.  FE_LIMIT
+is set larger than DRIVE_FE_LIMIT because the internal calculated FE is usually
+bigger than the following error calculated within the remote drive.
+</p>
+<p class="codeexample">
+FOR x = 0 to 4
+</p>
+<p class="codeexample">
+  BASE(x)
+</p>
+<p class="codeexample">
+  UNITS = 100
+</p>
+<p class="codeexample">
+  FE_LIMIT = 50
+</p>
+<p class="codeexample">
+  DRIVE_FE_LIMIT = 10
+</p>
+<p class="codeexample">
+  SPEED = 100  
+</p>
+<p class="codeexample">
+  ACCEL = 1000
+</p>
+<p class="codeexample">
+  DECEL = ACCEL
+</p>
+<p class="codeexample">
+NEXT x 
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FE.html">FE</a>
+, 
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+,
+
+<a href="DRIVE_FE.html">DRIVE_FE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

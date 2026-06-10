@@ -1,0 +1,46 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FHSPEED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FHSPEED">
+</head>
+<body>
+<h1>FHSPEED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+The feed-hold speed defines the speed to use when the feed-hold
+input (
+<a href="FHOLD_IN.html">FHOLD_IN</a>
+<span class="MsoHyperlink">) </span>is
+active.
+</p>
+<h2>Value:</h2>
+<p>
+The speed in user units (default 0).
+</p>
+<h2>Example:</h2>
+<p>
+Specify that motion is to ramp down to a tenth of the axis
+speed when the feed-hold input is active.
+</p>
+<p class="codeexample">
+BASE(3)
+</p>
+<p class="codeexample">
+SPEED = 1000
+</p>
+<p class="codeexample">
+FHSPEED = 0.1 * SPEED
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FHOLD_IN.html">FHOLD_IN</a>
+</p>
+</body>
+</html>

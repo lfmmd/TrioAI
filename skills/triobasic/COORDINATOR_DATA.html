@@ -1,0 +1,267 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>COORDINATOR_DATA</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="COORDINATOR_DATA">
+</head>
+<body>
+<h1>COORDINATOR_DATA</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+COORDINATOR_DATA(function_number[, param_values])
+</p>
+<h2>Description:</h2>
+<p>
+Allows special firmware features to be enabled or changed.
+Check the function you intend to use is available by first contacting your Trio
+Distributor.
+</p>
+<p class="warning">
+The random use of undocumented COORDINATOR_DATA functions may
+cause the Motion Coordinator to become unstable. It will then need to be
+returned to the manufacturer for reset.
+</p>
+<h2>Value:</h2>
+<p>
+Function number.  Each value represents a different operation.
+
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Function
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Disable/Enable 
+<span class="highlight">BASE</span> check
+  on axes order. When enabled, the axes in BASE must be in ascending order, e.g.
+  BASE(0, 1, 4, 5, 6)  
+</p>
+
+  
+<p class="tablecontent">
+0 = Axes order check enabled. (Default)  
+<br>
+
+  1 = Axes order check disabled.
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 / 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+30
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns the P number of the CANIO module at address n
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+31
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns the firmware Boot Code version number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+53
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Over-rule the system that prevents software from
+  loading a BASIC or Text file into the Motion Coordinator when Motion Perfect
+  is connected in Sync mode.
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 / 1
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+Allow the Motion Coordinator program to allocate an axis
+group in either descending or mixed axis order.
+</p>
+<p class="codeexample">
+COORDINATOR_DATA(16, 1)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+The programs may now use any axis order for BASE.
+</p>
+<p class="codeexample">
+BASE(4, 3, 0, 1)
+</p>
+<p class="warning">
+Note: When using Kinematic FRAMEs, the axes must be in
+ascending order.
+</p>
+<h3>Example 2:</h3>
+<p>
+Get the P number of the digital CAN I/O module at address 0
+and the analogue CAN I/O module at address 16.
+</p>
+<p class="codeexample">
+&gt;&gt;?COORDINATOR_DATA(30, 0)
+<br>
+
+318
+<br>
+
+&gt;&gt;?COORDINATOR_DATA(30, 16)
+<br>
+
+326
+</p>
+<h3>Example 3:</h3>
+<p>
+While debugging a program that loads files into the
+synchronised part of the memory, we want to load programs from an external
+source at the same time as Motion Perfect is connected in Sync Mode. This line
+is added to the BASIC program which runs on power up.
+</p>
+<p class="codeexample">
+COORDINATOR_DATA(53, 1) 'Allow files to be loaded while in
+Sync connection mode to MP
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FILE.html">FILE</a>
+, 
+<a href="IOMAP.html">IOMAP</a>
+</p>
+<p class="Category">
+&nbsp;
+</p>
+</body>
+</html>

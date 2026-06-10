@@ -1,0 +1,224 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AND</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AND">
+</head>
+<body>
+<h1>AND</h1>
+<h2>Type:</h2>
+<p class="Category">
+Logical and Bitwise operator
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+&lt;expression1&gt; AND &lt;expression2&gt;
+</p>
+<h2>Description:</h2>
+<p>
+This performs an AND function between corresponding bits of
+the integer part of two valid TrioBASIC expressions.
+</p>
+<p>
+The AND function between two bits is defined as follows:
+</p>
+<table>
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+AND
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+1
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+</table>
+<h2>Parameters:</h2>
+<table>
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression
+</p>
+
+  
+</td>
+</tr>
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Using AND to compare two logical expressions, if they are
+both true then set a local variable.
+</p>
+<p class="codeexample">
+IF (IN(6)=ON) AND (DPOS&gt;100) THEN
+</p>
+<p class="codeexample">
+  tap=ON
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+Use AND as a bitwise operator. 
+</p>
+<p class="codeexample">
+VR(0)=10 AND (2.1*9)
+</p>
+<p>
+Trio BASIC evaluates the parentheses first giving the value
+18.9, but as was specified earlier, only the integer part of the number is used
+for the operation, therefore this expression is equivalent to:
+</p>
+<p class="codeexample">
+VR(0)=10 AND 18
+</p>
+<p>
+AND is a bitwise operator and so the binary action taking
+place is:
+</p>
+<p class="codeexample">
+     01010
+</p>
+<p class="codeexample">
+AND  
+<u>10010</u></p>
+<p class="codeexample">
+     00010
+</p>
+<p>
+Therefore 
+<a href="VR.html">VR</a>
+(0) holds the value 2
+</p>
+<h3>Example 3:</h3>
+<p>
+If both 
+<a href="MPOS.html">MPOS</a>
+ are set to 0 then run a
+sub routine ‘cycle’
+</p>
+<p class="codeexample">
+IF MPOS AXIS(0)&gt;0 AND MPOS AXIS(1)&gt;0 THEN
+</p>
+<p class="codeexample">
+  GOSUB cycle
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+</body>
+</html>

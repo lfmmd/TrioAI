@@ -1,0 +1,340 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_SYNC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_SYNC">
+</head>
+<body>
+<h1>TC_SYNC</h1>
+<h2>Type:</h2>
+<p>
+Motion Function
+</p>
+<h2>Function:</h2>
+<p>
+Issues a new SYNC motion request for the axes specified by
+'AxisNo'.
+</p>
+<h2>Inputs:</h2>
+<p class="fixed">
+   
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EN : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set TRUE to enable the function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AxisNo : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Control : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Control value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SyncPos : LINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sync Position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SyncAxis : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Master axis to follow
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SyncTime : DINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Time duration for axes to become synchronised
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SyncPosX : LINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Synchronisation position X
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SyncPosY : LINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Synchronisation position Y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SyncPosZ : LINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Synchronisation position Z
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ENO : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if function is enabled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if a program error is detected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID : UINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returned error number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+When the EN input is TRUE, the function block applies the
+command to the axis indicated by AxisNo. 
+</p>
+<p>
+A programming error, such as parameter out of range, will
+set the Error output and return an error ID number.  For the Error ID
+reference, see the Trio Programming error list.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample">
+MyTC_Sync(EN, AxisNo, Control, SyncPos, SyncAxis, SyncTime,
+SyncPosX, SyncPosY, SyncPosZ);
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+ENO := MyTC_Sync.ENO;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Error := MyTC_Sync.Error;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+ErrorID := MyTC_Sync.ErrorID;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>FBD Language:</h2>
+<p align="center">
+<img width="474" height="310" id="Picture 2" src="TC_SYNC_files/image001.png">
+</p>
+<h2>LD Language: </h2>
+<p align="center">
+<img width="480" height="319" id="Picture 3" src="TC_SYNC_files/image002.png">
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBASIC Errors</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

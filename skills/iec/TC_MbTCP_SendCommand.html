@@ -1,0 +1,535 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_MbTCP_SendCommand</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_MbTCP_SendCommand">
+</head>
+<body>
+<h1>TC_MbTCP_SendCommand</h1>
+<h2>Type:</h2>
+<p>
+System Function.
+</p>
+<h2>Function:</h2>
+<p>
+Execute the given Modbus function if the connection is open.
+</p>
+<h2>Inputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute: BOOL;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rising edge requests execution
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot: INT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot number. Currently, the default value is -1. If it
+  is not -1, an error will be reported
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mode: TC_MODBUSTCP_MODE_T;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p>
+Modbus function mode, including
+</p>
+
+  
+<p>
+tcRdCoils,
+</p>
+
+  
+<p>
+tcRdDiscreteInputs,
+</p>
+
+  
+<p>
+tcRdHoldingRegs,
+</p>
+
+  
+<p>
+tcRdInputRegs,
+</p>
+
+  
+<p>
+tcRdWrRegs,
+</p>
+
+  
+<p>
+tcWrCoils,
+</p>
+
+  
+<p class="tablecontent">
+tcWrRegs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+HandleNum: DINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+The connection handle output by TC_MbTCP_OpenClient
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+RdStartAddr: DINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus start address when reading data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+RdNumValues: DINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of Modbus addresses when reading data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+WrStartAddr: DINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus start address when writing data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+WrNumValues: DINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of Modbus addresses when writing data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+LocalAddr: DINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+The target VR start address in the Motion Coordinator
+  client
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a name="_Hlk203674505">Done: BOOL;</a>
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when function has completed normally
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Busy: DINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+The FB is not finished and new output values are to be
+  expected.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error: BOOL;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if a program error is detected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID: UINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returned error number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+When the Execute input changes from FALSE to TRUE, the
+Function Block issues a command to execute the given Modbus function if the
+connection is open. ErrorID includes 781, 784, 788, 789, 799, and 800, and the
+corresponding error descriptions are as follows.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p>
+ErrorID
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p>
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p>
+781
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p>
+Slot error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p>
+784, 800
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p>
+Function execution internal error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p>
+788
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p>
+Modbus address error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p>
+789
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p>
+VR address error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p>
+799
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p>
+Modbus function mode error
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>ST Language:</h2>
+<p class="codeexample">
+Inst_TC_MbTCP_SendCommand(Execute:= (BOOL), Slot:= (INT),
+Mode:= (TC_MODBUSTCP_MODE_T), HandleNum:= (DINT), RdStartAddr:= (DINT),
+RdNumValues:= (DINT), WrStartAddr:= (DINT), WrNumValues:= (DINT), LocalAddr:=
+(DINT));
+</p>
+<p class="codeexample">
+(BOOL):=Inst_TC_MbTCP_SendCommand.Done;
+</p>
+<p class="codeexample">
+(BOOL):=Inst_TC_MbTCP_SendCommand.Busy;
+</p>
+<p class="codeexample">
+(BOOL):=Inst_TC_MbTCP_SendCommand.Error;
+</p>
+<p class="codeexample">
+(UINT):=Inst_TC_MbTCP_SendCommand.ErrorID;
+</p>
+<h2>FBD Language:</h2>
+<p align="center">
+<img width="467" height="169" id="&#22270;&#29255; 2" src="TC_MbTCP_SendCommand_files/image001.png">
+</p>
+<h2>LD Language: </h2>
+<p align="center">
+<img width="315" height="573" id="&#22270;&#29255; 1" src="TC_MbTCP_SendCommand_files/image002.png">
+</p>
+<h2>IL Language: </h2>
+<p>
+Not available.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBasic Error List</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

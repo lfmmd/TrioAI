@@ -1,0 +1,631 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SETCOM</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SETCOM">
+</head>
+<body>
+<h1>SETCOM</h1>
+<h2>Type:</h2>
+<p class="Category">
+Command
+</p>
+<h2>Set Port Parameters:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SETCOM(baudrate, databits, stopbits, parity, port[,
+mode][, variable][, timeout][, linetype]) 
+</p>
+<h3>Description:</h3>
+<p>
+Allows the user to configure the serial port parameters and
+enable communication protocols. 
+</p>
+<p class="note">
+By default the controller sets the serial ports to 38400 baud, 8
+data bits, 1 stop bits and even parity.
+</p>
+<p class="warning">
+Only one instance of Modbus RTU is available for the serial.
+This means that you can only run Modbus on Port 1 OR port 2 NOT both UNLESS one
+of the instances is working as a Modbus RTU master (mode 11) and the other one
+as a slave.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+baudrate:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1200, 2400, 4800, 9600, 19.2k, 38.4k, 57.6k, 115.2k
+<br>
+
+  128k, 153.6k and 230.4k (requires 2.0300+)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+databits:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7 or 8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+stopbits:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 or 2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parity:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+None
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Odd
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Even
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+port:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1, 2, 50 – 56
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="9" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+XON/XOFF inactive
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+XON/XOFF active 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MODBUS protocol (16-bit Integer)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Hostlink Slave
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Hostlink Master
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MODBUS protocol (32-bit IEEE floating point)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MODBUS protocol (32-bit long word integers)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MODBUS RTU master
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Modbus uses 
+<a href="VR.html">VR</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 = Modbus uses 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+timeout:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Communications timeout in milliseconds. Default is 3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+linetype: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4 wire RS485 (Modbus only)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 wire RS485 (Modbus only)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Descriptions of the port numbers can be found under the 
+<a href="Hash.html">#</a>
+ entry
+</p>
+<h2>Get Port Parameters:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+SETCOM(port) 
+</p>
+<h3>Description:</h3>
+<p>
+Prints the configuration of the port to the selected output
+channel (default terminal)
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+port:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1, 2, 50 - 56
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Descriptions of the port numbers can be found under the 
+<a href="Hash.html">#</a>
+ entry
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set port 1 to 19200 baud, 7 data bits, 2 stop bits even
+parity and XON/XOFF enabled.
+</p>
+<p class="codeexample">
+SETCOM(19200, 7, 2, 2, 1, 1)
+</p>
+<h3>Example 2:</h3>
+<p>
+Set port 2 (RS485) to 9600 baud, 8 data bits, 1 stop bit no
+parity and no XON/XOFF handshake.
+</p>
+<p class="codeexample">
+SETCOM(9600, 8, 1, 0, 2, 0)
+</p>
+<h3>Example 3:</h3>
+<p>
+The Modbus protocol is initialised by setting the mode
+parameter of the SETCOM instruction to 4. The 
+<a href="ADDRESS.html">ADDRESS</a>
+
+ parameter must also be set before the Modbus protocol is activated.
+</p>
+<p class="codeexample">
+ADDRESS=1
+</p>
+<p class="codeexample">
+SETCOM(19200, 8, 1, 2, 2, 4) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 4:</h3>
+<p>
+The Modbus protocol is initialised by setting the mode
+parameter of the SETCOM instruction to 11. Therefore, the protocol is initialised
+as a Modbus master.
+</p>
+<p class="codeexample">
+SETCOM(19200, 8, 1, 2, 2, 11, 0, 3, 0)
+</p>
+<h3>Example 5:</h3>
+<p>
+In the Motion Perfect command line terminal, get a report of
+the settings for serial port 1.
+</p>
+<p class="codeexample">
+SETCOM(1)
+<br>
+
+38400,8,1,2,1,0,4,0
+<br>
+
+&gt;&gt;
+</p>
+</body>
+</html>

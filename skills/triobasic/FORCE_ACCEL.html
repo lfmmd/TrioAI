@@ -1,0 +1,88 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FORCE_ACCEL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FORCE_ACCEL">
+</head>
+<body>
+<h1>FORCE_ACCEL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+This parameter sets the acceleration rate for a motion
+command that supports the advanced speed control. The 
+<a href="VP_SPEED.html">VP_SPEED</a>
+
+will accelerate at the rate given by FORCE_ACCEL.
+</p>
+<p class="note">
+With VP_MODE = 5 and VP_MODE = 6 with VP_OPTIONS.1 = 1, the
+forced demands (those loaded with the move) are bound to the axis demands such
+that the axis demands are primed with the forced demands of a move when it
+becomes active. This binding allows the axis demands to be adjusted, and the
+changes made influence the current move’s profiling.
+</p>
+<p class="note">
+FORCE_ACCEL is also used to provide the acceleration demand to
+MOVEADD. 
+</p>
+<h2>Value:</h2>
+<p>
+The acceleration rate at which the motion command will
+execute, in user 
+<a href="UNITS.html">UNITS</a>
+ per second per second. The default
+value is -1 and means the parameter is not used.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+With continuous motion running on the axis, make an
+additional move to advance the axis by 40&nbsp;mm after setting the speed,
+acceleration, deceleration and jerk values for the added movement.
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<p class="codeexample">
+WA(100)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FORCE_SPEED = 50
+</p>
+<p class="codeexample">
+FORCE_ACCEL = 2000
+</p>
+<p class="codeexample">
+FORCE_DECEL = 2000
+</p>
+<p class="codeexample">
+FORCE_JERK = 50000
+</p>
+<p class="codeexample">
+MOVEADD(40)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MOVEADD.html">MOVEADD</a>
+, 
+<a href="FORCE_DECEL.html">FORCE_DECEL</a>
+, 
+<a href="FORCE_JERK.html">FORCE_JERK</a>
+,
+
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,103 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FE_LIMIT_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FE_LIMIT_MODE">
+</head>
+<body>
+<h1>FE_LIMIT_MODE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter determines if an 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+
+error is produced immediately when the 
+<a href="FE.html">FE</a>
+ exceeds the 
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+ or if it exceeds for 2 consecutive servo
+periods. This means that if 
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+ is exceeded
+for one servo period only, it will be ignored.
+</p>
+<p class="warning">
+This will increase the time to disable your drives in an
+error. You should only change from the default values under advice from Trio or
+your distributor.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+ error generated
+  immediately (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+ error generated
+  when 
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+ is exceeded for 2 consecutive servo
+  periods.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2> See Also:</h2>
+<p>
+<a href="FE.html">FE</a>
+, 
+<a href="FE_LATCH.html">FE_LATCH</a>
+,
+
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+, 
+<a href="FE_RANGE.html">FE_RANGE</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,515 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LIFO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LIFO">
+</head>
+<body>
+<h1><a name="_Toc317749497"></a>
+<a name="O_1524"></a>
+LIFO</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+Manages a&nbsp;Last-In, First-Out&nbsp;stack.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>PUSH</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Push a new value (on rising edge).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>POP</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pop a new value (on rising edge).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>RST</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reset the list.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>NEXTIN</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>ANY</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value to be pushed.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>NEXTOUT</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>ANY
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value at the top of the stack - updated after call!
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BUFFER</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>ANY&nbsp;
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Array for storing values.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>EMPTY</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if the stack is empty.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>OFLO</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if overflow on a PUSH command.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>COUNT</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>DINT</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of values in the stack.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>PREAD</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>DINT&nbsp;
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Index in the buffer of the top of the stack.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>PWRITE</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>DINT</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Index in the buffer of the next push position.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+NEXTIN, NEXTOUT and BUFFER must have the same data type and
+cannot be STRING.
+</p>
+<p>
+The NEXTOUT argument specifies a variable that is filled
+with the value at the top of the stack after the block is called.
+</p>
+<p>
+Values are stored in the BUFFER array. Data is never shifted
+or reset. Only read and write pointers and pushed values are updated. The
+maximum size of the stack is the dimension of the array.
+</p>
+<p>
+The first time the block is called, it remembers on which
+array it should work. If you call later the same instance with another BUFFER
+input, the call is considered as invalid and makes nothing. Outputs reports an
+empty stack in this case.
+</p>
+<p>
+In LD language, input rung is the PUSH input. The output
+rung is the EMPTY output.
+</p>
+<h2>ST Language</h2>
+<p>
+MyLIFO is a declared instance of LIFO function block.
+</p>
+<p class="fixed">
+MyLIFO (PUSH, POP, RST, NEXTIN, NEXTOUT, BUFFER);
+<br>
+
+EMPTY := MyLIFO.EMPTY;
+<br>
+
+OFLO := MyLIFO.OFLO;
+<br>
+
+COUNT := MyLIFO.COUNT;
+<br>
+
+PREAD := MyLIFO.PREAD;
+<br>
+
+PWRITE := MyLIFO.PWRITE;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="237" height="155" src="AO-LIFO_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+<img width="256" height="157" src="AO-LIFO_files/image002.gif">
+</p>
+<h2>IL Language</h2>
+<p>
+MyLIFO is a declared instance of LIFO function block.
+</p>
+<p class="fixed">
+Op1: CAL MyLIFO (PUSH, POP, RST, NEXTIN, NEXTOUT, BUFFER)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyLIFO.EMPTY
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; EMPTY
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyLIFO.OFLO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; OFLO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyLIFO.COUNT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; COUNT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyLIFO.PREAD
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; PREAD
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyLIFO.PWRITE
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; PWRITE
+</p>
+<h2>See also</h2>
+<p>
+<a href="AO-FIFO.html">FIFO</a>
+<a name="H_1036"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

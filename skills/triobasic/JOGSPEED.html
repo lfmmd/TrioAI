@@ -1,0 +1,62 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>JOGSPEED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="JOGSPEED">
+</head>
+<body>
+<h1>JOGSPEED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Sets the jog speed in user units for an axis to run at when
+performing a jog.
+</p>
+<p class="tip">
+You can set a faster jog speed using 
+<a href="SPEED.html">SPEED</a>
+
+and the 
+<a href="FAST_JOG.html">FAST_JOG</a>
+ input
+</p>
+<h2>Value:</h2>
+<p>
+The speed in user 
+<a href="UNITS.html">UNITS</a>
+/second
+which an axis will use when being jogged
+</p>
+<h2>Example:</h2>
+<p>
+Configure an input to be the jog input at 20mm/sec on axis
+12
+</p>
+<p class="codeexample">
+BASE(12)
+</p>
+<p class="codeexample">
+SPEED=3000
+</p>
+<p class="codeexample">
+FWD_JOG = 12
+</p>
+<p class="codeexample">
+JOGSPEED = 20
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FAST_JOG.html">FAST_JOG</a>
+, 
+<a href="FWD_JOG.html">FWD_JOG</a>
+,
+
+<a href="REV_JOG.html">REV_JOG</a>
+</p>
+</body>
+</html>

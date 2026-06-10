@@ -1,0 +1,385 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>GLOBAL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="GLOBAL">
+</head>
+<body>
+<h1>GLOBAL</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+GLOBAL [&quot;name&quot;[, vr_number]]
+</p>
+<h2>Description:</h2>
+<p>
+GLOBALs can be declared in the controller which are
+available to all programs. GLOBAL declares the name as a reference to one of
+the global 
+<a href="VR.html">VR</a>
+ variables. The name can then be used both
+within the program containing the GLOBAL definition and all other programs in
+the Motion Coordinator project. 
+</p>
+<p>
+They must be declared on startup.  The program declaring
+GLOBALs must be the ONLY process running at power-up.
+</p>
+<p class="note">
+Once a GLOBAL has been assigned it cannot be changed, even if you
+change the program that assigns it.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Model number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Max number of GLOBALs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC464
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1024
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC403(Z), MC405, Euro404, Euro408, MC4N-ECAT, MC4N-RTEX
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4096
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC664(X), MC508, Flex-6 Nano, Flex-6X Nano, MC6N-ECAT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8192
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+While developing you may wish to clear or change a GLOBAL.
+You can clear a single GLOBAL by using the first parameter alone. All GLOBALs
+can be cleared by issuing GLOBAL. You can view all GLOBALS using 
+<a href="LIST_GLOBAL.html">LIST_GLOBAL</a>
+.
+</p>
+<p class="warning">
+Whenever a program is RUN, the GLOBAL and CONSTANT tables are
+searched for the names of already defined variables.  If a large number of
+GLOBAL/CONSTANT names are pre-defined, this may take several seconds.  When
+using the GLOBAL and CONSTANT system is it not advised to depend on temporarily
+running and then stopping programs.  It is best to run all the required
+programs when the machine starts and leave them in that running state.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any user-defined name containing lower case alpha,
+  numerical or underscore (_) characters.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_number:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of the 
+<a href="VR.html">VR</a>
+ to be
+  associated with name.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<h3>Example 1:</h3>
+<p>
+Initialise two GLOBALs and use then to adjust machine
+parameters.
+</p>
+<p class="codeexample">
+GLOBAL &quot;screw_pitch&quot;,12
+</p>
+<p class="codeexample">
+GLOBAL &quot;ratio1&quot;,534
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+ratio1 = 3.56
+</p>
+<p class="codeexample">
+screw_pitch = 23.0
+</p>
+<p class="codeexample">
+PRINT screw_pitch, ratio1
+</p>
+<h3>Example 2:</h3>
+<p>
+Initialise 3 GLOBALs, delete one of the GLOBALs, and then delete
+all GLOBALs.
+</p>
+<p class="codeexample">
+&gt;&gt;GLOBAL &quot;pitch&quot;,12
+<br>
+
+&gt;&gt;GLOBAL &quot;roll&quot;,534
+<br>
+
+&gt;&gt;GLOBAL &quot;yaw&quot;,922
+<br>
+
+&gt;&gt;LIST_GLOBAL ‘ Display GLOBALs
+<br>
+
+Global                           VR
+<br>
+
+----------------                 ----
+<br>
+
+pitch                            12
+<br>
+
+roll                             534
+<br>
+
+yaw                              922
+<br>
+
+Constant                         Value
+<br>
+
+----------------                 -------
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&gt;&gt;GLOBAL &quot;roll&quot; ‘ Delete roll
+<br>
+
+&gt;&gt;LIST_GLOBAL ‘ Display GLOBALs
+<br>
+
+Global                           VR
+<br>
+
+----------------                 ----
+<br>
+
+pitch                            12
+<br>
+
+yaw                              922
+<br>
+
+Constant                         Value
+<br>
+
+----------------                 -------
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&gt;&gt;GLOBAL ‘ Delete all GLOBALs
+<br>
+
+&gt;&gt;LIST_GLOBAL ‘ Display GLOBALs
+<br>
+
+Global                           VR
+<br>
+
+----------------                 ----
+<br>
+
+Constant                         Value
+<br>
+
+----------------                 -------
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p>
+The program to initialise GLOBAL and CONSTANT values runs on
+power up using the default process number.  Once finished, it then runs the
+main program to start machine operations.
+</p>
+<p class="codeexample">
+' machine settings
+</p>
+<p class="codeexample">
+GLOBAL &quot;initial_speed&quot;, 10
+</p>
+<p class="codeexample">
+GLOBAL &quot;run_speed&quot;, 11
+</p>
+<p class="codeexample">
+' vision data via Modbus
+</p>
+<p class="codeexample">
+GLOBAL &quot;vision_x&quot;, 51
+</p>
+<p class="codeexample">
+GLOBAL &quot;vision_y&quot;, 51
+</p>
+<p class="codeexample">
+GLOBAL &quot;vision_r&quot;, 52
+</p>
+<p class="codeexample">
+GLOBAL &quot;vision_status&quot;, 53
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+CONSTANT &quot;x_axis&quot;, 0
+</p>
+<p class="codeexample">
+CONSTANT &quot;y_axis&quot;, 1
+</p>
+<p class="codeexample">
+CONSTANT &quot;v_status_ok&quot;, 8
+</p>
+<p class="codeexample">
+CONSTANT &quot;v_status_error&quot;, 4
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+RUN &quot;MAIN&quot;, 2 ' run the main program on process
+#2
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CONSTANT.html">CONSTANT</a>
+, 
+<a href="LIST_GLOBAL.html">LIST_GLOBAL</a>
+<span class="MsoHyperlink">, </span><a href="VR.html">VR</a>
+</p>
+</body>
+</html>

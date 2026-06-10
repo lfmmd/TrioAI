@@ -1,0 +1,173 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MARK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MARK">
+</head>
+<body>
+<h1>MARK</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+This parameter can be polled to determine if the
+registration event has occurred.
+</p>
+<p>
+MARK is reset when 
+<a href="REGIST.html">REGIST</a>
+ is
+executed
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The registration event has not occurred 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+ </p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The registration event has occurred (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt; -1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quantity of registration events which have been logged
+  to the 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+When 
+<a href="TRUE.html">TRUE</a>
+ the 
+<a href="REG_POS.html">REG_POS</a>
+
+is valid.
+</p>
+<h2>Example:</h2>
+<h3>Example 1</h3>
+<p>
+Apply an offset to the position of the axis depending on the
+registration position.
+</p>
+<p class="codeexample">
+loop:
+</p>
+<p class="codeexample">
+  WAIT UNTIL IN(punch_clr)=ON
+</p>
+<p class="codeexample">
+  MOVE(index_length)
+</p>
+<p class="codeexample">
+  REGIST(20, 0, 0, 0, 0) 'rising edge of R
+</p>
+<p class="codeexample">
+  WAIT UNTIL MARK
+</p>
+<p class="codeexample">
+  MOVEMODIFY(REG_POS + offset)
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+GOTO loop
+</p>
+<h3>Example 2</h3>
+<p>
+Set up a fast, repeated capture to the TABLE using REGIST
+mode 20.  Put the number of captures and latest TABLE index in VRs.
+</p>
+<p class="codeexample">
+' REGIST(20, channel, source, edge, window [,quantity,
+table_start])
+</p>
+<p class="codeexample">
+' capture 60 events and store positions starting at
+TABLE(400)
+</p>
+<p class="codeexample">
+REGIST(20, 32, 4, 0, 0, 60, 400)
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+    VR(30) = -MARK
+</p>
+<p class="codeexample">
+    VR(31) = 400 + VR(30) - 1 ' the current position in
+TABLE
+</p>
+<p class="codeexample">
+UNTIL VR(30) &gt; 59
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REGIST.html">REGIST</a>
+, 
+<a href="REG_POS.html">REG_POS</a>
+</p>
+</body>
+</html>

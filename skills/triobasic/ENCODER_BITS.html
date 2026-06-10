@@ -1,0 +1,510 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENCODER_BITS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENCODER_BITS">
+</head>
+<body>
+<h1>ENCODER_BITS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (MC_CONFIG)
+</p>
+<h2>Description:</h2>
+<p>
+This parameter is only used with an absolute encoder axis.
+It is used to set the number of data bits to be clocked out of the encoder by
+the axis hardware. There are 2 types of absolute encoder supported by this
+parameter; SSI and EnDat. 
+</p>
+<p class="note">
+If the number of ENCODER_BITS is to be changed while running, the
+ATYPE parameter must first be set to zero before entering the new value, then
+set to the value for SSI.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Encoder type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bits
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+All:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No data is clocked out of the encoder (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SSI:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 0-5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0-32
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of bits to be clocked out of the encoder. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set for Binary, clear for Gray code (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+128
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reverses direction (inverts the data bits)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 8-10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+256 * n
+<br>
+
+  0&lt;n&lt;7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of bits to shift the data.  Use to allow
+  status bits to be ignored.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EnDat:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0..7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0-255
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The total number of data bits returned
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 8..13
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+256 * n
+<br>
+
+  0&lt;n&lt;64
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of multi-turn bits
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 14
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16384
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This is set by the controller when a correct CRC is
+  calculated from the encoder position data. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set up 2 axes of SSI absolute encoder
+</p>
+<p class="codeexample">
+ENCODER_BITS AXIS(3) = 12
+</p>
+<p class="codeexample">
+ENCODER_BITS AXIS(7) = 21
+</p>
+<h3>Example 2:</h3>
+<p>
+Re-initialise 
+<a href="MPOS.html">MPOS</a>
+ using absolute
+value from encoder
+</p>
+<p class="codeexample">
+SERVO=OFF
+</p>
+<p class="codeexample">
+ENCODER_BITS = 0
+</p>
+<p class="codeexample">
+ENCODER_BITS = databits
+</p>
+<h3>Example 3:</h3>
+<p>
+A 25 bit EnDat encoder has 12 multi-turn and 13 bits/turn
+resolution. (Total number of bits is 25)
+</p>
+<p class="codeexample">
+ENCODER_BITS = 25 + (256 * 12)
+</p>
+<p class="codeexample">
+ATYPE = 47
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 4:</h3>
+<p>
+Set up SSI absolute encoder with 21 bits of data and 3 bits
+of status at bits 21, 22 and 23.  The SSI will clock for 24 bits but only bits
+0 to 20 will be transferred to ENCODER and MPOS.
+</p>
+<p class="codeexample">
+ENCODER_BITS = 21 + (3 * 256)
+</p>
+<h3>Example 5:</h3>
+<p>
+Renishaw Biss-C linear RL32BAT050B10A encoder with 32 bits
+of data and 50 nm resolution.  Connected to axis 4 on MC405.  Use 
+<i>Reprogram
+FPGA …</i> to Select the FPGA that includes Biss-C encoder support.
+</p>
+<p class="codeexample">
+BASE
+(
+4
+)
+<br>
+
+
+' Clear the current axis type
+<br>
+
+
+ATYPE
+ = 
+0
+<br>
+
+
+' Clear any previous setting and disables encoder
+<br>
+
+
+ENCODER_BITS
+ = 
+0
+<br>
+
+
+WA
+(
+2
+)
+<br>
+
+
+' set TO 32 bits, binary data
+<br>
+
+
+ENCODER_BITS
+ = 
+64
+
++ 
+32
+<br>
+
+
+' BiSS Encoder Input (92 = BiSS Servo)
+<br>
+
+
+ATYPE
+ = 
+93
+<br>
+
+
+' Short delay to allow encoder to initialise and
+transmit valid data
+<br>
+
+
+WA
+(
+10
+)
+<br>
+
+
+' calibrate the axis for mm scale
+<br>
+
+
+UNITS
+ = 
+1
+
+/ (
+50
+ * 
+10
+ ^ -
+6
+)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ATYPE.html">ATYPE</a>
+, 
+<a href="ENCODER_CONTROL.html">ENCODER_CONTROL</a>
+, 
+<a href="ENCODER_READ.html">ENCODER_READ</a>
+,
+
+<a href="ENCODER_WRITE.html">ENCODER_WRITE</a>
+</p>
+</body>
+</html>

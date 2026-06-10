@@ -1,0 +1,474 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TABLE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TABLE">
+</head>
+<body>
+<h1>TABLE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = TABLE(address)
+</p>
+<p class="fixed">
+array = TABLE(start address, last address)
+</p>
+<p class="fixed">
+TABLE(address[, data0..data35])
+</p>
+<h2>Description:</h2>
+<p>
+The TABLE command can be used to load and read back the
+internal TABLE values. As the table can be written to and read from, it may be
+used to hold information as an alternative to variables. A single global floating-point
+value can be read from an address or alternatively a range of floating-point
+values can be read from a range of addresses as an array (1D) of floating-point
+values that could be copied to another area of VR/TABLE memory or a locally
+defined array.
+</p>
+<p class="note">
+The table values are floating-point and can therefore be
+fractional.
+</p>
+<p class="tip">
+You can clear the TABLE using 
+<a href="NEW.html">NEW</a>
+ “TABLE”
+</p>
+<p class="warning">
+Some TABLE elements are automatically backed up depending on
+the controller type. Use the FLASHTABLE command to force storing TABLE data. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+returns the value stored at the address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+address:
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The address of the first point of a write, or the single
+  address to read
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+array
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1D array of values read from a consecutive range of
+  TABLE addresses
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+first address, last address
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Range of TABLE addresses to read from as a 1D array
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data0:
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The data written to the address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data1:
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The data written to address + 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data2:
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The data written to address + 2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+…
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data35
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The data written to address + 35
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+This loads the TABLE with the following values, starting at
+address 100:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table Entry:
+</p>
+
+  
+</td>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+100
+</p>
+
+  
+</td>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ 0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+101
+</p>
+
+  
+</td>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+120
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+102
+</p>
+
+  
+</td>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+250
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+103
+</p>
+
+  
+</td>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+370
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+104
+</p>
+
+  
+</td>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+470
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+105
+</p>
+
+  
+</td>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+530
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p class="codeexample">
+TABLE(100, 0, 120, 250, 370, 470, 530)
+</p>
+<h3>Example 2:</h3>
+<p>
+Use the command line to read the value stored in index 1000.
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT TABLE(1000)
+</p>
+<p class="codeexample">
+1234.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p>
+Copy a range of TABLE locations to a local integer 2D array
+</p>
+<p class="codeexample">
+DIM myints AS INTEGER(5, 20)
+</p>
+<p class="codeexample">
+myints(2) = TABLE(1000, 1019) 'Row 2 will be populated
+</p>
+<p class="codeexample">
+PRINT myints
+</p>
+<h3>Example 4:</h3>
+<p>
+Copy a range of TABLE locations to another area of VR and
+TABLE memory
+</p>
+<p class="codeexample">
+TABLE(1000, TABLE(2000, 2199)) 'Copy points 2000..2199 to
+1000
+</p>
+<p class="codeexample">
+VR(0) = TABLE(100, 199) 'Copy points 100..199 to VR index 0
+</p>
+<h2>See also:</h2>
+<p>
+<a href="FLASHTABLE.html">FLASHTABLE</a>
+, 
+<a href="FLASH_TABLE_FIRST.html">FLASH_TABLE_FIRST</a>
+, 
+<a href="FLASH_TABLE_LAST.html">FLASH_TABLE_LAST</a>
+, 
+<a href="NEW.html">NEW</a>
+, 
+<a href="TSIZE.html">TSIZE</a>
+</p>
+</body>
+</html>

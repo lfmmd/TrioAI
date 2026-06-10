@@ -1,0 +1,81 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FASTDEC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FASTDEC">
+</head>
+<body>
+<h1>FASTDEC</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+The FASTDEC axis parameter may be used to set or read back
+the fast deceleration rate of each axis fitted.
+</p>
+<p>
+The fast deceleration and fast jerk rates are used when motion
+is cancelled, either via the 
+<a href="CANCEL.html">CANCEL</a>
+ or 
+<a href="RAPIDSTOP.html">RAPIDSTOP</a>
+ commands, or from a software or hardware
+limit.
+</p>
+<p>
+FASTDECEL must be greater than DECEL, otherwise DECEL will
+be used. 
+</p>
+<h2>Value:</h2>
+<p class="tablecontent">
+The deceleration rate in 
+<a href="UNITS.html">UNITS</a>
+/sec/sec
+and must be a positive value, or zero to not be used.
+</p>
+<h2>Example: </h2>
+<p class="codeexample">
+DECEL = 100            'Set normal deceleration rate
+</p>
+<p class="codeexample">
+JERK = 200             'Set normal jerk rate
+</p>
+<p class="codeexample">
+FASTDEC = 1000         'Set fast deceleration rate
+</p>
+<p class="codeexample">
+FASTJERK = 2000        'Set fast jerk rate
+</p>
+<p class="codeexample">
+MOVEABS(10000)         'Start a move
+</p>
+<p class="codeexample">
+WAIT UNTIL MPOS = 5000 'Wait until the move is halfway
+through
+</p>
+<p class="codeexample">
+CANCEL                 'Cancel the move (will use fast
+rates)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CANCEL.html">CANCEL</a>
+, 
+<a href="DECEL.html">DECEL</a>
+,
+
+<a href="FASTJERK.html">FASTJERK</a>
+, 
+<a href="JERK.html">JERK</a>
+, 
+<a href="RAPIDSTOP.html">RAPIDSTOP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

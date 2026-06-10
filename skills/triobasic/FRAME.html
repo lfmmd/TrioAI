@@ -1,0 +1,7980 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FRAME</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FRAME">
+</head>
+<body>
+<h1>FRAME</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+A FRAME is a transformation which enables the user to program
+in one coordinate system when the machine or robot does not have a direct or one-to-one
+mechanical connection to this coordinate system.
+</p>
+<p>
+The FRAME command selects which transformation to use on axes
+in a 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+. Applying a FRAME to an axis in
+a 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+ will apply that frame to all the axes
+in the group. To make this compatible with older firmware, if no 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+s have been configured then a default group
+is generated using the lowest axes, regardless of what axis the FRAME parameter
+was issued on. 
+</p>
+<p>
+Most transformations require configuration data to specify the
+lengths of mechanical links or operating modes. This is stored in the table with
+offsets detailed below in the parameters list. These table positions are offset
+by the ‘table_offset’ parameter in 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+. For
+a default 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+ table_offset is 0. 
+</p>
+<p class="warning">
+Do not change the FRAME TABLE parameters with the FRAME
+enabled. This can result in unpredictable movement which could cause damage or
+harm. 
+</p>
+<p class="note">
+The kinematic runtime feature enable code is required to run FRAME
+14 and higher.
+</p>
+<h4>System with FRAME=0</h4>
+<p>
+<img border="0" width="232" height="265" id="Picture 24" src="FRAME_files/image001.png">
+</p>
+<h4>System with FRAME&lt;&gt;0</h4>
+<p>
+<img border="0" width="475" height="265" id="Picture 25" src="FRAME_files/image002.png">
+</p>
+<h4>Axis scaling</h4>
+<p>
+When a FRAME is enabled 
+<a href="UNITS.html">UNITS</a>
+ applies
+the scaling to the world coordinate system and 
+<a href="AXIS_UNITS.html">AXIS_UNITS</a>
+
+applies scaling to the axis coordinate system.
+</p>
+<p class="warning">
+When FRAME is enabled 
+<a href="MPOS.html">MPOS</a>
+ is scaled by
+
+<a href="AXIS_UNITS.html">AXIS_UNITS</a>
+, when frame is disabled 
+<a href="MPOS.html">MPOS</a>
+ is scaled by 
+<a href="UNITS.html">UNITS</a>
+.
+</p>
+<h4>Position and following errors</h4>
+<p>
+When a FRAME is active 
+<a href="MPOS.html">MPOS</a>
+ is the motor
+position and 
+<a href="DPOS.html">DPOS</a>
+ is in the world coordinate system. 
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+ can be read to find the demand position in the
+motor coordinate system. 
+</p>
+<p>
+The following error is calculated between 
+<a href="MPOS.html">MPOS</a>
+
+and 
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+ and so is the following error of the
+motor. 
+</p>
+<p class="tip">
+When using multiple frames or if you wish to group your axis you can
+use 
+<a href="DISABLE_GROUP.html">DISABLE_GROUP</a>
+ so that a 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+ on one axis does not affect all. 
+</p>
+<h4>Hardware and Software limits</h4>
+<p>
+As 
+<a href="FS_LIMIT.html">FS_LIMIT</a>
+ and 
+<a href="RS_LIMIT.html">RS_LIMIT</a>
+ use 
+<a href="DPOS.html">DPOS</a>
+ they are both
+active in the world coordinate system. 
+<a href="VOLUME_LIMIT.html">VOLUME_LIMIT</a>
+
+also uses 
+<a href="DPOS.html">DPOS</a>
+ so is also in the world coordinate system.
+
+<a href="FWD_IN.html">FWD_IN</a>
+ and 
+<a href="REV_IN.html">REV_IN</a>
+, 
+<a href="AXIS_FS_LIMIT.html">AXIS_FS_LIMIT</a>
+ and 
+<a href="AXIS_RS_LIMIT.html">AXIS_RS_LIMIT</a>
+
+use 
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+ as so act on the forward and reverse
+limit of the motor.
+</p>
+<p class="note">
+When moving off 
+<a href="FWD_IN.html">FWD_IN</a>
+ and 
+<a href="AXIS_FS_LIMIT.html">AXIS_FS_LIMIT</a>
+ the motor must move in a reverse direction.
+Due to the FRAME transformation this may not be a reverse movement in the world
+coordinate system. When moving off a 
+<a href="REV_IN.html">REV_IN</a>
+ and 
+<a href="AXIS_RS_LIMIT.html">AXIS_RS_LIMIT</a>
+ the motor must move in a forward direction.
+Due to the FRAME transformation this may not be a forward movement in the world
+coordinate system. 
+</p>
+<h4>Offsetting positions</h4>
+<p>
+When a FRAME is enabled 
+<a href="OFFPOS.html">OFFPOS</a>
+ and
+
+<a href="DEFPOS.html">DEFPOS</a>
+ must not be used as they cause a jump in both 
+<a href="DPOS.html">DPOS</a>
+ and 
+<a href="MPOS.html">MPOS</a>
+. As the
+transformation separates 
+<a href="DPOS.html">DPOS</a>
+ and 
+<a href="MPOS.html">MPOS</a>
+
+using these commands will cause an undesirable jump in motor position.
+</p>
+<p>
+<a href="REP_DIST.html">REP_DIST</a>
+ also causes a jump in 
+<a href="DPOS.html">DPOS</a>
+ and 
+<a href="MPOS.html">MPOS</a>
+ so when using a
+FRAME the position must never reach 
+<a href="REP_DIST.html">REP_DIST</a>
+. 
+<a href="REP_OPTION.html">REP_OPTION</a>
+ must be set to 0 and 
+<a href="REP_DIST.html">REP_DIST</a>
+ must be at least twice the size of the
+biggest possible move on the system. 
+</p>
+<p>
+When 
+<a href="DATUM.html">DATUM</a>
+ is complete it also
+causes a jump in 
+<a href="DPOS.html">DPOS</a>
+ and 
+<a href="MPOS.html">MPOS</a>
+,
+so 
+<a href="DATUM.html">DATUM</a>
+ must never be used when FRAME &lt;&gt; 0
+</p>
+<p>
+You can use 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ to
+define a different origin to program from. 
+</p>
+<h4>Power on sequence and Homing</h4>
+<p>
+Some FRAME transformations require the machine to be homed and/
+or moved to a position before the FRAME is enabled. This can be done using the 
+<a href="DATUM.html">DATUM</a>
+ function. If you home position is not the zero position
+of the FRAME then you can use 
+<a href="DEFPOS.html">DEFPOS</a>
+/ 
+<a href="OFFPOS.html">OFFPOS</a>
+ to set the correct offset before enabling the FRAME.
+
+</p>
+<p>
+When a FRAME is enabled 
+<a href="DPOS.html">DPOS</a>
+ is adjusted
+to the world coordinates which are calculated from the current 
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+. 
+</p>
+<p class="warning">
+You should not perform a 
+<a href="DATUM.html">DATUM</a>
+ homing
+routine when the FRAME is enabled as this will change the 
+<a href="DPOS.html">DPOS</a>
+
+which may result in undesirable motion. If you need to perform homing when the FRAME
+is enabled, you can move to a registration position and then use 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ to apply the offset. 
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+No
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+RPS
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Relevant Docs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No transform
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME=1,_2_axis">1</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 axis SCARA robot
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-232
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME=2,_XY_single">2</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+XY single belt
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN – Coordinate Transformation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slider-Crank mechanism
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-308
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME=5,_2_axes">5</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 axes rotation
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME=6,_Polar_to_1">6</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Polar to Cartesian transformation
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME=10,_Cartesian_to">10</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cartesian to polar transformation
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-337
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inverse XY-Theta
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-305
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inverse XY-Theta where Y is ZY
+  combination
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-310
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME=13,_Dual_arm">13</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Dual arm robot transformation 
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-229
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME=14,_Delta_Robot">14</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3 arm delta robot.
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME=15,_4_axis">15</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4 axis SCARA. 
+</p>
+
+  
+<p class="tablecontent">
+TRIO recommends using RPS (Robot Programming System)
+  for this type of FRAME.
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME_=_16,">16</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3 Axis Robot with 2 Axis Wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-286
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME_=_116,">17</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Wire guided camera
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-331
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+19
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6 DOF robot with ZYZ wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style="font-family:Wingdings">ü</span></p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-302
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+21
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6 DOF robot with ZYX wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+22
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4-axis palletizing robot with 1 axis wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-306
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+24
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+XYZ Robot with 3 axis ZYX axis wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+25
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4 DOF Palletizing Robot (XYZU
+  + mode from 4 axis positions)
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style="font-family:Wingdings">ü</span></p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-388
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+26
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 axis parallelogram robot
+  with 1 axis wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+27
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4 DOF SCARA
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-328
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+28
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5 DOF robot with VW as YZ
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-328
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+29
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6 DOF robot with ZYZ wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+30
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Wire supported camera with 4 payout eyes in a
+  rectangular room
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-336
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+31
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5 DOF Robot with VW as YZ
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-347
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3 DOF Mechanism
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-369
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+33
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Gantry robot with 2-axis
+  wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-371
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+35
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Dual SCARA Arm robot
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+36
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3 DOF Mechanism
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-433
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+41
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SCARA robot with 1-axis wrist
+  W
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style="font-family:Wingdings">ü</span></p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-344
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+42
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Delta robot (rotary or
+  linear) with up to 3 axis wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style="font-family:Wingdings">ü</span></p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-456
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME=114,_Delta_Robot">114</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3 arm delta robot.
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-398
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME=115,_3_to">115</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3 to 5 axis SCARA. 
+</p>
+
+  
+<p class="tablecontent">
+TRIO recommends using RPS (Robot Programming System)
+  for this type of FRAME.
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-346
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_FRAME_=_116,_1">116</a>
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3 Axis Robot with 2 Axis Wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-317
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+117
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+XYZ Robot with angled Y
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AN-437
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+119
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3 to 5 axis cylindrical robot with 2 Axis Wrist
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+121
+</p>
+
+  
+</td>
+<td width="290" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Wafer robot with 2 SCARAs on one Z axis and one
+  Rotation axis
+</p>
+
+  
+</td>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="228" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+<a name="_FRAME=1,_2_axis"></a>
+For frames 
+<span style="font-family:Wingdings">ü</span>flagged
+as RPS compliant, see the Robot Programming System.
+</p>
+<h2>FRAME=1, 2 axis SCARA</h2>
+<h3><a name="_Ref266275790"></a>
+Description:</h3>
+<p>
+Frame=1 allows the user to program in
+X, Y, Cartesian coordinates for a 2 axis SCARA arm like the example below. The frame
+allows for 2 configurations of a SCARA depending if the second axis motor is in
+the joint or at the base. The difference is that in angle t2 is referenced from
+link 1, or t2 is referenced from the base. A linkage or belt is typically used to
+keep t2 referenced to the base. 
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<img border="0" width="584" height="350" id="Picture 10" src="FRAME_files/image003.jpg" alt="frame 1-2 schematic">
+</p>
+<p>
+<a name="_Ref269742692">Second motor is carried on the end of
+Link 1</a>
+, t2 is relative to link 1.
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<img border="0" width="586" height="357" id="Picture 42" src="FRAME_files/image004.jpg" alt="frame 1-1 schematic">
+</p>
+<p>
+Second motor in base with link arm to move upper part, t2 is
+relative to the base.
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+Once the frame is enabled 
+<a href="DPOS.html">DPOS</a>
+ is measured
+in Micrometres, 
+<a href="UNITS.html">UNITS</a>
+ can then be set to a convenient scale.
+
+</p>
+<h4>Homing</h4>
+<p>
+Is it required that the 2 motors’ absolute positions are homed
+relative to the “straight up” position before the FRAME is enabled. In other words,
+the zero angle on each axis is with the arms in line and vertical. Of course, it
+is not necessary for the motors to actually go to this position as you can offset
+the position using 
+<a href="DEFPOS.html">DEFPOS</a>
+ or 
+<a href="OFFPOS.html">OFFPOS</a>
+.
+
+</p>
+<h4>Joint configuration</h4>
+<p>
+The joint configuration is determined by the position of the
+SCARA arm when you enable FRAME = 1
+</p>
+<p>
+The joint is defined as Right-Handed if:
+</p>
+<p>
+(t2&lt;t1) –both motors in base
+</p>
+<p>
+(t2&lt;0) –motors in the joint
+</p>
+<p>
+Otherwise the robot is Left handed
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="13" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Length of arm 1 in micrometres
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Length of arm 2 in micrometres
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per radian for joint 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per radian for joint 2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Internal value. Set to 0 to force frame re-calculation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis configuration:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 – Both motors fixed in base
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 – Motors at the joint
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Joint configuration (read only):
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 – Left handed SCARA
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 – Right handed SCARA
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+used internally
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+used internally
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Ref269474433">Examples:</a>
+</h3>
+<h4>Example 1:</h4>
+<p>
+Set up the SCARA arm which is configured with the motors in the
+joints. Both motors return 16000 counts per revolution. The robot can be homed to
+switches which are at -80 degrees and +150degrees for the two joints. After setting
+FRAME=1 the tip of the second arm will be set with X, Y as (0,42426). This effectively
+makes the (0,0) XY position to be the bottom joint of the lower arm.
+</p>
+<p>
+All the normal move types can then be run within the FRAME=1
+setting until it is reset by setting FRAME=0. As the FRAME 1 makes the resolution
+of axes 0 and 1 micrometres, the 
+<a href="UNITS.html">UNITS</a>
+ can be set so you
+can program in mm. 
+</p>
+<p class="codeexample">
+FRAME=0
+<br>
+
+
+<br>
+
+'Enter Configuration Parameters:
+<br>
+
+TABLE(0, 300000) 'Length of arm 1 in mm * 1000
+<br>
+
+TABLE(1, 445000) 'Length of arm 2 in mm * 1000
+<br>
+
+TABLE(2, 16000/(2*PI)) 'Edges per radian for joint 1
+<br>
+
+TABLE(3, 16000/(2*PI)) 'Edges per radian for joint 2
+<br>
+
+TABLE(4, 0) 'Internal value. Set to 0 to force frame re-calculation
+<br>
+
+TABLE(5, 1) 'Set to 1 for second joint fixed to arm 1
+<br>
+
+
+<br>
+
+'Home the robot to its mechanical limit switches
+<br>
+
+DATUM(3) AXIS(0) ' find home switch for lower part of arm
+<br>
+
+WAIT IDLE
+<br>
+
+DATUM(3) AXIS(1) ' find upper arm home position
+<br>
+
+WAIT IDLE
+<br>
+
+
+<br>
+
+'The mechanical layout may make it impossible to home at (0,0)
+<br>
+
+'Define the home position values as their true angle (in edges)
+<br>
+
+DEFPOS(-3555, 6667) 'say home position is -80 deg and +150 deg
+<br>
+
+WAIT UNTIL OFFPOS = 0
+<br>
+
+
+<br>
+
+'Move both arms to start position PI/4 radians (45 degrees)
+<br>
+
+MOVEABS(-TABLE(2) * 0.7854, TABLE(3) * 0.7854 * 2)
+<br>
+
+WAIT IDLE
+<br>
+
+
+<br>
+
+FRAME=1
+<br>
+
+
+<br>
+
+UNITS AXIS(0) = 1000
+<br>
+
+UNITS AXIS(1) = 1000
+</p>
+<h4>Example 2:</h4>
+<p>
+Set up the table for SCARA arm which is configured with both
+motors in the base. Once the table is configured the rest of the initialisation
+is the same as the above example.
+</p>
+<p class="codeexample">
+'Enter Configuration Parameters:
+<br>
+
+TABLE(0, 400000)&nbsp;'Link 1 in mm * 1000
+<br>
+
+TABLE(1, 250000)&nbsp;'Link 2 in mm * 1000
+<br>
+
+TABLE(2,&nbsp;4096 * 5 / (2 * PI))&nbsp;'t1 in edges per radian
+<br>
+
+TABLE(3,&nbsp;4096 * 3 / (2 * PI))&nbsp;'t2 in edges per radian
+<br>
+
+TABLE(4, 0)&nbsp;'Internal value. Set to 0 to force frame re-calculation
+<br>
+
+TABLE(5, 0)&nbsp;'Set to 0 for second joint fixed to base
+</p>
+<h2><a name="_FRAME=2,_XY_single"></a>
+FRAME=2, XY single belt</h2>
+<h3>Description:</h3>
+<p>
+Switching to FRAME=2 will allow X-Y motion using a single-belt
+configuration. In this mode, an interpolated move of 
+<a href="MOVE.html">MOVE</a>
+(0,100)
+produces motion on both motor 1 and motor 2 to raise the load vertically, based
+on the transformed position. Note that the two motors are located on the X-axis.
+The mass of the Y-axis can be minimised in this configuration. The equations for
+the transformed position of the X and Y axes are as follows:
+</p>
+<p>
+Xtransformed = (
+<a href="MPOS.html">MPOS</a>
+<a href="AXIS.html">AXIS</a>
+(0)+ 
+<a href="MPOS.html">MPOS</a>
+<a href="AXIS.html">AXIS</a>
+(1))*0.5
+</p>
+<p>
+Ytransformed =
+(
+<a href="MPOS.html">MPOS</a>
+<a href="AXIS.html">AXIS</a>
+(0)- 
+<a href="MPOS.html">MPOS</a>
+<a href="AXIS.html">AXIS</a>
+(1))*0.5
+</p>
+<p>
+The transformed X-Y coordinates are derived from the measured
+encoder position (MPOS) of 
+<a href="AXIS.html">AXIS</a>
+(0) and 
+<a href="AXIS.html">AXIS</a>
+(1). This conversion is automatically accomplished by the
+Motion Coordinator when FRAME=2.
+</p>
+<p>
+Once the frame is enabled 
+<a href="DPOS.html">DPOS</a>
+ is measured
+in encoder counts, 
+<a href="UNITS.html">UNITS</a>
+ can be set to enable a more convenient
+scale. 
+</p>
+<p>
+<img border="0" width="590" height="371" id="Picture 20" src="FRAME_files/image005.png">
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+ATYPE = 0 'disable built in axes for MC464
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FRAME = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Define a start position
+</p>
+<p class="codeexample">
+DEFPOS(150, 50)
+</p>
+<p class="codeexample">
+FRAME = 2
+</p>
+<h2><a name="_FRAME=5,_2_axes"></a>
+FRAME=5, 2 axes rotation</h2>
+<h3>Description:</h3>
+<p>
+This frame is designed to allow two orthogonal axes to be
+“turned” through an angle so that command inputs to x, y (along the required
+plane) are transformed to the fixed axes x’ and y’.
+</p>
+<p>
+<img border="0" width="302" height="176" id="Picture 35" src="FRAME_files/image006.png">
+</p>
+<p>
+The transform is done by way of a 2 x 2 matrix, the
+coefficients of which can be easily derived from the required rotation angle of
+the operating plane.
+</p>
+<h4>Calculating the Matrix Coefficients:</h4>
+<p>
+For the frame to work, 2 sets of matrix coefficients must be
+entered, one for the forward transform and the second for the inverse. The
+transform calculates x and y according to the following:
+</p>
+<p class="codeexample">
+(x’, y’) = (x, y) * 
+<span style="font-family:Symbol">æ</span>TABLE(0), TABLE(1)
+<span style="font-family:Symbol">ö</span></p>
+<p class="codeexample">
+                    
+<span style="font-family:Symbol">è</span>TABLE(2), TABLE(3)
+<span style="font-family: Symbol">ø</span></p>
+<p>
+The inverse transform is calculated thus:
+</p>
+<p class="codeexample">
+(x, y) = (x’, y’) * 
+<span style="font-family:Symbol">æ</span>TABLE(4), TABLE(5)
+<span style="font-family:Symbol">ö</span></p>
+<p class="codeexample">
+                    
+<span style="font-family:Symbol">è</span>TABLE(6), TABLE(7)
+<span style="font-family: Symbol">ø</span></p>
+<h4>Homing:</h4>
+<p>
+The axes should be datumed in FRAME=0. Once this is done,
+then the frame can be set to 5 and move commands directed at either axis or at
+both axes together in the usual way. However, the actual movement of x’ and y’
+(the real axes) will be according to the transform.
+</p>
+<p>
+If the axes need to be re-positioned according to the real
+axes, the frame can be turned off simply by setting FRAME=0. When this is done,
+the DPOS values will change to be the same as the MPOS positions, i.e. they
+become the positions in the x’ / y’ plane. The axes can then be moved to a new
+starting position and the frame set back to 5, perhaps with a new angle set.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="8" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+COS(theta)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-SIN(theta)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SIN(theta)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+COS(theta)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TABLE(3) / det
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-TABLE(1) / det
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-TABLE(2) / det
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table(0) / det
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+theta, the angle of rotation is in radians. 
+</p>
+<p class="note">
+det = (TABLE(0) * TABLE(3)) – (TABLE(2) * TABLE(1))
+</p>
+<h3>Example:</h3>
+<p>
+Configure a rotation of 45 degrees and run a move on the new
+X Y axes. 
+</p>
+<p class="codeexample">
+<a name="_FRAME=6,_Polar_to"></a>
+x_axis = 0
+</p>
+<p class="codeexample">
+y_axis = 1
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+theta_degrees = 45 'Rotation angle in degrees
+</p>
+<p class="codeexample">
+theta = theta_degrees * (2 * PI / 360) 'Convert to radians
+</p>
+<p class="codeexample">
+GOSUB calc_matrix
+</p>
+<p class="codeexample">
+FRAME = 5
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(x_axis)
+</p>
+<p class="codeexample">
+MOVE(xdist, ydist)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+STOP
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'================================================
+</p>
+<p class="codeexample">
+' Calculate the matrix parameters for FRAME 5
+</p>
+<p class="codeexample">
+' Transform (x, y) * (TABLE(0), TABLE(1) )
+</p>
+<p class="codeexample">
+'                    (TABLE(2), TABLE(3) )
+</p>
+<p class="codeexample">
+'
+</p>
+<p class="codeexample">
+' Inverse Transform:
+</p>
+<p class="codeexample">
+'         (x', y') * (TABLE(4), TABLE(5) )
+</p>
+<p class="codeexample">
+'                    (TABLE(6), TABLE(7) )
+</p>
+<p class="codeexample">
+'================================================
+</p>
+<p class="codeexample">
+calc_matrix:
+</p>
+<p class="codeexample">
+'Forward transform
+</p>
+<p class="codeexample">
+TABLE(0, COS(theta))
+</p>
+<p class="codeexample">
+TABLE(1, -SIN(theta))
+</p>
+<p class="codeexample">
+TABLE(2, SIN(theta))
+</p>
+<p class="codeexample">
+TABLE(3, COS(theta))
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Inverse transform
+</p>
+<p class="codeexample">
+det = (TABLE(0) * TABLE(3)) - (TABLE(2) * TABLE(1))
+</p>
+<p class="codeexample">
+TABLE(4, TABLE(3) / det)
+</p>
+<p class="codeexample">
+TABLE(5, -TABLE(1) / det)
+</p>
+<p class="codeexample">
+TABLE(6, -TABLE(2) / det)
+</p>
+<p class="codeexample">
+TABLE(7, TABLE(0) / det)
+</p>
+<p class="codeexample">
+RETURN
+</p>
+<h2><a name="_FRAME=6,_Polar_to_1"></a>
+FRAME=6, Polar to Cartesian transformation</h2>
+<h3>Description:</h3>
+<p>
+This transformation allows the user to program in polar (radius,
+angle) coordinates and the actual axis to move in a
+ Cartesian
+(X, Y) coordinate system.
+</p>
+<p>
+The first axis in the frame group is the Radius, the second is
+the angle. . 
+</p>
+<p>
+<img border="0" width="311" height="165" src="FRAME_files/image007.png">
+</p>
+<p>
+Once the frame is enabled the raw position data (
+<a href="UNITS.html">UNITS</a>
+=1) is measured in encoder counts for the radius axis
+and radians*scale for the angle, 
+<a href="UNITS.html">UNITS</a>
+ can then be set
+to a convenient scale. The origin for the robot is the zero position for the Cartesian
+system. The zero angle position is along Axis 0.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Scale (counts per radian) for the rotary axis
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+A gantry robot has 2 axis configured in an X, Y configuration.
+For ease of programming the user would like to program in Polar coordinates. Both
+axes return 4000 counts per revolution. The 
+<a href="AXIS_UNITS.html">AXIS_UNITS</a>
+
+are set so that the axis coordinate system is in mm, the 
+<a href="UNITS.html">UNITS</a>
+
+are set so that the World coordinate system is in mm and degrees. 
+</p>
+<p class="codeexample">
+  scale = 1000000
+</p>
+<p class="codeexample">
+  UNITS AXIS(0) = 4000 'To program in mm
+</p>
+<p class="codeexample">
+  AXIS_UNITS AXIS(0) = 4000
+</p>
+<p class="codeexample">
+  UNITS AXIS(1) = scale * 2 * PI / 360 'to program in degrees
+</p>
+<p class="codeexample">
+  AXIS_UNITS AXIS(1) = 4000
+</p>
+<p class="codeexample">
+  TABLE(0, scale) 'Set resolution for the angle axis
+</p>
+<p class="codeexample">
+  FRAME = 6
+</p>
+<h4>Example 2:</h4>
+<p>
+Using the robot configured in example 1 move the tool to 150mm
+along the X axis, then move the tool in a circle around the Polar coordinate system
+origin. 
+</p>
+<p class="codeexample">
+   MOVEABS(150,0)
+</p>
+<p class="codeexample">
+   MOVE(0,360)
+</p>
+<h2><a name="_FRAME=10,_Cartesian_to"></a>
+FRAME=10, Cartesian to Polar transformation</h2>
+<h3>Description:</h3>
+<p>
+This FRAME transformation allows the
+user to program in Cartesian (X,Y) coordinates on a system that moves in a Polar
+(radius, angle) coordinate system. This is typically used on cylindrical robots
+where you need to program the arm extension (radius) and angle. The vertical Z axis
+can be simply added to make a 3 degree of freedom system. 
+</p>
+<p>
+<img border="0" width="419" height="313" id="Picture 8" src="FRAME_files/image008.jpg" alt="cyl 1">
+</p>
+<p>
+Once the frame is enabled the raw position data (
+<a href="UNITS.html">UNITS</a>
+=1) is scaled the same for the X and Y axes, the resolution
+is set from the radius axis. 
+<a href="UNITS.html">UNITS</a>
+ can then be set to a
+convenient scale. The origin is the centre of the Polar system. .
+</p>
+<p class="tip">
+The first axis in the group controls the radius axis and the second
+controls the rotary axis. 
+</p>
+<h4>Homing</h4>
+<p>
+Before enabling FRAME=10 the axes must be homed so that they
+are at a known position. When the FRAME is enabled the X and Y positions are calculated
+from the current Polar position. 
+</p>
+<p class="note">
+Take care when executing moves that go close to the origin. Moves
+that travel through the origin will require infinite speed and acceleration. This
+is usually not possible to achieve and the axes will trip out due to excessive following
+error.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of revolutions, set by firmware
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Previous servo cycle’s angle, set by firmware
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+A cylindrical robot has 3 axis which extend the arm (radius),
+rotate the arm (angle) and move the up and down (Z). The radius and Z axes have
+4000 counts per mm, this is used for the scale of the Cartesian axes in the FRAME.
+The rotate axis has 4000 counts per revolution, this should be divided by 2*PI to
+give the counts per revolution which is set in the table. The UNITS are set so that
+the Cartesian system can be programmed in mm, the AXIS_UNITS is set so that the
+axis are programmed in mm or degrees. Once the polar system has been homed the following
+code can be executed so that any further motion is programmed in Cartesian coordinates.
+
+</p>
+<p class="codeexample">
+UNITS AXIS(0) = 4000 'To use in mm
+</p>
+<p class="codeexample">
+AXIS_UNITS AXIS(0) = 4000 'To use in mm
+</p>
+<p class="codeexample">
+edges_per_radian = 4000 / (2 * PI) 'Edges per radian for the
+rotary axis
+</p>
+<p class="codeexample">
+UNITS AXIS(1) = 4000 'To use in mm
+</p>
+<p class="codeexample">
+AXIS_UNITS AXIS(1) = 4000 / 360 'To use in mm
+</p>
+<p class="codeexample">
+TABLE(0, edges_per_radian)
+</p>
+<p class="codeexample">
+UNITS AXIS(2) = 4000 'To use in mm
+</p>
+<p class="codeexample">
+FRAME = 10
+</p>
+<h2><a name="_FRAME=13,_Dual_arm"></a>
+FRAME=13, Dual arm Parallel robot</h2>
+<h3>Description:</h3>
+<p>
+Frame 13 enables the transformation for
+a 2 arm parallel robot as shown. It is then possible to program in X Y Cartesian
+coordinates. 
+</p>
+<p class="tip">
+If the lower link is not directly connected as per the image but is
+separated, this is compensated for by decreasing the centre distance of the top
+link by the same amount. 
+</p>
+<p>
+<table>
+<tr>
+<td width="246" height="0">
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+<img width="339" height="368" src="FRAME_files/image009.jpg" alt="perspective-front">
+</td>
+</tr>
+</table>
+<br clear="ALL">
+<a name="_Ref306089698"></a>
+Once the frame is enabled the raw position data (
+<a href="UNITS.html">UNITS</a>
+=1) is measured in Micrometres, 
+<a href="UNITS.html">UNITS</a>
+
+can then be set to a convenient scale.
+</p>
+<h4>Homing</h4>
+<p>
+The 2 arm delta robot should be homed so that the two link 1’s
+are vertical down. You do not need to enable the frame in this position, just ensure
+that it has been defined. 
+</p>
+<p class="tip">
+A vertical offset for the tool can be defined within the FRAME
+table data. This means that you can set the zero position vertically
+</p>
+<p>
+<img border="0" width="652" height="416" id="Picture 7" src="FRAME_files/image010.jpg" alt="Schematic - front">
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="10" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Link length 1 in microns
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Link length 2 in microns
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian axis 0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian axis 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Horizontal offset axes from x datum
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set Vertical datum with arms straight out
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+calculated values
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+calculated values
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+calculated values
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+first axis frame calculated value
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h4>Example</h4>
+<p>
+The following is a typical startup program for FRAME 13.
+</p>
+<p class="codeexample">
+FRAME=0
+</p>
+<p class="codeexample">
+WA(10)
+</p>
+<p class="codeexample">
+'------------------------------------------------
+</p>
+<p class="codeexample">
+TABLE(0, 220000)                   'Arm
+</p>
+<p class="codeexample">
+TABLE(1, 600000)                   'Forearm
+</p>
+<p class="codeexample">
+TABLE(2, (2048 * 4 * 70) / 2 / PI) 'pulse/radian
+</p>
+<p class="codeexample">
+TABLE(3, (2048 * 4 * 70) / 2 / PI) 'pulse/radian
+</p>
+<p class="codeexample">
+TABLE(4, 15000)                    'X-offset
+</p>
+<p class="codeexample">
+TABLE(5, 450000)                   'Y-offset = 450 mm below
+axis 0 centre
+</p>
+<p class="codeexample">
+'------------------------------------------------
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Set home position for arms at +/-90 degrees
+</p>
+<p class="codeexample">
+DATUM(4) AXIS(0) 'find home switch for left arm
+</p>
+<p class="codeexample">
+DATUM(3) AXIS(1) 'find home switch for right arm
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(0)
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(1)
+</p>
+<p class="codeexample">
+home_0 = -TABLE(2) * PI / 2
+</p>
+<p class="codeexample">
+home_1 = TABLE(3) * PI / 2
+</p>
+<p class="codeexample">
+BASE(0,1)
+</p>
+<p class="codeexample">
+DEFPOS(home_0, home_1)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WA(10)
+</p>
+<p class="codeexample">
+FRAME = 13
+</p>
+<h2><a name="_FRAME=14,_Delta_Robot"></a>
+FRAME=14, Delta Robot</h2>
+<h3><a name="_Ref269301095">Description:</a>
+</h3>
+<p>
+FRAME=14 enables the transformation for a 3 arm ‘delta’ or ‘parallel’
+robot. It transforms 3 axes from the mechanical configuration to Cartesian coordinates
+using the right hand rule.
+</p>
+<p class="note">
+For new projects FRAME 114 is recommended
+</p>
+<p class="note">
+FRAME=14 requires the kinematic runtime FEC
+</p>
+<p>
+<img border="0" width="506" height="406" id="Picture 6" src="FRAME_files/image011.png" alt="Description: \\TRIONAS\sales\Graphics WIP\Tech ills\Robots\for Alex\pers delta 004.png">
+</p>
+<p>
+Once the frame is enabled the raw position data (
+<a href="UNITS.html">UNITS</a>
+=1) is measured in Micrometres, 
+<a href="UNITS.html">UNITS</a>
+
+can then be set to a convenient scale. The origin for the robot is the centre of
+the top plate with the X direction following the first axis. This can be adjusted
+using the rotation parameter. 
+</p>
+<h4>Homing:</h4>
+<p>
+Before enabling FRAME=14 the position must be defined so that
+when the upper arms are horizontal the axis position is 0. You do not need to enable
+the frame in this position, just ensure that it has been defined. 
+</p>
+<h3><a name="_Ref270687084">Parameters:</a>
+</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Top radius to joint in Micrometres (R1)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Wrist radius to joint in Micrometres (R2)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Upper arm length in Micrometres (L1)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Lower arm length in Micrometres (L2)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per radian
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Angle of rotation in radians (Rotation)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Ref270687205">Example</a>
+:</h3>
+<p>
+Start-up sequence for a 3 arm delta robot using the default 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+. Homing is completed using a sensor that
+detects when the upper arms are level. 
+</p>
+<p class="codeexample">
+'Define Link Lengths for 3 arm delta:
+</p>
+<p class="codeexample">
+TABLE(0, 200000) 'Top radius to joint
+</p>
+<p class="codeexample">
+TABLE(1, 50000)  'Wrist radius to joint
+</p>
+<p class="codeexample">
+TABLE(2, 320000) 'Upper arm length
+</p>
+<p class="codeexample">
+TABLE(3, 850000) 'Lower arm length
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Define encoder edges/radian
+</p>
+<p class="codeexample">
+'18bit encoder and 31:1 ratio gearbox
+</p>
+<p class="codeexample">
+resolution = 262144 * 31 / (2 * PI)
+</p>
+<p class="codeexample">
+TABLE(4, resolution)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Define rotation of robot relative to global frame
+</p>
+<p class="codeexample">
+rotation = 30 'degrees
+</p>
+<p class="codeexample">
+TABLE(5, (rotation * 2 * PI) / 360)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Configure axis
+</p>
+<p class="codeexample">
+FOR axis_number = 0 TO 2
+</p>
+<p class="codeexample">
+    BASE(axis_number)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    'World coordinate system to operate in mm
+</p>
+<p class="codeexample">
+    UNITS = 1000
+</p>
+<p class="codeexample">
+    SERVO = ON
+</p>
+<p class="codeexample">
+NEXT axis_number
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WDOG = ON
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Home and initialise frame
+</p>
+<p class="codeexample">
+'Arms MUST be horizontal in home position
+</p>
+<p class="codeexample">
+'before frame is initialised.
+</p>
+<p class="codeexample">
+FOR axis_number = 0 TO 2
+</p>
+<p class="codeexample">
+    DATUM(4)
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+NEXT axis_number
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Enable Frame
+</p>
+<p class="codeexample">
+FRAME = 14
+</p>
+<h2><a name="_FRAME=15,_4_axis"></a>
+FRAME=15, 4 axis
+SCARA</h2>
+<h3>Description:</h3>
+<p>
+FRAME=15 enables the transformation for a 4 axis SCARA robot.
+This allows you to define the end position of the wrist in X.Y.Z and wrist angle
+(relative to the Y axis). The frame allows for 2 configurations of a SCARA depending
+if the second axis motor is in the joint or at the base. The difference is that
+the angle t2 is referenced from link 1, or the angle t2 is referenced from the base.
+A linkage or belt is typically used to keep t2 referenced to the base. 
+</p>
+<p>
+Some mechanical configurations have parasitic motion from the
+Z axis to the wrist angle. This can be included in the ‘ratio’ parameter. This is
+the change in encoder edges on the vertical for a change in wrist angle in encoder
+edges. Set this value to 0 if there is no parasitic motion. 
+</p>
+<p class="note">
+<strong>
+<span style='font-family:"Calibri",sans-serif'>For new projects FRAME 115 is recommended</span></strong>
+</p>
+<p class="note">
+<strong>
+<span style='font-family:"Calibri",sans-serif'>FRAME=15 requires the kinematic runtime FEC</span></strong>
+</p>
+<p>
+<img border="0" width="528" height="424" id="Picture 5" src="FRAME_files/image012.png" alt="scara_robot 1">
+</p>
+<p>
+<img border="0" width="584" height="350" id="Picture 4" src="FRAME_files/image013.jpg" alt="frame 1-2 schematic">
+</p>
+<p>
+<img border="0" width="586" height="357" id="Picture 3" src="FRAME_files/image014.jpg" alt="frame 1-1 schematic">
+</p>
+<p>
+Once the frame is enabled 
+<a href="DPOS.html">DPOS</a>
+ on the
+X,Y and Z axis are measured in Micrometres. The wrist axis is set to use
+Nanoradians. You can of course set 
+<a href="UNITS.html">UNITS</a>
+ for all axis to
+any suitable scale. 
+</p>
+<h4>Homing</h4>
+<p>
+Is it required that the X, Y and wrist absolute positions are
+homed relative to the “straight up” position before the FRAME is enabled. In other
+words, the zero angle on each axis is with the arms in line and vertical along the
+Y axis with Z=0. Of course, it is not necessary for the motors to actually go to
+this position as you can offset the position using 
+<a href="DEFPOS.html">DEFPOS</a>
+
+or 
+<a href="OFFPOS.html">OFFPOS</a>
+. 
+</p>
+<h4>Joint configuration</h4>
+<p>
+The joint configuration is determined by the position of the
+SCARA arm when you enable FRAME = 1
+</p>
+<p>
+The joint is defined as Right Handed if:
+</p>
+<p>
+(t2&lt;t1) –both motors in base
+</p>
+<p>
+(t2&lt;0) –motors in the joint
+</p>
+<p>
+Otherwise the robot is Left handed
+</p>
+<h3>Parameters:</h3>
+<p class="note">
+The table data values 0-8 are identical to FRAME 1, SCARA. This means
+you can easily switch between the 2 and 4 axis SCARA.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="17" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian axis 0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian axis 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Internal value. Set to 0 to force frame re-calculation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mechanical configuration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 – Both motors fixed in base
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 – Motors at the joint
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Joint configuration (read only)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 – Left handed SCARA
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 – Right handed SCARA
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+used internally
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+used internally
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian axis 3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ratio of encoder edges moved on axis 2/ edge axis3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/mm axis 2
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_FRAME_=_16,"></a>
+Example:</h3>
+<p class="codeexample">
+TABLE(100, 300000)               'Link 1 in microns
+<br>
+
+TABLE(101, 250000)               'Link 2 in microns
+<br>
+
+TABLE(102, 10000 * 11 / (PI * 2))'Encoder edges/radian axis 0
+<br>
+
+TABLE(103, 10000 * 6 / (PI * 2)) 'Encoder edges/radian axis 1
+<br>
+
+TABLE(105, 1)                    'Axis 1 motor is riding
+<br>
+
+TABLE(109, 10000 * 6 / (PI * 2)) 'Encoder edges/radian axis 3
+<br>
+
+TABLE(111, 0)                    'Ratio  for parasitic motion
+<br>
+
+TABLE(112, 10000 * 1.5 / 30)     'Encoder edges/mm axis 2
+<br>
+
+
+<br>
+
+ATYPE AXIS(0) = 0
+<br>
+
+ATYPE AXIS(1) = 0
+<br>
+
+ATYPE AXIS(2) = 0
+<br>
+
+ATYPE AXIS(3) = 0
+<br>
+
+
+<br>
+
+GOSUB config_joint
+<br>
+
+
+<br>
+
+FRAME_GROUP(1, 100, 0, 1, 2, 3) 'Set up axes 0,1,2,3 as group 1 with config
+data at 100
+<br>
+
+
+<br>
+
+DEFPOS(0, 0, 0, 0) 'Datum Robot to 0,90 deg position
+<br>
+
+WAIT UNTIL OFFPOS = 0
+<br>
+
+
+<br>
+
+REPEAT
+<br>
+
+    IF VR(1) = 2 THEN
+<br>
+
+        GOSUB config_world
+<br>
+
+        VR(1) = 0
+<br>
+
+    ELSEIF VR(1) = 1 THEN
+<br>
+
+        GOSUB config_joint
+<br>
+
+        VR(1) = 0
+<br>
+
+    ENDIF
+<br>
+
+UNTIL FALSE
+<br>
+
+
+<br>
+
+STOP
+<br>
+
+
+<br>
+
+
+<br>
+
+config_joint:
+<br>
+
+
+<br>
+
+WAIT IDLE
+<br>
+
+FRAME = 0
+<br>
+
+FRAME_GROUP(0, -1)
+<br>
+
+
+<br>
+
+
+<br>
+
+UNITS AXIS(0) = 10000 * 11 / 360 'Degrees
+<br>
+
+AXIS_UNITS AXIS(0) = UNITS AXIS(0)
+<br>
+
+UNITS AXIS(1) = 10000 * 6 / 360 'Degrees
+<br>
+
+AXIS_UNITS AXIS(1) = UNITS AXIS(1)
+<br>
+
+UNITS AXIS(2) = 10000 * 1.5 / 30 'mm
+<br>
+
+AXIS_UNITS AXIS(2) = UNITS AXIS(2)
+<br>
+
+UNITS AXIS(3) = 10000 * 6 / 360 'Degrees
+<br>
+
+AXIS_UNITS AXIS(3) = UNITS AXIS(3)
+<br>
+
+FRAME_SCALE AXIS(3) = 360000 / (2 * PI) 'Allow for 1000 edges/deg
+<br>
+
+
+<br>
+
+RETURN
+<br>
+
+
+<br>
+
+config_world:
+<br>
+
+
+<br>
+
+WAIT IDLE
+<br>
+
+FRAME = 15
+<br>
+
+
+<br>
+
+UNITS AXIS(0) = 1000 'Use mm units in world mode
+<br>
+
+UNITS AXIS(1) = 1000
+<br>
+
+UNITS AXIS(2) = 1000
+<br>
+
+UNITS AXIS(3) = 1000 'Wrist rotation in deg with FRAME_SCALE
+<br>
+
+
+<br>
+
+RETURN
+</p>
+<h2>FRAME = 16, 3 Axis Robot with 2 Axis Wrist</h2>
+<h3>Description:</h3>
+<p>
+The FRAME 16 transformation allows an XYZ Robot with a 2-axis
+wrist to be easily programmed. The transformation function provides
+compensation in XYZ when the 2 wrist axes are rotated.
+</p>
+<p class="note">
+<strong>
+<span style='font-family:"Calibri",sans-serif'>For new projects FRAME 116 is recommended</span></strong>
+</p>
+<p class="note">
+<strong>
+<span style='font-family:"Calibri",sans-serif'>FRAME=16 requires the kinematic runtime FEC</span></strong>
+</p>
+<p>
+<img border="0" width="576" height="432" id="Picture 38" src="FRAME_files/image015.png">
+</p>
+<p>
+Once the frame is enabled 
+<a href="DPOS.html">DPOS</a>
+ on
+the X, Y and Z axis are measured in axis counts. The wrist axis is set to use
+Nanoradians. You can of course set 
+<a href="UNITS.html">UNITS</a>
+ for all axis
+to any suitable scale.
+</p>
+<h4>Homing</h4>
+<p>
+Both wrist axes MUST be datumed to the correct zero position
+for the FRAME 16 transformation to operate. The zero position of the XYZ axes
+is not used by the transformation.
+</p>
+<p>
+The zero position on the C axis (rotation about Z) is when
+the offset arm is in line with the X axis. The diagram below is drawn from
+above looking down on to the X-Y plane.
+</p>
+<p>
+<img border="0" width="291" height="184" id="Picture 22" src="FRAME_files/image016.jpg">
+</p>
+<p>
+The zero position on the B axis(rotation about Y) is when
+the offset arm is the “straight down” position shown in the diagram.
+</p>
+<p>
+<img border="0" width="431" height="272" id="Picture 23" src="FRAME_files/image017.jpg">
+</p>
+<p>
+The direction of motion on all 5 axes MUST match the diagram
+for the FRAME 16 transformation to operate. 
+</p>
+<p class="tip">
+If an axis direction of motion is inverted it can be reversed
+either:
+</p>
+<p class="tip">
+Using the facility of the servo/stepper driver to invert the
+motion direction
+</p>
+<p class="tip">
+On pulse direction axes using 
+<a href="STEP_RATIO.html">STEP_RATIO</a>
+
+function inside the Motion Coordinator
+</p>
+<p class="tip">
+On closed loop servo axes using 
+<a href="ENCODER_RATIO.html">ENCODER_RATIO</a>
+
+/ 
+<a href="DAC_SCALE.html">DAC_SCALE</a>
+ functions inside the Motion
+Coordinator
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="7" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+Wrist joint to control point X offset (mm) (L1)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+Wrist joint to control point Z offset (mm) (L2)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+Wrist C axis encoder edges/radian
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+Wrist B axis encoder edges/radian
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+X axis encoder edges/mm
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+Y axis encoder edges/mm
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td class="tablegrid">
+
+  
+<p class="tablecontent">
+Z axis encoder edges/mm
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Configure the table data for a XYZ Cartesian system with a
+spherical wrist. 
+</p>
+<p class="codeexample">
+'Example:
+</p>
+<p class="codeexample">
+'Wrist offsets: 60mm in X and 90 mm in Z
+</p>
+<p class="codeexample">
+'XYZ pulses/mm 1600,1600,2560
+</p>
+<p class="codeexample">
+'C and B axes pulses radian = 3200 * 16 / (2 * PI)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TABLE(100, 60, 90, 3200 * 8 / PI, 3200 * 8 / PI, 1600, 1600,
+2560)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Set FRAME_GROUP zero using axes 0,1,2,3,4
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FRAME_GROUP(0, 100, 0, 1, 2, 3, 4)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FRAME = 16
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+… program moves in XYZBC with tool angle compensation
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FRAME = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+… program axes
+</p>
+<h2><a name="_FRAME_=_116,"></a>
+<a name="_FRAME=115,_4_axis"></a>
+<a name="_FRAME=17,_Multi-wire_camera"></a>
+FRAME=17, Multi-wire camera positioning
+</h2>
+<h3>Description:</h3>
+<p>
+The FRAME 17 transformation allows a wire mounted stadium
+camera to be easily programmed. The transformation function calculates the
+initial XYZ position of the camera using trilateration from 3 wire mounting
+points. During running the FRAME 17 calculations will calculate the wire
+lengths for up to 6 support wires with reels mounted in any XYZ positions. 
+</p>
+<p class="note">
+FRAME=17 requires the kinematic runtime FEC
+</p>
+<p>
+<img border="0" width="558" height="331" id="Picture 21" src="FRAME_files/image018.jpg">
+</p>
+<h4>Homing:</h4>
+<p>
+The length of wire related to each motor position must be
+known for the FRAME 17 transformation to operate. This requires that the wire
+winding drums are fitted with absolute encoders or that the system can start
+from a known position effectively datuming the axes.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+X axis position of payout position 1
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y axis position of payout position 1
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z axis position of payout position 1
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+X axis position of payout position 2
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y axis position of payout position 2
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z axis position of payout position 2
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+X axis position of payout position 3
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y axis position of payout position 3
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z axis position of payout position 3
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+X axis position of payout position 4 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y axis position of payout position 4 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z axis position of payout position 4 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+X axis position of payout position 5 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+13
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y axis position of payout position 5 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+14
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z axis position of payout position 5 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+15
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+X axis position of payout position 6 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y axis position of payout position 6 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z axis position of payout position 6 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+User choice units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+18 
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per user unit payout reel 1
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ratio (E.G. edges/mm)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+19 
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per user unit payout reel 2
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ratio (E.G. edges/mm)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+20 
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per user unit payout reel 3
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ratio (E.G. edges/mm)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+21 
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per user unit payout reel 4 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ratio (E.G. edges/mm)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+22 
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per user unit payout reel 5 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ratio (E.G. edges/mm)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+23 
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per user unit payout reel 6 (optional)
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ratio (E.G. edges/mm)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+24
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Option 
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 or 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+25
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axes 
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+3..6
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+26 
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Scale
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Scale User units (see below)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="70" class="tablegrid">
+
+  
+<p class="tablecontent">
+27
+</p>
+
+  
+</td>
+<td width="296" class="tablegrid">
+
+  
+<p class="tablecontent">
+Calculation Error
+</p>
+
+  
+</td>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Output 0 (Error) 1 (Solution)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Payout positions:  The positions (X,Y,Z) of between 3 and 6
+payout positions must be specified to the calculation. These can be in the
+users choice of units. For example mm.
+</p>
+<p class="note">
+Edges per user unit payout reel: These factors specify the number
+of encoder edges/user unit for each of the wire payout reels. The user units
+must be consistent with the payout positions so if the payout positions are
+specified in metres the edges number specified here must be edges/metre.
+</p>
+<p class="note">
+Option: The calculation for the camera position from 3 given
+lengths has 2 potential solutions. (The alternative solution normally requires
+negative gravity!) The Option parameter should be set to zero or 1 to give the
+correct solution.
+</p>
+<p class="note">
+Axes: A minimum of 3 wires are required. The FRAME 17 function
+will calculate the required wire lengths for between 3 and 6 payout drums. Note
+that the first 3 payouts only are used for calculating the starting position in
+XYZ from the 3 lengths. Where 4 or more wires are used the first 3 specified
+should be the most critical for the camera position.
+</p>
+<p class="note">
+Scale: When the FRAME 17 is running it calculates INTEGER
+positions in the XYZ space for the motion generator program inside the MC4XX.
+Since the user units (for example metres) are quite large distances a scale
+factor is required to ensure the integer positions are of fine resolution. The
+value should give fine resolution but the exact value is not critical. For
+example if the user units are metres the scale factor should be 100,000 or
+higher.
+</p>
+<p class="note">
+Calculation Error: In certain conditions (for example if the
+length of 1 or more wires is too short) the FRAME 17 calculation cannot be
+performed during the initial trilateration. In this case TABLE offset (27) is
+set to 0. 1 indicates a solution can be calculated. 
+</p>
+<h3>Examples:</h3>
+<h4>Example 1</h4>
+<p>
+Start 4 axes and set up FRAME 17 ready for X,Y,Z motion.
+Axes must be enabled with WDOG = ON and all UNITS set to 1 before running this
+program. Tool point must be at start position xyz relative to origin.
+</p>
+<p class="codeexample">
+FRAME_GROUP(1, 100, 0, 1, 2, 3)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'The following TABLE positions are in user units (mm for
+example)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TABLE(100, 0, 0, 0)
+</p>
+<p class="codeexample">
+TABLE(103, 700, 0, 0)
+</p>
+<p class="codeexample">
+TABLE(106, 700, 400, 0)
+</p>
+<p class="codeexample">
+TABLE(109, 0, 400, 0)
+</p>
+<p class="codeexample">
+TABLE(112, 0, 0, 0) 'Unused
+</p>
+<p class="codeexample">
+TABLE(115, 0, 0, 0) 'Unused
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'ratios:
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+ratio1 = 1000 'Encoder counts per mm of wire
+</p>
+<p class="codeexample">
+ratio2 = 1000
+</p>
+<p class="codeexample">
+ratio3 = 1000
+</p>
+<p class="codeexample">
+ratio4 = 1000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TABLE(118, ratio1, ratio2, ratio3, ratio4)
+</p>
+<p class="codeexample">
+TABLE(122, 0, 0) 'Unused
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'option:
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+scale = 100000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TABLE(124, 1) 'solution option (1 or 0)
+</p>
+<p class="codeexample">
+TABLE(125, 4) 'number of axes 
+</p>
+<p class="codeexample">
+TABLE(126, scale) 'scale factor
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'This is the start X,Y,Z position:
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+x = 350
+</p>
+<p class="codeexample">
+y = 200
+</p>
+<p class="codeexample">
+z = -100
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'This is not the general case: It assumes system datums to
+
+</p>
+<p class="codeexample">
+'middle XYZ position above, with Z at -100
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+r1 = SQR(x ^ 2 + y ^ 2 + z ^ 2)
+</p>
+<p class="codeexample">
+r2 = SQR(x ^ 2 + y ^ 2 + z ^ 2)
+</p>
+<p class="codeexample">
+r3 = SQR(x ^ 2 + y ^ 2 + z ^ 2)
+</p>
+<p class="codeexample">
+r4 = SQR(x ^ 2 + y ^ 2 + z ^ 2)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+DEFPOS(r1, r2, r3, r4)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FRAME = 17
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Set the World UNITS for XYZ
+</p>
+<p class="codeexample">
+UNITS AXIS(0) = scale
+</p>
+<p class="codeexample">
+UNITS AXIS(1) = scale
+</p>
+<p class="codeexample">
+UNITS AXIS(2) = scale
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'axis units is in mm of payed out wire
+</p>
+<p class="codeexample">
+AXIS_UNITS AXIS(0) = ratio1
+</p>
+<p class="codeexample">
+AXIS_UNITS AXIS(1) = ratio2
+</p>
+<p class="codeexample">
+AXIS_UNITS AXIS(2) = ratio3
+</p>
+<p class="codeexample">
+AXIS_UNITS AXIS(3) = ratio4
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'We can now move around in XYZ position
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h4>Example 2</h4>
+<p>
+Test program using the 
+<a href="FRAME_TRANS.html">FRAME_TRANS</a>
+
+function to check correct operation.
+</p>
+<p class="note">
+This verifies the position values and does not enable the FRAME
+or allow axes to move.
+</p>
+<p class="codeexample">
+ATYPE&nbsp;AXIS(0) = 0
+<br>
+
+ATYPE&nbsp;AXIS(1) = 0
+<br>
+
+ATYPE&nbsp;AXIS(2) = 0
+<br>
+
+ATYPE&nbsp;AXIS(3) = 0
+<br>
+
+
+<br>
+
+FRAME_GROUP(1, 100, 0, 1, 2, 3)
+<br>
+
+
+<br>
+
+'These positions are in user units (mm for example)
+<br>
+
+
+<br>
+
+TABLE(100, 0, 0, 0)
+<br>
+
+TABLE(103, 70, 0, 0)
+<br>
+
+TABLE(106, 70, -40, 0)
+<br>
+
+
+<br>
+
+'4th axis is not used to calculate starting position
+<br>
+
+
+<br>
+
+TABLE(109, 0, 0, 0)
+<br>
+
+TABLE(112, 0, 0, 0)
+<br>
+
+TABLE(115, 0, 0, 0)
+<br>
+
+
+<br>
+
+'ratios:
+<br>
+
+
+<br>
+
+ratio1 = 1000
+<br>
+
+ratio2 = 1000
+<br>
+
+ratio3 = 1000
+<br>
+
+ratio4 = 1000
+<br>
+
+
+<br>
+
+TABLE(118, ratio1, ratio2, ratio3)
+<br>
+
+TABLE(121, ratio4, ratio5, ratio6)
+<br>
+
+
+<br>
+
+'option:
+<br>
+
+
+<br>
+
+scale =&nbsp;1000
+<br>
+
+
+<br>
+
+TABLE(124, 1) 'solution option (1 or 0)
+<br>
+
+TABLE(125,4) 'axes 3..6
+<br>
+
+TABLE(126,1000) 'scale factor
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+'These distances simulate axis positions so should be in
+edges:
+<br>
+
+TABLE(200, 92.195 * ratio1, 60 * ratio2, 72.111 * ratio3) 
+</p>
+<p class="codeexample">
+<br>
+
+FRAME_TRANS(17, 200, 300, 1, 100) 'convert wire lengths to XYZ
+<br>
+
+
+<br>
+
+PRINT&nbsp;TABLE(300), TABLE(301), TABLE(302)
+<br>
+
+
+<br>
+
+FRAME_TRANS(17, 300, 400, 0, 100) 'convert XYZ to wire lengths
+<br>
+
+
+<br>
+
+PRINT&nbsp;TABLE(400) / ratio1, TABLE(401) / ratio2, TABLE(402) / ratio3, TABLE(403)
+/ ratio4
+</p>
+<h2>FRAME=18, 6 axis articulated arm </h2>
+<h3>Description:</h3>
+<p>
+Please contact Trio for details.
+</p>
+<h2><a name="_FRAME=114,_Delta_Robot"></a>
+FRAME=114, Delta Robot</h2>
+<h3>Description:</h3>
+<p>
+FRAME=114 enables the high accuracy transformation for a 3-arm
+‘delta’ or ‘parallel’ robot. It transforms 3 axes from the mechanical configuration
+to Cartesian coordinates using the right-hand rule.
+</p>
+<p class="note">
+FRAME=114 requires the kinematic runtime FEC
+</p>
+<p>
+<img border="0" width="506" height="406" id="Picture 9" src="FRAME_files/image019.png" alt="Description: \\TRIONAS\sales\Graphics WIP\Tech ills\Robots\for Alex\pers delta 004.png">
+</p>
+<p>
+Once the FRAME is enabled set the UNITS to FRAME_ANGLE_SCALE
+so that the Cartesian movements use the same scale as that used in the table
+data. So if the TABLE data is programmed in mm then when UNITS is set to
+FRAME_ANGLE_SCALE then the robot can be programmed in mm. 
+</p>
+<p>
+The origin for the robot is the centre of the top plate with
+the X direction following the first axis. This can be adjusted using the
+rotation parameter. 
+</p>
+<h4>Homing:</h4>
+<p>
+Before enabling FRAME=114 the position must be defined so
+that when the upper arms are horizontal the axis position is 0. You do not need
+to enable the frame in this position or even move to it, just ensure that it
+has been defined. 
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+Limits:
+</p>
+<p>
+-70 to 90 degrees
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="11" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Top radius to joint (R1)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Wrist radius to joint (R2)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Upper arm length (L1)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Lower arm length (L2)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per radian
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Angle of rotation in radians (Rotation)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Linkx (optional with 4 or 5 axis)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Linky (optional with 4 or 5 axis)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Linkz (optional with 4 or 5 axis)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian (optional Z rotation)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian (optional Y rotation)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_FRAME=115,_3_to"></a>
+FRAME=115, 3 to 5 axis SCARA</h2>
+<h3>Description:</h3>
+<p>
+FRAME=115 enables the transformation for a 4 axis SCARA robot.
+This allows you to define the end position of the wrist in X, Y, Z, wrist angle
+(relative to the Z axis) and wrist angle (relative to the Y axis). The frame allows
+for 2 configurations of a SCARA depending if the second axis motor is in the joint
+or at the base. The difference is that the angle t2 is referenced from link 1,
+or the angle t2 is referenced from the base. A linkage or belt is typically used
+to keep t2 referenced to the base. 
+</p>
+<p>
+Some mechanical configurations have parasitic motion from
+the Z axis to the wrist angle. This can be included in the ‘ratio’ parameter.
+This is the change in encoder edges on the vertical for a change in wrist angle
+in encoder edges. Set this value to 0 if there is no parasitic motion. 
+</p>
+<p class="note">
+<strong>
+<span style='font-family:"Calibri",sans-serif'>FRAME=115 requires the kinematic runtime FEC</span></strong>
+</p>
+<p>
+<img border="0" width="528" height="424" id="Picture 27" src="FRAME_files/image020.png" alt="scara_robot 1">
+</p>
+<p>
+<img border="0" width="584" height="350" id="Picture 28" src="FRAME_files/image021.jpg" alt="frame 1-2 schematic">
+</p>
+<p>
+<img border="0" width="586" height="357" id="Picture 29" src="FRAME_files/image022.jpg" alt="frame 1-1 schematic">
+</p>
+<p>
+Once the FRAME is enabled set the UNITS to FRAME_SCALE so
+that the Cartesian movements use the same scale as that used in the table data.
+So if the TABLE data is programmed in mm then when UNITS is set to FRAME_SCALE
+then the robot can be programmed in mm. 
+</p>
+<p>
+Set the UNITS on the rotational (wrist) axes to FRAME_SCALE
+* 2 * PI / 360 so that they are programmed in degrees. You can of course set 
+<a href="UNITS.html">UNITS</a>
+ for all axis to any suitable scale. 
+</p>
+<h4>Homing</h4>
+<p>
+Is it required that the X, Y and wrist absolute positions are
+homed relative to the “straight up” position before the FRAME is enabled. In other
+words, the zero angle on each axis is with the arms in line and vertical along
+the Y axis with Z=0. Of course, it is not necessary for the motors to actually go
+to this position as you can offset the position using 
+<a href="DEFPOS.html">DEFPOS</a>
+
+or 
+<a href="OFFPOS.html">OFFPOS</a>
+. 
+</p>
+<h4>Joint configuration</h4>
+<p>
+The joint configuration is determined by the position of the
+SCARA arm when you enable FRAME = 1
+</p>
+<p>
+The joint is defined as Right-Handed if:
+</p>
+<p>
+(t2&lt;t1) –both motors in base
+</p>
+<p>
+(t2&lt;0) –motors in the joint
+</p>
+<p>
+Otherwise the robot is Left handed
+</p>
+<h3>Parameters:</h3>
+<p class="note">
+The table data values 0-8 are identical to FRAME 1, SCARA. This
+means you can easily switch between the 2 and 5 axis SCARA.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="18" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian axis 0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian axis 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mechanical configuration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 – Both motors fixed in base
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 – Motors at the joint
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Joint configuration (read only)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 – Left-handed SCARA
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 – Right-handed SCARA
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/mm axis 2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ratio of encoder edges moved on axis 2/ edge axis3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Linkx (optional with 4 or 5 axis)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Linky (optional with 4 or 5 axis)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Linkz (optional with 4 or 5 axis)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian (optional Z rotation)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian (optional Y rotation)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+13
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameter to change orientation axis 3:
+<br>
+
+  0 - No change
+<br>
+
+  1 - Change
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="codeexample">
+<a name="_FRAME_=_116,_1"></a>
+&nbsp;
+</p>
+<h3>Example:</h3>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  BASE(0)
+<br>
+
+  
+<br>
+
+  DEFPOS(0, 90, 0, 0, 0) 'Datum Robot to 0, 90 degrees position
+<br>
+
+  WAIT UNTIL OFFPOS = 0
+<br>
+
+  
+<br>
+
+  REPEAT
+<br>
+
+     IF VR(1) = 2 THEN
+<br>
+
+        GOSUB frame_115 'Move the robot in Cartesian system
+<br>
+
+        VR(1) = 0
+<br>
+
+     ELSEIF VR(1) = 1 THEN
+<br>
+
+        GOSUB frame_0 'Move the robot in Joint mode
+<br>
+
+        VR(1) = 0
+<br>
+
+     ENDIF
+<br>
+
+  UNTIL FALSE
+<br>
+
+  
+<br>
+
+  STOP
+<br>
+
+  
+<br>
+
+frame_0:
+<br>
+
+    
+<br>
+
+'configure for frame 0:
+<br>
+
+    
+<br>
+
+    t1_encoder = 16000 'Encoder counts per revolution
+<br>
+
+    t1_gearbox = 360'50
+<br>
+
+    t1_edges_per_radian = t1_encoder * t1_gearbox / (2 * PI)
+<br>
+
+    t1_edges_per_degree = t1_encoder * t1_gearbox / 360
+<br>
+
+    
+<br>
+
+    t2_encoder = 16000 'Encoder counts per revolution
+<br>
+
+    t2_gearbox = 360 '50
+<br>
+
+    t2_edges_per_radian = t2_encoder * t2_gearbox / (2 * PI)
+<br>
+
+    t2_edges_per_degree = t2_encoder * t2_gearbox / 360
+<br>
+
+    
+<br>
+
+    r_encoder = 16000 'Encoder counts per revolution
+<br>
+
+    r_gearbox = 360 '50
+<br>
+
+    r_edges_per_radian = r_encoder * r_gearbox / (2 * PI)
+<br>
+
+    r_edges_per_degree = r_encoder * r_gearbox / 360
+<br>
+
+    
+<br>
+
+    u_encoder = 200*32*16*80/360 'Encoder counts per revolution
+<br>
+
+    u_gearbox = 360 '50
+<br>
+
+    u_edges_per_radian = u_encoder * u_gearbox / (2 * PI)
+<br>
+
+    u_edges_per_degree = u_encoder * u_gearbox / 360
+<br>
+
+    
+<br>
+
+    z_encoder = 16000 '4*250 encoder counts per revolution
+<br>
+
+    z_gearbox = 20
+<br>
+
+    z_mm_per_rev = 20
+<br>
+
+    z_edges_per_mm = z_encoder * z_gearbox / z_mm_per_rev
+<br>
+
+    
+<br>
+
+    
+<br>
+
+    FRAME = 0
+<br>
+
+    
+<br>
+
+    BASE(0)
+<br>
+
+    UNITS = t1_edges_per_degree 'degrees
+<br>
+
+    AXIS_UNITS = UNITS
+<br>
+
+    RS_LIMIT = -1000
+<br>
+
+    FS_LIMIT = 1000
+<br>
+
+    
+<br>
+
+    BASE(1)
+<br>
+
+    UNITS = t2_edges_per_degree 'degrees
+<br>
+
+    AXIS_UNITS = UNITS
+<br>
+
+    RS_LIMIT = -1000
+<br>
+
+    FS_LIMIT = 1000
+<br>
+
+    
+<br>
+
+    BASE(2)
+<br>
+
+    UNITS = z_edges_per_mm 'mm
+<br>
+
+    AXIS_UNITS = UNITS
+<br>
+
+    RS_LIMIT = -1000
+<br>
+
+    FS_LIMIT = 1000
+<br>
+
+    
+<br>
+
+    BASE(3)
+<br>
+
+    UNITS = u_edges_per_degree
+<br>
+
+    AXIS_UNITS = UNITS
+<br>
+
+    RS_LIMIT = -360
+<br>
+
+    FS_LIMIT = 360
+<br>
+
+    
+<br>
+
+    BASE(4)
+<br>
+
+    UNITS = r_edges_per_degree 'degrees
+<br>
+
+    AXIS_UNITS = UNITS
+<br>
+
+    RS_LIMIT = -360
+<br>
+
+    FS_LIMIT = 360
+<br>
+
+    
+<br>
+
+    FOR ax = 0 TO 4
+<br>
+
+       SPEED AXIS(ax) = 15
+<br>
+
+       ACC(200) AXIS(ax)
+<br>
+
+    NEXT ax
+<br>
+
+RETURN
+<br>
+
+    
+<br>
+
+frame_115:
+<br>
+
+    
+<br>
+
+    TABLE(0, 400)
+<br>
+
+    TABLE(1, 300)
+<br>
+
+    TABLE(2, 916732.47221)
+<br>
+
+    TABLE(3, 916732.47221)
+<br>
+
+    TABLE(4, 1)
+<br>
+
+    TABLE(5, 0)
+<br>
+
+    TABLE(6, 16000)
+<br>
+
+    TABLE(7, 0)
+<br>
+
+    TABLE(8, 0)
+<br>
+
+    TABLE(9, 0)
+<br>
+
+    TABLE(10, 282)
+<br>
+
+    TABLE(11, 916732.47221)
+<br>
+
+    TABLE(12, 1303797.29381)
+<br>
+
+    TABLE(13, 1)
+<br>
+
+    TABLE(14, 0)
+<br>
+
+    
+<br>
+
+    
+<br>
+
+'configure for frame 115:
+<br>
+
+    
+<br>
+
+    FRAME_GROUP(0, 0, 0, 1, 2, 3, 4) '4 axis SCARA
+<br>
+
+    FRAME = 115
+<br>
+
+    
+<br>
+
+    BASE(0)
+<br>
+
+    UNITS = 1000000000 'mm
+<br>
+
+    RS_LIMIT = -1000
+<br>
+
+    FS_LIMIT = 1000
+<br>
+
+    BASE(1)
+<br>
+
+    UNITS = 1000000000 'mm
+<br>
+
+    RS_LIMIT = -1000
+<br>
+
+    FS_LIMIT = 1000
+<br>
+
+    BASE(2)
+<br>
+
+    UNITS = 1000000000 'mm
+<br>
+
+    RS_LIMIT = -1000
+<br>
+
+    FS_LIMIT = 1000
+<br>
+
+    BASE(3)
+<br>
+
+    UNITS = (1000000000 * 2 * PI) / 360 'degrees
+<br>
+
+    RS_LIMIT = -360
+<br>
+
+    FS_LIMIT = 360
+<br>
+
+    BASE(4)
+<br>
+
+    UNITS = (1000000000 * 2 * PI) / 360 'degrees
+<br>
+
+    RS_LIMIT = -360
+<br>
+
+    FS_LIMIT = 360
+<br>
+
+    
+<br>
+
+    FOR ax = 0 TO 4
+<br>
+
+       SPEED AXIS(ax) = 10
+<br>
+
+       ACC(200) AXIS(ax)
+<br>
+
+    NEXT ax
+<br>
+
+    
+<br>
+
+RETURN
+</p>
+<h2>FRAME = 116, 3 Axis Robot with 2 Axis Wrist</h2>
+<h3>Description:</h3>
+<p>
+The FRAME 116 transformation allows an XYZ Robot with a 2-axis
+wrist to be easily programmed. The transformation function provides
+compensation in XYZ when the 2 wrist axes are rotated.
+</p>
+<p class="note">
+<strong>
+<span style='font-family:"Calibri",sans-serif'>FRAME=116 requires the kinematic runtime FEC</span></strong>
+</p>
+<p>
+<img border="0" width="576" height="432" id="Picture 1" src="FRAME_files/image023.png">
+</p>
+<h4><span style='font-family:"Calibri",sans-serif'>Once the FRAME is enabled set the UNITS to FRAME_ANGLE_SCALE
+so that the Cartesian movements use the same scale as that used in the table
+data. So, if the TABLE data is programmed in mm then when UNITS is set to
+FRAME_ANGLE_SCALE then the robot can be programmed in mm. </span></h4>
+<h4><span style='font-family:"Calibri",sans-serif'>Set the UNITS on the rotational (wrist) axes to
+FRAME_ANGLE_SCALE so that they are programmed in radians. You can of course set
+UNITS for all axis to any suitable scale. </span>Homing</h4>
+<p>
+Both wrist axes MUST be datumed to the correct zero position
+for the FRAME 116 transformation to operate. The zero position of the XYZ axes
+is not used by the transformation.
+</p>
+<p>
+The zero position on the C axis (rotation about Z) is when
+the offset arm is in line with the X axis. The diagram below is drawn from
+above looking down on to the X-Y plane.
+</p>
+<p>
+<img border="0" width="291" height="184" id="Picture 2" src="FRAME_files/image024.jpg">
+</p>
+<p>
+The zero position on the B axis(rotation about Y) is when
+the offset arm is the “straight down” position shown in the diagram.
+</p>
+<p>
+<img border="0" width="431" height="272" id="Picture 26" src="FRAME_files/image025.jpg">
+</p>
+<p>
+The direction of motion on all 5 axes MUST match the diagram
+for the FRAME 116 transformation to operate. 
+</p>
+<p class="tip">
+If an axis direction of motion is inverted it can be reversed
+either:
+</p>
+<p class="tip">
+Using the facility of the servo/stepper driver to invert the
+motion direction
+</p>
+<p class="tip">
+On pulse direction axes using 
+<a href="STEP_RATIO.html">STEP_RATIO</a>
+
+function inside the Motion Coordinator
+</p>
+<p class="tip">
+On closed loop servo axes using 
+<a href="ENCODER_RATIO.html">ENCODER_RATIO</a>
+
+/ 
+<a href="DAC_SCALE.html">DAC_SCALE</a>
+ functions inside the Motion
+Coordinator
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="8" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+X axis encoder edges/mm
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Y axis encoder edges/mm
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Z axis encoder edges/mm
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Linkx (optional with 4 or 5 axis) L1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Linky (optional with 4 or 5 axis) L3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Linkz (optional with 4 or 5 axis) L2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Encoder edges/radian (optional Z rotation) C
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Encoder edges/radian (optional Y rotation) B
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>FRAME 119 (Draft)</h2>
+<h3>Description:</h3>
+<p>
+FRAME=119 enables the high accuracy transformation for a 3-axis
+cylindrical robot with a 2 axis wrist. It has optionally 3 to 5 axes which can
+be set by FRAME_GROUP.
+</p>
+<p class="note">
+FRAME=119 requires the kinematic runtime FEC
+</p>
+<p>
+<span><img width="56" height="1" src="FRAME_files/image026.png" alt="X axis">
+</span><span><img width="56" height="1" src="FRAME_files/image026.png" alt="Z axis">
+</span><span><img width="56" height="1" src="FRAME_files/image026.png" alt="Y axis">
+</span><span><img width="52" height="1" src="FRAME_files/image027.png">
+</span><span><img width="32" height="1" src="FRAME_files/image028.png">
+</span><span><img width="15" height="1" src="FRAME_files/image029.png">
+</span><img border="0" width="419" height="313" id="Picture 37" src="FRAME_files/image030.jpg" alt="cyl 1">
+</p>
+<p>
+Once the FRAME is enabled set the UNITS to FRAME_ANGLE_SCALE
+so that the Cartesian movements use the same scale as that used in the table
+data. So if the TABLE data is programmed in mm then when UNITS is set to
+FRAME_ANGLE_SCALE then the robot can be programmed in mm. 
+</p>
+<p>
+The origin for the robot is the centre of the rotation axes.
+<br>
+<br>
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p align="center">
+<br>
+
+
+<img border="0" width="425" height="319" id="Picture 47" src="FRAME_files/image031.png">
+</p>
+<p>
+&nbsp;
+</p>
+<h4>Homing:</h4>
+<p>
+Axis(0) – base rotation
+</p>
+<p align="center">
+<img border="0" width="432" height="206" id="Picture 39" src="FRAME_files/image032.png">
+</p>
+<p>
+Home so that the zero position is along the y axis
+</p>
+<p>
+Positive direction is clockwise looking from above
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+Axis(1) – arm extension
+</p>
+<p>
+<img border="0" width="505" height="331" id="Picture 44" src="FRAME_files/image033.png">
+</p>
+<p>
+Home with arm at shortest position. Use DEFPOS to define the
+offset from the centre of rotation to the wrist
+</p>
+<p>
+Positive direction is moving away from centre
+</p>
+<p>
+Range: greater than zero
+</p>
+<p class="warning">
+The arm extension must never be allowed to become zero or
+negative as this will result in a jump in motion. You can set your RS_LIMIT to
+prevent this situation. 
+</p>
+<p>
+Axis(2) – vertical axis
+</p>
+<p>
+<img border="0" width="493" height="334" id="Picture 43" src="FRAME_files/image034.png">
+</p>
+<p>
+Home with zero at highest position
+</p>
+<p>
+Positive direction is moving down
+</p>
+<p>
+Range: 0 to infinite 
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+Axis(3) – wrist rotate about Y
+</p>
+<p>
+<img border="0" width="343" height="330" id="Picture 41" src="FRAME_files/image035.png">
+</p>
+<p>
+Home so that the wrist is horizontal
+</p>
+<p>
+Range: - infinite to infinite 
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+Axis(4) – wrist rotate about Z
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<img border="0" width="557" height="204" id="Picture 40" src="FRAME_files/image036.png">
+</p>
+<p>
+Home so that the zero position is along the y axis
+</p>
+<p>
+Positive direction is clockwise looking from above
+</p>
+<p>
+Range: - infinite to infinite 
+</p>
+<p>
+&nbsp;
+</p>
+<h3>Parameters:</h3>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="10" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per radian (base rotation)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per mm (arm extension)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Edges per mm (vertical axis)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Revolutions – set to 0 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Previous position – set to 0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Linkx (optional with 4 or 5 axis)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Linky (optional with 4 or 5 axis)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Linkz (optional with 4 or 5 axis)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian (optional Z rotation)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Encoder edges/radian (optional Y rotation)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>&nbsp;</h2>
+<h2>&nbsp;</h2>
+<h2><img border="0" width="347" height="237" id="Picture 45" src="FRAME_files/image037.png">
+<img border="0" width="243" height="346" id="Picture 46" src="FRAME_files/image038.png">
+</h2>
+<h2>&nbsp;</h2>
+<h2>&nbsp;</h2>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+This example sets up a 5 axis system
+</p>
+<p class="codeexample">
+linkx = 50 'mm
+<br>
+
+linky = 50 'mm
+<br>
+
+linkz = 50 'mm
+<br>
+
+
+<br>
+
+t1_encoder = 4 * 17000 'Encoder counts per revolution
+<br>
+
+t1_gearbox = 50
+<br>
+
+t1_edges_per_radian = t1_encoder * t1_gearbox / (2 * PI)
+<br>
+
+t1_edges_per_degree = t1_encoder * t1_gearbox / 360
+<br>
+
+
+<br>
+
+t2_encoder = 4 * 250 'Encoder counts per revolution
+<br>
+
+t2_gearbox = 1
+<br>
+
+t2_mm_per_rev = 1
+<br>
+
+t2_edges_per_mm = t2_encoder * t2_gearbox / t2_mm_per_rev
+<br>
+
+
+<br>
+
+t3_encoder = 4 * 250 'Encoder counts per revolution
+<br>
+
+t3_gearbox = 1
+<br>
+
+t3_mm_per_rev = 1
+<br>
+
+t3_edges_per_mm = t3_encoder * t3_gearbox / t3_mm_per_rev
+<br>
+
+
+<br>
+
+t4_encoder = 4 * 16000 'Encoder counts per revolution
+<br>
+
+t4_gearbox = 50
+<br>
+
+t4_edges_per_radian = t4_encoder * t4_gearbox / (2 * PI)
+<br>
+
+t4_edges_per_degree = t4_encoder * t4_gearbox / 360
+<br>
+
+
+<br>
+
+t5_encoder = 4 * 16000 'Encoder counts per revolution
+<br>
+
+t5_gearbox = 50
+<br>
+
+t5_edges_per_radian = t4_encoder * t4_gearbox / (2 * PI)
+<br>
+
+t5_edges_per_degree = t4_encoder * t4_gearbox / 360
+<br>
+
+
+<br>
+
+revolutions = 0
+<br>
+
+prev_pos = 0
+<br>
+
+
+<br>
+
+group_size = 5
+<br>
+
+
+<br>
+
+TABLE(0, t1_edges_per_radian, t2_edges_per_mm, t3_edges_per_mm, revolutions,
+prev_pos)
+<br>
+
+TABLE(5, linkx, linky, linkz, t4_edges_per_radian, t5_edges_per_radian)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FRAME_GROUP(0, 0, 0, 1, 2, 3, 4)
+</p>
+<p class="codeexample">
+BASE(0)
+<br>
+
+UNITS = FRAME_SCALE 'mm
+<br>
+
+BASE(1)
+<br>
+
+UNITS = FRAME_SCALE 'mm
+<br>
+
+BASE(2)
+<br>
+
+UNITS = FRAME_SCALE 'mm
+<br>
+
+BASE(3)
+<br>
+
+UNITS = (FRAME_SCALE * 2 * PI) / 360 'degrees
+<br>
+
+BASE(4)
+<br>
+
+UNITS = (FRAME_SCALE * 2 * PI) / 360 'degrees
+</p>
+<p class="codeexample">
+  
+</p>
+<p class="codeexample">
+BASE(0, 1, 2)
+<br>
+
+MOVE(-100, -100, 100)
+<br>
+
+MOVE(200, 0)
+<br>
+
+MOVE(-100, 100, -100)
+<br>
+
+BASE(0, 1, zrot)
+<br>
+
+MHELICAL(0, 0, 0, -50, 0, 360, 1)
+<br>
+
+MOVE(0, 25, 0)
+<br>
+
+MOVECIRC(0, 0, 0, -75, 0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 1:</h3>
+<p>
+This example sets up a 4 axis system
+</p>
+<p class="codeexample">
+linkx = 50'mm
+<br>
+
+linky = 50'mm
+<br>
+
+linkz = 50'mm
+<br>
+
+
+<br>
+
+t1_encoder = 4*17000 'Encoder counts per revolution
+<br>
+
+t1_gearbox = 50
+<br>
+
+t1_edges_per_radian = t1_encoder * t1_gearbox / (2 * PI)
+<br>
+
+t1_edges_per_degree = t1_encoder * t1_gearbox / 360
+<br>
+
+
+<br>
+
+t2_encoder = 4*250 'Encoder counts per revolution
+<br>
+
+t2_gearbox = 1
+<br>
+
+t2_mm_per_rev = 1
+<br>
+
+t2_edges_per_mm = t2_encoder * t2_gearbox / t2_mm_per_rev
+<br>
+
+
+<br>
+
+t3_encoder = 4 * 250 'Encoder counts per revolution
+<br>
+
+t3_gearbox = 1
+<br>
+
+t3_mm_per_rev = 1
+<br>
+
+t3_edges_per_mm = t3_encoder * t3_gearbox / t3_mm_per_rev
+<br>
+
+
+<br>
+
+t4_encoder = 4 * 16000 'Encoder counts per revolution
+<br>
+
+t4_gearbox = 50
+<br>
+
+t4_edges_per_radian = t4_encoder * t4_gearbox / (2 * PI)
+<br>
+
+t4_edges_per_degree = t4_encoder * t4_gearbox / 360
+<br>
+
+
+<br>
+
+revolutions = 0
+<br>
+
+prev_pos = 0
+<br>
+
+
+<br>
+
+group_size = 4
+<br>
+
+
+<br>
+
+TABLE(0, t1_edges_per_radian, t2_edges_per_mm, t3_edges_per_mm, revolutions,
+prev_pos)
+<br>
+
+TABLE(5, linkx, linky, linkz, t4_edges_per_radian)
+</p>
+<p class="codeexample">
+FRAME_GROUP(0, 0, 0, 1, 2, 3)
+</p>
+<p class="codeexample">
+BASE(0)
+<br>
+
+UNITS = FRAME_SCALE 'mm
+<br>
+
+BASE(1)
+<br>
+
+UNITS = FRAME_SCALE 'mm
+<br>
+
+BASE(2)
+<br>
+
+UNITS = FRAME_SCALE 'mm
+<br>
+
+BASE(3)
+<br>
+
+UNITS = (FRAME_SCALE * 2 * PI) / 360 'degrees
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+, 
+<a href="USER_FRAME.html">USER_FRAME</a>
+, 
+<a href="VOLUME_LIMIT.html">VOLUME_LIMIT</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STARTMOVE_SPEED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STARTMOVE_SPEED">
+</head>
+<body>
+<h1>STARTMOVE_SPEED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+This parameter sets the start speed for a motion command
+that supports advanced speed control (commands ending in SP). Subject to the 
+<a href="AXIS_BLENDING.html">AXIS_BLENDING</a>
+ mode, the 
+<a href="VP_SPEED.html">VP_SPEED</a>
+
+will decelerate so that STARTMOVE_SPEED is reached at the start of the motion
+command.
+</p>
+<p>
+STARTMOVE_SPEED is loaded into the buffer at the same time
+as the move so you can set different speeds for subsequent moves. 
+</p>
+<p class="note">
+STARTMOVE_SPEED has a default value of -1 to disable its use.
+</p>
+<p class="note">
+In general, STARTMOVE_SPEED is only used by the 
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+ methods. The user can program all
+profiles using only 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+ and 
+<a href="ENDMOVE_SPEED.html">ENDMOVE_SPEED</a>
+.
+</p>
+<h2>Value:</h2>
+<p>
+The speed at which the SP motion command will start, in user
+
+<a href="UNITS.html">UNITS</a>
+ (default -1).
+</p>
+<h2><a name="_Hlk212022729">See Also:</a>
+</h2>
+<p>
+<a href="AXIS_BLENDING.html">AXIS_BLENDING</a>
+, 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+, 
+<a href="ENDMOVE_SPEED.html">ENDMOVE_SPEED</a>
+,
+
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,245 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>BACKLASH</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="BACKLASH">
+</head>
+<body>
+<h1>BACKLASH</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+BACKLASH(enable [,distance, speed, acceleration])
+</p>
+<h2>Description:</h2>
+<p>
+This axis function allows backlash compensation to be
+loaded. This is achieved by applying an offset move when the motor demand is in
+one direction, then reversing the offset move when the motor demand is in the
+opposite direction.  These moves are superimposed on the commanded axis
+movements.
+</p>
+<p class="note">
+The backlash compensation is applied after a reversal of the
+direction of change of the 
+<a href="DPOS.html">DPOS</a>
+ parameter.
+</p>
+<p class="tip">
+The backlash compensation can be seen in the 
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+ axis parameter.  This is effectively 
+<a href="DPOS.html">DPOS</a>
+ + backlash compensation.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+enable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="ON.html">ON</a>
+ to enable BACKLASH
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="OFF.html">OFF</a>
+ to disable BACKLASH
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The distance to be offset in user units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+speed:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The speed at which is the compensation move is applied
+  in user units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+acceleration:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 
+<a href="ACCEL.html">ACCEL</a>
+/
+<a href="DECEL.html">DECEL</a>
+
+  rate at which is compensation move is applied in user units
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+'Apply backlash compensation on axes 0 and 1:
+</p>
+<p class="codeexample">
+'0.5 mm movement at 10 mm/sec with accel 50 mm/sec/sec
+</p>
+<p class="codeexample">
+BACKLASH(ON,0.5,10,50) AXIS(0)
+</p>
+<p class="codeexample">
+'0.4 mm movement at 8 mm/sec with accel 50 mm/sec/sec
+</p>
+<p class="codeexample">
+BACKLASH(ON,0.4,8,50) AXIS(1)
+</p>
+<h3>Example 2:</h3>
+<p class="codeexample">
+'Turn off backlash compensation on axis 3:
+</p>
+<p class="codeexample">
+BASE(3)
+</p>
+<p class="codeexample">
+BACKLASH(OFF)
+</p>
+<h3>Example 3:</h3>
+<p>
+Showing the backlash movement on Motion Perfect oscilloscope
+for a move 20 mm at the programmed speed 100 mm/sec.
+</p>
+<p class="codeexample">
+SPEED = 100
+</p>
+<p class="codeexample">
+ACCEL = SPEED * 10
+</p>
+<p class="codeexample">
+DECEL = SPEED * 10
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TRIGGER
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Apply backlash compensation on axis:
+</p>
+<p class="codeexample">
+' Syntax is BACKLASH(enable [,distance, speed,
+acceleration])
+</p>
+<p class="codeexample">
+BACKLASH(ON, 0.75, 10, 50) '0.75 mm backlash
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVE(20)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+WA(50)
+</p>
+<p class="codeexample">
+MOVE(-20)
+</p>
+<p class="codeexample">
+<img width="576" height="393" src="BACKLASH_files/image001.jpg" align="left" hspace="12">
+WAIT IDLE
+</p>
+<p>
+The MPOS is advanced by the backlash distance.  The extra
+movement applied at the start of the MOVE(20) can be seen as a short increase
+in the speed.  The speed during the Backlash compensation movement is SPEED +
+speed_in_backlash_command.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+<span class="MsoHyperlink">, </span><a href="BACKLASH_DIST.html">BACKLASH_DIST</a>
+</p>
+</body>
+</html>

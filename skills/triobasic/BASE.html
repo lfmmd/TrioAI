@@ -1,0 +1,197 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>BASE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="BASE">
+</head>
+<body>
+<h1>BASE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Process Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+BASE(axis0[, axis1[, axis2[, ...]]])
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+BA(...)
+</p>
+<h2>Description:</h2>
+<p>
+The BASE command is used to direct all subsequent motion
+commands and axis parameter read/writes to a particular axis, or group of axes.
+The default setting is a sequence: 0, 1, 2, 3... 
+</p>
+<p class="note">
+Each process has its own BASE group of axes, and each program can
+set BASE values independently, so the BASE array will be different for each of
+your programs and the command line.
+</p>
+<p>
+The values are stored in an array, when you adjust BASE the
+controller will automatically fill in the remaining positions by continuing the
+sequence and then adding the missed values at the end.
+</p>
+<p class="tip">
+The BASE array can be printed on the command line by entering BASE
+with no parameters.
+</p>
+<p>
+Each process has its own BASE array.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis numbers:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of the axis or axes to become the new base
+  axis array, i.e., the axis/axes to send the motion commands to or the first
+  axis in a multi axis command.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The BASE array must use ascending values when Kinematic
+FRAMEs are enabled, and a run-time error will result if the axis order is not
+set as low to high. If a non-ascending BASE array is required, for example
+BASE(3, 0, 1) then set 
+<a href="COORDINATOR_DATA.html">COORDINATOR_DATA</a>
+
+function 16 to 1.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set up calibration units, speed and acceleration values for
+axes 1 and 2.
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+UNITS = 2000     'unit conversion factor 
+</p>
+<p class="codeexample">
+SPEED = 100      'Set speed axis 1 (units/sec)
+</p>
+<p class="codeexample">
+ACCEL = 5000     'acceleration rate (units/sec/sec)
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+UNITS = 2000     'unit conversion factor
+</p>
+<p class="codeexample">
+SPEED = 125      'Set speed axis 2
+</p>
+<p class="codeexample">
+ACCEL = 10000    'acceleration rate
+</p>
+<h3>Example 2:</h3>
+<p>
+Set up an interpolated move to run on axes; 0 (x), 6 (y) and
+9 (z). Axis 0 will move 100 units, axis 6 will move -23.1 and axis 9 will move
+1250 units. The axes will move along the resultant path at the speed and
+acceleration set for axis 0.
+</p>
+<p class="codeexample">
+BASE(0, 6, 9)
+</p>
+<p class="codeexample">
+SPEED = 120
+</p>
+<p class="codeexample">
+ACCEL = 2000
+</p>
+<p class="codeexample">
+DECEL = 2500
+</p>
+<p class="codeexample">
+MOVE(100, -23.1, 1250)
+</p>
+<h3>Example 3:</h3>
+<p>
+Setting the base array to non-contiguous values and printing
+them back on the command line. This example uses a 16-axis controller. 
+</p>
+<p>
+The controller automatically continues the sequence with 10
+and then fills in the missed values at the end of the list. 
+</p>
+<p class="codeexample">
+&gt;&gt;BASE(1, 5, 9)
+</p>
+<p class="codeexample">
+&gt;&gt;BASE
+</p>
+<p class="codeexample">
+(1, 5, 9, 10, 11, 12, 13, 14, 15, 0, 2, 3, 4, 6, 7, 8)
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 4:</h3>
+<p>
+A system (not using kinematics) needs to set BASE in a
+descending axis order. 
+<a href="COORDINATOR_DATA.html">COORDINATOR_DATA</a>
+
+must first be set to allow it.
+</p>
+<p class="warning">
+Read the section on COORDINATOR_DATA before using this
+command.
+</p>
+<p class="codeexample">
+COORDINATOR_DATA(16, 1) 'Do not check axis order
+</p>
+<p class="codeexample">
+BASE(3, 2, 1)
+</p>
+<p class="codeexample">
+SPEED = 50
+</p>
+<p class="codeexample">
+ACCEL = 500
+</p>
+<p class="codeexample">
+DECEL = 500
+</p>
+<p class="codeexample">
+MOVE(z, y, x)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXIS.html">AXIS</a>
+, 
+<a href="AXISSIZE.html">AXISSIZE</a>
+,
+
+<a href="COORDINATOR_DATA.html">COORDINATOR_DATA</a>
+</p>
+</body>
+</html>

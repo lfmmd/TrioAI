@@ -1,0 +1,108 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>OFFPOS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="OFFPOS">
+</head>
+<body>
+<h1>OFFPOS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+The OFFPOS parameter allows the axis position value to be
+offset by any amount without affecting the motion that is in progress. OFFPOS
+can therefore be used to effectively datum a system at full speed. Values
+loaded into the OFFPOS axis parameter are reset to 0 by the system software
+after the axis position is changed.
+</p>
+<p>
+OFFPOS can be read to detect when a DEFPOS command has
+completed.
+</p>
+<h2>Value:</h2>
+<p>
+The distance to offset the current position
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Change the current position by 125, using the command line
+terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT DPOS
+</p>
+<p class="codeexample">
+300.0000
+</p>
+<p class="codeexample">
+&gt;&gt;OFFPOS = 125
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT DPOS
+</p>
+<p class="codeexample">
+425.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Define the current demand position as zero:
+</p>
+<p class="codeexample">
+OFFPOS = -DPOS 'This is equivalent to DEFPOS(0)
+</p>
+<h3>Example 3:</h3>
+<p>
+A conveyor is used to transport boxes onto which labels must
+be applied. 
+</p>
+<p>
+<img width="576" height="336" id="Picture 1" src="OFFPOS_files/image001.png">
+</p>
+<p>
+Using the 
+<a href="REGIST.html">REGIST</a>
+ function, we can
+capture the position at which the leading edge of the box is seen, then by
+using OFFPOS we can adjust the measured position of the axis to be zero at that
+point. Therefore, after the registration event has occurred, the measured
+position (seen in 
+<a href="MPOS.html">MPOS</a>
+) will actually reflect the
+absolute distance from the start of the box, the mechanism which applies the
+label can take advantage of the absolute position start mode of the 
+<a href="MOVELINK.html">MOVELINK</a>
+ or 
+<a href="CAMBOX.html">CAMBOX</a>
+ commands
+to apply the label. 
+</p>
+<p class="codeexample">
+BASE(conv)
+</p>
+<p class="codeexample">
+REGIST(3)
+</p>
+<p class="codeexample">
+WAIT UNTIL MARK
+</p>
+<p class="codeexample">
+OFFPOS = -REG_POS 'Leading edge of box is now zero
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DEFPOS.html">DEFPOS</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

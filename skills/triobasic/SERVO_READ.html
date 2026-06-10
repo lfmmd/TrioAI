@@ -1,0 +1,105 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SERVO_READ</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SERVO_READ">
+</head>
+<body>
+<h1>SERVO_READ</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+SERVO_READ(vr_start, p0[, p1[, p2[, p3[, p4[, p5[, p6[, p7]]]]]]])
+</p>
+<h2>Description:</h2>
+<p>
+Provides servo-synchronised access to axis/system
+parameters. Between 1 and 8 axis/system parameters can be read synchronously on
+the next servo cycle for consistent data access when required. The data read is
+stored in successive VR memory locations commencing from ‘vr_start’. 
+</p>
+<p class="note">
+The values stored are not scaled by 
+<a href="UNITS.html">UNITS</a>
+.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_start:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+base index of 
+<a href="VR.html">VR</a>
+ memory to store
+  data read from parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+p0..p7:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis/System parameters to be read
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Example:
+</p>
+<p>
+Read 
+<a href="MPOS.html">MPOS</a>
+ and 
+<a href="FE.html">FE</a>
+
+for axes 0 and 1 and stores in 
+<a href="VR.html">VR</a>
+ locations 100, 101, 102
+and 103.
+</p>
+<p class="codeexample">
+SERVO_READ(100, MPOS AXIS(0), FE AXIS(0), MPOS AXIS(1), FE
+AXIS(1))
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

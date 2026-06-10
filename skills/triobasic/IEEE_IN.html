@@ -1,0 +1,88 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IEEE_IN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IEEE_IN">
+</head>
+<body>
+<h1>IEEE_IN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+IEEE_IN(byte0, byte1, byte2, byte3[, byte4, byte5, byte6, byte7])
+</p>
+<h2>Description:</h2>
+<p>
+The IEEE_IN function returns the floating-point number
+represented by the given byte values in IEEE 754 format, typically received
+over a communications link such as Modbus. An IEEE 754 single-precision value
+is composed of 4 bytes, and a double-precision value is composed of 8 bytes.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte0 - 7:
+</p>
+
+  
+</td>
+<td width="508" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The bytes that represent an IEEE 754 floating point
+  value, 4 values for 32-bit float and 8 values for a 64-bit float.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Byte 0 is the high byte of the IEEE 754 floating-point format.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Take 4 bytes that have been sent over Modbus to 
+<a href="VR.html">VR</a>
+s and recombine them into a floating-point number. 
+</p>
+<p class="codeexample">
+VR(200) = IEEE_IN(VR(0), VR(1), VR(2), VR(3))
+</p>
+<h3>Example 2:</h3>
+<p>
+Take 8 bytes that have been sent over Modbus to 
+<a href="VR.html">VR</a>
+s and recombine them into a floating-point number. 
+</p>
+<p class="codeexample">
+VR(200) = IEEE_IN(VR(0), (1), VR(2), VR(3),
+_
+</p>
+<p class="codeexample">
+                  VR(4), VR(5), VR(6), VR(7))
+</p>
+<h2>See also:</h2>
+<p>
+<a href="IEEE_OUT.html">IEEE_OUT</a>
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+</body>
+</html>

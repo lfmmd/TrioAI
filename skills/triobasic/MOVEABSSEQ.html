@@ -1,0 +1,1273 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVEABSSEQ</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVEABSSEQ">
+</head>
+<body>
+<h1>MOVEABSSEQ</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVEABSSEQ(table_index, axes, npoints, options, radius[, output[,
+transition_angle]])
+</p>
+<h2>Description:</h2>
+<p>
+The MOVEABSSEQ command allows a sequence of movements to be
+loaded via TABLE values. The moves can be automatically merged together using a
+circular or spherical arc. Movement on 2 to 6 axes may be controlled in this
+way.
+</p>
+<p>
+The MOVEABSSEQ is loaded into the controller move buffers as
+a sequence of MOVEABS-&gt;MOVECIRC-&gt; moves if 2 axes are specified and
+MOVEABS-&gt;MSPHERICAL-&gt; if 3 or more axes are specified. The linear move
+may be omitted if the arcs blend together. If “Options” bit 0 is set to 1, the
+move sequence loaded will be a sequence of MOVEABSSP-&gt;MOVECIRCSP-&gt; moves
+if 2 axes are specified and MOVEABSSP-&gt;MSPHERICALSP-&gt; if 3+ axes are
+specified.
+</p>
+<p class="note">
+<span class="MsoIntenseEmphasis">If Options bit 0 is set, 4 additional speed control values
+must be provided with each table point.</span></p>
+<p>
+<a href="MOVE_COUNT.html">MOVE_COUNT</a>
+ is incremented on
+every move loaded. This parameter may be set by a user program.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="127" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_index:
+</p>
+
+  
+</td>
+<td width="463" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Index in TABLE memory where the absolute positions
+  start.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="127" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axes:
+</p>
+
+  
+</td>
+<td width="463" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of axes 2 to 6.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="127" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+npoints:
+</p>
+
+  
+</td>
+<td width="463" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of points, each point requires 2 or 3 table
+  values.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="127" rowspan="12" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+options
+</p>
+
+  
+</td>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 0
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Sequence will load MOVEABS, MOVECIRC, etc.
+</p>
+
+  
+<p class="tablecontent">
+1 = Sequence will load embedded speed moves MOVEABSSP,
+  MOVECIRCSP, etc.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 1
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = No automatic FORCE_RAMP
+</p>
+
+  
+<p class="tablecontent">
+1 = Auto-insert FORCE_RAMP
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 2
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Load a sequence of standard move types.
+</p>
+
+  
+<p class="tablecontent">
+1 = Load a sequence of MOVEABSSEQ/MOVEABSSEQSP contour
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 3
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = No MOVE_PA/MOVE_PB data in TABLE
+</p>
+
+  
+<p class="tablecontent">
+1 = MOVE_PA/MOVE_PB data is embedded within the TABLE
+  data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 4
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Process the move and load it
+</p>
+
+  
+<p class="tablecontent">
+1 = Process the move but without loading it
+</p>
+
+  
+<p class="tablecontent">
+Only applicable when bit 2 is set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 5
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = No embedded speeds
+</p>
+
+  
+<p class="tablecontent">
+1 = Embed speeds from TABLE data
+</p>
+
+  
+<p class="tablecontent">
+Only applicable when bit 2 is set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 6
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = No embedded MOVETURN
+</p>
+
+  
+<p class="tablecontent">
+1 = Embed MOVETURN (default is mode 5 unless bit 16 is
+  set)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 7
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Axes above XYZ are linear
+</p>
+
+  
+<p class="tablecontent">
+1 = Axes above XYZ are in degrees
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 8 … 13
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Contains a 7-bit integer that specifies an offset
+  between data points other than &quot;Axes&quot;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 14
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Use radius parameter
+</p>
+
+  
+<p class="tablecontent">
+1 = Radius is embedded within the TABLE data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 15
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Not used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 16
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Use MOVETURN mode 5 (default)
+</p>
+
+  
+<p class="tablecontent">
+1 = Use MOVETURN mode 6
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="127" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+radius:
+</p>
+
+  
+</td>
+<td width="463" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The radius of the corner fillet (see option bit 14,
+  which can override the value supplied in this parameter)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="127" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+output:
+</p>
+
+  
+</td>
+<td width="463" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional output of data to TABLE.  0 means do not
+  output data to TABLE.  Value otherwise is the TABLE start index for the data.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="127" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+transition_angle:
+</p>
+
+  
+</td>
+<td width="463" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional specification of transition angle (in Radians)
+  for any filleted arcs that are generated.  Either do not supply a parameter
+  or set it to 0 if no transition curve is to be applied.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+<span class="MsoIntenseEmphasis">The fillet Radius will automatically be reduced to the
+maximum possible if the points specified are insufficiently far apart to apply
+the fillet. Filleting will not be applied if bit 2 of options is set.</span></p>
+<p class="note">
+<span class="MsoIntenseEmphasis">The current axes positions at the start of the MOVEABSSEQ
+are used for calculating the first fillet.</span></p>
+<p>
+<a name="_Hlk206051289">The output of move information to
+TABLE data uses blocks of 15 TABLE data elements starting at the index
+specified in the ‘output’ parameter, and has the following format: </a>
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Offset
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Contents
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X change due to vector
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y change due to vector
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z change due to vector
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X change due to fillet
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y change due to fillet
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z change due to fillet
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+XYZ linear increment
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Arc length of fillet
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Total length
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of segments
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Radius of fillet applied
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unused
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unused
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+13
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unused
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+14
+</p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unused
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<h3>Example 1:</h3>
+<p>
+Draw O using separate MOVE and MOVECIRC (see Trio Manual
+MOVECIRC) and draw similar O using MOVEABSSEQ.
+</p>
+<p>
+<img border="0" width="288" height="142" id="Picture 1" src="MOVEABSSEQ_files/image001.png">
+</p>
+<p>
+&nbsp;
+</p>
+<p class="codeexample">
+'Using MOVE and MOVECIRC
+</p>
+<p class="codeexample">
+MOVE(0, 60) 'move A -&gt; B 
+</p>
+<p class="codeexample">
+MOVECIRC(30, 30, 30, 0, 1) 'move B -&gt; C 
+</p>
+<p class="codeexample">
+MOVE(20, 0) ' move C -&gt; D
+<b></b></p>
+<p class="codeexample">
+MOVECIRC(30, -30, 0, -30, 1) 'move D -&gt; E 
+</p>
+<p class="codeexample">
+MOVE(0, -60) 'move E -&gt; F 
+</p>
+<p class="codeexample">
+MOVECIRC(-30, -30, -30, 0, 1) 'move F -&gt; G 
+</p>
+<p class="codeexample">
+MOVE(-20, 0) 'move G -&gt; H 
+</p>
+<p class="codeexample">
+MOVECIRC(-30, 30, 0, 30, 1) 'move H -&gt; A 
+</p>
+<p class="codeexample">
+WAIT IDLE 
+</p>
+<p class="codeexample">
+DEFPOS(100, 30) 
+</p>
+<p class="codeexample">
+WAIT UNTIL OFFPOS = 0 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Equivalent using MOVEABSSEQ
+</p>
+<p class="codeexample">
+TABLE(1000, 100, 120) 
+</p>
+<p class="codeexample">
+TABLE(1002, 180, 120) 
+</p>
+<p class="codeexample">
+TABLE(1004, 180, 0) 
+</p>
+<p class="codeexample">
+TABLE(1006, 100, 0) 
+</p>
+<p class="codeexample">
+TABLE(1008, 100, 30)
+</p>
+<p class="codeexample">
+ 
+</p>
+<p class="codeexample">
+MOVEABSSEQ(1000, 2, 5, 0, 30)
+</p>
+<h3>Example 2:</h3>
+<p>
+If “options” bit 0 is set the MOVEABSSEQ command will load
+embedded speed move types. Four additional parameters are loaded with each
+position to control the speed of the loaded move and potential following fillet
+arc:
+</p>
+<p>
+0 - FORCE_SPEED linear move
+</p>
+<p>
+1 - ENDMOVE_SPEED linear move
+</p>
+<p>
+2 - FORCE_SPEED fillet arc
+</p>
+<p>
+3 - ENDMOVE_SPEED fillet arc
+</p>
+<p class="warning">
+The speed parameters for the potential fillet arc MUST be
+provided even if no fillet is used. For 2 axis programs 6 parameters are
+therefore required. For 3 axis programs 7 parameters must be entered.
+</p>
+<p class="codeexample">
+UNITS AXIS(0) = 1000
+</p>
+<p class="codeexample">
+UNITS AXIS(1) = 1000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(0, 1)
+</p>
+<p class="codeexample">
+MERGE = ON
+</p>
+<p class="codeexample">
+trans = 0
+</p>
+<p class="codeexample">
+SPEED = 2500
+</p>
+<p class="codeexample">
+ACCEL = 100000
+</p>
+<p class="codeexample">
+DECEL = 100000
+</p>
+<p class="codeexample">
+lin_sp = SPEED
+</p>
+<p class="codeexample">
+lin_end = SPEED * 0.5
+</p>
+<p class="codeexample">
+arc_sp = SPEED * 0.5
+</p>
+<p class="codeexample">
+arc_end = SPEED * 0.5
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TABLE(1020, 0, 0, lin_sp, lin_end, arc_sp, arc_end)
+</p>
+<p class="codeexample">
+TABLE(1026, 180, 0, lin_sp, lin_end, arc_sp, arc_end)
+</p>
+<p class="codeexample">
+TABLE(1032, 360, 0, lin_sp, lin_end, arc_sp, arc_end)
+</p>
+<p class="codeexample">
+TABLE(1038, 360, 360, lin_sp, lin_end, arc_sp, arc_end)
+</p>
+<p class="codeexample">
+TABLE(1044, 0, 360, lin_sp, lin_end, arc_sp, arc_end)
+</p>
+<p class="codeexample">
+TABLE(1050, 0, 0, lin_sp, lin_end, arc_sp, arc_end)
+</p>
+<p class="codeexample">
+TABLE(1056, -180, 0, lin_sp, lin_end, arc_sp, arc_end)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVEABSSEQ(1020, 2, 7, 1, 80, 0, trans * PI / 180)
+</p>
+<h3>Example 3:</h3>
+<p>
+Creating a single move from large numbers of data points can
+create problems with the velocity profile when there are a very large number of
+moves processed in a short time:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Trio Motion Coordinators can only load one move per axis in each
+servo cycle.
+</li>
+<li class="indent-list-last">
+With very short moves the velocity profile can start to ramp the
+speed down so as the current target end position is reached with the programmed
+deceleration rate.
+</li>
+</ul>
+<p>
+To avoid these problems a whole sequence of points can be
+loaded as a single move. To perform this type of move the parameters for the
+move command must be set:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+The “options” parameter must have bit 2 set on.
+</li>
+<li class="indent-list-last">
+The “output” data area MUST be defined with space for 10 values *
+npoints.
+</li>
+</ul>
+<p>
+This example shows axes moving along an ellipse at a
+constant path speed.
+</p>
+<p class="codeexample">
+'Suppose an ellipse is defined as a sequence of points 1
+degree apart:
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+UNITS AXIS(0) = 1000
+</p>
+<p class="codeexample">
+UNITS AXIS(1) = 1000 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+SPEED = 500
+</p>
+<p class="codeexample">
+ACCEL = 50000
+</p>
+<p class="codeexample">
+DECEL = 50000
+</p>
+<p class="codeexample">
+SRAMP=30 
+</p>
+<p class="codeexample">
+DEFPOS(100,0) 
+</p>
+<p class="codeexample">
+a = 100 
+</p>
+<p class="codeexample">
+b = 50 
+</p>
+<p class="codeexample">
+FOR d = 0 TO 360 
+</p>
+<p class="codeexample">
+    x = COS(d * PI / 180) * a 
+</p>
+<p class="codeexample">
+    y = SIN(d * PI / 180) * b 
+</p>
+<p class="codeexample">
+    TABLE(1000 + d * 2, x, y) 
+</p>
+<p class="codeexample">
+NEXT d 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVEABSSEQ(1000, 2, 361, 4, 0, 2000)
+</p>
+<p class="note">
+Note that the MOVEABSSEQ move type builds a table of data values
+at TABLE(2000) .. TABLE(5610) in this example to enable the move to be
+processed.
+</p>
+<h3>Example 4:</h3>
+<p>
+MOVEABSSEQ with 6 axes.
+</p>
+<p class="codeexample">
+FOR a = 0 TO 5 
+</p>
+<p class="codeexample">
+  ATYPE AXIS(a) = 0 
+</p>
+<p class="codeexample">
+  UNITS AXIS(a) = 1000 
+</p>
+<p class="codeexample">
+NEXT a
+</p>
+<p class="codeexample">
+ 
+</p>
+<p class="codeexample">
+'Ignore uvw for speed calculations: 
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(3) = 0 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(4) = 0 
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(5) = 0 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'This program has data sets 10 values apart : 
+</p>
+<p class="codeexample">
+TABLE(100, 0, 0, 0, 0, 15, 0) 
+</p>
+<p class="codeexample">
+TABLE(110, 10, 0, 0, 10, -5, 0) 
+</p>
+<p class="codeexample">
+TABLE(120, 10, 10, 0, 0, 0, 10) 
+</p>
+<p class="codeexample">
+TABLE(130, 20, 10, 0, 20, 5, 10) 
+</p>
+<p class="codeexample">
+TABLE(140, 20, 0, 0, 0, 0, 10)
+</p>
+<p class="codeexample">
+TABLE(150, 20, 0, 15, 5, 5, 0) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+'Define start position: 
+</p>
+<p class="codeexample">
+DEFPOS(0, 10, 0, 0, 20, 0, 0) 
+</p>
+<p class="codeexample">
+MOVE_COUNT = 0 
+</p>
+<p class="codeexample">
+SPEED = 5 
+</p>
+<p class="codeexample">
+ACC(SPEED * 50) 
+</p>
+<p class="codeexample" style="margin-left:0cm">
+  MERGE = ON
+</p>
+<p class="codeexample">
+ 
+</p>
+<p class="codeexample">
+options = 10 * 256 'Set to use data 10 values apart 
+</p>
+<p class="codeexample">
+movet = 0 
+</p>
+<p class="codeexample">
+npoints = 6 
+</p>
+<p class="codeexample">
+axes = 6 
+</p>
+<p class="codeexample">
+radius = 2 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVEABSSEQ(100, axes, npoints, options, radius) 
+</p>
+<p class="codeexample">
+MOVEABS(20, 0, 30, 5, 5, 0) 'This MOVEABS will be MERGE'd
+together with the MOVEABSSEQ
+</p>
+<h2>See also:</h2>
+<p>
+<a href="MOVESEQ.html">MOVESEQ</a>
+</p>
+</body>
+</html>

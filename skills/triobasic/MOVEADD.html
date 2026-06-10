@@ -1,0 +1,186 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVEADD</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVEADD">
+</head>
+<body>
+<h1>MOVEADD</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVEADD(distance)
+</p>
+<h2>Description:</h2>
+<p class="MsoNoSpacing">
+MOVEADD inserts an additional change of position on top
+of a move that is already running on the axis. The distance moved is in the
+same user units as the main move, i.e.  if the axis is set up by 
+<a href="UNITS.html">UNITS</a>
+ to be in mm, then MOVEADD adds distance in mm,
+speeds in mm/s and accelerations in mm/s
+<sup>2</sup>.
+</p>
+<p class="MsoNoSpacing">
+MOVEADD uses the demands of the axis it is being added
+to, but these can be overridden by using FORCE_SPEED, FORCE_ACCEL, FORCE_DECEL
+and FORCE_JERK.
+</p>
+<p class="warning">
+Note that MOVEADD is not an advanced speed control move, and
+uses the FORCE_SPEED, FORCE_ACCEL, FORCE_DECEL and FORCE_JERK purely as a
+convenient means of supplying MOVEADD its own demands in the case that they
+need to differ from the demands of axis having the additional movement.
+</p>
+<p class="warning">
+Note that MOVEADD does not adhere to the VP_MODE setting of
+the axis it is being added to, instead using its own S-ramped VPU.
+</p>
+<p>
+The action of MOVEADD is like loading a MOVE on a virtual
+axis and connecting it to the main axis using ADDAX, but without the need of a
+virtual axis.
+</p>
+<p class="note">
+Prefer using a virtual axis and ADDAX to MOVEADD, as this gives
+extra flexibility with regard how the move is handled (choice of demands,
+VP_MODE, cancellation, etc.).
+</p>
+<p class="MsoNoSpacing">
+To cancel both the move and the additional movement, use 
+<a href="CANCEL.html">CANCEL</a>
+(5).
+</p>
+<p class="MsoNoSpacing">
+To cancel the additional movement part way through its
+programmed distance, use 
+<a href="CANCEL.html">CANCEL</a>
+(6).
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Relative distance of the added movement. A positive
+  value will advance the axis, and a negative value will retard the axis. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<h3>Example 1:</h3>
+<p>
+With continuous motion running on the axis, make an
+additional move to advance the axis by 40&nbsp;mm after setting the speed,
+accelerations and jerk values for the added movement.
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<p class="codeexample">
+WA(100)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FORCE_SPEED = 50
+</p>
+<p class="codeexample">
+FORCE_ACCEL = 2000
+</p>
+<p class="codeexample">
+FORCE_DECEL = 2000
+</p>
+<p class="codeexample">
+FORCE_JERK = 50000
+</p>
+<p class="codeexample">
+MOVEADD(40)
+</p>
+<h3>Example 2:</h3>
+<p>
+An adjustment of position is needed after capturing the
+registration position from a sensor on the product. The calculated registration
+offset can be used in the MOVEADD to advance or retard the axis relative to the
+Link Axis.
+</p>
+<p class="codeexample">
+BASE(10)
+</p>
+<p class="codeexample">
+MOVELINK(1000, 1000, 0, 0, 11)
+</p>
+<p class="codeexample">
+WAIT UNTIL MARK OR IDLE
+</p>
+<p class="codeexample">
+IF MARK THEN
+</p>
+<p class="codeexample">
+    adjustment_dist = calc_reg_adjust(REG_POS)
+</p>
+<p class="codeexample">
+    FORCE_SPEED = 150
+</p>
+<p class="codeexample">
+    FORCE_ACCEL = 2000
+</p>
+<p class="codeexample">
+    FORCE_DECEL = 2000
+</p>
+<p class="codeexample">
+    FORCE_JERK = 50000
+</p>
+<p class="codeexample">
+    MOVEADD(adjustment_dist)
+</p>
+<p class="codeexample">
+    missed_mark_count = 0
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+    missed_mark_count = missed_mark_count + 1
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CANCEL.html">CANCEL</a>
+, 
+<a href="FORCE_ACCEL.html">FORCE_ACCEL</a>
+,
+
+<a href="FORCE_JERK.html">FORCE_JERK</a>
+, 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+</p>
+<h2>&nbsp;</h2>
+</body>
+</html>

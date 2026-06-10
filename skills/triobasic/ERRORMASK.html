@@ -1,0 +1,74 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ERRORMASK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ERRORMASK">
+</head>
+<body>
+<h1>ERRORMASK</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+The value held in this parameter is bitwise 
+<a href="AND.html">AND</a>
+ed with the 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+
+parameter by every axis on every servo cycle to determine if a runtime error
+should switch off the enable (
+<a href="WDOG.html">WDOG</a>
+) relay. If the
+result of the 
+<a href="AND.html">AND</a>
+ operation is not zero the enable relay
+is switched off. 
+</p>
+<p class="tip">
+After a critical error has tripped the enable relay, the Motion
+Coordinator must either be reset, or a 
+<a href="DATUM.html">DATUM</a>
+(0)
+command must be executed to reset the error flags.
+</p>
+<h2>Value:</h2>
+<p>
+The mask to be 
+<a href="AND.html">AND</a>
+ed with the 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+</p>
+<p class="note">
+For the MC464, the default value is 268 which will trap critical
+errors. This is 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+ bits 2, 3 and 8 which
+are digital drive communication errors and exceeding the following error limit.
+</p>
+<h2>Example:</h2>
+<p>
+Configure the 
+<a href="ERRORMASK.html">ERRORMASK</a>
+ so that
+the 
+<a href="WDOG.html">WDOG</a>
+ is turned off when there are communication
+failures (4), remote drive errors (8), the following error exceeds the limit
+(256) or the limit  switches have been hit(16 + 32).
+</p>
+<p class="codeexample">
+ERRORMASK= 4+8+16+32+256
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+, 
+<a href="DATUM.html">DATUM</a>
+(0)
+</p>
+</body>
+</html>

@@ -1,0 +1,90 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FULL_SP_RADIUS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FULL_SP_RADIUS">
+</head>
+<body>
+<h1>FULL_SP_RADIUS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+This parameter is used with 
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+,
+it defines the minimum radius that will be executed at full speed. When a
+radius to be profiled is smaller than FULL_SP_RADIUS the speed will be
+proportionally reduced so that 
+<a href="VP_SPEED.html">VP_SPEED</a>
+ = 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+ * radius / FULL_SP_RADIUS.
+</p>
+<h2>Value:</h2>
+<p>
+The full speed radius in user 
+<a href="UNITS.html">UNITS</a>
+
+(default = 0).
+</p>
+<h2>Example:</h2>
+<p>
+In the following program, the FULL_SP_RADIUS is 6, so when
+the first 
+<a href="MOVECIRCSP.html">MOVECIRCSP</a>
+ is reached, the speed
+remains at 10 because its radius of 8 is greater than the FULL_SP_RADIUS, but when the second 
+<a href="MOVECIRCSP.html">MOVECIRCSP</a>
+ is reached, the
+speed is halved because its radius of 3 is half that of the FULL_SP_RADIUS.
+</p>
+<p class="codeexample">
+CORNER_MODE = 8
+</p>
+<p class="codeexample">
+MERGE = ON
+</p>
+<p class="codeexample">
+SPEED = 10
+</p>
+<p class="codeexample">
+FULL_SP_RADIUS = 6
+</p>
+<p class="codeexample">
+DEFPOS(0, 0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVESP(10, 10)
+</p>
+<p class="codeexample">
+MOVESP(10, 5)
+</p>
+<p class="codeexample">
+MOVESP(5, 5)
+</p>
+<p class="codeexample">
+MOVECIRCSP(8, 8, 0, 8, 1)
+</p>
+<p class="codeexample">
+MOVECIRCSP(3, 3, 0, 3, 1)
+</p>
+<p class="codeexample">
+MOVESP(5, 5)
+</p>
+<p class="codeexample">
+MOVESP(10, 5)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+</p>
+</body>
+</html>

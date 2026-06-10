@@ -1,0 +1,123 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IP_TCP_TX_THRESHOLD</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IP_TCP_TX_THRESHOLD">
+</head>
+<body>
+<h1>IP_TCP_TX_THRESHOLD</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG) 
+</p>
+<h2>Description:</h2>
+<p>
+IP_TCP_TX_THRESHOLD defines the number of bytes in the TCP
+socket transmit buffer which will trigger a telegram transmit. The default is
+32. This value applies to all the TCP protocols.
+</p>
+<h2>Value:</h2>
+<p class="note">
+Please consult Trio before changing this value.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Size
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Default
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+word
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Number of bytes in TCP socket transmit buffer which
+  triggers a transmission.
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1 to 1023
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+32
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+Setting this value away from the default may make the
+connection to Motion Perfect unstable. 
+</p>
+<h2>Example:</h2>
+<p>
+Force the Ethernet processor to transmit TCP packets immediately
+when the data size is small, so as not to wait for the timeout before sending.
+</p>
+<p class="codeexample">
+IP_TCP_TX_THRESHOLD = 16
+</p>
+</body>
+</html>

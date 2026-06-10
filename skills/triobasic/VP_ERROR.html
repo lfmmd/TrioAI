@@ -1,0 +1,303 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VP_ERROR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VP_ERROR">
+</head>
+<body>
+<h1>VP_ERROR</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+value = VP_ERROR AXIS(n)
+</p>
+<h2>Description:</h2>
+<p>
+The axis parameter VP_ERROR allows the error state of the
+VPU to be read.
+</p>
+<p class="note">
+Only the VPU axis will have its VP_ERROR updated.
+</p>
+<p class="warning">
+Only valid for VP_MODE 6 – all other modes will only return 0.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No error present
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The VPU has not been initialised
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bad mode change – the VPU’s mode may only be changed
+  when idle
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bad position demand – a position demand is only allowed
+  when the VPU is in position mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bad speed demand – speed must be greater than zero in
+  position mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bad acceleration/deceleration demand – value must be
+  greater than zero
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bad acceleration demand – value must be greater than
+  zero
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bad deceleration demand – value must be greater than
+  zero
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bad jerk demand – value must be greater than zero
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bad profile time – value must be greater than zero and
+  less than 4&nbsp;ms
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bad resume – may only resume after a pause
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_VP_MODE=0:"></a>
+Example:</h2>
+<p>
+The AXISSTATUS has bit 33 set, indicating a VP_ERROR is
+present, so print the error code:
+</p>
+<p class="codeexample">
+PRINT VP_ERROR
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+, 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

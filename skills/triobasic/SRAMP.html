@@ -1,0 +1,122 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SRAMP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SRAMP">
+</head>
+<body>
+<h1>SRAMP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+When using VP_MODE&nbsp;=&nbsp;0 (the default), which is a
+trapezoidal profiler (acceleration and deceleration come on instantly), its
+smoothness can be improved using a mechanism that blends acceleration and
+deceleration transitions. This is controlled by the SRAMP parameter which
+specifies the time in milliseconds that the blend should span. This parameter
+should be set when motion is not in progress, as it takes an amount of time
+equal to the SRAMP time to take effect, so a delay needs to be used before
+moves are loaded.
+</p>
+<p class="note">
+The SRAMP time should not exceed half the acceleration or
+deceleration time.
+</p>
+<p>
+To aid the porting of existing applications to VP_MODE&nbsp;=&nbsp;6,
+which is a jerked VPU and so is a naturally S-ramped profiler, the SRAMP
+parameter can still be used.
+</p>
+<p class="warning">
+Using SRAMP with VP_MODE&nbsp;=&nbsp;6 is intended solely to
+aid portability for existing applications, and it is strongly recommended that
+new applications use JERK.
+</p>
+<p>
+The way that this works is via AXISSTATUS bit 38 being set whenever
+SRAMP is assigned a value, and this flags that JERK and FASTJERK should be
+calculated as each move becomes active. The JERK and FASTJERK values are
+calculated from ACCEL and FASTDEC being divided by the SRAMP duration.
+</p>
+<p class="note">
+Note that once SRAMP has been assigned, automatic JERK and
+FASTJERK calculation can only be cancelled using INITIALISE. Consequently, any
+subsequent assignment made to JERK and FASTJERK will be ignored until
+INITIALISE is issued. However, this should not normally be necessary, as an
+application will either use SRAMP or JERK, as there is little benefit in being
+able to swap between the two.
+</p>
+<p>
+There are a few differences in how it operates compared to VP_MODE&nbsp;=&nbsp;0.
+Firstly, the delay between setting SRAMP and loading a move is not required.
+Secondly, the limitation regarding not exceeding half the acceleration or
+deceleration distance is removed. Thirdly, because this mechanism works by
+calculating the JERK value required to get to ACCEL in the time specified, if
+your application uses a different setting for DECEL, the resulting deceleration
+velocity profile will differ.
+</p>
+<p class="note">
+Using SRAMP with VP_MODE&nbsp;=&nbsp;6 is only available with
+firmware version 2.0342 and later.
+</p>
+<h2>Value:</h2>
+<p>
+Time between 0 and 500&nbsp;milliseconds.
+</p>
+<p class="warning">
+SRAMP must be set before motion starts (for VP_MODE&nbsp;=&nbsp;0
+only).
+</p>
+<h2>Example:</h2>
+<p>
+To provide smooth transition into the acceleration, an
+S-ramp is applied with a time of 50&nbsp;ms.
+</p>
+<p class="codeexample">
+VP_MODE = 0
+</p>
+<p class="codeexample">
+SPEED = 160000
+</p>
+<p class="codeexample">
+ACCEL = 1600000
+</p>
+<p class="codeexample">
+DECEL = 1600000
+</p>
+<p class="codeexample">
+SRAMP = 50
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WA(SRAMP) 'Must wait for it to become ready
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVEABS(100000)
+</p>
+<p>
+Without the S-ramp factor, the acceleration takes 100&nbsp;ms
+to reach the set speed. With SRAMP = 50, the acceleration takes 150&nbsp;ms but
+the rate of change of force (torque) is controlled, i.e. jerk is limited.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="JERK.html">JERK</a>
+, 
+<a href="VP_MODE.html">VP_MODE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

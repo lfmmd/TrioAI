@@ -1,0 +1,33 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HMI_PROC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HMI_PROC">
+</head>
+<body>
+<h1>HMI_PROC</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Parameter (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p>
+HMI_PROC=value
+</p>
+<h2>Description:</h2>
+<p>
+Sets the process number on which the HMI Server protocol
+will be initiated. This value must be set before the first HMI Client
+connection occurs. The default value at power up is -1, which will
+automatically select the process number according to the normal RUN command
+rules.
+</p>
+<p>
+If this value is to be set, then it is recommended that it
+be set in the special MC_CONFIG program to insure that the value is valid
+before any HMI Client can connect to the Motion Coordinator.
+</p>
+</body>
+</html>

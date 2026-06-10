@@ -1,0 +1,1051 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MS_BUS_IO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MS_BUS_IO">
+</head>
+<body>
+<h1>MS_BUS_IO</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MS_BUS_IO(function, slot[, parameters...])
+</p>
+<h2>Description:</h2>
+<p>
+The command MS_BUS_IO is used to setup slices on a MS-Bus network.
+</p>
+<p class="note">
+The MS_BUS_IO command returns TRUE (-1) if successful and FALSE
+(0) if the command execution was in error. Functions which return a value must
+either put the value in a VR or print it to the current output terminal.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p>
+function:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Function to be performed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_0">$00</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Set default output mode when slice is in error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_1">$01</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Set digital 
+input
+
+  filter setting
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$02:">$02</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Set Analogue I/O range
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+slot
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="Function_0">Function = $00</a>
+: Set default output mode in error
+state</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+MS_BUS_LINK(0, slot, slice_address, value)
+</p>
+<h3>Description:</h3>
+<p>
+Setup action of an output if the network goes into an error
+state. Each output has two possible states. The default behaviour will turn off
+all outputs if a slice goes into an error state. The other state will retain
+the last known state of the output if a slice goes into an error state. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+slot
+</p>
+
+  
+</td>
+<td width="357" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+slice_address
+</p>
+
+  
+</td>
+<td width="357" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Address of a slice on a MS-Bus network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+value
+</p>
+
+  
+</td>
+<td width="357" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Bitmap for outputs.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Retain the last state of output numbers 16 and 20 so that
+they retain their last state if the slice goes into an error state.
+</p>
+<p class="codeexample">
+&gt;&gt;iomap
+<br>
+
+Digital Input map :
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0-&nbsp;&nbsp;&nbsp;7 : Built-in Inputs
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8-&nbsp;&nbsp;15 : Built-in Bi-Directional IO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;16-&nbsp;&nbsp;31 : MS-Bus Input Module @ Slot 1
+(Address 1)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;32-1023 : Virtual
+<br>
+
+
+<br>
+
+Digital Output map :
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0-&nbsp;&nbsp;&nbsp;7 : Reserved
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8-&nbsp;&nbsp;15 : Built-in Bi-Directional IO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;16-&nbsp;&nbsp;31 : MS-Bus Output Module @ Slot 1 (
+Address 0
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;32-1023 : Virtual
+</p>
+<p>
+<br>
+
+Set the first and the 5
+<sup>th</sup> output on slice 0 to retain their last
+state in case of an error.
+</p>
+<p class="codeexample">
+MS_BUS_IO(0, 1, 0, $11)
+</p>
+<h2><a name="Function_1"></a>
+<a name="_Function_=_1:"></a>
+Function = $01: Setup
+digital input filter</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+MS_BUS_LINK(1, slot, slice_address, mode[, parameters...])
+</p>
+<h3>Description:</h3>
+<p>
+Setup digital filtering for inputs. Slice Inputs are grouped
+by banks. Each bank is formed of 4 inputs. Filtering for individual inputs
+cannot be controlled independently. Filtering can be turned on for each bank. 
+</p>
+<p class="note">
+<em><span style='font-family:"Calibri",sans-serif'>An input must be on for the filter duration for it to be registered as
+being on.</span></em></p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="101" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+slot
+</p>
+
+  
+</td>
+<td width="489" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="413" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p>
+slice_address
+</p>
+
+  
+</td>
+<td width="489" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+Address of the slice
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" rowspan="6" valign="top" class="tablegrid">
+
+  
+<p>
+mode
+</p>
+
+  
+</td>
+<td width="76" rowspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="413" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set a value of all banks
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="180" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+value
+</p>
+
+  
+</td>
+<td width="234" valign="top" class="tablegrid">
+
+  
+<p>
+Bitmap of filter settings for all banks
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="234" valign="top" class="tablegrid">
+
+  
+<p>
+16-bit bitmap:
+<br>
+
+  Bit 0 to 2 = Bank 1 filter value
+<br>
+
+  Bit 3 = Bank 1 filter enable
+</p>
+
+  
+<p>
+Bit 4 to 6 = Bank 2 filter value
+<br>
+
+  Bit 7 = Bank 2 filter  enable
+</p>
+
+  
+<p>
+Bit 8 to 10 = Bank 3 filter value
+<br>
+
+  Bit 11 = Bank 3 filter enable
+</p>
+
+  
+<p>
+Bit 12 to 14 = Bank 4 filter value
+<br>
+
+  Bit 15 = Bank 4 filter enable
+<br>
+<br>
+
+  Filter value:
+<br>
+
+  0 = 125&nbsp;µs
+<br>
+
+  1 = 250&nbsp;µs
+<br>
+
+  2 = 500&nbsp;µs
+<br>
+
+  3 = 1&nbsp;ms
+<br>
+
+  4 = 2&nbsp;ms
+<br>
+
+  5 = 4&nbsp;ms
+<br>
+
+  6 = 8&nbsp;ms
+<br>
+
+  7 = 16&nbsp;ms
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" rowspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="413" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set filtering for a particular bank
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="180" valign="top" class="tablegrid">
+
+  
+<p>
+bank
+</p>
+
+  
+</td>
+<td width="234" valign="top" class="tablegrid">
+
+  
+<p>
+Select which input bank to set filter on
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="180" valign="top" class="tablegrid">
+
+  
+<p>
+filter_time
+</p>
+
+  
+</td>
+<td width="234" valign="top" class="tablegrid">
+
+  
+<p>
+0 = No filtering
+<br>
+
+  1 = 125&nbsp;µs
+<br>
+
+  2 = 250&nbsp;µs
+<br>
+
+  3 = 500&nbsp;µs
+<br>
+
+  4 = 1&nbsp;ms
+<br>
+
+  5 = 2&nbsp;ms
+<br>
+
+  6 = 4&nbsp;ms
+<br>
+
+  7 = 8&nbsp;ms
+<br>
+
+  8 = 16&nbsp;ms
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example 1:</h3>
+<p>
+Set filtering for inputs 20, 21, 22 and 23 to filter at a 2&nbsp;ms.
+</p>
+<p class="codeexample">
+&gt;&gt;iomap
+<br>
+
+Digital Input map :
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0-&nbsp;&nbsp;&nbsp;7 : Built-in Inputs
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8-&nbsp;&nbsp;15 : Built-in Bi-Directional IO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;16-&nbsp;&nbsp;31 : MS-Bus Input Module @ Slot 1 (
+Address 1
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;32-1023 : Virtual
+<br>
+
+
+<br>
+
+Digital Output map :
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0-&nbsp;&nbsp;&nbsp;7 : Reserved
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8-&nbsp;&nbsp;15 : Built-in Bi-Directional IO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;16-&nbsp;&nbsp;31 : MS-Bus Output Module @ Slot 1
+(Address 0)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;32-1023 : Virtual
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+Inputs 20, 21, 22 and 23 belong to input bank 2 on an input
+slice with address 1.
+</p>
+<p class="codeexample">
+MS_BUS_IO(1, 1, 1, 1, 2, 5)
+</p>
+<h3>Example 2:</h3>
+<p>
+Set filtering for two banks at once. 
+</p>
+<p class="codeexample">
+&gt;&gt;iomap
+<br>
+
+Digital Input map :
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0-&nbsp;&nbsp;&nbsp;7 : Built-in Inputs
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8-&nbsp;&nbsp;15 : Built-in Bi-Directional IO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;16-&nbsp;&nbsp;31 : MS-Bus Input Module @ Slot 1 (
+Address 1
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;32-1023 : Virtual
+<br>
+
+
+<br>
+
+Digital Output map :
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0-&nbsp;&nbsp;&nbsp;7 : Reserved
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8-&nbsp;&nbsp;15 : Built-in Bi-Directional IO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;16-&nbsp;&nbsp;31 : MS-Bus Output Module @ Slot 1
+(Address 0)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;32-1023 : Virtual
+</p>
+<p>
+Set filter time to 500&nbsp;µs for inputs in bank 1 (16, 17,
+18 and 19) and set filter time to 8&nbsp;ms for inputs in bank 4 (inputs 28,
+29, 30 and 31).
+</p>
+<p class="codeexample">
+'Setup bitmap for banks 1 and 4
+<br>
+
+DIM inputs_filter, fil1, fil4 AS INTEGER
+<br>
+
+fil1.0 = 1 ' Enable filter for bank 1
+<br>
+
+fil1 = fil0 OR (2 &lt;&lt; 1) ' Set filter value to 500 us
+<br>
+
+
+<br>
+
+fil4.0 = 1 ' Enable filter for bank 4
+<br>
+
+fil4 = fil4 OR (6 &lt;&lt; 1) ' Set filter value to 8 ms
+<br>
+
+
+<br>
+
+'Create a bitmap
+<br>
+
+inputs_filter = fil1 OR (fil4 &lt;&lt; 12)
+<br>
+
+
+<br>
+
+MS_BUS_IO(1, 1, 1, 0, inputs_filter)
+</p>
+<h2><a name="_Function_=_$02:"></a>
+Function = $02: Set Analogue I/O range</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+MS_BUS_IO(2, slot, slice_address, mode, channel)
+</p>
+<h3>Description:</h3>
+<p class="CodeSample" style="margin-left:0cm">
+Setup range of analogue I/O. This function
+allows configuration of voltage or current range of an analogue input or
+output. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="101" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+slot
+</p>
+
+  
+</td>
+<td width="489" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="413" valign="top" class="tablegrid">
+
+  
+<p>
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p>
+slice_address
+</p>
+
+  
+</td>
+<td width="489" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Address of the slice
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" rowspan="6" valign="top" class="tablegrid">
+
+  
+<p>
+mode
+</p>
+
+  
+</td>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="413" valign="top" class="tablegrid">
+
+  
+<p>
+Set range to [+/- 10&nbsp;V]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="413" valign="top" class="tablegrid">
+
+  
+<p>
+Set range to [0 to 10&nbsp;V]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="413" valign="top" class="tablegrid">
+
+  
+<p>
+Set range to [+/-5&nbsp;V]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td width="413" valign="top" class="tablegrid">
+
+  
+<p>
+Set range to [0 to 5&nbsp;V]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td width="413" valign="top" class="tablegrid">
+
+  
+<p>
+Set range to [4 to 20&nbsp;mA]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td width="413" valign="top" class="tablegrid">
+
+  
+<p>
+Set range to [0 to 20&nbsp;mA]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="101" valign="top" class="tablegrid">
+
+  
+<p>
+Channel
+</p>
+
+  
+</td>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="413" valign="top" class="tablegrid">
+
+  
+<p>
+Channel number on analogue slice. There is a maximum of 4
+  channels on a slice. Range of channel is from 0 to 3.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="CodeSample" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MS_BUS.html">MS_BUS</a>
+, 
+<a href="MS_BUS_CONFIG.html">MS_BUS_CONFIG</a>
+, 
+<a href="AOUT_CONFIG.html">AOUT_CONFIG</a>
+,
+
+<a href="AIN_CONFIG.html">AIN_CONFIG</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

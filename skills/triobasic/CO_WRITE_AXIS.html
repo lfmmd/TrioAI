@@ -1,0 +1,454 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CO_WRITE_AXIS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CO_WRITE_AXIS">
+</head>
+<body>
+<h1>CO_WRITE_AXIS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CO_WRITE_AXIS(axis_number, index, subindex, type, vr_number[, value])
+</p>
+<h2>Description:</h2>
+<p>
+This function sets a CANopen-over-EtherCAT (CoE) object in
+the remote drive or I/O device. The object’s index and sub-index are used to
+write a value to that object. The value can come from a VR or is put into the
+command directly if the VR number is set to -1.
+</p>
+<p>
+Refer to the remote device’s manual for a list of available
+objects. If the object value is set successfully, the command returns TRUE (-1).
+Otherwise, in the case of an error while writing the value, the command returns
+FALSE (0).
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis_number: 
+</p>
+
+  
+</td>
+<td width="486" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number of the EtherCAT drive.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index: 
+</p>
+
+  
+</td>
+<td width="486" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen Object index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+subindex: 
+</p>
+
+  
+</td>
+<td width="486" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen Object sub-index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="104" rowspan="11" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Type:
+</p>
+
+  
+</td>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Boolean
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Real 32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Real 64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+21
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+27
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_number: 
+</p>
+
+  
+</td>
+<td width="486" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR number between 0 and max VR where the result will be
+  stored.
+<br>
+
+  (-1 if the next parameter contains the value to be written)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="486" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional data value for direct setting of the object
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Function_=_2"></a>
+Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+Write a value of 1 to a manufacturer specific object on
+servo drive at MC464 axis 3. CoE object 0x2802 sub-index 0x00, type 2 (8-bit
+integer). Get the TRUE/FALSE success indication and print it to the terminal.
+</p>
+<p class="codeexample">
+&gt;&gt;?CO_WRITE_AXIS(3, $2802, 0, 2, -1, 1)
+</p>
+<p class="codeexample">
+&gt;&gt;-1.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h4>Example 2:</h4>
+<p>
+Write a position controller velocity feed-forward gain value
+to the servo drive at MC464 axis 12. CoE object 0x60FB sub-index 0x02, type 6
+(unsigned 16-bit integer).
+</p>
+<p class="codeexample">
+VR(2010) = 1000
+</p>
+<p class="codeexample">
+'Write the value from VR(2010)
+</p>
+<p class="codeexample">
+error_flag = CO_WRITE_AXIS(12, $60fb, 2, 6, 2010)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+IF error_flag = FALSE THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Error writing CANopen Object to Drive&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="fixed" style="text-indent:14.2pt">
+&nbsp;
+</p>
+<p class="warning">
+Warning: Always refer to the manufacturer’s user manual before
+writing to a CANopen object over EtherCAT.
+</p>
+</body>
+</html>

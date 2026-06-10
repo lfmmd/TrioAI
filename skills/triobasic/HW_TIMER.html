@@ -1,0 +1,435 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HW_TIMER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HW_TIMER">
+</head>
+<body>
+<h1>HW_TIMER</h1>
+<h2>Type:</h2>
+<p class="Category">
+Slot Command
+</p>
+<h2>Syntax: </h2>
+<p class="fixed">
+HW_TIMER(mode, cycleTime, &lt;onTime, reps, &gt; opMode, opSel,
+opState)
+</p>
+<h2>Description: </h2>
+<p>
+The HW_TIMER command turns 
+<a href="ON.html">ON</a>
+/
+<a href="OFF.html">OFF</a>
+ a digital output or enable
+output of an axis for a specified length of ‘cycleTime’ (microseconds) in mode
+1 or ‘onTime’ (microseconds) in mode 2 within the overall on/off time
+‘cycleTime’.
+</p>
+<p>
+The command can be used with
+either 1, 5 or 7 parameters. Only 1 parameter is needed to disable the timer. Five
+parameters are needed to enable the timer in mode 1, seven parameters for mode
+2.
+</p>
+<p>
+Note that the internal FPGA
+timer resolution is 10&nbsp;µs so the requested time will be divided by 10 thus
+effectively truncating any remainder less than 10&nbsp;µs e.g. 27&nbsp;µs will
+be interpreted as 20&nbsp;µs. The user should also consider the rise/fall times
+of digital outputs, for highest performance then enable output selection should
+be used.
+</p>
+<p class="note">
+When using modes 1 or 2 you must use an 
+<a href="ATYPE.html">ATYPE</a>
+
+with an enable output. 
+</p>
+<p class="note">
+This command is only supported on controllers that have the
+correct 
+<a href="FPGA_PROGRAM.html">FPGA_PROGRAM</a>
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Disable timer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Starts timer after which the
+  selected output changes state.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Starts timer after which the
+  selected output changes state and then changes state again at the end of the
+  overall cycle time and repeats for the given number of repetitions.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+cycleTime:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Specifies in microseconds the
+  timer cycle time to be used. For mode 1 this is effectively the ON time.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+onTime
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Mode 2 only, specifies in
+  microseconds the timer ON time to be used within the overall ‘cycleTime’.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+reps
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Mode 2 only, specified how
+  many repetitions of the ‘cycleTime’ sequence are required.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+opMode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Indicates that a digital
+  output is to be controlled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Indicates that a Enable output
+  output is to be controlled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Indicates that a digital
+  output and enable output output are to be controlled. These are only
+  available in fixed pairs:
+</p>
+
+  
+<p>
+axis 0 + Digital Output 8
+</p>
+
+  
+<p>
+axis 1 + Digital Output 9
+</p>
+
+  
+<p>
+axis 2 + Digital Output 10
+</p>
+
+  
+<p>
+axis 3 + Digital Output 11
+</p>
+
+  
+<p>
+axis 4 + Digital Output 12
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+opSel:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+For opMode=0 this selects
+  which digital output is to be controlled; valid range is 8..15.
+</p>
+
+  
+<p>
+For opMode=1 this selects
+  which axis enable output (0..4) is to be controlled; valid range is 0..4.
+</p>
+
+  
+<p>
+For opMode=2 this selects
+  which digital output and axis enable output is to be controlled; valid range
+  is 0..4 which is interpreted as 8..12 for the corresponding digital output.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+opState:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Initial state of selected
+  output, 
+<a href="ON.html">ON</a>
+ or 
+<a href="OFF.html">OFF</a>
+.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1: </h3>
+<p>
+Request output 14 to be 
+<a href="ON.html">ON</a>
+ for 350&nbsp;µs.
+</p>
+<p class="codeexample">
+HW_TIMER(1, 350, 0, 14, ON)
+</p>
+<h3>Example 2:</h3>
+<p>
+Disable the timer after it was
+enabled previously.
+</p>
+<p class="codeexample">
+HW_TIMER(0)
+</p>
+<h3>Example 3:</h3>
+<p>
+Request enable output of axis 2
+to be 
+<a href="ON.html">ON</a>
+ for 1.5&nbsp;s.
+</p>
+<p class="codeexample">
+HW_TIMER(1, 1500000, 1, 2, ON)
+</p>
+<h3>Example 4:</h3>
+<p>
+Request digital output 9 and
+enable output of axis 1 to be 
+<a href="OFF.html">OFF</a>
+ for 200&nbsp;ms.
+</p>
+<p class="codeexample">
+HW_TIMER(1, 200000, 2, 1, OFF) : WAIT UNTIL HW_TIMER_DONE
+</p>
+<h3>Example 5:</h3>
+<p>
+Request a cycle time of 1&nbsp;s
+to be repeated 10 times with digital output 13 being 
+<a href="ON.html">ON</a>
+
+for 3500&nbsp;µs within each cycle.
+</p>
+<p class="codeexample">
+HW_TIMER(2, 1000000, 3500, 10, 0, 13, ON)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="HW_TIMER_DONE.html">HW_TIMER_DONE</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

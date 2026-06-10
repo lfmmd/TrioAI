@@ -1,0 +1,108 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REV_JOG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REV_JOG">
+</head>
+<body>
+<h1>REV_JOG</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter holds the input number to be used as a jog reverse
+input. 
+</p>
+<p>
+When the REV_JOG input is active the axis moves in reverse
+at 
+<a href="JOGSPEED.html">JOGSPEED</a>
+.
+</p>
+<p class="note">
+The input used for REV_JOG is active low. 
+</p>
+<p class="tip">
+It is advisable to use 
+<a href="INVERT_IN.html">INVERT_IN</a>
+ on
+the input for REV_JOG so that 0V at the input disables the jog.
+</p>
+<p class="note">
+<a href="FWD_JOG.html">FWD_JOG</a>
+ overrides REV_JOG
+if both are active
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+disable the input as REV_JOG (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&gt;0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input number as REV_JOG
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Initialise the REV_JOG so that it is active high on input 12
+</p>
+<p class="codeexample">
+INVERT_IN(12,ON)
+</p>
+<p class="codeexample">
+REV_JOG=12
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REV_START.html">REV_START</a>
+, 
+<a href="FWD_JOG.html">FWD_JOG</a>
+, 
+<a href="FWD_START.html">FWD_START</a>
+</p>
+</body>
+</html>

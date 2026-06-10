@@ -1,0 +1,1168 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Synchronisation</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Synchronisation</h1>
+<p class="MsoNoSpacing">
+It is possible to synchronise the robot TCP with a moving
+object or with another machine or robot. This means the robot TCP will move or
+rotate in the same directions than the synchronised object and absolute
+movements on top of it.
+</p>
+<p class="MsoNoSpacing">
+There are two types of synchronisation:
+</p>
+<p class="MsoNoSpacing" style="margin-left:36.0pt;text-indent: -18.0pt">
+1.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Object frame synchronisation 
+</p>
+<p class="MsoNoSpacing" style="margin-left:36.0pt;text-indent: -18.0pt">
+2.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>GTA synchronisation
+</p>
+<h2>Object Frame Synchronisation</h2>
+<p class="MsoNoSpacing">
+An object frame must be attached to at least an axis
+first before the robot can synchronise with.
+</p>
+<div>
+<table>
+<tr>
+<td valign="top" align="left">
+
+  
+<div>
+<p class="Safetyinfo">
+<span style="font-family:Wingdings">M<span style='font:7.0pt "Times New Roman"'> </span></span>As synchronisation and attachment
+  process do not get loaded into the move buffer, they are not cancelled by CANCEL
+  and RAPIDSTOP commands. A desynchronisation or detachment process must be
+  performed for this purpose. When a software or hardware limit is reached,
+  synchronisation and attachment are immediately stopped without deceleration.
+</p>
+</div>
+
+  
+</td>
+</tr>
+</table>
+</div>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+SYNC_TO_OBJECT_FRAME(control, time[, object frame, GTA])
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+control
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+1 = Start synchronisation
+</p>
+
+  
+<p>
+4 = Stop synchronisation. 
+</p>
+
+  
+<p>
+10 = Resynchronisation to another attached object frame
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+time
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+Time to complete the synchronisation in milliseconds.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+(optional) object
+  frame
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+Object frame already attached. Value = index or name of
+  the object frame. Not needed for control 4 (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+(optional) 
+<em><span style='font-family:"Calibri",sans-serif'>GTA</span></em></p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+GTA related to the object frame synchronised. Value = index
+  or name of GTA, or -1 for no GTA. Not needed for control value 4 (Stop
+  synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Attaching an Object Frame to Axes</h2>
+<p class="MsoNoSpacing">
+ATTACH_OBJECT_FRAME is a linking method between the
+vectors of an Object Frame and axes (up to 6) and placing it in a specific
+position. The object frame will then move along with the axes. 
+</p>
+<p class="MsoNoSpacing">
+There are two different modes to attach an object frame;
+one specially designs to work with a conveyor and another one to work with a
+multipurpose machine.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+ATTACH_OBJECT_FRAME(control, object frame, syncVector,
+  syncPos, syncAxis)
+</p>
+
+  
+<p class="codeexample">
+ATTACH_OBJECT_FRAME(control, object frame, axisX, axisY,
+  axisZ, axisU, axisV, axisW, xOffset, yOffset, zOffset, uOffset, vOffset,
+  wOffset)
+</p>
+
+  
+<p class="codeexample">
+ATTACH_OBJECT_FRAME(object frame)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+control
+</p>
+
+  
+</td>
+<td width="502" class="tablegrid">
+
+  
+<p>
+ATTACH_OBJECT_FRAME mode. 
+</p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>1 = Attach object frame with a conveyor mode</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>2 = Attach object frame with multipurpose machine mode</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>4 = Detach object frame</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+object frame
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Object Frame to attach. Value = index or name or the
+  object frame.
+</p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>When used on its own, the command will return:</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>TRUE = object frame specified is attached to a minimum of
+  1 axis</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>FALSE = object frame specified is not attached to any axes</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+syncVector
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Object Frame
+  vector that will be attached to syncAxis. 
+</p>
+
+  
+<p>
+Values: 
+</p>
+
+  
+<p>
+1 = x
+</p>
+
+  
+<p>
+2 = y
+</p>
+
+  
+<p>
+3 = z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+syncPos
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Captured position on syncAxis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+syncAxis
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Axis to synchronise with.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+axisX, axisY, axisZ,
+</p>
+
+  
+<p align="right">
+axisU, axisV, axisW
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Machine axis number that corresponds to the Object Frame
+  vector that will be attached. Set -1 for non-attached vectors.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+xOffset, yOffset,
+  zOffset,
+</p>
+
+  
+<p align="right">
+uOffset, vOffset,
+  wOffset
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Object Frame position and orientation relative to the
+  origin of the Robot
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Examples:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Example
+  1:</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Check if object frame “of2” is attached to any axes.</span></em></p>
+
+  
+<p class="codeexample">
+ATTACH_OBJECT_FRAME(
+&quot;of2&quot;
+)
+</p>
+
+  
+<p class="codeexample">
+<em><span style='font-family:"Courier New"'>&nbsp;</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Example
+  2:</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Attach object frame “pallet’ to axis 11. See </span></em><a href="#_Attach_Object_Frame">Attach Object Frame with a Conveyor</a>
+<em><span style='font-family:"Calibri",sans-serif'> section for more
+  details.</span></em></p>
+
+  
+<p class="codeexample">
+ATTACH_OBJECT_FRAME
+(
+1
+, 
+&quot;pallet&quot;
+,
+  
+1
+, registed_position, 
+11
+)
+</p>
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Example
+  3:</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Attach object frame 3 with along Y vector of axis 11 of a
+  multipurpose machine. The x and z position is offset by 400mm and Y
+  orientation is offset by 90 degrees. See </span></em><a href="#_Attach_Object_Frame_1">Attach Object Frame with a Multipurpose
+  Machine</a>
+<em><span style='font-family:"Calibri",sans-serif'>
+  section for more details.</span></em> </p>
+
+  
+<p class="codeexample">
+ATTACH_OBJECT_FRAME
+(2,
+  3, -1, 11, -1, -1, -1, -1, 400, 0, 400, 0, 90, 0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+An object frame must be created first before being attached or
+detached to axes.
+</p>
+<h3><a name="_Attach_Object_Frame"></a>
+Attach Object Frame with a Conveyor</h3>
+<p>
+As the conveyor can be in different orientations, the object
+frame can be set in multiple orientations to match the conveyor’s orientation.
+The selected object frame vector will follow the direction of the conveyor
+vector.
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>A common industry example is the picking of objects from a
+pallet and placing them onto another station or into a package. The
+synchronisation could be simplified by using Attach Object Frame technique. An
+Object Frame will be placed on the pallet in a specific position. All the
+objects will be taught relative to the Object Frame “pallet”. The Object Frame
+“pallet” will be attached to the conveyor using one of the three possible
+options: vector X, vector Y or vector Z. Bear in mind that the conveyor could not
+be perfectly aligned with the robot, so orientation data of the Object Frame
+could be used to adjust it.</span></em></p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME(1, &quot;pallet&quot;, 1, registed_position,
+11)
+</p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>After the command is executed, the Object Frame “pallet”
+will follow the conveyor precisely. At this state, the robot should be
+synchronised with the Object Frame “pallet”. Please, go to the next section to
+continue with the example.</span></em></p>
+<p>
+<img width="658" height="369" src="RPS_Reference_14_Synchronisation_files/image001.png" align="left" hspace="12">
+</p>
+<h3><a name="_Attach_Object_Frame_1"></a>
+Attach Object Frame with a Multipurpose
+Machine</h3>
+<p class="MsoNoSpacing">
+For machines with more than one axis, it is possible to
+attach the position and orientation vectors with up to 6 axes changing the
+control parameter. If, for instance, an object frame is attached to a 6 DOF
+robot arm, the position and orientation of the object frame will follow the
+robot TCP.
+</p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME(2, 3, -1, 11, -1, -1, -1, -1, 400, 0, 400,
+0, 90, 0)
+</p>
+<h2>Detaching an Object Frame from Axes</h2>
+<p>
+Use control mode 4 to detach an object frame from axes as
+shown in the example below.
+</p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME(4, &quot;of2&quot;)
+</p>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+<i><img border="0" width="646" height="336" id="Canvas 24" src="RPS_Reference_14_Synchronisation_files/image002.png">
+</i></p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>After having attached the Object Frame onto the pallet, the
+robot has to be synchronised with the Object Frame and, in this particular
+case, placed over a specific object (GTA related to the Object Frame “pallet”
+previously taught).</span></em></p>
+<p class="codeexample">
+SYNC_TO_OBJECT_FRAME(1, 1000, &quot;pallet&quot;, &quot;object_1&quot;)
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Stop synchronisation within 250&nbsp;ms.</span></em></p>
+<p class="codeexample">
+SYNC_TO_OBJECT_FRAME(4, 250)
+</p>
+<h2>GTA Synchronisation</h2>
+<p>
+GTA synchronisation is designed for simpler
+synchronisations. It synchronises the robot TCP with one axis in X direction.
+If the robot is not aligned perfectly with X direction, Object Frame can always
+be previously set and selected.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+SYNC_TO_GTA(control, time[, syncPos, syncAxis, object frame,
+  GTA])
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+control
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+1 = Start synchronisation
+</p>
+
+  
+<p>
+4 = Stop synchronisation
+</p>
+
+  
+<p>
+10 = Resynchronisation to another GTA
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+time
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+Time to complete the synchronisation in milliseconds.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+(optional) syncPos
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+Captured position on syncAxis. Not needed for control
+  value 4 (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+(optional) syncAxis
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+Axis to synchronise with. Not needed for control value 4
+  (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+(optional) object
+  frame
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+Object frame related to selected GTA. Value = index or
+  name of the object frame, or 0 (default) for no Object Frame. Not needed for
+  control value 4 (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+(optional) 
+<em><span style='font-family:"Calibri",sans-serif'>GTA</span></em></p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+GTA to sync with. Value = index or name of GTA, or -1 for
+  no GTA. Not needed for control value 4 (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><em><span style='font-family:"Cambria",serif'>Examples</span></em></h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+<i><img border="0" width="646" height="340" id="Canvas 31" src="RPS_Reference_14_Synchronisation_files/image003.png">
+</i></p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Products are placed in a conveyor belt randomly. They are
+then to be picked and placed to a specific position. A camera vision system
+will process the position and orientation of the products and send this
+information to the controller. Depending on the camera technology used, the
+information can be sent using an Ethernet socket connection or Trio ActiveX.
+The offsets measured for the camera are relative to the camera origin and
+therefore we need to tell the system where that origin is using OBJECT_FRAME. </span></em></p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Bear in mind that the robot will be synced with X direction,
+so the X vector of the OBJECT_FRAME should be aligned with the direction of the
+conveyor. After setting the OBJECT_FRAME in the camera origin, a GTA should be
+set with the offset detected. In this example, the camera will send 5
+parameters to a table data:</span></em></p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></em></p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="63" valign="top" class="tablegrid">
+
+  
+<p>
+<b>TABLE</b></p>
+
+  
+</td>
+<td width="140" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Contents</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="63" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="140" valign="top" class="tablegrid">
+
+  
+<p>
+X offset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="63" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="140" valign="top" class="tablegrid">
+
+  
+<p>
+Y offset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="63" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="140" valign="top" class="tablegrid">
+
+  
+<p>
+Orientation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="63" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td width="140" valign="top" class="tablegrid">
+
+  
+<p>
+Conveyor position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="63" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td width="140" valign="top" class="tablegrid">
+
+  
+<p>
+Detected flag
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+fixed_z = 50 'Z will always be the same due to conveyor is
+parallel to the ground
+<br>
+
+
+<br>
+
+'Open gripper
+<br>
+
+OP(gripper, OFF)
+<br>
+
+
+<br>
+
+SYNC_TO_GTA(4, 500) 'Desync in 500ms
+<br>
+
+WAIT UNTIL SYNC_CONTROL = 0 'Wait until fully desync
+<br>
+
+
+<br>
+
+WAIT UNTIL TABLE(4) = 1 'Wait until product is detected
+<br>
+
+TABLE(4, 0) 'Reset product detected
+<br>
+
+
+<br>
+
+'Set GTA value with camera measured offsets
+<br>
+
+GTA(0) = TABLE(0), TABLE(1), fixed_z, 180,0, TABLE(2)
+<br>
+
+
+<br>
+
+'Register conveyor position when camera detects the product
+<br>
+
+registed_position = TABLE(3)
+<br>
+
+
+<br>
+
+'Sync to axis 10, GTA(0) in Object Frame &quot;camera&quot; (1) in 2000&nbsp;ms
+<br>
+
+SYNC_TO_GTA(1, 2000, registed_position, 10, 1, 0)
+<br>
+
+WAIT UNTIL SYNC_CONTROL = 3 'Wait until fully synced
+<br>
+
+
+<br>
+
+'Close gripper
+<br>
+
+OP(gripper, ON)
+<br>
+
+WA(200) 'Wait for gripper close
+<br>
+
+
+<br>
+
+SYNC_TO_GTA(4, 500) 'Desync in 500ms
+<br>
+
+WAIT UNTIL SYNC_CONTROL = 0 'Wait until fully desync
+<br>
+
+
+<br>
+
+STOP
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Stop synchronisation within 250&nbsp;ms.</span></em></p>
+<p class="codeexample">
+SYNC_TO_OBJECT_FRAME(4, 250)
+</p>
+<h2><em><span style='font-family:"Cambria",serif'>Synchronisation Status</span></em></h2>
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>To check if the robot is already being synchronised, use
+axis parameter SYNC_CONTROL.</span></em></p>
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>When synchronised with Object Frame, specify the axis of the
+robot that has been synchronised. </span></em></p>
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>When synchronised with GTA, the robot is synchronised to
+axis X and therefore it is not necessary to specify the robot axis.</span></em></p>
+<h3><em><span style='font-family:"Cambria",serif'>Syntax</span></em></h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+SYNC_CONTROL
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Values:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="31" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="641" valign="top" class="tablegrid">
+
+  
+<p>
+No synchronisation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="31" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>3</span></em></p>
+
+  
+</td>
+<td width="641" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Synchronised</span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><em><span style='font-family:"Cambria",serif'>Examples</span></em></h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Wait for axis 2 to be synchronised before picking a part.</span></em></p>
+<p class="codeexample">
+WAIT UNTIL SYNC_CONTROL AXIS(2) = 3
+<br>
+
+GOSUB pick_part
+<em><span style='font-family:"Courier New"'> </span></em></p>
+<p class="codeexample">
+<em><span style='font-family:"Courier New"'>&nbsp;</span></em></p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Wait for robot to be synchronised.</span></em></p>
+<p class="codeexample">
+WAIT UNTIL SYNC_CONTROL = 3
+</p>
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></em></p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

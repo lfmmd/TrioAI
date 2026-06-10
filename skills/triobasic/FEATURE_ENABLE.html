@@ -1,0 +1,530 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FEATURE_ENABLE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FEATURE_ENABLE">
+</head>
+<body>
+<h1>FEATURE_ENABLE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+FEATURE_ENABLE[(feature_number[, &quot;password&quot;])]
+</p>
+<h2>Description:</h2>
+<p>
+Motion Coordinators can unlock additional features by
+entering a “Feature Enable Code”, or FEC. This function is used to enable
+protected features, such as additional remote axes on digital dive networks or
+other programming languages. This can only be run on the command line.
+</p>
+<p class="note">
+It is recommended to use Motion Perfect to enter and store the
+feature enable codes.
+</p>
+<p>
+The password parameter is optional, if it is omitted then
+the command will prompt you to enter it.
+</p>
+<p class="tip">
+You can purchase additional feature codes from the Trio Website or
+through your distributor, you will need the SERIAL_NUMBER of the controller.
+</p>
+<p class="warning">
+If you enter the wrong password 3 times the controller will
+enter an attack state where it stops communicating. You can resume normal
+operation by power cycling the controller. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="18" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+feature_number:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+None
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Prints the security code and currently enabled
+  features.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 remote axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 remote axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4 remote axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8 remote axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16 remote axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32 remote axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6-11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved use
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 remote axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+13
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 remote axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+14
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4 remote axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8 remote axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16 remote axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32 remote axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+18-20
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved use
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+21
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IEC runtime
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+22-31
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis upgrade
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+24-31
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved use
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+password:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The password for the required feature code
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+When enabling a feature, a password is required.
+</p>
+<p class="note">
+When entering a password always enter the characters in upper
+case. Take care to check that 0 (zero) is not confused with O and 1 (one) is
+not confused with I.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Check the enabled features on a controller
+</p>
+<p class="codeexample">
+&gt;&gt;FEATURE_ENABLE
+</p>
+<p class="codeexample">
+Security code=17980000000028
+</p>
+<p class="codeexample">
+Enabled features: 0 1
+</p>
+<p class="note">
+Features 0 and 1 are enabled so an additional 3 axes on top of
+the built-in axes included with the module. 
+</p>
+<h3>Example 2:</h3>
+<p>
+Enable an additional 4 axes (feature 2). For this controller
+and this feature, the password is 5P0APT.
+</p>
+<p class="codeexample">
+&gt;&gt;FEATURE_ENABLE(2)
+</p>
+<p class="codeexample">
+Feature 2 Password=5P0APT
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p class="codeexample">
+&gt;&gt;FEATURE_ENABLE
+</p>
+<p class="codeexample">
+Security code=17980000000028
+</p>
+<p class="codeexample">
+Enabled features: 0 1 2 
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SERIAL_NUMBER.html">SERIAL_NUMBER</a>
+</p>
+</body>
+</html>

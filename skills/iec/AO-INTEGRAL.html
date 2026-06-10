@@ -1,0 +1,363 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INTEGRAL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INTEGRAL">
+</head>
+<body>
+<h1><a name="_Toc317749496"></a>
+<a name="O_1510"></a>
+INTEGRAL</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+Calculates the integral of a signal.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>RUN</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Run command: TRUE=integrate / FALSE=hold.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>R1</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Overriding reset.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>XIN</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input signal.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>X0</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initial value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>CYCLE</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>TIME</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sampling period (should not be less than the target
+  cycle timing).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Q</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>DINT&nbsp;
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Running mode report: NOT (R1).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>XOUT</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Output signal.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+In LD language, the input rung is the RUN command. The
+output rung is the Q report status.
+</p>
+<h2>ST Language</h2>
+<p>
+MyIntg is a declared instance of INTEGRAL function block.
+</p>
+<p class="fixed">
+MyIntg (RUN, R1, XIN, X0, CYCLE);
+<br>
+
+Q := MyIntg.Q;
+<br>
+
+XOUT := MyIntg.XOUT;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="191" height="122" src="AO-INTEGRAL_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+<img width="259" height="111" src="AO-INTEGRAL_files/image002.gif">
+</p>
+<h2>IL Language</h2>
+<p>
+MyIntg is a declared instance of INTEGRAL function block.
+</p>
+<p class="fixed">
+Op1: CAL MyIntg (RUN, R1, XIN, X0, CYCLE)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyIntg.Q
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; Q
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyIntg.XOUT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; XOUT
+</p>
+<h2>See also</h2>
+<p>
+<a href="AO-AVERAGE.html">AVERAGE</a>
+</p>
+<p>
+<a href="AO-DERIVATE.html">DERIVATE</a>
+</p>
+<p>
+<a href="AO-LIM_ALRM.html">LIM_ALRM</a>
+</p>
+<p>
+<a href="AO-HYSTER.html">HYSTER</a>
+</p>
+<p>
+<a href="AO-STACKINT.html">STACKINT</a>
+<a name="H_1261"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

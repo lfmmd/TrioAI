@@ -1,0 +1,60 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SYSTEM_LOAD</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SYSTEM_LOAD">
+</head>
+<body>
+<h1>SYSTEM_LOAD</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+SYSTEM_LOAD returns the amount of time that is used by the
+system and motion software.  The value is expressed as a percentage of the
+current servo period.  The remaining time, that is 100 minus SYSTEM_LOAD
+percent, is therefore available to the application programs.
+</p>
+<p class="warning">
+When setting 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+
+appropriate to the number of axes running, the value of SYSTEM_LOAD should
+normally not be more than 55%.
+</p>
+<h2>Value:</h2>
+<p>
+The percentage of the servo period time that is used for
+system and motion processing. 
+</p>
+<h2>Example:</h2>
+<p>
+From the terminal 0 command line, read the percentage of
+servo time being used by the system firmware.
+</p>
+<p class="codeexample">
+&gt;&gt;?SYSTEM_LOAD
+</p>
+<p class="codeexample">
+23.1390
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+The remaining processing time, 76.8610% is available for the
+multi-tasking BASIC or IEC61131-3 programs.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SYSTEM_LOAD_MAX.html">SYSTEM_LOAD_MAX</a>
+</p>
+</body>
+</html>

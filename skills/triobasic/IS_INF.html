@@ -1,0 +1,93 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IS_INF</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IS_INF">
+</head>
+<body>
+<h1>IS_INF</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = IS_INF(expression)
+</p>
+<h2>Description:</h2>
+<p>
+Check the value of a stored variable. Tests to see if the
+value is a floating-point infinite number and therefore likely to cause an
+expression to generate a BASIC Error.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid numeric expression.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+IF IS_INF(TABLE(3000)) THEN
+</p>
+<p class="codeexample">
+    PRINT &quot;TABLE(3000) is Infinity&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Check all VRs in the MC403 and remove Infinite values
+</p>
+<p class="codeexample">
+FOR i = 0 TO 4095
+</p>
+<p class="codeexample">
+    IF IS_INF(VR(i)) THEN
+</p>
+<p class="codeexample">
+        VR(i) = 0
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+NEXT i
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2>See also: </h2>
+<p>
+<a href="IS_NAN.html">IS_NAN</a>
+</p>
+</body>
+</html>

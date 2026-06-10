@@ -1,0 +1,127 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AUTO_PROFINET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AUTO_PROFINET">
+</head>
+<body>
+<h1>AUTO_PROFINET</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG only)
+</p>
+<h2>Description:</h2>
+<p>
+Controls the action of the system software on power up. If
+present, the ProfiNET network is initialised automatically on power up or soft
+reset (EX). If this is not required, then setting AUTO_ETHERCAT to OFF will
+prevent the ProfiNET from being set up and it is then up to the programmer to
+start the ProfiNET network from a BASIC program.
+</p>
+<p class="note">
+ProfiNET name of the controller will be assigned the default
+name, i.e. : trio-&lt;controller name&gt;-&lt;5 digit serial number&gt;. For
+example, trio-f6nano-00260. 
+</p>
+<p class="note">
+This command should not be used in a TrioBASIC program. You must
+use it in the special MC_CONFIG script which runs automatically on power up.
+This parameter is NOT stored in FLASH.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ProfiNET network does not initialise on power up.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ProfiNET network starts on power up.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+Prevent the ProfiNET system from starting on power up.
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+AUTO_PROFINET = OFF
+</p>
+<h3>Example 2:</h3>
+<p>
+Allow the EtherCAT network to start on power up and allow
+the ProfiNET name of the controller to be the default name.
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+AUTO_PROFINET = ON
+</p>
+</body>
+</html>

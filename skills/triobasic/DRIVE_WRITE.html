@@ -1,0 +1,311 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_WRITE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_WRITE">
+</head>
+<body>
+<h1>DRIVE_WRITE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+result = DRIVE_WRITE (parameter, value)
+</p>
+<h2>Description:</h2>
+<p>
+DRIVE_WRITE allows the controller to write to a parameter
+from a digital bus connected drive. Currently this is supports Panasonic A4N,
+A5N and A6N RTEX drives. 
+</p>
+<p class="note">
+The parameter numbers and details can be found in the Motion
+Perfect intelligent drives tool. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+result:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DRIVE_WRITE was successful 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DRIVE_WRITE failed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter_number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A4N parameter to write
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+class * 256 + parameter_number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A5N/A6N parameter to write
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+128
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Stores all drive parameters into EPROM
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+129
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Resets all drive parameters to default values
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value to be written to the parameter.
+</p>
+
+  
+<p class="tablecontent">
+(Use 0 for parameter numbers 128 &amp; 129)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Write parameter 122, encoder scale on an A4N drive
+</p>
+<p class="codeexample">
+success = DRIVE_WRITE(122, 10000)
+</p>
+<p class="codeexample">
+If success = 0 THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Error writing drive parameter&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Encoder scale set&quot;
+</p>
+<p class="codeexample">
+ENDIF 
+</p>
+<h3>Example 2:</h3>
+<p>
+Write class 0 parameter 8, encoder scale on an A5N drive
+</p>
+<p class="codeexample">
+success = DRIVE_WRITE(0 * 256 + 8, 15000)
+</p>
+<p class="codeexample">
+If success = 0 THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Error writing drive parameter&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Encoder scale set&quot;
+</p>
+<p class="codeexample">
+ENDIF 
+</p>
+<h3>Example 3:</h3>
+<p>
+Store all drive parameters in EPROM
+</p>
+<p class="codeexample">
+success = DRIVE_WRITE(128, 0)
+</p>
+<p class="codeexample">
+IF success = 0 THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Error storing drive parameters to
+EPROM&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Drive parameters stored in EPROM&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 4:</h3>
+<p>
+Reset all drive parameters to default values
+</p>
+<p class="codeexample">
+success = DRIVE_WRITE(129, 0)
+</p>
+<p class="codeexample">
+IF success = 0 THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Error resetting drive parameters&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Drive parameters reset to defaults&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+</body>
+</html>

@@ -1,0 +1,135 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>BASICERROR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="BASICERROR">
+</head>
+<body>
+<h1>BASICERROR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Description:</h2>
+<p>
+This command is used as part of an ON..
+<a href="GOSUB.html">GOSUB</a>
+
+or ON.. 
+<a href="GOTO.html">GOTO</a>
+ as a means of handling program errors. 
+<span style='font-family:"Courier New"'>ON BASICERROR GOTO [or GOSUB] label_name</span>
+must be written as one of the first active program lines in the BASIC program. When
+the runtime engine detects an error, the routine at label_name will be called
+and processing will then continue from the first line after the label.
+</p>
+<p class="note">
+The handler will only be called once, so if you need to keep it
+active after processing the error, you need to run the ON BASICERROR line again
+</p>
+<p class="note">
+The handler will also be called on program termination, so a test
+may need including to see if 
+<a href="RUN_ERROR.html">RUN_ERROR</a>
+ is equal to
+31 (Program is stopped)
+</p>
+<p>
+Later versions of firmware include the ability to create
+function libraries. Any runtime error that occurs while processing lines in the
+FUNCTION will not trigger the ON BASICERROR and the error will cause the
+program to stop as if there is no ON BASICERROR set up.
+</p>
+<h2>Example:</h2>
+<h3>Example 1:</h3>
+<p>
+When a program error occurs, print the error to the terminal
+and stop all the motion only in case the error routine has not been executed
+due to a normal stopping of the program.
+</p>
+<p class="codeexample">
+ON BASICERROR GOTO error_routine
+</p>
+<p class="codeexample">
+'(rest of program)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Run time error handling
+</p>
+<p class="codeexample">
+error_routine:
+</p>
+<p class="codeexample">
+  IF RUN_ERROR &lt;&gt; 31 THEN
+</p>
+<p class="codeexample">
+    'If there is a run time error then stop the machine as
+per a program stop
+</p>
+<p class="codeexample">
+    RAPIDSTOP(2)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    'Print the run error if the program is not stopping
+normally
+</p>
+<p class="codeexample">
+    PRINT &quot;RUN_ERROR = &quot;; RUN_ERROR[0], &quot;ERROR_LINE
+= &quot;; ERROR_LINE[0]
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+STOP
+</p>
+<h3>Example 2:</h3>
+<p>
+When a program error occurs, print the error to the terminal
+and record the error number in a 
+<a href="VR.html">VR</a>
+ so that it can be
+displayed on an HMI through Modbus.
+</p>
+<p class="codeexample">
+ON BASICERROR GOTO error_routine
+</p>
+<p class="codeexample">
+'(rest of program)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+error_routine:
+</p>
+<p class="codeexample">
+  VR(100) = RUN_ERROR
+</p>
+<p class="codeexample">
+  PRINT &quot;The error &quot;; RUN_ERROR[0];
+</p>
+<p class="codeexample">
+  PRINT &quot; occurred in line &quot;; ERROR_LINE[0]
+</p>
+<p class="codeexample">
+STOP
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RUN_ERROR.html">RUN_ERROR</a>
+, 
+<a href="ERROR_LINE.html">ERROR_LINE</a>
+<span class="MsoHyperlink">, </span><a href="_Errors.html">TrioBASIC
+Errors</a>
+</p>
+</body>
+</html>

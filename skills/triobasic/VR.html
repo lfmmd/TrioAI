@@ -1,0 +1,280 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VR">
+</head>
+<body>
+<h1>VR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = VR(index)
+</p>
+<p class="fixed">
+array = VR(first index, last index)
+</p>
+<p class="fixed">
+VR(index) = value
+</p>
+<h2>Description:</h2>
+<p>
+Recall or assign a single global floating-point value by
+index, starting from 0. Alternatively a range of floating-point values can be
+read as an array (1D) of floating-point values that could be copied to another
+area of VR/TABLE memory or a locally defined array.
+</p>
+<p>
+The number of elements in VR varies across controllers and
+can be determined using the 
+<a href="VRSIZE.html">VRSIZE</a>
+ keyword, so the valid
+index range is from 0 to VRSIZE&nbsp;-&nbsp;1.
+</p>
+<p>
+VR can be used as an array or partitioned as several arrays.
+VR can also be used to hold ASCII representations of STRINGS and can be
+assigned with a string value. To read the string value back you must use 
+<a href="VRSTRING.html">VRSTRING</a>
+.
+</p>
+<p class="tip">
+The numbered variables are globally shared between programs and
+can be used for communication between programs, so care is needed when multiple
+programs manipulate the same VR.
+</p>
+<p class="note">
+All VR are stored as 64-bit floating-point values, encoded
+following the IEEE-754 standard (53 significant bits, 1 sign bit and 11
+exponent bits). As such, integers that require more than 53 bits will incur
+precision loss during the conversion to floating-point.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value written to or read from the VR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index:
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The index of a single VR to read or write
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+array
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1D array of values read from a consecutive range of VR
+  indices
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+first index, last index
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Range of VR indices to read from as a 1D array
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Put value 1.2555 into VR variable 15. Note local variable
+‘val’ used to give name to global variable:
+</p>
+<p class="codeexample">
+val = 15
+</p>
+<p class="codeexample">
+VR(val) = 1.2555
+</p>
+<h3>Example 2:</h3>
+<p>
+A transfer gantry has 10 put down positions in a row and each
+position may at any time be FULL or EMPTY. VR(101) to VR(110) are used to hold
+an array of ten 1’s or 0’s to signal that the positions are full (1) or empty (0),
+and the gantry should place the load in the first free position. Part of the
+program to achieve this would be:
+</p>
+<p class="codeexample">
+movep:
+</p>
+<p class="codeexample">
+  MOVEABS(115) 'Move to first put down position:
+</p>
+<p class="codeexample">
+  FOR VR(0) = 101 TO 110
+</p>
+<p class="codeexample">
+    IF VR(VR(0)) = 0 THEN 
+</p>
+<p class="codeexample">
+      GOSUB load
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+    MOVE(200)  '200 is spacing between positions
+</p>
+<p class="codeexample">
+  NEXT VR(0)
+</p>
+<p class="codeexample">
+  PRINT &quot;All Positions Are Full&quot;
+</p>
+<p class="codeexample">
+  WAIT UNTIL IN(3) = ON
+</p>
+<p class="codeexample">
+  GOTO movep
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+load:
+</p>
+<p class="codeexample">
+  'Put load in position and mark array
+</p>
+<p class="codeexample">
+  OP(15, OFF)
+</p>
+<p class="codeexample">
+  VR(VR(0)) = 1
+</p>
+<h3>Example 3:</h3>
+<p>
+Assign VR(65) with the value VR(0) multiplied by Axis 1
+measured position 
+</p>
+<p class="codeexample">
+VR(65) = VR(0) * MPOS AXIS(1)
+</p>
+<p class="codeexample">
+PRINT VR(65)
+</p>
+<h3>Example 4:</h3>
+<p>
+Write a string into a sequence of VR’s starting at index 10
+</p>
+<p class="codeexample">
+VR(10) = &quot;Hello World&quot;
+</p>
+<p class="codeexample">
+PRINT VR(10)       '72 (ASCII for H)
+</p>
+<p class="codeexample">
+PRINT CHR(VR(10))  'H
+</p>
+<p class="codeexample">
+PRINT VRSTRING(10) 'Hello World
+</p>
+<h3>Example 5:</h3>
+<p>
+Copy a range of VR’s to a local integer 2D array
+</p>
+<p class="codeexample">
+DIM myints as INTEGER(5,20)
+</p>
+<p class="codeexample">
+myints(2) = VR(1000,1019) ‘Row 2 will be populated with
+VRs
+</p>
+<p class="codeexample">
+PRINT myints
+</p>
+<h3>Example 6:</h3>
+<p>
+Copy a range of VR’s to another area of VR and TABLE memory
+</p>
+<p class="codeexample">
+VR(1000) = VR(2000,2499) ‘Copy VRs 2000..2499 to 1000
+</p>
+<p class="codeexample">
+TABLE(0,VR(100,199)) ‘Copy VRs 100..199 to TABLE address 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See also:</h2>
+<p>
+<a href="VRSIZE.html">VRSIZE</a>
+, 
+<a href="VRSTRING.html">VRSTRING</a>
+</p>
+</body>
+</html>

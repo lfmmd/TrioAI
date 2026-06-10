@@ -1,0 +1,86 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INDEVICE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INDEVICE">
+</head>
+<body>
+<h1>INDEVICE </h1>
+<h2>Type:</h2>
+<p class="Category">
+Process Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+This parameter specifies the default active input device.
+Specifying an INDEVICE for a process allows the channel number for a program to
+set for all subsequent 
+<a href="GET.html">GET</a>
+, 
+<a href="KEY.html">KEY</a>
+, 
+<a href="INPUT.html">INPUT</a>
+ and 
+<a href="LINPUT.html">LINPUT</a>
+ statements.
+</p>
+<p class="note">
+This command is process specific so other processes will use the
+default channel. 
+</p>
+<p class="note">
+This command is available for backward compatibility, it is
+currently recommended to use #channel, instead.
+</p>
+<h2> Value:</h2>
+<p>
+The channel number to use for any inputs
+</p>
+<p class="note">
+For a full list of communication channels see #
+</p>
+<h2>Example:</h2>
+<p>
+Set up a program to use channel 5 by default for any 
+<a href="GET.html">GET</a>
+ commands
+</p>
+<p class="codeexample">
+INDEVICE = 5
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Get character on channel 5:
+</p>
+<p class="codeexample">
+IF KEY THEN
+</p>
+<p class="codeexample">
+  GET k
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="HASH.html">#</a>
+, 
+<a href="GET.html">GET</a>
+, 
+<a href="INPUT.html">INPUT</a>
+, 
+<a href="KEY.html">KEY</a>
+, 
+<a href="LINPUT.html">LINPUT</a>
+,
+
+<a href="OUTDEVICE.html">OUTDEVICE</a>
+, 
+<a href="PROC.html">PROC</a>
+</p>
+</body>
+</html>

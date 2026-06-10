@@ -1,0 +1,173 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>R_REGPOS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="R_REGPOS">
+</head>
+<body>
+<h1>R_REGPOS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+R_REGPOS(expression)
+</p>
+<h2>Description:</h2>
+<p>
+Stores the latest position at which a registration mark was
+seen on the axis in user units. This parameter is used with the time based
+registration channel that was set by the 
+<a href="REGIST.html">REGIST</a>
+
+command.
+</p>
+<p class="note">
+This is an AXIS parameter, so you need to ensure that you are
+using this parameter with the same AXIS that you used to set the REGIST so to
+ensure that the correct UNITS are used.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Expression:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression. The result of the
+  expression should be a valid integer channel number.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Value:</h2>
+<p>
+The absolute position in user 
+<a href="UNITS.html">UNITS</a>
+
+at which the registration event occurred.
+</p>
+<h2>Example:</h2>
+<p>
+A paper cutting machine uses a cam profile shape to quickly
+draw paper through servo driven rollers then stop it whilst it is cut. The
+paper is printed with a registration mark. This mark is detected, and the
+length of the next sheet is adjusted by scaling the cam profile with the third
+parameter of the 
+<a href="CAM.html">CAM</a>
+ command:
+</p>
+<p class="codeexample">
+'Example Registration Program using CAM
+stretching:
+</p>
+<p class="codeexample">
+'Set window open and close:
+</p>
+<p class="codeexample">
+Length = 200 
+</p>
+<p class="codeexample">
+OPEN_WIN = 100
+</p>
+<p class="codeexample">
+CLOSE_WIN = 130
+</p>
+<p class="codeexample">
+GOSUB initial
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+loop:
+</p>
+<p class="codeexample">
+  TICKS = 0 'Set millisecond counter to 0
+</p>
+<p class="codeexample">
+  IF R_MARK(0) THEN
+</p>
+<p class="codeexample">
+    Offset = R_REGPOS(0)
+</p>
+<p class="codeexample">
+    'This next line makes offset -ve if at end of sheet:
+</p>
+<p class="codeexample">
+    IF ABS(offset - length) &lt; offset THEN offset =
+offset - length
+</p>
+<p class="codeexample">
+    PRINT &quot;Mark seen at:&quot;; offset[5, 1]
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    Offset = 0
+</p>
+<p class="codeexample">
+    PRINT &quot;Mark not seen&quot;
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  ' Reset registration prior to each move:
+</p>
+<p class="codeexample">
+  DEFPOS(0)
+</p>
+<p class="codeexample">
+  REGIST(32, 0, 0, 0, 1) 'Allow mark to be seen between
+100 and 130
+</p>
+<p class="codeexample">
+  CAM(0, 50, (length + offset * 0.5) * cf, 1000)
+</p>
+<p class="codeexample">
+  WAIT UNTIL TICKS &lt; -500
+</p>
+<p class="codeexample">
+GOTO loop
+</p>
+<p>
+(variable “cf” is a constant which would be calculated
+depending on the machine draw length per encoder edge)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REGIST.html">REGIST</a>
+, 
+<a href="REG_POS.html">REG_POS</a>
+,
+
+<a href="REG_POSB.html">REG_POSB</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

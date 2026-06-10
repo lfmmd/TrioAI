@@ -1,0 +1,401 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ROBOT_ERROR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ROBOT_ERROR">
+</head>
+<body>
+<h1>ROBOT_ERROR</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Parameter (Read Only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ROBOT_ERROR(group)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the errors present in the RPS 2.0 kernel. There may
+be multiple errors present, with the value in the table below showing what each
+bit set represents.
+</p>
+<p class="note">
+ROBOT_ERROR requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+<p class="note">
+RPS 2.0 kernel must be activated using the RPS_KERNEL_V2 keyword
+to enable its use.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Invalid I/O
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Invalid key switch
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Kinematic group changed while
+  activated
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Kinematic group I/O changed while
+  activated
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Kinematic group activated when not set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Kinematic group activated when I/O not
+  set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Operating mode changed while not idle
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+128
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Safety condition triggered
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+256
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Emergency stop triggered
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="52" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+512
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Drive not enabled
+ </p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Detect an emergency stop activation in Robot(0).
+</p>
+<p class="codeexample">
+IF (ROBOT_ERROR(0) AND 256) &lt;&gt; 0 THEN
+<br>
+
+   ‘Emergency stop has been triggered
+<br>
+
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_RPS_KERNEL_V2.html">RPS_KERNEL_V2</a>
+</p>
+</body>
+</html>

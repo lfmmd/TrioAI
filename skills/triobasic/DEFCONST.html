@@ -1,0 +1,147 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DEFCONST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DEFCONST">
+</head>
+<body>
+<h1>DEFCONST</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Constant
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DEFCONST name value
+</p>
+<h2>Description:</h2>
+<p>
+DEFCONST defines a literal name with a value, either integer
+or floating point.
+</p>
+<p class="warning" style="margin-left:0cm">
+These literals can then be used with array declarations or
+switch statements or any general line of BASIC.  They can be added to INCLUDE
+files and referenced within the INCLUDE file itself or the main program that
+uses the INCLUDE file.
+</p>
+<p class="note">
+DEFCONST is evaluated at compile time. This limits its use for
+certain runtime functionality. For example, “DEFCONST process_number
+PROCNUMBER” will not work since DEFCONST does not know which process the
+program is on in runtime.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any user-defined name containing lower case alpha,
+  numerical or underscore (_) characters.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value or evaluated expression assigned to the name.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Declare 4 constant literals.
+</p>
+<p class="codeexample">
+DEFCONST mysize 20
+</p>
+<p class="codeexample">
+DEFCONST fval SIN(90)
+</p>
+<p class="codeexample">
+DEFCONST i1 7
+</p>
+<p class="codeexample">
+DEFCONST i2 i1 * 1000
+</p>
+<p class="codeexample">
+<b><i>&nbsp;</i></b></p>
+<p class="codeexample">
+DIM myarray AS INTEGER(mysize)
+</p>
+<h3>Example 2:</h3>
+<p>
+Use a constant with SELECT_CASE.
+</p>
+<p class="codeexample">
+DEFCONST errorval 100
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+SELECT_CASE swval
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    CASE 0
+</p>
+<p class="codeexample">
+        PRINT &quot;valid data&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    CASE errorval
+</p>
+<p class="codeexample">
+        PRINT &quot;SWVAL invalid&quot;
+</p>
+<p class="codeexample">
+END_CASE
+</p>
+<h2>See Also:</h2>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,624 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>GTAMAP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="GTAMAP">
+</head>
+<body>
+<h1>GTAMAP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command 
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+value = GTAMAP
+</p>
+<h2>Description:</h2>
+<p>
+Returns a string showing which GTA indices represent
+cartesian coordinates (i.e. were set using GTA, or GTAE with an explicit point
+type of 0). Each character represents a nybble (half a byte, or 4 bits) in the
+form of a hexadecimal character (‘0’ to ‘F’), with the low GTA indices being
+stored in the high order bits, as illustrated below.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="79" valign="top" class="tablegrid">
+
+  
+<p>
+<b>GTA</b></p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+0
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+1
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+2
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+3
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+4
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+5
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+6
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+7
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+8
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+9
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+10
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+11
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="79" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Character</b></p>
+
+  
+</td>
+<td width="236" colspan="4" valign="top" class="tablegrid">
+
+  
+<p align="center">
+0
+</p>
+
+  
+</td>
+<td width="236" colspan="4" valign="top" class="tablegrid">
+
+  
+<p align="center">
+1
+</p>
+
+  
+</td>
+<td width="236" colspan="4" valign="top" class="tablegrid">
+
+  
+<p align="center">
+2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="79" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Bit</b></p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+3
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+2
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+1
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+0
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+3
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+2
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+1
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+0
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+3
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+2
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+1
+</p>
+
+  
+</td>
+<td width="59" valign="top" class="tablegrid">
+
+  
+<p align="center">
+0
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+It is recommended to use GTAEMAP in preference to GTAMAP, as
+it handles all point types in a uniform manner, so GTAEMAP(0) is functionally
+equivalent to GTAMAP, as a point type of 0 represents cartesian coordinates.
+</p>
+<h2>Examples:</h2>
+<p class="codeexample">
+GTA
+(
+0
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTA
+(
+1
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTAJ
+(
+2
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTA
+(
+3
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTAJ
+(
+4
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTA
+(
+5
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTA
+(
+6
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTAJ
+(
+7
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTAJ
+(
+8
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTAJ
+(
+9
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTA
+(
+10
+) = 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+GTAJ
+(
+11
+) =
+
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+, 
+6
+<br>
+
+
+<br>
+
+
+PRINT
+ &quot;GTAMAP =
+&quot;
+; 
+LEFT
+(
+GTAMAP
+,
+
+10
+)
+<br>
+
+
+PRINT
+ &quot;GTAJMAP
+= &quot;
+; 
+LEFT
+(
+GTAJMAP
+, 
+10
+)
+<br>
+
+
+PRINT
+ &quot;GTAEMAP(0)
+= &quot;
+; 
+LEFT
+(
+GTAEMAP
+(
+0
+), 
+10
+)
+<br>
+
+
+PRINT
+ &quot;GTAEMAP(1)
+= &quot;
+; 
+LEFT
+(
+GTAEMAP
+(
+1
+), 
+10
+)
+</p>
+<p>
+Displays the following on the terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;GTAMAP = D620000000
+<br>
+
+GTAJMAP = 29D0000000
+<br>
+
+GTAEMAP(0) = D620000000
+<br>
+
+GTAEMAP(1) = 29D0000000
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_GTA.html">GTA</a>
+, 
+<a href="RPS_GTAE.html">GTAE</a>
+,
+
+<a href="RPS_GTAJ.html">GTAJ</a>
+, 
+<a href="RPS_GTAEMAP.html">GTAEMAP</a>
+, 
+<a href="RPS_GTAJMAP.html">GTAJMAP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,173 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TARGET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TARGET">
+</head>
+<body>
+<h1>TARGET</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Type
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+DIM &lt;var-list&gt; AS TARGET
+</p>
+<p class="codeexample">
+&lt;target-variable&gt; = x, y, z, u, v, w
+</p>
+<p class="codeexample">
+&lt;target-variable&gt; = &lt;target-variable&gt;
+</p>
+<h2>Description:</h2>
+<p>
+TARGET is a datatype to store position and orientation and is
+commonly used with robotic move commands, such as 
+<a href="RPS_MOVEC.html">MOVEC</a>
+,
+
+<a href="RPS_MOVEJ.html">MOVEJ</a>
+ and 
+<a href="RPS_MOVEL.html">MOVEL</a>
+.
+TARGET variables are for local use only and can be defined just as other variables
+in a program. For global use, use the global target array (see 
+<a href="RPS_GTA.html">GTA</a>
+). 
+</p>
+<p class="MsoNoSpacing">
+It is possible to have an array of local targets by
+defining the dimensions it in the declaration statement:
+</p>
+<p class="codeexample">
+DIM
+ point4 
+AS
+ TARGET
+(
+10
+)
+</p>
+<p>
+It is possible read from and write into the target’s
+elements using the ‘dot’ notation (“.”) as shown in the table below:
+</p>
+<p class="codeexample">
+x_val = tgt.x
+</p>
+<p class="codeexample">
+tgt.y
+ =
+ 12.2
+</p>
+<p class="MsoNoSpacing">
+Assignment between targets, both local and global, is
+possible:
+</p>
+<p class="codeexample">
+GTA(20) = GTA(14)
+</p>
+<p class="codeexample">
+GTA(10).x = GTA(11).x
+</p>
+<p class="codeexample">
+my_target_1 = GTA(10)
+</p>
+<p class="codeexample">
+GTA(11) = my_target_2
+</p>
+<p class="note">
+TARGET requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+.
+
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="177" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td width="397" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+x, y, z, u, v , w:
+  Float
+</p>
+
+  
+</td>
+<td width="397" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cartesian positions x, y and z (mm), and orientations
+  u, v and w (degrees)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Define an array of 4 targets.
+</p>
+<p class="codeexample">
+DIM trgts AS TARGET(4)
+</p>
+<p class="codeexample">
+trgts(0) = 433.0, 0.0, 370.0, 0.0, 90.0, 0.0
+</p>
+<p class="codeexample">
+trgts(1) = 433.0, 300.0, 370.0, 0.0, 90.0, 0.0
+</p>
+<p class="codeexample">
+trgts(2) = -100.0, 300.0, 370.0, -90.0, 90.0, 0.0
+</p>
+<p class="codeexample">
+trgts(3) = 433.0, 300.0, 370.0, -90.0, 90.0, 0.0
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_GTA.html">GTA</a>
+, 
+<a href="RPS_GTAE.html">GTAE</a>
+,
+
+<a href="RPS_GTAJ.html">GTAJ</a>
+, 
+<a href="RPS_TARGETE.html">TARGETE</a>
+, 
+<a href="RPS_TARGETJ.html">TARGETJ</a>
+</p>
+</body>
+</html>

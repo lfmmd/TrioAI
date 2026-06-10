@@ -1,0 +1,116 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INCLUDE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INCLUDE">
+</head>
+<body>
+<h1>INCLUDE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command.
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+INCLUDE &quot;filename&quot;
+</p>
+<h2>Description:</h2>
+<p>
+Allows the inclusion of TrioBASIC commands and constructs
+(except ON BASICERROR). This is typically used to share data initialisation
+between programs, but you can imagine an INCLUDE as a copy and paste from the
+include into the program at the point of the INCLUDE statement, but with the
+benefit that any changes made to the included file are shared between all
+programs that include it.
+</p>
+<p class="note">
+Whenever an included program is modified, all programs that
+depend on it are re-compiled as well, avoiding inconsistencies.
+</p>
+<p class="note">
+Note that prior to firmware version 2.0269:
+</p>
+<p class="note" style="margin-left:57.25pt;text-indent:-18.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Nested includes were not allowed (now they are allowed to be up
+to 5 deep)
+</p>
+<p class="note" style="margin-left:57.25pt;text-indent:-18.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Includes had to be the first statement (barring comments) in a
+program (now they may be placed anywhere)
+</p>
+<p class="note" style="margin-left:57.25pt;text-indent:-18.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Only variable definitions and conditional logic were allowed, and
+it could not be used as a general subroutine with any commands within it (it
+may now contain any statements)
+</p>
+<p class="note">
+Circular dependency is not permitted. So, A cannot include
+itself; if A includes B, B cannot include A; if A includes B and B Includes C,
+C cannot include either B or A, etc.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+filename:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the program to be included
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Initialise all local variables with an include program. 
+</p>
+<p>
+<b>Program “MOTION_1”:</b></p>
+<p class="codeexample">
+'Include data definitions
+</p>
+<p class="codeexample">
+INCLUDE &quot;DATA_DEFS&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Motion commands using included data
+</p>
+<p class="codeexample">
+FORWARD AXIS(drive_axis)
+</p>
+<p class="codeexample">
+CONNECT(1, drive_axis) AXIS(linked_axis)
+</p>
+<p>
+<b>Program “DATA_DEFS”:</b></p>
+<p class="codeexample">
+drive_axis = 4
+</p>
+<p class="codeexample">
+linked_axis = 1
+</p>
+</body>
+</html>

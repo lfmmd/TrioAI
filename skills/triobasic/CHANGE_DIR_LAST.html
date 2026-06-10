@@ -1,0 +1,70 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CHANGE_DIR_LAST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CHANGE_DIR_LAST">
+</head>
+<body>
+<h1>CHANGE_DIR_LAST</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (read only)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the direction difference in radians between the end
+of the previously loaded interpolated motion command and the start direction of
+the last loaded interpolated motion command.
+</p>
+<p>
+The angle returned has no sign, and in 2D direction mode is
+the direction change between the first two axes of the moves, and in 3D mode is
+the direction change between the first three axes of the moves (direction mode
+is set with 
+<a href="AXIS_MODE.html">AXIS_MODE</a>
+ bit 2).
+</p>
+<p class="note">
+Note that this parameter is relevant to SP motion commands only,
+such as 
+<a href="MOVESP.html">MOVESP</a>
+, 
+<a href="MOVEABSSP.html">MOVEABSSP</a>
+
+etc.
+</p>
+<h2>Value:</h2>
+<p>
+Change in direction, in radians between 0 and 
+<a href="PI.html">PI</a>
+. 
+</p>
+<h2>Example: </h2>
+<p class="codeexample">
+Perform a 90 degree move and print the change.
+</p>
+<p class="codeexample">
+&gt;&gt;MOVESP(0, 100)
+</p>
+<p class="codeexample">
+&gt;&gt;MOVESP(100, 0)
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT CHANGE_DIR_LAST
+</p>
+<p class="codeexample">
+1.5708
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="END_DIR_LAST.html">END_DIR_LAST</a>
+, 
+<a href="START_DIR_LAST.html">START_DIR_LAST</a>
+</p>
+</body>
+</html>

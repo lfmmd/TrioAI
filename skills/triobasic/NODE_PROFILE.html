@@ -1,0 +1,153 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NODE_PROFILE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NODE_PROFILE">
+</head>
+<body>
+<h1>NODE_PROFILE</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+NODE_PROFILE(slot, node)= value
+</p>
+<h2>Description:</h2>
+<p>
+This 2D array is used to set the EtherCAT profile within the
+internal database to use the selected profile. Each profile gives extra
+functionality and is vendor and product code specific. Consult the extra
+technical notes made available for your connected slave device.
+</p>
+<p>
+The array is 2-dimensional, the first dimension is the
+master slot identifier, the second dimension is the position of the node within
+that master network.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot number of the EtherCAT port. (0 on MC4N, MC6N
+  and Flex-6 Nano)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+node:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Address determined by the position of the node on the
+  EtherCAT network.  The first node is address 0.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the default node profile/configuration (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&gt;= 1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the specified EtherCAT profile/configuration
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="NODE_AXIS.html">NODE_AXIS</a>
+, 
+<a href="NODE_INDEX.html">NODE_INDEX</a>
+, 
+<a href="NODE_AXIS_COUNT.html">NODE_AXIS_COUNT</a>
+,
+
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

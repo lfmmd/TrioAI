@@ -1,0 +1,425 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>COMBINE_CONTROL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="COMBINE_CONTROL">
+</head>
+<body>
+<h1>COMBINE_CONTROL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+COMBINE_CONTROL(mode, source_1, source_2, Numerator_1,
+Denominator_1, Numerator_2, Denominator_2)
+</p>
+<h2>Description:</h2>
+<p>
+The COMBINE_CONTROL command is used to set up the mode of
+operation for the COMBINE_AXES function.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DPOS out = source_1 position + source_2 position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DPOS out = source_1 position – source_2 position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&#8730; (source_1 MPOS ^2 + source_2 MPOS ^2)  
+<sup>[1]</sup></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DPOS out = (source_1 position + source_2 position) / 2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source_1
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = DPOS, 1 = MPOS
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source_2
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = DPOS, 1 = MPOS
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+numerator_1
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Applied to source_1 before the value is used in the
+  function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+denominator_1
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Applied to source_1 before the value is used in the
+  function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+numerator_2
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Applied to source_2 before the value is used in the
+  function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+denominator_2
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Applied to source_2 before the value is used in the
+  function
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+[1] Mode 2 has only 3 parameters:
+</p>
+<p style="margin-left:36.0pt">
+<span style='font-family:"Courier New"'>COMBINE_CONTROL(mode,
+offset_1, offset_2)</span></p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+offset_1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Offset applied to source_1 value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+offest_2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Offset applied to source_2 value
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+<span style='font-family:"Courier New"'>&nbsp;</span></p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Sub routine to set up an axis to have position defined by
+the sum of 2 other axes.  Set the first source axis to have 0.5 multiplier and
+the second source to be x2.
+</p>
+<p style="margin-left:14.2pt">
+DPOS out = MPOS1 * 0.5 + MPOS2 *
+2
+</p>
+<p class="codeexample">
+'=============================
+</p>
+<p class="codeexample">
+' source1 + source2
+</p>
+<p class="codeexample">
+mode_0:
+</p>
+<p class="codeexample">
+source1 = 10
+</p>
+<p class="codeexample">
+source2 = 11
+</p>
+<p class="codeexample">
+out_axis = 12
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+source_mpos = 1
+</p>
+<p class="codeexample">
+source_dpos = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'COMBINE_CONTROL(mode, source  1, source  2, Numerator  1,
+Denominator  1, Numerator  2, Denominator  2)
+</p>
+<p class="codeexample">
+COMBINE_CONTROL(0, source_mpos, source_mpos, 1, 2, 500,
+250)
+</p>
+<p class="codeexample">
+COMBINE_AXES(source1, source2)
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+BASE(source1, source2)
+</p>
+<p class="codeexample">
+MOVE(100, 120)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+PRINT DPOS AXIS(out_axis)
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<p class="codeexample">
+RETURN
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="COMBINE_AXES.html">COMBINE_AXES</a>
+</p>
+</body>
+</html>

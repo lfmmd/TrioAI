@@ -1,0 +1,126 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DEL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DEL">
+</head>
+<body>
+<h1>DEL</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DEL &quot;filename&quot;[, delete_source]
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+RM &quot;filename&quot;
+</p>
+<h2>Description:</h2>
+<p>
+Deletes the specified file from the controller’s memory.
+</p>
+<p class="warning">
+This command cannot be used from within Motion Perfect when in
+Sync Mode or Tool Mode.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+filename:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+the name of the file to be deleted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+delete_source:
+</p>
+
+  
+</td>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="732" valign="top" class="tablegrid">
+
+  
+<p>
+Delete the program’s compiled code only, leaving its
+  source code on the controller
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+1 (default)
+</p>
+
+  
+</td>
+<td width="732" valign="top" class="tablegrid">
+
+  
+<p>
+Delete both the program’s source and compiled code
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Delete an old program
+</p>
+<p class="codeexample">
+&gt;&gt;DEL &quot;oldprog&quot;
+</p>
+<p class="codeexample">
+OK
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+</body>
+</html>

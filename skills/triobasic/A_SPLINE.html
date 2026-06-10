@@ -1,0 +1,175 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>A_SPLINE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="A_SPLINE">
+</head>
+<body>
+<h1>A_SPLINE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+A_SPLINE(parameters)
+</p>
+<h2>Description:</h2>
+<p>
+Generate the Akima spline interpolation of the given set of
+points.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+data_in
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Index to the 
+<a href="TABLE.html">TABLE</a>
+ data that
+  contains the points to be interpolated
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+points
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Number of points to be interpolated
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+data_out
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Index to the 
+<a href="TABLE.html">TABLE</a>
+ data that will
+  contain the interpolated points
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+expansion
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Number of output points between each input point
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Mode_=_1:"></a>
+<a name="_Mode_=_1;"></a>
+Example:</h3>
+<p class="codeexample">
+TABLE
+(
+0
+, 
+100
+, 
+138.1773291
+, 
+49.315059
+,
+-
+84.8872489
+, -
+141.0446116
+,
+-
+67.5262089
+)
+<br>
+
+
+A_SPLINE
+(
+0
+, 
+6
+, 
+100
+, 
+10
+)
+<br>
+
+
+CAMBOX
+(
+100
+, 
+159
+, 
+1
+, 
+6
+, 
+1
+)
+</p>
+</body>
+</html>

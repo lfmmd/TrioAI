@@ -1,0 +1,140 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>READ_OP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="READ_OP">
+</head>
+<body>
+<h1>READ_OP</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = READ_OP(output[, finaloutput])
+</p>
+<h2>Description:</h2>
+<p>
+Returns the state of digital output logic. 
+</p>
+<p>
+If called with one parameter, it returns the state (1 or 0)
+of that specific output channel. If called with 2 parameters READ_OP returns
+the binary sum of the group of outputs.
+</p>
+<p class="note">
+READ_OP checks the state of the output logic. The output may be
+virtual or not powered and you will still see the logic state. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The binary pattern of the selected outputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+output:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Output to return the value of/start of output group
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+finaloutput:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last output of group
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The range of output to final output must not exceed 32
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+In this example a single output is tested:
+</p>
+<p class="codeexample">
+test:
+</p>
+<p class="codeexample">
+  WAIT UNTIL READ_OP(12) = ON
+</p>
+<p class="codeexample">
+  GOSUB place
+</p>
+<h3>Example 2:</h3>
+<p>
+Check the group of 8 outputs and call a routine if any of
+them are 
+<a href="ON.html">ON</a>
+.
+</p>
+<p class="codeexample">
+op_bits = READ_OP(16, 23)
+</p>
+<p class="codeexample">
+IF op_bits &lt;&gt; 0 THEN
+</p>
+<p class="codeexample">
+  GOSUB check_outputs
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+</body>
+</html>

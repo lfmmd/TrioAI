@@ -1,0 +1,102 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LENB</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LENB">
+</head>
+<body>
+<h1>LENB</h1>
+<h2>Type:</h2>
+<p class="Category">
+String Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = LENB(string)
+</p>
+<h2>Description:</h2>
+<p>
+Returns number of bytes used in the specified string.
+</p>
+<p class="note">
+Note that this will differ from the number of characters in the
+string when UTF-8 characters are present.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+string:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+String to be measured.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Define a variable of type string, assign to it a string
+containing UTF-8 characters, and then display its byte length and character
+length.
+</p>
+<p class="codeexample">
+DIM str1 AS STRING(30)
+</p>
+<p class="codeexample">
+str1 = &quot;&#1047;&#1076;&#1088;&#1072;&#1074;&#1077;&#1081;
+&#1089;&#1074;&#1103;&#1090;&quot; '&quot;Hello world&quot; in Bulgarian
+</p>
+<p class="codeexample">
+PRINT LENB(str1), LEN(str1) 'Will display 23 and 12
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CHR.html">CHR</a>
+, 
+<a href="STR.html">STR</a>
+, 
+<a href="VAL.html">VAL</a>
+, 
+<a href="LEN.html">LEN</a>
+ , 
+<a href="LEFT.html">LEFT,</a>
+<a href="RIGHT.html">RIGHT</a>
+, 
+<a href="MID.html">MID</a>
+, 
+<a href="LCASE.html">LCASE</a>
+,
+
+<a href="UCASE.html">UCASE</a>
+, 
+<a href="INSTR.html">INSTR</a>
+</p>
+<span class="MsoHyperlink"><span style='font-family:"Calibri",sans-serif'><br clear="all">
+
+</span></span><p>
+&nbsp;
+</p>
+
+
+
+</body>
+</html>

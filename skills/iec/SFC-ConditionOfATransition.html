@@ -1,0 +1,43 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Condition of a SFC transition</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="O_1411"></a>
+Condition of a SFC transition</h1>
+<p>
+Each SFC transitions must have a boolean condition that
+indicates if the transition can be crossed. The condition is a boolean
+expression that can be programmed either in ST or LD language.
+</p>
+<p>
+In ST language, enter a boolean expression. In can be a
+complex expression including function calls and parenthesis. 
+</p>
+<h2>Example</h2>
+<p class="codeexample">
+<span class="STCode">bForce AND (bAlarm OR min (iLevel, 1)
+&lt;&gt; 1)</span></p>
+<p>
+In LD language, the condition is represented by a single
+rung. The coil at the end of the rung represents the transition and should have
+no symbol attached. 
+</p>
+<h2>Example</h2>
+<p>
+<img width="229" height="49" src="SFC-ConditionOfATransition_files/image001.gif">
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

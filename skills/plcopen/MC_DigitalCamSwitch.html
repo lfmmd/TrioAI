@@ -1,0 +1,2465 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MC_DigitalCamSwitch</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MC_DigitalCamSwitch">
+</head>
+
+
+
+<body>
+<h1>MC_DigitalCamSwitch</h1>
+<p>
+Commands a group of discrete output bits to switch in
+analogy to a set of mechanical cam-controlled switches connected to an axis.
+</p>
+<p>
+<img width="403" height="178" src="MC_DigitalCamSwitch_files/image001.png">
+</p>
+<h2>Description:</h2>
+<p>
+MC_DigitalCamSwitch is the analogy to switches on a motor
+shaft: it commands a group of discrete output bits to switch in analogy to a
+set of mechanical cam-controlled switches connected to an axis. Forward and
+backward movements are allowed.
+</p>
+<p>
+A track is one cam that contains a set of switches related
+to one output. ‘TrackNumber’ corresponds to the cam number. When ‘Enable’ is
+TRUE, ‘EnableMask’ specifies whether each track is enabled or disabled. Bit 0
+corresponds to track 0 and bit 15 corresponds to track 15. The corresponding
+track is enabled if a bit is set to 1 and disabled if the bit is set to 0. If
+the value of a bit changes from 1 to 0, the output of the corresponding track
+will turn OFF. This functionality is sometimes called PLS – Phase or Position
+or Programmable Limit Switch.
+</p>
+<p>
+Upon rising edge of ‘Enable’, the parameters for the
+configured ‘Switches’, ‘Outputs’, and ‘TrackOptions’ are initialized. Internal
+switching begins immediately following the initialization.
+<a name="wp9021102"></a>
+<a name="wp9021103"></a>
+</p>
+<p>
+Upon rising edge of &quot;EnableMask&quot;, the digital
+output will be enabled. The output will be set and reset according to the
+configured ‘Switches’ and ‘TrackOptions’. When outputs are disabled, the outputs
+are reset. 
+</p>
+<p>
+<img width="554" height="323" src="MC_DigitalCamSwitch_files/image002.png">
+</p>
+<p>
+<img width="439" height="347" src="MC_DigitalCamSwitch_files/image003.png">
+</p>
+<p>
+‘EnableMask’ is used to enable and disable the corresponding
+track. If ‘FirstOnPositon[n]’ equal to ‘LastOnPosition[0]’, the corresponding
+output defined in ‘OutputNumber[n]’ will always be set. 
+</p>
+<p>
+‘AxisDirection’ is used to define the resource which the
+direction of digital cam is based on. 
+</p>
+<p>
+‘Duration’ is used when ‘CamSwitchMode’ is set to ‘Time
+based’. 
+</p>
+<p>
+The above timing diagram is ‘Position based’, and ‘AxisDirection’
+is ‘Positive (1)’ or ‘Both (0)’. The axis is moving in constant velocity.
+</p>
+<p>
+‘Duration’ is used when the ‘CamSwitchMode’ is time based. It
+specifies the output time after the corresponding ’OutputNumber’ is set to
+TRUE. It is a non-negative value.
+</p>
+<p>
+<img width="566" height="439" src="MC_DigitalCamSwitch_files/image004.png">
+The above diagram shows the
+outputs of the first three tracks with ‘OffCompensation’ for all tracks, and ‘OnCompensation’
+for the second track. 
+</p>
+<p>
+‘OffCompensation’ is used to compensate output time delay
+for the outputs switching off. ‘OnCompensation’ is used to compensate output
+time delay for switching on. The index for ‘OffCompensation’ and ‘OnCompensation’
+is used for corresponding track number. It can be positive or negative value. 
+<span style='font-family:"Helvetica",sans-serif'>T</span>he time is delayed
+for a positive value and advanced for a negative value.
+</p>
+<p>
+The negative time value will be calculated according to the
+actual velocity. ‘OnCompensation’ and ‘OffCompensation’ can be used in both ‘CamSwitchMode’
+mode ‘Position based’ and ‘Time based’ and any direction of ‘AxisDircetion’. The
+output time for a track T
+<sub>track </sub>is calculated as follows:
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+T
+<sub>track </sub>= T
+<sub>out </sub>–
+T
+<sub>OnCompensation </sub>+ T
+<sub>OffCompensation</sub></p>
+<p>
+&nbsp;
+</p>
+<p>
+T
+<sub>track</sub>: The output
+time for a track
+</p>
+<p>
+T
+<sub>out</sub>: The output time
+for a track without compensation
+</p>
+<p>
+T
+<sub>OnCompensation</sub>: The
+compensation time for ‘OnCompensation’
+</p>
+<p>
+T
+<sub>OffCompensation</sub>: The
+compensation time for ‘OffCompensation’
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="547" valign="top" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="15" height="15" id="&#22270;&#29255; 546" src="MC_DigitalCamSwitch_files/image005.jpg">
+Important 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="547" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+MC_DigitalCamSwitch
+  is always used when the axis is moving in constant velocity.
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+If the axis is
+  set as a rotation axis, the following operation will occur for ‘OnCompensiation’
+  or ‘OffCompensation’ and the axis changes abruptly.
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Long time
+  value for ‘OnCompensation’ or ‘OffCompensation’ may cause unstable output
+  timing, such as the time is equivalent to the time for a rotation.
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+If the value
+  of ‘OnCompensation’ results in exceeding ‘LastOnPosition’ point + ’OffCompensation’,
+  the output timing will be unstable.
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+If the value
+  of ‘OffCompensation’ results in execeeding ‘FirstOnPosition’ point + ‘OnCompensation’,
+  the output timing will be unstable.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+<a name="N56843_N56861"></a>
+<img width="552" height="302" src="MC_DigitalCamSwitch_files/image006.png">
+</p>
+<p>
+<a name="N56969_N56987"></a>
+The above diagram provides an
+example of how the hysteresis function can be used. Specifying a hysteresis
+window prevents an unwanted series of pulses in the area around the switching
+position. The output corresponds to track 0 is set at the position ‘FirstOnPosition’
+and ‘LastOnPosition’ are changed to ‘FirstOnPosition+Hysteresis’ and ‘LastOnPosition+Hysteresis’.
+
+</p>
+<p>
+Example of an axis moving in the positive direction: 
+</p>
+<p>
+At point a, the axis position reaches the configured &quot;FirstOnPosition&quot;.
+The output is turned on when the position &quot;FirstOnPosition +
+Hysteresis&quot; is reached.
+</p>
+<p>
+At point b, the axis position reaches the turn-off position
+&quot;LastOnPosition&quot;. The output is turned off when the position &quot;LastOnPosition
++ Hysteresis&quot; is reached. 
+</p>
+<p>
+‘Hysteresis’ is to avoid multiple switching around the
+switching point.
+</p>
+<p class="tip">
+Make sure the input and output parameters are of data type
+indicated in the table below.
+</p>
+<p class="note">
+MC_CAMSWITCH_REF is a switch structure for use as ON/OFF switch pattern
+data.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="547" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+STRUCT
+</p>
+
+  
+<p class="codeexample">
+   TrackNumber : ARRAY[0..15] of UINT; (*TrackNumber is    the
+  reference to the track*)
+</p>
+
+  
+<p class="codeexample">
+   OutputNumber : ARRAY[0..15] of UINT; (* Output number
+     *)
+</p>
+
+  
+<p class="codeexample">
+   FirstOnPosition : ARRAY[0..15] of LREAL;
+</p>
+
+  
+<p class="codeexample">
+   LastOnPosition : ARRAY[0..15] of LREAL;
+</p>
+
+  
+<p class="codeexample">
+   AxisDirection : ARRAY[0..15] of MC_AXIS_DIRECTION;(*
+  0:    Both directions, 1:Positive direction, 2:Negative    direction *)
+</p>
+
+  
+<p class="codeexample">
+   CamSwitchMode : ARRAY[0..15] of MC_CAMSWITCH_MODE;(*    Default
+  0:Position based; 1:Time based *)
+</p>
+
+  
+<p class="codeexample">
+   Duration:  ARRAY[0..15] of TIME;
+</p>
+
+  
+<p class="codeexample">
+END_STRUCT
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+MC_TRACK_REF is a specific structure containing the track
+properties.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="547" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+STRUCT
+</p>
+
+  
+<p class="codeexample">
+   OnCompensation: ARRAY[0..15] TIME;(* Compensation
+  time    with which the switching on is delayed in time per    track.*)
+</p>
+
+  
+<p class="codeexample">
+   OffCompensation: ARRAY[0..15] TIME;(*Time
+  compensation    the switching off is delayed per track.*)
+</p>
+
+  
+<p class="codeexample">
+   Hysteresis: ARRAY[0..15]LREAL; (*Distance from the    switching
+  point (in positive and negative direction) in    which the switch is not
+  executed until the axis has    left this area, in order to avoid multiple
+  switching    aroundthe switching point.*)
+</p>
+
+  
+<p class="codeexample">
+END_STRUCT
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Inputs/Outputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="128" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Name</b></p>
+
+  
+</td>
+<td width="160" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="281" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>INPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="128" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable
+</p>
+
+  
+</td>
+<td width="160" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="281" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enables FB. When SET all FB
+  parameters are downloaded and internal switching begins.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="128" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis
+</p>
+
+  
+</td>
+<td width="160" class="tablegrid">
+
+  
+<p class="tablecontent">
+AXIS_REF
+</p>
+
+  
+</td>
+<td width="281" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the axis where the
+  switch is connected.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="128" class="tablegrid">
+
+  
+<p class="tablecontent">
+Switches
+</p>
+
+  
+</td>
+<td width="160" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_CAMSWITCH_REF
+</p>
+
+  
+</td>
+<td width="281" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the switching actions.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="128" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrackOptions
+</p>
+
+  
+</td>
+<td width="160" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_TRACK_REF
+</p>
+
+  
+</td>
+<td width="281" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference track related properties.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="128" class="tablegrid">
+
+  
+<p class="tablecontent">
+EnableMask
+</p>
+
+  
+</td>
+<td width="160" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT
+</p>
+
+  
+</td>
+<td width="281" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enables &quot;Outputs&quot; when SET.
+  The digital output will be switched ON and OFF according to the
+  &quot;Switches&quot; and &quot;TrackOptions&quot;. 
+</p>
+
+  
+<p class="tablecontent">
+When RESET, the digital output will
+  be RESET.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="128" class="tablegrid">
+
+  
+<p class="tablecontent">
+ValueSource
+</p>
+
+  
+</td>
+<td width="160" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_SOURCE
+</p>
+
+  
+</td>
+<td width="281" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+<b>mcSetValue</b>: Synchronization on set value
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+<b>mcCommandValue</b>: Synchronization on command value
+</p>
+
+  
+<p class="tablecontent">
+<b>mcActualValue</b>: Synchronization
+  on actual value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+<b>OUTPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="128" class="tablegrid">
+
+  
+<p class="tablecontent">
+InOperation
+</p>
+
+  
+</td>
+<td width="160" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="281" class="tablegrid">
+
+  
+<p class="TableText">
+When
+  ‘Enable’ is TRUE, there are commanded tracks are enabled.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="128" class="tablegrid">
+
+  
+<p class="tablecontent">
+Busy
+</p>
+
+  
+</td>
+<td width="160" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="281" class="tablegrid">
+
+  
+<p class="TableText">
+The
+  FB is not finished and new output values are to be expected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="128" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error
+</p>
+
+  
+</td>
+<td width="160" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="281" class="tablegrid">
+
+  
+<p class="TableText">
+Signals
+  that an error has occurred within the Function Block
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="128" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID
+</p>
+
+  
+</td>
+<td width="160" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT
+</p>
+
+  
+</td>
+<td width="281" class="tablegrid">
+
+  
+<p class="TableText">
+Error
+  identification
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+MC_CAMSWITCH_REF data type ‘Switches’ definition for this
+example:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+Track
+</p>
+
+  
+</td>
+<td width="57" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+Type
+</p>
+
+  
+</td>
+<td width="69" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+1
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+2
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+3
+</p>
+
+  
+</td>
+<td width="38" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+…
+</p>
+
+  
+</td>
+<td width="76" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+TrackN
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+OutputNumber
+</p>
+
+  
+</td>
+<td width="57" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+INT
+</p>
+
+  
+</td>
+<td width="69" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+1
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+2
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+3
+</p>
+
+  
+</td>
+<td width="38" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="76" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+FirstOnPosition [u]
+</p>
+
+  
+</td>
+<td width="57" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+LREAL
+</p>
+
+  
+</td>
+<td width="69" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+2000.0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+2500.0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+3500.0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+5000.0
+</p>
+
+  
+</td>
+<td width="38" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="76" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+LastOnPosition [u]
+</p>
+
+  
+</td>
+<td width="57" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+LREAL
+</p>
+
+  
+</td>
+<td width="69" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+3000.0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+3000.0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+4000.0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+1000.0
+</p>
+
+  
+</td>
+<td width="38" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="76" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+AxisDirection
+</p>
+
+  
+</td>
+<td width="57" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+INT
+</p>
+
+  
+</td>
+<td width="69" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+1=Pos
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+2=Neg
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+0=Both
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+0=Both
+</p>
+
+  
+</td>
+<td width="38" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="76" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+CamSwitchMode
+</p>
+
+  
+</td>
+<td width="57" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+INT
+</p>
+
+  
+</td>
+<td width="69" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+0
+</p>
+
+  
+</td>
+<td width="66" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+0
+</p>
+
+  
+</td>
+<td width="38" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="76" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Note: Every ‘Output[x]’ can be bound to any physical output
+port, even to the same one (The last track with the same output as the one
+before will cover the output result). In this example, they are bound to
+different ports.
+</p>
+<p>
+<img width="491" height="218" src="MC_DigitalCamSwitch_files/image007.png">
+</p>
+<p>
+<img width="509" height="242" src="MC_DigitalCamSwitch_files/image008.png">
+</p>
+<p>
+The example below uses the values from the example above for
+‘Switches’ (MC_CAMSWITCH_REF data type). It does not use ‘OnCompensation’ / ‘OffCompensation’
+and ‘Hysteresis’. It is the behaviour of the outputs when the axis is moving
+continuously in the positive direction. The axis is a rotation axis with a
+modular length of 5000 units.
+</p>
+<p>
+Set ‘EnableDigiCam’ to activate the FB ‘Inst_MC_DigitalCamSwitch’.
+Switching data and track options can be initialized while the FB is enabled. If
+no errors occur, the output in motion controller is activated and the machine
+enters STATE_READY state.
+</p>
+<p>
+Axis0 can be made to move positive or negative. It is
+possible to observe the action of commanded outputs.
+</p>
+<p>
+<img width="556" height="768" src="MC_DigitalCamSwitch_files/image009.png">
+</p>
+<br clear="all">
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="19" height="23" id="&#22270;&#29255; 13" src="MC_DigitalCamSwitch_files/image010.png">
+ Example
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+(* Defines for
+  MC_DigitalCamSwitch example *)
+<br>
+
+  
+#define
+ STATE_READY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0
+<br>
+
+  
+#define
+ STATE_CAMIN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1
+<br>
+
+  
+#define
+ STATE_DIGITALCAM 
+2
+<br>
+
+  
+#define
+
+  NEXT_STEP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3
+<br>
+
+  
+#define
+ STATE_MOVE_POS&nbsp;&nbsp;
+9
+<br>
+
+  
+#define
+ STATE_MOVE_NEG&nbsp;&nbsp;
+6
+<br>
+
+  
+#define
+
+  STATE_STOP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5
+<br>
+
+  
+#define
+
+  ERROR_STEP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+7
+<br>
+
+  
+#define
+ STATE_ERROR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+VAR
+<br>
+
+  &nbsp;state : 
+USINT
+ ;
+<br>
+
+  &nbsp;RefTrack : 
+lib:MC_TRACK_REF
+ ;
+<br>
+
+  &nbsp;RefSwith : 
+lib:MC_CAMSWITCH_REF
+ ;
+<br>
+
+  &nbsp;EnableDigiCam : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;Inst_MC_DigitalCamSwitch : 
+MC_DigitalCamSwitch
+ ;
+<br>
+
+  &nbsp;mcSource : 
+MC_SOURCE
+ ;
+<br>
+
+  &nbsp;Axis0Ref : 
+lib:AXIS_REF
+ ;
+<br>
+
+  &nbsp;MovePositive : 
+BOOL
+ := 
+TRUE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Move positive
+  direction enable variable*)
+<br>
+
+  &nbsp;Inst_MC_MoveVelocity1 : 
+MC_MoveVelocity
+ ;
+<br>
+
+  &nbsp;mDirection : 
+MC_DIRECTION
+ ;
+<br>
+
+  &nbsp;BufferMode : 
+MC_BUFFER_MODE
+ ;
+<br>
+
+  &nbsp;ErrorID0 : 
+UINT
+ ;
+<br>
+
+  &nbsp;MoveNegative : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Enable
+  variable for negative movement*)
+<br>
+
+  &nbsp;bStop : 
+BOOL
+ := 
+TRUE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To stop
+  motion, it is bound to IO1*)
+<br>
+
+  &nbsp;&nbsp;
+(*$profile=IO*)
+<br>
+
+  &nbsp;&nbsp;
+(*$embed=(VERS=1&nbsp;&nbsp;&nbsp;&nbsp;MODE=0&nbsp;&nbsp;&nbsp;&nbsp;POINT=1)*)
+<br>
+
+  &nbsp;Inst_MC_Stop4 : 
+MC_Stop
+ ;
+<br>
+
+  
+END_VAR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+(* Variables
+  initialization *)
+<br>
+
+  
+<br>
+
+  
+(******************** SWITCH
+  SETUP*********************)
+<br>
+
+  RefSwith.TrackNumber[
+0
+] := 
+UINT#0
+;
+<br>
+
+  RefSwith.OutputNumber[
+0
+] := 
+UINT#0
+;
+<br>
+
+  RefSwith.FirstOnPosition[
+0
+] := 
+LREAL#2000.0
+;
+<br>
+
+  RefSwith.LastOnPosition[
+0
+] := 
+LREAL#3000.0
+;
+<br>
+
+  RefSwith.AxisDirection[
+0
+] := mcPositive;
+<br>
+
+  RefSwith.Duration[
+0
+] := 
+time#0
+;
+<br>
+
+  RefSwith.CamSwitchMode[
+0
+] := mcPosition;
+<br>
+
+  
+<br>
+
+  RefSwith.TrackNumber[
+1
+] := 
+UINT#1
+;
+<br>
+
+  RefSwith.OutputNumber[
+1
+] := 
+UINT#1
+;
+<br>
+
+  RefSwith.FirstOnPosition[
+1
+] := 
+LREAL#2500.0
+;
+<br>
+
+  RefSwith.LastOnPosition[
+1
+] := 
+LREAL#3000.0
+;
+<br>
+
+  RefSwith.AxisDirection[
+1
+] := mcNegative;
+<br>
+
+  RefSwith.Duration[
+1
+] := 
+time#0
+;
+<br>
+
+  RefSwith.CamSwitchMode[
+1
+] := mcPosition;
+<br>
+
+  
+<br>
+
+  RefSwith.TrackNumber[
+2
+] := 
+UINT#2
+;
+<br>
+
+  RefSwith.OutputNumber[
+2
+] := 
+UINT#2
+;
+<br>
+
+  RefSwith.FirstOnPosition[
+2
+] := 
+LREAL#3500.0
+;
+<br>
+
+  RefSwith.LastOnPosition[
+2
+] := 
+LREAL#4000.0
+;
+<br>
+
+  RefSwith.AxisDirection[
+2
+] := mcBoth;
+<br>
+
+  RefSwith.Duration[
+2
+] := 
+time#0
+;
+<br>
+
+  RefSwith.CamSwitchMode[
+2
+] := mcPosition;
+<br>
+
+  
+<br>
+
+  RefSwith.TrackNumber[
+3
+] := 
+UINT#3
+;
+<br>
+
+  RefSwith.OutputNumber[
+3
+] := 
+UINT#3
+;
+<br>
+
+  RefSwith.FirstOnPosition[
+3
+] := 
+LREAL#5000.0
+;
+<br>
+
+  RefSwith.LastOnPosition[
+3
+] := 
+LREAL#1000.0
+;
+<br>
+
+  RefSwith.AxisDirection[
+3
+] := mcBoth;
+<br>
+
+  RefSwith.Duration[
+3
+] := 
+time#0
+;
+<br>
+
+  RefSwith.CamSwitchMode[
+3
+] := mcPosition;
+<br>
+
+  
+<br>
+
+  
+(******************** TRACK
+  SETUP*********************)
+<br>
+
+  RefTrack.OnCompensation[
+0
+] := 
+T#0
+;
+<br>
+
+  RefTrack.OffCompensation[
+0
+] := 
+t#0
+;
+<br>
+
+  RefTrack.Hysteresis[
+0
+] := 
+0
+;
+<br>
+
+  
+<br>
+
+  RefTrack.OnCompensation[
+1
+] := 
+T#0
+;
+<br>
+
+  RefTrack.OffCompensation[
+1
+] := 
+t#0
+;
+<br>
+
+  RefTrack.Hysteresis[
+1
+] := 
+0
+;
+<br>
+
+  
+<br>
+
+  RefTrack.OnCompensation[
+2
+] := 
+T#0
+;
+<br>
+
+  RefTrack.OffCompensation[
+2
+] := 
+t#0
+;
+<br>
+
+  RefTrack.Hysteresis[
+2
+] := 
+0
+;
+<br>
+
+  
+<br>
+
+  RefTrack.OnCompensation[
+3
+] := 
+T#0
+;
+<br>
+
+  RefTrack.OffCompensation[
+3
+] := 
+t#0
+;
+<br>
+
+  RefTrack.Hysteresis[
+3
+] := 
+0
+;
+<br>
+
+  
+<br>
+
+  mcSource := mcCommandedValue;
+<br>
+
+  Axis0Ref.AxisNo := 
+0
+;
+<br>
+
+  mDirection := mcPositiveDirection;
+<br>
+
+  BufferMode := mcAborting;
+<br>
+
+  
+<br>
+
+  
+(******************* cyclic
+  program*********************)
+<br>
+
+  
+CASE
+ State 
+OF
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+(*power
+  and home axis before moving... *)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+(********************STATE_READY****************************)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;STATE_READY:
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+IF
+(EnableDigiCam) 
+THEN
+&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inst_MC_DigitalCamSwitch(
+  Enable := 
+TRUE
+(*BOOL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis
+  := Axis0Ref
+(*AXIS_REF*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switches
+  := RefSwith
+(*MC_CAMSWITCH_REF*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TrackOptions
+  := RefTrack
+(*MC_TRACK_REF*)
+,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EnableMask
+  := 
+UINT#15
+(*UINT*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ValueSource
+  := mcSource
+(*MC_SOURCE*)
+ );
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State:=STATE_DIGITALCAM;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+END_IF
+;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+(********************STATE_DIGITALCAM****************************)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;STATE_DIGITALCAM:&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ (Inst_MC_DigitalCamSwitch.InOperation) 
+AND
+
+  (MovePositive = 
+TRUE
+) 
+THEN
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mDirection :=
+  mcPositiveDirection;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inst_MC_MoveVelocity1(
+  Execute := 
+FALSE
+ (*BOOL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis
+  := Axis0Ref 
+(*AXIS_REF*)
+,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ContinuousUpdate
+  := 
+TRUE
+ (*BOOL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Velocity
+  := 
+LREAL#100.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acceleration
+  := 
+LREAL#1000.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration
+  := 
+LREAL#1000.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk
+  := 
+LREAL#500.0
+(*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Direction
+  := mDirection 
+(*MC_DIRECTION*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BufferMode
+  := BufferMode 
+(*MC_BUFFER_MODE*)
+ );
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inst_MC_MoveVelocity1(
+  Execute := 
+TRUE
+ (*BOOL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis
+  := Axis0Ref 
+(*AXIS_REF*)
+,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ContinuousUpdate
+  := 
+TRUE
+ (*BOOL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Velocity
+  := 
+LREAL#100.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acceleration
+  := 
+LREAL#1000.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration
+  := 
+LREAL#1000.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk
+  := 
+LREAL#500.0
+(*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Direction
+  := mDirection 
+(*MC_DIRECTION*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BufferMode
+  := BufferMode 
+(*MC_BUFFER_MODE*)
+ );
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State := STATE_MOVE_POS;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+ELSIF
+ (Inst_MC_DigitalCamSwitch.Error) 
+THEN
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(*Store ErrorID in a variable*)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ErrorID0:=Inst_MC_DigitalCamSwitch.ErrorID;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State:= STATE_ERROR;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+END_IF
+;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+(********************STATE_MOVE_POS****************************)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;STATE_MOVE_POS:&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ (Inst_MC_MoveVelocity1.InVelocity) 
+AND
+
+  (MoveNegative = 
+TRUE
+) 
+THEN
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mDirection :=
+  mcNegativeDirection;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inst_MC_MoveVelocity1(
+  Execute := 
+FALSE
+ (*BOOL*)
+,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis
+  := Axis0Ref 
+(*AXIS_REF*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ContinuousUpdate
+  := 
+TRUE
+ (*BOOL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Velocity
+  := 
+LREAL#100.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acceleration
+  := 
+LREAL#1000.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration
+  := 
+LREAL#1000.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk
+  := 
+LREAL#500.0
+(*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Direction
+  := mDirection 
+(*MC_DIRECTION*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BufferMode
+  := BufferMode 
+(*MC_BUFFER_MODE*)
+ );
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inst_MC_MoveVelocity1(
+  Execute := 
+TRUE
+ (*BOOL*)
+,&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis
+  := Axis0Ref 
+(*AXIS_REF*)
+,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ContinuousUpdate
+  := 
+TRUE
+ (*BOOL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Velocity
+  := 
+LREAL#100.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acceleration
+  := 
+LREAL#1000.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration
+  := 
+LREAL#1000.0
+ (*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk
+  := 
+LREAL#500.0
+(*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Direction
+  := mDirection 
+(*MC_DIRECTION*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BufferMode
+  := BufferMode 
+(*MC_BUFFER_MODE*)
+ );
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State:=STATE_MOVE_NEG;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+ELSIF
+ (Inst_MC_MoveVelocity1.Error) 
+THEN
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(*Store ErrorID in a variable*)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ErrorID0:=Inst_MC_MoveVelocity1.ErrorID;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State:= STATE_ERROR;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+END_IF
+;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+(********************STATE_MOVE_NEG****************************)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;STATE_MOVE_NEG:
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+IF
+((Inst_MC_MoveVelocity1.InVelocity) 
+AND
+
+  (bStop = 
+TRUE
+)) 
+THEN
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inst_MC_Stop4( Execute := 
+FALSE
+(*BOOL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis
+  := Axis0Ref
+(*AXIS_REF*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration
+  := 
+LREAL#2000.0
+(*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk
+  := 
+LREAL#1000.0
+(*LREAL*)
+ );
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inst_MC_Stop4( Execute := 
+TRUE
+(*BOOL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis
+  := Axis0Ref
+(*AXIS_REF*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration
+  := 
+LREAL#2000.0
+(*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk
+  := 
+LREAL#1000.0
+(*LREAL*)
+ );
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State:= STATE_STOP;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+ELSIF
+ (Inst_MC_MoveVelocity1.Error) 
+THEN
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(*Store ErrorID in a variable*)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ErrorID0:=Inst_MC_MoveVelocity1.ErrorID;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State:= STATE_ERROR;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+END_IF
+;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+(********************STATE_STOP****************************)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;STATE_STOP:&nbsp;&nbsp;
+(*stop movement*)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ (Inst_MC_Stop4.Done = 
+TRUE
+) 
+THEN
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inst_MC_Stop4( Execute := 
+FALSE
+(*BOOL*)
+,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis
+  := Axis0Ref
+(*AXIS_REF*)
+,&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration
+  := 
+LREAL#2000.0
+(*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk
+  := 
+LREAL#1000.0
+(*LREAL*)
+ );
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State:=NEXT_STEP;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+ELSIF
+ (Inst_MC_Stop4.Error = 
+TRUE
+) 
+THEN
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(*Store ErrorID in a variable,*)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ErrorID0:=
+  Inst_MC_Stop4.ErrorID;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inst_MC_Stop4( Execute := 
+FALSE
+(*BOOL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis
+  := Axis0Ref
+(*AXIS_REF*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration
+  := 
+LREAL#2000.0
+(*LREAL*)
+,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk
+  := 
+LREAL#1000.0
+(*LREAL*)
+ );
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State:=ERROR_STEP;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+END_IF
+;
+<br>
+
+  
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;ERROR_STEP:
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+(* Adding
+  code here, when motion got errors *)
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;NEXT_STEP:
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+(* Adding
+  code here, after MC_Stop calling *)
+<br>
+
+  
+<br>
+
+  
+END_CASE
+;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See also: </h2>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

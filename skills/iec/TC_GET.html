@@ -1,0 +1,106 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_GET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_GET">
+</head>
+<body>
+<h1>TC_GET</h1>
+<h2>Type:</h2>
+<p>
+System Command
+</p>
+<h2>Function:</h2>
+<p>
+Reads a single char from channel source.
+</p>
+<h2>Inputs:</h2>
+<p class="fixed">
+   
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Channel : INT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Channel buffer used.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q : DINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ASCII value of the character being read.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+TC_GET reads a single char from channel source. It waits for
+the arrival of a single character on the serial. The ASCII value of the
+character is assigned to the output. The user program will wait until a
+character is available.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample">
+TC_GET
+( Channel
+(*INT*)
+ );
+</p>
+<h2>FBD Language: </h2>
+<p align="center">
+<img width="315" height="53" id="Picture 1" src="TC_GET_files/image001.png">
+</p>
+<h2>LD Language: </h2>
+<p align="center">
+<img width="547" height="65" id="Picture 3" src="TC_GET_files/image002.png">
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBASIC Errors</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

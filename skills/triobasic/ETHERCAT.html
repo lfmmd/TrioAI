@@ -1,0 +1,3536 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ETHERCAT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ETHERCAT">
+</head>
+<body>
+<h1>ETHERCAT</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ETHERCAT(function, slot[, parameters...])
+</p>
+<h2>Description:</h2>
+<p>
+The command ETHERCAT is used to perform advanced operations
+on the EtherCAT network. In normal use the EtherCAT network will start automatically
+without the need for any commands in a startup program. Some ETHERCAT command
+functions may be useful when debugging and setting up an EtherCAT system, so a
+small sub-set is described here.
+</p>
+<p class="note">
+The ETHERCAT command returns TRUE (-1) if successful and FALSE
+(0) if the command execution was in error. Functions which return a value must
+either put the value in a VR or print it to the current output terminal.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="20" valign="top" class="tablegrid">
+
+  
+<p>
+function:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Function to be performed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_00">$00</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Start EtherCAT network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_01">$01</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Stop EtherCAT network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_02">$02</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Check slave online
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_03">$03</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Check number of slaves
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_04">$04</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Get slave address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_05">$05</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Get slave axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_06">$06</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Get EtherCAT State (Legacy)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_21">$21</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Set EtherCAT State
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_22">$22</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Get EtherCAT State
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_30">$30</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Set Slave ESC Register value (Auto)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_31">$31</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Get Slave ESC Register value (Auto)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_64">$64</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Send reset sequence to a drive
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_79">$79</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Set Status Mask and Trigger Pattern
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_7A">$7A</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Get Status Mask and Trigger Pattern
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_87">$87</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Display
+  network configuration</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_91">$91</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Set
+  Sync0 Start time</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_93">$93</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Set
+  DC Master mode</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_E0">$E0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Set
+  Emergency Message control</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_E1">$E1</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Read
+  Emergency Message control value</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p>
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set to the EtherCAT port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+MC4N, MC6N
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Flex-6 Nano
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Flex-6X Nano
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+MC464
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+P876 slot number (0 to 7)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+MC664
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Internal slot number or -2
+</p>
+
+  
+<p>
+P876 slot number if fitted
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="Function_00">Function = $00</a>
+: Start EtherCAT network</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT(0, slot[, option_flags[, MAC_retries]])
+</p>
+<h3>Description:</h3>
+<p>
+Initialise EtherCAT network and put it into Operational state.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot number of EtherCAT port.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="9" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+option_flags:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+state
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Do not print progress information
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Print out progress information (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Normal state change (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Force a re-scan of the network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Standard startup
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Express startup; do not wait for PLL to lock between
+  state changes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Standard startup (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Trio production test mode startup.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MAC_retries:
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sets the number of times the master attempts to restart
+  the Ethernet auto-negotiation. Default = 2
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Check for the EtherCAT state and if not in Operational state,
+restart the EtherCAT and set an output to indicate that a re-start is in
+progress.
+</p>
+<p class="codeexample">
+'--Init EtherCAT if needed.
+</p>
+<p class="codeexample">
+Slt = 0
+</p>
+<p class="codeexample">
+ecs_vr = 30 'Use VR 30 for returned value
+</p>
+<p class="codeexample">
+chk = ETHERCAT($06, slt, ecs_vr) 'Test state
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+IF chk &lt;&gt; TRUE OR VR(ecs_vr) &lt;&gt; 3 THEN
+</p>
+<p class="codeexample">
+  OP(9, ON)
+</p>
+<p class="codeexample">
+  WA(15000) 'Wait 15 seconds for drive to power up
+</p>
+<p class="codeexample">
+  ETHERCAT(0, slt) 'Initialise EtherCAT
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2><a name="Function_01">Function = $01</a>
+: Stop EtherCAT network</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT(1, slot)
+</p>
+<h3>Description:</h3>
+<p>
+Closedown the EtherCAT network.
+</p>
+<h3>Parameters:</h3>
+<p>
+None.
+</p>
+<h3>Example:</h3>
+<p>
+Stop the EtherCAT protocol from the terminal and then
+re-start it.
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERCAT(1, 0)
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERCAT(1, 0)
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="Function_02">Function = $02</a>
+: Check slave online</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT(2, slot, slave_position, vr_index)
+</p>
+<h3>Description:</h3>
+<p>
+Check whether given slave is online. If the vr_index
+&lt;&gt; -1, then write the result into the given VR. If the vr_index = -1 then
+write the result to the standard output stream. Return whether the function was
+successful.
+</p>
+<p class="note">
+Slave must have been initialised and on the network before the
+status can be checked.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_position:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position on the network of the slave to be checked.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to VRSIZE - 1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Result is placed in the selected VR variable.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Result is displayed in the current output path.
+  (default terminal 0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Check if the slaves at network positions 0 to 7 have gone
+offline.
+</p>
+<p class="codeexample">
+  
+FOR
+ posn = 
+0
+ TO
+ 7
+<br>
+
+    
+ETHERCAT
+(
+2
+,
+
+0
+, posn, 
+20 
++
+posn)
+<br>
+
+    
+IF
+ VR
+(
+20 
++ posn) = 
+FALSE
+
+
+THEN
+<br>
+
+      
+PRINT
+ &quot;Drive
+at &quot;
+; posn[
+0
+]; 
+&quot; is offline&quot;
+<br>
+
+    
+ENDIF
+<br>
+
+  
+NEXT
+ posn
+</p>
+<h2><a name="Function_03">Function = $03</a>
+: Check number of slaves</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT(3, slot, vr_index)
+</p>
+<h3>Description:</h3>
+<p>
+Determine the number of slaves on the bus. If the vr_index
+&lt;&gt; -1, then write the result into the given VR. If the vr_index = -1 then
+write the result to the standard output stream. Return whether the function was
+successful.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to VRSIZE - 1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Result is placed in the selected VR variable.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Result is displayed in the current output path.
+  (default terminal 0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Check to see how many slaves are on the EtherCAT bus.
+</p>
+<p class="codeexample">
+  
+ETHERCAT
+(
+3
+, 
+0
+, 
+20
+)
+<br>
+
+  
+PRINT
+ &quot;There
+are &quot;
+; 
+VR
+(
+20
+)[
+0
+]; 
+&quot;
+slaves on the EtherCAT bus&quot;
+</p>
+<h2><a name="Function_04">Function = $04</a>
+: Get slave address</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT(4, slot, slave_position, vr_index)
+</p>
+<h3>Description:</h3>
+<p>
+Determine the configured address of the slave identified by
+its position on the network. If vr_index &lt;&gt; -1, then write the result
+into the given VR. If vr_index = -1 then write the result to the standard
+output stream. Return whether the function was successful.
+</p>
+<p class="note">
+Slave must have been initialised and on the network before the
+configured address can be checked.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_position:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position on the network of the slave to be checked.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to VRSIZE - 1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configured address is placed in the selected VR
+  variable.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configured address is displayed in the current output
+  path. (default terminal 0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Report the configured addresses of every node on the
+network.
+</p>
+<p class="codeexample">
+  
+ETHERCAT
+(
+3
+, 
+0
+, 
+20
+) 
+'Get the number of
+slaves on the bus
+<br>
+
+  
+FOR
+ posn = 
+0
+
+
+TO
+ VR
+(
+20
+) - 
+1
+<br>
+
+    
+ETHERCAT
+(
+4
+,
+
+0
+, posn, 
+30 
++
+posn)
+<br>
+
+    
+PRINT
+ &quot;Drive
+at position &quot;
+; posn[
+0
+]; 
+&quot; has address &quot;
+; 
+VR
+(
+30
++posn)[
+0
+]
+<br>
+
+  
+NEXT
+ posn
+</p>
+<h2><a name="Function_05">Function = $05</a>
+: Get slave axis</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT(5, slot, slave_position, vr_index)
+</p>
+<h3>Description:</h3>
+<p>
+Determine the axis of the slave identified by its position
+on the network. If vr_index &lt;&gt; -1, then write the result into the given
+VR. If vr_index = -1 then write the result to the standard output stream. Return
+whether the function was successful.
+</p>
+<p class="note">
+Slave must have been initialised and on the network before the
+Axis number can be checked.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_position:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position on the network of the slave to be checked.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to VRSIZE - 1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number is placed in the selected VR variable.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number is displayed in the current output path.
+  (default terminal 0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Report the configured addresses of every node on the
+network.
+</p>
+<p class="codeexample">
+  
+ETHERCAT
+(
+3
+, 
+0
+, 
+20
+) 
+' get the number of
+slaves on the bus
+<br>
+
+  
+FOR
+ posn = 
+0
+
+
+TO
+ VR
+(
+20
+) - 
+1
+<br>
+
+    
+ETHERCAT
+(
+5
+,
+
+0
+, posn, 
+30 
++
+posn)
+<br>
+
+    
+PRINT
+ &quot;Drive
+at position &quot;
+; posn[
+0
+]; 
+&quot; has Axis &quot;
+; 
+VR
+(
+30 
++ posn)[
+0
+]
+<br>
+
+  
+NEXT
+ posn
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2><a name="Function_06">Function = $06</a>
+: Get EtherCAT State</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT($06, slot, vr_number)
+</p>
+<h3>Description:</h3>
+<p>
+Gets the present state of the EtherCAT running on the
+defined slot. The value returned shows the EtherCAT state as follows:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+0 – Initial
+</li>
+<li class="indent-list-middle">
+1 – Pre-Operational
+</li>
+<li class="indent-list-middle">
+2 – Safe-Operational
+</li>
+<li class="indent-list-last">
+3 – Operational
+</li>
+</ul>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_number:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The VR number where the returned value will be put.
+</p>
+
+  
+<p class="tablecontent">
+(-1 forces the value to be printed on the terminal)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+In the terminal, request the EtherCAT state value.
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERCAT($06, 0, -1)
+</p>
+<p class="codeexample">
+3
+</p>
+<p class="codeexample" style="margin-left:0cm;text-indent:14.2pt">
+&gt;&gt;&nbsp;
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2><a name="Function_21">Function = $21</a>
+: Set EtherCAT State</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT($21, slot, state, display)
+</p>
+<h3>Description:</h3>
+<p>
+This function controls the EtherCAT State Machine (ESM). It
+requests the master change to given EtherCAT state and hence changes all slaves
+to the same state. When a change to a higher state is made, the EtherCAT
+network will progress to the new state through the intermediate states to allow
+correct starting of the network.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+state:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT state request
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="28" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="28" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initial (EtherCAT ESC value 0x01)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="28" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pre-Operational (0x02)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="28" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Safe-Operational  (0x04)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="28" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Operational  (0x08)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+display:
+</p>
+
+  
+</td>
+<td width="526" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Verdana",sans-serif'>Function</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="28" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Verdana",sans-serif'>1</span></p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Verdana",sans-serif'>Writes
+  state change information to the standard output stream. (Default)</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="28" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Verdana",sans-serif'>0</span></p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Verdana",sans-serif'>Do
+  not write out state change information.</span></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h3>Example:</h3>
+<p>
+Change the EtherCAT to Safe-Operational and suppress the
+information that would be printed to the terminal.
+</p>
+<p class="codeexample">
+ETHERCAT($21, 0, 2, 0)
+</p>
+<h2><a name="Function_22">Function = $22</a>
+: Get EtherCAT State</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT($22, slot, vr_number)
+</p>
+<h3>Description:</h3>
+<p>
+Gets the present state of the EtherCAT running on the
+defined slot. The value returned shows the EtherCAT state as follows:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+0 – Initial
+</li>
+<li class="indent-list-middle">
+1 – Pre-Operational
+</li>
+<li class="indent-list-middle">
+2 – Safe-Operational
+</li>
+<li class="indent-list-last">
+3 – Operational
+</li>
+</ul>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_number:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The VR number where the returned value will be put.
+</p>
+
+  
+<p class="tablecontent">
+(-1 forces the value to be printed on the terminal)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+In the terminal, request the EtherCAT state value.
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERCAT($22, 0, -1)
+</p>
+<p class="codeexample">
+3
+</p>
+<p class="codeexample" style="margin-left:0cm;text-indent:14.2pt">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="Function_30">Function = $30</a>
+: Set Slave ESC Register (Auto)</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT($30, slot, slave_address, ESC_offset, data_length,
+value)
+</p>
+<h3>Description:</h3>
+<p>
+Low-level write to the slave's ESC registers, addressing
+method used is auto-increment addressing.
+</p>
+<p>
+Returns TRUE if the write is successful.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot number in the Motion Coordinator
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_address:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Auto-increment address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ESC_offset:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Register address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data_length
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of bytes in the register size
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value, value1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value/value1 are 32-bit data values, LS word first.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+In the terminal, set the value of ESC register $0935 (speed
+counter filter depth) in slave at address number 2.
+</p>
+<p class="codeexample">
+&gt;&gt;?ETHERCAT($30, 0, 2, $0935, 2, 12)
+<br>
+
+-1
+</p>
+<h2><a name="Function_31">Function = $31</a>
+: Get Slave ESC Register (Auto)</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT($31, slot, slave_address, ESC_offset, data_length,
+vr_index)
+</p>
+<h3>Description:</h3>
+<p>
+Low-level read from the slave's ESC registers, addressing
+method used is auto-increment addressing.
+</p>
+<p>
+Returns TRUE if the read is successful.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot number in the Motion Coordinator
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slave_address:
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Auto-increment address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ESC_offset:
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Register address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data_length
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of bytes in the register size
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Display the value on the current default output channel
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+e.g. terminal #0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to VRSIZE - 1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Store the value in the VR number specified.
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+In the terminal, read the value of ESC register $0130
+(EtherCAT Slave State) in slave at address number 5. Print the result to the
+terminal.
+</p>
+<p class="codeexample">
+&gt;&gt;?ETHERCAT($31, 0, 5, $0130, 2, -1)
+<br>
+
+8
+<br>
+
+-1
+</p>
+<h2><a name="Function_64">Function = $64</a>
+: Send reset sequence to a drive</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT($64, axis_number[, mode[, timeout]])
+</p>
+<h3>Description:</h3>
+<p>
+Reset a slave error. This function runs the error reset
+sequence on the drive control word. DRIVE_CONTROLWORD bit 8 is toggled high
+then low. This will instruct the drive to reset any errors in the drive where
+the cause of the error has been removed.
+</p>
+<p class="warning">
+The response to a reset sequence will depend on the drive and
+how closely it follows the CoE DS402 specification.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="103" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis_number:
+</p>
+
+  
+</td>
+<td width="488" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis number of the drive to be reset.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="103" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="441" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 'Fault Reset' (bit 7) of DS402 control word is set
+  high and then set low again after a hard coded timeout. (default) 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="441" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 7 is set high until the 'Fault Flag' (bit 3) of the
+  status word goes low, or a timeout occurs.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="103" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+timeout:
+</p>
+
+  
+</td>
+<td width="488" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional 
+timeout in milliseconds used
+  during mode 1 operation. Default is 
+100&nbsp;ms
+. Range
+  is 1 to 10000&nbsp;ms.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<h4>Example 1</h4>
+<p>
+Send control word reset sequence to drive at axis 8.
+</p>
+<p class="codeexample">
+ETHERCAT($64, 8)
+</p>
+<h4>Example 2</h4>
+<p>
+Send control word reset sequence to drive at axis 2. Use
+Mode 1 to force the reset bit to remain high until the status it 3 goes low or
+force the reset bit low again after 60&nbsp;ms, even if the status bit is still
+high.
+</p>
+<p class="codeexample">
+ETHERCAT($64, 2, 1, 60)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2><a name="Function_79">ETHERCAT $79</a>
+: Set Status Mask and Trigger Pattern</h2>
+<h3>Type: </h3>
+<p>
+EtherCAT configuration setup. Runtime definition of slave –
+controller interaction.
+</p>
+<h3>Syntax:</h3>
+<p class="TrioBASIC">
+ETHERCAT($79, slot, addr, vr_index[, mask, trigger_pattern])
+
+</p>
+<h3>Description:</h3>
+<p>
+This command enables the user to define a CoE status word
+(0x6041:00) mask and trigger pattern for raising the controller AXISSTATUS
+‘Remote Drive Status word Error’ flag (bit 26.)
+</p>
+<p>
+The mask defines which bits within the CoE status word are
+relevant, and the trigger pattern defines the state of these bits (0 or 1)
+which will trigger the controller AXISSTATUS flag.
+</p>
+<p>
+If it is necessary to reset the watchdog (master enable)
+when this AXISISTATUS flag is set, then the axis ERRORMASK must be set accordingly.
+</p>
+<p class="note">
+The slave mask and pattern can be set and modified from preop to Operational
+state of the network (after the configured addresses have been assigned). It
+must be reset if the network is restarted. 
+</p>
+<p class="note">
+The slave must support the CoE status word (0x6041:00) within the
+PDO cyclic data.
+</p>
+<p class="note">
+If the Mask is zero, the controller will not execute any runtime
+check of the CoE status word.
+</p>
+<p class="warning">
+If the watchdog must be cleared to OFF when the ‘remote drive
+statusword error’ flag is raised, then bit 26 of the axis ERRORMASK parameter
+must be set.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="182" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot:
+</p>
+
+  
+</td>
+<td width="347" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+module slot number
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+e.g. 0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="182" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Addr:
+</p>
+
+  
+</td>
+<td width="347" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+configured address of the slave
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="182" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td width="199" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+use the given mask and trigger_pattern values in
+  parameters 5 and 6.
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to VRSIZE - 1
+</p>
+
+  
+</td>
+<td width="199" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The index of the VR which contains the mask and the
+  next VR (vr_index+1) contains the trigger_pattern.
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="182" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mask:
+</p>
+
+  
+</td>
+<td width="347" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CoE status word mask
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="182" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Trigger_pattern:
+</p>
+
+  
+</td>
+<td width="347" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Defines the state of the relevant bits which will
+  trigger the controller AXISSTATUS ‘remote drive statusword error’ flag (bit
+  26.)
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+</p>
+<h3>Return Value</h3>
+<p>
+-1 : mask and pattern set correctly
+</p>
+<p>
+0: failed to set the mask and pattern 
+</p>
+<h3>Example:</h3>
+<p>
+We want to set the AXISSTATUS ‘remote drive statusword
+error’ (bit 26) flag and drop the watchdog to OFF when the slave drive either
+sets the ‘switch on disabled’ flag (bit 6 of the CoE status word) or clears the
+‘Ready to switch on’ flag (bit 0 of the CoE status word.)
+</p>
+<p>
+Hence 
+</p>
+<p class="TrioBASIC" align="left">
+'Mask = 0x41
+</p>
+<p class="TrioBASIC" align="left">
+'Trigger Pattern = 0x40
+</p>
+<p class="TrioBASIC" align="left">
+&nbsp;
+</p>
+<p class="TrioBASIC" align="left">
+'Set mask and trigger
+pattern. 
+<br>
+
+'Slot = 0, slave configured address = 1 and axis = 0
+</p>
+<p class="TrioBASIC" align="left">
+&nbsp;
+</p>
+<p class="TrioBASIC" align="left">
+'Params(func, slot, addr,
+vr_index, mask, trigger pattern)
+</p>
+<p class="TrioBASIC" align="left">
+ETHERCAT($79, 0, 1, -1,
+$41, $40)
+</p>
+<p class="TrioBASIC" align="left">
+&nbsp;
+</p>
+<p class="TrioBASIC" align="left">
+'Set ERRORMASK to ensure
+the AXISSTATUS bit 26 will clear the WDOG when triggered.
+</p>
+<p class="TrioBASIC" align="left">
+BASE(0)
+</p>
+<p class="TrioBASIC" align="left">
+ERRORMASK.26 = 1
+</p>
+<p>
+Now if the CoE status word bit 0 (ready to enable) is set
+low, or bit 6 (switch on disabled) is set high the AXISSTATUS ‘remote drive
+status word error’ flag (bit 26) will be set and the WDOG cleared.
+</p>
+<h2><a name="Function_7A">ETHERCAT $7A</a>
+: Get Status Mask and Trigger Pattern</h2>
+<h3>Type: </h3>
+<p>
+EtherCAT configuration setup. Runtime definition of slave –
+controller interaction.
+</p>
+<h3>Syntax:</h3>
+<p class="TrioBASIC">
+ETHERCAT($7A, slot, addr[, vr_index]) 
+</p>
+<h3>Description:</h3>
+<p>
+This command enables the user to display and check the mask
+and trigger pattern values set (if any) for a given slave. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="182" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot:
+</p>
+
+  
+</td>
+<td width="347" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+module slot number
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+e.g. 0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="182" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Addr:
+</p>
+
+  
+</td>
+<td width="347" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+configured address of the slave
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="182" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td width="208" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Display the mask and trigger_pattern values to the
+  current default output channel. 
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+e.g. terminal 0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to VRSIZE - 1
+</p>
+
+  
+</td>
+<td width="208" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Index of the array of 2 VRs where the mask and the
+  trigger_pattern will be stored.
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+</p>
+<h3>Return Value</h3>
+<p>
+-1 : mask and pattern read correctly
+</p>
+<p>
+0: failed to get the mask and pattern 
+</p>
+<h3>Example:</h3>
+<p class="TrioBASIC" align="left">
+'Mask and pattern have
+not been set, so default values returned.
+</p>
+<p class="TrioBASIC" align="left">
+'Params(func, slot, addr
+[, vr_index])
+</p>
+<p class="TrioBASIC" align="left">
+&gt;&gt;?ETHERCAT($7A, 0,
+1, -1)
+<br>
+
+0
+<br>
+
+0
+<br>
+
+-1
+</p>
+<p class="TrioBASIC" align="left">
+&nbsp;
+</p>
+<p class="TrioBASIC" align="left">
+'Set Mask to0x41 and
+trigger pattern to 0x40, for slave on slot 0 with configured addr of 1
+</p>
+<p class="TrioBASIC" align="left">
+&gt;&gt;ETHERCAT($79, 0,
+1, -1, $41, $40)
+</p>
+<p class="TrioBASIC" align="left">
+&nbsp;
+</p>
+<p class="TrioBASIC" align="left">
+'Read back the values (in
+decimal)
+</p>
+<p class="TrioBASIC" align="left">
+&gt;&gt;?ETHERCAT($7A, 0,
+1, -1)
+<br>
+
+65
+<br>
+
+64
+<br>
+
+-1
+</p>
+<h2><a name="Function_87">Function = $87</a>
+: Display network configuration</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT($87, slot)
+</p>
+<h3>Description:</h3>
+<p>
+<span style='font-family:"Verdana",sans-serif'>Displays
+the network configuration to the command line terminal in Motion Perfect.</span></p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot number where the EtherCAT module is located
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+In the terminal, request the EtherCAT network configuration.
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&gt;&gt;ethercat($87,0)
+<br>
+
+EtherCAT Configuration (0):
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;EK1100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;0
+: 0 : 2000&nbsp;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;EL2008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;1
+: 0 : 1000 (0:0/16:8)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;EL2008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;2
+: 0 : 1001 (0:0/24:8)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;EL2008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;3
+: 0 : 1002 (0:0/32:8)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;EL2008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;4
+: 0 : 1003 (0:0/40:8)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;EL2008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;5
+: 0 : 1004 (0:0/48:8)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;EK1110&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;6
+: 0 : 2001&nbsp;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;RS2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;7
+: 0 : 1 (0)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;SGDV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;8
+: 0 : 2 (1)
+<br>
+
+&gt;&gt;
+</p>
+<h2><a name="Function_91">ETHERCAT $91</a>
+: Set EtherCAT Sync0 start time</h2>
+<h3>Type: </h3>
+<p>
+EtherCAT configuration setup.
+</p>
+<h3>Syntax:</h3>
+<p class="TrioBASIC">
+ETHERCAT($91, vr_index[, value]) 
+</p>
+<h3>Description:</h3>
+<p>
+Set the network default Sync0 start time offset. If the
+vr_index &lt;&gt; -1, then use the value from the given VR, if the vr_index =
+-1 then write the value in the third parameter.
+</p>
+<p>
+The default start time is 1 second (1000000 microseconds).
+Add or subtract the required offset in microseconds. For example, 1000150 is an
+offset of 150&nbsp;&#956;s and 999930 is an offset of -70&nbsp;&#956;s. The
+offset must not exceed ±50% of the servo period.
+</p>
+<p>
+The command updates the offset for all networks if the
+controller can operate more than one. 
+</p>
+<p>
+The function returns TRUE/FALSE depending upon whether the operation
+was successful.
+</p>
+<p>
+This command must be run before the EtherCAT network is
+started.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="155" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot:
+</p>
+
+  
+</td>
+<td width="317" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+module slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="155" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td width="185" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the value from parameter 3. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to VRSIZE - 1
+</p>
+
+  
+</td>
+<td width="185" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the value in the VR number specified.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="155" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td width="317" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional direct value for the start time.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+</p>
+<h3>Example:</h3>
+<p class="TrioBASIC" align="left">
+'Set the EtherCAT Sync0
+start time with offset of 500 microseconds
+</p>
+<p class="TrioBASIC" align="left">
+e_flag = ETHERCAT($91,
+-1, 1000500)
+<br>
+
+IF e_flag = FALSE THEN 
+</p>
+<p class="TrioBASIC" align="left">
+    PRINT #5, &quot;Failed
+to set Sync0 start time&quot;
+<br>
+
+ENDIF
+</p>
+<h2><a name="Function_93">ETHERCAT $93</a>
+: Set Distributed Clocks master mode</h2>
+<h3>Type: </h3>
+<p>
+EtherCAT configuration setup.
+</p>
+<h3>Syntax:</h3>
+<p class="TrioBASIC">
+ETHERCAT($93, slot, dc_function, vr_index[, value]) 
+</p>
+<h3>Description:</h3>
+<p>
+Set the EtherCAT master to enable the first DC enabled node
+to be the Distributed Clocks master. As this requires the Trio Motion
+Coordinator to synchronise to the external DC master, it does not function on
+P876, MC4N-ECAT or MC664(X) as these have FPGA based fixed timing hardware for
+the EtherCAT port.
+</p>
+<p>
+The function returns TRUE/FALSE depending upon whether the operation
+was successful.
+</p>
+<p>
+This command must be run before the EtherCAT network is
+started.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="155" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slot:
+</p>
+
+  
+</td>
+<td width="317" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+module slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="155" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+dc_function:
+</p>
+
+  
+</td>
+<td width="317" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Distributed Clocks function. 2 = use first DC enabled
+  node as clocks master.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="155" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td width="147" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the value from parameter 3. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="147" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to VRSIZE - 1
+</p>
+
+  
+</td>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the value in the VR number specified.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="155" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td width="317" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional direct value for the DC mode. 0 = use first DC
+  enabled node as the clocks master.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+</p>
+<h3>Example:</h3>
+<p>
+Set the first drive with DC capability to be the
+Distributed Clocks Master then start the network.
+</p>
+<p class="TrioBASIC">
+'Use first DC enabled drive as master clock
+</p>
+<p class="TrioBASIC">
+ETHERCAT($93, 0, 2, -1, 0)
+</p>
+<p class="TrioBASIC">
+'Start EtherCAT network
+</p>
+<p class="TrioBASIC">
+ETHERCAT(0, 0)
+</p>
+<h2><a name="Function_E0">Function = $E0</a>
+: Set Emergency Message control</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT($E0, slot, mode)
+</p>
+<h3>Description:</h3>
+<p>
+Set the response of the master to an emergency telegram
+transmitted by a slave node. This function enables the user to determine
+whether emergency messages should trigger a system error alarm and cause the
+WDOG to be dropped.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Log error and raise a System Error and drop WDOG off.
+  (Default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Log error only.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Set the mode so that Emergency Messages from slave nodes do
+not cause the WDOG to go OFF. Then start the EtherCAT network.
+</p>
+<p class="codeexample" style="margin-left:0cm;text-indent:14.2pt">
+ec_slot = 0
+</p>
+<p class="codeexample" style="margin-left:0cm;text-indent:14.2pt">
+ETHERCAT($E0,
+ec_slot, 1)
+</p>
+<p class="codeexample" style="margin-left:0cm;text-indent:14.2pt">
+ETHERCAT(0,
+ec_slot)
+</p>
+<h2><a name="Function_E1">Function = $E1</a>
+: Read Emergency Message control
+value</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ETHERCAT($E1, slot, vr_number)
+</p>
+<h3>Description:</h3>
+<p>
+Get the current value, indicating the response of the master
+to an emergency telegram transmitted by a slave node.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_number:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The VR number where the returned value will be put.
+</p>
+
+  
+<p class="tablecontent">
+(-1 forces the value to be printed on the terminal)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+In the terminal, request the EtherCAT Emergency Message
+response setting.
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERCAT($E1, 0, -1)
+</p>
+<p class="codeexample">
+1
+</p>
+<p class="codeexample" style="margin-left:0cm;text-indent:14.2pt">
+&gt;&gt;&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

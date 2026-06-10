@@ -1,0 +1,66 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NIO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NIO">
+</head>
+<body>
+<h1>NIO</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter returns the number of inputs/outputs fitted
+to the system. The value is set by the firmware taking into consideration the
+total I/O detected; including module I/O, CAN I/O, Fieldbus I/O and CANopen I/O.
+</p>
+<p class="tip">
+Inputs/Outputs outside of NIO can be used as virtual
+</p>
+<h2>Value:</h2>
+<p>
+The highest I/O point + 1 that is available for use.
+</p>
+<p class="tip">
+If the number of inputs is not the same as the number of outputs,
+then the higher count is returned in the NIO parameter).
+</p>
+<h2>Example:</h2>
+<p>
+There are 32 external I/O points in addition to the 16
+built-in I/O points on the controller.
+</p>
+<p>
+Typing ?NIO in the terminal:
+</p>
+<p class="fixed">
+&gt;&gt;?NIO
+</p>
+<p class="fixed">
+48
+</p>
+<p class="fixed">
+&gt;&gt;&nbsp;
+</p>
+<p>
+Note that in this case, the last I/O point addressable is
+IN(47) and OP(47, state).
+</p>
+<h2>See also:</h2>
+<p>
+<a href="IOSIZE.html">IOSIZE</a>
+, 
+<a href="NIN.html">NIN</a>
+,
+
+<a href="NOP.html">NOP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,436 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CO_READ_AXIS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CO_READ_AXIS">
+</head>
+<body>
+<h1>CO_READ_AXIS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CO_READ_AXIS(axis_number, index, subindex, type[, vr_number])
+</p>
+<h2>Description:</h2>
+<p>
+This function gets a CANopen-over-EtherCAT (CoE) object from
+the remote drive or I/O device. The object’s index and sub-index are used to
+request a value and that value is either placed in the VR or is displayed in
+the Motion Perfect terminal if the VR number is set to -1.
+</p>
+<p>
+Refer to the remote device’s manual for a list of available
+objects. If the object value is returned successfully, the command returns TRUE
+(-1) . Otherwise, in the case of an error while requesting the value, the
+command returns FALSE (0).
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis_number: 
+</p>
+
+  
+</td>
+<td width="486" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number of the EtherCAT drive.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index: 
+</p>
+
+  
+</td>
+<td width="486" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen Object index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+subindex: 
+</p>
+
+  
+</td>
+<td width="486" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen Object sub-index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="104" rowspan="11" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Type:
+</p>
+
+  
+</td>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Boolean
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Real 32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Real 64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+21
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="44" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+27
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_number: 
+</p>
+
+  
+</td>
+<td width="486" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR number between 0 and max VR where the result will be
+  stored.
+<br>
+
+  (-1 means the value will be printed to the terminal)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Function_=_2"></a>
+Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+Print the value for object 0x6064 sub-index 00, position
+actual value. This is a 32 bit long word and so has the CANopen type 4.
+</p>
+<p class="codeexample">
+&gt;&gt;CO_READ_AXIS(3, $6064, 0, 4, -1)
+</p>
+<p class="codeexample">
+5472
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h4>Example 2:</h4>
+<p>
+Get the proportional gain and velocity feedforward gain from
+the remote drive, and place in VR(200) and VR(201).  Perform a check to make
+sure the object is supported by the drive.
+</p>
+<p class="codeexample">
+IF CO_READ_AXIS(2, $60FB, 1, 6, 200) = FALSE THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Error reading Object $60FB:01&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Drive P Gain = &quot;; VR(200)[0]
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+IF CO_READ_AXIS(2, $60FB, 2, 6, 201) = FALSE THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Error reading Object $60FB:02&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Drive VFF Gain = &quot;; VR(201)[0]
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="fixed" style="text-indent:14.2pt">
+&nbsp;
+</p>
+</body>
+</html>

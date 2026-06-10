@@ -1,0 +1,125 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENCODER_WRITE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENCODER_WRITE">
+</head>
+<body>
+<h1>ENCODER_WRITE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+Value = ENCODER_WRITE (address, data)
+</p>
+<h2>Description:</h2>
+<p>
+Write an internal register to an Absolute Encoder on an
+EnDat absolute encoder.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns 
+<a href="TRUE.html">TRUE</a>
+ if the write was
+  successful and 
+<a href="FALSE.html">FALSE</a>
+ if it fails
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+address:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The address of the EnDat encoder register to be written
+  to
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value to be written to the specified register. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Write a value to the EnDat encoder and check it has been
+written, then set the encoder back to position mode
+</p>
+<p class="codeexample">
+IF NOT ENCODER_WRITE (endat_address, setvalue) THEN
+</p>
+<p class="codeexample">
+  PRINT “Fail to write to encoder”
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+ENCODER_CONTROL=0
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ENCODER_CONTROL.html">ENCODER_CONTROL</a>
+, 
+<a href="ENCODER_READ.html">ENCODER_READ</a>
+</p>
+</body>
+</html>

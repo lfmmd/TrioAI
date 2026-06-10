@@ -1,0 +1,58 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LCDSTR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LCDSTR">
+</head>
+<body>
+<h1>LCDSTR</h1>
+<h2>Type:</h2>
+<p class="Category">
+String Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+LCDSTR = string
+</p>
+<h2>Description:</h2>
+<p>
+Allows the currently displayed character string on display
+to be read from or written to when under user control. This will only be
+allowed when the display is in normal display mode, for example if the user
+removes and replaces the ethernet cable then the displaying of IP address data
+will take priority before returning to the previous display string again.
+</p>
+<p>
+Note, this function is available on the MC405 only.
+</p>
+<h2>Value:</h2>
+<p>
+The string is predefined with a length of 3 and reflects the
+currently displayed 7-segment characters.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Take user control of 7-segement characters and display
+integer value of VR(100).
+</p>
+<p class="codeexample">
+DISPLAY.16 = 1 'Enable user control of 7-segment chars
+</p>
+<p class="codeexample">
+vr(100) = -88
+</p>
+<p class="codeexample">
+LCDSTR = STR(VR(100), 0, 3)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DISPLAY.html">DISPLAY</a>
+</p>
+</body>
+</html>

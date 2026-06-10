@@ -1,0 +1,459 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Open Keyword Overview</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Open Keyword</h1>
+<p>
+Trio Controllers support user defined keywords, and this
+section explains how to setup, use and debug custom keywords.
+</p>
+<h2>Setting up an open keyword</h2>
+<p>
+A keyword can be registered by using the command 
+</p>
+<p>
+REGISTER_KEYWORD(KeywordName, BASICFunctionName, minParams,
+maxParams)
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>Parameter</b></p>
+
+  
+</td>
+<td width="94" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="331" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+KeywordName
+</p>
+
+  
+</td>
+<td width="94" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+STRING
+</p>
+
+  
+</td>
+<td width="331" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Name
+  of your keyword.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+BASICFunctionName
+</p>
+
+  
+</td>
+<td width="94" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+STRING
+</p>
+
+  
+</td>
+<td width="331" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Name
+  of your TrioBASIC function.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+minParams
+</p>
+
+  
+</td>
+<td width="94" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+INTEGER
+</p>
+
+  
+</td>
+<td width="331" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Minimum
+  number of parameters for your function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+maxParams
+</p>
+
+  
+</td>
+<td width="94" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+INTEGER
+</p>
+
+  
+</td>
+<td width="331" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Maximum
+  number of parameters for your function
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>Limitations</h2>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+A new keyword cannot have the same name as the existing keyword,
+otherwise the controller will throw an error
+</li>
+<li class="indent-list-middle">
+The registered TrioBASIC function has to be compiled before
+calling then keyword
+</li>
+<li class="indent-list-middle">
+The number of parameters defined in the TrioBASIC function has to
+match the number of parameters passed to the keyword
+</li>
+<li class="indent-list-middle">
+A maximum of 5 keywords can be registered
+</li>
+<li class="indent-list-last">
+The REGISTER_KEYWORD command can only be used in MC_CONFIG
+</li>
+</ul>
+<h2>Examples</h2>
+<h3>In MC_CONFIG.MCC</h3>
+<p class="codeexample">
+REGISTER_KEYWORD(
+&quot;RUN_TEST0&quot;
+,
+
+&quot;test_void&quot;
+, 
+0
+,
+
+1
+)
+<br>
+
+REGISTER_KEYWORD(
+&quot;RUN_TEST1&quot;
+, 
+&quot;test_int&quot;
+, 
+0
+,
+
+2
+)
+<br>
+
+REGISTER_KEYWORD(
+&quot;RUN_TEST2&quot;
+, 
+&quot;test_float&quot;
+, 
+0
+,
+
+1
+)
+<br>
+
+REGISTER_KEYWORD(
+&quot;RUN_TEST3&quot;
+, 
+&quot;test_str&quot;
+, 
+0
+,
+
+1
+)
+</p>
+<p>
+&nbsp;
+</p>
+<h3>In TEST_LIB.BAL</h3>
+<p class="codeexample">
+FUNCTION
+ test_void()
+<br>
+
+
+   PRINT
+ &quot;test_void
+passed&quot;
+<br>
+
+
+ENDFUNC
+<br>
+
+
+<br>
+
+
+FUNCTION
+ test_int(param1, param2 
+AS
+ INTEGER
+)
+<br>
+
+
+   IF
+ param1 = 
+2
+
+
+THEN
+<br>
+
+
+      PRINT
+ &quot;test_int
+passed&quot;
+<br>
+
+
+   ELSE
+<br>
+
+
+      PRINT
+ &quot;test_int
+failed&quot;
+<br>
+
+
+   ENDIF
+<br>
+
+
+ENDFUNC
+<br>
+
+
+<br>
+
+
+FUNCTION
+ test_float(param1 
+AS
+ FLOAT
+)
+<br>
+
+
+   IF
+ param1 = 
+4.12
+
+
+THEN
+<br>
+
+
+      PRINT
+ &quot;test_float
+passed&quot;
+<br>
+
+
+   ELSE
+<br>
+
+
+      PRINT
+ &quot;test_float
+failed&quot;
+<br>
+
+
+   ENDIF
+<br>
+
+
+ENDFUNC
+<br>
+
+
+<br>
+
+
+FUNCTION
+ test_str(param1 
+AS
+ STRING
+) 
+AS
+ INTEGER
+<br>
+
+
+   IF
+ param1 = 
+&quot;TEST22&quot;
+
+
+THEN
+<br>
+
+
+      PRINT
+ &quot;test_str
+passed&quot;
+<br>
+
+
+      RETURN
+ 1
+<br>
+
+
+   ELSE
+<br>
+
+
+      PRINT
+ &quot;test_str
+failed&quot;
+<br>
+
+
+      RETURN
+ 0
+<br>
+
+
+   ENDIF
+<br>
+
+
+ENDFUNC
+</p>
+<h3>In TEST.BAS</h3>
+<p class="codeexample">
+DIM
+ ret 
+AS
+ INTEGER
+<br>
+
+
+<br>
+
+test_int(
+2
+, 
+1
+)
+<br>
+
+RUN_TEST1(
+2
+, 
+1
+)
+<br>
+
+RUN_TEST2(
+4.12
+)
+<br>
+
+ret = RUN_TEST3(
+&quot;TEST22&quot;
+)
+<br>
+
+
+PRINT
+ ret
+</p>
+</body>
+</html>

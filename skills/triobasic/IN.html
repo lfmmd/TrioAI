@@ -1,0 +1,203 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IN">
+</head>
+<body>
+<h1>IN</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = IN[(input_no[, final_input_no])]
+</p>
+<h2>Description:</h2>
+<p>
+IN is used to read the state of the Digital Inputs. Digital
+I/O normally refers to the 24&nbsp;V inputs and outputs attached to the Motion
+Coordinator. I/O points that do not have hardware attached can be used as &quot;Virtual&quot;
+outputs and inputs that can be set with OP and read back with IN.
+</p>
+<p>
+If called with no parameters, IN returns the binary sum of
+the first 32 inputs. If called with one parameter, it returns the state (1 or
+0) of that specific input channel. If called with 2 parameters IN returns the
+binary sum of the group of inputs.
+</p>
+<p class="note">
+For the 2 parameter case, the inputs should be less than 32
+apart.
+</p>
+<p class="note">
+IN is equivalent to IN(0, 31)
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The state of the selected input or range of inputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+none:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns the binary sum of the first 32 inputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+input_no:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input number to return the value of/start of input
+  group
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+final_inpu_not:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last input number of group
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+In this example a single input is tested:
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(4) = ON
+</p>
+<p class="codeexample">
+GOSUB place
+</p>
+<h3>Example 2:</h3>
+<p>
+Move to the distance set on a thumb wheel multiplied by a
+factor. The thumb wheel is connected to inputs 4, 5, 6, 7 and gives output in binary
+coded decimal.
+</p>
+<p>
+The move command is constructed in the following order:
+</p>
+<p>
+Step 1: IN(4, 7) will get a number 0..15
+</p>
+<p>
+Step 2: multiply by 1.5467 to get required distance
+</p>
+<p>
+Step 3: absolute 
+<a href="MOVE.html">MOVE</a>
+ to this
+position
+</p>
+<p class="codeexample">
+WHILE TRUE
+</p>
+<p class="codeexample">
+  MOVEABS(IN(4, 7) * 1.5467)
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3>Example 3:</h3>
+<p>
+Test if either input 2 or 3 is 
+<a href="ON.html">ON</a>
+. 
+</p>
+<p class="codeexample">
+If (IN AND 12) &lt;&gt; 0 THEN GOTO start
+</p>
+<p class="codeexample">
+'(Bit 2 = 4 and Bit 3 = 8) so the mask is 12
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="OP.html">OP</a>
+, 
+<a href="NIN.html">NIN</a>
+, 
+<a href="READ_OP.html">READ_OP</a>
+, 
+<a href="IOMAP.html">IOMAP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

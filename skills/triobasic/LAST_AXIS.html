@@ -1,0 +1,81 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LAST_AXIS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LAST_AXIS">
+</head>
+<body>
+<h1>LAST_AXIS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter 
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+LAST_AXIS
+</p>
+<p class="codeexample">
+LAST_AXIS = &lt;value&gt;
+</p>
+<h2>Description:</h2>
+<p>
+The 
+<i>Motion coordinator</i> keeps a list of axes that are
+currently in use. LAST_AXIS can be used to read the number of the highest axis
+in the list or assigned to set the last axis.
+</p>
+<p>
+LAST_AXIS is set automatically by the system software when
+an axis is written to; this can include setting 
+<a href="BASE.html">BASE</a>
+
+for the axis.
+</p>
+<p class="note">
+Axes higher than LAST_AXIS are not processed. Not all axis lower
+than LAST_AXIS are processed.
+</p>
+<h2>Value:</h2>
+<p>
+The highest axis in the axis list that is processed.
+</p>
+<h2>Example:</h2>
+<h3>Example 1:</h3>
+<p>
+Check LAST_AXIS to ensure that the digital network has
+configured enough drives.
+</p>
+<p class="codeexample">
+IF LAST_AXIS &lt;&gt; 26 THEN
+</p>
+<p class="codeexample">
+  PRINT#user, &quot;Digital Drives not initialised&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+Remove all configured axes to that after power up.
+</p>
+<p class="codeexample">
+LAST_AXIS = 0
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXISLIST.html">AXISLIST</a>
+, 
+<a href="AXISSIZE.html">AXISSIZE</a>
+,
+
+<a href="BASE.html">BASE</a>
+, 
+<a href="INITIALISE.html">INITIALISE</a>
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+</body>
+</html>

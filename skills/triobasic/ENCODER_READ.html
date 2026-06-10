@@ -1,0 +1,121 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENCODER_READ</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENCODER_READ">
+</head>
+<body>
+<h1>ENCODER_READ</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = ENCODER_READ (address)
+</p>
+<h2>Description:</h2>
+<p>
+Read an internal register from an EnDat absolute encoder. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value returned from the specified register. Returns -1
+  if the encoder has not been initialised
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+address:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The address of the EnDat encoder register to be read
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1</h3>
+<p>
+Initialise and check an EnDat encoder
+</p>
+<p class="codeexample">
+ENCODER_BITS=25+256*12
+</p>
+<p class="codeexample">
+ATYPE=47
+</p>
+<p class="codeexample">
+IF ENCODER_READ($A700)=-1 then
+</p>
+<p class="codeexample">
+  PRINT “Failed to initialise EnDat Encoder
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+ENCODER_CONTROL=0
+</p>
+<h3>Example 2</h3>
+<p>
+Read the number of encoder bits from an EnDat encoder. This
+can be done before ENCODER_BITS is set to find the correct value to use. This
+command will work with any EnDat 2.1 encoder. 
+</p>
+<p class="codeexample">
+&gt;&gt;BASE(1)
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT ENCODER_READ($A10d)AND $3F
+</p>
+<p class="codeexample">
+25
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ENCODER_CONTROL.html">ENCODER_CONTROL</a>
+, 
+<a href="ENCODER_WRITE.html">ENCODER_WRITE</a>
+</p>
+</body>
+</html>

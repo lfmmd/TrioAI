@@ -1,0 +1,233 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_EC_RESETERR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_EC_RESETERR">
+</head>
+<body>
+<h1>TC_EC_RESETERR</h1>
+<h2>Type:</h2>
+<p>
+System Command.
+</p>
+<h2>Function:</h2>
+<p>
+Sends reset sequence to a drive.
+</p>
+<h2>Inputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute: BOOL;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rising edge requests execution
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+AxisNo: USINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis number of the drive to be reset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mode: INT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p>
+0: The 'Fault Reset' (bit 7) of DS402 control word is set
+  high and then set low again after a hard coded timeout
+</p>
+
+  
+<p class="tablecontent">
+1: Bit 7 is set high until the 'Fault Flag' (bit 3) of
+  the status word goes low, or a timeout occurs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Timeout: INT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional timeout in ms used during mode 1 operation. Range
+  is 1 to 10000 ms
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done: BOOL;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when function has completed normally
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error: BOOL;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p>
+TRUE if a program error is detected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID: UINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p>
+Returned error number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+This function runs the error reset sequence on the drive
+control word. DRIVE_CONTROLWORD bit 8 is toggled high then low. This will
+instruct the drive to reset any errors in the drive where the cause of the
+error has been removed. When the input parameters are incorrect, the ErrorID
+will change to 256.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample">
+Inst_TC_EC_RESETERR(Execute:= (BOOL), AxisNo:= (USINT),
+Mode:= (INT), Timeout:= (INT));
+</p>
+<p class="codeexample">
+(BOOL):=Inst_TC_EC_RESETERR.Done;
+</p>
+<p class="codeexample">
+(BOOL):=Inst_TC_EC_RESETERR.Error;
+</p>
+<p class="codeexample">
+(UINT):=Inst_TC_EC_RESETERR.ErrorID; 
+</p>
+<h2>FBD Language:</h2>
+<p align="center">
+<span style='font-family:"Microsoft YaHei",sans-serif'><img width="375" height="89" src="TC_EC_RESETERR_files/image001.png">
+</span></p>
+<h2>LD Language: </h2>
+<p align="center">
+<img width="232" height="295" id="&#22270;&#29255; 1" src="TC_EC_RESETERR_files/image002.png">
+</p>
+<h2>IL Language: </h2>
+<p>
+Not available.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBasic Error List</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

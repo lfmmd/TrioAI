@@ -1,0 +1,545 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SYNC_TO_GTA</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SYNC_TO_GTA">
+</head>
+<body>
+<h1>SYNC_TO_GTA</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command
+</p>
+<h2>Syntax:</h2>
+<h2><span style='font-family:"Courier New"'>SYNC_TO_GTA(control,
+time[, syncPos, syncAxis, object frame, GTA])</span></h2>
+<h2>Description:</h2>
+<p class="MsoNoSpacing">
+It is possible to synchronise the robot TCP with a moving
+object or with another machine or robot. This means the robot TCP will move or
+rotate in the same directions than the synchronised object and absolute
+movements on top of it.
+</p>
+<p class="MsoNoSpacing">
+There are two types of synchronisation:
+</p>
+<p class="MsoNoSpacing" style="margin-left:36.0pt;text-indent: -18.0pt">
+1.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Object frame synchronisation 
+</p>
+<p class="MsoNoSpacing" style="margin-left:36.0pt;text-indent: -18.0pt">
+2.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>GTA synchronisation
+</p>
+<p>
+GTA synchronisation is designed for simpler
+synchronisations. It synchronises the robot TCP with one axis in X direction.
+If the robot is not aligned perfectly with X direction, Object Frame can always
+be previously set and selected.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Data type
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Control
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+1 = Start synchronisation
+</p>
+
+  
+<p>
+4 = Stop synchronisation
+</p>
+
+  
+<p class="tablecontent">
+10 = Resynchronisation to another GTA
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+time
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Time to complete the synchronisation in milliseconds.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(optional) syncPos
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Captured position on syncAxis. 
+</p>
+
+  
+<p>
+Not needed for control value 4 (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(optional) syncAxis
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Axis to synchronise with. 
+</p>
+
+  
+<p>
+Not needed for control value 4 (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(optional) object frame
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer /
+</p>
+
+  
+<p class="tablecontent">
+String
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Object frame related to selected GTA. 
+</p>
+
+  
+<p>
+Value = index or name of the object frame, or 0 (default)
+  for no Object Frame. 
+</p>
+
+  
+<p>
+Not needed for control value 4 (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(optional) 
+<em><span style='font-family:"Calibri",sans-serif'>GTA</span></em></p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+GTA to sync with. 
+</p>
+
+  
+<p>
+Value = index or name of GTA, or -1 for no GTA. 
+</p>
+
+  
+<p>
+Not needed for control value 4 (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></em></p>
+<p>
+<i><img width="646" height="340" id="Canvas 31" src="RPS_SYNC_TO_GTA_files/image001.png">
+</i></p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Products are placed in a conveyor belt randomly. They are
+then to be picked and placed to a specific position. A camera vision system
+will process the position and orientation of the products and send this
+information to the controller. Depending on the camera technology used, the
+information can be sent using an Ethernet socket connection or Trio ActiveX.
+The offsets measured for the camera are relative to the camera origin and
+therefore we need to tell the system where that origin is by the use of
+OBJECT_FRAME. </span></em></p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Bear in mind that the robot will be synced with X direction,
+so the X vector of the OBJECT_FRAME should be aligned with the direction of the
+conveyor. After setting the OBJECT_FRAME in the camera origin, a GTA should be
+set with the offset detected. In this example, the camera will send 5
+parameters to a table data:</span></em></p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Table 0: X offset, Table 1: Y offset, Table 2: Orientation,
+Table 3: Conveyor position, Table 4: Detected</span></em></p>
+<p class="MsoNoSpacing">
+<em><b><u><span style='font-family:"Calibri",sans-serif'>Code:</span></u></b></em></p>
+<p class="codeexample">
+fixed_z = 
+50
+ ' Z will
+always be the same due to conveyor is parallel to the ground
+<br>
+
+
+<br>
+
+' Open gripper
+<br>
+
+
+OP
+(gripper,
+OFF
+)
+<br>
+
+
+<br>
+
+
+SYNC_TO_GTA
+(
+4
+,
+500
+) ' Desync in 500ms
+<br>
+
+
+WAIT
+ UNTIL
+ SYNC_CONTROL
+ = 
+0
+
+' Wait until fully desync
+<br>
+
+
+<br>
+
+
+WAIT
+ UNTIL
+ TABLE
+(
+4
+) = 
+1
+ ' Wait until product is detected
+<br>
+
+
+TABLE
+(
+4
+,
+0
+) ' Reset product detected
+<br>
+
+
+<br>
+
+' Set GTA value with camera measured offsets
+<br>
+
+
+GTA
+(
+0
+) = 
+TABLE
+(
+0
+), 
+TABLE
+(
+1
+),fixed_z, 
+180
+,
+0
+, 
+TABLE
+(
+2
+)
+<br>
+
+
+<br>
+
+' Register conveyor position when camera detects the product
+<br>
+
+registed_position = 
+TABLE
+(
+3
+)
+<br>
+
+
+<br>
+
+' Sync to axis 10, GTA(0) in Object Frame “camera” (1) in 2000ms
+<br>
+
+
+SYNC_TO_GTA
+(
+1
+,
+2000
+,registed_position,
+10
+,
+1
+,
+0
+)
+<br>
+
+
+WAIT
+ UNTIL
+ SYNC_CONTROL
+ = 
+3
+
+' Wait until fully synced
+<br>
+
+
+<br>
+
+' Close gripper
+<br>
+
+
+OP
+(gripper,
+ON
+)
+<br>
+
+
+WA
+(
+200
+) '
+Wait for gripper close
+<br>
+
+
+<br>
+
+
+SYNC_TO_GTA
+(
+4
+,
+500
+) ' Desync in 500ms
+<br>
+
+
+WAIT
+ UNTIL
+ SYNC_CONTROL
+ = 
+0
+
+' Wait until fully desync
+<br>
+
+
+<br>
+
+
+STOP
+</p>
+<h3>Example 2:</h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Stop synchronisation within 250ms.</span></em></p>
+<p class="codeexample">
+SYNC_TO_OBJECT_FRAME
+(
+4
+,
+250
+)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_ATTACH_OBJECT_FRAME.html">ATTACH_OBJECT_FRAME</a>
+,
+
+<a href="RPS_SYNC_TO_OBJECT_FRAME.html">SYNC_TO_OBJECT_FRAME</a>
+</p>
+</body>
+</html>

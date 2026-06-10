@@ -1,0 +1,61 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NOP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NOP">
+</head>
+<body>
+<h1>NOP</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter returns the number of outputs fitted to the
+system. The value is set by the firmware taking into consideration the total I/O
+detected, including module I/O, CAN I/O, Fieldbus I/O and CANopen I/O.
+</p>
+<h2>Value:</h2>
+<p>
+The highest output point + 1 that is available for use.
+</p>
+<h2>Example:</h2>
+<p>
+There are 64 external Output points in addition to the 8
+built-in I/O points on the controller.
+</p>
+<p>
+Printing NOP in the terminal:
+</p>
+<p class="fixed">
+&gt;&gt;?NOP
+</p>
+<p class="fixed">
+80
+</p>
+<p class="fixed">
+&gt;&gt;&nbsp;
+</p>
+<p>
+Note; in this case the last output point addressable is OP(79,
+state) and READ_OP(79). The outputs start at OP(8, state) so the NOP value is
+not the total output points, it is the number at which the output map has as
+the highest available.
+</p>
+<h2>See also:</h2>
+<p>
+<a href="IOSIZE.html">IOSIZE</a>
+, 
+<a href="NIN.html">NIN</a>
+,
+
+<a href="NIO.html">NIO</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

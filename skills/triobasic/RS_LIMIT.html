@@ -1,0 +1,96 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>RS_LIMIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="RS_LIMIT">
+</head>
+<body>
+<h1>RS_LIMIT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+RSLIMIT
+</p>
+<h2>Description:</h2>
+<p>
+An end of travel limit may be set up in software thus
+allowing the program control of the working envelope of the machine. This
+parameter holds the absolute position of the reverse travel limit in user
+units.
+</p>
+<p>
+Bit 10 of the 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+
+register is set when the axis position is less than than the RS_LIMIT.
+</p>
+<p class="note">
+When 
+<a href="DPOS.html">DPOS</a>
+ is less than RS_LIMIT the
+controller will cancel the move, so the axis will decelerate at 
+<a href="FASTDEC.html">FASTDEC</a>
+ if specified, otherwise at 
+<a href="DECEL.html">DECEL</a>
+.
+
+</p>
+<p class="tip">
+RS_LIMIT is disabled when it has a value greater than -
+<a href="REP_DIST.html">REP_DIST</a>
+. The value must take account of the position
+lag on MPOS.
+</p>
+<h2>Value:</h2>
+<p>
+The absolute position of the software reverse travel limit
+in user units (default = -200000000000).
+</p>
+<h2>Example:</h2>
+<p>
+After homing a machine set up the reverse software limit so
+that the axis will stop 5mm away from the hard stop. So, if the hard limit is
+at -200, with a maximum speed of 80 and a 
+<a href="FASTDEC.html">FASTDEC</a>
+ of
+1000 the reverse limit will be -188.6.
+</p>
+<p class="codeexample">
+hard_limit_position = -200
+</p>
+<p class="codeexample">
+max_speed = 400
+</p>
+<p class="codeexample">
+FASTDEC = 1000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+DATUM(3)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+RS_LIMIT= hard_limit_position + 0.5 * (max_speed ^ 2 / FASTDEC)
++ 5
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FS_LIMIT.html">FS_LIMIT</a>
+, 
+<a href="FWD_IN.html">FWD_IN</a>
+,
+
+<a href="REV_IN.html">REV_IN</a>
+<span class="MsoHyperlink">, </span><a href="FASTDEC.html">FASTDEC</a>
+</p>
+</body>
+</html>

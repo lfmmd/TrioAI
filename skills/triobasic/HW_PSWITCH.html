@@ -1,0 +1,368 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HW_PSWITCH</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HW_PSWITCH">
+</head>
+<body>
+<h1>HW_PSWITCH</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax: </h2>
+<p class="fixed">
+HW_PSWITCH(mode, direction, opstate, table_start, table_end)
+</p>
+<h2>Description: </h2>
+<p>
+The HW_PSWITCH command is used
+to control an output based on a position. It can either turn on the output when
+the start position is reached, and turn the output off when the next position
+is reached.
+</p>
+<p>
+The output is a 24V output
+linked to the axis.
+</p>
+<p class="note">
+HW_PSWITCH outputs are assigned to the axes in a fixed way with one
+output per axis.  See note 1.
+</p>
+<p>
+The positions are defined as a sequence
+in the 
+<a href="TABLE.html">TABLE</a>
+ memory in range from table_start to
+table_end. On execution of the HW_PSWITCH command the positions are stored in a
+FIFO (first in – first out) queue.
+</p>
+<p class="tip">
+There are 512 positions in the FIFO in all products that support
+HW_PSWITCH except in the MC664/MC464 Flexaxis module which has 256.
+</p>
+<p class="tip">
+MC664 built-in axis supports 512 positions in the FIFO buffer.
+</p>
+<p>
+This command is applicable only
+to Flexible axes with 
+<a href="ATYPE.html">ATYPE</a>
+s that use incremental
+encoders, stepper or quadrature outputs.
+</p>
+<p class="note">
+When using a step direction output or encoder output 
+<a href="ATYPE.html">ATYPE</a>
+ the positions do not take into account the 16 times
+multiplier. This means that you should enter your positions as ‘position * 16’.
+</p>
+<p>
+The command can be used with
+either 1 or 5 parameters. Only 1 parameter is needed to disable the switch or
+clear FIFO queue. All five parameters are needed to enable the switch.
+</p>
+<p>
+After loading the FIFO and going
+through the sequence of positions in it, if the same sequence has to be
+executed again, the FIFO must be cleared before executing another HW_PSWITCH
+command with the same parameters.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Disable switch
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Toggles Digital Output at
+  specified positions which are loaded into the HW FIFO.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Clear FIFO
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+direction:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="MPOS.html">MPOS</a>
+
+  decreasing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="MPOS.html">MPOS</a>
+
+  increasing.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+opstate:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Output state to set in the
+  first position in the FIFO; 
+<a href="ON.html">ON</a>
+ or 
+<a href="OFF.html">OFF</a>
+.
+  
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+table_start:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Starting 
+<a href="TABLE.html">TABLE</a>
+
+  address of the sequence.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+table_end:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Ending 
+<a href="TABLE.html">TABLE</a>
+
+  address of the sequence.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Notes:</h2>
+<h3>Note 1:</h3>
+<p>
+The MC464 requires either the P874 or P879 Flexible Axis
+Module.  The module has 4 digital outputs which are connected to the first 4
+axes in the Flexaxis 8.  In the Flexaxis 4, the first 2 axes have HW_PSWITCH
+circuits using the first 2 module outputs.
+</p>
+<p>
+The MC405 has 5 HW_PSWITCH outputs.  Axis 0 uses Output 8
+and each axis in sequence uses the next output up to axis 4, which uses Output
+12.
+</p>
+<p>
+The MC403 has 3 HW_PSWITCH outputs.  Axis 0 uses Output 8
+and each axis in sequence uses the next output up to axis 2, which uses Output
+10.
+</p>
+<p>
+The MC404Z has 1 HW_PSWITCH outputs.  Axis 3 uses Output 11(NPN).
+</p>
+<p>
+The MC4N has 1 HW_PSWITCH output. The built in encoder axis
+(axis 0 by default) uses output 8.
+</p>
+<p>
+The MC664/MC664X has 1 HW_PSWITCH output. The built in
+encoder axis (axis 0 by default) uses output 8. In case of fitting either the
+P874 or P879 Flexible Axis Module, the module has 4 digital outputs which are
+connected to the first 4 axes in the Flexaxis 8.  In the Flexaxis 4, the first
+2 axes have HW_PSWITCH circuits using the first 2 module outputs.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1: </h3>
+<p>
+Load the table with 30 ON/OFF
+positions then run the command to load the FIFO with these positions.  When the
+position stored in 
+<a href="TABLE.html">TABLE</a>
+(21) is reached, the PSn
+output will be set 
+<a href="ON.html">ON</a>
+ and then alternatively 
+<a href="OFF.html">OFF</a>
+ and 
+<a href="ON.html">ON</a>
+ on reaching the following
+positions in the sequence, until the position stored in 
+<a href="TABLE.html">TABLE</a>
+(50)
+is reached.
+</p>
+<p class="codeexample">
+TABLE(21,5,10,15,18,20,24,30,33,45,51,56,57,65,76,79,84,88,90,94)
+</p>
+<p class="codeexample">
+TABLE(40,99,105,120,140,145,190,235,260,271,280,300)
+</p>
+<p class="codeexample">
+HW_PSWITCH(1, 1, ON, 21, 50)
+</p>
+<h3>Example 2:</h3>
+<p>
+Disable the switch if it was
+enabled previously.  Does not clear the FIFO queue.
+</p>
+<p class="codeexample">
+HW_PSWITCH(0)
+</p>
+<h3>Example 3:</h3>
+<p>
+Clear the FIFO queue of a switch not on the 
+<a href="BASE.html">BASE</a>
+ axis.
+</p>
+<p class="codeexample">
+HW_PSWITCH(2) AXIS(8)
+</p>
+</body>
+</html>

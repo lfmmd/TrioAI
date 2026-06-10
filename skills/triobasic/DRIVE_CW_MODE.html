@@ -1,0 +1,247 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_CW_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_CW_MODE">
+</head>
+<body>
+<h1>DRIVE_CW_MODE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+The operation of the control word sent cyclically to a
+remote drive is, by default, controlled by the firmware. For example, the
+control word will usually be under the control of the WDOG and AXIS_ENABLE
+parameters so that the drive can be enabled and disabled by software.
+Optionally, if DRIVE_CW_MODE is set to non-zero, the control word may be set by
+a user program.
+</p>
+<h2>Value:</h2>
+<p>
+The mode of operation for the drive control word.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+System sets the value of the control word, depending on
+  state of WDOG and AXIS_ENABLE. [default]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+User program takes control of the control word via
+  DRIVE_CONTROLWORD.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+User program takes control of bits 11 to 15 via
+  DRIVE_CONTROLWORD.
+</p>
+
+  
+<p class="tablecontent">
+Allows manufacturer specific bits to be changed while
+  the enable bits are under control of WDOG and AXIS_ENABLE.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<h3>Example1</h3>
+<p>
+Take over the CoE control word sent cyclically to the drive
+connected as axis 0 on an EtherCAT network, then toggle the reset bit.
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+DRIVE_CW_MODE = 1 
+<a name="OLE_LINK1"></a>
+<a name="OLE_LINK2">'</a>
+Take manual control of the Control Word
+</p>
+<p class="codeexample">
+DRIVE_CONTROLWORD = $06 'Disable the drive
+</p>
+<p class="codeexample">
+WA(10)
+</p>
+<p class="codeexample">
+DRIVE_CONTROLWORD = $86 'Reset the drive
+</p>
+<p class="codeexample">
+WA(10)
+</p>
+<p class="codeexample">
+DRIVE_CONTROLWORD = $06
+</p>
+<h3>Example2</h3>
+<p>
+Take over the CoE control word sent cyclically to the drive
+connected as axis 2 on an EtherCAT network, then make a sequence to start
+homing.
+</p>
+<p class="codeexample">
+  BASE(2)
+</p>
+<p class="codeexample">
+  SERVO = OFF
+</p>
+<p class="codeexample">
+  DRIVE_CW_MODE = 1 'Set the control word to be user mode
+</p>
+<p class="codeexample">
+  DRIVE_CONTROLWORD = $06 'Disable the drive
+</p>
+<p class="codeexample">
+  'Set the drive to DS402 homing mode
+</p>
+<p class="codeexample">
+  CO_WRITE_AXIS(ax, $6060, $00, 2, -1, 6)
+</p>
+<p class="codeexample">
+  'Wait for the homing mode to be accepted
+</p>
+<p class="codeexample">
+  VR(100) = 0
+</p>
+<p class="codeexample">
+  REPEAT
+</p>
+<p class="codeexample">
+    CO_READ_AXIS(ax, $6061, $00, 2, 100)
+</p>
+<p class="codeexample">
+  UNTIL VR(100) = 6
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Set the homing method (1 for +ve direction, 2 for -ve)
+</p>
+<p class="codeexample">
+  fwd = 1
+</p>
+<p class="codeexample">
+  rev = 2
+</p>
+<p class="codeexample">
+  CO_WRITE_AXIS(ax, $6098, $00, 2, -1, fwd)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  DRIVE_CONTROLWORD = $1f 'Start homing
+</p>
+<p class="codeexample">
+  WA(20)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Wait for Homing Done flag (bit 12)
+</p>
+<p class="codeexample">
+  REPEAT
+</p>
+<p class="codeexample">
+    WA(1)
+</p>
+<p class="codeexample">
+  UNTIL DRIVE_STATUS.12 = 1
+</p>
+<p class="codeexample">
+  WA(20)
+</p>
+<p class="codeexample">
+  DEFPOS(ENCODER) 'Set the axis position to drive’s value
+</p>
+<p class="codeexample">
+  SERVO = ON
+</p>
+<p class="codeexample">
+  WDOG = ON
+</p>
+<p class="codeexample">
+  'Set the drive to position mode
+</p>
+<p class="codeexample">
+  CO_WRITE_AXIS(ax, $6060, $00, 2, -1, 8)
+</p>
+<p class="codeexample">
+  'Set control word to normal enabled state
+</p>
+<p class="codeexample">
+  DRIVE_CONTROLWORD = $2f
+</p>
+<p class="codeexample">
+  DRIVE_CW_MODE = 0 'Set the control word back to wdog
+mode
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

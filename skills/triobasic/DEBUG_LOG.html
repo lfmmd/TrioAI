@@ -1,0 +1,139 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DEBUG_LOG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DEBUG_LOG">
+</head>
+<body>
+<h1>DEBUG_LOG</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DEBUG_LOG([start[, finish]])
+</p>
+<h2>Description:</h2>
+<p class="note">
+Records up to 4096
+of the most recent controller optional events.
+</p>
+<p class="note">
+Each event is
+recorded with a timestamp of the current RTC value and the time since power-up
+of the controller.
+</p>
+<p class="note">
+Each event is
+also tagged with a checksum for verification.
+</p>
+<p class="note">
+When executing
+the command, either in the terminal or a Trio BASIC program, it will print the
+recorded event messages to the terminal.
+</p>
+<p class="note">
+Note : Before displaying a log entry the checksum for the log is
+validated, if it is invalid then the message '&lt;INVALID LOG ENTRY&gt;' will
+be displayed instead.
+</p>
+<h2>List of events recorded:</h2>
+<p>
+A list of the events and its corresponding recorded messages
+is configured by the DEBUG_LOG_MODE parameter.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Displays all debug log entries starting from line
+  number 'start'.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Special case, erases log from flash memory (second
+  parameter is not needed).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+finish:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Displays all debug log entries starting from line
+  number 'start' until line number 'finish'.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Example log file output:
+</p>
+<p class="codeexample" style="margin-left:0cm">
+DEBUG_LOG(1,7)
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DEBUG_LOG_MODE.html">DEBUG_LOG_MODE</a>
+, 
+<a href="FLASH_LOG.html">FLASH_LOG</a>
+</p>
+</body>
+</html>

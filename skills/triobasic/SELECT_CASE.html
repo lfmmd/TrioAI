@@ -1,0 +1,364 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SELECT_CASE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SELECT_CASE">
+</head>
+<body>
+<h1>SELECT_CASE..CASE..END_CASE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Structure
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+SELECT_CASE variable
+</p>
+<p class="fixed">
+  CASE 1
+</p>
+<p class="fixed" style="text-indent:36.0pt">
+commands
+</p>
+<p class="fixed">
+  CASE 3, 5, 7
+</p>
+<p class="fixed" style="text-indent:36.0pt">
+Commands
+</p>
+<p class="fixed">
+  CASE 8, 10, 12
+</p>
+<p class="fixed" style="text-indent:36.0pt">
+commands
+</p>
+<p class="fixed">
+  CASE ELSE
+</p>
+<p class="fixed">
+     commands
+</p>
+<p class="fixed">
+END_CASE
+</p>
+<h2>Description: </h2>
+<p>
+A SELECT_CASE program structure is used to evaluate an
+integer variable and execute a single block of commands depending on its value.
+The block of commands to be executed are embedded into the CASE statement. A
+CASE ELSE statement can be added to handle the situation where none of the
+previous CASE conditions are met.
+</p>
+<p>
+CASE will take a string value up to 8 characters and convert
+it internally to an INTEGER. The result is compared to the value in the
+SELECT_CASE statement.  Available in firmware 2.0299 and above.
+</p>
+<p class="note">
+Once a CASE test is met, the program execution will exit the
+SELECT_CASE program structure immediately and none of the others CASE
+statements will be evaluated
+</p>
+<p class="warning">
+This program structure is only available from firmware version
+2.0282 onwards
+</p>
+<p class="warning">
+The maximum individual CASE statements is 200 per SELECT_CASE
+structure
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any INTEGER variable
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+commands: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC statements that you wish to execute
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Check status of Input 0 and Input 1.
+</p>
+<p class="codeexample">
+variable = IN(0, 1)
+</p>
+<p class="codeexample">
+SELECT_CASE variable
+</p>
+<p class="codeexample">
+    CASE 1
+</p>
+<p class="codeexample">
+        PRINT &quot;Input 0 is ON&quot;
+</p>
+<p class="codeexample">
+    CASE 2
+</p>
+<p class="codeexample">
+        PRINT &quot;Input 1 is ON&quot;
+</p>
+<p class="codeexample">
+    CASE 3
+</p>
+<p class="codeexample">
+        PRINT &quot;Inputs 0 and 1 are ON&quot;
+</p>
+<p class="codeexample">
+    CASE ELSE
+</p>
+<p class="codeexample">
+        PRINT &quot;Inputs 0 and 1 are OFF&quot;
+</p>
+<p class="codeexample">
+END_CASE
+</p>
+<h3>Example 2:</h3>
+<p>
+Create a function that returns a string with the AXISSTATUS
+description assuming AXISSTATUS parameter is passed on.
+</p>
+<p class="codeexample">
+FUNCTION get_axisstatus(axis_status AS INTEGER) AS STRING
+</p>
+<p class="codeexample">
+    SELECT_CASE axis_status
+</p>
+<p class="codeexample">
+        CASE 1
+</p>
+<p class="codeexample">
+            RETURN &quot;Speed limit active&quot;
+</p>
+<p class="codeexample">
+        CASE 2
+</p>
+<p class="codeexample">
+            RETURN &quot;Following error warning
+range&quot;
+</p>
+<p class="codeexample">
+        CASE 4
+</p>
+<p class="codeexample">
+            RETURN &quot;Communications error to remote
+drive&quot;
+</p>
+<p class="codeexample">
+        CASE 8
+</p>
+<p class="codeexample">
+            RETURN &quot;Remote drive error&quot;
+</p>
+<p class="codeexample">
+        CASE 16
+</p>
+<p class="codeexample">
+            RETURN &quot;In forward hardware limit&quot;
+</p>
+<p class="codeexample">
+        CASE 32
+</p>
+<p class="codeexample">
+            RETURN &quot;In reverse hardware limit&quot;
+</p>
+<p class="codeexample">
+        CASE 64
+</p>
+<p class="codeexample">
+            RETURN &quot;Datuming in progress&quot;
+</p>
+<p class="codeexample">
+        CASE 128
+</p>
+<p class="codeexample">
+            RETURN &quot;Feedhold active&quot;
+</p>
+<p class="codeexample">
+        CASE 256
+</p>
+<p class="codeexample">
+            RETURN &quot;Following error exceeds
+limit&quot;
+</p>
+<p class="codeexample">
+        CASE 512
+</p>
+<p class="codeexample">
+            RETURN &quot;FS_LIMIT active&quot;
+</p>
+<p class="codeexample">
+        CASE 1024
+</p>
+<p class="codeexample">
+            RETURN &quot;RS_LIMIT active&quot;
+</p>
+<p class="codeexample">
+        CASE 2048
+</p>
+<p class="codeexample">
+            RETURN &quot;Cancelling move&quot;
+</p>
+<p class="codeexample">
+        CASE 4096
+</p>
+<p class="codeexample">
+            RETURN &quot;Pulse output axis overspeed&quot;
+</p>
+<p class="codeexample">
+        CASE 8192
+</p>
+<p class="codeexample">
+            RETURN &quot;MOVETANG decelerating&quot;
+</p>
+<p class="codeexample">
+        CASE 32768
+</p>
+<p class="codeexample">
+            RETURN &quot;VOLUME_LIMIT active&quot;
+</p>
+<p class="codeexample">
+        CASE 65536
+</p>
+<p class="codeexample">
+            RETURN &quot;AXIS_FS_LIMIT active&quot;
+</p>
+<p class="codeexample">
+        CASE 131072
+</p>
+<p class="codeexample">
+            RETURN &quot;AXIS_RS_LIMIT active&quot;
+</p>
+<p class="codeexample">
+        CASE 262144
+</p>
+<p class="codeexample">
+            RETURN &quot;Encoder power supply
+overload&quot;
+</p>
+<p class="codeexample">
+        CASE 524288
+</p>
+<p class="codeexample">
+            RETURN &quot;HW_PSWITCH FIFO not empty&quot;
+</p>
+<p class="codeexample">
+        CASE 1048576
+</p>
+<p class="codeexample">
+            RETURN &quot;HW_PSWITCH FIFO full&quot;
+</p>
+<p class="codeexample">
+        CASE 2097152
+</p>
+<p class="codeexample">
+            RETURN &quot;Kinematic FRAME stopped&quot;
+</p>
+<p class="codeexample">
+        CASE ELSE
+</p>
+<p class="codeexample">
+            RETURN &quot;Unknown Status&quot;
+</p>
+<p class="codeexample">
+    END_CASE
+</p>
+<p class="codeexample">
+ENDFUNC
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p>
+Evaluate the SELECT_CASE value as a short string with up to
+8 characters. CASE will accept a STRING constant and convert it to an INTEGER
+for evaluation.
+</p>
+<p class="codeexample">
+DIM v1 AS INTEGER
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+v1 = $7472696F ' 4 ASCII characters t r i o
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+SELECT_CASE v1
+</p>
+<p class="codeexample">
+    CASE &quot;abc&quot;
+</p>
+<p class="codeexample">
+        PRINT &quot;abc&quot;
+</p>
+<p class="codeexample">
+    CASE &quot;xyz&quot;
+</p>
+<p class="codeexample">
+        PRINT &quot;xyx&quot;
+</p>
+<p class="codeexample">
+    CASE &quot;trio&quot;
+</p>
+<p class="codeexample">
+        PRINT &quot;Trio Motion Technology&quot;
+</p>
+<p class="codeexample">
+END_CASE
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DIM.html">DIM</a>
+, 
+<a href="FUNCTION.html">FUNCTION</a>
+</p>
+</body>
+</html>

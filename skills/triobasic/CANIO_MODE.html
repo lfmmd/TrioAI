@@ -1,0 +1,323 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CANIO_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CANIO_MODE">
+</head>
+<body>
+<h1>CANIO_MODE</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O Parameter (MC_CONFIG only / FLASH*) 
+</p>
+<h2>Description:              </h2>
+<p>
+CANIO_MODE is used to set the operating mode of the Trio CAN
+I/O system. The MC4xx 
+<i>Motion Coordinators</i> allow separate Input and
+Output modules to occupy overlapping addresses, allowing up to 32 Input and
+Output modules to be connected. Alternatively, the CANIO_MODE can be set to
+force the MC4/MC6 
+<i>Motion Coordinator</i> to work in the same way as the
+MC2xx series, with only 16 digital modules of any type allowed.
+</p>
+<p>
+Bits 1 to 3 control the data size and synchronisation of CAN
+analogue inputs. Requires firmware V2.0256 and CAN firmware V2.2.0 or later in
+the P326 CAN Analogue module.
+</p>
+<p class="warning">
+Synchronised and 16-bit CAN analogue is not available on the
+MC464.
+</p>
+<p>
+The value is held in flash EPROM* and can be set in the
+MC_CONFIG script. 
+</p>
+<p class="note">
+*
+ Some Motion
+Coordinators, for example the MC4N, do not store System Parameters to Flash.
+Use MC_CONFIG.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Operation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC4xx CAN I/O addressing (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Compatibility mode CAN I/O addressing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use 12-bit Analogue mode (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable 16-bit Analogue mode (1)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable Servo Sync Analogue mode (2)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable 2 x Servo Sync Analogue Mode (2)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note" style="margin-left:39.25pt;text-indent:-18.0pt">
+(1)
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Requires CAN I/O
+firmware version 2.2.0 or later.
+</p>
+<p class="note" style="margin-left:39.25pt;text-indent:-18.0pt">
+(2)
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>Choose only one of
+bits 2 and 3.  Bit 2 has priority if both are set.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set up a CAN Analogue system to send AIN information every
+second servo cycle in synchronisation with the servo-cycle. It will then be
+used as feedback for servo axes.
+</p>
+<p class="codeexample">
+  'Sets the fast CAN mode for the P326
+<br>
+
+  
+CANIO_MODE
+.1 
+=
+
+1
+ 'Enable 16-bit Analogue mode
+<br>
+
+  
+CANIO_MODE
+.2 
+=
+
+0
+<br>
+
+  
+CANIO_MODE
+.3 
+=
+
+1
+ 'Enable '2xServo Sync' mode
+<br>
+
+
+<br>
+
+  'Set the CAN baud rate
+<br>
+
+  '00 = 500k
+<br>
+
+  '01 = 250k
+<br>
+
+  '10 = 125k
+<br>
+
+  '11 = 1M
+<br>
+
+  
+CANIO_ADDRESS
+.8
+
+= 
+1
+<br>
+
+  
+CANIO_ADDRESS
+.9
+
+= 
+1
+<br>
+
+
+<br>
+
+  
+SERVO_PERIOD 
+= 
+1000
+</p>
+<h2>See also:</h2>
+<p>
+<a href="CANIO_ADDRESS.html">CANIO_ADDRESS</a>
+, 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+, 
+<a href="AXIS_ADDRESS.html">AXIS_ADDRESS</a>
+,
+
+<a href="CANIO_BASE.html">CANIO_BASE</a>
+</p>
+</body>
+</html>

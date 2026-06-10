@@ -1,0 +1,171 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FLASHVR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FLASHVR">
+</head>
+<body>
+<h1>FLASHVR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+FLASHVR(index)
+</p>
+<h2>Description:</h2>
+<p>
+Copies the specified VR index to permanent Flash memory, a
+negative index signifying a special action (see table below).
+</p>
+<p class="note">
+If FLASHVR(-1) is being used then you cannot use 
+<a href="FLASHTABLE.html">FLASHTABLE</a>
+</p>
+<p class="warning">
+This command should only be used on MC2XX and MC3XX, which do
+not store data in flash memory automatically. Other controllers automatically
+store VR in flash memory, and FLASHTABLE should be used to backup TABLE data.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index:
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to 
+<a href="VRSIZE.html">VRSIZE</a>
+ - 1
+</p>
+
+  
+</td>
+<td width="435" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The index of the VR array element to write to flash
+  memory.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td width="435" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Stores the entire 
+<a href="TABLE.html">TABLE</a>
+ to the
+  Flash EPROM and use it to replace the RAM table data on power-up.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-2
+</p>
+
+  
+</td>
+<td width="435" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Stop using the EPROM copy of table during power-up.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-100
+</p>
+
+  
+</td>
+<td width="435" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Force all changed 
+<a href="VR.html">VR</a>
+’s to be
+  committed to Flash EPROM (non-battery backed controllers only)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+After using function -1, any changed table data will be
+overwritten on the next power up or reset.
+</p>
+<h2>Example:</h2>
+<p>
+Save the entire 
+<a href="TABLE.html">TABLE</a>
+ data to FLASH
+memory.
+</p>
+<p class="codeexample">
+FLASHVR(-1)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FLASHTABLE.html">FLASHTABLE</a>
+, 
+<a href="FLASH_STATUS.html">FLASH_STATUS</a>
+, 
+<a href="TABLE.html">TABLE</a>
+, 
+<a href="VR.html">VR</a>
+, 
+<a href="VRSIZE.html">VRSIZE</a>
+</p>
+</body>
+</html>

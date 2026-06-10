@@ -1,0 +1,38 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>UNIT_SW_VERSION</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="UNIT_SW_VERSION">
+</head>
+<body>
+<h1>UNIT_SW_VERSION</h1>
+<h2>Type:</h2>
+<p class="Category">
+Slot Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+value = UNIT_SW_VERSION SLOT(n)
+</p>
+<h2>Description:</h2>
+<p>
+Returns a value that is the version number of the Software
+in a module fitted at the specified SLOT.  This parameter can be used when
+connected to a MC664(X) to get the Software version of each module fitted to
+the Motion Coordinator.
+</p>
+<p class="note">
+For FPGA information use 
+<a href="FPGA_VERSION.html">FPGA_VERSION</a>
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+&gt;&gt;PRINT UNIT_SW_VERSION SLOT(0)
+</p>
+<p class="codeexample">
+0
+</p>
+</body>
+</html>

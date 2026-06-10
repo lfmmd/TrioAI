@@ -1,0 +1,161 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FPGA_VERSION</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FPGA_VERSION">
+</head>
+<body>
+<h1>FPGA_VERSION</h1>
+<h2>Type:</h2>
+<p class="Category">
+Slot Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Using the 
+<a href="SLOT.html">SLOT</a>
+ modifier on the MC464
+enables checking of the FPGA version number in the main controller and any of
+the expansion modules. 
+</p>
+<p>
+On controllers that support FPGA re-programming, the version
+number is split to display the main version number and program loaded. 
+</p>
+<h2>Value:</h2>
+<p>
+On the MC464 it displays the FPGA version of the specified 
+<a href="SLOT.html">SLOT</a>
+</p>
+<p>
+On controllers that support FPGA variants the FPGA returns
+the following:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Function 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 – 7 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FPGA version number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unique version number for this FPGA program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8 - 14
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FPGA program 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The currently installed 
+<a href="FPGA_PROGRAM.html">FPGA_PROGRAM</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Bits 8-14 return a number that is one higher than the one you use
+in 
+<a href="FPGA_PROGRAM.html">FPGA_PROGRAM</a>
+</p>
+<h2>Example:</h2>
+<p>
+Check the currently installed FPGA program and its version
+number on the command line. The result shows that FPGA program 1 is installed
+and the version is 0C.
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT HEX(FPGA_VERSION)
+<br>
+
+10C
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FPGA_PROGRAM.html">FPGA_PROGRAM</a>
+, 
+<a href="SLOT.html">SLOT</a>
+</p>
+</body>
+</html>

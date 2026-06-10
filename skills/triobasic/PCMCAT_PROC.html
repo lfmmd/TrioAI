@@ -1,0 +1,119 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PCMCAT_PROC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PCMCAT_PROC">
+</head>
+<body>
+<h1>PCMCAT_PROC</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG / FLASH)
+</p>
+<h2>Description:</h2>
+<p>
+When the PC-MCAT API opens a connection to the 
+<i>Motion
+Coordinator</i>, the PCMCAT_PROGRAM is started on the highest available
+process.
+</p>
+<p>
+PCMCAT_PROC can be set to specify a different process for
+the PCMCAT_PROGRAM. If the defined process is in use then the next lower
+available process will be used.
+</p>
+<p>
+This programs handles operations that cannot be handled
+through direct access to shared memory. A FIFO is initialised in shared memory
+when the API opens a connection to handle these operations. The PCMCAT_PROGRAM
+would manage this FIFO acting as a bridge between the shared memory and the 
+<i>Motion
+Coordinator</i>.
+</p>
+<p class="note">
+PCMCAT_PROC is stored in Flash EPROM and can also be set in the
+MC_CONFIG script file.
+</p>
+<p class="warning">
+This command only works on the PC-MCAT and PC-MCAT S products.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Use the highest available process (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0 to max process
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Run on defined process
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example1:</h3>
+<p>
+Set PCMCAT_PROGRAM to start on process 19 or lower (using the
+command line terminal).
+</p>
+<p class="codeexample">
+&gt;&gt;PCMCAT_PROC = 19
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example2:</h3>
+<p>
+Remove the PCMCAT_PROC setting so that PCMCAT_PROGRAM starts
+on default process (using MC_CONFIG).
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+PCMCAT_PROC = -1  'Start on default process on connection
+</p>
+<h2>See Also:</h2>
+<p class="codeexample">
+<a href="REMOTE_PROC.html">REMOTE_PROC</a>
+</p>
+</body>
+</html>

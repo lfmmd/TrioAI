@@ -1,0 +1,40 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SYSTEM_ERROR_MASK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SYSTEM_ERROR_MASK">
+</head>
+<body>
+<h1>SYSTEM_ERROR_MASK</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Allows selection of which 
+<a href="SYSTEM_ERROR.html">SYSTEM_ERROR</a>
+ bits will trigger a fault indication and set WDOG to OFF.
+</p>
+<p class="warning">
+Masking SYSTEM_ERROR bits must be done with
+caution as it might create a condition where motors can run out of control.
+</p>
+<h2>Value:</h2>
+<p>
+Default value is $FFFFFFFF (all bits set to
+1) to not mask out any errors.
+</p>
+<p>
+Set bits to 0 to mask out the error bits listed
+in 
+<a href="SYSTEM_ERROR.html">SYSTEM_ERROR</a>
+ as required.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

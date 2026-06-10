@@ -1,0 +1,73 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>UNIT_CLEAR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="UNIT_CLEAR">
+</head>
+<body>
+<h1>UNIT_CLEAR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Description:</h2>
+<p>
+Clears all the bits in the UNIT_ERROR system parameter. This
+command is typically used to reset a SYSTEM_ERROR raised by EtherCAT or to
+reset module errors from MC664 option modules.
+</p>
+<p class="note">
+Motion Coordinators with an LCD display will show Unn when there
+is a UNIT_ERROR.  UNIT_CLEAR can be used to reset the display.
+</p>
+<h2>Value:</h2>
+<p>
+This command takes no values
+</p>
+<h2>Example:</h2>
+<h3>Example 1:</h3>
+<p>
+Clear the UNIT_ERROR bits and then check for which module or
+modules may be in error.
+</p>
+<p class="codeexample">
+<span class="fixedChar">UNIT_CLEAR</span></p>
+<p class="codeexample">
+<span class="fixedChar">WA(10)</span></p>
+<p class="codeexample">
+<span class="fixedChar">PRINT UNIT_ERROR[0]</span></p>
+<h3>Example 2:</h3>
+<p>
+Reset SYSTEM_ERROR flags in the MC6N-ECAT as part of the
+error recovery routine.
+</p>
+<p class="codeexample">
+<span class="fixedChar">IF SYSTEM_ERROR &lt;&gt; 0 THEN<br>
+
+  UNIT_CLEAR </span><span class="fixedChar">' attempt to clear the errors<br>
+
+  WA(50)</span></p>
+<p class="codeexample">
+<span class="fixedChar">  IF SYSTEM_ERROR &lt;&gt; 0 THEN<br>
+
+    PRINT </span><span class="fixedChar">&quot;Error bits cannot be cleared: </span><span class="fixedChar">&quot;;HEX(SYSTEM_ERROR)<br>
+
+  ENDIF<br>
+
+ENDIF</span></p>
+<p class="codeexample">
+<span class="fixedChar">&nbsp;</span></p>
+<h2>See Also:</h2>
+<p>
+<a href="SLOT.html">SLOT</a>
+, 
+<a href="SYSTEM_ERROR.html">SYSTEM_ERROR</a>
+,
+
+<a href="UNIT_ERROR.html">UNIT_ERROR</a>
+<span class="MsoHyperlink">, </span><a href="ETHERCAT.html">ETHERCAT</a>
+</p>
+</body>
+</html>

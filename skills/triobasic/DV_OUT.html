@@ -1,0 +1,198 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DV_OUT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DV_OUT">
+</head>
+<body>
+<h1>DV_OUT</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = DV_OUT(channel)
+</p>
+<p class="fixed">
+DV_OUT(channel) = value
+</p>
+<h2>Description:</h2>
+<p>
+DV_OUT sets the state or value, known as a Device Variable,
+on a remote I/O block such as the Flexslice temperature modules, thermocouple
+and RTD type.  During system startup the channels are allocated according to
+the DV_MAP, usually there will be 4 or 8 channels per module.
+</p>
+<p>
+DV_OUT also returns the current state or value of the Device
+Variable.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The integer value read from or written to the device
+  variable’s output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 … max channel number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<p>
+Read the temperature value from a thermocouple and compare
+with the given setpoint.  Use the difference to control a heater using low
+frequency PWM.  Temperature values are integer values scaled as degrees Celsius
+x 100 so the DV_IN(channel) must be divided by 100.
+</p>
+<p class="codeexample">
+DIM temperature AS FLOAT
+</p>
+<p class="codeexample">
+DIM channel_number AS INTEGER = 2
+</p>
+<p class="codeexample">
+DIM p_cycle AS INTEGER = 500 ' half second cycle time
+</p>
+<p class="codeexample">
+DIM p_mark AS INTEGER ' mark/space value as time in msecs
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+DIM setpoint AS FLOAT
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TICKS = 0 ' TICKS counts down one count per servo cycle
+</p>
+<p class="codeexample">
+WHILE TRUE
+</p>
+<p class="codeexample">
+' read temperature value from P367
+</p>
+<p class="codeexample">
+  temperature = DV_IN(channel_number) / 100
+</p>
+<p class="codeexample">
+  setpoint = VR(0) ' degrees celcius
+</p>
+<p class="codeexample">
+  
+</p>
+<p class="codeexample">
+' Compare with setpoint to produce a temperature error
+value
+</p>
+<p class="codeexample">
+  temperature_error = setpoint - temperature
+</p>
+<p class="codeexample">
+  
+</p>
+<p class="codeexample">
+  loop_gain = VR(1) ' typical values 1 .. 10
+</p>
+<p class="codeexample">
+  p_mark = temperature_error * loop_gain * p_cycle / 100
+</p>
+<p class="codeexample">
+  
+</p>
+<p class="codeexample">
+  IF TICKS &gt; -p_mark THEN
+</p>
+<p class="codeexample">
+    DV_OUT(channel_number) = 1
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    DV_OUT(channel_number) = 0
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+  
+</p>
+<p class="codeexample">
+  IF TICKS &lt; -p_cycle THEN
+</p>
+<p class="codeexample">
+    TICKS = 0
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+  
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DV_CONTROLWORD.html">DV_CONTROLWORD</a>
+, 
+<a href="DV_IN.html">DV_IN</a>
+, 
+<a href="DV_MAP.html">DV_MAP</a>
+, 
+<a href="DV_STATUSWORD.html">DV_STATUSWORD</a>
+</p>
+</body>
+</html>

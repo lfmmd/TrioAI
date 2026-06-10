@@ -1,0 +1,244 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ApplyRecipeColumn</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ApplyRecipeColumn">
+</head>
+<body>
+<h1><a name="_Toc317749479"></a>
+<a name="O_1364"></a>
+ApplyRecipeColumn</h1>
+<p class="Category">
+Function
+</p>
+<p>
+Apply the values of a column from a recipe file.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FILE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+STRING&nbsp;&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pathname of the recipe file (.RCP or .CSV) - must be a
+  constant value!
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+COL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Index of the column in the recipe (0 based).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+OK
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL&nbsp;&nbsp;&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if OK - FALSE if parameters are invalid.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+The 'FILE' input is a constant string expression specifying
+the path name of a valid .RCP or .CSV file. If no path is specified, the file
+is assumed to be located in the project folder. RCP files are created using the
+recipe editor. CSV files can be created using EXCEL or NOTEPAD.
+</p>
+<p>
+In CSV files, the first line must contain column headers,
+and is ignored during compiling. There is one variable per line. The first
+column contains the symbol of the variable. Other columns are values.
+</p>
+<p>
+If a cell is empty, it is assumed to be the same value as
+the previous (left side) cell. If it is the first cell of a raw, it is assumed
+to be null (0 or FALSE or empty string).
+</p>
+<p>
+In LD language, the operation is executed only if the input
+rung (EN) is TRUE. The output rung is the result of the function.
+</p>
+<p class="warning">
+Recipe files are read at compiling time and are embedded into
+the downloaded application code. This implies that a modification performed in
+the recipe file after downloading will not be taken into account by the
+application.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+OK := ApplyRecipeColumn ('MyFile.rcp', COL);
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="295" height="82" src="AO-ApplyRecipeColumn_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The function is executed only if EN is TRUE.
+<br>
+<img width="388" height="101" src="AO-ApplyRecipeColumn_files/image002.gif">
+</p>
+<h2>IL Language</h2>
+<p class="codeexample">
+Op1:
+LD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+'MyFile.rcp'
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ApplyRecipeColumn COL
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+OK
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

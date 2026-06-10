@@ -1,0 +1,857 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_READ</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_READ">
+</head>
+<body>
+<h1>DRIVE_READ</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = DRIVE_READ(parameter [,vr_index])
+</p>
+<h2>Description:</h2>
+<p>
+DRIVE_READ allows the controller to read a parameter from a
+digital bus connected drive. Currently this is supports Panasonic A4N, A5N and
+A6N drives. 
+</p>
+<p class="note">
+The parameter index and details can be found in the Motion
+Perfect intelligent drives tool. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DRIVE_READ was successful 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DRIVE_READ failed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If vr_index is not used the return value is the
+  parameter value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter_number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A4N parameter number to read
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(class * 256) + parameter_number
+</p>
+
+  
+<p class="tablecontent">
+or
+</p>
+
+  
+<p class="tablecontent">
+(class * $100) + parameter_number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A5N/A6N parameter number to read
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+65536 + SSID_code
+</p>
+
+  
+<p class="tablecontent">
+or
+</p>
+
+  
+<p class="tablecontent">
+$10000 + SSID_code
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read a System ID into a 
+<a href="VRSTRING.html">VRSTRING</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+131072 + (alarm_index * 4096) + alarm_function
+</p>
+
+  
+<p class="tablecontent">
+or
+</p>
+
+  
+<p class="tablecontent">
+$20000 + (alarm_index * $1000) + alarm_function
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read an Alarm code 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+196608 + (index * 4096) + monitor_number
+</p>
+
+  
+<p class="tablecontent">
+or
+</p>
+
+  
+<p class="tablecontent">
+$30000 + (index * $1000) + monitor_number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read a Monitor Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="VR.html">VR</a>
+ in which to store the returned
+  value
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+System ID, Alarm codes and Monitor Commands apply to A4N, A5N and
+A6N drives. 
+</p>
+<h5>System String ID Codes</h5>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+SSID_code
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$010
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Drive Vendor
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$120
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Drive Model No.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$130
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Drive Serial No.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$140
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Drive Firmware Version
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$220
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Motor Model No.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$230
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Motor Serial No.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$310
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+External Scale Vendor
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$320
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+External Scale Model No.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h5>Alarm Functions</h5>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Alarm Code
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$000
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Alarm Read
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Index of alarm to be read
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$001
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Clear Current Alarm
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$011
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Clear All Alarms
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$012
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Clear External Alarm
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+<a href="DRIVE_CLEAR.html">DRIVE_CLEAR</a>
+ can be used to clear
+alarms
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Read parameter 124, external scale direction from a A4N
+drive
+</p>
+<p class="codeexample">
+success = DRIVE_READ(124,0)
+</p>
+<p class="codeexample">
+IF success = 0 THEN 
+</p>
+<p class="codeexample">
+  PRINT &quot;Error reading drive parameter&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;External scale direction = &quot;; VR(0)[0]
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+Read class 3 parameter 26, external scale direction from a
+A5N drive
+</p>
+<p class="codeexample">
+success = DRIVE_READ(3 * 256 + 26,0)
+</p>
+<p class="codeexample">
+IF success = 0 THEN 
+</p>
+<p class="codeexample">
+  PRINT &quot;Error reading drive parameter&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;External scale direction = &quot;; VR(0)[0]
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Read the system ID to find the Panasonic servo drive serial
+number into a 
+<a href="VRSTRING.html">VRSTRING</a>
+ starting at VR(0).
+</p>
+<p class="codeexample">
+success = DRIVE_READ($10000 + $130,0)
+</p>
+<p class="codeexample">
+IF success = 0 THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Error reading drive parameter&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Driver Serial No. = &quot;;VRSTRING(0)
+</p>
+<p class="codeexample">
+ENDIF 
+</p>
+<h3>Example 4:</h3>
+<p>
+Read the alarm history from the Panasonic servo drive. 
+</p>
+<p class="codeexample">
+PRINT &quot;Alarm Read
+AXIS(&quot;;axis_no[0];&quot;)&quot;
+</p>
+<p class="codeexample">
+FOR past_alarm = 0 TO 14
+</p>
+<p class="codeexample">
+  DRIVE_READ($20000 + past_alarm * 4096 + 0 ,0)
+</p>
+<p class="codeexample">
+  PRINT &quot;Alarm history index &quot;;
+past_alarm[0];&quot; = &quot;;VR(0)[0]
+</p>
+<p class="codeexample">
+NEXT past_alarm
+</p>
+<h3>Example 5:</h3>
+<p>
+Read monitor type code 102 to find the encoder resolution of
+a Panasonic servo drive. 
+</p>
+<p class="codeexample">
+success = DRIVE_READ($30000 + $102, 0)
+</p>
+<p class="codeexample">
+IF success = FALSE THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Error reading drive parameter&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Encoder resolution = &quot;;VR(0)[0]
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 6:</h3>
+<p class="code">
+The following routine can be used to home to the Z mark on the
+motor encoder using an A4N.This works by waiting for the Z mark o be seen on
+the drive then reading the mechanical angle. 
+</p>
+<p class="codeexample">
+pos = DRIVE_READ($30201)
+</p>
+<p class="codeexample">
+oneturn=10000' Distance for one turn depends on encoder
+type
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+IF pos &lt;&gt; -1 THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Mechanical offset:&quot;;pos[0]
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Drive has not yet seen Z mark&quot;
+</p>
+<p class="codeexample">
+  MOVE(oneturn)
+</p>
+<p class="codeexample">
+  WAIT UNTIL DRIVE_READ($30201)&lt;&gt;-1
+</p>
+<p class="codeexample">
+  CANCEL
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+  pos = DRIVE_READ($30201)
+</p>
+<p class="codeexample">
+  PRINT &quot;Mechanical offset:&quot;;pos[0]
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+DEFPOS(pos)
+</p>
+</body>
+</html>

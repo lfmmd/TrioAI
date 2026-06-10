@@ -1,0 +1,170 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>RUNTYPE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="RUNTYPE">
+</head>
+<body>
+<h1>RUNTYPE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+RUNTYPE  “program”, mode [,process]
+</p>
+<h2>Description:</h2>
+<p>
+Sets if program is run automatically at power up, and which
+process it is to run on. 
+</p>
+<p class="tip">
+The current status of each program’s RUNTYPE is displayed when a 
+<a href="DIR.html">DIR</a>
+ command is performed.
+</p>
+<p class="warning">
+For any program to run automatically on power-up ALL
+the programs on the controller must compile without errors. Even if they are
+not used. 
+</p>
+<p class="note">
+Usually a programs RUNTYPE is set through Motion Perfect. It can
+be useful to set the RUNTYPE when loading programs from a SD card.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+program:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The program to set the power up mode.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Run automatically on power up. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Manual running.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+process:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ The process number to run the program on.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+When loading a sequence of programs from a SD card, MAIN
+must be set to run from power up and HMI must be run on process 4 on power up.
+The following is from the TRIOINIT.bas file. 
+</p>
+<p class="codeexample">
+FILE “LOAD_PROGRAM” “MOTION”
+</p>
+<p class="codeexample">
+FILE “LOAD_PROGRAM” “HMI”
+</p>
+<p class="codeexample">
+FILE “LOAD_PROGRAM” “MAIN”
+</p>
+<p class="codeexample">
+RUNTYPE “HMI”, 1, 4
+</p>
+<p class="codeexample">
+RUNTYPE “MAIN”, 1
+</p>
+<p class="codeexample">
+AUTORUN
+</p>
+</body>
+</html>

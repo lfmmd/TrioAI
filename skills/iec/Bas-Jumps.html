@@ -1,0 +1,71 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Jumps JMP JMPC JMPNC JMPCN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="JMP JMPC JMPNC JMPCN">
+</head>
+<body>
+<h1><a name="_Toc317749342"></a>
+<a name="O_1513"></a>
+Jumps JMP JMPC JMPNC JMPCN</h1>
+<p class="Category">
+Statement
+</p>
+<p>
+Jump to a label.
+</p>
+<h2>Remarks</h2>
+<p>
+A jump to a label branches the execution of the program
+after the specified label. Labels and jumps cannot be used in structured ST
+language. In FBD language, a jump is represented by the &gt;&gt; symbol
+followed by the label name. The input of the &gt;&gt; symbol must be connected
+to a valid Boolean signal. The jump is performed only if the input is TRUE. In
+LD language, the &gt;&gt; symbol, followed by the target label name, is used as
+a coil at the end of a rung. The jump is performed only if the rung state is
+TRUE.&nbsp; In IL language, JMP, JMPC, JMPCN and JMPNC instructions are used to
+specify a jump. The destination label is the operand of the jump instruction.
+</p>
+<p class="warning">
+Backward jumps may lead to infinite loops that block the
+target cycle.
+</p>
+<h2>ST Language</h2>
+<p>
+Not available.
+</p>
+<h2>FBD Language</h2>
+<p>
+In this example the TON block will not be called if
+bEnable is TRUE:
+</p>
+<h3>Example</h3>
+<p class="BoxesText">
+<img width="184" height="145" src="Bas-Jumps_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+In this example the second rung will be skipped if IN1 is
+TRUE:
+</p>
+<h3>Example</h3>
+<p class="BoxesText">
+<img width="283" height="155" src="Bas-Jumps_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Bas-Labels.html">Labels</a>
+</p>
+<p>
+<a href="Bas-RETURN.html">RETURN</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

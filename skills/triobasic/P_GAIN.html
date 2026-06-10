@@ -1,0 +1,44 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>P_GAIN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="P_GAIN">
+</head>
+<body>
+<h1>P_GAIN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+The Proportional gain sets the 'stiffness' of the servo
+response. Values that are too high will produce oscillation. Values that are
+too low will produce large following errors. 
+</p>
+<p>
+For a proportional gain K
+<sub>p</sub> and position error E,
+its contribution to the output signal is:
+</p>
+<p class="Formula">
+O
+<sub>p</sub> = K
+<sub>p</sub> × E
+</p>
+<h2>Value:</h2>
+<p>
+Proportional gain constant (default =1)
+</p>
+<h2>Example:</h2>
+<p>
+Set the P_GAIN on axis 11 to be a value smaller than the
+default
+</p>
+<p class="codeexample">
+P_GAIN AXIS(11)=0.25
+</p>
+</body>
+</html>

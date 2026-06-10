@@ -1,0 +1,176 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>OUTDEVICE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="OUTDEVICE">
+</head>
+<body>
+<h1>OUTDEVICE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Process Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+The value of this parameter determines the default output
+device for the process it is issued within, allowing the channel number to be set
+for all statements that generate output, like 
+<a href="PRINT.html">PRINT</a>
+, 
+<a href="AXISLIST.html">AXISLIST</a>
+, 
+<a href="DIR.html">DIR</a>
+, etc. 
+</p>
+<p class="note">
+This command is process specific so other processes will use the
+default channel. 
+</p>
+<p class="note">
+This command is available for backward compatibility, it is
+currently recommended to use #channel, instead. However, it remains useful for
+commands that do not accept a channel number, like DIR.
+</p>
+<h2>Value:</h2>
+<p>
+The channel number to use for output
+</p>
+<p class="note">
+For a full list of communication channels see 
+<a href="Hash.html">#</a>
+</p>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+Set up a program to print all data to channel 5.
+</p>
+<p class="codeexample">
+OUTDEVICE = 5
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+IF error THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Error Detected&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+Change the output device to enable the output from a command
+to go into a string variable and subsequent conversion to a value.
+</p>
+<p class="codeexample">
+DIM
+ old_outdevice 
+AS
+ INTEGER
+<br>
+
+
+DIM
+ my_str 
+AS
+
+
+STRING
+(
+20
+)
+<br>
+
+
+DIM
+ crc 
+AS
+ INTEGER
+<br>
+
+
+<br>
+
+old_outdevice = 
+OUTDEVICE
+<br>
+
+
+OPEN
+ #
+40
+ AS
+ &quot;STRING:my_str&quot;
+
+
+FOR
+ OUTPUT
+(
+0
+)
+<br>
+
+
+OUTDEVICE
+ = 
+40
+<br>
+
+
+FILE
+ &quot;CRC16&quot;
+
+
+&quot;FILE1.TXT&quot;
+<br>
+
+
+OUTDEVICE
+ = old_outdevice
+<br>
+
+
+CLOSE
+ #
+40
+<br>
+
+
+<br>
+
+crc = 
+VAL
+(my_str)
+<br>
+
+
+PRINT
+ &quot;CRC-16
+of file 'FILE1.TXT' is &quot;
+; crc
+</p>
+<p>
+Will display:
+</p>
+<p class="codeexample">
+CRC-16 of file 'FILE1.TXT' is 51612
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="Hash.html">#</a>
+, 
+<a href="INDEVICE.html">INDEVICE</a>
+,
+
+<a href="OPEN.html">OPEN</a>
+, 
+<a href="PROC.html">PROC</a>
+, 
+<a href="PRINT.html">PRINT</a>
+</p>
+</body>
+</html>

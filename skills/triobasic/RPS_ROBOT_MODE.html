@@ -1,0 +1,194 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ROBOT_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ROBOT_MODE">
+</head>
+<body>
+<h1>ROBOT_MODE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Parameter (Read Only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ROBOT_MODE(group)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the operating profile (mode) of the given kinematic
+group.
+</p>
+<p class="note">
+ROBOT_MODE requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+<p class="note">
+RPS 2.0 kernel must be activated using the RPS_KERNEL_V2 keyword
+to enable its use.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Mode
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unset (key switch has not
+  been sampled)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+External (KMI and KAI both
+  unset)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Manual (KMI set)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Automatic (MAI set)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Invalid (KMI and KAI both
+  set)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Detect if Robot(0) is in manual.
+</p>
+<p class="codeexample">
+IF ROBOT_MODE(0) = 2 THEN
+<br>
+
+   ‘Robot is in manual mode. Further action here.
+<br>
+
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_RPS_KERNEL_V2.html">RPS_KERNEL_V2</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

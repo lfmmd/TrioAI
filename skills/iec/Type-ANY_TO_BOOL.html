@@ -1,0 +1,214 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ANY_TO_BOOL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ANY_TO_BOOL">
+</head>
+<body>
+<h1><a name="_Toc317749386"></a>
+<a name="O_1355"></a>
+ANY_TO_BOOL</h1>
+<p class="Category">
+Operator
+</p>
+<p>
+Converts the input into a Boolean value.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input value.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value converted to Boolean.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+For DINT, REAL and TIME input data types, the result is
+FALSE if the input is 0. The result is TRUE in all other cases. For STRING
+inputs, the output is TRUE if the input string is not empty, and FALSE if the
+string is empty. In LD language, the conversion is executed only if the input
+rung (EN) is TRUE. The output rung is the result of the conversion. In IL
+Language, the ANY_TO_BOOL function converts the current result.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+Q := ANY_TO_BOOL (IN);
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="151" height="61" src="Type-ANY_TO_BOOL_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The conversion is executed only if EN is TRUE.
+<br>
+
+The output rung is the result of the conversion.
+<br>
+
+The output rung is FALSE if the EN is FALSE.
+<br>
+<img width="268" height="62" src="Type-ANY_TO_BOOL_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<span class="HotSpot"><a href="Type-ANY_TO_SINT.html">ANY_TO_SINT</a>
+</span></p>
+<p>
+<a href="Type-ANY_TO_INT.html">ANY_TO_INT</a>
+</p>
+<p>
+<a href="Type-ANY_TO_DINT.html">ANY_TO_DINT</a>
+</p>
+<p>
+<a href="Type-ANY_TO_LINT.html">ANY_TO_LINT</a>
+</p>
+<p>
+<a href="Type-ANY_TO_REAL.html">ANY_TO_REAL</a>
+</p>
+<p>
+<a href="Type-ANY_TO_LREAL.html">ANY_TO_LREAL</a>
+</p>
+<p>
+<a href="Type-ANY_TO_TIME.html">ANY_TO_TIME</a>
+</p>
+<p>
+<a href="Type-ANY_TO_STRING.html">ANY_TO_STRING</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

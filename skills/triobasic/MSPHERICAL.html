@@ -1,0 +1,1198 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MSPHERICAL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MSPHERICAL">
+</head>
+<body>
+<h1>MSPHERICAL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MSPHERICAL({parameters}, mode[, gtpi[, rotau[, rotav[, rotaw]]]])
+</p>
+<h2>Description:</h2>
+<p>
+Moves the three axis group defined in 
+<a href="BASE.html">BASE</a>
+
+along a spherical path with a vector speed determined by the 
+<a href="SPEED.html">SPEED</a>
+ set in the first axis of the 
+<a href="BASE.html">BASE</a>
+
+array. There are 2 modes of operation with the option of finishing the move at
+an endpoint different to the start or returning to the start point to complete
+a circle. The path of the movement in 3D space can be defined either by
+specifying a point somewhere along the path, or by specifying the centre of the
+sphere.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Mode_0">0</a>
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specify end point and mid-point on curve.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Mode_1">1</a>
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specify end point and centre of sphere.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Mode_2">2</a>
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Two mid-point are specified, and the curve completes a
+  full circle.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Mode_3">3</a>
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mid-point on curve and centre of sphere are specified
+  and the curve completes a full circle.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 8
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 9
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 10
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 11
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = MOVE; 1 = MOVETURN
+</p>
+
+  
+<p class="tablecontent">
+Replace MOVE with MOVETURN
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 12
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = MOVETURN mode 5; 1 = MOVETURN mode 6
+</p>
+
+  
+<p class="tablecontent">
+Only applicable if bit 11 set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+gtpi:
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If this optional parameter is non-zero, modes 0 and 1
+  will perform a move taking the opposite way around a 360-degree circle to the
+  same endpoint.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+rotau:
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If this optional parameter is non-zero, a 4
+<sup>th</sup>
+  axis will perform linear interpolation at the same time as the spherical
+  move. The axis is the next in the BASE sequence. The move distance does not
+  affect the path length or time taken for the movement. The path length is
+  calculated just from the spherical distance.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+rotav:
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If this optional parameter is non-zero, a 5
+<sup>th</sup>
+  axis will perform linear interpolation at the same time as the spherical
+  move.  
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+rotaw:
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If this optional parameter is non-zero, a 6
+<sup>th</sup>
+  axis will perform linear interpolation at the same time as the spherical
+  move.  
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+If you specify the parameters for the third axis as 0 and assign
+it to a virtual, you can use MSPHERICAL to perform circular movements. This
+allows you to specify the arc without knowing the centre point.
+</p>
+<h2><a name="Mode_0">Mode = 0</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+MSPHERICAL(endx, endy, endz, midx, midy, midz, 0)
+</p>
+<h3>Description:                                                            </h3>
+<p>
+Move the three axes set in the 
+<a href="BASE.html">BASE</a>
+
+array through a section of a sphere by specifying the end point and a mid-point
+on the curve.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+endx:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End position of the first axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+endy: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End position of the second axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+endz: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End position of the third axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midx:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mid position of the first axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midy: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mid position of the second axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midz:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mid position of the third axis
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="Mode_1">Mode = 1</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+MSPHERICAL(endx, endy, endz, centrex, centrey, centrez,
+1)
+</p>
+<h3>Description:</h3>
+<p>
+Move the three axes set in the 
+<a href="BASE.html">BASE</a>
+
+array through a section of a sphere by specifying the end point and the centre
+of the sphere. The profile will always go the shortest path to the endpoint,
+this may be clockwise or anticlockwise.
+</p>
+<p class="warning">
+The coordinates of the centre point and end point must not be
+co-linear. Semi-circles cannot be defined by using mode 1 because the sphere
+centre would be co-linear with the endpoint. If co-linier points are specified,
+the controller will stop the program with a 
+<a href="RUN_ERROR.html">RUN_ERROR</a>
+.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+endx:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End position of the first axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+endy: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End position of the second axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+endz: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End position of the third axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centrex:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position of the first axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centrey:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Centre position of the second axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centrez:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Centre position of the third axis
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="Mode_2">Mode = 2</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+MSPHERICAL(midx1, midy1, midz1, midx, midy, midz, 2)
+</p>
+<h3>Description:</h3>
+<p>
+Move the three axes set in the 
+<a href="BASE.html">BASE</a>
+
+array through a full circle on a sphere by specifying two mid points of the
+curve. The profile will move through the first mid position, then the second
+and finally back to the start point.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midx1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second mid position of the first axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midy1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second mid position of the second axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midz1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second mid position of the third axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midx:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First mid position of the first axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midy: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First mid position of the second axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midz:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First mid position of the third axis
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="Mode_3">Mode = 3</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+MSPHERICAL(midx, midy, midz, centrex, centrey,
+centrez, 3)
+</p>
+<h3>Description:</h3>
+<p>
+Move the three axes set in the 
+<a href="BASE.html">BASE</a>
+
+array through a full circle on a sphere by specifying a mid-point and the
+centre of the sphere. The profile will start by heading in the shortest
+distance to the mid-point, this enables you to define the direction. 
+</p>
+<p class="warning">
+The coordinates of the centre point and mid-point must not be
+co-linear. If co-linear points are specified, the controller will stop the
+program with a 
+<a href="RUN_ERROR.html">RUN_ERROR</a>
+.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midx:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mid position of the first axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midy: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mid position of the second axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+midz:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mid position of the third axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centrex:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position of the first axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centrey:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Centre position of the second axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centrez:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Centre position of the third axis
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A move is needed that follows a spherical path which ends 30&nbsp;mm
+up in the Z direction:
+</p>
+<p>
+<img border="0" width="218" height="190" id="Picture 1" src="MSPHERICAL_files/image001.png">
+</p>
+<p class="codeexample">
+radius = 30 'sphere radius
+<br>
+
+angle = 0   'radians
+<br>
+
+
+<br>
+
+startx = 0
+<br>
+
+starty = 0
+<br>
+
+startz = 0
+<br>
+
+
+<br>
+
+endx = startx + radius * COS(angle)
+<br>
+
+endy = starty + radius * SIN(angle)
+<br>
+
+endz = startz + radius
+<br>
+
+
+<br>
+
+midx = (endx - startx) * (1 - COS(PI / 4))
+<br>
+
+midy = (endy - starty) * (1 - COS(PI / 4))
+<br>
+
+midz = (endz - startz) * SIN(PI / 4)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(3,4,5)
+</p>
+<p class="codeexample">
+MSPHERICAL(endx, endy, endz, midx, midy, midz, 0)
+</p>
+<h3>Example 2:</h3>
+<p>
+A similar move that follows a spherical path but at 45
+degrees to the Y axis which ends 30&nbsp;mm above the XY plane:
+</p>
+<p>
+<img border="0" width="218" height="202" id="Picture 2" src="MSPHERICAL_files/image002.png">
+</p>
+<p class="codeexample">
+radius = 30    'sphere radius
+<br>
+
+angle = PI/4   'radians 
+<br>
+
+
+<br>
+
+startx = 0
+<br>
+
+starty = 0
+<br>
+
+startz = 0
+<br>
+
+
+<br>
+
+endx = startx + radius * COS(angle)
+<br>
+
+endy = starty + radius * SIN(angle)
+<br>
+
+endz = startz + radius
+<br>
+
+
+<br>
+
+midx = (endx - startx) * (1 - COS(PI / 4))
+<br>
+
+midy = (endy - starty) * (1 - COS(PI / 4))
+<br>
+
+midz = (endz - startz) * SIN(PI / 4)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(0, 1, 2)
+</p>
+<p class="codeexample">
+MSPHERICAL(endx, endy, endz, midx, midy, midz, 0)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MSPHERICALSP.html">MSPHERICALSP</a>
+<span class="MsoHyperlink">, </span><a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

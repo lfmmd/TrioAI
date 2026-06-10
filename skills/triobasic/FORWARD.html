@@ -1,0 +1,154 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FORWARD</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FORWARD">
+</head>
+<body>
+<h1>FORWARD</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+FORWARD
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+FO
+</p>
+<h2>Description:</h2>
+<p>
+Sets continuous forward movement.  The axis accelerates at
+the programmed 
+<a href="ACCEL.html">ACCEL</a>
+ rate and continues moving at the 
+<a href="SPEED.html">SPEED</a>
+ value until either a 
+<a href="CANCEL.html">CANCEL</a>
+
+or 
+<a href="RAPIDSTOP.html">RAPIDSTOP</a>
+ command are encountered.  It then
+decelerates to a stop at the programmed 
+<a href="DECEL.html">DECEL</a>
+ rate.
+</p>
+<p class="note">
+If the axis reaches either the forward limit switch or forward
+soft limit, the FORWARD will be cancelled and the axis will decelerate to a
+stop.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Run an axis forwards.  When an input signal is detected on
+input 12, bring the axis to a stop.
+</p>
+<p>
+<img border="0" width="576" height="336" id="Picture 1" src="FORWARD_files/image001.jpg">
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<p class="codeexample">
+'wait for stop signal
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(12)=ON
+</p>
+<p class="codeexample">
+CANCEL
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<h3>Example 2:</h3>
+<p>
+Move an axis forwards until it hits the end limit switch,
+then move it in the reverse direction for 25 cm.
+</p>
+<p>
+<img border="0" width="576" height="336" id="Picture 2" src="FORWARD_files/image002.png">
+</p>
+<p class="codeexample">
+BASE(3)
+</p>
+<p class="codeexample">
+FWD_IN=7   'limit switch connected to input 7
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<p class="codeexample">
+WAIT IDLE  'wait for motion to stop on the switch
+</p>
+<p class="codeexample">
+MOVE(-25.0)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<h3>Example 3:</h3>
+<p>
+A machine that applies lids to cartons uses a simulated line
+shaft.  This example sets up a virtual axis running forward, this is to
+simulate the line shaft.  Axis 0 is then 
+<a href="CONNECT.html">CONNECT</a>
+ed
+to this to run the conveyor.  Axis 1 controls a vacuum roller that feeds the
+lids on to the cartons using the 
+<a href="MOVELINK.html">MOVELINK</a>
+ control.
+</p>
+<p class="codeexample">
+BASE(4)
+</p>
+<p class="codeexample">
+ATYPE=0       'Set axis 4 to virtual axis
+</p>
+<p class="codeexample">
+REP_OPTION=1
+</p>
+<p class="codeexample">
+SERVO=ON
+</p>
+<p class="codeexample">
+FORWARD       'starts line shaft 
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+CONNECT(-1,4) 'Connects base 0 to virtual axis in reverse
+</p>
+<p class="codeexample">
+WHILE IN(2)=ON
+</p>
+<p class="codeexample">
+  BASE(1)
+</p>
+<p class="codeexample">
+  'Links axis 1 to the shaft in reverse direction
+</p>
+<p class="codeexample">
+  MOVELINK(-4000,2000,0,0,4,2,1000)
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+RAPIDSTOP
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REVERSE.html">REVERSE</a>
+</p>
+</body>
+</html>

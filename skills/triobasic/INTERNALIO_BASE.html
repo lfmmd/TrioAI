@@ -1,0 +1,101 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INTERNALIO_BASE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INTERNALIO_BASE">
+</head>
+<body>
+<h1>INTERNALIO_BASE</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O Parameter (MC_CONFIG only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+INTERNALIO_BASE = value
+</p>
+<h2>Description:</h2>
+<p>
+The majority of Motion Coordinators have internal I/O
+addressed at IN(0) to IN(15) and OP(8) to OP(15). If the Motion Coordinator has
+more than 16 internal I/O points, the extra I/O are addressed from IN/OP(16)
+and above. These addresses are usually allocated to CAN I/O. Therefore, to
+allow application programs to have common functionality between the standard 16
+I/O points and Motion Coordinators with more than 16 I/O, the parameter
+INTERNALIO_BASE can be set to split the internal I/O at the 15/16 boundary.
+</p>
+<p>
+INTERNALIO_BASE sets the start address for the internal I/O
+point number 16. The internal I/O is then split into 2 groups, 0 to 15 and
+INTERNALIO_BASE to INTERNALIO_BASE + number of extra internal I/O points.
+</p>
+<p class="tip">
+It is common to set the INTERNALIO_BASE to the next value above
+the last CAN I/O point.
+</p>
+<p class="note">
+This command only has a function on Motion Coordinators with more
+than 16 internal I/O points.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sets the base address of the upper part of the internal
+  I/O. (Default = 16)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A Motion Coordinator has 48 internal I/O points. The user is
+loading a project that runs well on a MC405 with 16 I/O points, but which also
+uses one CANIO module., and want to keep the same addresses 16 to 31 for the
+CAN I/O. The default situation is that the CANIO will start at IN(48) so
+INTERNALIO_BASE is used to change it.
+</p>
+<p class="codeexample">
+INTERNALIO_BASE = 32
+</p>
+<p>
+The first bank of internal I/O is now at 0 to 15, the CAN I/O
+is at 16 to 31 and the remaining internal I/O is at 32 to 63.
+</p>
+<h2>See also: </h2>
+<p>
+<a href="MODULEIO_BASE.html">MODULEIO_BASE</a>
+, 
+<a href="DRIVEIO_BASE.html">DRIVEIO_BASE</a>
+, 
+<a href="NODE_IO.html">NODE_IO</a>
+, 
+<a href="MODULE_IO_MODE.html">MODULE_IO_MODE</a>
+<span class="MsoHyperlink">,</span> <a href="CANIO_BASE.html">CANIO_BASE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

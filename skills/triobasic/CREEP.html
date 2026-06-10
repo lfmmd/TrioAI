@@ -1,0 +1,59 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CREEP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CREEP">
+</head>
+<body>
+<h1>CREEP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Sets the CREEP speed on the current base axis. The creep
+speed is used for the slow part of a 
+<a href="DATUM.html">DATUM</a>
+ sequence. 
+</p>
+<h2>Value:</h2>
+<p>
+Any positive value in user 
+<a href="UNITS.html">UNITS</a>
+</p>
+<h2>Example:</h2>
+<p>
+Set up the CREEP speeds on 2 axes and then perform a 
+<a href="DATUM.html">DATUM</a>
+ routine.
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+CREEP = 10
+</p>
+<p class="codeexample">
+SPEED = 500
+</p>
+<p class="codeexample">
+DATUM(4)
+</p>
+<p class="codeexample">
+CREEP AXIS(1) = 10
+</p>
+<p class="codeexample">
+SPEED AXIS(1) = 500
+</p>
+<p class="codeexample">
+DATUM(4) AXIS(1)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DATUM.html">DATUM</a>
+</p>
+</body>
+</html>

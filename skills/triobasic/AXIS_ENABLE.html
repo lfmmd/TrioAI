@@ -1,0 +1,84 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXIS_ENABLE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXIS_ENABLE">
+</head>
+<body>
+<h1>AXIS_ENABLE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Can be used to independently disable an axis. 
+<a href="ON.html">ON</a>
+ by default, can be set to 
+<a href="OFF.html">OFF</a>
+ to
+disable the axis. The axis is enabled if AXIS_ENABLE = 
+<a href="ON.html">ON</a>
+
+and 
+<a href="WDOG.html">WDOG</a>
+ = 
+<a href="ON.html">ON</a>
+. 
+</p>
+<p>
+On stepper axis AXIS_ENABLE will turn on the hardware enable
+outputs. 
+</p>
+<p class="tip">
+ If the axis is part of a 
+<a href="DISABLE_GROUP.html">DISABLE_GROUP</a>
+
+and an error occurs AXIS_ENABLE is set to 
+<a href="OFF.html">OFF</a>
+ but the 
+<a href="WDOG.html">WDOG</a>
+ remains 
+<a href="ON.html">ON</a>
+.
+</p>
+<h2>Value:</h2>
+<p>
+Accepts the values 
+<a href="ON.html">ON</a>
+ or 
+<a href="OFF.html">OFF</a>
+, default is 
+<a href="ON.html">ON</a>
+. 
+</p>
+<h2>Example:</h2>
+<p>
+Re-enabling a group of axes after a motion error
+</p>
+<p class="codeexample">
+DEFPOS(0)             'Clear the error
+</p>
+<p class="codeexample">
+For axis_number = 4 to 8
+</p>
+<p class="codeexample">
+    BASE(axis_number)
+</p>
+<p class="codeexample">
+    AXIS_ENABLE = ON  'Enable the axis
+</p>
+<p class="codeexample">
+NEXT axis_number
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXIS_ENABLE_OVERRIDE.html">AXIS_ENABLE_OVERRIDE</a>
+,
+
+<a href="DISABLE_GROUP.html">DISABLE_GROUP</a>
+</p>
+</body>
+</html>

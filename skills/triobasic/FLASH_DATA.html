@@ -1,0 +1,227 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FLASH_DATA</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FLASH_DATA">
+</head>
+<body>
+<h1>FLASH_DATA</h1>
+<h2>Type:</h2>
+<p class="Category">
+Startup Parameter (MC_CONFIG only)
+</p>
+<h2>Description:</h2>
+<p>
+FLASH_DATA controls whether VR or TABLE data is
+automatically backed up to flash memory.
+</p>
+<p>
+The default setting (0) will use VR memory as the source for
+backup. However, by changing this parameter to 1 within MC_CONFIG will cause
+TABLE data as the source for backup. Please note that regardless of which data
+source is selected, only the first 4096 elements will be available for
+automatic backup.
+</p>
+<p class="warning">
+MC664 would use the first 196608 TABLE and all the VR points
+as a backup (flash memory) by default. When FLASH_DATA=1 all the TABLE and VR
+points are backed up in flash.
+</p>
+<p class="warning">
+MC508, Flex-6 Nano and MC6N would only backup VR points by
+default. When FLASHTABLE=1, all VR and the first 64000 TABLE points would be
+backed up in flash.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="96" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC4X 
+</p>
+
+  
+</td>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="400" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR memory selected for automatic backup (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="400" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TABLE memory selected for automatic backup
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="96" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC664
+</p>
+
+  
+</td>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="400" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR memory selected for automatic backup + first 196608
+  TABLE points (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="400" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR memory and TABLE memory selected for automatic
+  backup
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="96" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC508
+</p>
+
+  
+<p class="tablecontent">
+Flex-6 Nano
+</p>
+
+  
+<p class="tablecontent">
+MC6N
+</p>
+
+  
+</td>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="400" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR memory selected for automatic backup (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="400" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR memory and first 64000 TABLE points selected for
+  automatic backup
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+FLASH_DATA = 0 'Select VR memory for backup
+</p>
+<h3>Example 2:</h3>
+<p class="codeexample">
+FLASH_DATA = 1 'Select TABLE memory for backup
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

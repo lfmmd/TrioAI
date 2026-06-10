@@ -1,0 +1,578 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VP_OPTIONS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VP_OPTIONS">
+</head>
+<body>
+<h1>VP_OPTIONS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+VP_OPTIONS = value
+</p>
+<p class="codeexample">
+VP_OPTIONS AXIS(n) = value
+</p>
+<h2>Description:</h2>
+<p>
+This parameter controls the behaviour of VP_MODE = 6, with the
+default value of zero intending to provide functionality suitable for most
+motion applications. If necessary, the behaviour can be tailored by setting
+bits that control various aspects, with bits 0 and 1 enabling VP_MODE = 6 to
+behave more like VPU_MODE = 5, and the remaining bits controlling aspects
+mainly related to processor usage and accuracy.
+</p>
+<p class="tip">
+Note that most applications use VP_MODE = 0 (the default VP_MODE),
+and so the default value of zero is normally adequate when migrating to VP_MODE
+= 6, but applications that use VP_MODE = 5 (usually PLC and RPS) may require
+adjustments to be made.
+</p>
+<p>
+Bit 0 controls whether VP_MODE&nbsp;=&nbsp;6 has a minimum move
+buffer depth of 5, which is the default behaviour of VP_MODE&nbsp;=&nbsp;5.
+</p>
+<p>
+Bit 1 controls whether VP_MODE&nbsp;=&nbsp;6 binds the forced
+parameters with the axis parameters, i.e. FORCE_SPEED, FORCE_ACCEL, FORCE_DECEL
+and FORCE_JERK are bound to SPEED, ACCEL, DECEL and JERK respectively. When
+this bit is set, the axis parameters are overwritten when a move with forced
+parameters is loaded, and the axis parameters can subsequently be used to alter
+its motion, which is the default behaviour for VP_MODE&nbsp;=&nbsp;5. When this
+bit is not set, the axis parameters are left untouched when a move that uses
+forced demands is loaded and the forced demands in place when the move was
+loaded are used throughout the move, which is the default behaviour of VP_MODE&nbsp;=&nbsp;0.
+</p>
+<p class="tip">
+Note that when bit 1 is set, that the axis demands will reset to
+the forced demands each time one move ends and another begins, so any changes
+made to the axis parameters will be lost and therefore require reapplying if
+required.
+</p>
+<p>
+Bit 2 controls which VP_MODE is used when VP_MODE is set to
+5. When unset, VP_MODE&nbsp;=&nbsp;5 will be used, and when set, VP_MODE&nbsp;=&nbsp;6
+will be used instead. The sole purpose is to allow VP_MODE&nbsp;=&nbsp;6 to be
+tested in an environment that specifies the use of VP_MODE&nbsp;=&nbsp;5.
+</p>
+<p class="tip">
+Note that this setting only alters what velocity profiling
+calculations are performed, so bits 0 and 1 should also be set if full
+compatibility is required.
+</p>
+<p>
+Bit 3 controls whether the current look-ahead is invalidated
+when a demand factor, such as SPEED_FACTOR (including LOOKAHEAD_FACTOR),
+ACCEL_FACTOR or JERK_FACTOR change value.
+</p>
+<p>
+Bit 4 controls whether the blend point is fine-tuned to hit
+the blend speed exactly on the move junction. The default is to fine-tune once
+when it is time to start adjusting the velocity profile to hit the blend point,
+but setting this bit disables this fine-tuning, which is less processor
+intensive.
+</p>
+<p>
+Bit 5 controls whether fine-tuning is done once, which is
+the default, or is performed continuously until the blend point is reached.
+Continuous re-evaluation of the demands to hit the blend point accurately may
+be slightly more accurate (than doing it only once), but is more processor
+intensive.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Auto-set LIMIT_BUFFERED
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bind forced demands to
+  axis demands
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VP_MODE 5 will use mode
+  6 instead
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No look-ahead
+  invalidation on factor changes
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No fine-tuning to hit
+  blend speeds
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Continuous fine-tuning
+  to hit blend speeds
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_VP_MODE=0:"></a>
+Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+The behaviour of can be shown using the below program and
+adjusting the VP_MODE and for VP_MODE = 6 changing the value of VP_OPTIONS.0:
+</p>
+<p class="codeexample">
+DIM i AS INTEGER
+<br>
+
+
+<br>
+
+INITIALISE
+<br>
+
+
+<br>
+
+BASE(0)
+<br>
+
+VP_MODE = 6
+<br>
+
+VP_OPTIONS.0 = 1
+<br>
+
+
+<br>
+
+i = 0
+<br>
+
+REPEAT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;FORWARD
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;WA(1) 'Allow time for move to load before seeing if it
+has
+<br>
+
+UNTIL PMOVE
+<br>
+
+
+<br>
+
+PRINT i; &quot; moves loaded with VP_OPTION.0 = &quot;; VP_OPTIONS.0
+</p>
+<p>
+When VP_MODE = 0 (VP_OPTIONS is irrelevant), the following
+is printed:
+</p>
+<p class="codeexample">
+3 moves loaded with VP_OPTION.0 = 0
+</p>
+<p>
+When VP_MODE = 5 (VP_OPTIONS is irrelevant), the following
+is printed:
+</p>
+<p class="codeexample">
+7 moves loaded with VP_OPTION.0 = 0
+</p>
+<p>
+When VP_MODE = 6 and VP_OPTIONS.0 = 0, the following is
+printed:
+</p>
+<p class="codeexample">
+3 moves loaded with VP_OPTION.0 = 0
+</p>
+<p>
+When VP_MODE = 6 and VP_OPTIONS.0 = 1, the following is
+printed:
+</p>
+<p class="codeexample">
+7 moves loaded with VP_OPTION.0 = 0
+</p>
+<p>
+The reason that 3 is printed is that the default setting
+after INITIALISE for LIMIT_BUFFERED is 1, so 3 moves can be loaded, one that
+immediately becomes active, one waits in the axis move buffer and one waits in
+the process move buffer until space is available in the axis move buffer. This
+is how VP_MODE = 0 always operates and how VP_MODE = 6 operates when
+VP_OPTIONS.0 = 0 (the default for all VP_OPTIONS is 0).
+</p>
+<p>
+The reason that 7 is printed is that VP_MODE = 5 and VP_MODE
+= 6 in conjunction with VP_OPTIONS.0 = 1 enforces a minimum axis move buffer
+depth of 5, so 7 moves are loaded in total, one active, five waiting in the
+axis move buffer and one waiting in the process move buffer.
+</p>
+<h3>Example 2:</h3>
+<p>
+Make VP_MODE 6 bind the forced demands to the axis demands
+to allow motion to be adjusted during profiling.
+</p>
+<p>
+The behaviour of the various VPUs can be shown using the
+program below:
+</p>
+<p class="codeexample">
+BASE
+(
+0
+)
+<br>
+
+
+<br>
+
+UNITS = 
+10000
+<br>
+
+SPEED = 
+100
+<br>
+
+ACCEL = 
+100
+<br>
+
+DECEL = ACCEL
+<br>
+
+JERK = 
+1000
+<br>
+
+
+<br>
+
+VP_MODE = 
+6
+<br>
+
+VP_OPTIONS
+.1
+ = 
+0
+'0: VP_MODE = 0 behaviour; 1: VP_MODE = 5 behaviour
+<br>
+
+
+<br>
+
+MERGE = 
+ON
+<br>
+
+AXIS_BLENDING = 
+1
+<br>
+
+
+DEFPOS
+(
+0
+)
+<br>
+
+
+<br>
+
+FORCE_SPEED = 
+80
+<br>
+
+
+MOVESP
+(
+300
+)
+<br>
+
+FORCE_SPEED = 
+100
+<br>
+
+
+MOVESP
+(
+300
+)
+<br>
+
+
+WAIT
+ UNTIL
+
+MPOS &gt; 
+100
+<br>
+
+SPEED = 
+90
+</p>
+<p>
+Trace for VP_MODE = 0:
+</p>
+<p>
+<img width="576" height="138" id="Picture 2" src="VP_OPTIONS_files/image001.png">
+</p>
+<p>
+Trace for VP_MODE = 5:
+</p>
+<p>
+<img width="576" height="145" id="Picture 1" src="VP_OPTIONS_files/image002.png">
+</p>
+<p>
+Trace for VP_MODE = 6 with
+VP_OPTIONS.1 = 0:
+</p>
+<p>
+<img width="576" height="136" id="Picture 3" src="VP_OPTIONS_files/image003.png">
+</p>
+<p>
+Trace for VP_MODE = 6 with
+VP_OPTIONS.1 = 1:
+</p>
+<p>
+<img width="576" height="140" id="Picture 4" src="VP_OPTIONS_files/image004.png">
+</p>
+<h3>Example 3:</h3>
+<p>
+Make VP_MODE 5 profile motion using VP_MODE 6.
+</p>
+<p class="codeexample">
+VP_MODE = 5 'Use VP_MODE 5 (note: overridden by bit 2
+below)
+</p>
+<p class="codeexample">
+VP_OPTIONS.0 = 1 'Assume LIMIT_BUFFERED is at least 5
+</p>
+<p class="codeexample">
+VP_OPTIONS.1 = 1 'Bind forced demands to axis demands
+</p>
+<p class="codeexample">
+VP_OPTIONS.2 = 1 'Call VP_MODE = 6 rather than 5
+</p>
+<p>
+This setting is only required in scenarios where the VP_MODE
+cannot easily be changed from 5 to 6, so it can be fooled into using VP_MODE =
+6.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="INITIALISE.html">INITIALISE</a>
+, 
+<a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+, 
+<a href="PMOVE.html">PMOVE</a>
+, 
+<a href="VP_MODE.html">VP_MODE</a>
+</p>
+</body>
+</html>

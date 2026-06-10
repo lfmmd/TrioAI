@@ -1,0 +1,62 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VFF_GAIN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VFF_GAIN">
+</head>
+<body>
+<h1>VFF_GAIN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Servo axes and remote speed (CSV) axes; The velocity feed
+forward gain is a constant which is multiplied by the change in demand
+position. Velocity feed forward gain can be used to decreases the following
+error during constant speed by increasing the output proportionally with the
+speed. For a velocity feed forward  
+<span class="FormulaChar">K<sub>vff </sub></span>and change in position 
+<span class="FormulaChar">&#916;</span><span class="FormulaChar">&#929;</span><span class="FormulaChar"><sub>d</sub></span>,
+the contribution to the output signal is:
+</p>
+<p>
+<span class="FormulaChar">0<sub>vff</sub>
+</span>= 
+<span class="FormulaChar">K<sub>vff
+</sub></span>x 
+<span class="FormulaChar">&#916;</span><span class="FormulaChar">&#929;</span><span class="FormulaChar"><sub>d</sub></span></p>
+<p>
+<span class="FormulaChar"><sub>Remote
+position axes like EtherCAT </sub></span>CSP and RTEX position axes, the
+VFF_GAIN applies a target position (P
+<sub>t</sub>) advance that is proportional
+to DEMAND_SPEED.
+</p>
+<p>
+P
+<sub>tout </sub>= P
+<sub>t</sub>
++
+<span class="FormulaChar">&#916;</span><span class="FormulaChar">&#929;</span><span class="FormulaChar"><sub>d</sub></span> x
+ K
+<sub>vff</sub></p>
+<h2>Value:</h2>
+<p>
+Velocity feed forward constant (default =0)
+</p>
+<h2>Example:</h2>
+<p>
+Set the VFF_GAIN on axis 15 to 12
+</p>
+<p class="codeexample">
+BASE(15)
+</p>
+<p class="codeexample">
+VFF_GAIN=12
+</p>
+</body>
+</html>

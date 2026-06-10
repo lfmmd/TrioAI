@@ -1,0 +1,155 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INTEGER_READ</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INTEGER_READ">
+</head>
+<body>
+<h1>INTEGER_READ</h1>
+<h2>Type: </h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+INTEGER_READ(source, least_significant, most_significant)
+</p>
+<h2>Description:</h2>
+<p>
+INTEGER_READ performs a low-level read of a 64-bit source, splitting
+it into two 32-bit values, where each value represents the bit pattern of the
+source’s least significant and most significant 32-bit words. The source may be
+integer or floating-point, as it is the bit pattern (i.e. internal
+representation) that is read, not its value or a cast of its value.
+</p>
+<p class="tip">
+This can be used to read the position from high resolution
+encoders
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64-bit value that will be read, can be 
+<a href="VR.html">VR</a>
+,
+  
+<a href="TABLE.html">TABLE</a>
+, or system variable.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+least_significant:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The variable to store the least significant (rightmost)
+  32 bits, this may be local variable, 
+<a href="VR.html">VR</a>
+ or 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+most_significant:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The variable to store the most significant (leftmost)
+  32 bits, this may be local variable, 
+<a href="VR.html">VR</a>
+ or 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1</h3>
+<p>
+Read the floating-point number stored in VR(1) as two
+integer values and display them hexadecimal format.
+</p>
+<p class="codeexample">
+VR(1) = 0.9999
+</p>
+<p class="codeexample">
+INTEGER_READ(VR(1), VR(4), VR(5))
+</p>
+<p class="codeexample">
+PRINT VR(1); &quot;    &quot;;
+</p>
+<p class="codeexample">
+PRINT &quot;MSW &quot;; HEX(VR(5)), &quot;LSW &quot;;
+HEX(VR(4))
+</p>
+<p>
+Would display:
+</p>
+<p class="codeexample">
+0.9999&nbsp;&nbsp;&nbsp;&nbsp;MSW
+48E8A71E&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LSW 3FEFFF2E
+</p>
+<h3>Example 2</h3>
+<p>
+Read the ENCODER value as an integer.
+</p>
+<p class="codeexample">
+INTEGER_READ(ENCODER AXIS(2), VR(4), VR(5))
+</p>
+<p class="codeexample">
+PRINT &quot;Encoder Value &quot;; VR(5)[0]
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

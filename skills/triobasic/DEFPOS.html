@@ -1,0 +1,210 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DEFPOS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DEFPOS">
+</head>
+<body>
+<h1>DEFPOS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DEFPOS(pos1[, pos2[, pos3[, pos4...]]])
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+DP(pos1[, pos2[, pos3[, pos4...]]])
+</p>
+<h2>Description:</h2>
+<p>
+Defines the current position(s) as a new absolute value. The
+positions specified are placed in 
+<a href="DPOS.html">DPOS</a>
+, while 
+<a href="MPOS.html">MPOS</a>
+ is adjusted to maintain the 
+<a href="FE.html">FE</a>
+
+value. This function is completed after the next servo-cycle. DEFPOS may be
+used at any time, even while a move is in progress, but its normal function is
+to set the position values of a group of axes that are stationary.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+pos1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Absolute position to set on current base axis in user
+  units.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+pos2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Absolute position to set on the next axis in 
+<a href="BASE.html">BASE</a>
+ array in user units.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+pos3:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Absolute position to set on the next axis in 
+<a href="BASE.html">BASE</a>
+ array in user units.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+...
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+As many parameters as axes on the system may be specified.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+After homing 2 axes, it is required to change the 
+<a href="DPOS.html">DPOS</a>
+ values so that the “home” positions are not zero, but
+some defined positions instead.
+</p>
+<p>
+<img border="0" width="479" height="279" id="Picture 1" src="DEFPOS_files/image001.png">
+</p>
+<p class="codeexample">
+DATUM(5) AXIS(1) 'Home both axes. At the end of the DATUM
+</p>
+<p class="codeexample">
+DATUM(4) AXIS(3) 'procedure, the positions will be 0, 0
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(1)
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(3)
+</p>
+<p class="codeexample">
+BASE(1, 3) 'Set up the BASE array
+</p>
+<p class="codeexample">
+DEFPOS(-10, -35) 'Define positions of axes to -10 and -35
+</p>
+<h3>Example 2:</h3>
+<p>
+Define the axis position to be 10, then start an absolute
+move, but make sure the axis has updated the position before loading the 
+<a href="MOVEABS.html">MOVEABS</a>
+.
+</p>
+<p>
+<img border="0" width="522" height="304" id="Picture 2" src="DEFPOS_files/image002.png">
+</p>
+<p class="codeexample">
+DEFPOS(10)
+</p>
+<p class="codeexample">
+WAIT UNTIL OFFPOS = 0 'Ensures DEFPOS has completed
+</p>
+<p class="codeexample">
+MOVEABS(25.03)
+</p>
+<h3>Example 3:</h3>
+<p>
+From the 
+<i>Motion</i> Perfect terminal, quickly set the 
+<a href="DPOS.html">DPOS</a>
+ values of the first four axes to 0.
+</p>
+<p>
+<img border="0" width="431" height="93" id="Picture 3" src="DEFPOS_files/image003.png">
+</p>
+<p class="codeexample">
+&gt;&gt;BASE(0)
+</p>
+<p class="codeexample">
+&gt;&gt;DEFPOS(0, 0, 0, 0)
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="OFFPOS.html">OFFPOS</a>
+</p>
+</body>
+</html>

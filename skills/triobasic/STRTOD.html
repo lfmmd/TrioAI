@@ -1,0 +1,1627 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STRTOD</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STRTOD">
+</head>
+<body>
+<h1>STRTOD</h1>
+<h2>Type: </h2>
+<p class="Category">
+String Function
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+value = STRTOD(format, ...)
+</p>
+<h2>Description:</h2>
+<p>
+The STRTOD command reads a sequence of characters and
+converts them to a numeric value. The conversion stops at the first invalid character
+found in the input character stream. The characters may be read from the VR
+array or from a TrioBASIC I/O channel.
+</p>
+<p>
+Values may be integer or floating-point (with and without
+leading/trailing digits), which may be signed and may include an exponent (with
+and without sign). The following are examples of valid values:
+</p>
+<p class="codeexample">
+123
+</p>
+<p class="codeexample">
+123.456
+</p>
+<p class="codeexample">
++12.6
+</p>
+<p class="codeexample">
+-0.12
+</p>
+<p class="codeexample">
+.125
+</p>
+<p class="codeexample">
+12.
+</p>
+<p class="codeexample">
+12.7E-3
+</p>
+<p class="codeexample">
+0.1e10
+</p>
+<p class="codeexample">
+1.6e+3
+</p>
+<h2>Parameters:</h2>
+<h3>format:</h3>
+<p>
+This is a bitwise field that specifies the data source and
+the number format.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Format:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+bit 0
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Source
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR array
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC I/O channel
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+bit 1..2
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number format
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Floating point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer. If the number is not an integer then 0 is
+  returned.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The format is auto-selected to provide the best
+  resolution.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The format is Letter + Value.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Source = 0:</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+value = STRTOD(format, vr_start, vr_index)
+</p>
+<h3>Description:</h3>
+<p>
+Converts characters in the VR array to a number.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_start
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position of the first character of the numeric string
+  in the VR array.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in the VR array to store the index of the
+  first non-number character found.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Ref322074726">Source = 1:</a>
+</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+value = STRTOD(format, channel, vr_length, vr_index)
+</p>
+<h3>Description:</h3>
+<p>
+Converts characters from the TrioBASIC channel to a number.
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC I/O channel to read. This can be any valid
+  TrioBASIC I/O channel: standard communications channel, ANYBUS channel, or
+  file channel.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_length
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in the VR array to store the length of the
+  number string that was parsed.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in the VR array to store the ASCII code of the
+  character that terminated conversion.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Number Format = 3:</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+value = STRTOD(format, channel, vr_length, vr_term,
+vr_index)
+</p>
+<h3>Description:</h3>
+<p>
+Converts strings that have the format LETTER+VALUE (e.g.
+A123.456) from the source channel to a series of numbers in the VR memory
+starting at vr_index.  Returns a value that is a bit pattern denoting which
+code values have been parsed during the function call.
+</p>
+<p>
+Each letter found, has the associated value placed in a VR,
+where the VRs are in alphabetic order starting at vr_index. For Example is M123
+is found in the string, then the value 123 is placed in VR(vr_index + 13)
+because M is the 13
+<sup>th</sup> letter of the alphabet. Bit 13 is also set in
+the returned value to indicate that there is a M value.
+</p>
+<p>
+This format is useful for parsing G-Code strings in CNC
+applications. See Example 4.
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC I/O channel to read. This can be any valid
+  TrioBASIC I/O channel: standard communications channel, ANYBUS channel, or
+  file channel.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_length
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in the VR array to store the length of the
+  string that was parsed.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_term
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in the VR array to store the termination
+  character found at the end of the string.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in the VR array to store the index of the
+  first value in the code list. The first item is the A code value, the last is
+  the Z code value.  (vr_index + 0 and vr_index + 25 respectively).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h3>Example 1:</h3>
+<p>
+Open a file and print a floating-point value to it and close
+it, then reopen the file and use STRTOD to read it as a float.
+</p>
+<p class="codeexample">
+OPEN
+ #
+40
+ AS
+ &quot;N&quot;
+ FOR
+ OUTPUT
+(
+1
+)
+<br>
+
+
+PRINT
+ #
+40
+, 
+&quot;123.456&quot;
+<br>
+
+  
+<br>
+
+
+CLOSE
+ #
+40
+<br>
+
+
+OPEN
+ #
+40
+ AS
+ &quot;N&quot;
+ FOR
+ INPUT
+<br>
+
+
+VR
+(
+100
+) = 
+STRTOD
+(
+1
+, 
+40
+, 
+101
+, 
+102
+)
+<br>
+
+  
+<br>
+
+
+PRINT
+ #
+5
+, 
+&quot;Value = &quot;
+; 
+VR
+(
+100
+)
+<br>
+
+
+PRINT
+ #
+5
+, 
+&quot;Length of string = &quot;
+; 
+VR
+(
+101
+)[
+0
+]
+<br>
+
+
+PRINT
+ #
+5
+, 
+&quot;Terminating character = &quot;
+; 
+VR
+(
+102
+)[
+0
+]
+<br>
+
+  
+<br>
+
+
+CLOSE
+ #
+40
+<br>
+
+
+DEL
+ &quot;N&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+Produces the output:
+</p>
+<p class="codeexample">
+Value = 123.4560
+</p>
+<p class="codeexample">
+Length of input = 7
+</p>
+<p class="codeexample">
+Terminating character = 13
+</p>
+<p>
+The value being 123.4560, read from 7 input characters and
+terminated with a carriage return (ASCII code 13).
+</p>
+<h3>Example 2:</h3>
+<p>
+Open a file and print a floating-point value to it and close
+it, then reopen the file and use STRTOD to read it as an integer.
+</p>
+<p class="codeexample">
+OPEN
+ #
+40
+ AS
+ &quot;N&quot;
+ FOR
+ OUTPUT
+(
+1
+)
+<br>
+
+
+PRINT
+ #
+40
+, 
+&quot;123.456&quot;
+<br>
+
+  
+<br>
+
+
+CLOSE
+ #
+40
+<br>
+
+
+OPEN
+ #
+40
+ AS
+ &quot;N&quot;
+ FOR
+ INPUT
+<br>
+
+
+VR
+(
+100
+) = 
+STRTOD
+(
+3
+, 
+40
+, 
+101
+, 
+102
+)
+<br>
+
+  
+<br>
+
+
+PRINT
+ #
+5
+, 
+&quot;Value = &quot;
+; 
+VR
+(
+100
+)
+<br>
+
+
+PRINT
+ #
+5
+, 
+&quot;Length of input = &quot;
+; 
+VR
+(
+101
+)[
+0
+]
+<br>
+
+
+PRINT
+ #
+5
+, 
+&quot;Terminating character = &quot;
+; 
+VR
+(
+102
+)[
+0
+]
+<br>
+
+  
+<br>
+
+
+CLOSE
+ #
+40
+<br>
+
+
+DEL
+ &quot;N&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+Produces the output:
+</p>
+<p class="codeexample">
+Value = 0.0000
+</p>
+<p class="codeexample">
+Length of input = 7
+</p>
+<p class="codeexample">
+Terminating character = 13
+</p>
+<p>
+The value being zero because it was specified to read an
+integer but a floating-point value was encountered, read from 7 input
+characters and terminated with a carriage return (ASCII code 13).
+</p>
+<h3>Example 3:</h3>
+<p>
+Open a file and print an integer value to it and close it,
+then reopen the file and use STRTOD to read it as an integer.
+</p>
+<p class="codeexample">
+OPEN
+ #
+40
+ AS
+ &quot;N&quot;
+ FOR
+ OUTPUT
+(
+1
+)
+<br>
+
+
+PRINT
+ #
+40
+, 
+&quot;123&quot;
+<br>
+
+
+CLOSE
+ #
+40
+<br>
+
+  
+<br>
+
+
+OPEN
+ #
+40
+ AS
+ &quot;N&quot;
+ FOR
+ INPUT
+<br>
+
+
+VR
+(
+100
+) = 
+STRTOD
+(
+3
+, 
+40
+, 
+101
+, 
+102
+)
+<br>
+
+  
+<br>
+
+
+PRINT
+ #
+5
+, 
+&quot;Value = &quot;
+; 
+VR
+(
+100
+)
+<br>
+
+
+PRINT
+ #
+5
+, 
+&quot;Length of string = &quot;
+; 
+VR
+(
+101
+)[
+0
+]
+<br>
+
+
+PRINT
+ #
+5
+, 
+&quot;Terminating character = &quot;
+; 
+VR
+(
+102
+)[
+0
+]
+<br>
+
+  
+<br>
+
+
+CLOSE
+ #
+40
+<br>
+
+
+DEL
+ &quot;N&quot;
+</p>
+<p>
+Produces the output:
+</p>
+<p class="codeexample">
+Value = 123.0000
+</p>
+<p class="codeexample">
+Length of input = 3
+</p>
+<p class="codeexample">
+Terminating character = 13
+</p>
+<p>
+The value being 123.0000, read from 7 input characters and
+terminated with a carriage return (ASCII code 13).
+</p>
+<h3>Example 4:</h3>
+<p>
+Open a file and print an integer value to it and close it,
+then reopen the file and use STRTOD to read it as an integer.
+</p>
+<p class="codeexample">
+DIM
+ mask 
+AS
+ INTEGER
+<br>
+
+
+<br>
+
+
+OPEN
+ #
+40
+ AS
+ &quot;N&quot;
+ FOR
+ OUTPUT
+(
+1
+)
+<br>
+
+
+PRINT
+ #
+40
+,
+
+&quot;N16X2.345Y-12.273Z+123.802&quot;
+<br>
+
+
+CLOSE
+ #
+40
+<br>
+
+
+<br>
+
+
+OPEN
+ #
+40
+ AS
+ &quot;N&quot;
+ FOR
+ INPUT
+<br>
+
+
+<br>
+
+mask = 
+STRTOD
+(
+7
+,
+
+40
+, 
+101
+, 
+102
+, 
+103
+)
+<br>
+
+
+<br>
+
+
+PRINT
+ #5, mask
+<br>
+
+
+PRINT
+ #5, 
+VR
+(
+116
+)
+<br>
+
+
+PRINT
+ #5, 
+VR
+(
+126
+)
+<br>
+
+
+PRINT
+ #5, 
+VR
+(
+127
+)
+<br>
+
+
+PRINT
+ #5, 
+VR
+(
+128
+)
+<br>
+
+
+<br>
+
+
+CLOSE
+ #
+40
+<br>
+
+
+DEL
+ &quot;N&quot;
+</p>
+<p>
+Produces the output:
+</p>
+<p class="codeexample">
+58728448
+</p>
+<p class="codeexample">
+16.0000
+</p>
+<p class="codeexample">
+2.3450
+</p>
+<p class="codeexample">
+-12.2730
+</p>
+<p class="codeexample">
+123.8020
+</p>
+<p>
+The mask of returned values being equal to ‘(1 &lt;&lt; 13)
+OR (1 &lt;&lt; 23) OR (1 &lt;&lt; 24) OR (1 &lt;&lt; 25)’ (i.e. the 13
+<sup>th</sup>,
+23
+<sup>rd</sup>, 24
+<sup>th</sup> and 25
+<sup>th</sup> letters of the alphabet
+numbered from 0) and the other values being that of “N”, “X”, “Y”, and “Z”
+respectively.
+</p>
+<h3>Example 5:</h3>
+<p>
+Open a file containing valid lines of G-Code text. Parse
+each line, looking for the G01 command and place the values in TABLE.
+</p>
+<p class="codeexample">
+OPEN
+ #
+40
+ AS
+ &quot;GCODE&quot;
+ FOR
+
+
+INPUT
+<br>
+
+
+<br>
+
+
+DIM
+ i, ch, g_val, mcount, movesteps 
+AS
+ INTEGER
+<br>
+
+
+DIM
+ x_val, y_val, z_val, a_val, b_val 
+AS
+ FLOAT
+<br>
+
+
+<br>
+
+
+VR
+(
+101
+) = 
+0
+<br>
+
+
+<br>
+
+
+TICKS
+ = 
+0
+<br>
+
+debug = 
+ON
+'OFF
+<br>
+
+mcount = 
+0
+<br>
+
+mstride = 
+5
+<br>
+
+movesteps = 
+1
+<br>
+
+
+<br>
+
+
+WHILE
+ VR
+(
+101
+) &gt;= 
+0
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;mask = 
+STRTOD
+(
+7
+, 
+40
+, 
+101
+, 
+102
+, 
+103
+)
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ mask
+.6
+ THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_val = 
+VR
+(
+109
+) 
+' G Register
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+
+debug 
+THEN
+ PRINT
+
+
+&quot;G&quot;
+; g_val[
+0
+];
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+
+g_val = 
+1
+ THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x_val =
+
+VR
+(
+126
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_val =
+
+VR
+(
+127
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z_val =
+
+VR
+(
+128
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a_val =
+
+VR
+(
+103
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b_val =
+
+VR
+(
+104
+)
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TABLE
+(
+1000
+ +
+mcount * mstride, x_val, y_val, z_val, a_val, b_val)
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ debug 
+THEN
+ PRINT
+ &quot; X&quot;
+;
+x_val; 
+&quot; Y&quot;
+; y_val; 
+&quot; Z&quot;
+; z_val; 
+&quot;
+A&quot;
+; a_val; 
+&quot; B&quot;
+; b_val
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mcount
+= mcount + 
+1
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ mcount &gt;= 
+25000
+
+
+THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+ &quot;Stopping to
+limit memory use&quot;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+STOP
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ENDIF
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ELSE
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ debug 
+THEN
+ PRINT
+ &quot;&quot;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ENDIF
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ENDIF
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ VR
+(
+102
+) = 
+13
+ THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+'End
+of line
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ELSEIF
+ VR
+(
+102
+) = 
+10
+ THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+'End
+of line
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ELSEIF
+ VR
+(
+102
+) = 
+ASC
+(
+&quot;(&quot;
+) 
+THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+'Comment
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+
+
+&quot;~~&quot;
+;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+GET
+
+#
+40
+, ch
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+WHILE
+
+ch &lt;&gt; 
+ASC
+(
+&quot;)&quot;
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+ CHR
+(ch);
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+GET
+ #
+40
+, ch
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+WEND
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+
+
+&quot;~~&quot;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ELSEIF
+ VR
+(
+102
+) = 
+0
+ THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+'NULL
+is end-of-file. (Assumes the input is ASCII and does not contain a NULL)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+
+
+&quot;EOF&quot;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ELSE
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+'Unknown
+char in stream.
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+
+
+&quot;FAILED to understand ASCII&quot;
+;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+
+
+VR
+(
+102
+); 
+&quot; : &quot;
+; 
+CHR
+(
+VR
+(
+102
+))
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ENDIF
+<br>
+
+
+WEND
+</p>
+</body>
+</html>

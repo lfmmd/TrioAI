@@ -1,0 +1,263 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>BLINKA</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="BLINKA">
+</head>
+<body>
+<h1><a name="_Toc317749430"></a>
+<a name="O_1387"></a>
+BLINKA</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+Blink asymmetrically.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RUN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enabling command.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TM0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TIME
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Duration of FALSE state on output.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TM1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TIME
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Duration of TRUE state on output.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Output blinking signal.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Time diagram</h2>
+<p>
+<img width="413" height="184" src="Tim-BLINKA_files/image001.gif">
+</p>
+<h2>Remarks</h2>
+<p>
+The output signal is FALSE when the RUN input is FALSE. In
+LD language, the input rung is the IN command. The output rung is the Q output
+signal.
+</p>
+<h2>ST Language</h2>
+<p>
+MyBlinker is a declared instance of BLINKA function block.
+</p>
+<p class="codeexample">
+MyBlinker (RUN, TM0, TM1);
+<br>
+
+Q := MyBlinker.Q;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="165" height="99" src="Tim-BLINKA_files/image002.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+<img width="278" height="100" src="Tim-BLINKA_files/image003.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Tim-BLINK.html">BLINK</a>
+</p>
+<p>
+<a href="Tim-TON.html">TON</a>
+</p>
+<p>
+<a href="Tim-TOF.html">TOF/TOFR</a>
+</p>
+<p>
+<a href="Tim-TP.html">TP/TPR</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

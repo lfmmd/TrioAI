@@ -1,0 +1,128 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DATUM_IN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DATUM_IN">
+</head>
+<body>
+<h1>DATUM_IN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Alternate Format:</h2>
+<p>
+DAT_IN
+</p>
+<h2>Description:</h2>
+<p>
+This parameter holds a digital input channel to be used as a
+datum input. 
+</p>
+<p class="note">
+The input used for DATUM_IN is active low. 
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+disable the input as DATUM_IN (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0-IO_Max
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Input to use as datum input
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+Any type of input can be used, built in, Trio CAN I/O, CANopen,
+EtherCAT or virtual. 
+</p>
+<h2>Example:</h2>
+<h3>Example 1:</h3>
+<p>
+Set input 28 as the 
+<a href="DATUM.html">DATUM</a>
+ input for
+axis 0 then perform a homing routine with normally closed (NC) sensor.
+</p>
+<p class="codeexample">
+DATUM_IN AXIS(3)=28
+</p>
+<p class="codeexample">
+DATUM(4) AXIS(3) ' reverse until the datum switch is
+reached
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(3)
+</p>
+<h3>Example 2:</h3>
+<p>
+Set up inputs for X and Y axes for homing.  The inputs are
+normally open (NO) proximity sensors therefore the inputs must be inverted.
+</p>
+<p class="codeexample">
+BASE(x_axis)
+</p>
+<p class="codeexample">
+INVERT_IN(205, 1)
+<br>
+
+DATUM_IN = 205
+</p>
+<p class="codeexample">
+<br>
+
+BASE(y_axis)
+<br>
+
+INVERT_IN(206, 1)
+<br>
+
+DATUM_IN = 206
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DATUM.html">DATUM</a>
+</p>
+</body>
+</html>

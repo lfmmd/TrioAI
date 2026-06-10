@@ -1,0 +1,315 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DATE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DATE">
+</head>
+<body>
+<h1>DATE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Description:</h2>
+<p>
+<a href="#_Reading_the_date:">Returns</a>
+ or 
+<a href="#_Setting_the_date:">sets</a>
+ the current date held by the real time
+clock.
+</p>
+<h2><a name="_Setting_the_date:"></a>
+Setting the date:</h2>
+<h3>Syntax:</h3>
+<p>
+DATE = dd:mm:yy
+</p>
+<h3>Description:</h3>
+<p>
+Sets the date using the two-digit year format or the four-digit
+year format.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+dd: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+day in two digit numeric format
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+mm:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Month in two digit numeric format
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+yy:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+last two digits of the year using the range 00-99
+  representing 2000-2099
+</p>
+
+  
+<p align="center">
+OR
+</p>
+
+  
+<p>
+ the full four digits of the year using the range
+  2000-2099
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Years outside the range 2000-2099 are invalid.
+</p>
+<h3>Example:</h3>
+<p>
+Set the date to the
+ 20th October 2012          
+</p>
+<p>
+&gt;&gt;DATE = 20:10:12
+</p>
+<p>
+or
+</p>
+<p>
+&gt;&gt;DATE = 20:10:2012
+</p>
+<h2><a name="_Reading_the_date:"></a>
+Reading the date:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+Value = DATE({mode})
+</p>
+<h3>Description:</h3>
+<p>
+Read the date value from the real time clock as a number.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+mode
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+none
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of days since 01/01/2000 (with 01/01/2000 =
+  0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The day of the current month
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The month of the current year
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The current year
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+Print the number of days since 1st
+ January 2000 (with the 1st being day 0).
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT DATE
+</p>
+<p class="codeexample">
+4676
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h4>Example 2:</h4>
+<p>
+Set a date then print it out using the US format.
+</p>
+<p class="codeexample">
+&gt;&gt;DATE=05:08:2008
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT DATE(1); &quot;/&quot;; DATE(0); &quot;/&quot;;
+DATE(2) 'Prints the date in US format.
+</p>
+<p class="codeexample">
+08/05/2008
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p>
+Set the date from within a BASIC program using values in 
+<a href="VR.html">VR</a>
+.
+</p>
+<p class="codeexample">
+VR(20) = 15
+</p>
+<p class="codeexample">
+VR(21) = 11
+</p>
+<p class="codeexample">
+VR(22) = 2012
+</p>
+<p class="codeexample">
+DATE = VR(20):VR(21):VR(22)
+</p>
+<h3>See also:</h3>
+<p class="codeexample">
+<a href="DATE$.html">DATE$</a>
+</p>
+</body>
+</html>

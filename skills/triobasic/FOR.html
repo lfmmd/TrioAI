@@ -1,0 +1,249 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FOR..TO.. STEP..NEXT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FOR TO STEP NEXT">
+</head>
+<body>
+<h1>FOR .. TO .. STEP .. NEXT </h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Structure
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+FOR variable = start TO end [STEP increment]
+</p>
+<p class="fixed">
+  commands
+</p>
+<p class="fixed">
+NEXT variable
+</p>
+<h2>Description:</h2>
+<p>
+A FOR..NEXT loop is used to execute a block of code a specific
+number of times. 
+</p>
+<p>
+On entering this loop, the control variable is initialised
+to the value of ‘start’ and the block of commands is then executed. Upon
+reaching the NEXT command the control variable is incremented by the specified
+‘increment’, and if its value has not gone beyond the ‘end’ parameter, then the
+block of commands is executed again, otherwise execution drops out of the FOR..NEXT
+loop.
+</p>
+<p class="note">
+FOR..NEXT loops can be nested up to 8 deep in each program.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+commands: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Trio BASIC statements that you wish to execute
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A valid Trio BASIC variable. Either a global 
+<a href="VR.html">VR</a>
+ variable, or a local variable may be used.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The initial value for the variable
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The final value for the variable
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+increment:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value that the variable is incremented by, which may
+  be positive or negative
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The STEP increment is optional, if this is omitted then the FOR NEXT
+will increment by 1
+</p>
+<p class="tip">
+The variable can be adjusted or used within the structure. 
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:                                     </h3>
+<p>
+Turn ON outputs 10 to 18, using the variable to change the
+output.
+</p>
+<p class="codeexample">
+FOR op_num = 10 TO 18
+</p>
+<p class="codeexample">
+  OP(op_num, ON)
+</p>
+<p class="codeexample">
+NEXT op_num
+</p>
+<h3>Example 2:</h3>
+<p>
+Index an axis from 5 to -5 using a negative STEP.
+</p>
+<p class="codeexample">
+FOR dist = 5 TO -5 STEP -0.25
+</p>
+<p class="codeexample">
+  MOVEABS(dist)
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+  GOSUB pick_up
+</p>
+<p class="codeexample">
+NEXT dist
+</p>
+<h3>Example 3:</h3>
+<p>
+Using a FOR structure to move through a set of (x, y)
+positions. If there is a 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+ then the
+variables are set to a large values so the loop no longer repeats
+</p>
+<p class="codeexample">
+FOR x = 1 TO 8
+</p>
+<p class="codeexample">
+  FOR y = 1 TO 6
+</p>
+<p class="codeexample">
+    MOVEABS(x * 100, y * 100)
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+    GOSUB operation
+</p>
+<p class="codeexample">
+    IF MOTIONERROR THEN
+</p>
+<p class="codeexample">
+      EXIT_LOOP
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+  NEXT y
+</p>
+<p class="codeexample">
+NEXT x
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CONTINUE.html">CONTINUE</a>
+, 
+<a href="EXIT_LOOP.html">EXIT_LOOP</a>
+,
+<span class="MsoHyperlink"> </span><a href="REPEAT.html">REPEAT</a>
+, 
+<a href="WHILE.html">WHILE</a>
+</p>
+</body>
+</html>

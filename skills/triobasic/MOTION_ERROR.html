@@ -1,0 +1,307 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOTION_ERROR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOTION_ERROR">
+</head>
+<body>
+<h1>MOTION_ERROR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (read only)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+value = MOTION_ERROR
+</p>
+<p class="codeexample">
+value = MOTION_ERROR(&lt;bank&gt;)
+</p>
+<h2>Description:</h2>
+<p>
+The MOTION_ERROR system parameter is a 64-bit integer that provides
+an indication that one or more axes are in error, with a bit being set for each
+axis in error. Since this parameter is a bit mask, it is usual to use the bit
+operator to interrogate each bit.
+</p>
+<p>
+In order to handle up to 1024 axes, MOTION_ERROR is split
+into 16 banks of 64-bit integers with each bank containing the motion error
+state of 64 axes. To access a bank, MOTION_ERROR can be indexed using an index
+from 0 to 15. As with the unindexed form, the bit operator may be used in
+conjunction with indexing.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+bank
+</p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The bank of axes to access, range 0 to 15 (default 0).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Value:</h2>
+<p>
+A sum of the bit values representing each axis that is in
+error.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td width="382" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="382" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 in bank 0; 64 in bank 1; 128 in bank 3; ...
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="382" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 in bank 0; 65 in bank 1; 129 in bank 3; ...
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="382" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 in bank 0; 66 in bank 1; 130 in bank 3; ...
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="382" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3 in bank 0; 67 in bank 1; 131 in bank 3; ...
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+…
+</p>
+
+  
+</td>
+<td width="382" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+63
+</p>
+
+  
+</td>
+<td width="382" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+63 in bank 0; 127 in bank 1; 191 in bank 3; ...
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example: </h2>
+<h3>Example 1:</h3>
+<p>
+Axes 0, 1 and 3 have an error and the error on axis 3 occurred
+first.
+</p>
+<p class="codeexample">
+&gt;&gt;?MOTION_ERROR
+<br>
+
+11
+<br>
+
+&gt;&gt;?ERROR_AXIS
+<br>
+
+3
+</p>
+<h3>Example 2:</h3>
+<p>
+When motion error occurs, this program routine checks the
+axis status for each axis in error and prints a message to terminal 5.
+</p>
+<p class="codeexample">
+IF MOTION_ERROR &lt;&gt; 0 THEN
+</p>
+<p class="codeexample">
+  FOR a = 0 to 23
+</p>
+<p class="codeexample">
+    IF MOTION_ERROR.a = 1 THEN
+<br>
+
+      IF AXISSTATUS AXIS(a).2 = 1 THEN
+</p>
+<p class="codeexample">
+        PRINT #5, &quot;Communication error on axis &quot;;
+a[0]
+</p>
+<p class="codeexample">
+      IF AXISSTATUS AXIS(a).3 = 1 THEN
+</p>
+<p class="codeexample">
+        PRINT #5, &quot;Remote drive error on axis &quot;;
+a[0]
+</p>
+<p class="codeexample">
+      IF AXISSTATUS AXIS(a).8 = 1 THEN
+</p>
+<p class="codeexample">
+        PRINT #5, &quot;FE exceeded FE_LIMIT on axis &quot;;
+a[0]
+<br>
+
+      ENDIF
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+  NEXT a
+<br>
+
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Display the motion error state of axis 70 on the command
+like
+</p>
+<p class="codeexample">
+PRINT MOTION_ERROR(1).6
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+, 
+<a href="ERROR_AXIS.html">ERROR_AXIS</a>
+<span class="MsoHyperlink">,</span> <a href="MOTION_ERROR_COUNT.html">MOTION_ERROR_COUNT</a>
+</p>
+</body>
+</html>

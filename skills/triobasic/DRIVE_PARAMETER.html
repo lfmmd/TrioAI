@@ -1,0 +1,56 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_PARAMETER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_PARAMETER">
+</head>
+<body>
+<h1>DRIVE_PARAMETER </h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+DRIVE_PARAMETER AXIS(n) = value
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+value = DRIVE_PARAMETER AXIS(n)
+</p>
+<h2>Description:</h2>
+<p>
+<img width="532" height="165" src="DRIVE_PARAMETER_files/image001.png">
+<br clear="ALL">
+
+This parameter is a general name that is used to allow access to some named
+objects via the EtherCAT PDO.  DRIVE_PARAMETER may be mapped to either TxPDO or
+RxPDO objects by using the EC_EXTEND EtherCAT Extension file.
+</p>
+<p class="MsoCaption">
+EC_EXTEND RxPDO containing TARGET_MAX_CURRENT
+</p>
+<p>
+<img width="473" height="165" src="DRIVE_PARAMETER_files/image002.png">
+<br clear="ALL">
+
+The parameter in the PDO shown here will be mapped to DRIVE_PARAMETER.
+</p>
+<p class="MsoCaption">
+EC_EXTEND SDO initialisation list. (Pre-Op -&gt; Safe-Op)
+</p>
+<p>
+The TARGET_MAX_CURRENT, being the 3
+<sup>rd</sup> object in
+the PDO, will be mapped to drive object 0x6073, sub-index 0x00 as shown.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ETHERCAT.html">ETHERCAT</a>
+</p>
+</body>
+</html>

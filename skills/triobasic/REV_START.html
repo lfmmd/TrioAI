@@ -1,0 +1,252 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REV_START</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REV_START">
+</head>
+<body>
+<h1>REV_START</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Force an immediate forward jog motion.   When 
+<a href="REV_JOG.html">REV_JOG</a>
+ is -1 and REV_START is set to 1, the axis will
+run the 
+<a href="MTYPE.html">MTYPE</a>
+ 15 reverse_jog in the axis.  If REV_JOG
+is set to an input number, (not equal to -1) then FWD_START has no function.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+REV_START
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+REV_JOG
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MTYPE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 (Idle)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+15 (reverse_jog)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Not Equ 1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 (Idle)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Not Equ -1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 (Idle) *
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+*
+ Under control of the
+designated input
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+FWD_JOG = -1
+</p>
+<p class="codeexample">
+REV_JOG = -1
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+IF IDLE THEN
+</p>
+<p class="codeexample">
+  REPEAT
+</p>
+<p class="codeexample">
+    SELECT_CASE VR(10)
+</p>
+<p class="codeexample">
+    CASE 0
+</p>
+<p class="codeexample">
+      FWD_START = 0
+</p>
+<p class="codeexample">
+      REV_START = 0
+</p>
+<p class="codeexample">
+    CASE 1
+</p>
+<p class="codeexample">
+      FWD_START = 1
+</p>
+<p class="codeexample">
+      REV_START = 0
+</p>
+<p class="codeexample">
+    CASE 2
+<br>
+
+      FWD_START = 0
+</p>
+<p class="codeexample">
+      REV_START = 1
+</p>
+<p class="codeexample">
+    END_CASE
+</p>
+<p class="codeexample">
+  UNTIL VR(10) = 99
+<br>
+
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

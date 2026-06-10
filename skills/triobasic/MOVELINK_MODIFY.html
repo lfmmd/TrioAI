@@ -1,0 +1,172 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVELINK_MODIFY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVELINK_MODIFY">
+</head>
+<body>
+<h1>MOVELINK_MODIFY</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVELINK_MODIFY = position-offset
+</p>
+<h2>Description:</h2>
+<p>
+MOVELINK_MODIFY allows MOVELINK motion commands to be
+modified whilst they are running by applying the specified positional offset. A
+typical example of using MOVELINK_MODIFY is for stopping product relative to a
+registration mark when using MOVELINK commands which link motion to a conveyor.
+</p>
+<p class="note">
+The MOVELINK_MODIFY adjustment will only be applied if the
+MOVELINK has NOT already started decelerating and if there is sufficient time
+to make the adjustment without specified deceleration having to be faster than
+specified.
+</p>
+<p class="note">
+If MOVELINK_MODIFY cannot be applied for the reasons specified,
+the parameter will remain at the requested adjustment value.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position-offset:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Relative positional offset for the current MOVELINK to
+  complete at.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+The following Trio BASIC statements show an example usage of
+MOVELINK_MODIFY. The target end position for the axis is adjusted up or down by
+the positional offset specified in the MOVELINK_MODIFY axis parameter.
+</p>
+<p class="codeexample">
+MOVELINK_MODIFY = 0 'Ensure any earlier adjustments are
+cleared
+</p>
+<p class="codeexample">
+DEFPOS(0, 0) 'Makes the adjustment easier to understand
+</p>
+<p class="codeexample">
+MOVELINK(18000, 10000, 1000, 1000, 1, 16)
+</p>
+<p class="codeexample">
+TRIGGER
+</p>
+<p class="codeexample">
+WAIT LOADED
+</p>
+<p class="codeexample">
+PRINT ENDMOVE 'Prints 18000
+</p>
+<p class="codeexample">
+WAIT UNTIL MPOS AXIS(1) &gt; 2000 'Wait for some condition
+</p>
+<p class="codeexample">
+MOVELINK_MODIFY = -7000 'Reduce the target by 7000
+</p>
+<p class="codeexample">
+WAIT UNTIL MOVELINK_MODIFY = 0 'Wait until offset applied
+</p>
+<p class="codeexample">
+PRINT ENDMOVE 'Prints 11000
+</p>
+<h3>Example 2:</h3>
+<p>
+MOVELINK is sometimes used to simply achieve a delay by a
+distance. In this case the length of the MOVELINK is zero. In this special case
+only the Motion Coordinator will modify the LINK AXIS distance by the
+MOVELINK_MODIFY distance:
+</p>
+<p class="codeexample">
+MOVELINK_MODIFY = 0 'Ensure any earlier adjustments are
+cleared
+<br>
+
+DEFPOS(0, 0) 'Makes the adjustment easier to understand
+<br>
+
+MOVELINK(0, 5000, 0, 0, 1) 'Delay for 5000 on axis 1
+<br>
+
+WAIT UNTIL MPOS AXIS(1) &gt; 1000
+<br>
+
+
+<br>
+
+MOVELINK_MODIFY = -1500
+<br>
+
+WAIT UNTIL MOVELINK_MODIFY = 0
+<br>
+
+WAIT IDLE
+<br>
+
+PRINT MPOS AXIS(1) 'Prints 3500 approximately
+</p>
+<h3>Example 3:</h3>
+<p>
+MOVELINK_MODIFY can be used with registration to “park” a
+motion axis whilst remaining synchronised. This program “parks” the axis at a
+position 5000 pulses after the registration position, whilst remaining in sync:
+</p>
+<p class="codeexample">
+MOVELINK_MODIFY = 0
+<br>
+
+REGIST(3)
+<br>
+
+MOVELINK(19000, 20000, 1000, 1000, 1, 16)
+<br>
+
+WAIT LOADED
+<br>
+
+WAIT UNTIL MARK OR IDLE
+<br>
+
+IF MARK THEN
+<br>
+
+    MOVELINK_MODIFY = REG_POS + 5000 – ENDMOVE
+<br>
+
+ENDIF
+</p>
+<h2>See also:</h2>
+<p>
+<a href="MOVELINK.html">MOVELINK</a>
+</p>
+</body>
+</html>

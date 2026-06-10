@@ -1,0 +1,190 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>RUN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="RUN">
+</head>
+<body>
+<h1>RUN</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+RUN [&quot;program&quot;[, process]]
+</p>
+<h2>Description:</h2>
+<p>
+Runs a named program on the controller. Programs can be RUN
+from another program. 
+</p>
+<p class="tip">
+A program can be run multiple times in different processes. You
+can use 
+<a href="PROCNUMBER.html">PROCNUMBER</a>
+ to help assign values in the
+program. 
+</p>
+<p class="note">
+Programs will continue to execute until there are no more lines
+to execute, a 
+<a href="HALT.html">HALT</a>
+ is typed in the command line, a 
+<a href="STOP.html">STOP</a>
+ is issued or there is a run time error.
+</p>
+<p>
+When a program is RUN there is a short delay while the
+program’s data area is initialised. Running a program is therefore always
+slower than calling a subroutine by 
+<a href="GOSUB.html">GOSUB</a>
+ or calling a
+
+<a href="FUNCTION.html">FUNCTION</a>
+.
+</p>
+<p>
+This delay is more pronounced when using GLOBAL.
+</p>
+<p class="warning">
+Whenever a program is RUN, the GLOBAL and CONSTANT tables are
+searched for the names of already defined variables. If many GLOBAL/CONSTANT
+names are pre-defined, this may cause a delay in starting the program.
+</p>
+<p class="note">
+From V2.0298 onwards, when an IEC program is running, the
+multi-tasking is flat with no fast processes. Use SCHEDULE_TYPE.8 = 1 in
+MC_CONFIG to enable fast processes with IEC 61131-3.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+program:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of program to be run. If not present the 
+<a href="SELECT.html">SELECT</a>
+ed program is run
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+process:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional process number. (default highest available)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+From the MAIN program, run the STARTUP program on process 2
+and wait for its completion:
+</p>
+<p class="codeexample">
+RUN &quot;STARTUP&quot;, 2
+</p>
+<p class="codeexample">
+WA(50)  'wait for program to start
+</p>
+<p class="codeexample">
+WAIT UNTIL PROC_STATUS PROC(2) = 0   'wait for program to
+complete
+</p>
+<p class="codeexample">
+WDOG = ON
+</p>
+<h3>Example 2:</h3>
+<p>
+After STARTUP has completed the MAIN program will start
+other programs running in the highest available processes. 
+</p>
+<p class="codeexample">
+RUN &quot;IO_CONTROL&quot;
+</p>
+<p class="codeexample">
+RUN &quot;HMI&quot;
+</p>
+<p class="codeexample">
+RUN &quot;SAUSAGE_CHOPPER&quot;
+</p>
+<h3>Example 3:</h3>
+<p>
+<a href="SELECT.html">SELECT</a>
+ the program STARTUP and run
+it on the command line.
+</p>
+<p class="codeexample">
+&gt;&gt;SELECT &quot;STARTUP&quot;
+</p>
+<p class="codeexample">
+STARTUP selected
+</p>
+<p class="codeexample">
+&gt;&gt;RUN%[Process 21:Program STARTUP] - Running
+</p>
+<p class="codeexample">
+&gt;&gt;%[Process 21:Line 238] (31) - Program is stopped
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="HALT.html">HALT</a>
+,
+<span class="MsoHyperlink"> </span><a href="PROCNUMBER.html">PROCNUMBER</a>
+,
+
+<a href="RUN_ERROR.html">RUN_ERROR</a>
+, 
+<a href="SELECT.html">SELECT</a>
+, 
+<a href="SETLINE.html">SETLINE</a>
+, 
+<a href="SCHEDULE_TYPE.html">SCHEDULE_TYPE</a>
+,
+
+<a href="STEPINTO.html">STEPINTO</a>
+, 
+<a href="STEPLINE.html">STEPLINE</a>
+, 
+<a href="STOP.html">STOP</a>
+</p>
+</body>
+</html>

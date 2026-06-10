@@ -1,0 +1,169 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VIEW</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VIEW">
+</head>
+<body>
+<h1>VIEW</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax</h2>
+<p class="codeexample">
+VIEW &quot;program_name&quot;
+</p>
+<h2>Description:</h2>
+<p>
+Display source and object code data to the terminal.  Optional
+string parameter can be used to view a specific program otherwise the currently
+selected program will be used, eg VIEW &quot;STARTUP&quot;.
+</p>
+<p class="note">
+The VIEW command will not show the memory contents if the
+controller is 
+<a href="LOCK.html">LOCK</a>
+ed or the project programs are
+Encrypted.
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+&gt;&gt;VIEW &quot;D2&quot;
+</p>
+<p class="codeexample">
+Source Code : from 1048576 to 1048906
+</p>
+<p class="codeexample">
+1048576 : 00 19 00 79 2C 1D 73 74 6F 72 65 30 00 2C 87 2C
+84 16 1C 35 30 30 00 17 01 
+</p>
+<p class="codeexample">
+1048601 : 19 04 00 01 
+</p>
+<p class="codeexample">
+1048605 : 04 10 00 78 16 1C 31 00 17 2C 0C 2C 1C 31 00 01 
+</p>
+<p class="codeexample">
+1048621 : 10 04 00 01 
+</p>
+<p class="codeexample">
+1048625 : 04 08 00 A9 2C 25 03 01 
+</p>
+<p class="codeexample">
+1048633 : 08 14 04 A7 2C A5 2C 78 16 1C 30 00 17 2C 0C 2C
+1C 31 00 01 
+</p>
+<p class="codeexample">
+1048653 : 14 10 04 78 16 1C 31 00 17 2C 0C 2C 1C 30 00 01 
+</p>
+<p class="codeexample">
+1048669 : 10 04 00 01 
+</p>
+<p class="codeexample">
+1048673 : 04 17 04 1D 73 74 6F 72 65 5F 69 6E 64 65 78 00
+2C 0C 2C 1C 30 00 01 
+</p>
+<p class="codeexample">
+1048696 : 17 1E 04 91 2C 1D 69 6E 64 65 78 00 2C 0C 2C 1C
+30 00 2C A2 2C 1C 35 30 30 30 30 30 00 01 
+</p>
+<p class="codeexample">
+1048726 : 1E 28 06 1D 73 74 6F 72 65 30 00 16 1D 73 74 6F
+72 65 5F 69 6E 64 65 78 00 17 2C 0C 2C 74 16 1D 69 6E 64 65 78
+</p>
+<p class="codeexample">
+ 00 17 01 
+</p>
+<p class="codeexample">
+1048766 : 28 27 06 1D 73 74 6F 72 65 5F 69 6E 64 65 78 00
+2C 0C 2C 1D 73 74 6F 72 65 5F 69 6E 64 65 78 00 2C 06 2C 1C 31
+</p>
+<p class="codeexample">
+ 00 01 
+</p>
+<p class="codeexample">
+1048805 : 27 1D 06 95 2C 1D 73 74 6F 72 65 5F 69 6E 64 65
+78 00 2C 0D 2C 1C 34 39 39 00 2C A1 01 
+</p>
+<p class="codeexample">
+1048834 : 1D 17 08 1D 73 74 6F 72 65 5F 69 6E 64 65 78 00
+2C 0C 2C 1C 30 00 01 
+</p>
+<p class="codeexample">
+1048857 : 17 05 06 8D 01 
+</p>
+<p class="codeexample">
+1048862 : 05 0D 04 97 2C 1D 69 6E 64 65 78 00 01 
+</p>
+<p class="codeexample">
+1048875 : 0D 04 00 01 
+</p>
+<p class="codeexample">
+1048879 : 04 10 04 78 16 1C 31 00 17 2C 0C 2C 1C 31 00 01 
+</p>
+<p class="codeexample">
+1048895 : 10 05 00 A8 01 
+</p>
+<p class="codeexample">
+1048900 : 05 04 00 01 
+</p>
+<p class="codeexample">
+1048904 : 04 00 00 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+Object Code : from 876 to 1099
+</p>
+<p class="codeexample">
+876 : 03 00 00 0B 00 78 16 1B 01 15 17 26 1B 01 15 01 
+</p>
+<p class="codeexample">
+892 : 05 00 00 09 00 A9 DF 00 00 00 1B FF 15 01 
+</p>
+<p class="codeexample">
+906 : 06 00 00 10 00 A5 23 00 00 00 78 16 1B 00 15 17 1B
+01 0C 15 01 
+</p>
+<p class="codeexample">
+927 : 07 00 00 0B 00 78 16 1B 01 15 17 26 1B 00 15 01 
+</p>
+<p class="codeexample">
+943 : 09 00 00 08 00 1E 01 00 26 1B 00 15 01 
+</p>
+<p class="codeexample">
+956 : 0A 00 00 15 00 91 00 1E 02 00 26 1B 00 15 A2 1C 20
+A1 07 00 00 00 00 00 15 01 
+</p>
+<p class="codeexample">
+982 : 0B 00 00 14 00 1D 00 00 01 1E 01 00 15 26 01 00 74
+16 1E 02 00 15 17 15 01 
+</p>
+<p class="codeexample">
+1007 : 0C 00 00 0C 00 1E 01 00 26 1E 01 00 1B 01 06 15 01 
+</p>
+<p class="codeexample">
+1024 : 0D 00 00 14 00 95 BF 00 00 00 1E 01 00 1C F3 01 00
+00 00 00 00 00 0D 15 01 
+</p>
+<p class="codeexample">
+1049 : 0E 00 00 08 00 1E 01 00 26 1B 00 15 01 
+</p>
+<p class="codeexample">
+1062 : 10 00 00 06 00 97 00 1E 02 00 01 
+</p>
+<p class="codeexample">
+1073 : 12 00 00 0B 00 78 16 1B 01 15 17 26 1B 01 15 01 
+</p>
+<p class="codeexample">
+1089 : 13 00 00 06 00 A8 15 00 00 00 01 
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+</body>
+</html>

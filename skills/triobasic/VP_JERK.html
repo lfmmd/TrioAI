@@ -1,0 +1,41 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VP_JERK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VP_JERK">
+</head>
+<body>
+<h1>VP_JERK</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the instantaneous jerk that the velocity profiler is
+running at, which varies as moves are being profiled. The jerk is the rate at
+which acceleration is increased or decreased.
+</p>
+<h2>Value:</h2>
+<p>
+The velocity profile jerk in user 
+<a href="UNITS.html">UNITS</a>
+/second/second/second.
+</p>
+<h2>Example:</h2>
+<p>
+Wait until the axis achieves constant acceleration:
+</p>
+<p class="codeexample">
+MOVE(100)
+</p>
+<p class="codeexample">
+WAIT UNTIL VP_JERK &lt;&gt; 0
+</p>
+<p class="codeexample">
+WAIT UNTIL VP_JERK = 0
+</p>
+</body>
+</html>

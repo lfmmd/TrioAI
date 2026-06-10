@@ -1,0 +1,118 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NODE_SYNC_OFFSET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NODE_SYNC_OFFSET">
+</head>
+<body>
+<h1>NODE_SYNC_OFFSET</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+NODE_SYNC_OFFSET(slot, node_address) = offset_value
+</p>
+<h2>Description:</h2>
+<p>
+This 2D array can be used to set the EtherCAT Sync0 offset
+time for any node on the network. This can be used to define a specific offset
+that applies to the defined node, leaving all other nodes at the default Sync0
+offset value.  The default Sync0 offset may also be defined using ETHERCAT
+function $91.
+</p>
+<p>
+The array is 2-dimensional, the first dimension is the
+master slot identifier, the second dimension is the position of the node within
+the master network.
+</p>
+<h2>Value:</h2>
+<p>
+Offset value in nanoseconds. This is a
+signed value and is the offset from the system value set by ETHERCAT function
+$91 or from the default system value of -70000 ns (nanoseconds).
+</p>
+<p class="note">
+ETHERCAT function $91 is scaled in microseconds
+(
+&#956;
+s).
+</p>
+<p class="note">
+The default Sync0 offset is -70000 ns in V2.0287
+and below. It is 0 ns in V2.0288 and higher.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A Linmot C1250 drive requires a specific
+Sync0 offset of 200 
+&#956;
+s.
+There are other drives on the same EtherCAT network that do not require this
+offset. The Linmot drives are at nodes 2, 3, 4 and 5.  The default sync0 start
+value of 1000000 
+&#956;
+s is
+used, so the system Sync0 offset is 0 ns.
+</p>
+<p class="tip">
+The default Sync0 offset can be checked with
+ETHERCAT($92) in MPv4 terminal #0
+</p>
+<p>
+In MC_CONFIG
+</p>
+<p class="codeexample">
+NODE_SYNC_OFFSET(0, 2) = 200000
+</p>
+<p class="codeexample">
+NODE_SYNC_OFFSET(0, 3) = 200000
+</p>
+<p class="codeexample">
+NODE_SYNC_OFFSET(0, 4) = 200000
+</p>
+<p class="codeexample">
+NODE_SYNC_OFFSET(0, 5) = 200000
+</p>
+<h3>Example 2:</h3>
+<p>
+A network contains 3 x Kollmorgen AKD
+drives and one ABB Microflex e150 at node 3. The ABB drive requires the Sync0
+offset to be -70 
+&#956;
+s. The
+Kollmorgen drives do not need this offset. The default sync0 start value is
+used, so the system Sync0 offset is 0 ns.
+</p>
+<p class="tip">
+The default Sync0 offset can be checked with
+ETHERCAT($92) in MPv4 terminal #0
+</p>
+<p>
+In MC_CONFIG
+</p>
+<p class="codeexample">
+NODE_SYNC_OFFSET(0, 0) = 0
+</p>
+<p class="codeexample">
+NODE_SYNC_OFFSET(0, 1) = 0
+</p>
+<p class="codeexample">
+NODE_SYNC_OFFSET(0, 2) = 0
+</p>
+<p class="codeexample">
+NODE_SYNC_OFFSET(0, 3) = -70000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ETHERCAT.html">ETHERCAT</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,178 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INSTR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INSTR">
+</head>
+<body>
+<h1>INSTR</h1>
+<h2>Type:</h2>
+<p class="Category">
+String Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = INSTR([offset-index, ]string, search-string[, wildcard-char])
+</p>
+<h2>Description:</h2>
+<p>
+Searches the input string looking for the search string and
+returns the (zero based) index of the first occurrence of the string or -1 if
+the string is not found.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Offset index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional integer offset to start searching at
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+string:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+String to be searched
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Search string:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+String to search for
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Wildcard char:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional wildcard character to use within the search
+  string expressed as a single character string or as a numerical ASCII value
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example:</h3>
+<p>
+Pre-define a variable of type string and search it for
+various sub-strings:
+</p>
+<p class="codeexample">
+DIM str1 AS STRING(32)
+</p>
+<p class="codeexample">
+str1 = &quot;TRIO MOTION TECHNOLOGY&quot;
+</p>
+<p class="codeexample">
+PRINT INSTR(str1, &quot;MOTION&quot;) 'value = 5
+</p>
+<p class="codeexample">
+PRINT INSTR(6, str1, &quot;MOTION&quot;) 'value = -1
+</p>
+<p class="codeexample">
+PRINT INSTR(&quot;Value = 123.45E10&quot;, &quot;###.##E##&quot;,
+&quot;#&quot;) 'Value = 8
+</p>
+<p class="codeexample">
+PRINT INSTR(&quot;this is my string&quot;, &quot;is *y&quot;,
+42) 'Value = 5
+</p>
+<p class="codeexample">
+PRINT INSTR(3, str1, &quot;IO&quot;) 'Value = 8
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CHR.html">CHR</a>
+, 
+<a href="STR.html">STR</a>
+, 
+<a href="VAL.html">VAL</a>
+, 
+<a href="LEFT.html">LEFT,</a>
+<a href="RIGHT.html">RIGHT</a>
+,
+
+<a href="MID.html">MID</a>
+, 
+<a href="LEN.html">LEN</a>
+, 
+<a href="LCASE.html">LCASE</a>
+,
+
+<a href="UCASE.html">UCASE</a>
+</p>
+<span class="MsoHyperlink"><span style='font-family:"Calibri",sans-serif'><br clear="all">
+
+</span></span><p>
+&nbsp;
+</p>
+
+
+
+</body>
+</html>

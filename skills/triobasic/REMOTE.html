@@ -1,0 +1,97 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REMOTE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REMOTE">
+</head>
+<body>
+<h1>REMOTE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+REMOTE(slot) 
+</p>
+<h2>Description:</h2>
+<p>
+Starts up the REMOTE_PROGRAM communication protocol as a
+program which communicates with PCMotion ActiveX. The REMOTE program will take
+up a user process if it is run automatically or manually. It is recommended
+that REMOTE should run on a high priority process, 
+<a href="REMOTE_PROC.html">REMOTE_PROC</a>
+
+can be set to define which process the REMOTE_PROGRAM runs on. 
+</p>
+<p class="tip">
+The REMOTE program is normally started automatically when you open
+a PCMotion connection. You can call it manually if you wish to control the
+starting of the process manually. 
+</p>
+<p class="warning">
+If you execute REMOTE manually the program it runs in will
+suspend at the REMOTE line. The REMOTE therefore should be the last line of the
+program to execute.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+A program that will start the REMOTE program on process 20
+if the project wants to run in debug mode. 
+</p>
+<p class="fixed">
+  WHILE(1)
+</p>
+<p class="fixed">
+    IF VR(debug)=TRUE THEN
+</p>
+<p class="fixed">
+      REMOTE(0)
+</p>
+<p class="fixed">
+    ELSE
+</p>
+<p class="fixed">
+      WA(100)
+</p>
+<p class="fixed">
+    ENDIF
+</p>
+<p class="fixed">
+  WEND
+</p>
+<h2>See also:</h2>
+<p>
+<a href="REMOTE_PROC.html">REMOTE_PROC</a>
+</p>
+</body>
+</html>

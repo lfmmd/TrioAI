@@ -1,0 +1,94 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FASTJERK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FASTJERK">
+</head>
+<body>
+<h1>FASTJERK</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+The FASTJERK axis parameter may be used to set or read the
+fast jerk rate of each axis fitted.
+</p>
+<p>
+The fast deceleration and fast jerk rates are used when motion
+is cancelled, either via the 
+<a href="CANCEL.html">CANCEL</a>
+ or 
+<a href="RAPIDSTOP.html">RAPIDSTOP</a>
+ commands, or from a software or hardware
+limit.
+</p>
+<p>
+FASTJERK is applied only when using 
+<a href="VP_MODE.html">VP_MODE</a>
+
+5 or 6.
+</p>
+<p class="note">
+FASTJERK must be greater than JERK, otherwise JERK will be used. 
+</p>
+<p class="note">
+As of firmware version 2.0342, the SRAMP keyword may be used
+instead of FASTJERK, but if SRAMP is assigned a value (even 0), then any
+assignment to FASTJERK will be ignored. When SRAMP is used, the FASTJERK is
+calculated from FASTDEC / SRAMP.
+</p>
+<p class="warning">
+Using SRAMP with VP_MODE&nbsp;=&nbsp;6 is intended solely to
+aid portability for existing applications, and it is strongly recommended that
+new applications use JERK and FASTJERK.
+</p>
+<h2>Value:</h2>
+<p class="tablecontent">
+The deceleration rate in 
+<a href="UNITS.html">UNITS</a>
+/sec/sec/sec
+and must be a positive value, or zero to not be used.
+</p>
+<h2>Example: </h2>
+<p class="codeexample">
+DECEL = 100            'Set normal deceleration rate
+</p>
+<p class="codeexample">
+JERK = 200             'Set normal jerk rate
+</p>
+<p class="codeexample">
+FASTDEC = 1000         'Set fast deceleration rate
+</p>
+<p class="codeexample">
+FASTJERK = 2000        'Set fast jerk rate
+</p>
+<p class="codeexample">
+MOVEABS(10000)         'Start a move
+</p>
+<p class="codeexample">
+WAIT UNTIL MPOS = 5000 'Wait until the move is halfway
+through
+</p>
+<p class="codeexample">
+CANCEL                 'Cancel the move (will use fast
+rates)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CANCEL.html">CANCEL</a>
+, 
+<a href="DECEL.html">DECEL</a>
+,
+
+<a href="FASTDEC.html">FASTDEC</a>
+, 
+<a href="JERK.html">JERK</a>
+, 
+<a href="RAPIDSTOP.html">RAPIDSTOP</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>EXIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="EXIT">
+</head>
+<body>
+<h1><a name="_Toc317749338"></a>
+<a name="O_1462"></a>
+EXIT</h1>
+<p class="Category">
+Statement
+</p>
+<p>
+Exit from a loop statement.
+</p>
+<h2>Remarks</h2>
+<p>
+The EXIT statement indicates that the current loop (WHILE,
+REPEAT or FOR) must be finished. The execution continues after the END_WHILE,
+END_REPEAT or END_FOR keyword or the loop where the EXIT is. EXIT quits only
+one loop and cannot be used to exit at the same time several levels of nested
+loops.
+</p>
+<p class="note">
+Loop instructions may lead to infinite loops that block the
+target cycle.
+</p>
+<h2>ST Language</h2>
+<p>
+This program searches for the first non null item of an
+array:
+</p>
+<p class="codeexample">
+iFound = -1; (* means: not found *)
+<br>
+
+FOR iPos := 0 TO (iArrayDim - 1) DO
+<br>
+
+&nbsp;&nbsp; IF iPos &lt;&gt; 0 THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iFound := iPos;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EXIT;
+<br>
+
+&nbsp;&nbsp; END_IF;
+<br>
+
+END_FOR;
+</p>
+<h2>FBD Language</h2>
+<p>
+Not available.
+</p>
+<h2>LD Language</h2>
+<p>
+Not available.
+</p>
+<h2>See also</h2>
+<p>
+<a href="Bas-IF.html">IF</a>
+</p>
+<p>
+<a href="Bas-WHILE.html">WHILE</a>
+</p>
+<p>
+<a href="Bas-REPEAT.html">REPEAT</a>
+</p>
+<p>
+<a href="Bas-FOR.html">FOR</a>
+</p>
+<p>
+<a href="Bas-CASE.html">CASE</a>
+</p>
+<h2>&nbsp;</h2>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

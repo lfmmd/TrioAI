@@ -1,0 +1,95 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PROGRAM_NAME</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PROGRAM_NAME">
+</head>
+<body>
+<h1>PROGRAM_NAME</h1>
+<h2>Type:</h2>
+<p class="Category">
+Process Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the name of the process being executed as a string
+value.
+</p>
+<p class="note">
+This command can be used in conjunction with 
+<a href="PROC.html">PROC</a>
+
+and 
+<a href="PROCNUMBER.html">PROCNUMBER</a>
+. See examples below.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Using a Basic Library function, print the running program
+name.
+</p>
+<p>
+<b><u>Basic Library file (LIB.BAL):</u></b></p>
+<p class="codeexample">
+FUNCTION printprogname(process_number AS INTEGER) AS
+STRING
+<br>
+
+&nbsp;&nbsp;DIM progname AS STRING(20)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+&nbsp;&nbsp;progname = PROGRAM_NAME PROC(process_number)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+&nbsp;&nbsp;RETURN progname
+<br>
+
+ENDFUNC
+</p>
+<p>
+<b><u>Demo program (DEMO_PROG.BAS):</u></b></p>
+<p class="codeexample">
+PRINT &quot;Running: &quot; + printprogname(PROCNUMBER)
+</p>
+<p>
+<b><u>Result on Terminal 0:</u></b></p>
+<p>
+<img border="0" width="140" height="71" id="Picture 3" src="PROGRAM_NAME_files/image001.png">
+</p>
+<h3>Example 2:</h3>
+<p>
+In Terminal 0, print the name of the program running on
+process number 18.
+</p>
+<p class="codeexample">
+&gt;&gt;?PROGRAM_NAME PROC(18)
+</p>
+<p class="codeexample">
+DEMO_PROG
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="PROC.html">PROC</a>
+, 
+<a href="PROC_LINE.html">PROC_LINE</a>
+,
+
+<a href="PROCNUMBER.html">PROCNUMBER</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="note">
+&nbsp;
+</p>
+</body>
+</html>

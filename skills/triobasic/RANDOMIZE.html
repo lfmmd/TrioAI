@@ -1,0 +1,146 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>RANDOMIZE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="RANDOMIZE">
+</head>
+
+
+
+<body>
+<h1>RANDOMIZE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Process Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+RANDOMIZE
+</p>
+<p class="fixed">
+RANDOMIZE(seed)
+</p>
+<h2>Description:</h2>
+<p>
+This command initialises the pseudo-random number generator
+for the process it is issued within (so issuing this command in one process
+will not influence the pseudo-random sequence generated in another process).
+</p>
+<p>
+Without parameters, the pseudo-random number generator is
+primed with a seed that is generated from the constantly varying internal
+system state.
+</p>
+<p>
+With a parameter, the pseudo-random number generator is
+primed with the seed specified.
+</p>
+<p class="tip">
+Note that use of this command is not normally required, as each
+time a program is executed, it implicitly calls RANDOMIZE with no parameters to
+ensure that the sequence is generated from an unknown starting point. However,
+if you require a known series of pseudo-random values, for example when
+debugging or testing, then you can use this command with a parameter, usually
+zero, before you call RND or RNDF.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+seed:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The integer value that the pseudo-random number generator
+  will use to as the base from which to generate values from
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print some random numbers on the command line with and
+without RANDOMIZE
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND, RND, RND
+</p>
+<p class="codeexample">
+3337245933&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;325304933&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1294402698
+</p>
+<p class="codeexample">
+&gt;&gt;RANDOMIZE
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND, RND, RND
+</p>
+<p class="codeexample">
+447495379&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;435546399&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1826854126
+</p>
+<p class="codeexample">
+&gt;&gt;RANDOMIZE(0)
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND, RND, RND
+</p>
+<p class="codeexample">
+2627695341&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1250387728&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1117271038
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND, RND, RND
+</p>
+<p class="codeexample">
+782908658&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3895116732&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3594165340
+</p>
+<p class="codeexample">
+&gt;&gt;RANDOMIZE(0)
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND, RND, RND
+</p>
+<p class="codeexample">
+2627695341&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1250387728&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1117271038
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND, RND, RND
+</p>
+<p class="codeexample">
+782908658&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3895116732&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3594165340
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RND.html">RND</a>
+, 
+<a href="RNDF.html">RNDF</a>
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

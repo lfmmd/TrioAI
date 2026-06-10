@@ -1,0 +1,654 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Move Commands</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Move Commands</h1>
+<p class="MsoNoSpacing">
+RPS has a group of move commands by which is possible to
+move a robot from one position to another in multiple ways.
+</p>
+<p class="MsoNoSpacing">
+It is possible to modify the behaviour of the movement
+according to some parameters. These parameters can be standalone parameters or embedded
+parameters in move commands. 
+</p>
+<p class="MsoNoSpacing">
+As standalone parameters, they override the default values
+and apply to all subsequent move commands, i.e. all moves will be performed
+with the new parameter value. 
+</p>
+<p class="MsoNoSpacing">
+As embedded parameters, they only affect the hosting move
+instruction. If not specified and not overridden by standalone parameters,
+default values will be assigned to these parameters. The order of embedded
+parameters does not affect the move instruction.
+</p>
+<p class="MsoNoSpacing">
+&nbsp;
+</p>
+<table>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p align="center">
+<b><span style='font-family:"Trebuchet MS",sans-serif'>Standalone Parameter</span></b></p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p align="center">
+<b><span style='font-family:"Trebuchet MS",sans-serif'>Equivalent Embedded Parameter</span></b></p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p align="center">
+<b><span style='font-family:"Trebuchet MS",sans-serif'>Parameter Range</span></b></p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+WORLD_POS_SPEED: linear speed mm/s
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+S
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+MOVEL :[0, WORLD_POS_MAX_SPEED]
+<br>
+
+  MOVEC :[0, WORLD_POS_MAX_SPEED]
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+WORLD_ORI_SPEED:
+  joint speed deg/s
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+S
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+MOVEJ  :[0,
+  WORLD_ORI_MAX_SPEED]
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+WORLD_MAX_ACC
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+A
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+Percentage of WORLD_MAX_ACC [1 - 100]
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+WORLD_MAX_DEC
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+D
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+Percentage of
+  WORLD_MAX_ACC [1 – 100]
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+TOOL_OFFSET
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+T
+</p>
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+[0 - 31]
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+OBJECT_FRAME
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+O
+</p>
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+[0 - 31], or name of the Object Frame in “”
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+ROBOT CONFIGURATION
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+C
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+SCARA : {0, 1}. 0 = left-handed; 1 = right-handed
+</p>
+
+  
+<p>
+<br>
+
+  6 Axis Anthropomorphic : {0,1,2,3,4,5,6,7}
+<br>
+
+  Palletizing : {0}
+</p>
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+<p>
+<b>ONLY available for joint moves (MOVEJ, MOVEJREL).</b></p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+PRECISION_ZONE
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+ZF: orientation changes from start until the
+  end of blend curve. 
+</p>
+
+  
+<p>
+ZT: orientation changes along blend curve.
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+[0 - Length of move]
+</p>
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+Interrupt by path percentage
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+IP
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+[0 - 200]
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+Interrupt by input
+  number
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+II
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+Input number depending on the controller.
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+Interrupt by time
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+IT
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+[0, 
+<span style='font-family:"Calibri",sans-serif'><img width="14" height="27" src="RPS_Reference_6_Move_Commands_files/image001.png">
+</span>) mS
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+Routine Output
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+RO
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+Output number depending on the controller
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="180" class="tablegrid">
+
+  
+<p>
+Long Path
+</p>
+
+  
+</td>
+<td width="148" class="tablegrid">
+
+  
+<p>
+LP
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p>
+True or false
+</p>
+
+  
+<p>
+0 or 1
+</p>
+
+  
+</td>
+</tr>
+</table>
+<h2>Speed</h2>
+<p>
+Speed is a default parameter for
+linear and for orientation movements specified by parameter WORLD_POS_SPEED for
+linear speed in mm/s and parameter WORLD_ORI_SPEED in deg/s for joint speed. 
+</p>
+<p>
+Embedded parameter ‘S’ means
+linear speed if it is used in linear move commands, such as MOVEL, MOVEC or
+MOVELREL. It will mean joint speed if it is used in joint move commands, like
+MOVEJ or MOVEJREL.
+</p>
+<h2>Accel</h2>
+<p>
+Acceleration is a default
+parameter in ROBOT_DEFINITIONS file specified by parameter WORLD_POS_MAX_ACC
+for linear axes and parameter WORLD_ORI_MAX_ACC for orientation axes. 
+</p>
+<p>
+Embedded parameter ‘A’ can be set
+as a percentage (%) of the acceleration specified in ROBOT_DEFINITIONS. Valid
+values are between 1 and 100, that is between 1% and 100% of the specified
+acceleration.
+</p>
+<h2>Decel</h2>
+<p>
+Deceleration is a default
+parameter in ROBOT_DEFINITIONS file specified by parameter WORLD_POS_MAX_DEC
+for linear axes and parameter WORLD_ORI_MAX_ACC for orientation axes. 
+</p>
+<p>
+Embedded parameter ‘D’ can be set
+as a percentage % of the deceleration specified in ROBOT_DEFINITIONS. Valid
+values are between 1 and 100, that is between 1% and 100% of the specified
+deceleration.
+</p>
+<h2>Robot Configuration</h2>
+<p class="MsoNoSpacing">
+The robot configuration can only be used in the MOVEJ
+command, which always overrides the current configuration. This means that if a
+MOVEJ command is executed with a different configuration than current configuration,
+subsequent move instructions will also be executed using the new robot
+configuration. This will prevent singularities because consecutive linear moves
+cannot have different robot configurations.
+</p>
+<h2>Interrupts</h2>
+<p>
+An output can be triggered when a certain condition is met.
+This is achieved using Routine Output and Interrupts.
+</p>
+<h3>Routine Output</h3>
+<p>
+The output specified in RO (Routine Output) will be turned
+ON / OFF when any of the conditions specified by IP (Interrupt Percentage), II
+(Interrupt Input) or IT (Interrupt Time) is met. If the output is already in
+the specified status, no further action will be taken when the condition is
+met.
+</p>
+<h3>Interrupt by path percentage</h3>
+<p>
+The specified output (RO) will be turned ON / OFF when the
+robot has traversed a certain percentage of the path specified by IP (Interrupt
+Path).
+</p>
+<p class="codeexample">
+MOVEL GTA(10) IP:=50 RO:=9,ON
+</p>
+<p>
+In this example, output number 9 will be turned ON when the
+robot finishes 50% of the move to GTA 10. 
+</p>
+<p>
+The range of this parameter is from 0 to 200. The interrupt
+can be generated even while the robot is blending two moves. This can be done
+by specifying IP from 100 to 200. 
+</p>
+<p class="codeexample">
+MOVEL GTA(10) Z:=30 IP:=130 RO:=9,ON
+</p>
+<p>
+In this example, the output 9 will be turned ON when the
+robot finishes 30% of the blend curve. 
+</p>
+<p class="tip">
+If there is no blending in a move and an IP &gt; 100 is specified,
+no action will be taken.
+</p>
+<h3>Interrupt by input number</h3>
+<p>
+The specified output (RO) will be turned ON / OFF when the
+input specified in II (Interrupt Input) gives a rising / falling edge.
+</p>
+<p class="codeexample">
+MOVEL GTA(10) II:=3,ON RO:=9,ON
+</p>
+<p>
+In this example, when input 3 gives a rising edge (goes from
+low to high) output 9 will be turned ON while the MOVE is being executed. 
+</p>
+<p class="tip">
+If input 3 turns ON after the move finishes, no action will be
+taken.
+</p>
+<h3>Interrupt by time</h3>
+<p>
+The specified output (RO) will be turned ON / OFF after the
+time specified in IT (Interrupt Time) is reached. 
+</p>
+<p class="codeexample">
+MOVEL GTA(10) IT:=700 RO:=9,ON
+</p>
+<p>
+In this example, output 9 will be turned ON after 700mS
+after the move starts. 
+</p>
+<p class="tip">
+If the move finishes earlier than 700mS, no action will be taken.
+</p>
+<h2>Long Path</h2>
+<p>
+It is possible to force the orientation of the position to
+be interpolated as the longest distance instead of the shortest. By default,
+the shortest is the orientation used, which has the default value of 0.
+</p>
+<h2>Precision zone</h2>
+<p class="MsoNoSpacing">
+Precision zone parameter is the degree of approximation
+of the manipulator’s end effector to a taught point. 
+</p>
+<p class="MsoNoSpacing">
+<img width="670" height="320" id="Canvas 57" src="RPS_Reference_6_Move_Commands_files/image002.png">
+If a point-to-point
+trajectory must pass exactly through every point, then the trajectory must stop
+at each point where the direction of the path changes. Otherwise, there will be
+discontinuities in the velocity profile of the trajectory. This can be avoided
+by allowing the path to deviate slightly from the points, using blending curves
+to smooth the path near the point while changing directions without stopping.
+</p>
+<p class="MsoNoSpacing">
+The system allows this to transition smoothly between any
+two straight lines generated by MOVEL instructions.
+</p>
+<p class="MsoNoSpacing">
+It is not possible to control the transition shape.
+However, a tightness parameter is provided to measure how close the trajectory
+is to the target before blending into the next move (with the next target).
+</p>
+<p class="MsoNoSpacing">
+There are two tightness parameters: ZF and ZT. Both
+specify the tightness of the blend curve in mm. ZF specifies that the change in
+orientation is performed from the start of the straight line until the end of
+the blend curve, whereas ZT specifies that the change in orientation is done
+entirely along the blend curve.
+</p>
+<p class="note">
+KINEMATIC_GROUP requires the 
+<a href="Glossary.html#RPS">RPS</a>
+
+runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+</body>
+</html>

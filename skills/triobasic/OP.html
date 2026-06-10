@@ -1,0 +1,337 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>OP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="OP">
+</head>
+<body>
+<h1>OP</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O Command
+</p>
+<h2>Description:</h2>
+<p>
+Sets output(s) and allows the state of the first 32 outputs
+to be read back. Digital I/O normally refers to the 24&nbsp;V inputs and
+outputs attached to the Motion Coordinator.  I/O points that do not have
+hardware attached can be used as &quot;Virtual&quot; outputs and inputs that
+can be set with OP and read back with IN.
+</p>
+<p>
+There are four modes of operation for the OP command, using up
+to three parameters:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Read Base Block
+</li>
+<li class="indent-list-middle">
+Write Base Block
+</li>
+<li class="indent-list-middle">
+Set Single Output
+</li>
+<li class="indent-list-last">
+Write Block
+</li>
+</ul>
+<h2>Mode = Read Base Block:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = OP
+</p>
+<h3>Description:</h3>
+<p>
+Return the state of the first 32 outputs as a binary
+pattern.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Binary pattern of the first 32 outputs
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Mode = Write Base Block:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+OP(state)
+</p>
+<h3>Description:</h3>
+<p>
+Simultaneously set the first 32 outputs with the binary
+pattern of the state.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+State
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Decimal equivalent of binary number to set on outputs 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Mode = Set Single Output:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+OP(output, state)
+</p>
+<h3>Description:</h3>
+<p>
+Set the state of an individual output
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+output
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Output number to set.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+state
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 or 
+<a href="OFF.html">OFF</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 or 
+<a href="ON.html">ON</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Mode = Write Block:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+OP(start, end, state)
+</p>
+<h3>Description:</h3>
+<p>
+Simultaneously set a defined group of outputs with the
+binary pattern of the state.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First output in the group
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last output in the group
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+state
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Decimal equivalent of binary number to set on the group
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Turn on a single output 44
+</p>
+<p class="codeexample">
+OP(44, 1)
+</p>
+<p>
+This is equivalent to:
+</p>
+<p class="codeexample">
+OP(44, ON)
+</p>
+<h3>Example 2:</h3>
+<p>
+Sets the bit pattern 10010 on the first 5 physical outputs,
+outputs 13-31 will be cleared. Note how the bit pattern is shifted 8 bits to
+set the first available outputs, as 0 to 7 do not exist.
+</p>
+<p class="codeexample">
+OP(18 &lt;&lt; 8)
+</p>
+<h3>Example 3:</h3>
+<p>
+Read the first 32 outputs, clear 0-7 as they are only inputs
+and 16-32. Then set 16-32 leaving 8-15 in their original state.
+</p>
+<p class="codeexample">
+read_output:
+</p>
+<p class="codeexample">
+  VR(0) = OP
+</p>
+<p class="codeexample">
+  'Clear 0-7 and 16-32
+</p>
+<p class="codeexample">
+  VR(0) = VR(0) AND $0000FF00
+</p>
+<p class="codeexample">
+  'Set $1A42 in outputs 16-32,
+</p>
+<p class="codeexample">
+  '8-15 will remain in their original state
+</p>
+<p class="codeexample">
+  VR(0) = VR(0) OR $1A420000
+</p>
+<p class="codeexample">
+  OP(VR(0))
+</p>
+<h3>Example 4</h3>
+<p>
+Simultaneously setting outputs 10 to 13 all on.
+</p>
+<p class="codeexample">
+OP(10, 13, $F)
+</p>
+<h2>See also:</h2>
+<p>
+<a href="IN.html">IN</a>
+<span class="MsoHyperlink">, </span><a href="IOMAP.html">IOMAP</a>
+<span class="MsoHyperlink">, </span><a href="IOSIZE.html">IOSIZE</a>
+<span class="MsoHyperlink">, </span><a href="NOP.html">NOP</a>
+<span class="MsoHyperlink">, </span><a href="READ_OP.html">READ_OP</a>
+</p>
+</body>
+</html>

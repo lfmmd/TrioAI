@@ -1,0 +1,155 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IS_ENCRYPTION_KEY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IS_ENCRYPTION_KEY">
+</head>
+<body>
+<h1>IS_ENCRYPTION_KEY</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = IS_ENCRYPTION_KEY(type)
+</p>
+<h2>Description:</h2>
+<p>
+The System Function, IS_ENCRYPTION_KEY returns either TRUE
+or FALSE to indicate that a USER or OEM key have been set in the controller. 
+The type parameter selects which key type is being requested.
+</p>
+<p class="tip">
+Motion Perfect has tools for managing the Encryption Key.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+type:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the Controller key status
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the OEM key status
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the USER key status
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Get the status of the USER Encryption key.
+</p>
+<p class="codeexample">
+' Is the USER encryption key set?
+</p>
+<p class="codeexample">
+IF IS_ENCRYPTION_KEY(2)=FALSE THEN
+</p>
+<p class="codeexample">
+    PRINT &quot;No USER Encryption Key set in this
+controller&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See also: </h2>
+<p>
+<a href="SET_ENCRYPTION_KEY.html">SET_ENCRYPTION_KEY</a>
+, 
+<a href="PROJECT_KEY.html">PROJECT_KEY</a>
+</p>
+</body>
+</html>

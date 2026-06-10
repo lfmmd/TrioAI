@@ -1,0 +1,660 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVECIRC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVECIRC">
+</head>
+<body>
+<h1>MOVECIRC</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax: </h2>
+<p class="fixed">
+MOVECIRC(end1, end2, centre1, centre2, direction[, ta[, output]])
+</p>
+<h2>Alternate Format</h2>
+<p class="fixed">
+MC()
+</p>
+<h2>Description:</h2>
+<p>
+This command moves two orthogonal axes in such a way as to
+produce a circular arc at the tool point. The length and radius of the arc are
+defined by the five parameters in the command line. The move parameters are
+always relative to the end of the last specified move. This is the start
+position on the circle circumference. Axis 1 is the current 
+<a href="BASE.html">BASE</a>
+
+axis. Axis 2 is the next axis in the 
+<a href="BASE.html">BASE</a>
+ array. The
+first 4 distance parameters are scaled according to the current unit conversion
+factor for the 
+<a href="BASE.html">BASE</a>
+ axis.
+</p>
+<p>
+An enhanced MOVECIRC function, using Transition Curves can
+be enabled by adding the transition angle and, optionally, the output offset
+parameters. This is available in firmware from version 2.0221 onwards.
+</p>
+<p class="tip">
+For the MOVECIRC command to be correctly executed, the two axes
+generating the circular arc must have the same number of encoder pulses/linear
+axis distance. If this is not the case it is possible to adjust the encoder
+scales in many cases by using 
+<a href="ENCODER_RATIO.html">ENCODER_RATIO</a>
+ or
+
+<a href="STEP_RATIO.html">STEP_RATIO</a>
+.
+</p>
+<p class="note">
+If the end point specified is not on the circular arc. The arc
+will end at the angle specified by a line between the centre and the end point.
+</p>
+<p class="note">
+Neither axis may cross the set absolute repeat distance (
+<a href="REP_DIST.html">REP_DIST</a>
+) during a MOVECIRC. Doing so may cause one or
+both axes to jump or for their 
+<a href="FE.html">FE</a>
+ value to exceed 
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end1:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position on 
+<a href="BASE.html">BASE</a>
+ axis to finish
+  at.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end2:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position on next axis in 
+<a href="BASE.html">BASE</a>
+
+  array to finish at.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centre1:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position on 
+<a href="BASE.html">BASE</a>
+ about which to
+  move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centre2:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position on next axis in 
+<a href="BASE.html">BASE</a>
+
+  array about which to move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+direction:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Arc is interpolated in an anti-clockwise direction
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Arc is interpolated in a clockwise direction
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Arc is interpolated using the shortest path to endpoint
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Arc is interpolated using the longest path to endpoint
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ta:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Transition angle (in radians): the angle over which the
+  circle should be transitioned into.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="8" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+output
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Option to output details of the transition curve to TABLE
+  starting at TABLE(0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Revised arc centre X
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Revised arc centre Y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Scale factor from transition curve calculations
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Radius of revised arc
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Transition curve length
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Total length
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Transition angle used (this can be less than requested
+  if arc angle is insufficient)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The direction is:
+</p>
+<p>
+<img border="0" width="283" height="106" id="Picture 4" src="MOVECIRC_files/image001.png" alt="A white square with red lines and a red line&#10;&#10;AI-generated content may be incorrect.">
+</p>
+<p>
+<img border="0" width="157" height="108" id="Picture 2" src="MOVECIRC_files/image002.png" alt="A white circle with red and black circles&#10;&#10;AI-generated content may be incorrect.">
+</p>
+<p>
+Transition curves can be applied where the acceleration
+forces need to be reduced at the point of entry to or exit from a circular arc.
+</p>
+<p>
+The centripetal acceleration due to travelling along an arc
+is given by:
+</p>
+<p>
+a = v
+<sup>2</sup> / r
+</p>
+<p>
+NB: Curvature is 1/radius
+</p>
+<p>
+It can be seen from this equation that a machine moving into
+or out from a circular arc at continuous speed will undergo a step change of
+acceleration that is highly speed dependant.   
+</p>
+<p>
+<img border="0" width="278" height="156" id="Picture 5" src="MOVECIRC_files/image003.png">
+</p>
+<p>
+The diagram above shows the basic idea of transition curves.
+The red spiral section has a gradually changing curvature that smoothens out
+this change of acceleration. The diagram shows a large transition angle but
+even a few degrees of “transition curve” can dramatically reduce machine
+vibration in many cases. 
+</p>
+<p class="note">
+Note that the transition curve facility modifies the position and
+radius of the arc. The acceptability of the modification depends on the
+application.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+The command sequence to plot the letter ‘0’ might be:
+</p>
+<p class="codeexample">
+MOVE(0, 6)                 'Move A -&gt; B
+</p>
+<p class="codeexample">
+MOVECIRC(3, 3, 3, 0, 1)    'Move B -&gt; C
+</p>
+<p class="codeexample">
+MOVE(2, 0)                 'Move C -&gt; D
+</p>
+<p class="codeexample">
+MOVECIRC(3, -3, 0, -3, 1)  'Move D -&gt; E
+</p>
+<p class="codeexample">
+MOVE(0, -6)                'Move E -&gt; F
+</p>
+<p class="codeexample">
+MOVECIRC(-3, -3, -3, 0, 1) 'Move F -&gt; G
+</p>
+<p class="codeexample">
+MOVE(-2, 0)                'Move G -&gt; H
+</p>
+<p class="codeexample">
+MOVECIRC(-3, 3, 0, 3, 1)   'Move H -&gt; A
+</p>
+<p>
+<img border="0" width="106" height="142" id="Picture 3" src="MOVECIRC_files/image004.png">
+</p>
+<h3>Example 2:</h3>
+<p>
+A machine is required to drop chemicals into test tubes. The
+nozzle can move up and down as well as along its rail. The most efficient
+motion is for the nozzle to move in an arc between the test tubes.
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<img border="0" width="486" height="283" id="Picture 1" src="MOVECIRC_files/image005.png">
+</p>
+<p class="codeexample">
+BASE(0, 1)
+</p>
+<p class="codeexample">
+MOVEABS(0, 5)               'Move to position above first
+tube
+</p>
+<p class="codeexample">
+MOVEABS(0, 0)               'Lower for first drop
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+OP(15, ON)                  'Apply dropper
+</p>
+<p class="codeexample">
+WA(20)
+</p>
+<p class="codeexample">
+OP(15, OFF)
+</p>
+<p class="codeexample">
+FOR x = 0 TO 5
+</p>
+<p class="codeexample">
+  MOVECIRC(5, 0, 2.5, 0, 1) 'Arc between the test tubes
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+  OP(15, ON)                'Apply dropper
+</p>
+<p class="codeexample">
+  WA(20)
+</p>
+<p class="codeexample">
+  OP(15, OFF)
+</p>
+<p class="codeexample">
+NEXT x
+</p>
+<p class="codeexample">
+MOVECIRC(5, 5, 5, 0, 1)     'Move to rest position
+</p>
+<h3>Example 3:</h3>
+<p>
+Plot the letter ‘0’ using transition curves to reduce
+acceleration forces on the corners. Of each 45 degree arc, 10 degrees will be
+the transition in and 10 degrees for transition out.
+</p>
+<p class="codeexample">
+ta = 10 * PI / 180 'Set the transition angle to 10 degrees
+</p>
+<p class="codeexample">
+MOVEABS(0, 40)                    'Move A -&gt; B
+</p>
+<p class="codeexample">
+MOVECIRC(30, 30, 30, 0, 1, ta)    'Move B -&gt; C
+</p>
+<p class="codeexample">
+MOVE(20, 0)                       'Move C -&gt; D
+</p>
+<p class="codeexample">
+MOVECIRC(30, -30, 0, -30, 1, ta)  'Move D -&gt; E
+</p>
+<p class="codeexample">
+MOVE(0, -40)                      'Move E -&gt; F
+</p>
+<p class="codeexample">
+MOVECIRC(-30, -30, -30, 0, 1, ta) 'Move F -&gt; G
+</p>
+<p class="codeexample">
+MOVE(-20, 0)                      'Move G -&gt; H
+</p>
+<p class="codeexample">
+MOVECIRC(-30, 30, 0, 30, 1, ta)   'Move H -&gt; A
+</p>
+<p>
+<img border="0" width="106" height="142" id="Picture 6" src="MOVECIRC_files/image006.png">
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+, 
+<a href="MOVECIRCSP.html">MOVECIRCSP</a>
+, 
+<a href="MHELICAL.html">MHELICAL</a>
+, 
+<a href="MHELICALSP.html">MHELICALSP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

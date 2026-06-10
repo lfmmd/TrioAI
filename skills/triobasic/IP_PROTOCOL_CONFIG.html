@@ -1,0 +1,407 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IP_PROTOCOL_CONFIG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IP_PROTOCOL_CONFIG">
+</head>
+<body>
+<h1>IP_PROTOCOL_CONFIG</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG) 
+</p>
+<h2>Description:</h2>
+<p>
+MC464: This Motion Coordinator is limited to 7 communication
+ports on Ethernet, IP_PROTOCOL_CONFIG allows the user to select which ports are
+in use and therefore reduce the load on the communications processor. By default,
+all ports except the transparent protocol text file loader port are enabled. It
+is recommended to use the MC4xx protocol which is enabled by default.  
+</p>
+<p>
+All other Motion Coordinators in the MC4xx, MC5xx and MC6xx
+ranges; this parameter takes a value that is the number of Ethernet packets that
+are read at a time. The default value is 0, which allows the firmware to
+automatically decide the data size that is appropriate to efficient operation.
+</p>
+<h2>Value (MC464 only):</h2>
+<p>
+Up to 7 bits can be selected, the default value is 575
+($23F).
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Motion Perfect (Telnet)
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+PCMotion 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Modbus
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+EthernetIP
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+IEC61131-3 programming
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Uniplay
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Transparent protocol text file loader
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Reserved bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+128
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Reserved bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+256
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+MC4xx protocol text file loader 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+512
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+Do not disable bit 0 otherwise the command line and Motion
+Perfect will not be usable. 
+</p>
+<h2>Value (All other Motion Coordinators)</h2>
+<p>
+The number of incoming Ethernet packets that trigger the
+firmware to read data from the Ethernet stack.  Default value 0 means
+Automatic.
+</p>
+<h2>Example:</h2>
+<p>
+In the MC464, enable the standard ports using bits 0-5 and
+the transparent protocol text file loader ports. 
+</p>
+<p class="codeexample">
+IP_PROTOCOL_CONFIG = 1 + 2 + 4 + 8 + 16 + 32 + 64
+</p>
+<p class="codeexample">
+'or
+</p>
+<p class="codeexample">
+IP_PROTOCOL_CONFIG = $7F
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

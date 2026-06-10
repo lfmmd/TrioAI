@@ -1,0 +1,144 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INVERT_IN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INVERT_IN">
+</head>
+<body>
+<h1>INVERT_IN</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = INVERT_IN(input)
+</p>
+<p class="fixed">
+INVERT_IN(input, state)
+</p>
+<h2>Description:</h2>
+<p>
+The INVERT_IN command allows digital input channels to be
+individually inverted in software.
+</p>
+<p class="note">
+This is important as these input channels can be assigned to
+activate functions such as feed-hold. 
+</p>
+<p>
+When called with one parameter, the current inversion state
+of the specified input number is returned (either ON or OFF).
+</p>
+<p>
+When called with two parameters, the inversion state is set
+to that specified in the second parameter. The two-parameter form can also be
+used as a function, but it always returns TRUE (-1).
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+input:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The input to invert
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+state:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="ON.html">ON</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the input is inverted in software
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="OFF.html">OFF</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the input is not inverted
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Invert input 7 so that when the input is low the 
+<a href="FWD_JOG.html">FWD_JOG</a>
+ is not active.
+</p>
+<p class="codeexample">
+INVERT_IN(7, ON)
+</p>
+<p class="codeexample">
+FWD_JOG = 7
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FHOLD_IN.html">FHOLD_IN</a>
+, 
+<a href="IN.html">IN</a>
+,
+
+<a href="IOSIZE.html">IOSIZE</a>
+, 
+<a href="REV_JOG.html">REV_JOG</a>
+</p>
+</body>
+</html>

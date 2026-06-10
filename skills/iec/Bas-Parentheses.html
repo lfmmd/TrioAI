@@ -1,0 +1,314 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Parentheses ()</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="_Toc317749345"></a>
+<a name="O_1676"></a>
+Parentheses ()</h1>
+<p class="Category">
+Operator
+</p>
+<p>
+Force the evaluation order in a complex expression.
+</p>
+<h2>Remarks</h2>
+<p>
+Parenthesis are used in ST and IL language for changing the
+default evaluation order of various operations within a complex expression. For
+instance, the default evaluation of &quot;2 * 3 + 4&quot; expression in ST
+language gives a result of 10 as &quot;*&quot; operator has highest priority.
+Changing the expression as &quot;2 * (3 + 4)&quot; gives a result of 14.
+Parenthesis can be nested in a complex expression.
+</p>
+<p>
+Below is the default evaluation order for ST language
+operations (first is highest priority):
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Order
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Operators
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unary operators
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-&nbsp; NOT
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Multiply/Divide
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+* /
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Add/Subtract
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
++ -
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Comparisons
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt; &gt; &lt;= &gt;= = &lt;&gt;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Boolean And
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&amp; AND
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Boolean Or
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+OR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Exclusive OR
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+XOR
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+In IL language, the default order is the sequence of
+instructions. Each new instruction modifies the current result sequentially. In
+IL language, the opening parenthesis &quot;(&quot; is written between the
+instruction and its operand. The closing parenthesis &quot;)&quot; must be
+written alone as an instruction without operand.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+Q := (IN1 + (IN2 / IN 3)) * IN4;
+</p>
+<h2>FBD Language</h2>
+<p>
+Not available.
+</p>
+<h2>LD Language</h2>
+<p>
+Not available.
+</p>
+<h2>See also</h2>
+<p>
+<a href="Bas-VariableAssign.html">Assignment</a>
+<a name="H_941"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

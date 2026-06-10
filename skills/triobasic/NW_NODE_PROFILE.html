@@ -1,0 +1,217 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NW_NODE_PROFILE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NW_NODE_PROFILE">
+</head>
+<body>
+<h1>NW_NODE_PROFILE</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+NW_NODE_PROFILE(slot, alias_address) = value
+</p>
+<h2>Description:</h2>
+<p>
+This is an array system parameter which can be used in
+MC_CONFIG.  The parameter is used to define which profile number should be
+mapped to a particular EtherCAT slave. The EtherCAT protocol startup will fail
+if the selected profile is not available or is out of range.
+</p>
+<p>
+The NW_NODE_PROFILE profile ID values are initialised to
+zero, because any profile ID value will only be used if a slave device has been
+setup with the same non-zero configured station alias.  Zero valued station
+alias addresses are not used by the EtherCAT protocol.
+</p>
+<p>
+If set to non-zero, the use of NODE_PROFILE for the same
+slave device will be used in preference to a NW_NODE_PROFILE.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot number of the EtherCAT port. (0 on MC4N, MC6N
+  and Flex-6 Nano)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+alias_address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configured address of the node.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the default node profile/configuration (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&gt;= 1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the specified EtherCAT profile/configuration
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Set the profile of the P375 at alias address 123 to 2. 
+Equivalent to DRIVE_PROFILE = 2.
+</p>
+<p>
+In MC_CONFIG:        
+</p>
+<p class="codeexample">
+NW_NODE_PROFILE(0, 12) = 2
+</p>
+<p>
+Start the EtherCAT network.  Terminal #0 output shows:
+</p>
+<p class="codeexample">
+EtherCAT State: Init (0)
+</p>
+<p class="codeexample">
+EtherCAT State: Init (0)
+</p>
+<p class="codeexample">
+EtherCAT State: Pre-Operational (0)
+</p>
+<p class="codeexample">
+EtherCAT State: Safe-Operational (0)
+</p>
+<p class="codeexample">
+EtherCAT State: Operational (0)
+</p>
+<p class="codeexample">
+EtherCAT Configuration (0):
+</p>
+<p>
+&nbsp;
+</p>
+<p class="codeexample">
+    P600: 0 : 0 : 2000
+</p>
+<p class="codeexample">
+    P366 Coupler: 1 : 0 : 2001
+</p>
+<p class="codeexample">
+    P375 3 Axes Stepper Output: 2 : 12 : 12 (11:2:0,12:2:0,13:2:0)
+</p>
+<p>
+Check the profile number from the terminal.
+</p>
+<p class="codeexample">
+    ? nw_node_profile(0,12)
+</p>
+<p class="codeexample">
+    2
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+The P375 display values are:
+</p>
+<p>
+autoincrement position : alias address : configured address
+(axis number : node profile ID : control mode)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="NODE_AXIS.html">NODE_AXIS</a>
+, 
+<a href="NODE_INDEX.html">NODE_INDEX</a>
+, 
+<a href="NODE_AXIS_COUNT.html">NODE_AXIS_COUNT</a>
+,
+
+<a href="NODE_PROFILE.html">NODE_PROFILE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

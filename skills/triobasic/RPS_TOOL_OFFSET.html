@@ -1,0 +1,721 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TOOL_OFFSET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TOOL_OFFSET">
+</head>
+<body>
+<h1>TOOL_OFFSET</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Frame
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+TOOL_OFFSET[(function[, identity])]
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TOOL_OFFSET(identity | name)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TOOL_OFFSET(identity, name, x offset, y offset, z offset,
+x rotation, y rotation, z rotation)
+</p>
+<h2>Description:</h2>
+<p>
+Frames are 4x4 orthogonal matrices that define a position
+and orientation in XYZ space. They are defined for a 3-axis translation and
+rotation. The rotations are applied using the Euler ZYX convention. This means
+that the Z rotation is applied first, then the Y is applied on the new
+coordinate system and finally the X is applied. The coordinate system is
+defined using the ‘right hand rule’ and the rotation of the origin is defined
+using the ‘right hand turn’.
+</p>
+<p class="note">
+Frames are applied on the axis KINEMATIC_GROUP. If no
+KINEMATIC_GROUP is defined, then a runtime error will be generated.
+</p>
+<p>
+Movements are loaded with the selected frame and tool. This
+means that you can buffer a sequence of moves on different frames and tools.
+The active frame and tool are the one associated with the move in the MTYPE. If
+the KINEMATIC_GROUP is IDLE, then the active frame and tool is the selected
+frame and tool.
+</p>
+<p>
+Tool offset is an offset between the centre of the robot
+flange and the TCP of the mounted end-effector. It sets a distance and
+orientation of the mounted tool. If no TOOL_OFFSET is applied, the TCP is at
+the centre of the robot flange.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+function
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>-</span></em><em><span style='font-family:"Calibri",sans-serif'>1 = display existing frame(s). </span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>-2 = remove frame(s).</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame index. Value: 0..31. Index 0 is default frame “RF_default”
+  which cannot be modified or removed.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>name</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Name of the frame. It can be left blank. However, if
+  specified, the name must be unique (no duplicates); otherwise “Duplicate
+  Identifier” run time error will be thrown.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z offset</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame </span></em>position (in mm) relative to World Frame
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z rotation</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame </span></em>orientation (in degrees) relative to World
+  Frame
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Parameter name can be left as an empty String. However, when not
+blank, the name must be unique. “Duplicate Identifier” run time error is thrown
+when this is not the case.
+</p>
+<p class="note">
+Default tool offset “RF_default” (index 0) cannot be modified or
+deleted.
+</p>
+<h2>Create or Modify a Tool Offset</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+TOOL_OFFSET(identity, name, x offset, y offset, z offset,
+x rotation, y rotation, z rotation)
+</p>
+<h3>Description:</h3>
+<p>
+Tool offsets must be created first using the corresponding
+syntax command with the desired values before using them.
+</p>
+<p>
+Existing tool offsets (except “TO_default”) can be modified
+at any time, except when the tool offset is active. To do this, use the same
+command as creating the tool offset. This will overwrite the tool offset with a
+new set of values in the same index.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Tool offset index. Value: 1..31. Index 0 is default tool
+  offset “TO_default” which cannot be modified or removed.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>name</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Name of the tool offset. It can be left blank. However, if
+  specified, the name must be unique (no duplicates); otherwise “Duplicate
+  Identifier” run time error will be thrown.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z offset</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Tool offset </span></em>position (in mm) relative to wrist
+  coordinate system of the robot.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z rotation</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Tool offset </span></em>orientation (in degrees) relative
+  to wrist coordinate system of the robot
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Create a tool offset on index 1 with name “spike” located at
+(0,0,155) from the robot’s flange with no rotation.</span></em></p>
+<p class="codeexample">
+TOOL_OFFSET
+(
+1
+,
+&quot;spike&quot;
+,
+0
+,
+0
+,
+155
+,
+0
+,
+0
+,
+0
+)
+</p>
+<h4>Example 2:</h4>
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>Create a tool offset on index 2 with no name located at
+(0,0,250) from the robot’s flange with no rotation.</span></em></p>
+<p class="codeexample">
+TOOL_OFFSET
+(
+2
+,
+&quot;&quot;
+,
+0
+,
+0
+,
+250
+,
+0
+,
+0
+,
+0
+)
+</p>
+<h4>Example 3:</h4>
+<p class="MsoNoSpacing">
+Modify tool offset index 2 position to (0, 0,285) and name
+it “gripper”. Note: to be able to modify the entries, tool offset index 2
+cannot be active/selected.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;tool_offset(-1)&nbsp;'display all tool
+offsets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 155.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 : 0.00000, 0.00000, 250.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+&gt;&gt;print tool_offset 'check if tool offset 2 is active
+<br>
+
+0
+<br>
+
+&gt;&gt;tool_offset(2, &quot;gripper&quot;, 0, 0, 285, 0, 0, 0)&nbsp;'modify
+tool offset 2
+<br>
+
+&gt;&gt;tool_offset(-1)&nbsp;‘ display all tool
+offsets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 155.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [gripper] : 0.00000, 0.00000, 285.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h2>Display Tool Offset Data</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+TOOL_OFFSET(-1[, identity])
+</p>
+<h3>Description:</h3>
+<p>
+To display a tool offset, use function -1 followed by the
+tool offset’s index. If the index is not specified, all tool offsets will be
+displayed.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Tool offset index. Value: 0..31. </span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1:</span></em></h4>
+<p>
+Show all existing tool offsets.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+tool_offset(-1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 155.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [gripper] : 0.00000, 0.00000, 285.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2:</span></em></h4>
+<p>
+Display tool offset index 1.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;tool_offset(-1, 1)
+<br>
+
+1 [spike] : 0.00000, 0.00000, 155.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h2>Remove a Tool Offset</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+TOOL_OFFSET(-2[, identity])
+</p>
+<h3>Description:</h3>
+<p class="MsoNoSpacing">
+To remove a tool offset, use function -2 followed by the
+tool offset’s index. If the index is not specified, all tool offsets will be
+deleted.
+</p>
+<p class="note">
+An active tool offset cannot be modified or deleted. Trying to do
+so will throw a runtime error “TOOL cannot be modifying or delete while
+selected”.
+</p>
+<p class="note">
+Default tool offset “TO_default” (index 0) cannot be modified or
+deleted.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Tool offset index. Value: 1..31. Index 0 is default tool
+  offset “TO_default” which cannot be modified or removed.</span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1:</span></em></h4>
+<p>
+Remove tool offset “spike”.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;tool_offset(-1)&nbsp;'display all tool
+offsets&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [spike] : 0.00000, 0.00000, 155.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [gripper] : 0.00000, 0.00000, 285.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+&gt;&gt;tool_offset(-2, 1) 'remove tool offset 1
+<br>
+
+&gt;&gt;tool_offset(-1)&nbsp;'display all tool offsets&nbsp;
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [gripper] : 0.00000, 0.00000, 285.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2:</span></em></h4>
+<p>
+Remove all tool offsets.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;tool_offset(-2)&nbsp;&nbsp;
+<br>
+
+&gt;&gt;tool_offset(-1)
+<br>
+
+0 [TO_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h2>Select a Tool Offset</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+TOOL_OFFSET(identity | name)
+</p>
+<h3>Description:</h3>
+<p>
+To make a tool offset active, the tool offset must be
+selected. To do this, use 
+<span class="codeexampleChar">TOOL_OFFSET</span> command with the tool offset’s index or name
+as the parameter.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Tool offset index. Value: 0..31. </span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>name</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Name of the tool offset. </span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1:</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Select tool offset 1.</span></em></p>
+<p class="codeexample">
+TOOL_OFFSET(1)
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2:</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Select tool offset “gripper”.</span></em></p>
+<p class="codeexample">
+TOOL_OFFSET(&quot;gripper&quot;)
+</p>
+<h2>Identify Active Tool Offset</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+value = TOOL_OFFSET
+</p>
+<h3>Description:</h3>
+<p>
+To know which tool offset is active, assign the return value
+to the 
+<span class="codeexampleChar">TOOL_OFFSET</span>
+command with no parameters. The command will return the index of the active
+tool offset.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p>
+Value
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+Index of the active tool offset. Value: 0..31.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1:</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Assign variable ‘i’ to the index of the active tool offset. </span></em></p>
+<p class="codeexample">
+i = TOOL_OFFSET
+</p>
+<h4>Example 2:</h4>
+<p>
+Check the active tool offset and print the index of the tool
+offset on the terminal.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;kinematic_group(0) 'Check active tool offset
+<br>
+
+0 [1000] [41] : 0, 1, 2, 3, 4, 5 TO={2[gripper]:0.00000, 0.00000, 250.00000,
+0.00000, 0.00000, 0.00000} RF={0[RF_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} OF={0[OF_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} CO={0}
+<br>
+
+&gt;&gt;print tool_offset 'Check active tool offset
+<br>
+
+2
+<br>
+
+&gt;&gt;tool_offset(0) 'Select tool offset 0 to be active
+<br>
+
+&gt;&gt;kinematic_group(0) 'Check active tool offset
+<br>
+
+0 [1000] [41] : 0, 1, 2, 3, 4, 5 TO={0[TO_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} RF={0[RF_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} OF={0[OF_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000,0.00000} CO={0}
+<br>
+
+&gt;&gt;print tool_offset&nbsp;'Check active tool offset
+<br>
+
+0
+</p>
+<h2>See also:</h2>
+<p>
+<a href="RPS_OBJECT_FRAME.html">OBJECT_FRAME</a>
+, 
+<a href="RPS_ROBOT_FRAME.html">ROBOT_FRAME</a>
+, 
+<a href="RPS_KINEMATIC_GROUP.html">KINEMATIC_GROUP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

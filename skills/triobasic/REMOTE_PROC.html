@@ -1,0 +1,141 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REMOTE_PROC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REMOTE_PROC">
+</head>
+<body>
+<h1>REMOTE_PROC</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG / FLASH)
+</p>
+<h2>Description:</h2>
+<p>
+When the TrioPC ActiveX opens a synchronous connection to
+the 
+<i>Motion Coordinator</i>, the REMOTE_PROGRAM is started on the highest
+available process.  REMOTE_PROC can be set to specify a different process for
+the REMOTE_PROGRAM.  If the defined process is in use then the next lower
+available process will be used.
+</p>
+<p class="note">
+REMOTE_PROC is stored in Flash EPROM and can also be set in the
+MC_CONFIG script file.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Use the highest available process (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Turn off the Active X processing
+<br>
+
+  No connection will be possible when set to this value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0 to max process
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Run on defined process
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+It is recommended to set the REMOTE_PROC parameter in MC_CONFIG
+whenever there is a connection to TrioPC Motion ActiveX.
+</p>
+<h2>Examples:</h2>
+<h3>Example1:</h3>
+<p>
+Set REMOTE_PROGRAM to start on process 19 or lower (using the
+command line terminal).
+</p>
+<p class="codeexample">
+&gt;&gt;REMOTE_PROC=19
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p class="note">
+Reset the Motion Coordinator after setting the value in the
+command line terminal.
+</p>
+<h3>Example2:</h3>
+<p>
+Remove the REMOTE_PROC setting so that REMOTE_PROGRAM starts
+on default process (using MC_CONFIG).
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+REMOTE_PROC = -1  'Start on default process on connection
+</p>
+<p class="codeexample">
+<img width="554" height="134" src="REMOTE_PROC_files/image001.jpg" align="left" hspace="12">
+</p>
+<h2>See Also:</h2>
+<p class="codeexample">
+<a href="REMOTE.html">REMOTE</a>
+</p>
+</body>
+</html>

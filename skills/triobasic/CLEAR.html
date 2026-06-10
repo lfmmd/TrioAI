@@ -1,0 +1,69 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CLEAR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CLEAR">
+</head>
+<body>
+<h1>CLEAR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Description:</h2>
+<p>
+Sets all global (numbered) variables and VR values to 0 and
+sets local variables on the process on which command is run to 0.
+</p>
+<p class="note">
+Trio BASIC does not clear the global variables automatically
+following a RUN command. This allows the global variables, which are all
+battery-backed to be used to hold information between program runs. Named local
+variables are always cleared prior to program running. If used in a program
+CLEAR sets local variables in this program only to zero as well as setting the
+global variables to zero.   
+</p>
+<p>
+CLEAR does not alter the program in memory.
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+Setting and clearing VR values.
+</p>
+<p class="codeexample">
+VR(0)=44
+</p>
+<p class="codeexample">
+VR(10)=12.3456
+</p>
+<p class="codeexample">
+VR(100)=2
+</p>
+<p class="codeexample">
+PRINT VR(0),VR(10),VR(100)
+</p>
+<p class="codeexample">
+CLEAR
+</p>
+<p class="codeexample">
+PRINT VR(0),VR(10),VR(100)
+</p>
+<p>
+On execution this would give an output such as:
+</p>
+<p class="fixed">
+44.0000  12.345  62.0000
+</p>
+<p class="fixed">
+0.0000   0.0000  0.0000
+</p>
+<p class="fixed">
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

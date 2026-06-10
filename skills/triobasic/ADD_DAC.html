@@ -1,0 +1,200 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ADD_DAC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ADD_DAC">
+</head>
+<body>
+<h1>ADD_DAC</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ADD_DAC(axis)
+</p>
+<h2>Description:</h2>
+<p>
+Adds the output from the servo control block of a secondary
+axis to the output of the base axis.  The resulting 
+<a href="DAC_OUT.html">DAC_OUT</a>
+
+of the base axis is then the sum of the two control loop outputs.
+</p>
+<p>
+The ADD_DAC command is provided to allow a secondary encoder
+to be used on a servo axis to implement dual feedback control.
+</p>
+<p class="tip">
+This would typically be used in applications such as a roll-feed
+where a secondary encoder to compensate for slippage is required.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of the second axis, who’s output will be added
+  to the base axis.
+<br>
+
+  -1 will terminate the ADD_DAC link.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Use ADD_DAC to add the output of a measuring wheel to the
+servo motor axis controlling a roll-feed.  Set up the servo motor axis as usual
+with encoder feedback from the motor drive. The measuring wheel axis must also
+be set up as a servo. This is so that the software will perform the servo
+control calculations on that axis.
+</p>
+<p>
+It is necessary for the two axes to be controlled by a
+common demand position.   Typically this would be achieved by using 
+<a href="ADDAX.html">ADDAX</a>
+ to produce a matching 
+<a href="DPOS.html">DPOS</a>
+
+on BOTH axes. The servo gains are then set up on BOTH axes, and the output
+summed on to one physical output using ADD_DAC. 
+</p>
+<p class="tip">
+If the required demand positions on both axes are not identical
+due to a difference in resolution between the 2 feedback devices, ENCODER_RATIO
+can be used on one axis to produce matching UNITS.
+</p>
+<p>
+<img border="0" width="531" height="398" id="Picture 1" src="ADD_DAC_files/image001.jpg">
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+ATYPE = 44
+</p>
+<p class="codeexample">
+' No need to scale the servo encoder as it is the highest
+resolution
+</p>
+<p class="codeexample">
+ENCODER_RATIO(1,1)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+' Link to the output of the encoders virtual DAC
+</p>
+<p class="codeexample">
+ADD_DAC(2)
+</p>
+<p class="codeexample">
+UNITS = 10000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+' Disable the output from the servo control block by
+setting PGAIN = 0
+</p>
+<p class="codeexample">
+P_GAIN = 0
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+' ATYPE must be set to a servo ATYPE to enable the closed
+position loop
+</p>
+<p class="codeexample">
+ATYPE = 44
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+' Set the encoder ratio so that it has the same counts per
+rev as the servo
+</p>
+<p class="codeexample">
+ENCODER_RATIO(10000,4096)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+' Superimpose axis 1 demand on axis 2
+</p>
+<p class="codeexample">
+ADDAX(1)
+</p>
+<p class="codeexample">
+UNITS = 10000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+' Use servo control block from encoder axis by setting
+&gt;0 P_GAIN
+</p>
+<p class="codeexample">
+P_GAIN = 0.5
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WDOG=ON
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+' Start movements
+</p>
+<p class="codeexample">
+MOVE(1200)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+</body>
+</html>

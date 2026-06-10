@@ -1,0 +1,114 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>GET_EIP_TAG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="GET_EIP_TAG">
+</head>
+<body>
+<h1>GET_EIP_TAG</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function 
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+GET_EIP_TAG([name[, vr_index]])
+</p>
+<h2>Description:</h2>
+<h2><span style='font-family:"Calibri",sans-serif'>Return information about the defined tags, and either print to the
+standard output stream or write into the VRs from the given index. </span></h2>
+<p class="note">
+Note: only the display write to the command line (terminal #0) has
+been implemented in the current releases.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optionally included is the name of the tag (of data
+  type string) whose configuration is to be returned. If there are no
+  parameters or the name parameter is a null string, then return all defined
+  tags.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameter to indicate where in the VRs the tag
+  information will be written. If -1 (default), then write to the standard
+  output stream.
+</p>
+
+  
+<p class="tablecontent">
+See 
+<i>Note</i>
+  above.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Display all tags.
+</p>
+<p class="codeexample">
+&gt;&gt;GET_EIP_TAG                   
+</p>
+<p class="codeexample">
+x_pos: Memory: 1 (Vr), Address: 100, Datatype: 0xC3
+</p>
+<p class="codeexample">
+y_pos: Memory: 1 (Vr), Address: 101, Datatype: 0xC7
+</p>
+<h2>See also:</h2>
+<p>
+<a href="SET_EIP_TAG.html">SET_EIP_TAG</a>
+, 
+<a href="ETHERNET.html">ETHERNET</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

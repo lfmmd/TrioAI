@@ -1,0 +1,431 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SET_EIP_TAG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SET_EIP_TAG">
+</head>
+<body>
+<h1>SET_EIP_TAG</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function 
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+SET_EIP_TAG(name, mem_area, address, data_type)
+</p>
+<h2>Description:</h2>
+<p>
+Define a new CIP tag entry (a symbol segment data type), or
+update the configuration of an existing tag if the tag name has already been
+defined.  
+</p>
+<p>
+All the currently defined tags will be deleted if this
+command is called without any parameters.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of the tag (of data type string)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mem_area:
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1: VR, 2: TABLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+address:
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Address within the memory area of the tag
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="9" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data_type:
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The datatype of the tag, using the values as defined in
+  the CIP Spec volume 1, section C-6.1.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data types currently supported include:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data Type Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data Type Code
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0xC2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Signed 8 bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+INT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0xC3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Signed 16 bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0xC4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Signed 32 bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+USINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0xC5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 8 bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0xC6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 16 bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+UDINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0xC7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned 32 bit integer
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Return value</h3>
+<p>
+TRUE (-1) : Successful, FALSE (0) : Failed
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set up tag names for x and y position located in VR(200) and
+VR(201)
+</p>
+<p class="codeexample">
+SET_EIP_TAG(&quot;x_pos&quot;,1,200,$c3)
+</p>
+<p class="codeexample">
+SET_EIP_TAG(&quot;y_pos&quot;,1,201,$c7)
+</p>
+<p>
+Display tags by command in the terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;GET_EIP_TAG
+<br>
+
+x_pos: Memory: 1 (Vr), Address: 200, Datatype: 0xC3
+<br>
+
+y_pos: Memory: 1 (Vr), Address: 201, Datatype: 0xC7
+</p>
+<h3>Example 2:</h3>
+<p>
+Change the address of the ‘y_pos’ tag in example 1
+</p>
+<p class="codeexample">
+&gt;&gt;SET_EIP_TAG(&quot;y_pos&quot;,1,150,$c7)
+</p>
+<p>
+Display tags
+</p>
+<p class="codeexample">
+&gt;&gt;GET_EIP_TAG                   
+<br>
+
+x_pos: Memory: 1 (Vr), Address: 200, Datatype: 0xC3
+<br>
+
+y_pos: Memory: 1 (Vr), Address: 150, Datatype: 0xC7
+<br>
+
+&gt;&gt;
+</p>
+<h3>Example 3:</h3>
+<p>
+Delete all tags ready to start configuring tags again.
+</p>
+<p class="codeexample">
+SET_EIP_TAG
+</p>
+<p>
+Display the tag store to confirm that it is empty.
+<br>
+<span class="codeexampleChar">&gt;&gt;GET_EIP_TAG<br>
+
+&gt;&gt;</span></p>
+<p>
+&nbsp;
+</p>
+<h2>See also:</h2>
+<p>
+GET_EIP_TAG, 
+<a href="ETHERNET.html">ETHERNET</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

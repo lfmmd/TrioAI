@@ -1,0 +1,694 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SCOPE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SCOPE">
+</head>
+<body>
+<h1>SCOPE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+SCOPE(enable[, period])
+</p>
+<p class="fixed">
+SCOPE(enable, period, table_start, table_stop, p0 [,p1 [,p2 [,p3
+[,p4 [,p5 [,p6 [,p7]]]]]]])
+</p>
+<p class="fixed">
+SCOPE(enable, period, fifo_name, fifo_size, samples, p0 [,p1 [,p2
+[,p3 [,p4 [,p5 [,p6 [,p7]]]]]]])
+</p>
+<h2>Description:</h2>
+<p>
+The SCOPE command enables capture of up to 8 parameters
+every sample period. Samples are taken until the table range is filled. Trigger
+is used to start the capture. 
+</p>
+<p class="note">
+Once loaded the SCOPE must be started by the 
+<a href="TRIGGER.html">TRIGGER</a>
+ command. 
+<a href="TRIGGER.html">TRIGGER</a>
+ may
+specify one-shot or automatic. 
+</p>
+<p class="warning">
+Make sure to assign the table range outside of any table data
+used by your programs. 
+</p>
+<p class="tip">
+It is normal to use Motion Perfect to assign the SCOPE command,
+but it is sometimes useful to do it manually. The table data can be read back
+to a PC and displayed on the Motion Perfect Oscilloscope, saved using Motion
+Perfect or 
+<a href="STICK_WRITE.html">STICK_WRITE</a>
+.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+enable:
+</p>
+
+  
+<p class="tablecontent">
+ 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 or 
+<a href="ON.html">ON</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable software SCOPE (requires at least 5 parameters)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0  or 
+<a href="OFF.html">OFF</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Disable SCOPE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+period:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of servo periods between data samples
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_start:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position to start to store the data in the table array
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_stop:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End of table range to use
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+fifo_name:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of the FIFO file to be written. If this file
+  already exists on the Motion Coordinator it must be a FIFO file.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+fifo_size:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Size of the FIFO file to be created. If the FIFO file
+  already exists with a different size then it will be deleted and recreated
+  with the correct size.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+samples:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of samples to store to the FIFO file.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+p0:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First parameter to store
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+p1:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second parameter to store
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+p2:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Third parameter to store
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+p3:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Fourth parameter to store
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+p4
+</p>
+
+  
+<p class="tablecontent">
+p5
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Fifth parameter to store
+</p>
+
+  
+<p class="tablecontent">
+Sixth parameter to store
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+p6
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Seventh parameter to store
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+p7
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Eighth parameter to store
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+This example arms the SCOPE to store the 
+<a href="MPOS.html">MPOS</a>
+
+and 
+<a href="DPOS.html">DPOS</a>
+ on axis 5 axis 5 every 10 milliseconds (
+<a href="SERVO_PERIOD.html">SERVO_PERIOD </a>
+ = 1000). The 
+<a href="MPOS.html">MPOS</a>
+
+will be stored in table values 0..499, the 
+<a href="DPOS.html">DPOS</a>
+ in
+table values 500 to 999. The sampling does not start until the 
+<a href="TRIGGER.html">TRIGGER</a>
+ command is executed.
+</p>
+<p class="codeexample">
+SCOPE(ON,10,0,1000,MPOS AXIS(5), DPOS
+AXIS(5))
+</p>
+<h3>Example 2:</h3>
+<p>
+Disable the SCOPE to prevent 
+<a href="TRIGGER.html">TRIGGER</a>
+
+from starting a capture
+</p>
+<p class="codeexample">
+SCOPE(OFF) 
+</p>
+<h3>Example 3:</h3>
+<p>
+Change the period on the fly
+</p>
+<p class="codeexample">
+SCOPE(ON,10,0,1000,MPOS AXIS(5), DPOS
+AXIS(5))
+</p>
+<p class="codeexample">
+TRIGGER
+</p>
+<p class="codeexample">
+WA(100)
+</p>
+<p class="codeexample">
+SCOPE(ON,20) 
+</p>
+<h3>Example 4:</h3>
+<p>
+Delay start of capture until 20 milliseconds after TRIGGER
+</p>
+<p class="codeexample">
+SCOPE(ON,10,0,1000,MPOS AXIS(5), DPOS
+AXIS(5))
+</p>
+<p class="codeexample">
+SCOPE_DELAY=20
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(10)=1
+</p>
+<p class="codeexample">
+TRIGGER
+</p>
+<h3>Example 5:</h3>
+<p>
+Store 20 ms of data before the trigger.
+</p>
+<p class="codeexample">
+SCOPE(ON,10,0,1000,MPOS AXIS(5), DPOS
+AXIS(5))
+</p>
+<p class="codeexample">
+SCOPE_DELAY=-20
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(10)=1
+</p>
+<p class="codeexample">
+TRIGGER
+</p>
+<h3>Example 6:</h3>
+<p>
+Store 50 samples to the FIFO file “SCOPE_FIFO” and print to terminal
+#5.
+</p>
+<p class="codeexample">
+ SCOPE
+(
+ON
+, 
+1
+, 
+&quot;SCOPE_FIFO&quot;
+, 
+2048
+,
+
+50
+, 
+TICKS
+,
+
+MPOS
+ AXIS
+(
+0
+), 
+DPOS
+ AXIS
+(
+0
+))
+<br>
+
+ 
+TICKS
+ = 
+0
+<br>
+
+ 
+TRIGGER
+<br>
+
+ 
+<br>
+
+ 
+OPEN
+ #
+40
+ AS
+ &quot;SCOPE_FIFO&quot;
+
+
+FOR
+ FIFO_READ
+<br>
+
+ length = 
+0
+<br>
+
+ 
+WHILE
+ length &lt; 
+150
+<br>
+
+   
+IF
+ KEY
+ #
+40
+ THEN
+<br>
+
+     
+GET
+ #
+40
+,
+char
+<br>
+
+     
+IF
+ char = 
+13
+
+
+THEN
+<br>
+
+       
+PRINT
+ #
+5
+,
+
+&quot;&quot;
+<br>
+
+       length = length + 
+1
+<br>
+
+     
+ELSE
+<br>
+
+       
+PRINT
+ #
+5
+,
+
+CHR
+(char);
+<br>
+
+     
+ENDIF
+<br>
+
+     
+IF
+ char = 
+$2C
+
+
+THEN
+<br>
+
+       length = length + 
+1
+<br>
+
+     
+ENDIF
+<br>
+
+   
+ENDIF
+<br>
+
+ 
+WEND
+<br>
+
+
+<br>
+
+ 
+CLOSE
+ #
+40
+</p>
+<p>
+The data stored in the FIFO is ASCII CSV format.  Each row
+has the data for one capture point. E.g.
+</p>
+<p>
+0.00000,45.00000,45.00000
+<br>
+
+-1.00000,47.00000,47.00000
+<br>
+
+-2.00000,51.00000,51.00000
+<br>
+
+-3.00000,56.00000,55.00000
+<br>
+
+-4.00000,60.00000,60.00000
+<br>
+
+-5.00000,63.00000,62.00000
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="TRIGGER.html">TRIGGER</a>
+, 
+<a href="SCOPE_POS.html">SCOPE_POS</a>
+,
+
+<a href="SCOPE_CYCLE_COUNT.html">SCOPE_CYCLE_COUNT</a>
+, 
+<a href="SCOPE_DELAY.html">SCOPE_DELAY</a>
+</p>
+</body>
+</html>

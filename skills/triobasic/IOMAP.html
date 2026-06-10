@@ -1,0 +1,206 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IOMAP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IOMAP">
+</head>
+<body>
+<h1>IOMAP</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O Command (command line only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+IOMAP[(mode)]
+</p>
+<h2>Description:</h2>
+<p>
+Lists the current digital I/O map, analogue I/O map or full I/O
+map.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Show digital I/O only (Default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Show analogue I/O only
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Show digital and analogue I/O
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example1:</h2>
+<p class="codeexample">
+&gt;&gt; IOMAP
+</p>
+<p class="codeexample">
+Digital Input map :
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0-&nbsp;&nbsp;&nbsp;7 : Built-in Inputs
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8-&nbsp;&nbsp;15 : Built-in Bi-Directional IO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;16-&nbsp;&nbsp;31 : CAN P318 @ Address 0 (fw=v1.3.0)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;32-1023 : Virtual
+<br>
+
+
+<br>
+
+Digital Output map :
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0-&nbsp;&nbsp;&nbsp;7 : Virtual
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8-&nbsp;&nbsp;15 : Built-in Bi-Directional IO
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;16-&nbsp;&nbsp;31 : CAN P327 @ Address 0 (fw=v1.3.0)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;32-1023 : Virtual
+</p>
+<h2>Example2:</h2>
+<p>
+Show analogue I/O connected using CANopen
+</p>
+<p class="codeexample">
+&gt;&gt;IOMAP(1)
+<br>
+
+Analogue Input map :
+<br>
+
+     0-   3 : CANopen @ CAN Buffer 20
+<br>
+
+     4-   7 : CANopen @ CAN Buffer 21
+<br>
+
+     8-  11 : CANopen @ CAN Buffer 23
+<br>
+
+    12-  15 : CANopen @ CAN Buffer 24
+<br>
+
+    16-  19 : CANopen @ CAN Buffer 26
+<br>
+
+    20-  23 : CANopen @ CAN Buffer 27
+<br>
+
+    24-  27 : CANopen @ CAN Buffer 29
+<br>
+
+    28-  31 : CANopen @ CAN Buffer 30
+<br>
+
+         32 : Built-in @ channel 0 [12-bit, unipolar, 10V]
+<br>
+
+         33 : Built-in @ channel 1 [12-bit, unipolar, 10V]
+<br>
+
+    34-  63 : Reserved
+<br>
+
+
+<br>
+
+Analogue Output map :
+<br>
+
+     0-   3 : CANopen @ CAN Buffer 22
+<br>
+
+     4-   7 : CANopen @ CAN Buffer 25
+<br>
+
+     8-  11 : CANopen @ CAN Buffer 28
+<br>
+
+    12-  15 : CANopen @ CAN Buffer 31
+<br>
+
+    16-  63 : Reserved
+</p>
+</body>
+</html>

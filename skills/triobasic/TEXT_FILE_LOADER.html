@@ -1,0 +1,470 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TEXT_FILE_LOADER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TEXT_FILE_LOADER">
+</head>
+<body>
+<h1>TEXT_FILE_LOADER</h1>
+<h2>Type: </h2>
+<p class="Category">
+Command
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+TEXT_FILE_LOADER[(function [, parameter[,value]])]
+</p>
+<h2>Description:</h2>
+<p>
+The TEXT_FILE_LOADER command controls the
+TEXT_FILE_LOADER_PROGRAM on the controller. This function allows the
+TEXT_FILE_LOADER to be controlled and configured from the BASIC. 
+<a href="TEXT_FILE_LOADER_PROC.html">TEXT_FILE_LOADER_PROC</a>
+ can be set to
+define which process the TEXT_FILE_LOADER_PROGRAM runs on. 
+</p>
+<p>
+The TEXT_FILE_LOADER_PROGRAM is the controller end of the
+fast file transfer process that communicates with the file loading
+functionality of PCMotion.
+</p>
+<p>
+If no parameters are used then the function is 0.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+function:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+description:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Run the TEXT_FILE_LOADER program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read a TEXT_FILE_LOADER  parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write a TEXT_FILE_LOADER parameter
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Function = 0:</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+TEXT_FILE_LOADER 
+</p>
+<p class="codeexample">
+TEXT_FILE_LOADER(0)
+</p>
+<h3>Description:</h3>
+<p>
+Starts up the TEXT_FILE_LOADER communication protocol as a
+program. The TEXT_FILE_LOADER program will take up a user process if it is run
+automatically or manually. 
+</p>
+<p class="tip">
+The TEXT_FILE_LOADER program is normally started automatically
+when you open a file load connection. You can call it manually if you wish to
+specify which process it should run on. 
+</p>
+<p class="warning">
+If you execute TEXT_FILE_LOADER manually the program it runs
+in will suspend at the TEXT_FILE_LOADER line. The TEXT_FILE_LOADER therefore
+should be the last line of the program to execute.
+</p>
+<h2><a name="_Ref322074726">Function = 1 and Function = 2:</a>
+</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+value = TEXT_FILE_LOADER(function, parameter[, value])
+</p>
+<h3>Description:</h3>
+<p>
+Functions 1 and 2 are used to respectively read and write
+parameters from the TEXT_FILE_LOADER_PROGRAM.
+</p>
+<p class="note">
+The default destination for transparent protocol transfers should
+be set before any transfers occur. 
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Transfer status parameter (read only)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+no transfer active
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+transfer active
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Default destination for transparent transfers
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TEMP file
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FIFO file
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SDCARD
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Wait for a transfer to start then process the characters as
+they arrive at on the controller.
+</p>
+<p class="codeexample">
+'Wait for a file transfer to start
+</p>
+<p class="codeexample">
+WAIT UNTIL TEXT_FILE_LOADER(1, 0) = 1
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Process this file
+</p>
+<p class="codeexample">
+WHILE KEY #fifo_channel
+</p>
+<p class="codeexample">
+    GET #fifo_channel, k
+</p>
+<p class="codeexample">
+    PRINT #echo_channel, CHR(k);
+</p>
+<p class="codeexample">
+    IF k = 13 THEN PRINT #echo_channel, CHR(10);
+</p>
+<p class="codeexample">
+    IF k &gt;= 65 AND k &lt;= 90 THEN 'A to Z
+</p>
+<p class="codeexample">
+        ltflag = 0
+</p>
+<p class="codeexample">
+        spflag = 0
+</p>
+<p class="codeexample">
+        value = 0
+</p>
+<p class="codeexample">
+        GOTO command_pro
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3>Example 2:</h3>
+<p>
+Load a file into a FIFO then configure the FILE to be read
+back into the BASIC.
+</p>
+<p class="codeexample">
+'Set the FIFO as default file location for transparent
+protocol
+</p>
+<p class="codeexample">
+TEXT_FILE_LOADER(2, 1, 1)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Initialise FIFO
+</p>
+<p class="codeexample">
+OPEN #fifo_channel AS &quot;TRANSFER_FILE&quot; FOR
+FIFO_WRITE(fifo_size)
+</p>
+<p class="codeexample">
+CLOSE #fifo_channel
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Open FIFO to read
+</p>
+<p class="codeexample">
+OPEN #fifo_channel AS &quot;TRANSFER_FILE&quot; FOR
+FIFO_READ
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Run
+</p>
+<p class="codeexample">
+WHILE running
+</p>
+<p class="codeexample">
+    'Wait for a file transfer to start
+</p>
+<p class="codeexample">
+    WAIT UNTIL TEXT_FILE_LOADER(1, 0)
+</p>
+<p class="codeexample">
+    WHILE KEY #fifo_channel 
+</p>
+<p class="codeexample">
+        GET #fifo_channel, char
+</p>
+<p class="codeexample">
+        PRINT #5, CHR(char)
+<br>
+
+    WEND
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="TEXT_FILE_LOADER_PROC.html">TEXT_FILE_LOADER_PROC</a>
+</p>
+</body>
+</html>

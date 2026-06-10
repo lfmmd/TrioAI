@@ -1,0 +1,224 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CHR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CHR">
+</head>
+<body>
+<h1>CHR</h1>
+<h2>Type:</h2>
+<p class="Category">
+String Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = CHR(number[, format])
+</p>
+<h2>Description:</h2>
+<p>
+CHR returns the ASCII/UTF-8 character as a 
+<a href="DIM.html">STRING</a>
+
+which is referred to by the number, this can be assigned to a 
+<a href="DIM.html">STRING</a>
+
+variable or be 
+<a href="PRINT.html">PRINT</a>
+ed.
+</p>
+<p>
+Parameters:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A 
+<a href="DIM.html">STRING</a>
+ containing the
+  character 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+number:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid numerical value for an ASCII/UTF-8 character
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+format:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Format of the number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="31" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="294" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ASCII (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="31" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="294" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+UNICODE UTF-8 encoded
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print the character A on the command line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT CHR(65)
+</p>
+<p class="codeexample">
+A
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Print a line of text terminating only with a carriage return
+</p>
+<p class="codeexample">
+PRINT#5, 
+&quot;abcdefghijk&quot;;
+
+CHR(13)
+</p>
+<h3>Example 3:</h3>
+<p>
+Append a character from the serial port to a 
+<a href="DIM.html">STRING</a>
+ variable
+</p>
+<p class="codeexample">
+DIM value AS STRING
+</p>
+<p class="codeexample">
+WHILE KEY#5
+</p>
+<p class="codeexample">
+  GET#5, char
+</p>
+<p class="codeexample">
+  value = value + CHR(char)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3>Example 4:</h3>
+<p>
+Print a Unicode character UTF-8 encoded:
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT CHR(2600, 1)
+</p>
+<p class="codeexample">
+<span style='font-family:"MS Gothic"'>&#34946;</span></p>
+<p class="codeexample">
+&gt;&gt;
+<span style='font-family:"MS Gothic"'>&nbsp;</span></p>
+<h2>See Also:</h2>
+<p>
+<a href="PRINT.html">PRINT</a>
+, 
+<a href="DIM.html">STRING</a>
+</p>
+</body>
+</html>

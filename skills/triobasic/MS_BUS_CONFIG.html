@@ -1,0 +1,404 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MS_BUS_CONFIG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MS_BUS_CONFIG">
+</head>
+<body>
+<h1>MS_BUS_CONFIG</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+MS_BUS_CONFIG(register_type, slice_address) = value
+</p>
+<h2>Description:</h2>
+<p>
+This 2D array can be used to configure slices during
+initialisation of the MS-Bus network. 
+</p>
+<p>
+The array is 2-dimensional, the first dimension is the type
+of slice setting, the second dimension is the position of the slice within that
+master network.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+register_type:
+</p>
+
+  
+</td>
+<td width="561" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Type of register to configure on power on
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="62" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="499" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configure digital output state if a slice goes into an
+  error state
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="62" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="499" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configure digital input filter for a slice
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="62" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="499" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configure Analogue input range for a slice
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slice_address:
+</p>
+
+  
+</td>
+<td width="561" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Address determined by the position of the node on the MS-Bus
+  network.  The first node is address 0.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+To configure filtering on different banks on an input module use
+the MS_BUS_IO command
+</p>
+<h2>Example 1:</h2>
+<p>
+Configure the output slice (address 0) to retain the last
+state of output numbers 0, 3, 4, 5, 6, and 7 if the slice encounters an error.
+</p>
+<p class="codeexample">
+MS_BUS_CONFIG(0, 0) = 249 ' set output mode for outputs on
+slice address 0
+</p>
+<h2>Example 2:</h2>
+<p>
+Configure an input slice (address 1) to
+filter at a 2mS period. 
+</p>
+<p class="codeexample">
+MS_BUS_CONFIG(1, 1) = 11 ' Set filtering for bank 0 to 1ms,
+slice address 1. Set bit 3 to enable filter for bank 0, set bits 0 and 1 to
+configure filter 3 (= 1ms)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="180" valign="top" class="tablegrid">
+
+  
+<p>
+filter_value
+</p>
+
+  
+</td>
+<td width="234" valign="top" class="tablegrid">
+
+  
+<p>
+16-bit bitmap:
+<br>
+
+  Bit 0 to 2 = Bank 1 filter value
+<br>
+
+  Bit 3 = Bank 1 filter enable
+</p>
+
+  
+<p>
+Bit 4 to 6 = Bank 2 filter value
+<br>
+
+  Bit 7 = Bank 2 filter  enable
+</p>
+
+  
+<p>
+Bit 8 to 10 = Bank 3 filter value
+<br>
+
+  Bit 11 = Bank 3 filter enable
+</p>
+
+  
+<p>
+Bit 12 to 14 = Bank 4 filter value
+<br>
+
+  Bit 15 = Bank 4 filter enable
+<br>
+<br>
+
+  Filter value:
+<br>
+
+  0 = 125&nbsp;µs
+<br>
+
+  1 = 250&nbsp;µs
+<br>
+
+  2 = 500&nbsp;µs
+<br>
+
+  3 = 1&nbsp;ms
+<br>
+
+  4 = 2&nbsp;ms
+<br>
+
+  5 = 4&nbsp;ms
+<br>
+
+  6 = 8&nbsp;ms
+<br>
+
+  7 = 16&nbsp;ms
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example 3:</h2>
+<p>
+Configure an Analogue input slice to work
+in 0 to 5V range on channel 3
+</p>
+<p class="codeexample">
+MS_BUS_CONFIG(2, 1) = 8192 ' Configure channel 3 on slice
+1 to be in 0 to 5V range
+</p>
+<p>
+The bitmap is defined as follows:
+</p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>value =
+mode &lt;&lt; (channel*4)</span></em></p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+<em><b><span style='font-family:"Calibri",sans-serif'>Mode</span></b></em></p>
+
+  
+</td>
+<td width="246" valign="top" class="tablegrid">
+
+  
+<p>
+<em><b><span style='font-family:"Calibri",sans-serif'>Range</span></b></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>0</span></em></p>
+
+  
+</td>
+<td width="246" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>-10V to
+  +10V</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>1</span></em></p>
+
+  
+</td>
+<td width="246" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>0 to
+  +10V</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>2</span></em></p>
+
+  
+</td>
+<td width="246" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>[-5V to
+  +5V] or[ -20mA to +20mA]</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>3</span></em></p>
+
+  
+</td>
+<td width="246" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>0V to
+  +5Vor [0mA to 20mA]</span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></em></p>
+<p>
+&nbsp;
+</p>
+<h2>&nbsp;</h2>
+<h2>See Also:</h2>
+<p>
+<a href="MS_BUS.html">MS_BUS</a>
+, 
+<a href="MS_BUS_IO.html">MS_BUS_IO</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

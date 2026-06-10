@@ -1,0 +1,198 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DEC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DEC">
+</head>
+<body>
+<h1><a name="_Toc317749337"></a>
+<a name="O_1432"></a>
+DEC</h1>
+<p class="Category">
+Function
+</p>
+<p>
+Decreases a numerical variable.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+IN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Numerical variable (increased after call).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Decreased value.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+When the function is called, the variable connected to the
+IN input is decreased and copied to Q. All data types are supported except BOOL
+<span class="Property"> </span>and STRING: for these types, the output is the copy of
+IN.
+</p>
+<p>
+For real values, variable is decreased by 1.0. For time
+values, variable is decreased by 1ms.
+</p>
+<p>
+The IN input must be directly connected to a variable and
+cannot be a constant or complex expression.
+</p>
+<p>
+This function is particularly designed for ST language. It
+allows simplified writing as assigning the result of the function is not
+mandatory.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+IN := 2;
+<br>
+
+Q := DEC (IN);
+<br>
+
+(* now: IN = 1 ; Q = 1 *)
+</p>
+<p class="codeexample">
+DEC (IN);  
+<span class="CodeComment">(* simplified call *)</span></p>
+<h2>FBD Language</h2>
+<p>
+<img width="123" height="63" src="Std-DEC_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+<img width="247" height="82" src="Std-DEC_files/image002.gif">
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

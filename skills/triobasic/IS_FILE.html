@@ -1,0 +1,115 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IS_FILE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IS_FILE">
+</head>
+<body>
+<h1>IS_FILE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (Read Only)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+value = IS_FILE &quot;file_name&quot;
+</p>
+<h2>Description:</h2>
+<p>
+IS_FILE returns the state of whether a specific file exists
+or not within the project directory of the controller (
+<a href="DIR.html">DIR</a>
+). 
+The name of the file could be a string literal, a variable of string type and
+VRSTRING could also be used.
+</p>
+<p class="note">
+IS_FILE and IS_PROG have the same function.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE (-1) if the file exists, 
+<br>
+
+  FALSE (0) if the file does not exists.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+file:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of the file
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+file_status = IS_FILE &quot;MAIN_TASK&quot;
+</p>
+<h3>Example 2:</h3>
+<p>
+Remove a text file only if it exists: 
+</p>
+<p class="codeexample">
+DIM textfile_name AS STRING(12)
+</p>
+<p class="codeexample">
+textfile_name = &quot;textfile_no1&quot;
+</p>
+<p class="codeexample">
+IF IS_FILE textfile_name THEN 
+</p>
+<p class="codeexample">
+    DEL textfile_name
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DIR.html">DIR</a>
+, 
+<a href="DEL.html">DEL</a>
+<span class="MsoHyperlink">, </span><a href="IS_PROG.html">IS_PROG</a>
+</p>
+</body>
+</html>

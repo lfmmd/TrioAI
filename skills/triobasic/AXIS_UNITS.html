@@ -1,0 +1,83 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXIS_UNITS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXIS_UNITS">
+</head>
+<body>
+<h1>AXIS_UNITS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+AXIS_UNITS is a conversion factor that allows the user to
+scale the edges/ stepper pulses to a more convenient scale. AXIS_UNITS is only
+used when a 
+<a href="FRAME.html">FRAME</a>
+ is active and only applies to the
+parameters in the axis coordinate system (after the 
+<a href="FRAME.html">FRAME</a>
+).
+This includes 
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+, 
+<a href="AXIS_FS_LIMIT.html">AXIS_FS_LIMIT</a>
+, 
+<a href="AXIS_RS_LIMIT.html">AXIS_RS_LIMIT</a>
+
+and 
+<a href="MPOS.html">MPOS</a>
+. 
+</p>
+<p class="warning">
+<a href="MPOS.html">MPOS</a>
+ will use 
+<a href="UNITS.html">UNITS</a>
+
+when 
+<a href="FRAME.html">FRAME</a>
+ =0 and AXIS_UNITS when 
+<a href="FRAME.html">FRAME</a>
+
+&lt;&gt; 0
+</p>
+<h2>Value:</h2>
+<p>
+The number of counts per required units (default =1). Examples:
+</p>
+<h2>Example:</h2>
+<p>
+A motor on a robot has an 18bit encoder and uses an 18bit
+encoder and 31:1 ratio gearbox. To simplify reading AXIS_DPOS the user wants to
+use radians. 
+</p>
+<p class="codeexample">
+encoder_bits = 2^10
+</p>
+<p class="codeexample">
+gearbox_ratio = 31
+</p>
+<p class="codeexample">
+radians_conversion=2*PI
+</p>
+<p class="codeexample">
+AXIS_UNITS=( encoder_bits * gearbox_ratio)/
+radians_conversion
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+, 
+<a href="AXIS_FS_LIMIT.html">AXIS_FS_LIMIT</a>
+, 
+<a href="AXIS_RS_LIMIT.html">AXIS_RS_LIMIT</a>
+,
+
+<a href="UNITS.html">UNITS</a>
+</p>
+</body>
+</html>

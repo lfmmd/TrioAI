@@ -1,0 +1,228 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>POW/**/POWL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="_Toc317749443"></a>
+<a name="O_1708"></a>
+POW/**/POWL</h1>
+<p class="Category">
+Function
+</p>
+<p>
+Calculates a power.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+REAL/LREAL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Real value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EXP
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+REAL/LREAL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Exponent.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+REAL/LREAL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Result: IN at the 'EXP' power.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+In ST, the ** operator may be used. In LD, the operation is
+executed only if the input rung (EN) is TRUE. The output rung (ENO) keeps the
+same value as the input rung. In IL, the input must be loaded in the current
+result before calling the function. The exponent (second input of the function)
+must be the operand of the function.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+Q := POW (IN, EXP);
+<br>
+
+Q := IN ** EXP;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="113" height="74" src="Math-POW_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The function is executed only if EN is TRUE.
+<br>
+
+ENO keeps the same value as EN.
+<br>
+<img width="218" height="81" src="Math-POW_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Math-ABS.html">ABS</a>
+</p>
+<p>
+<a href="Math-TRUNC.html">TRUNC</a>
+</p>
+<p>
+<a href="Math-LOG.html">LOG</a>
+</p>
+<p>
+<a href="Math-SQRT.html">SQRT</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

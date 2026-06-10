@@ -1,0 +1,223 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Execution order of programs</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Execution order of programs</h1>
+<p>
+By default, programs created in a task are executed in the
+order they’ve been created. This means that if program A has been created
+before program B, when the task executes, its cycle will look like:
+</p>
+<p class="codeexample">
+Program A
+</p>
+<p class="codeexample">
+Program B
+</p>
+<p class="codeexample">
+Other programs
+</p>
+<p>
+Sometimes it is necessary to change the order of execution
+of programs in the task cycle. 
+<i>Motion</i> Perfect provides this ability via
+the “Programs execution order” tool. It can be launched either from the context
+menu of the task in Controller and Project tree views, or from the task
+settings “Execution mode” page.
+</p>
+<p>
+<img width="628" height="475" src="IecExecutionOrder_files/image001.png">
+</p>
+<p>
+The tool lists all main programs in the task. Sub-programs
+and User defined function blocks are not listed here, because they are not
+executed in the cycle, but rather are called from other main programs.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Command
+</p>
+
+  
+</td>
+<td width="984" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Move up
+</p>
+
+  
+</td>
+<td width="984" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Moves the selected program up in the task cycle. This
+  means that this program will be executed before programs at lower positions
+  in the list
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Move down
+</p>
+
+  
+</td>
+<td width="984" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Moves the selected program down in the task cycle. This
+  means that this program will be executed after programs at higher positions
+  in the list
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable/Disable
+</p>
+
+  
+</td>
+<td width="984" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable or disable a program in the task cycle. When a
+  program is not enabled, it will not be executed in the cycle, even though it
+  will be compiled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Undo
+</p>
+
+  
+</td>
+<td width="984" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Undo the last operation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Redo
+</p>
+
+  
+</td>
+<td width="984" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Redo the last operation
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+For example, there are three programs in the task
+</p>
+<p class="codeexample">
+MAIN
+</p>
+<p class="codeexample">
+INPUT
+</p>
+<p class="codeexample">
+OUTPUT
+</p>
+<p class="codeexample">
+DBG
+</p>
+<p>
+MAIN program contains the main controller logic, INPUT
+program reads some digital inputs, OUTPUT writes to some analogue outputs, and
+DBG program contains some logging and debugging functionality, that is not
+needed in a production environment. They have been created in order “MAIN”,
+“DBG”, “INPUT”, “OUTPUT”. However, the execution order needs to be:
+</p>
+<p class="codeexample">
+INPUT
+</p>
+<p class="codeexample">
+MAIN
+</p>
+<p class="codeexample">
+OUTPUT
+</p>
+<p>
+The DBG program is only needed during development and
+tuning, so it is disabled in the task cycle by removing the corresponding check
+mark in the list.
+</p>
+<p class="note">
+<span class="MsoIntenseEmphasis">Note that actions in this window are executed immediately
+and that changing the order of execution while the task is running is not
+allowed.</span></p>
+</body>
+</html>

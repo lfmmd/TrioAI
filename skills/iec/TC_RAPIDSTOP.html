@@ -1,0 +1,296 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_RAPIDSTOP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_RAPIDSTOP">
+</head>
+<body>
+<h1>TC_RAPIDSTOP</h1>
+<h2>Type:</h2>
+<p>
+Motion Function.
+</p>
+<h2>Function:</h2>
+<p>
+Issues a new RAPIDSTOP motion request for the axis specified
+by 'AxisNo'.
+</p>
+<h2>Inputs:</h2>
+<p class="fixed">
+   
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rising edge requests execution
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mode : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RAPIDSTOP mode
+</p>
+
+  
+<table class="Parameter" border="1" cellspacing="0" cellpadding="0" style="margin-left:    1.9pt">
+
+   
+<tr>
+<td width="90" valign="top">
+
+    
+<p>
+0 or none 
+</p>
+
+    
+</td>
+<td valign="top">
+
+    
+<p>
+Cancels axis commands from the MTYPE buffers 
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="90" valign="top">
+
+    
+<p>
+1 
+</p>
+
+    
+</td>
+<td valign="top">
+
+    
+<p>
+Cancels all buffered moves on all axis (excluding the PMOVE)
+    
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="90" valign="top">
+
+    
+<p>
+2 
+</p>
+
+    
+</td>
+<td valign="top">
+
+    
+<p>
+Cancels all active and buffered moves including the PMOVE
+</p>
+
+    
+</td>
+</tr>
+
+  
+</table>
+
+  
+<p class="tablecontent">
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when function has completed normally
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+The RAPIDSTOP command cancels the currently executing move
+on ALL axes.&nbsp; 
+</p>
+<p>
+Velocity profiled moves, for example; FORWARD, REVERSE, MOVE,
+MOVEABS, MOVECIRC, MHELICAL, MOVEMODIFY, will be ramped down at the programmed DECEL
+or FASTDEC rate then terminated.&nbsp;Other move types will be terminated
+immediately.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample" style="margin-left:36.0pt">
+Inst_TC_RAPIDSTOP( Execute
+(*BOOL*)
+, Mode
+(*USINT*)
+
+);
+</p>
+<h3>Example 1:</h3>
+<p>
+Program below starts with Initialisation subprogram ST_INIT.
+Once WDOG is enabled, axis 0 and axis 1 are set in motion with RapidStop set up
+when Stop push button is pressed. In this example, mode 0 is used to clear axis
+commands in MTYPE buffer.
+</p>
+<p class="codeexample">
+// Initialise axes parameters
+<br>
+
+
+ST_Init
+();
+<br>
+
+
+<br>
+
+
+// Switch on WDOG
+<br>
+
+
+TCW_WDOG
+(
+1
+);
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+// Move axis0 and axis1
+(relative) 1000 units
+<br>
+
+Inst_TC_MOVE1_0(
+TRUE
+,
+0
+,
+1000
+);&nbsp;
+<br>
+
+Inst_TC_MOVE1_1(
+TRUE
+,
+1
+,
+1000
+);
+<br>
+
+
+<br>
+
+
+// Activate RapidStop when Stop Push Button is
+pressed
+<br>
+
+Inst_TC_RAPIDSTOP(Stop_PB,
+0
+);
+</p>
+<h2>FBD Language:</h2>
+<p align="center">
+<img width="389" height="99" id="Picture 1" src="TC_RAPIDSTOP_files/image001.png">
+</p>
+<h3>Example 1:</h3>
+<p>
+Program below starts with Initialisation subprogram
+FBD_INIT. Once WDOG is enabled, axis 0 is set in motion with RapidStop set up
+when Stop push button is pressed. In this example, mode 0 is used to clear axis
+commands in MTYPE buffer.
+</p>
+<p>
+<img width="672" height="514" id="Picture 5" src="TC_RAPIDSTOP_files/image002.png">
+</p>
+<h2>LD Language: </h2>
+<p align="center">
+<img width="629" height="69" id="Picture 4" src="TC_RAPIDSTOP_files/image003.png">
+</p>
+<h3>Example 1:</h3>
+<p>
+Axes 0 and 1 are to move with interpolation; axis 0 to move
+10000 units and axis 1 to move 20000 units. RapidStop is set to clear axis
+commands in MTYPE buffer (mode 0) when Stop push button is pressed. If the move
+is uninterrupted, WDOG is switched off when the move is done.
+</p>
+<p>
+<img width="672" height="329" id="Picture 2" src="TC_RAPIDSTOP_files/image004.png">
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBasic Error List</a>
+</p>
+</body>
+</html>

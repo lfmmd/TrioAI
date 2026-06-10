@@ -1,0 +1,71 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CPU_TEMP_MAX</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CPU_TEMP_MAX">
+</head>
+
+
+
+<body>
+<h1>CPU_TEMP_MAX</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = CPU_TEMP_MAX
+</p>
+<p class="fixed">
+CPU_TEMP_MAX = value
+</p>
+<h2>Description:</h2>
+<p>
+This keeps a record of the highest temperature the CPU has
+reached.
+</p>
+<p>
+It can be reset by writing a value to it in degrees Celsius
+(°C), usually zero.
+</p>
+<p class="warning">
+CPU_TEMP_MAX is not available for Euro404/408, MC403, MC403-Z,
+MC405, MC405-Y, MC4NE and MC4N-RTEX.
+</p>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+Display the maximum temperature the CPU has reached on the
+command line.
+</p>
+<p class="codeexample">
+PRINT CPU_TEMP_MAX
+</p>
+<p>
+Will display:
+</p>
+<p class="codeexample">
+58.1
+</p>
+<h3>Example 2:</h3>
+<p>
+Reset the maximum temperature.
+</p>
+<p class="codeexample">
+CPU_TEMP_MAX = 0
+</p>
+<h2>See also:</h2>
+<p>
+<a href="CPU_TEMP.html">CPU_TEMP</a>
+</p>
+</body>
+
+
+
+</html>

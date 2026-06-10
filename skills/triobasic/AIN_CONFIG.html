@@ -1,0 +1,203 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AIN_CONFIG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AIN_CONFIG">
+</head>
+<body>
+<h1>AIN_CONFIG</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+AIN_CONFIG(channel) = value
+</p>
+<h2>Description:</h2>
+<p>
+Sets the mode of operation for an analogue input. This
+operation can be performed on any external analogue input from a Trio CAN
+Analogue input module P326/P328. 
+</p>
+<p>
+This function requires CANIO firmware 2.3.2 or later.
+</p>
+<p class="note">
+The CAN analogue module P326 has 8 x 12 bit inputs.
+</p>
+<p class="note">
+The CAN analogue module P328 has 8 x 16 bit inputs.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue input channel number.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="41" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bipolar, -10&nbsp;V .. +10&nbsp;V
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="41" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unipolar, 0 .. +10&nbsp;V
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="41" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bipolar, -5&nbsp;V .. +5&nbsp;V
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="41" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unipolar, 0 .. +5&nbsp;V
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Set analogue input 5 to range 0 to 5&nbsp;V. The 12 bit
+value range will be 0 to 4095 where 4095 := 5&nbsp;V.
+</p>
+<p class="codeexample">
+AIN_CONFIG(5) = 3
+</p>
+<h2>See also:</h2>
+<p>
+<a href="AIN.html">AIN</a>
+, 
+<a href="AOUT_CONFIG.html">AOUT_CONFIG</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

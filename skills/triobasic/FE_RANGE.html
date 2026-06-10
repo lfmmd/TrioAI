@@ -1,0 +1,93 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FE_RANGE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FE_RANGE">
+</head>
+<body>
+<h1>FE_RANGE</h1>
+<h2>Type: </h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Following error report range. When the 
+<a href="FE.html">FE</a>
+
+exceeds this value, the axis has bit 1 in the 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+
+axis parameter set.
+</p>
+<h2>Value:</h2>
+<p>
+The value in user 
+<a href="UNITS.html">UNITS</a>
+ above which
+bit 1 is set in 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+</p>
+<h2>Example:</h2>
+<p>
+Using FE_RANGE to slow a machine down when the 
+<a href="FE.html">FE</a>
+ is too large.
+</p>
+<p class="codeexample">
+'Initialise the axis
+</p>
+<p class="codeexample">
+FE_RANGE = 10
+</p>
+<p class="codeexample">
+FE_LIMIT = 15
+</p>
+<p class="codeexample">
+SPEED = 100
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'loop to check if FE_RANGE has been exceeded
+</p>
+<p class="codeexample">
+WHILE NOT IDLE
+</p>
+<p class="codeexample">
+VR(10) = AXISSTATUS
+</p>
+<p class="codeexample">
+IF READBIT(1, 10) THEN
+</p>
+<p class="codeexample">
+  'Slow down by 1%
+</p>
+<p class="codeexample">
+  SPEED = SPEED * 0.99
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+SPEED = 100
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FE.html">FE</a>
+, 
+<a href="FE_LATCH.html">FE_LATCH</a>
+,
+
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+, 
+<a href="FE_LIMIT_MODE.html">FE_LIMIT_MODE</a>
+</p>
+</body>
+</html>

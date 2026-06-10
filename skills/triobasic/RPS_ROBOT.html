@@ -1,0 +1,152 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ROBOT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ROBOT">
+</head>
+<body>
+<h1>ROBOT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ROBOT(identity | function)
+</p>
+<h2>Description:</h2>
+<p>
+RPS can configure up to 8 robots in the same system. To let
+the program know what Robot it should direct its motion commands and other
+parameters to, a robot must be selected first by invoking 
+<b>ROBOT(</b>identity
+<b>)</b>
+command.
+</p>
+<p>
+Once a Robot is selected, it will stay with that process
+until the movements produced by that process are finished and program stops. If
+a program stops (process finishes) then the Robot will not be released until
+buffers are idle. It is possible to check what process hold a particular Robot
+by reading ROBOT(identity) command. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+identity:            
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Robot unique identity number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Function
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1 = release robot from process. Note: releasing a
+  robot must be in the same process as Robot(identity)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Move Robot(0) between 2 defined points whilst input 303 is
+active. Release robot if input 303 is not active.
+</p>
+<p class="codeexample">
+ROBOT
+(
+0
+)
+<br>
+
+
+<br>
+
+
+WHILE
+ IN
+(
+303
+) = 
+ON
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MOVEJ
+ GTA
+(
+&quot;pInfeed_pt1&quot;
+)
+S:=
+10
+ O:=
+&quot;infeed&quot;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MOVEJ
+ GTA
+(
+&quot;pOutfeed_pt1&quot;
+)
+S:=
+10
+ O:=
+&quot;outfeed&quot;
+<br>
+
+
+WEND
+<br>
+
+
+<br>
+
+
+ROBOT
+(-
+1
+)
+</p>
+<h2>See Also:</h2>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

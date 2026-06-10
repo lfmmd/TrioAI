@@ -1,0 +1,235 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>&gt; GT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="GT">
+</head>
+<body>
+<h1><a name="_Toc317749380"></a>
+<a name="O_1343"></a>
+&gt; GT</h1>
+<p class="Category">
+Operator
+</p>
+<p>
+Test if first input is greater than second input.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+IN1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+First input.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+IN2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Second input.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+TRUE if IN1 &gt; IN2.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+Both inputs must have the same type. In LD language, the
+input rung (EN) enables the operation, and the output rung is the result of the
+comparison. In IL language, the GT instruction performs the comparison between
+the current result and the operand. The current result and the operand must
+have the same type.
+</p>
+<p>
+Comparisons can be used with strings. In that case, the
+lexical order is used for comparing the input strings. For instance,
+&quot;ABC&quot; is less than &quot;ZX&quot;; &quot;ABCD&quot; is greater than
+&quot;ABC&quot;.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+Q := IN1 &gt; IN2;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="120" height="76" src="Comp-GT_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The comparison is executed only if EN is TRUE.
+<br>
+<img width="220" height="82" src="Comp-GT_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Comp-LT.html">&lt; LT</a>
+</p>
+<p>
+<a href="Comp-GE.html">&gt;= GE</a>
+</p>
+<p>
+<a href="Comp-LE.html">&lt;= LE</a>
+</p>
+<p>
+<a href="Comp-EQ.html">= EQ</a>
+</p>
+<p>
+<a href="Comp-NE.html">&lt;&gt; NE</a>
+</p>
+<p>
+<a href="Comp-CMP.html">CMP</a>
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,215 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>OR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="OR">
+</head>
+<body>
+<h1>OR</h1>
+<h2>Type:</h2>
+<p class="Category">
+Logical and Bitwise operator
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+&lt;expression1&gt; OR &lt;expression2&gt;
+</p>
+<h2>Description:</h2>
+<p>
+This performs an OR function between corresponding bits of
+the integer part of two valid TrioBASIC expressions.
+</p>
+<p>
+The OR function between two bits is defined as follows:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+OR
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid Trio BASIC expression
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid Trio BASIC expression
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Use OR to allow the program to progress if there is a 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+ or an input is pressed
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(2)=ON OR MOTION_ERROR
+</p>
+<h3>Example 2:</h3>
+<p>
+Calculate the bitwise OR between values
+</p>
+<p class="codeexample">
+result=10 OR (2.1*9)
+</p>
+<p>
+Trio BASIC evaluates the parentheses first giving the value
+18.9, but as was specified earlier, only the integer part of the number is used
+for the operation, therefore this expression is equivalent to:
+</p>
+<p class="codeexample">
+result=10 OR 18
+</p>
+<p>
+The OR is a bitwise operator and so the binary action taking
+place is:
+</p>
+<p class="codeexample">
+     01010
+</p>
+<p class="codeexample">
+OR   
+<u>10010</u></p>
+<p class="codeexample">
+     11010
+</p>
+<p>
+Therefore result holds the value 26
+</p>
+</body>
+</html>

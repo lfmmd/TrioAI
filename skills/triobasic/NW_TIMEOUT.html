@@ -1,0 +1,225 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NW_TIMEOUT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NW_TIMEOUT">
+</head>
+<body>
+<h1>NW_TIMEOUT</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+NW_TIMEOUT(slot, param_index) = value
+</p>
+<h2>Description:</h2>
+<p>
+NW_TIMEOUT is a slot based system parameter used to define
+the EtherCAT network timeout parameters during network startup.  A timeout
+value can be set for each phase of the startup sequence or for the overall
+EtherCAT startup.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot index for the EtherCAT port.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+param_index:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Identifies which timeout parameter to configure.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Index
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Overall ESM* startup timeout
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initial to pre-operational timeout
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pre-operational to Safe-operational timeout
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Safe-operational to Operational timeout
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Timeout value.  (units depend upon parameter)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+* ESM = EtherCAT State Machine.
+</p>
+<h2>Example:</h2>
+<p>
+A slave node requires 4 seconds to allow it
+time to go from Pre-operational to Safe-Operational state.  The EtherCAT
+network is running on Slot 0 of the Motion Coordinator.  Add the NW_TIMEOUT to
+MC_CONFIG:
+</p>
+<p class="codeexample">
+NW_TIMEOUT(0, 2) = 4000
+</p>
+<h2>See Also:</h2>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

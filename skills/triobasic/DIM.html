@@ -1,0 +1,892 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DIM</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DIM">
+</head>
+<body>
+<h1>DIM.. AS..</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Variable
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DIM name AS type[ = initial_value]
+</p>
+<p class="fixed">
+DIM name AS type(size1[, size2[, size3]])
+</p>
+<h2>Description</h2>
+<p>
+By default, local variables are of type FLOAT and do not
+require declaration, but it is advisable to declare all variables explicitly,
+which allows types other than FLOAT to be specified and the declaration of arrays.
+</p>
+<p class="tip">
+When 
+<a href="COMPILE_MODE.html">COMPILE_MODE</a>
+ is set to 1,
+then all local variables must be declared, which is a useful aid to avoid
+problems with misspelt variables.
+</p>
+<p>
+The types that may be used are shown in the table below:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Type_=_BOOLEAN:">BOOLEAN</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1-bit binary value (
+<a href="TRUE.html">TRUE</a>
+ or 
+<a href="FALSE.html">FALSE</a>
+)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Type_=_FLOAT:">FLOAT</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64-bit floating point number (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Type_=_INTEGER:">INTEGER</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64-bit signed integer value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Type_=_STRING:">STRING</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ASCII text
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+<a name="_Type_=_BOOLEAN:"></a>
+Local variables can be declared in
+an 
+<a href="INCLUDE.html">INCLUDE</a>
+ file.
+</p>
+<p class="tip">
+Note that for a string array, the last bracketed value is always
+the number of characters that the string may contain.
+</p>
+<p class="tip">
+The dimension sizes and string length must all be constants.
+</p>
+<p class="tip">
+If an initial value is provided, this will only be assigned when
+the variable is created.
+</p>
+<p>
+Arrays are indexed from 0 (zero) to the dimension’s size
+minus 1, and the field operator may be used to access the “dims” and “dimsize”
+fields to determine the array’s number of dimensions and the number of elements
+in each dimension. See the 
+<a href="ArrayIndexing.html">() Array Indexing</a>
+
+and 
+<a href="Field_operator.html">. Field operator</a>
+ pages for more
+information.
+</p>
+<h2>BOOLEAN:</h2>
+<p class="fixed">
+DIM name AS BOOLEAN[(size[, size[, size]])]
+</p>
+<h2>Description:</h2>
+<p>
+Declare a variable as a BOOLEAN value. This can be used with
+
+<a href="TRUE.html">TRUE</a>
+ and 
+<a href="FALSE.html">FALSE</a>
+, any non-zero
+value written to a BOOLEAN variable will set its state to 
+<a href="TRUE.html">TRUE</a>
+.
+
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any user-defined name containing lower case alpha, numerical
+  or underscore (_) characters.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+size:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of elements in each dimension of the array,
+  up to 3 dimensions.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<p>
+Use a local variable as a flag to track the ok status of a
+machine. 
+</p>
+<p class="codeexample">
+DIM machine_ok AS BOOLEAN
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+machine_ok = TRUE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WHILE machine_ok
+</p>
+<p class="codeexample">
+  IF MOTION_ERROR &lt;&gt; 0 AND IN(0) THEN
+</p>
+<p class="codeexample">
+    machine_ok = FALSE
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h2><a name="_Type_=_FLOAT:"></a>
+FLOAT:</h2>
+<p class="fixed">
+DIM name AS FLOAT[(size[, size[, size]])]
+</p>
+<h2>Description:</h2>
+<p>
+Declare a variable as a floating-point value. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any user-defined name containing lower case alpha, numerical
+  or underscore (_) characters.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+size:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of elements in each dimension of the array,
+  up to 3 dimensions.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<p>
+Use an array of positions to run a sequence of moves. 
+</p>
+<p class="codeexample">
+DIM position AS FLOAT(10)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+position(0) = 0
+</p>
+<p class="codeexample">
+position(1) = 10.3214
+</p>
+<p class="codeexample">
+position(2) = 15.123
+</p>
+<p class="codeexample">
+position(3) = 20.77569
+</p>
+<p class="codeexample">
+position(4) = 25.2215
+</p>
+<p class="codeexample">
+position(5) = 22.37895
+</p>
+<p class="codeexample">
+position(6) = 21.7897
+</p>
+<p class="codeexample">
+position(7) = 20.1457
+</p>
+<p class="codeexample">
+position(8) = 15.4457
+</p>
+<p class="codeexample">
+position(9) = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FOR x = 0 TO 9 
+</p>
+<p class="codeexample">
+  MOVEABS(position(x))
+</p>
+<p class="codeexample">
+NEXT x
+</p>
+<h2><a name="_Type_=_INTEGER:"></a>
+INTEGER:</h2>
+<p class="fixed">
+DIM name AS INTEGER[(size[, size[, size]])]
+</p>
+<h2>Description:</h2>
+<p>
+Declare a variable as an integer value. If a floating-point
+number is assigned to an integer variable then the decimal part is truncated. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any user-defined name containing lower case alpha, numerical
+  or underscore (_) characters.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+size:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of elements in each dimension of the array,
+  up to 3 dimensions.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples</h2>
+<h3>Example1:</h3>
+<p>
+Declare a local variable as an integer to use when reading
+in characters from the serial port. 
+</p>
+<p class="codeexample">
+DIM character AS INTEGER
+</p>
+<p class="codeexample">
+DIM message AS STRING(200)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WHILE KEY#1
+</p>
+<p class="codeexample">
+  GET#1, character
+</p>
+<p class="codeexample">
+  message = message + CHR(character)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3>Example2:</h3>
+<p>
+Declare a 3-dimensional array of Integers and load with
+values. 
+</p>
+<p class="codeexample">
+DIM i, j, k AS INTEGER
+<br>
+
+DIM me AS INTEGER(20, 20, 20)
+<br>
+
+  
+<br>
+
+FOR i = 0 TO 19
+<br>
+
+  FOR j = 0 TO 19
+<br>
+
+    FOR k = 0 TO 19
+<br>
+
+      me(i, j, k) = i * 10000 + j * 100 + k
+<br>
+
+    NEXT k
+<br>
+
+  NEXT j
+<br>
+
+NEXT i
+<br>
+
+  
+<br>
+
+PRINT me(2, 5, 18)
+</p>
+<h2><a name="_Type_=_STRING:"></a>
+STRING:</h2>
+<p class="fixed">
+DIM name AS STRING(length)
+</p>
+<p class="fixed">
+DIM name AS STRING(size, length)
+</p>
+<p class="fixed">
+DIM name AS STRING(size1, size2, length)
+</p>
+<h2>Description:</h2>
+<p>
+Declare a variable as a string so that you can use it in 
+<a href="PRINT.html">PRINT</a>
+ statements, part of a logical condition or anywhere
+in the TrioBASIC that uses text. The variable can be assigned by any function
+or parameter that generates a string or manually. 
+</p>
+<p class="tip">
+You can use the 
+<a href="STR.html">STR</a>
+ function to change a
+numerical value to a string. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any user-defined name containing lower case alpha, numerical
+  or underscore (_) characters.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+size
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of elements in each dimension of the array,
+  up to 2 dimensions.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+length:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Maximum number of characters that the variable can hold
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+Pre-define a set of error strings to use later:
+</p>
+<p class="codeexample">
+DIM error1 AS STRING(20)
+</p>
+<p class="codeexample">
+error1 = &quot;Feed jammed&quot;
+</p>
+<p class="codeexample">
+DIM error2 AS STRING(20)
+</p>
+<p class="codeexample">
+error2 = &quot;Cutter jammed&quot;
+</p>
+<p class="codeexample">
+DIM error3 AS STRING(20)
+</p>
+<p class="codeexample">
+error3 = &quot;Out of material&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+display_error:
+</p>
+<p class="codeexample">
+IF error_number = 1 THEN
+</p>
+<p class="codeexample">
+  PRINT error1
+</p>
+<p class="codeexample">
+ELSEIF error_number = 2 THEN
+</p>
+<p class="codeexample">
+  PRINT error2
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT error3
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+Read in characters from a channel and append them to a
+string variable then finally printing them.
+</p>
+<p class="codeexample">
+DIM captured_text AS STRING(50)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+captured_text = &quot;&quot;
+</p>
+<p class="codeexample">
+WHILE char &lt;&gt; 13 AND count &lt; 50
+</p>
+<p class="codeexample">
+  TICKS = 10000 'Timeout on character
+<br>
+
+  WAIT UNTIL KEY#5 OR TICKS &lt; 0
+</p>
+<p class="codeexample">
+  IF TICKS &lt; 0 THEN
+<br>
+
+    EXIT_LOOP
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    GET#5, char
+</p>
+<p class="codeexample">
+    captured_text = captured_text + CHR(char)
+</p>
+<p class="codeexample">
+    count = count + 1
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+PRINT captured_text
+</p>
+<h3>Example 3:</h3>
+<p>
+Using a string variable decide which motion routine to
+execute:
+</p>
+<p class="codeexample">
+  IF g_value = &quot;G00&quot; THEN 'Rapid positioning
+</p>
+<p class="codeexample">
+    SPEED = fast_speed
+</p>
+<p class="codeexample">
+    MOVE(x, y, z)
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+    SPEED = standard_speed
+</p>
+<p class="codeexample">
+  ELSEIF g_value = &quot;G01&quot; THEN 'Linear move
+</p>
+<p class="codeexample">
+    MOVE(x, y, z)
+</p>
+<p class="codeexample">
+  ELSEIF g_value = &quot;G02&quot; THEN 'Anticlockwise circular
+move
+</p>
+<p class="codeexample">
+    MOVECIRC(x, y, x + i_value, y + j_value, 0)
+</p>
+<p class="codeexample">
+  ELSEIF g_value = &quot;G03&quot; THEN 'Clockwise circular
+move
+</p>
+<p class="codeexample">
+    MOVECIRC(x, y, x + i_value, y + j_value, 1)
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    PRINT &quot;Ignoring unsupported token: &quot;; g_value
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<h3>Example 4:</h3>
+<p>
+Define a multiple array of string and print the values on terminal
+0.
+</p>
+<p class="codeexample">
+DIM arrayofstring AS STRING(2, 3, 4)
+<br>
+
+
+<br>
+
+arrayofstring(0, 0) = &quot;abcd&quot;
+<br>
+
+arrayofstring(0, 1) = &quot;efgh&quot;
+<br>
+
+arrayofstring(0, 2) = &quot;ijkl&quot;
+<br>
+
+arrayofstring(1, 0) = &quot;mnop&quot;
+<br>
+
+arrayofstring(1, 1) = &quot;qrst&quot;
+<br>
+
+arrayofstring(1, 2) = &quot;uvwx&quot;
+<br>
+
+
+<br>
+
+PRINT arrayofstring(0, 0)
+<br>
+
+PRINT arrayofstring(0, 1)
+<br>
+
+PRINT arrayofstring(0, 2)
+<br>
+
+PRINT arrayofstring(1, 0)
+<br>
+
+PRINT arrayofstring(1, 1)
+<br>
+
+PRINT arrayofstring(1, 2)
+</p>
+<p>
+<b><u>Result on Terminal 0:</u></b></p>
+<p class="codeexample">
+abcd
+</p>
+<p class="codeexample">
+efgh
+</p>
+<p class="codeexample">
+ijkl
+</p>
+<p class="codeexample">
+mnop
+</p>
+<p class="codeexample">
+qrst
+</p>
+<p class="codeexample">
+uvwx
+</p>
+<h3>Example 4:</h3>
+<p>
+This example shows how initialisation in a DIM statement is
+different to a DIM statement followed by an assignment statement.
+</p>
+<p class="codeexample">
+DIM a AS INTEGER = TICKS
+</p>
+<p class="codeexample">
+DIM b AS INTEGER
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+b = TICKS
+</p>
+<p class="codeexample">
+PRINT a, b
+</p>
+<p>
+<b><u>Result on Terminal 0:</u></b></p>
+<p class="codeexample">
+-777882&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-798843
+<br>
+
+-777882&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-799764
+<br>
+
+-777882&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-800598
+<br>
+
+-777882&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-801450
+<br>
+
+-777882&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-802214
+<br>
+
+-777882&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-803282
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ArrayIndexing.html">() Array Indexing</a>
+, 
+<a href="Field_operator.html">. Field operator</a>
+, 
+<a href="CHR.html">CHR</a>
+, 
+<a href="COMPILE_MODE.html">COMPILE_MODE</a>
+, 
+<a href="DATE$.html">DATE$</a>
+, 
+<a href="DAY$.html">DAY$</a>
+, 
+<a href="HEX.html">HEX</a>
+, 
+<a href="STATIC.html">STATIC</a>
+,
+
+<a href="STR.html">STR</a>
+, 
+<a href="TIME$.html">TIME$</a>
+</p>
+</body>
+</html>

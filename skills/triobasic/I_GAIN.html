@@ -1,0 +1,59 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>I_GAIN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="I_GAIN">
+</head>
+<body>
+<h1>I_GAIN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Used as part of the closed loop control, adding integral
+gain to a system reduces position error when at rest or moving steadily. It
+will produce or increase overshoot and may lead to oscillation.
+</p>
+<p>
+For an integral gain Ki and a sum of position errors &#8747;
+<sub>e</sub>,
+the contribution to the output signal is:
+</p>
+<p class="Formula">
+O
+<sub>i</sub> = K
+<sub>i</sub> × &#8747;
+<sub>e</sub></p>
+<h2>Value:</h2>
+<p>
+The integral gain is a constant which is multiplied by the
+sum of following errors. Default value = 0
+</p>
+<h2>Example:</h2>
+<p>
+Setting the gain values as part of a STARTUP program
+</p>
+<p class="codeexample">
+P_GAIN=1
+</p>
+<p class="codeexample">
+I_GAIN=0.01
+</p>
+<p class="codeexample">
+D_GAIN=0
+</p>
+<p class="codeexample">
+OV_GAIN=0
+</p>
+<p class="codeexample">
+…
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,177 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>GET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="GET">
+</head>
+<body>
+<h1>GET</h1>
+<h2>Type:</h2>
+<p class="Category">
+File Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+GET [#channel,] variable
+</p>
+<h2>Description:</h2>
+<p>
+Waits for the arrival of a single character on the serial.
+The ASCII value of the character is assigned to the variable specified. The
+user program will wait until a character is available. 
+</p>
+<p class="tip">
+Poll 
+<a href="KEY.html">KEY</a>
+ to check to if a character has
+been received before performing a GET.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+#channel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+See # for the full channel list (default 0 if omitted)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The variable to store the received character, this may
+  be local variable, 
+<a href="VR.html">VR</a>
+ or 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+Performing a GET or GET#0 will suspend the command line until
+a character is sent on that channel. 
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Ask a user to enter ‘y’ for yes or ‘n’ for no on channel 5
+</p>
+<p class="codeexample">
+start:
+</p>
+<p class="codeexample">
+  PRINT #5, &quot;Press 'y' for YES or 'n' for NO&quot;
+</p>
+<p class="codeexample">
+  GET #5, char
+</p>
+<p class="codeexample">
+  IF char = 121 THEN
+</p>
+<p class="codeexample">
+    PRINT #5, &quot;YES selected&quot;
+</p>
+<p class="codeexample">
+  ELSEIF char = 110 THEN
+</p>
+<p class="codeexample">
+    PRINT #5, &quot;NO selected&quot;
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    PRINT #5, &quot;BAD selection&quot;
+</p>
+<p class="codeexample">
+    GOTO start
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+Clear the serial buffer then request the user to enter a
+name
+</p>
+<p class="codeexample">
+WHILE KEY #2
+</p>
+<p class="codeexample">
+  GET #2, dump
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+PRINT #2, &quot;ENTER NAME&quot;
+</p>
+<p class="codeexample">
+WAIT UNTIL KEY #2
+</p>
+<p class="codeexample">
+count = 0
+</p>
+<p class="codeexample">
+WHILE char &lt;&gt; $D 'Carriage return
+</p>
+<p class="codeexample">
+  GET #2, char
+</p>
+<p class="codeexample">
+  VR(count) = char
+</p>
+<p class="codeexample">
+  count = count + 1
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="LINPUT.html">LINPUT</a>
+, 
+<a href="PRINT.html">PRINT</a>
+,
+
+<a href="KEY.html">KEY</a>
+</p>
+</body>
+</html>

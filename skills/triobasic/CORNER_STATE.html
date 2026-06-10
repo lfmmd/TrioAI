@@ -1,0 +1,416 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CORNER_STATE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CORNER_STATE">
+</head>
+<body>
+<h1>CORNER_STATE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Allows a BASIC program to interact with the move loading
+process.
+</p>
+<p class="tip">
+This can be used to facilitate tool adjustment such as knife
+rotation at sharp corners. 
+</p>
+<p class="note">
+This parameter is only active when CORNER_MODE bit 2 is set. It
+is also required to set bit 1 of CORNER_MODE with 
+<a href="STOP_ANGLE.html">STOP_ANGLE</a>
+
+set to less than or equal to 
+<a href="RAISE_ANGLE.html">RAISE_ANGLE</a>
+ to stop
+the motion. 
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ready for corner sequence, XY axes are stopped
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Load next XY move with 0 speed
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Next move is loaded and TANG_DIRECTION is ready
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ramp up speed and continue XY move
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Bits 0 and 2 are set by the system software. Bit 1 must be set by
+the application program that controls the corner sequence.
+</p>
+<p class="note">
+<b>Value</b> will be the combination of bits set, 0, 1, 3 and 7.
+</p>
+<h2>Example:</h2>
+<p>
+When a transition exceeds 
+<a href="RAISE_ANGLE.html">RAISE_ANGLE</a>
+
+it is required to lift a cutting knife and rotate it to a new position. The
+following process is required:
+</p>
+<ol style="list_style_type:decimal">
+<li class="indent-list-first">
+System
+sets CORNER_STATE to 1 to indicate move ready to be loaded with large angle
+change.
+</li>
+<li class="indent-list-middle">
+BASIC
+program raises knife.
+</li>
+<li class="indent-list-middle">
+BASIC
+program sets CORNER_STATE to 3.
+</li>
+<li class="indent-list-middle">
+System
+will load following move but with speed overridden to zero. This allows the
+direction to be obtained from 
+<a href="TANG_DIRECTION.html">TANG_DIRECTION</a>
+.
+</li>
+<li class="indent-list-middle">
+System
+sets CORNER_STATE to 7.
+</li>
+<li class="indent-list-middle">
+BASIC
+program orients knife. Possibly using 
+<a href="MOVETANG.html">MOVETANG</a>
+.
+</li>
+<li class="indent-list-middle">
+BASIC
+program clears CORNER_STATE to 0.
+</li>
+<li class="indent-list-last">
+System
+will ramp up speed to perform the next move.
+</li>
+</ol>
+<p>
+Axes 0 and 1 are XY, axis 2 is the knife rotation. This
+program controls the knife raise/lower and rotation synchronised with the state
+of CORNER_STATE.
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+'Set up an automatic tangential move on axis 2
+</p>
+<p class="codeexample">
+IF MTYPE = 0 THEN
+<br>
+
+    MOVETANG(0, 0)
+<br>
+
+ENDIF
+<br>
+
+
+<br>
+
+BASE(0)
+<br>
+
+CORNER_MODE = 4 'Enable the CORNER_STATE machine
+<br>
+
+RAISE_ANGLE = 15 * PI / 180 '15 degrees
+<br>
+
+
+<br>
+
+REPEAT
+<br>
+
+    WAIT UNTIL CORNER_STATE &gt; 0 'Normally CORNER_STATE = 1 here
+<br>
+
+    WAIT UNTIL MTYPE = 0 'Wait for the present XY move to finish
+<br>
+
+
+<br>
+
+    'Insert BASIC commands to raise the knife here:
+</p>
+<p class="codeexample">
+<br>
+
+    WA(100)
+<br>
+
+
+<br>
+
+    'Setting CORNER_STATE = 3 by BASIC makes the firmware
+<br>
+
+    'load the next move but at zero speed:
+<br>
+
+    CORNER_STATE = 3
+<br>
+
+
+<br>
+
+    'Firmware sets CORNER_STATE = 7 to indicate next move loaded
+<br>
+
+    WAIT UNTIL CORNER_STATE = 7
+<br>
+
+
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+    'In this example we are using MOVETANG, but if not,
+then insert BASIC commands to rotate knife here:
+<br>
+
+    WA(2)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    'Allows MOVETANG to start following new TANG_DIRECTION
+<br>
+
+    WAIT UNTIL REMAIN AXIS(2) = 0
+<br>
+
+
+<br>
+
+    'Insert BASIC commands to lower the knife here:
+</p>
+<p class="codeexample">
+<br>
+
+    WA(100)
+<br>
+
+
+<br>
+
+    'Set CORNER_MODE = 0 to ramp up speed in XY
+<br>
+
+    CORNER_STATE = 0
+<br>
+
+UNTIL FALSE
+</p>
+<p>
+Running in parallel with the above program, a separate
+program feeds XY moves into the motion generator.
+</p>
+<p class="codeexample">
+  LIMIT_BUFFERED = 10
+<br>
+
+  BASE(0, 1)
+<br>
+
+  MERGE = ON
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+  MOVEABS(200, 0)
+<br>
+
+  MOVEABS(200, 200)
+<br>
+
+  MOVEABS(0, 200)
+<br>
+
+  MOVEABS(0, 0)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+, 
+<a href="RAISE_ANGLE.html">RAISE_ANGLE</a>
+, 
+<a href="STOP_ANGLE.html">STOP_ANGLE</a>
+</p>
+</body>
+</html>

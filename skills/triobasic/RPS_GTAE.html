@@ -1,0 +1,724 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>GTAE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="GTAE">
+</head>
+<body>
+<h1>GTAE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Parameter 
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+GTAE(index) = x, y, z, u, v, w, name, ptype, rnum, rconf, revs,
+of, tool, rf, userdata
+</p>
+<h2>Description:</h2>
+<p>
+GTAE is the extended version of 
+<a href="RPS_GTA.html">GTA</a>
+
+(Global Targets Array) and 
+<a href="RPS_GTAJ.html">GTAJ</a>
+ (Global Targets
+Array – Joint) which contains an extended array of globally available positions
+for use in Robotics applications.
+</p>
+<p>
+GTAE, like GTA and GTAJ, are global to all programs and
+their values are retained. For local targets, see TARGETE.
+</p>
+<p>
+<a name="_Hlk201905437">A GTAE variable is an aggregate of
+multiple values, each value being stored in a named member as shown below.</a>
+</p>
+<table>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Trebuchet MS",sans-serif'>Keyword</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Trebuchet MS",sans-serif'>Description</span></b></p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>x,
+  y, z, u, v, w</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+64-bit floating point number
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>id </span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+32-character string
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>active
+  </span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+Boolean
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>ptype</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+8-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>rnum</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+8-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>rconf</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+8-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>revs</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+8-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>of</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+8-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>tool</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+8-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>rf</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+8-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="198" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Courier New"'>userdata</span></b></p>
+
+  
+</td>
+<td width="365" class="tablegrid">
+
+  
+<p>
+64-bit floating point number
+</p>
+
+  
+</td>
+</tr>
+</table>
+<p class="MsoNoSpacing">
+<a name="_Hlk201923101">Global targets may be activated
+or deactivated using the Boolean member “active”. Assigning ‘FALSE’ will erase the
+target (all values to 0 and empty name) and deactivate it (not visible in any
+program). </a>
+<a name="_Hlk201905579">When a target has been deactivated, it is
+like it had never been used, so deactivating a target can be done with any of
+GTA, GTAJ or GTAE and the result will be the same.</a>
+</p>
+<p class="codeexample">
+GTAE
+(
+10
+).active = 
+FALSE
+</p>
+<p class="MsoNoSpacing">
+<a name="_Hlk201924014">If it is required to reset all
+elements of the global target array, then the following command can be used.</a>
+</p>
+<p class="codeexample">
+GTAE
+(
+0, GTASIZE - 1
+).active = 
+FALSE
+</p>
+<p class="MsoNoSpacing">
+A range of GTAJs can be requested or assigned by
+specifying the start and end index separated by comma.
+</p>
+<p class="codeexample">
+GTAE
+(
+555
+, 
+559
+) = 
+90
+, -
+90
+, 
+0
+, 
+0
+, 
+0
+, 
+0
+<br>
+
+
+PRINT
+ GTE
+(
+555
+, 
+559
+) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+90.00000,-90.00000,0.00000,0.00000,0.00000,0.00000,&quot;&quot;,0,0,0,0,0,0,0,0.00000
+<br>
+
+90.00000,-90.00000,0.00000,0.00000,0.00000,0.00000,&quot;&quot;,0,0,0,0,0,0,0,0.00000
+<br>
+
+90.00000,-90.00000,0.00000,0.00000,0.00000,0.00000,&quot;&quot;,0,0,0,0,0,0,0,0.00000
+<br>
+
+90.00000,-90.00000,0.00000,0.00000,0.00000,0.00000,&quot;&quot;,0,0,0,0,0,0,0,0.00000
+<br>
+
+90.00000,-90.00000,0.00000,0.00000,0.00000,0.00000,&quot;&quot;,0,0,0,0,0,0,0,0.00000
+</p>
+<p>
+<a name="_Hlk201905453">Global target members can be read from
+and written to using the ‘dot’ notation (“.”)<em><span style='font-family:"Calibri",sans-serif'>.</span></em></a>
+</p>
+<p class="codeexample">
+my_variable = 
+GTAE
+(
+10
+).x
+</p>
+<p class="codeexample">
+GTAE10).x = (GTAE(23).x + GTAE(24).x) / 2
+</p>
+<p class="MsoNoSpacing">
+If an inactive global target array element is assigned to
+using GTAE, then that element becomes a GTAE, i.e. one that can take any point
+type, and must be manipulated with GTAE otherwise a run-time error may be
+generated. The reason that an error may be generated is that if you know that
+the point type of a GTAE is 0, then it is possible to access it with GTA, and
+likewise, if you know that the point type of the GTAE is 1, then it is possible
+to access it with GTAJ. However, it is a good general rule to always use GTAE
+to access a GTAE, regardless of the point type it contains.
+</p>
+<p class="MsoNoSpacing">
+Global target array elements may be assigned to each
+other and to and from local target variables.
+</p>
+<p class="codeexample">
+GTAE
+(
+10
+) = 
+GTAE
+(
+11
+)
+</p>
+<p class="codeexample">
+my_target = 
+GTAE
+(
+10
+)
+</p>
+<p class="codeexample">
+GTAE(12) = my_target
+</p>
+<p class="note">
+GTAE requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+.
+
+</p>
+<p class="warning">
+<a name="_Hlk201905124"><span class="normaltextrun">GTA, GTAJ, and GTAE are sharing the same allocated
+location of the memory. This means they cannot share indices. Maximum number of
+targets is controller dependent.&nbsp;</span></a>
+</p>
+<p class="warning">
+<span class="normaltextrun">For
+example:</span><span class="scxw38965323">&nbsp;</span><br>
+
+
+<span class="normaltextrun">GTA(1) =&nbsp;X1,
+Y1,&nbsp;Z1, U1, V1, W1, “pt1”</span><span class="eop">&nbsp;</span></p>
+<p class="warning">
+<span class="normaltextrun">GTAE(2)
+= 154.694, -440.071, -27.495, 180, 0, 200, &quot;test&quot;, 0, 0, 1, 0, 0, 0,
+0, 69.420</span><span class="eop">&nbsp;</span></p>
+<p class="warning">
+<span class="normaltextrun">In
+this example, the GTAE cannot have index 1 and the GTA cannot have index 2.</span><span class="eop">&nbsp;</span></p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="188" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+x, y, z, u, v, w:
+  Float
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Positions (mm) and/or orientations (degrees) in
+  Cartesian space, Joint space, or user-defined space.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+(optional) “name”:
+  String
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unique name for the target. Duplicated names generate a
+  compile error.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+ptype: Integer
+</p>
+
+  
+</td>
+<td width="386" class="tablegrid">
+
+  
+<p class="tablecontent">
+Point type. 
+</p>
+
+  
+<p class="tablecontent">
+0 = Cartesian, 1 = Joint, 2+ = User defined.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+rnum: Integer
+</p>
+
+  
+</td>
+<td width="386" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot number used for the target.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+rconf: Integer
+</p>
+
+  
+</td>
+<td width="386" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot configuration setup for the target.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+revs: Integer
+</p>
+
+  
+</td>
+<td width="386" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of revolutions from the calibration point when
+  target was taken.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+of: Integer
+</p>
+
+  
+</td>
+<td width="386" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object frame used for the target.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+tool: Integer
+</p>
+
+  
+</td>
+<td width="386" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool offset used for the target.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+rf: Integer
+</p>
+
+  
+</td>
+<td width="386" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot frame used for the target.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+userdata: Float
+</p>
+
+  
+</td>
+<td width="386" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any useful numeric value.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+<a name="_Hlk201918558">Name is optional but if specified must be
+unique (not used by any other GTA elements of any type).</a>
+</p>
+<p class="note">
+Name is truncated if more than 32 characters long.
+</p>
+<p class="note">
+GTAE cannot be declared using a name; instead, it must use an id
+number. If so, the run time error “ID not defined” will be thrown.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Define an extended global target named “p1”.
+</p>
+<p class="codeexample">
+GTAE
+(1011) = 100, 0, 50,
+180, 0, 180, &quot;p1&quot;, 0, 0, 1, 10, 0, 0, 0, 69.420
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_GTA.html">GTA</a>
+, 
+<a href="RPS_GTAJ.html">GTAJ</a>
+,
+
+<a href="RPS_GTAMAP.html">GTAMAP</a>
+, 
+<a href="RPS_GTAEMAP.html">GTAEMAP</a>
+, 
+<a href="RPS_GTAJMAP.html">GTAJMAP</a>
+, 
+<a href="GTASIZE.html">TARGETJ</a>
+, 
+<a href="RPS_TARGET.html">TARGET</a>
+, 
+<a href="RPS_TARGETE.html">TARGETE</a>
+, 
+<a href="RPS_TARGETJ.html">TARGETJ</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,277 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SCOPE_DELAY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SCOPE_DELAY">
+</head>
+<body>
+<h1>SCOPE_DELAY</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter enables pre-triggering in the 
+<a href="SCOPE.html">SCOPE</a>
+ in milliseconds. 
+</p>
+<p>
+If the SCOPE_DELAY is less than 0 then the 
+<a href="SCOPE.html">SCOPE</a>
+ will capture SCOPE_DELAY milliseconds of
+pre-trigger data.
+</p>
+<p>
+If the SCOPE_DELAY is greater than 0 then the 
+<a href="SCOPE.html">SCOPE</a>
+ will delay the start of capture by SCOPE_DELAY
+milliseconds. 
+</p>
+<p class="note">
+When SCOPE_DELAY is negative and the time between the SCOPE
+command and the TRIGGER is less than -SCOPE_DELAY, only the points captured so
+far will be saved and the SCOPE_TRIGGER_POS will be set according to the amount
+of data actually captured.
+</p>
+<h2>Value:</h2>
+<p>
+The scope trigger delay in milliseconds.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set Scope for delayed trigger of 20&nbsp;ms. Print a message
+to show scope capture completed.
+</p>
+<p class="codeexample">
+  
+'Capture 200 points on 4
+channels
+<br>
+
+  
+'Delay trigger by 20 ms
+<br>
+
+  
+SCOPE_DELAY 
+= 
+20
+<br>
+
+  SCOPE(
+ON
+, 
+1
+,
+
+10001
+, 
+10800
+, 
+DPOS
+ AXIS(
+2
+), 
+MPOS
+ AXIS(
+2
+), 
+FE
+ AXIS(
+2
+), 
+VP_SPEED
+ AXIS(
+2
+))
+<br>
+
+  
+WAIT
+ UNTIL
+
+
+IN
+(
+60
+) = 
+OFF
+<br>
+
+  
+WAIT
+ UNTIL
+
+
+IN
+(
+60
+) = 
+ON
+ 'Wait for rising
+edge on IN(60)
+</p>
+<p class="codeexample">
+  TRIGGER
+<br>
+
+  WAIT UNTIL 
+SCOPE_POS 
+= 
+200
+<br>
+
+  PRINT #
+5
+, 
+&quot;Scope
+capture complete&quot;
+<br>
+
+  PRINT #
+5
+, 
+&quot;Trace
+1 starts at TABLE(10001)&quot;
+<br>
+
+  PRINT #
+5
+, 
+&quot;Trace
+2 starts at TABLE(10201)&quot;
+<br>
+
+  PRINT #
+5
+, 
+&quot;Trace
+3 starts at TABLE(10401)&quot;
+<br>
+
+  PRINT #
+5
+, 
+&quot;Trace
+4 starts at TABLE(10601)&quot;
+<br>
+
+
+<br>
+
+
+</p>
+<h3>Example 2:</h3>
+<p>
+Set Scope to pre-trigger at 500&nbsp;ms. Print a message
+with scope completed and the trigger position to terminal #5.
+</p>
+<p class="codeexample">
+  
+'Capture 1000 points on 2
+channels
+<br>
+
+  
+'pre-trigger to capture 500 points before the
+TRIGGER 
+<br>
+
+  'and 500 after TRIGGER
+<br>
+
+  
+SCOPE_DELAY 
+= -
+500
+<br>
+
+  
+SCOPE
+(
+ON
+,
+
+1
+, 
+10001
+, 
+12000
+, 
+MPOS
+ AXIS
+(
+0
+), 
+MPOS
+ AXIS
+(
+1
+))
+<br>
+
+  
+WA
+(
+320
+)
+<br>
+
+  
+TRIGGER
+<br>
+
+  
+WAIT
+ UNTIL
+
+
+SCOPE_POS 
+= 
+1000
+<br>
+
+  
+PRINT
+ #
+5
+, 
+&quot;Scope capture complete&quot;
+<br>
+
+  
+PRINT
+ #
+5
+, 
+&quot;Actual Trigger at TABLE &quot;
+; 
+10000 
++ 
+SCOPE_TRIGGER_POS
+</p>
+<p class="note">
+This deliberately does not leave enough time to capture 500
+points. It is to show the use of SCOPE_TRIGGER_POS.
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See also:</h2>
+<p>
+<a href="SCOPE.html">SCOPE</a>
+ , 
+<a href="TRIGGER.html">TRIGGER</a>
+
+, 
+<a href="SCOPE_TRIGGER_POS.html">SCOPE_TRIGGER_POS</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

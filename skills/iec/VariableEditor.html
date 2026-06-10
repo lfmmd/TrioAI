@@ -1,0 +1,679 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Variable Editor</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Variable Editor</h1>
+<p>
+<img width="672" height="250" id="Image3" src="VariableEditor_files/image001.jpg">
+</p>
+<p>
+The Variable Editor displays all the variables that are in
+use in the IEC task. The variables are grouped into three groups, 
+Global,
+ Task and Retain. Then for each IEC program in the IEC
+task, a variable group with the same name as the program exists.
+</p>
+<ul type="disc">
+
+ 
+<li>
+Variables in the “Global” group are
+     shared for all programs in all tasks and libraries. They are automatically
+     managed by 
+<i>Motion</i> Perfect, so when a global variable is inserted or
+     modified in one IEC 61131-3 task or library, this is reflected in all IEC
+     61131-3 tasks and libraries. Global variables require controller firmware
+     version greater or equal to 2.0265.
+</li>
+
+ 
+<li>
+Variables in the “Task” group are accessible from all
+     programs 
+in a single task
+. 
+</li>
+
+ 
+<li>
+Variables in the “Retain” group are
+     accessible from all programs in a single task, but also their 
+values
+     are stored upon IEC execution stop and are restored upon next start of the
+     IEC executable. 
+</li>
+
+ 
+<li>
+The variables in the rest of the groups are “private” for
+     the corresponding program, 
+structure or UDFB.
+</li>
+
+
+</ul>
+<p>
+A new variable can be added, by selecting the corresponding
+group, and pressing the “Insert” key on the keyboard. A new variable will be
+inserted in the selected group and will have default name, type, initial value,
+etc. 
+</p>
+<p>
+The variable has the following properties, which are
+separated as columns in the variables editor:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="82" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Property
+</p>
+
+  
+</td>
+<td width="594" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="82" valign="top" class="tablegrid">
+
+  
+<p>
+Name
+</p>
+
+  
+</td>
+<td width="594" valign="top" class="tablegrid">
+
+  
+<p>
+The name of the variable. To edit this property, double-click
+  on it.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="82" valign="top" class="tablegrid">
+
+  
+<p>
+Type
+</p>
+
+  
+</td>
+<td width="594" valign="top" class="tablegrid">
+
+  
+<p>
+The type of variable. Can be some of the predefined IEC
+  types, or some user-defined type. To edit this property, double-click on it.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="82" valign="top" class="tablegrid">
+
+  
+<p>
+Binding
+</p>
+
+  
+</td>
+<td width="594" valign="top" class="tablegrid">
+
+  
+<p>
+Binding of variable to controller memory
+  space – I/O point, VR, TABLE. By default variables are not bound.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="82" valign="top" class="tablegrid">
+
+  
+<p>
+Dim
+</p>
+
+  
+</td>
+<td width="594" valign="top" class="tablegrid">
+
+  
+<p>
+Dimensions of the variable. For example, arrays are
+  created by specifying the size of the array in this field. To edit this
+  property, double-click on it.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="82" valign="top" class="tablegrid">
+
+  
+<p>
+Attrib
+</p>
+
+  
+</td>
+<td width="594" valign="top" class="tablegrid">
+
+  
+<p>
+Attributes of the variable. Depends on the variable type
+  and profile. To edit this property, double-click on it. 
+V
+ariables
+  can have the “Read-only” attribute set.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="82" valign="top" class="tablegrid">
+
+  
+<p>
+Init value
+</p>
+
+  
+</td>
+<td width="594" valign="top" class="tablegrid">
+
+  
+<p>
+The initial value of the variable, depending on its type.
+  To edit this property, double-click on it.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="82" valign="top" class="tablegrid">
+
+  
+<p>
+Comment
+</p>
+
+  
+</td>
+<td width="594" valign="top" class="tablegrid">
+
+  
+<p>
+A short comment text for the variable. To edit this
+  property, double-click on it.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Variable binding editing</h2>
+<p>
+Each variable 
+could be bound to a memory
+area on the controller – a VR or TABLE entry, an input or output. Bindings are
+editor in the variables editor by clicking on the corresponding row of the
+editor in the “Binding” column. When variable is not bound, and the mouse
+hovers over it there is a “Click to set up a binding” text displayed. When
+clicked, the following menu appears:
+</p>
+<p>
+<img width="241" height="186" id="Image1" src="VariableEditor_files/image002.png">
+</p>
+<p>
+The possible binding types are described in the following
+table:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="168" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Binding
+</p>
+
+  
+</td>
+<td width="518" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="168" valign="top" class="tablegrid">
+
+  
+<p>
+Digital Input
+</p>
+
+  
+</td>
+<td width="518" valign="top" class="tablegrid">
+
+  
+<p>
+the variable can be mapped to a Digital Input, by
+  specifying the input index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="168" valign="top" class="tablegrid">
+
+  
+<p>
+Digital Output
+</p>
+
+  
+</td>
+<td width="518" valign="top" class="tablegrid">
+
+  
+<p>
+the variable can be mapped to a Digital output, by
+  specifying the output index
+</p>
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="168" valign="top" class="tablegrid">
+
+  
+<p>
+Digital Output Read
+</p>
+
+  
+</td>
+<td width="518" valign="top" class="tablegrid">
+
+  
+<p>
+the variable can be mapped to a Digital Output, by
+  specifying the output index. Similar to the Trio BASIC READ_OP command
+  behaviour
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="168" valign="top" class="tablegrid">
+
+  
+<p>
+Analog Input
+</p>
+
+  
+</td>
+<td width="518" valign="top" class="tablegrid">
+
+  
+<p>
+the variable can be mapped to an Analogue Input, by
+  specifying the input index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="168" valign="top" class="tablegrid">
+
+  
+<p>
+Analog Output
+</p>
+
+  
+</td>
+<td width="518" valign="top" class="tablegrid">
+
+  
+<p>
+the variable can be mapped to an Analogue Output, by
+  specifying the output index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="168" valign="top" class="tablegrid">
+
+  
+<p>
+VR
+</p>
+
+  
+</td>
+<td width="518" valign="top" class="tablegrid">
+
+  
+<p>
+the variable can be mapped to a VR variable, by specifying
+  the index in the VR memory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="168" valign="top" class="tablegrid">
+
+  
+<p>
+VR_BIT
+</p>
+
+  
+</td>
+<td width="518" valign="top" class="tablegrid">
+
+  
+<p>
+the variable can be mapped to a bit of a VR variable, by
+  specifying the index in the VR memory and the bit number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="168" valign="top" class="tablegrid">
+
+  
+<p>
+TABLE
+</p>
+
+  
+</td>
+<td width="518" valign="top" class="tablegrid">
+
+  
+<p>
+the variable can be mapped to a TABLE location, by
+  specifying the index in the table memory
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+When a variable has a binding, it is displayed in the
+“Binding” column of the variables editor. When clicked, it is displayed in a
+dialog where the binding can be modified or removed.
+</p>
+<p>
+<img width="200" height="58" id="Image2" src="VariableEditor_files/image003.png">
+</p>
+<h2>Editing variables in text mode</h2>
+<p>
+In some situations it’s useful to be able to edit variables
+manually in text mode, for example, when inserting variables from another IEC
+61131-3 system or editing multiple variables at once.
+</p>
+<p>
+<i>Motion</i> Perfect provides editing of variables in text
+mode for each program and for Global, Task and Retain variable groups.
+</p>
+<p>
+There is an “Edit variables as text” button on the toolbar
+that launches a text editor where variables can be edited in text mode. Changes
+are applied when closing the editor by pressing its “OK” button.
+</p>
+<p>
+<img width="387" height="293" id="Image4" src="VariableEditor_files/image004.png">
+</p>
+<p>
+&nbsp;
+</p>
+<h2>Variables initial values</h2>
+<p>
+Initial values of variables can be specified so when the
+task starts the variables are initialized to custom values instead of 0.
+</p>
+<p>
+To edit a variable’s initial value simply double-click on
+the “Init Value” column in the grid editor or use the following syntax in text
+editor:
+</p>
+<p class="codeexample">
+&lt;variable name&gt; : &lt;variable type&gt; :=
+&lt;initial value&gt;;
+</p>
+<p>
+For example, the variable 
+<i>my_str</i> of STRING(250) type
+can be initialized with the following line in text mode:
+</p>
+<p class="codeexample">
+my_str : STRING(250) := 'hello world';
+</p>
+<h3>Array variables</h3>
+<p>
+Array variables can have initial values. The syntax of the
+initial value is the following:
+</p>
+<p class="codeexample">
+[value1, value2, value3, value4, …, valueK]
+</p>
+<p>
+where K is less or equal the dimension of the array.
+</p>
+<p>
+For example the array variable my_arr which is an array of
+integers with 10 elements can be initialized with the following code in text
+mode:
+</p>
+<p class="codeexample">
+my_arr : ARRAY [0 .. 9] OF INT := [0, 1, 2, 3, 4, 5, 6, 7,
+8, 9];
+</p>
+<h3>Variables of structure types and function block instances</h3>
+<p>
+Complex variables of structure types or function block
+instances can have initial values too. The syntax to initialize members of
+structure variables or function block instances is the following:
+</p>
+<p class="codeexample">
+(&lt;member1&gt; := &lt;value1&gt;, &lt;member2&gt; :=
+&lt;value2&gt;, …)
+</p>
+<p>
+Please note that &lt;value1,2,3…&gt; could be a nested
+structure variable or function block instance initialization. Hence it is
+possible to have very complex initializing syntax.
+</p>
+<p>
+A simple example with a variable of structure type. The
+structure type is defined as
+</p>
+<p class="codeexample">
+STRUCT MyStructType
+</p>
+<p class="codeexample" style="text-indent:21.8pt">
+flag : BOOL;
+</p>
+<p class="codeexample" style="text-indent:21.8pt">
+id := DINT;
+</p>
+<p class="codeexample">
+END_STRUCT;
+</p>
+<p>
+Declaring a variable of this structure type with initial
+values can be done with the following syntax:
+</p>
+<p class="codeexample">
+VAR
+</p>
+<p class="codeexample" style="text-indent:21.8pt">
+my_struct_variable :
+MyStructType := ( flag := true, id := 1000 );
+</p>
+<p class="codeexample">
+END_VAR;
+</p>
+<h3>Arrays of complex variables ( structure types or function
+block instances)</h3>
+<p>
+It is possible to give initial values to arrays of complex
+types. The syntax is the following
+</p>
+<p class="codeexample">
+[ &lt;value1&gt;, &lt;value2&gt;, … &lt;valueK&gt;]
+</p>
+<p>
+Where K is less or equal to the array dimension and
+&lt;value i&gt;, i = 0 to K follows the complex variable initial value syntax
+(member1 := v1, member2 := v2, …).
+</p>
+<p>
+For example an array with 3 elements of the above structure
+type MyStructType can be declared with the following code in text mode:
+</p>
+<p class="codeexample">
+VAR
+</p>
+<p class="codeexample">
+   my_complex_arr : ARRAY [0..2] OF MyStructType := [
+(flag := true, id := 1), (flag := true, id := 2), (flag := true, id := 3) ];
+</p>
+<p class="codeexample">
+END_VAR
+</p>
+<h3>Complex variables with array members</h3>
+<p>
+A rather complicated case is where a structure type has a
+member that is an array. It is possible to create a variable of this structure
+type and initialize its array member to a predefined value.
+</p>
+<p>
+Consider the structure defined as following:
+</p>
+<p class="codeexample">
+STRUCT MyStructType
+</p>
+<p class="codeexample" style="text-indent:21.8pt">
+id : DINT;
+</p>
+<p class="codeexample" style="text-indent:21.8pt">
+arr : ARRAY [0..9] OF DINT;
+</p>
+<p class="codeexample">
+END_STRUCT;
+</p>
+<p>
+Declaring and initializing a variable of this type can be
+done with the following syntax:
+</p>
+<p class="codeexample">
+VAR
+</p>
+<p class="codeexample">
+   my_complex_var : MyStructType := ( id := 100, arr := [
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9] );
+</p>
+<p class="codeexample">
+END_VAR;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

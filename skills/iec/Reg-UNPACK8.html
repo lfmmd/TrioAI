@@ -1,0 +1,274 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>UNPACK8</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="UNPACK8">
+</head>
+<body>
+<h1><a name="_Toc317749422"></a>
+<a name="O_1842"></a>
+UNPACK8</h1>
+<p class="Category">
+Function block
+</p>
+<p>
+Extract bits of a byte.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+USINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8-bit register.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Least significant bit.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+...
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ Q7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Most significant bit.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+In LD language, the output rung is the Q0 output. The
+operation is executed only in the input rung (EN) is TRUE.
+</p>
+<h2>ST Language</h2>
+<p>
+MyUnpack is a declared instance of the UNPACK8 function
+block.
+</p>
+<p class="codeexample">
+MyUnpack (IN);
+</p>
+<p class="codeexample">
+Q0 := MyUnpack.Q0;
+<br>
+
+Q1 := MyUnpack.Q1;
+<br>
+
+Q2 := MyUnpack.Q2;
+<br>
+
+Q3 := MyUnpack.Q3;
+<br>
+
+Q4 := MyUnpack.Q4;
+<br>
+
+Q5 := MyUnpack.Q5;
+<br>
+
+Q6 := MyUnpack.Q6;
+<br>
+
+Q7 := MyUnpack.Q7;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="172" height="196" src="Reg-UNPACK8_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The operation is performed if EN = TRUE:
+<br>
+<img width="287" height="193" src="Reg-UNPACK8_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Reg-PACK8.html">PACK8</a>
+<a name="H_1137"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,252 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_FRAMEGROUP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_FRAMEGROUP">
+</head>
+<body>
+<h1>TC_FRAMEGROUP</h1>
+<h2>Type:</h2>
+<p>
+Motion Function
+</p>
+<h2>Function:</h2>
+<p>
+Issues a new FRAME_GROUP motion request for the axis
+specified by 'AxisNo'.
+</p>
+<h2>Inputs:</h2>
+<p class="fixed">
+   
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EN : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE to enable the function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ID : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Frame Group Identity number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TableIndex : DINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table index points to frame parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AxisCount : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of axes in Frame Group
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axes[] : USINT[];
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Array containing the axis numbers
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ENO : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when function is enabled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if a program error is detected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID : UINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returned error number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+When the EN input is TRUE, the function block applies the
+command to the axis group indicated by AxisNo.  
+</p>
+<p>
+A programming error, such as parameter out of range, will
+set the Error output and return an error ID number.  For the Error ID
+reference, see the Trio Programming error list.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample">
+MyTC_FrameGroup(EN, ID, TableIndex, AxisCount, Axes);
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+ENO := MyTC_FrameGroup.ENO;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Error := MyTC_FrameGroup.Error;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+ErrorID :=
+MyTC_FrameGroup.ErrorID;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>FBD Language:</h2>
+<p align="center">
+<span style='font-family:"Courier New"'><img width="474" height="211" id="Picture 19" src="TC_FRAMEGROUP_files/image001.png">
+</span></p>
+<h2>LD Language: </h2>
+<p align="center">
+<span style='font-family:"Courier New"'><img width="479" height="212" id="Picture 20" src="TC_FRAMEGROUP_files/image002.png">
+</span></p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBASIC Errors</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

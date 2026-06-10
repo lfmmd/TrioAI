@@ -1,0 +1,92 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INVERT_STEP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INVERT_STEP">
+</head>
+<body>
+<h1>INVERT_STEP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+INVERT_STEP is used to switch a hardware inverter into the
+stepper pulse output circuit. This can be necessary for connecting to some
+stepper drives. The electronic logic inside the Motion Coordinator stepper
+pulse generation assumes that the FALLING edge of the step output is the active
+edge which results in motor movement, and this is suitable for most stepper
+drives. 
+</p>
+<p class="note">
+INVERT_STEP should be set with WDOG&nbsp;=&nbsp;OFF. 
+</p>
+<p class="warning">
+If the setting is incorrect, a stepper motor may lose position
+by one step when changing direction. 
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="ON.html">ON</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The rising edge of the step signal is the active edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="OFF.html">OFF</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The falling edge of the step signal is the active edge
+  (default)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Set INVERT_STEP for axis 2 as part of a startup routine.
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+INVERT_STEP = ON
+</p>
+</body>
+</html>

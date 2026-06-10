@@ -1,0 +1,45 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VECTOR_BUFFERED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VECTOR_BUFFERED">
+</head>
+<body>
+<h1>VECTOR_BUFFERED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read only)
+</p>
+<h2>Description:</h2>
+<p>
+This holds the total vector length of the buffered moves. It
+is effectively the amount the VPU can assume is available for deceleration. It
+should be executed with respect to the first axis in the group.
+</p>
+<h2>Value:</h2>
+<p>
+The vector length of buffered moves on the axis group.
+</p>
+<h2>Example:</h2>
+<p>
+Return the total vector length for the current buffered
+moves whose axis group begins with 
+<a href="AXIS.html">axis</a>
+(0).
+</p>
+<p class="codeexample">
+&gt;&gt;BASE(0,1,2)
+</p>
+<p class="codeexample">
+&gt;&gt;? VECTOR_BUFFERED AXIS(0)
+</p>
+<p class="codeexample">
+1245.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+</body>
+</html>

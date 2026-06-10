@@ -1,0 +1,42 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENCODER_ID</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENCODER_ID">
+</head>
+<body>
+<h1>ENCODER_ID</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter returns the Encoder Identification (ENID)
+parameter from a Tamagawa absolute encoder.
+</p>
+<h2>Value:</h2>
+<p>
+Only encoders returning 17 are currently supported
+</p>
+<h2>Example:</h2>
+<p>
+Initialise a Tamagawa absolute encoder and check it is
+working by looking at ENCODER_ID.
+</p>
+<p class="codeexample">
+ATYPE = 46
+</p>
+<p class="codeexample">
+IF ENCODER_ID&lt;&gt;17 THEN
+</p>
+<p class="codeexample">
+  PRINT#term, “Incorrect ENID”
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+</body>
+</html>

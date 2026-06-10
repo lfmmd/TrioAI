@@ -1,0 +1,111 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INT">
+</head>
+<body>
+<h1>INT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = INT(expression)
+</p>
+<h2>Description:</h2>
+<p>
+The INT function returns the integer part of a number by
+truncating the fractional part towards zero.
+</p>
+<p class="tip">
+To convert a floating-point value to the nearest whole number, use
+the ROUND function, but note that this returns a floating-point value, so use INT
+to cast the result of ROUND to integer, if required
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The integer part of the expression
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print the integer part of a number on the command line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT INT(1.79), INT(-1.79)
+</p>
+<p class="codeexample">
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1
+</p>
+<h3>Example 2:</h3>
+<p>
+Print a value to the nearest integer on the command line,
+either returning the result as a FLOAT or an INTEGER.
+</p>
+<p class="codeexample" style="text-indent:27.0pt">
+&gt;&gt;PRINT ROUND(1.79), INT(ROUND(1.79)),
+ROUND(-1.79), INT(ROUND(-1.79))
+</p>
+<p class="codeexample" style="text-indent:27.0pt">
+2.0000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-2.0000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-2
+</p>
+<h2>See also:</h2>
+<p>
+<a href="FRAC.html">FRAC</a>
+, 
+<a href="ROUND.html">ROUND</a>
+</p>
+<p class="codeexample" style="text-indent:27.0pt">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,3082 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ETHERNET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ETHERNET">
+</head>
+<body>
+<h1>ETHERNET</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ETHERNET(action, slot, function[, parameters...])
+</p>
+<h2>Description:</h2>
+<p>
+The command ETHERNET is used to configure the operation of
+the Ethernet port.
+</p>
+<p class="note">
+Many of the ETHERNET functions are command line only; these are
+stored in flash EPROM and are then used on power up. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p>
+action:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Specifies the required action.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Read
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Write
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set to -1 for the built in Ethernet port
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="22" valign="top" class="tablegrid">
+
+  
+<p>
+function:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Function to be performed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_0">0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+IP Address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Reserved function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_2">2</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Subnet Mask
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_3">3</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+MAC address (read only)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_4">4</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Default Port Number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_5">5</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Token Port Number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_6">6</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+PRP firmware version (MC464 read only)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_7">7</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Modbus TCP mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_8">8</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Default Gateway
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_9">9</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Data configuration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_10">10</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Modbus TCP port number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_11">11</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+ARP cache (read only)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+12
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Reserved function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+13
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Reserved function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_14">14</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Configure endpoints for Modbus TCP or Ethernet IP
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_15:">15</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Set the maximum packets handled per stack call
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_21:">21</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+List status of ports to the terminal
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_22:">22</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Read Ethernet port MIB information
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+23
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Reserved for device specific PHY registers
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_24:">24</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Read Ethernet connection state
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_25:">25</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Restart Ethernet services
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="Function_0">Function = 0</a>
+: IP Address</h3>
+<p>
+Prints or writes the Ethernet IP address. This is command
+line only.
+</p>
+<p class="note">
+You must power cycle the controller or perform 
+<a href="EX.html">EX</a>
+(1)
+to apply the new IP address.
+</p>
+<p class="fixed">
+ETHERNET(action, slot, 0[, byte1, byte2, byte3, byte4])
+</p>
+<h4>Alternative:</h4>
+<p class="codeexample">
+IP_ADDRESS = xxx.xxx.xxx.xxx
+</p>
+<h4>Parameters:</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The first byte of the IP address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The second byte of the IP address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte3:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The third byte of the IP address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte4:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The fourth byte of the IP address
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The default address is 192.168.0.250
+</p>
+<h4>Example:</h4>
+<p>
+Read the current IP address and then set a new IP address
+into the controller and perform an 
+<a href="EX.html">EX</a>
+(1) to activate the
+address
+</p>
+<p class="warning">
+Performing an 
+<a href="EX.html">EX</a>
+(1) as in this example
+will close the communications and you will only be able to communicate again
+using the new IP address.
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERNET(0, -1, 0)
+</p>
+<p class="codeexample">
+192.168.0.250
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERNET(1, -1, 0, 192, 168, 0, 201)
+</p>
+<p class="codeexample">
+&gt;&gt;EX(1)
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3><a name="Function_2">Function = 2</a>
+: Subnet Mask</h3>
+<p>
+Prints or writes the Subnet Mask. This is command line only.
+</p>
+<p class="note">
+You must power cycle the controller or perform 
+<a href="EX.html">EX</a>
+(1)
+to apply the new IP address.
+</p>
+<p class="fixed">
+ETHERNET(action, slot, 2[, byte1, byte2, byte3, byte4])
+</p>
+<h4>Alternative:</h4>
+<p class="codeexample">
+IP_NETMASK = xxx.xxx.xxx.xxx
+</p>
+<h4>Parameters:</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The first byte of the Subnet Mask
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The second byte of the Subnet Mask
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte3:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The third byte of the Subnet Mask
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte4:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The fourth byte of the Subnet Mask
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The default Subnet Mask is 255.255.255.0
+</p>
+<h4>Example:</h4>
+<p>
+Read the subnet mask and write a new value
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERNET(0, -1, 0)
+</p>
+<p class="codeexample">
+255.255.255.0
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERNET(1, -1, 2, 255, 255, 128, 0)
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3><a name="Function_3">Function = 3</a>
+: MAC Address</h3>
+<p>
+Prints the MAC address. This is command line only.
+</p>
+<p class="note">
+This function is read only.
+</p>
+<p class="fixed">
+ETHERNET(0, slot, 3)
+</p>
+<h4>Parameters:</h4>
+<p>
+The MAC address is unique to your controller.
+</p>
+<h4>Example:</h4>
+<p>
+Read the MAC address of a controller
+</p>
+<p>
+&nbsp;
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERNET(0, -1, 3)
+</p>
+<p class="codeexample">
+00:06:70:00:00:FA
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3><a name="Function_4">Function = 4</a>
+: Default Port</h3>
+<p>
+Prints or writes the default port number. This is command
+line only.
+</p>
+<p class="warning">
+The default value is used by Motion Perfect and PCMotion and
+should not be changed unless absolutely necessary.
+</p>
+<p class="fixed">
+ETHERNET(action, slot, 4[, port])
+</p>
+<h4>Parameters:</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="54" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+port:
+</p>
+
+  
+</td>
+<td width="491" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The port used for the main command line in the
+  controller. (default 23)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="Function_5">Function = 5</a>
+: Token Port</h3>
+<p>
+Prints or writes the default port number for token channel
+which is used by the PCMotion ActiveX control. This is command line only.
+</p>
+<p class="warning">
+The default value is used by the PCMotion ActiveX control and
+should not be changed unless absolutely necessary.
+</p>
+<p class="fixed">
+ETHERNET(action, slot, 5[, port])
+</p>
+<h4>Parameters:</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+port:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The port used for the token channel in the controller.
+  (default 3240)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="Function_6">Function = 6</a>
+: PRP Firmware Version (read only)</h3>
+<p>
+Reads the communications processor’s firmware version. This
+is command line only.
+</p>
+<p class="note">
+This function is read only
+</p>
+<p class="fixed">
+ETHERNET(0, slot, 6)
+</p>
+<h4>Parameters:</h4>
+<p>
+Returns the flash application version and the bootloader
+version.
+</p>
+<h4>Example:</h4>
+<p>
+Read the communications processor firmware with application
+version 61 and boot loader version 22.
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERNET(0, -1, 6)
+</p>
+<p class="codeexample">
+61;22
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3><a name="Function_7">Function = 7</a>
+: Modbus TCP mode</h3>
+<p>
+Sets the Modbus TCP data type. This value is stored in RAM
+and so must be initialised every time the controller powers up. This can be
+done in a TrioBASIC program for example STARTUP
+</p>
+<p class="note">
+This must be configured before the Modbus master opens the port. 
+</p>
+<p class="fixed">
+ETHERNET(action, slot, 7[, mode])
+</p>
+<h4>Parameters:</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16-bit integer (default value)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32-bit single precision floating point without address
+  halving
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32-bit long word integers without address halving
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If you want to use address halving please see 
+<a href="#Function_14">ETHERNET Function 14</a>
+</p>
+<h4>Example:</h4>
+<p>
+Initialise the Modbus TCP port for floating point data.
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 7, 1)
+</p>
+<h3><a name="Function_8">Function = 8</a>
+: Default Gateway</h3>
+<p>
+Prints or writes the Default Gateway. This is command line
+only.
+</p>
+<p class="note">
+You must power cycle the controller or perform 
+<a href="EX.html">EX</a>
+(1)
+to apply the new Default Gateway.
+</p>
+<p class="fixed">
+ETHERNET(action, slot, 8[, byte1, byte2, byte3, byte4])
+</p>
+<h4>Alternative:</h4>
+<p class="codeexample">
+IP_GATEWAY = xxx.xxx.xxx.xxx
+</p>
+<h4>Parameters:</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The first byte of the Default Gateway
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The second byte of the Default Gateway 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte3:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The third byte of the Default Gateway
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte4:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The fourth byte of the Default Gateway
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h4>Example:</h4>
+<p>
+Print then change the value of the default gateway.
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERNET(0, -1, 8)
+</p>
+<p class="codeexample">
+192.168.0.225
+</p>
+<p class="codeexample">
+&gt;&gt;ETHERNET(0, -1, 8, 192, 168, 0, 150)
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3><a name="Function_9">Function = 9</a>
+: Data configuration</h3>
+<p>
+Sets the Modbus TCP data source. This value is stored in RAM
+and so must be initialised every time the controller powers up. This can be
+done in a TrioBASIC program for example STARTUP
+</p>
+<p class="note">
+This must be configured before the Modbus master opens the port. 
+</p>
+<p class="fixed">
+ETHERNET(action, slot, 9[, mode])
+</p>
+<h4>Parameters:</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR (default value)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h4>Example:</h4>
+<p>
+Initialise the Modbus TCP port for table data.
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 9, 1)
+</p>
+<h3><a name="Function_10">Function = 10</a>
+: Modbus TCP port number</h3>
+<p>
+Prints or writes the default port number for token channel
+which is used by Modbus TCP. This is command line only.
+</p>
+<p class="warning">
+The default value is used by Modbus and should not be changed
+unless absolutely necessary.
+</p>
+<p class="fixed">
+ETHERNET(action, slot, 10[, port])
+</p>
+<h4>Parameters:</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+port:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The port used for the token channel in the controller.
+  (default 502)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="Function_11">Function = 11</a>
+: ARP cache</h3>
+<p>
+Reads the ARP cache. (Command line only.)
+</p>
+<p class="note">
+This function is read only
+</p>
+<p class="fixed">
+ETHERNET(0, slot, 11)
+</p>
+<h3><a name="Function_14">Function = 14</a>
+: Endpoints for Modbus TCP
+or Ethernet IP</h3>
+<p>
+This function allows the user to configure Ethernet IP and
+Modbus at a low level. The default values allow a master to connect without any
+configuration on the Controller side. These settings are stored in RAM
+and so must be initialised every time the controller powers up. This can be
+done in a TrioBASIC program for example STARTUP.
+</p>
+<p class="warning">
+As mentioned above, both, Ethernet IP and Modbus TCP would
+work without any configuration (using default values) on power-up. In case a
+different initial configuration is needed, the system parameter 
+<a href="IP_PROTOCOL_CTRL.html">IP_PROTOCOL_CTRL</a>
+ must be configured in the
+MC_CONFIG file in order to disable the protocol and set the configuration
+required within a BASIC start-up routine.
+</p>
+<p class="fixed">
+ETHERNET(1, slot, 14, endpoint_id, parameter_index,
+parameter_value )
+</p>
+<h4>Parameters:</h4>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="7" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+endpoint_id:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This allows you to specify which end point you are
+  reading or writing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus TCP Server (Slave)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ethernet IP Assembly Object, Instance 100 (input)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ethernet IP Assembly Object, Instance 101 (output)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ethernet IP Assembly Object, Instance 102 (input)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ethernet IP Assembly Object, Instance 103 (output)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus TCP Client (Master)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="9" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter_index:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This parameter selects which of the endpoint variables
+  you are reading or writing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data location
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data format
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Length
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Class 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Instance
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Operation Mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set/read memory map
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter_value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Dependent on Parameter index, see table below
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Parameter values:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="129" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+parameter_index
+</p>
+
+  
+</td>
+<td width="411" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+parameter_value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="129" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="411" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start position of the data location. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="129" rowspan="10" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="411" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The location of the data on the controller.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Register (reserved use)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+I/O input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+I/O output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="VR.html">VR</a>
+ (default value)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Digital I/O Input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Digital I/O Output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue I/O Input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue I/O Output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="129" rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="411" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The precision of the data.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 16 bit (default value)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer 32 bit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Floating point 32 bit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Floating point 64 bit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unsigned integer 16 bit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="129" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="411" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of the data locations returned.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="129" rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="411" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The class. This function is read only.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ethernet IP 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+68
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="129" rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="411" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The instance of the endpoint. This function is read only.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+100
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ethernet IP input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+101
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ethernet IP output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="129" rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="411" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The Operation mode. Read/write.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus TCP uses normal addressing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="48" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="363" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus TCP uses “address halving”
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="129" rowspan="9" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="411" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set memory mapping for Modbus TCP.
+</p>
+
+  
+<p class="tablecontent">
+32-bit values will have automatic address halving.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Request
+  address</span></p>
+
+  
+</td>
+<td width="335" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Modbus
+  request address. If request address of -1 is used, then all defined regions
+  are reset</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Base
+  address</span></p>
+
+  
+</td>
+<td width="335" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Base
+  address on the controller memory area to which the request address is mapped</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Num
+  entries</span></p>
+
+  
+</td>
+<td width="335" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Number
+  of Modbus registers in the mapped region. Minimum value is 1.</span></p>
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Given
+  that this function automatically applies address halving, the number of
+  mapped controller memory registers will depend on the data type.</span></p>
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>For
+  16-bit data types then each Modbus register is mapped to one controller value
+  so the mapped address area is from the base address to (base address +
+  num_entries – 1).</span></p>
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>For
+  32-bit data types then each Modbus register is mapped to two controller
+  values so the mapped address area is from the base address to (base address +
+  (num_entries/2) – 1).</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" colspan="2" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Mem
+  area</span></p>
+
+  
+</td>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>0</span></p>
+
+  
+</td>
+<td width="297" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Map
+  Modbus data to VR</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>1</span></p>
+
+  
+</td>
+<td width="297" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Map
+  Modbus data to TABLE</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" colspan="2" rowspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Data
+  type</span></p>
+
+  
+</td>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>0</span></p>
+
+  
+</td>
+<td width="297" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Integer
+  16</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>1</span></p>
+
+  
+</td>
+<td width="297" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Integer
+  32</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>2</span></p>
+
+  
+</td>
+<td width="297" valign="top" class="tablegrid">
+
+  
+<p>
+<span style='font-family:"Verdana",sans-serif'>Floating
+  Point 32</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr height="0">
+
+  
+<td width="129">
+</td>
+
+  
+<td width="48">
+</td>
+
+  
+<td width="28">
+</td>
+
+  
+<td width="38">
+</td>
+
+  
+<td width="297">
+</td>
+
+ 
+</tr>
+
+
+</table>
+<p class="note">
+<span style='font-family:"Verdana",sans-serif'>Note:
+address halving will be automatically used for 32-bit data types when mapped
+with parameter_index 7.</span></p>
+<h4>Examples:</h4>
+<h5>Example 1:</h5>
+<p>
+Configure Modbus using Function 14 to use Table and floating
+point 64-bit
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 0, 1, 4)
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 0, 2, 3)
+</p>
+<h5>Example 2:</h5>
+<p>
+Configure Ethernet IP for 50 TABLE inputs starting at 200
+and 50 table outputs starting at 300 all at 32-bit float
+</p>
+<p class="codeexample">
+'Inputs
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 1, 0, 200)
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 1, 1, 4)
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 1, 2, 2)
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 1, 3, 50)
+</p>
+<p class="codeexample">
+'Outputs
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 2, 0, 300)
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 2, 1, 4)
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 2, 2, 2)
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 2, 3, 50)
+</p>
+<h5>Example 3:</h5>
+<p>
+Configure Modbus TCP floating point TABLE access, using
+address halving to match the addressing scheme used in the master.
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 0, 2, 2)
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 0, 1, 4)
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 0, 6, 1)
+</p>
+<h5>Example 4:</h5>
+<p>
+Configure Modbus TCP mapping to VR memory with zones
+representing different data types. Modbus registers 100-109, 110-128, 130-148
+and 150-168 are mapped.
+</p>
+<p class="note">
+32-bit values require 2 x 16 bit registers per value.
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 0, 7, -1) 'Cancel all previous maps
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 0, 7, 100, 200, 10, 0, 0) 'VRs 200 to
+209 size = Int 16
+<br>
+
+ETHERNET(1, -1, 14, 0, 7, 110, 300, 10, 0, 1) 'VRs 300 to 304 size = Int 32
+<br>
+
+ETHERNET(1, -1, 14, 0, 7, 130, 400, 10, 0, 2) 'VRs 400 to 404 size = FP 32
+<br>
+
+ETHERNET(1, -1, 14, 0, 7, 150, 400, 10, 1, 2) 'TABLE 400 to 404 size = FP 32
+<br>
+
+ETHERNET(0, -1, 14, 0, 7) 'Display the map to terminal #0        
+<br>
+
+
+<br>
+
+
+</p>
+<p>
+Map displayed in the terminal:
+</p>
+<p class="codeexample">
+0: Req: 100, Base: 200, Num: 10, Area: VR(3), DataType:
+INT16(0)
+<br>
+
+1: Req: 110, Base: 300, Num: 10, Area: VR(3), DataType: INT32(1)
+<br>
+
+2: Req: 130, Base: 400, Num: 10, Area: VR(3), DataType: FP32(2)
+<br>
+
+3: Req: 150, Base: 400, Num: 10, Area: Table(4), DataType: FP32(2)
+<br>
+
+4: Req: 0, Base: 0, Num: 0, Area: Unknown(0), DataType: INT16(0)
+<br>
+
+5: Req: 0, Base: 0, Num: 0, Area: Unknown(0), DataType: INT16(0)
+<br>
+
+6: Req: 0, Base: 0, Num: 0, Area: Unknown(0), DataType: INT16(0)
+<br>
+
+7: Req: 0, Base: 0, Num: 0, Area: Unknown(0), DataType: INT16(0)
+</p>
+<h3><a name="_Function_=_15:"></a>
+Function = 15: Maximum packets handled per
+stack call</h3>
+<p>
+ARM based controllers only.
+</p>
+<p>
+Function ‘15’ of the Ethernet command provides access to a
+parameter which limits the number of incoming Ethernet packets handled per call
+to a particular stack function. It controls the rate, and the smaller the value
+the slower the rate of packet handling but the less chance of overloading other
+processes going on in the microprocessor.
+</p>
+<p>
+The default value is 0, which means handle all incoming
+packets. This parameter is dynamic and must be set each time from power on in a
+program.
+</p>
+<p class="fixed">
+ETHERNET(action, slot, 15, value)
+</p>
+<h4>Example 1:</h4>
+<p>
+In the terminal 0 command line, check the setting of
+function 15.
+</p>
+<p class="codeexample">
+&gt;&gt;?ETHERNET(0, -1, 15)
+<br>
+
+0
+<br>
+
+-1
+</p>
+<h4>Example 2:</h4>
+<p>
+In a program, set the max number of packets that can be
+handled in one stack call to 20. This will be enough to limit the impact of
+large data transfers over the TrioPC ActiveX from affecting motion and other
+networks.
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 15, 20)
+</p>
+<h3><a name="_Function_=_21:"></a>
+Function = 21: List port status</h3>
+<p>
+Prints a report to the current output stream showing
+connection details for the Ethernet ports.
+</p>
+<p class="codeexample">
+ETHERNET(0, slot, 21)
+</p>
+<h4>Example:</h4>
+<p class="codeexample">
+&gt;&gt;ETHERNET(0, -1, 21)
+<br>
+
+Socket: index 13 is connected.
+</p>
+<p class="codeexample">
+Socket: index 13, Local IP: 192.168.0.249 Port: 502
+</p>
+<p class="codeexample">
+Socket: index 13, Remote IP: 192.168.0.57 Port: 56683
+</p>
+<p class="codeexample">
+Socket: keep alive cfg: Interval: 20, Idle: 20, Count: 8, 
+</p>
+<p class="codeexample">
+Socket: keep alive : value: 20, Abort: -1
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+Socket: index 14 is connected.
+</p>
+<p class="codeexample">
+Socket: index 14, Local IP: 192.168.0.249 Port: 3240
+</p>
+<p class="codeexample">
+Socket: index 14, Remote IP: 192.168.0.142 Port: 1297
+</p>
+<p class="codeexample">
+Socket: keep alive cfg: Interval: 20, Idle: 20, Count: 8, 
+</p>
+<p class="codeexample">
+Socket: keep alive : value: 20, Abort: -1
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+Socket: index 15 is connected.
+</p>
+<p class="codeexample">
+Socket: index 15, Local IP: 192.168.0.249 Port: 23
+</p>
+<p class="codeexample">
+Socket: index 15, Remote IP: 192.168.0.142 Port: 1271
+</p>
+<p class="codeexample">
+Socket: keep alive cfg: Interval: 20, Idle: 20, Count: 8, 
+</p>
+<p class="codeexample">
+Socket: keep alive : value: 20, Abort: -1
+</p>
+<p>
+Port 502 is the Modbus TCP port, 3240 is for TrioPC Motion
+ActiveX/DLL and 23 is for Motion Perfect.
+</p>
+<h3><a name="_Function_=_22:"></a>
+Function = 22: Read MIB information</h3>
+<p>
+This command should be used in the command line terminal
+only. Function 22 returns the MIB information as text to the command line
+output.
+</p>
+<p class="note">
+This function is read only
+</p>
+<h4>Example:</h4>
+<p>
+In the terminal, type the command and read the text
+response.
+</p>
+<p class="codeexample">
+<br>
+
+&gt;&gt;ETHERNET(0, -1, 22)
+</p>
+<p class="codeexample">
+MIB Information:
+</p>
+<p class="codeexample">
+RMON_T_DROP : 0
+</p>
+<p class="codeexample">
+RMON_T_PACKETS : 18322
+</p>
+<p class="codeexample">
+RMON_T_BC_PKT : 259
+</p>
+<p class="codeexample">
+Etc.
+</p>
+<h3><a name="_Function_=_24:"></a>
+Function = 24: Read connection state</h3>
+<p>
+Returns the cable connection state as TRUE/FALSE. If the
+RJ45 connector has a live Ethernet connection plugged in, then function 24
+returns TRUE. If the cable is unplugged or is connected to a switch or other
+device that is powered off, then the function returns FALSE.
+</p>
+<p class="note">
+This function is read only
+</p>
+<p class="codeexample">
+DIM state AS BOOLEAN
+<br>
+
+state = ETHERNET(0, slot, 24)
+</p>
+<h4>Example:</h4>
+<p class="codeexample">
+'Monitor the Ethernet connection and flash an output when
+<br>
+
+'connection is lost
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WHILE TRUE
+</p>
+<p class="codeexample">
+  IF ETHERNET(0, -1, 24) = FALSE THEN
+</p>
+<p class="codeexample">
+    OP(9, 0) 
+</p>
+<p class="codeexample">
+    OP(8, 1) 'Output 8 flashing shows connection lost
+</p>
+<p class="codeexample">
+    WA(250)
+</p>
+<p class="codeexample">
+    OP(8, 0)
+</p>
+<p class="codeexample">
+    WA(250)
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    OP(9, 1) 'Output 9 shows a good connection
+</p>
+<p class="codeexample">
+    WA(250)
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3><a name="_Function_=_25:"></a>
+Function = 25: Restart Ethernet services</h3>
+<p>
+Restarts Ethernet services on the specified slot.
+</p>
+<p class="note">
+This function is command only
+</p>
+<p class="codeexample">
+ETHERNET(2, slot, 25)
+</p>
+<h2>See also:</h2>
+<p>
+<a href="MODBUS.html">MODBUS</a>
+, 
+<a href="IP_PROTOCOL_CTRL.html">IP_PROTOCOL_CTRL</a>
+, 
+<a href="IP_TCP_TX_THRESHOLD.html">IP_TCP_TX_THRESHOLD</a>
+, 
+<a href="IP_TCP_TX_TIMEOUT.html">IP_TCP_TX_TIMEOUT</a>
+</p>
+</body>
+</html>

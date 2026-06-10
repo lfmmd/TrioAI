@@ -585,7 +585,7 @@ namespace TrioAI.MPPlugIn
             {
                 Title = Lang.S("SettingsTitle"),
                 Width = 450,
-                Height = 320,
+                Height = 400,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 Owner = Window.GetWindow(this),
                 ResizeMode = ResizeMode.NoResize,
@@ -651,35 +651,60 @@ namespace TrioAI.MPPlugIn
             };
             panel.Children.Add(showStatusCheck);
 
+            // Include skill images checkbox
+            var includeImagesCheck = new CheckBox
+            {
+                Content = Lang.S("IncludeSkillImages"),
+                IsChecked = _ai.IncludeSkillImages,
+                Foreground = Brushes.White,
+                Margin = new Thickness(0, 0, 0, 14),
+                ToolTip = Lang.S("IncludeSkillImagesDesc")
+            };
+            panel.Children.Add(includeImagesCheck);
+
             // Buttons
             var btnRow = new DockPanel { LastChildFill = false };
 
-            Button initBtn = null;
-            if (!_ai.SkillsInitialized)
+            var initBtn = new Button
             {
-                initBtn = new Button
+                Content = "初始化 Skill 数据",
+                Height = 28,
+                Padding = new Thickness(10, 0, 10, 0),
+                Background = new SolidColorBrush(Color.FromRgb(80, 50, 0)),
+                Foreground = Brushes.White,
+                BorderBrush = new SolidColorBrush(Color.FromRgb(120, 80, 0))
+            };
+            var skillStatus = new TextBlock
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(8, 0, 0, 0),
+                Text = _ai.SkillsInitialized ? "已释放" : "",
+                Foreground = _ai.SkillsInitialized
+                    ? new SolidColorBrush(Color.FromRgb(0, 200, 0))
+                    : Brushes.Gray
+            };
+            initBtn.Click += (s, ev) =>
+            {
+                if (_ai.SkillsInitialized)
                 {
-                    Content = "初始化 Skill 数据",
-                    Height = 28,
-                    Padding = new Thickness(10, 0, 10, 0),
-                    Background = new SolidColorBrush(Color.FromRgb(80, 50, 0)),
-                    Foreground = Brushes.White,
-                    BorderBrush = new SolidColorBrush(Color.FromRgb(120, 80, 0))
-                };
-                initBtn.Click += (s, ev) =>
+                    var r = MessageBox.Show(win, "Skill 数据已释放，是否覆盖？", "确认覆盖",
+                        MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (r != MessageBoxResult.Yes) return;
+                }
+                var err = _ai.InitializeSkills();
+                if (err != null)
                 {
-                    var err = _ai.InitializeSkills();
-                    if (err != null)
-                    {
-                        MessageBox.Show(win, err, "错误", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
-                    }
-                    MessageBox.Show(win, "Skill 数据初始化完成。", "完成", MessageBoxButton.OK, MessageBoxImage.Information);
-                    initBtn.Visibility = Visibility.Collapsed;
-                };
-                DockPanel.SetDock(initBtn, Dock.Left);
-                btnRow.Children.Add(initBtn);
-            }
+                    MessageBox.Show(win, err, "错误", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                MessageBox.Show(win, "Skill 数据初始化完成。", "完成", MessageBoxButton.OK, MessageBoxImage.Information);
+                skillStatus.Text = "已释放";
+                skillStatus.Foreground = new SolidColorBrush(Color.FromRgb(0, 200, 0));
+            };
+            DockPanel.SetDock(initBtn, Dock.Left);
+            DockPanel.SetDock(skillStatus, Dock.Left);
+            btnRow.Children.Add(initBtn);
+            btnRow.Children.Add(skillStatus);
 
             var btnPanel = new StackPanel
             {
@@ -719,7 +744,7 @@ namespace TrioAI.MPPlugIn
                     MessageBox.Show(win, Lang.S("EmptyKey"), Lang.S("Error"), MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked);
+                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked);
                 _messages.Add(new ChatMessage("System", Lang.S("SettingsSaved")));
                 _scrollViewer.ScrollToEnd();
                 win.DialogResult = true;
@@ -1196,6 +1221,8 @@ namespace TrioAI.MPPlugIn
                 { "CopyAll", "全部复制" },
                 { "ShowToolStatus", "显示工具执行状态" },
                 { "ShowToolStatusDesc", "在聊天中显示黄色工具调用状态信息" },
+                { "IncludeSkillImages", "Skill 查询包含图片" },
+                { "IncludeSkillImagesDesc", "查询 TrioBASIC/IEC/PLCOpen 指令时在返回内容中保留 <img> 标签（默认关闭以节省 Token）" },
             },
             ["en"] = new Dictionary<string, string>
             {
@@ -1233,6 +1260,8 @@ namespace TrioAI.MPPlugIn
                 { "CopyAll", "Copy All" },
                 { "ShowToolStatus", "Show Tool Status" },
                 { "ShowToolStatusDesc", "Display yellow tool execution status messages in chat" },
+                { "IncludeSkillImages", "Include images in skill lookups" },
+                { "IncludeSkillImagesDesc", "Keep <img> tags when returning TrioBASIC/IEC/PLCOpen command help (off by default to save tokens)" },
             },
             ["de"] = new Dictionary<string, string>
             {
@@ -1270,6 +1299,8 @@ namespace TrioAI.MPPlugIn
                 { "CopyAll", "Alles kopieren" },
                 { "ShowToolStatus", "Tool-Status anzeigen" },
                 { "ShowToolStatusDesc", "Gelbe Tool-Ausfuehrungsstatusmeldungen im Chat anzeigen" },
+                { "IncludeSkillImages", "Bilder in Skill-Abfragen einschließen" },
+                { "IncludeSkillImagesDesc", "<img>-Tags bei TrioBASIC/IEC/PLCOpen-Hilfeausgaben behalten (standardmäßig aus, um Tokens zu sparen)" },
             },
             ["fr"] = new Dictionary<string, string>
             {
@@ -1307,6 +1338,8 @@ namespace TrioAI.MPPlugIn
                 { "CopyAll", "Tout copier" },
                 { "ShowToolStatus", "Afficher statut outil" },
                 { "ShowToolStatusDesc", "Afficher les messages d'etat d'execution des outils en jaune" },
+                { "IncludeSkillImages", "Inclure les images dans les recherches de skill" },
+                { "IncludeSkillImagesDesc", "Conserver les balises <img> lors du retour de l'aide TrioBASIC/IEC/PLCOpen (désactivé par défaut pour économiser des tokens)" },
             },
         };
 

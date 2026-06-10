@@ -1,0 +1,61 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>POSI_SEQ_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="POSI_SEQ_MODE">
+</head>
+<body>
+<h1>POSI_SEQ_MODE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+The command POSI_SEQ_MODE controls the delay filter to apply
+the demand position (DPOS).
+</p>
+<p>
+The delay filter allows the final axis output position
+(DPOS) to be fed through a delay buffer.  The delay is defined as a number of
+servo cycles, specified using the command POSI_SEQ_DELAY. 
+</p>
+<p>
+The filter is controlled using POSI_SEQ_MODE.  There are 3
+modes of operation:
+</p>
+<p>
+0: No delay (filter disabled)
+</p>
+<p>
+1: Delay only.  The latest value is pushed to delay buffer
+and popped later when the number of specified delay cycles has elapsed.
+</p>
+<p>
+2: 2-point filter delay.  The average of latest value pushed
+to delay buffer and current value popped from delay buffer.
+</p>
+<p>
+Internally, the delay buffer must be fully populated before
+delayed values become active and overwrite demand position, until this happens the
+demand position will not be delayed.
+</p>
+<p class="Category">
+Value:
+</p>
+<p>
+Default value is 0.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DPOS.html">DPOS</a>
+, 
+<a href="POSI_SEQ_DELAY.html">POSI_SEQ_DELAY</a>
+</p>
+<p class="Category">
+&nbsp;
+</p>
+</body>
+</html>

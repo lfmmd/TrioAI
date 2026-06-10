@@ -1,0 +1,117 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>R_REGISTSPEED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="R_REGISTSPEED">
+</head>
+<body>
+<h1>R_REGISTSPEED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+R_REGISTSPEED(expression)
+</p>
+<h2>Description:</h2>
+<p>
+Stores the speed of the axis when a registration mark was
+seen. Value is in user units per millisecond. This parameter is used with the time-based
+registration channel set with the 
+<a href="REGIST.html">REGIST</a>
+ command.
+</p>
+<p class="tip">
+In most real-world systems there are delays built into the
+registration circuit; the external sensor and the input opto-isolator will have
+some fixed response time. As machine speed increases, the fixed electrical
+delays will have an effect on the captured registration position. 
+</p>
+<p>
+R_REGISTSPEED returns the value of axis speed captured at
+the same time as 
+<a href="R_REGPOS.html">R_REGPOS</a>
+. The captured speed and
+position values can be used to calculate a registration position that does not
+vary with speed because of the fixed delays.
+</p>
+<p class="note">
+This is an AXIS parameter; you need to ensure that you are using
+this parameter with the same AXIS that you used to set the REGIST so to ensure
+that the correct UNITS are used.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Expression:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression. The result of the
+  expression should be a valid integer channel number.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Value:</h2>
+<p>
+The speed of the axis in user units per millisecond at which
+the registration event occurred.
+</p>
+<p class="note">
+This parameter has the units of 
+<a href="UNITS.html">UNITS</a>
+/ms
+at all 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+ settings.
+</p>
+<h2>Example:</h2>
+<p>
+Compensate for fixed delays in the registration circuit
+using R_REGISTSPEED.
+</p>
+<p class="codeexample">
+fixed_delays = 0.012 'Circuit delays in milliseconds
+</p>
+<p class="codeexample">
+REGIST(21, 3, 0, 0, 0) 'Registration on time based channel
+3
+</p>
+<p class="codeexample">
+WAIT UNTIL R_MARK(3)
+</p>
+<p class="codeexample">
+captured_position = R_REGPOS(3) - (R_REGISTSPEED(3) * fixed_delays)
+</p>
+<p>
+See Also:
+</p>
+<p>
+<a href="REGIST.html">REGIST</a>
+, 
+<a href="REGIST_SPEED.html">REGIST_SPEED</a>
+,
+
+<a href="REGIST_SPEEDB.html">REGIST_SPEEDB</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LOOKAHEAD_FACTOR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LOOKAHEAD_FACTOR">
+</head>
+<body>
+<h1>LOOKAHEAD_FACTOR</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter is used to modify all speeds in the motion
+buffer by factoring them by value specified.
+</p>
+<p>
+LOOKAHEAD_FACTOR operates with all SP type interpolated
+moves 
+<a href="MOVESP.html">MOVESP</a>
+, 
+<a href="MOVEABSSP.html">MOVEABSSP</a>
+
+and 
+<a href="MHELICALSP.html">MHELICALSP</a>
+ and will factor the axis speeds 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+, 
+<a href="ENDMOVE_SPEED.html">ENDMOVE_SPEED</a>
+
+and 
+<a href="STARTMOVE_SPEED.html">STARTMOVE_SPEED</a>
+.
+</p>
+<p>
+This is typically used to reduce speeds by using a factor
+less than one but can also be used to increase speeds by using a factor greater
+than one.
+</p>
+<h2>Example:</h2>
+<h3>Example 1</h3>
+<p>
+An analogue input from a potentiometer is used to adjust the
+overall speed of the motion on axes 2 and 3. 
+</p>
+<p class="codeexample">
+IF VR(200) = 1 THEN
+</p>
+<p class="codeexample">
+  'Start the operator speed control routine
+</p>
+<p class="codeexample">
+  BASE(2)
+</p>
+<p class="codeexample">
+  REPEAT
+</p>
+<p class="codeexample">
+    speed_factor = AIN(0) / 4096
+</p>
+<p class="codeexample">
+    LOOKAHEAD_FACTOR = speed_factor
+</p>
+<p class="codeexample">
+    WA(100)
+</p>
+<p class="codeexample">
+  UNTIL VR(200) = 0
+</p>
+<p class="codeexample">
+  LOOKAHEAD_FACTOR = 1.0 '100% full speed
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 2</h3>
+<p>
+Set all look-ahead speeds of axis group starting at axis 4
+to 50% of the programmed speed. 
+</p>
+<p class="codeexample">
+LOOKAHEAD_FACTOR AXIS(4) = 0.5
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ACCEL_FACTOR.html">ACCEL_FACTOR</a>
+, 
+<a href="FEED_OVERRIDE.html">FEED_OVERRIDE</a>
+, 
+<a href="JERK_FACTOR.html">JERK_FACTOR</a>
+,
+
+<a href="SPEED_FACTOR.html">SPEED_FACTOR</a>
+, 
+<a href="VP_MODE.html">VP_MODE</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

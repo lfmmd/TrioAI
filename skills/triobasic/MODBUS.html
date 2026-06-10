@@ -1,0 +1,3009 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MODBUS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MODBUS">
+</head>
+<body>
+<h1>MODBUS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MODBUS(function, slot[, parameters...])
+</p>
+<h2>Description:</h2>
+<p>
+This function allows the user to configure the Ethernet port
+to run as a Modbus TCP and Modbus RTU Client (Master). Using the MODBUS
+command, the user can open a connection to a remote server, transfer data using
+a sub-set of Modbus Function Numbers and check for errors. 
+</p>
+<p>
+Up to 10 Modbus TCP connections may be opened
+simultaneously.
+</p>
+<p>
+One Modbus RTU master connection may be opened.
+</p>
+<p class="warning">
+When attempting to open a Modbus connection over the serial
+port, you must first configure the serial port parameters using the 
+<a href="SETCOM.html">SETCOM</a>
+ command.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+function:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_0;">0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open a Modbus client connection
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_1:_1">1</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Close connection
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_2:_1">2</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Check connection status
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_3:_1">3</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Send commands (Modbus functions)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_$10:">$10</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Get Error Log Entry
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_$11:">$11</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Get Error Log Count
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_0;"></a>
+Function = 0;</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = MODBUS(0,slot, ip address/network type 1...4[, port
+number/connection type[, vr_index[, unit identifier[, CmdTimeout[, CharTimeout]]]]])
+</p>
+<h3>Description:</h3>
+<p>
+Attempt to open a Modbus TCP/RTU client connection to the
+given remote server. 
+</p>
+<h3>Parameters:         </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+ =  the command was
+  successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+ = the command was
+  unsuccessful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the communication port is fitted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ip address/network type:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Server’s IP address as 4 octets separated by commas
+  (Modbus TCP)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RS232 (Modbus RTU)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-2
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 wire RS485  (Modbus RTU)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-3
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4 wire RS485  (Modbus RTU)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+port number/connection type:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional port number.  Default is port 502 if none
+  given.  (Modbus TCP)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Client (Modbus RTU)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="23" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="423" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Server (Modbus RTU) * 
+<i>for future development</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Index number of the VR where the connection handle will
+  be written. Default value is -1.  -1 means print to the standard output
+  stream. (normally terminal 0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+unit identifier:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unit identifier byte used in request header. (Modbus
+  RTU only*)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CmdTimeout:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Time out (ms) for executing functions. Default is 5000&nbsp;ms
+  (5 seconds).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CharTimeout:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Maximum time interval permitted between individual
+  received characters or ability to transmit characters within a message before
+  an error is triggered. Default is 100&nbsp;ms.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Function_=_1:"></a>
+Example 1:</h3>
+<p class="codeexample">
+'IP Address 192.168.0.185, Port Number 502
+</p>
+<p class="codeexample">
+IF MODBUS(0, -1, 192, 168, 0, 185, 502, 20) THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Modbus port opened OK&quot;
+</p>
+<p class="codeexample">
+  modbus_handle = VR(20)
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Error, Modbus server not found&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p class="codeexample">
+'Modbus RTU master over RS232
+</p>
+<p class="codeexample">
+IF MODBUS(0, -1, -1, 0, 20) THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Modbus port opened OK&quot;
+</p>
+<p class="codeexample">
+  modbus_handle = VR(20)
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Error, Modbus server not found&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Open 3 simultaneous Modbus connections to remote Modbus TCP servers.
+</p>
+<p class="TrioBASIC">
+'VRs for returned connection handles
+</p>
+<p class="TrioBASIC">
+plc = 10
+</p>
+<p class="TrioBASIC">
+inverter_1 = 11
+</p>
+<p class="TrioBASIC">
+inverter_2 = 12
+</p>
+<p class="TrioBASIC">
+&nbsp;
+</p>
+<p class="TrioBASIC">
+'Constants
+</p>
+<p class="TrioBASIC">
+DEFCONST open_modbus, 0
+</p>
+<p class="TrioBASIC">
+DEFCONST mb_slot -1
+</p>
+<p class="TrioBASIC">
+ 
+</p>
+<p class="TrioBASIC">
+'Open connections (maximum 10 at the same time)
+</p>
+<p class="TrioBASIC">
+MODBUS(open_modbus, mb_slot, 192, 168, 0, 184, 502, plc, 3)
+</p>
+<p class="TrioBASIC">
+MODBUS(open_modbus, mb_slot, 192, 168, 0, 102, 502, inverter_1,
+3)
+</p>
+<p class="TrioBASIC">
+MODBUS(open_modbus, mb_slot, 192, 168, 0, 094, 502, inverter_2,
+3)
+</p>
+<h2><a name="_Function_=_1:_1"></a>
+Function = 1:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = MODBUS(1, slot, handle)
+</p>
+<h3>Description:</h3>
+<p>
+Close Modbus TCP/RTU client connection if open.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was unsuccessful or the connection was
+  already closed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the communication port is fitted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+handle:
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+number that was returned by the previous “open”
+  function
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Function_=_2:"></a>
+Example:</h3>
+<p class="codeexample">
+'Close Modbus connection
+</p>
+<p class="codeexample">
+MODBUS(1, -1, modbus_handle)
+</p>
+<h2><a name="_Function_=_2:_1"></a>
+Function = 2:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = MODBUS(2, slot, handle[, VR index])
+</p>
+<h3>Description:</h3>
+<p>
+Return connection status (0 = closed, 1 = open)
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was unsuccessful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the communication port is fitted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+handle:
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+number that was returned by the previous “open”
+  function or 0 which checks for any open handle
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR index:
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR number which will hold the returned value. If set to
+  -1 or not included, then the value is printed to the command-line terminal
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Function_=_3:"></a>
+Example:</h3>
+<h4>Example 1</h4>
+<p class="codeexample">
+'Is Modbus connection open?
+</p>
+<p class="codeexample">
+MODBUS(2, -1, 0, 200)
+</p>
+<p class="codeexample">
+IF VR(200) = 1 THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Modbus port is open&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Modbus port is closed&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h4>Example 2</h4>
+<p>
+Check in Terminal 0 for Modbus status.  Direct reply to the
+terminal input stream.
+</p>
+<p class="codeexample">
+&gt;&gt;MODBUS(2, -1, 0, -1)
+</p>
+<p class="codeexample">
+1
+</p>
+<h2><a name="_Function_=_3:_1"></a>
+Function = 3:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = MODBUS(3, slot, handle, modbus function code[, parameters])
+</p>
+<h3>Description:</h3>
+<p>
+Execute the given Modbus function if the connection is open.
+The parameters vary depending upon the function required.  Holding Registers
+are mapped to the corresponding VR in the client.  I/O functions use the VRs to
+hold the remote I/O states when reading from the remote server, or as the I/O
+source when writing to the remote server. Each VR entry is used to hold up to
+32 I/O bits. The Modbus functions supported are defined below. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="162" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="72" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="72" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was unsuccessful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="162" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="429" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the communication port is fitted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="162" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+handle:
+</p>
+
+  
+</td>
+<td width="429" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Handle of the previously opened connection
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="162" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus function code:
+</p>
+
+  
+</td>
+<td width="429" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A recognised valid Modbus function code number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="162" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Node Address:
+</p>
+
+  
+</td>
+<td width="429" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus RTU only*
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="162" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Other parameters:
+</p>
+
+  
+</td>
+<td width="429" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+See table below
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="codeexample">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Function
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+#
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameters
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Notes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read Coils 
+</p>
+
+  
+</td>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of values
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Result start address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR index for response values
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read Discrete Inputs
+</p>
+
+  
+</td>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of values
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Result start address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR index for response values
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read Holding Registers
+</p>
+
+  
+</td>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus register start address in
+  Server. The data read is mapped directly to same VR indices in the client
+  unless Local Address is set.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of values
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Minimum 1, Maximum 126 (Integer),
+  Maximum 63 (Long and 32 bit Float).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Local Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If set, this is the target VR start
+  address in the Motion Coordinator client.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read Input Registers
+</p>
+
+  
+</td>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus register start address in
+  Server. Data read is mapped directly to same VRs in the client unless Local
+  Address is set.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of values
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Local Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If set, this is the target VR start
+  address in the Motion Coordinator client.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write Single Coil
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 (on) or 0 (off)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write Single Register
+</p>
+
+  
+</td>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus register address in server. Value
+  is taken from the same client VR unless Local Address is set.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Local Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If set, this is the target VR address
+  in the Motion Coordinator client.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write Multiple Coils
+</p>
+
+  
+</td>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of coils
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Source address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR start address containing required
+  coil state values.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write Multiple Registers
+</p>
+
+  
+</td>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus register start address in
+  server. Values are copied from the same VR indices in the client unless the Local
+  Address is set.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of registers
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Minimum 1, Maximum 126 (Integer),
+  Maximum 63 (Long and 32 bit Float).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Local Address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If set, this is the target VR start
+  address in the Motion Coordinator client.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read Write Multiple Registers
+</p>
+
+  
+</td>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+23
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read Start address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mapped to same VRs in Client
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of Read registers
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write Start address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mapped from same VRs in Client.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of Write registers
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The Modbus “start address” is the value transmitted in the Modbus
+packet.  If a 32 bit mode is set, the address can represent 2 x Holding
+Register address in the remote Server.  See remote device documentation for
+details. 
+</p>
+<p class="warning">
+When in 32 bit mode, the Modbus Start Address must be an even
+number.
+</p>
+<h3>Example 1</h3>
+<p>
+Read and write holding registers in 16 bit mode. Map the
+Holding Register data to the same VR addresses in the Motion Coordinator.
+</p>
+<p class="codeexample">
+my_slot = -
+1
+<br>
+
+
+<br>
+
+open_modbus = $
+00
+<br>
+
+close_modbus = $
+01
+<br>
+
+get_status = $
+02
+<br>
+
+ex_modbus_func = $
+03
+</p>
+<p class="codeexample">
+get_error_log = $
+10
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Check if Modbus is already open
+<br>
+
+
+MODBUS
+(get_status, my_slot,&nbsp;
+100
+)
+<br>
+
+
+IF
+&nbsp;
+VR
+(
+100
+) = 
+1
+&nbsp;
+THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+'Close the connection so that
+it can be re-opened
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MODBUS
+(close_modbus,
+my_slot)
+<br>
+
+
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Open the modbus server (remote slave) &amp; put handle in
+VR(20)
+<br>
+
+
+MODBUS
+(open_modbus, my_slot,&nbsp;
+192
+, 
+168
+, 
+0
+, 
+249, 502, 20
+)
+<br>
+
+
+<br>
+
+
+REPEAT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;'Get 10 values from holding registers 1000 to 1009
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MODBUS
+(ex_modbus_func,
+my_slot, VR(20), 
+3
+,&nbsp;
+1000
+,&nbsp;
+10
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;'Send 10 values to holding registers 1010 to 1019
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MODBUS
+(ex_modbus_func,
+my_slot, VR(20), 
+16
+,&nbsp;
+1010
+,&nbsp;
+10
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+WA
+(
+200
+)
+<br>
+
+
+UNTIL
+&nbsp;
+FALSE
+</p>
+<h3>Example 2</h3>
+<p>
+Read and write holding registers in 32-bit mode. Use
+parameter 7 to map the Holding Register data to VRs with different addresses in
+the Motion Coordinator.
+</p>
+<p class="codeexample">
+'Modbus registers are 16 bit.We
+are sending 32 bit values
+</p>
+<p class="codeexample">
+'therefore 2 Modbus registers
+are used for each data value
+</p>
+<p class="codeexample">
+ETHERNET
+(
+1
+, -
+1
+, 
+14
+, 
+6
+, 
+1
+, 
+3
+) 
+'VR
+<br>
+
+
+ETHERNET
+(
+1
+, -
+1
+, 
+14
+, 
+6
+, 
+2
+, 
+1
+) 
+'Integer 32 bit on
+master
+<br>
+
+
+<br>
+
+my_slot = -
+1
+<br>
+
+
+<br>
+
+open_modbus = 
+$00
+<br>
+
+close_modbus = 
+$01
+<br>
+
+get_status = 
+$02
+<br>
+
+ex_modbus_func = 
+$03
+<br>
+
+
+<br>
+
+get_error_log = 
+$10
+<br>
+
+
+<br>
+
+vr_handle = 
+100
+<br>
+
+vr_status = 
+101
+<br>
+
+default_handle = 
+0
+<br>
+
+
+<br>
+
+
+'Check if Modbus is already open
+<br>
+
+
+MODBUS
+(get_status, my_slot, default_handle,
+vr_status)
+<br>
+
+
+IF
+ VR
+(vr_status)
+= 
+1
+ THEN
+<br>
+
+
+  'Close the connection so that it can be re-opened
+<br>
+
+  
+MODBUS
+(close_modbus, my_slot,
+default_handle)
+<br>
+
+
+ENDIF
+<br>
+
+
+<br>
+
+
+'Open the modbus server (remote slave)
+<br>
+
+
+IF
+ NOT
+ MODBUS
+(open_modbus, my_slot, 
+192
+, 
+168
+, 
+008
+, 
+250
+, 
+502
+, vr_handle) 
+THEN
+<br>
+
+
+  PRINT
+ &quot;Err:
+failed to open modbusTCP connection&quot;
+<br>
+
+  
+STOP
+<br>
+
+
+ELSE
+<br>
+
+    
+PRINT
+ &quot;Successfully
+opened connection, handle : &quot;
+, 
+VR
+(vr_handle)
+[
+0
+]
+<br>
+
+
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+REPEAT
+<br>
+
+
+  'Get 2 values from holding registers 2048 to 2049
+copy to VR(200).. VR(201)
+<br>
+
+  
+IF
+ MODBUS
+(ex_modbus_func,
+my_slot, 
+VR
+(vr_handle), 
+3
+, 
+4096
+, 
+4
+, 
+200
+) = 
+FALSE
+ THEN
+<br>
+
+    
+PRINT
+ #
+5
+,
+
+&quot;Error reading holding registers 2048..2049&quot;
+<br>
+
+    
+GOSUB
+ check_error
+<br>
+
+  
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  
+'Send 30 values to holding
+registers 500 to 529, get from VR(1200)...
+<br>
+
+  
+IF
+ MODBUS
+(ex_modbus_func,
+my_slot, 
+VR
+(vr_handle), 
+16
+, 
+1000
+, 
+60
+, 
+1200
+) = 
+FALSE
+ THEN
+<br>
+
+    
+PRINT
+ #
+5
+,
+
+&quot;Error writing holding registers 500..&quot;
+<br>
+
+    
+GOSUB
+ check_error
+<br>
+
+  
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;
+WA
+(
+20
+)
+<br>
+
+
+UNTIL
+ FALSE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 3</h3>
+<p>
+3 Trio controllers (F6N, MC6N-ECAT, F6N) are setup as below.
+VRs used to exchange between 2 controllers are shown below. 
+</p>
+<p>
+<img border="0" width="576" height="402" src="MODBUS_files/image001.png">
+</p>
+<p>
+<b><i>F6N client (192.168.0.192) code:</i></b></p>
+<p class="codeexample">
+my_slot = -
+1
+<br>
+
+
+<br>
+
+open_modbus = 
+$00
+<br>
+
+close_modbus = 
+$01
+<br>
+
+get_status = 
+$02
+<br>
+
+ex_modbus_func = 
+$03
+<br>
+
+get_error_log = 
+$10
+<br>
+
+
+<br>
+
+
+'Check if Modbus is already open
+<br>
+
+
+MODBUS
+ (get_status, my_slot, 
+VR
+(
+20
+))
+<br>
+
+
+<br>
+
+
+'Close the connection so that it can be re-opened
+<br>
+
+
+IF
+ VR
+(
+100
+) = 
+1
+ THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MODBUS
+(close_modbus,my_slot,
+VR
+(
+20
+))
+<br>
+
+
+ENDIF
+<br>
+
+
+<br>
+
+
+'Open the modbus server (remote slave) &amp; put
+handle in VR(20)
+<br>
+
+
+MODBUS
+ (open_modbus, my_slot, 
+192
+ , 
+168
+ , 
+0
+ , 
+247
+, 
+502
+, 
+20
+ )
+<br>
+
+
+<br>
+
+
+REPEAT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+'Get 10 values from holding
+registers 100 to 109
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MODBUS
+
+(ex_modbus_func, my_slot, 
+VR
+(
+20
+), 
+3
+ , 
+100
+ , 
+10
+ )
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+'Send 10 values to holding
+registers 110 to 119
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MODBUS
+
+(ex_modbus_func, my_slot, 
+VR
+(
+20
+), 
+16
+ , 
+110
+ , 
+10
+ )
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+WA
+ ( 
+200
+ )
+<br>
+
+
+UNTIL
+ FALSE
+</p>
+<p>
+<b><i>MC6N-ECAT server/client (192.168.0.192) code:</i></b></p>
+<p class="codeexample">
+my_slot = -
+1
+<br>
+
+
+<br>
+
+open_modbus = 
+$00
+<br>
+
+close_modbus = 
+$01
+<br>
+
+get_status = 
+$02
+<br>
+
+ex_modbus_func = 
+$03
+<br>
+
+get_error_log = 
+$10
+<br>
+
+
+<br>
+
+
+'Check if Modbus is already open
+<br>
+
+
+MODBUS
+ (get_status, my_slot, 
+VR
+(
+21
+))
+<br>
+
+
+<br>
+
+
+'Close the connection so that it can be re-opened
+<br>
+
+
+IF
+ VR
+(
+100
+) = 
+1
+ THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MODBUS
+(close_modbus,my_slot,
+VR
+(
+21
+))
+<br>
+
+
+ENDIF
+<br>
+
+
+<br>
+
+
+'Open the modbus server (remote slave) &amp; put
+handle in VR(21)
+<br>
+
+
+MODBUS
+ (open_modbus, my_slot, 
+192
+ , 
+168
+ , 
+0
+ , 
+240
+, 
+502
+, 
+21
+ )
+<br>
+
+
+<br>
+
+
+REPEAT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+'Get 10 values from holding
+registers 120 to 129
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MODBUS
+
+(ex_modbus_func, my_slot, 
+VR
+(
+21
+), 
+3
+ , 
+120
+ , 
+10
+ )
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+'Send 10 values to holding
+registers 130 to 139
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MODBUS
+
+(ex_modbus_func, my_slot, 
+VR
+(
+21
+), 
+16
+ , 
+130
+ , 
+10
+ )
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+WA
+ ( 
+200
+ )
+<br>
+
+
+UNTIL
+ FALSE
+</p>
+<p>
+<b><i>F6N server (192.168.0.192) code: </i></b></p>
+<p class="codeexample">
+' No code needed as server
+</p>
+<h2><a name="_Function_=_$10:"></a>
+Function = $10:</h2>
+<h3>Syntax:</h3>
+<p>
+MODBUS($10,  slot,  handle[, entry offset[, VR index]])
+</p>
+<h3>Description:</h3>
+<p>
+Returns the error log entry. If no entry offset is supplied,
+then the last entry (offset = 0) is returned. Otherwise, 1 will return the
+previous entry, 2 will return the last one but 2 etc.
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="108" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td width="432" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td width="432" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was unsuccessful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="482" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the communication port is fitted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+handle:
+</p>
+
+  
+</td>
+<td width="482" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Handle of the connection whose error log entry is
+  required. If -1 then access general protocol errors (for example failed to
+  open connection.)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+entry offset:
+</p>
+
+  
+</td>
+<td width="482" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Entry in the error log. If not supplied then entry 0 is
+  returned.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR index:
+</p>
+
+  
+</td>
+<td width="482" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR number which will hold the returned value. If set to
+  -1 or not included, then the value is printed to the command-line terminal.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Function_=_4:"></a>
+Example:</h3>
+<h4>Example 1</h4>
+<p class="codeexample">
+'Get error log entries 0 to 4 and put in VR(100) to VR(104)
+</p>
+<p class="codeexample">
+FOR I = 0 to 4
+</p>
+<p class="codeexample">
+  error_flag = MODBUS($10, -1, modbus_handle, i, 100 + i)
+</p>
+<p class="codeexample">
+  IF error_flag = FALSE THEN
+</p>
+<p class="codeexample">
+    PRINT &quot;Error fetching error log entry &quot;; i[0]
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+NEXT i
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h4>Example 2</h4>
+<p class="codeexample">
+'Get an error log entry from the terminal
+</p>
+<p class="codeexample">
+&gt;&gt;MODBUS($10, -1, modbus_handle, 0, -1)
+</p>
+<p class="codeexample">
+19
+</p>
+<h2><a name="_Function_=_$11:"></a>
+Function = $11:</h2>
+<h3>Syntax:</h3>
+<p>
+MODBUS($11,  slot,  handle[, vr_index])
+</p>
+<h3>Description:</h3>
+<p>
+Return the count of the number of error codes logged for the
+given handle.
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="108" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td width="432" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td width="432" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was unsuccessful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="482" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the communication port is fitted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+handle:
+</p>
+
+  
+</td>
+<td width="482" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Handle of the connection whose error log entry is
+  required. If -1 then access general protocol errors (for example failed to
+  open connection.)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR index:
+</p>
+
+  
+</td>
+<td width="482" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR number which will hold the returned value.  If set
+  to -1 or not included, then the value is printed to the command-line
+  terminal.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

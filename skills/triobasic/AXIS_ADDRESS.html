@@ -1,0 +1,224 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXIS_ADDRESS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXIS_ADDRESS">
+</head>
+<body>
+<h1>AXIS_ADDRESS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (MC_CONFIG)
+</p>
+<h2>Description:</h2>
+<p>
+The AXIS_ADDRESS parameter holds the address of the drive or
+feedback device. For example can be used to specify the Sercos drive address or
+ AIN channel that is used for feedback on the base axis.
+</p>
+<p>
+An extension in firmware V2.0232 and later uses bits 8 to 15
+as the AOUT address for an analogue output so that a servo axis may use a
+standard analogue output.  This mode requires axis ATYPE  31 and must have FEC
+25 enabled in the Motion Coordinator.  FEC 25 allows up to 8 axes of this type
+to be run.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+ATYPE in use
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Bits 15 .. 8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Bits 7 .. 0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+53 .. 59 (sercos)
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n/a
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Node address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+30 (Ain servo)
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n/a
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+AIN address
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+31 (Aout servo)
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+AOUT address
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+AIN address (optional)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+ATYPE 31 is for EtherCAT systems using the FlexSlice modules
+only.
+</p>
+<p class="tip">
+You may require additional Feature Enable Codes before using the
+remote axis functionality.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set up a servo axis in MC403/MC405 to use an analogue input
+instead of the encoder. Feedback comes from a linear potentiometer connected to
+AIN(32) and the speed command to the drive comes out of axis 1 DAC output.
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+AXIS_ADDRESS = 32
+</p>
+<p class="codeexample">
+ATYPE = 30
+</p>
+<p class="codeexample">
+P_GAIN = 1.2
+<br>
+
+VFF_GAIN = 14.8
+</p>
+<h3>Example 2:</h3>
+<p>
+Set up a servo axis in the Flex-6 Nano to use an analogue
+input for feedback and analogue output for the speed command to the drive.  Feedback
+comes from an LVDT via its signal processing card and is connected to AIN(4)
+and the speed command to the drive is at AOUT(7).
+</p>
+<p class="codeexample">
+BASE(14)
+</p>
+<p class="codeexample">
+AXIS_ADDRESS = (7 &lt;&lt; 8) + 4
+</p>
+<p class="codeexample">
+ATYPE = 31
+</p>
+<p class="codeexample">
+P_GAIN = 0.78
+<br>
+
+VFF_GAIN = 8.26
+</p>
+<h3>Example 3:</h3>
+<p>
+Assigning the Sercos drive with the node address 4 to axis 8
+in the controller. Then starting it in position mode with drive registration.
+</p>
+<p class="codeexample">
+BASE(8)
+</p>
+<p class="codeexample">
+AXIS_ADDRESS = 4
+</p>
+<p class="codeexample">
+ATYPE = 58
+</p>
+</body>
+</html>

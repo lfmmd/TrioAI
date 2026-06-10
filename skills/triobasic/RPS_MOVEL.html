@@ -1,0 +1,985 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVEL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVEL">
+</head>
+<body>
+<h1>MOVEL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command 
+</p>
+<h2>Syntax:</h2>
+<p class="MsoNoSpacing">
+MOVEL target [S:= T:= O:= ZT:= ZF:= A:= D:=]
+</p>
+<h2>Description:</h2>
+<p class="MsoNoSpacing">
+MOVEL is used to move the robot from one point to another
+along a linear path. All axes reach the destination position at the same time.
+</p>
+<p class="note">
+KINEMATIC_GROUP requires the 
+<a href="Glossary.html#RPS">RPS</a>
+
+runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Data type
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TARGET
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cartesian target that the robot is moving to. 
+</p>
+
+  
+<p class="tablecontent">
+NOTE: joint target is not suitable for this move. Error
+  ‘Invalid mix of data type’ will be generated if joint target is used instead.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Embedded parameters:
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+See 
+<a href="RPS_Reference_6_Move_Commands.html">RPS
+  Move Commands</a>
+ for details
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+GTA
+(
+0
+) = 
+350
+, 
+0
+, 
+50
+, 
+180
+, 
+0
+, 
+0
+, 
+&quot;p1&quot;
+<br>
+
+
+GTA
+(
+1
+) = 
+400
+, 
+100
+, 
+20
+, 
+180
+, 
+0
+, 
+0
+, 
+&quot;p2&quot;
+<br>
+
+
+GTA
+(
+2
+) = 
+450
+, -
+300
+, 
+60
+, 
+180
+, 
+0
+, 
+0
+, 
+&quot;p3&quot;
+<br>
+
+
+OBJECT_FRAME
+(
+1
+,
+&quot;of1&quot;
+, -
+10
+,
+
+0
+, 
+0
+, 
+0
+, 
+0
+, 
+15
+)
+<br>
+
+
+TOOL_OFFSET
+(
+1
+,
+&quot;tool1&quot;
+, 
+0
+,
+
+0
+, 
+50
+, 
+0
+, 
+0
+, 
+0
+)
+</p>
+<p class="codeexample">
+ROBOT
+(
+0
+)
+<br>
+
+
+MOVEL
+ GTA
+(
+&quot;p1&quot;
+)
+<br>
+
+
+MOVEL
+ GTA
+(
+&quot;p2&quot;
+)
+<br>
+
+
+MOVEL
+ GTA
+(
+&quot;p3&quot;
+)
+<br>
+
+
+STOP
+</p>
+<p>
+This example commands Robot 0 to Move linearly to target
+point 0. Note that there are no other embedded instructions in the MOVE. This
+instruction will MOVE the robot to target point 1 using the following
+parameters.
+</p>
+<table>
+<tr>
+<td width="196" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object Frame
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Currently active object frame
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Offset
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Currently active tool offset
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Speed (mm/s)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_SPEED * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration (mm/s2)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_MAX_ACC * JOG_ACC_FACTOR
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk (mm/s3)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_MAX_JERK
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Blend radius (mm)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+</table>
+<h3>Example 2:</h3>
+<p class="codeexample">
+MOVEL
+ GTA
+(
+&quot;p1&quot;
+)
+S:=
+100
+</p>
+<table>
+<tr>
+<td width="196" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Speed (m/s)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+100 * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+</tr>
+</table>
+<h3><em><span style='font-family:"Cambria",serif'>Example 3:</span></em></h3>
+<p class="codeexample">
+MOVEL
+ <span>GTA</span>(&quot;p1&quot;) O:=&quot;of1&quot;
+</p>
+<table>
+<tr>
+<td width="196" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object Frame
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object Frame “of1”
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Speed (mm/s)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_SPEED * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+</tr>
+</table>
+<p class="note">
+of1 is not set as the active object frame. This instruction takes
+of1 into consideration for this move only.
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 4:</span></em></h3>
+<p class="codeexample">
+MOVEL
+ GTA
+(&quot;p1&quot;) T:=&quot;tool1&quot;
+</p>
+<table>
+<tr>
+<td width="196" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object Frame
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Currently active object frame
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Offset
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Frame “tool1”
+</p>
+
+  
+</td>
+</tr>
+</table>
+<p class="note">
+tool1 is not set as the active tool frame. This instruction takes
+tool1 into consideration for this move only.
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 5:</span></em></h3>
+<p class="codeexample">
+MOVEL
+ GTA
+(
+&quot;p1&quot;
+)
+Z:=
+67
+<br>
+
+
+MOVEL
+ GTA
+(
+&quot;p1&quot;
+)
+</p>
+<table>
+<tr>
+<td width="196" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Offset
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Currently active tool offset
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Blend radius (mm)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+67&nbsp;mm
+</p>
+
+  
+</td>
+</tr>
+</table>
+<p>
+The robot will go towards target point 0 and 67 before the
+reaching the target point, it will blend the next move and go to target point
+1. 
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 6:</span></em></h3>
+<p class="codeexample">
+MOVEL
+ GTA
+(
+&quot;p1&quot;
+)
+S:=
+150
+ O:=
+&quot;of1&quot;
+
+T:=
+&quot;tool1&quot;
+ Z:=
+42
+<br>
+
+
+MOVEL
+ GTA
+(
+&quot;p1&quot;
+) S:= 
+100
+</p>
+<table>
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter for MOVE
+  GTA(0)
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter for MOVE
+  GTA(1)
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object Frame
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object Frame 1
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Currently active object frame
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Offset
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Offset 1
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Currently active tool offset
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Speed
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+150 * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+100 * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_MAX_ACC * JOG_ACC_FACTOR
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_MAX_ACC * JOG_ACC_FACTOR
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_MAX_JERK
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_MAX_JERK
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Blend radius
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+42&nbsp;mm 
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+</table>
+<h3><em><span style='font-family:"Cambria",serif'>Example 7:</span></em></h3>
+<p class="codeexample">
+GTA(0) = 350, 0, 50, 180, 0, 0, &quot;p1&quot;
+<br>
+
+GTA(1) = 400, 100, 20, 180, 0, 0, &quot;p2&quot;
+<br>
+
+GTA(2) = 450, -300, 60, 180, 0, 0, &quot;p3&quot;
+<br>
+
+OBJECT_FRAME(1, -10, 0, 0, 0, 0, 15)
+<br>
+
+TOOL_OFFSET(1, 0, 0, 50, 0, 0, 0)
+<br>
+
+ROBOT(0)
+<br>
+
+MOVEL GTA(&quot;p1&quot;) S:=280 O:=1 T:=1 Z:=80
+<br>
+
+MOVEL GTA(&quot;p2&quot;) S:=360
+<br>
+
+MOVEL GTA(&quot;p3&quot;)
+<br>
+
+STOP
+</p>
+<p>
+<img border="0" width="666" height="336" id="Canvas 48" src="RPS_MOVEL_files/image001.png">
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_MOVEC.html">MOVEC</a>
+, 
+<a href="RPS_MOVEJ.html">MOVEJ</a>
+,
+
+<a href="RPS_Reference_12_Errors.html">RPS Errors</a>
+, 
+<a href="RPS_Reference_6_Move_Commands.html">RPS Move Commands</a>
+</p>
+<h2>&nbsp;</h2>
+</body>
+</html>

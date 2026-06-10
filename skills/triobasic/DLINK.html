@@ -1,0 +1,1189 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DLINK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DLINK">
+</head>
+<body>
+<h1>DLINK</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DLINK(function,…)
+</p>
+<h2>Description:</h2>
+<p>
+This is a specialised command, to allow access to the SLM™
+digital drive interface. The axis parameters have to be initialised by the
+DLINK function 2 command before the interface can be used for controlling an
+external drive.
+</p>
+<p class="warning">
+The current SLM software dictates that the drive MUST be
+powered up after power is applied to the Motion Coordinator/ SLM.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Function:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Specifies the required
+  function.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Function_2">2</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Check for presence SLM module
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Function_3">3</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Check for presence of SLM servo drive
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Function_4">4</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Assign a 
+<i>Motion Coordinator</i> axis to a SLM
+  channel
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Function_5">5</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read an SLM parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Function_6">6</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write an SLM parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Function_7">7</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write an SLM command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Function_8">8</a>
+ </p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read a drive parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Function_9">9</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns slot and communication channel associated with
+  an axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#Function_10">10</a>
+ </p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read an EEPROM parameter
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="Function_2">Function = 2</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = DLINK(2, slot, com)
+</p>
+<h3>Description:</h3>
+<p>
+Check for presence SLM module on rear of motor.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns 1 if the SLM is answering, otherwise it returns
+  0.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The communications slot where the module is connected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+com:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The communication channel where the axis is connected
+  in the module
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example</h3>
+<p>
+Check for a SLM module on slot 0, communication channel 0
+</p>
+<p class="codeexample">
+&gt;&gt;? DLINK(2,0,0)
+</p>
+<p class="codeexample">
+1.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="Function_3">Function = 3</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = DLINK(3, slot, com)
+</p>
+<h3>Description:</h3>
+<p>
+Check for presence of SLM servo drive, such as MultiAx. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns 1 if the drive is answering, otherwise it
+  returns 0.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The communications slot where the module is connected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+com:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The communication channel where the axis is connected
+  in the module
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Check for a SLM drive on slot 0, communication channel 0.
+</p>
+<p class="codeexample">
+&gt;&gt;? DLINK(3,0,0)
+</p>
+<p class="codeexample">
+0.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="Function_4">Function = 4</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = DLINK(4, slot, com, axis)
+</p>
+<h3>Description:</h3>
+<p>
+Assign a Motion Coordinator axis to a SLM
+channel.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns 
+<a href="TRUE.html">TRUE</a>
+ if successful
+  otherwise returns 
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The communications slot where the module is connected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+com:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The communication channel where the axis is connected
+  in the module
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis to be associated with this drive. If this axis
+  is already assigned then it will fail. The 
+<a href="ATYPE.html">ATYPE</a>
+ of
+  this axis will be set to 11. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Assign axis 0 to the drive connected to slot 0 and
+communication channel 0
+</p>
+<p class="codeexample">
+&gt;&gt;DLINK(4,0,0,0)
+</p>
+<h2><a name="Function_5">Function = 5</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value =  DLINK(5, axis, parameter)
+</p>
+<h3>Description:</h3>
+<p>
+Read an SLM parameter
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value returned from SLM, returns -1 if the command
+  fails
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis number associated with the drive
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of the SLM parameter to be read. This is
+  normally in the range 0…127. See the drive documentation for further
+  information.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Print the value of the SLM parameter 5 from axis 0.
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT DLINK(5,0,1)
+</p>
+<p class="codeexample">
+463.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="Function_6">Function = 6</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = DLINK(6, axis, parameter, value)
+</p>
+<h3>Description:</h3>
+<p>
+Write an SLM parameter
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns TRUE if successful otherwise returns FALSE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis number associated with the drive
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of the SLM parameter to be read. This is
+  normally in the range 0…127. See the drive documentation for further
+  information
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value to write to the parameter
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Set SLM parameter 0 to the value 0 on axis 0. 
+</p>
+<p class="codeexample">
+&gt;&gt;DLINK(6,0,0,0)
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="Function_7">Function = 7</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = DLINK(7, axis, command)
+</p>
+<h3>Description:</h3>
+<p>
+Write an SLM command.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns 
+<a href="TRUE.html">TRUE</a>
+ if successful
+  otherwise returns 
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis number associated with the drive Function 7
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+command:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The command number. (See drive documentation)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Write SLM command 250 to axis 0
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT DLINK(7,0,250)
+</p>
+<p class="codeexample">
+1.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="Function_8">Function = 8</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = DLINK(8, axis, parameter)
+</p>
+<h3>Description:</h3>
+<p>
+Read a drive parameter
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value returned from the drive, returns -1 if the
+  command fails
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis number associated with the drive
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of the drive parameter to be read. This is
+  normally in the range 0…127. See the drive documentation for further
+  information.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Read drive parameter 53248 for axis 0
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT DLINK(8,0,53248)
+</p>
+<p class="codeexample">
+20504.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="Function_9">Function = 9</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = DLINK(9, axis)
+</p>
+<h3>Description:</h3>
+<p>
+Return slot and communication channel associated with an
+axis
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10 x slot number + communication channel, returns -1 if
+  the command fails
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis number associated with the drive.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Read axis 2 SLM information
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT DLINK(9,2)
+</p>
+<p class="codeexample">
+&gt;&gt;11.0000
+</p>
+<p class="note">
+This example is for slot 1, communication channel 1
+</p>
+<h2><a name="Function_10">Function = 10</a>
+:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = DLINK(10, axis, parameter)
+</p>
+<h3>Description:</h3>
+<p>
+Read an EEPROM parameter
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value from the EEPROM value, returns -1 if the
+  command fails
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis number associated with the drive.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EEPROM parameter number. (See drive documentation)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Return the EEPROM parameter 29, the Flux Angle from axis 0
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT DLINK(10,0,29)
+</p>
+<p class="codeexample">
+&gt;&gt;62128.0000
+</p>
+</body>
+</html>

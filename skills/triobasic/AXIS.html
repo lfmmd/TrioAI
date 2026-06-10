@@ -1,0 +1,110 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXIS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXIS">
+</head>
+<body>
+<h1>AXIS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Modifier (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+AXIS(expression)
+</p>
+<h2>Description:</h2>
+<p>
+Assigns ONE command, function or axis parameter operation to
+a particular axis.
+</p>
+<p class="tip">
+If it is required to change the axis used in every subsequent
+command, the 
+<a href="BASE.html">BASE</a>
+ command should be used instead.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Expression:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression. The result of the
+  expression should be a valid integer axis number.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+The command line has a default base axis of 0. To print the
+measured position of axis 3 to the terminal in 
+<i>Motion</i> Perfect, you must
+add the axis number after the parameter name.
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT MPOS AXIS(3)
+</p>
+<h3>Example 2:</h3>
+<p>
+The base axis is 0, but it is required to start moves on
+other axes as well as the base axis.
+</p>
+<p class="codeexample">
+MOVE(450)    'Start a move on the base axis (axis 0)
+</p>
+<p class="codeexample">
+MOVE(300) AXIS(2)     'Start a move on axis 2
+</p>
+<p class="codeexample">
+MOVEABS(120) AXIS(5)  'Start an absolute move on axis 5
+</p>
+<h3>Example 3:</h3>
+<p>
+Set up the repeat distance and repeat option on axis 3, then
+resume using the base axis for all subsequent commands.
+</p>
+<p class="codeexample">
+REP_DIST AXIS(3) = 100
+</p>
+<p class="codeexample">
+REP_OPTION AXIS(3) = 1
+</p>
+<p class="codeexample">
+SPEED = 2.30 'Set speed, acceleration and deceleration on
+the BASE axis
+</p>
+<p class="codeexample">
+ACCEL = 5.35
+</p>
+<p class="codeexample">
+DECEL = 8.55
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="BASE.html">BASE</a>
+<span class="MsoHyperlink">, </span><a href="AXISSIZE.html">AXISSIZE</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>$ Dollar</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>$ Dollar</h1>
+<h2>Type:</h2>
+<p class="Category">
+Special Character
+</p>
+<h2>Syntax</h2>
+<p class="fixed">
+$&lt;hexadecimal-digits&gt;
+</p>
+<h2>Description:</h2>
+<p>
+The $ symbol is used to specify that the following signed 53
+bit number (for floating point) or 63 bit (for integer) is in hexadecimal format
+using the digits 0-9 and A-F.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Store the hexadecimal value of 38F3B into VR element 10 and -A58
+into 
+<a href="VR.html">VR</a>
+ element 11
+</p>
+<p class="codeexample">
+VR(10) = $38F3B
+</p>
+<p class="codeexample">
+VR(11) = -$A58
+</p>
+<h3>Example 2:</h3>
+<p>
+Turn on outputs 10, 11, 14, 15
+</p>
+<p class="codeexample">
+OP($CC00)
+</p>
+</body>
+</html>

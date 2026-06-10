@@ -1,0 +1,112 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SLOT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SLOT">
+</head>
+<body>
+<h1>SLOT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Modifier
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+SLOT
+(position)
+</p>
+<h2>Description:</h2>
+<p>
+When expansion modules are used they are assigned a SLOT
+number depending on their position in the system. The SLOT modifier can be used
+to assign ONE command, function or slot parameter operation to a particular
+slot
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Built in feature
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to max_slot
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Expansion module
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Check for an Anybus-CC module in the holder in slot 1
+</p>
+<p class="codeexample">
+IF COMMSTYPE SLOT(1) = 62 THEN
+<br>
+
+  PRINT “No Anybus card present”
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="COMMSPOSITION.html">COMMSPOSITION</a>
+</p>
+</body>
+</html>

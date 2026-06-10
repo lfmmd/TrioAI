@@ -1,0 +1,181 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SEEK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SEEK">
+</head>
+<body>
+<h1>SEEK</h1>
+<h2>Type:</h2>
+<p class="Category">
+File Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+SEEK #channel, from, position
+</p>
+<h2>Description:</h2>
+<p>
+Sets the position in the file for the next read/write
+operation. The file must be opened for INPUT or for READ_WRITE when available.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Channel number.  e.g. 40 for a file opened with OPEN
+  #40.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+from:
+</p>
+
+  
+</td>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="363" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position offset from start of the file.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="363" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position offset from current position in the file.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position offset value, in bytes from the selected
+  &quot;from&quot; position.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Save a string to a file and later select a position to start
+reading the file:
+</p>
+<p class="codeexample">
+  DIM mystring AS STRING(35)
+<br>
+
+  
+<br>
+
+  OPEN #40 AS &quot;my_file&quot; FOR OUTPUT(1)
+<br>
+
+  PRINT #40,&quot;Trio Motion Technology MC range of Motion Coordinators&quot;;
+CHR(10); CHR(13);
+<br>
+
+  CLOSE #40
+<br>
+
+  
+<br>
+
+  OPEN #40 AS &quot;my_file&quot; FOR INPUT
+<br>
+
+  SEEK #40, 0, 22
+<br>
+
+  LINPUT #40, mystring
+</p>
+<p class="codeexample">
+  'mystring contains &quot;MC range of Motion
+Coordinators&quot;
+<br>
+
+  PRINT mystring
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="OPEN.html">OPEN</a>
+, 
+<a href="CLOSE.html">CLOSE</a>
+,
+
+<a href="GET.html">GET</a>
+, 
+<a href="PRINT.html">PRINT</a>
+</p>
+</body>
+</html>

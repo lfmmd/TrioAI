@@ -1,0 +1,200 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IO_STATUSMASK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IO_STATUSMASK">
+</head>
+<body>
+<h1>IO_STATUSMASK</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = IO_STATUSMASK(slot, address, read_write, vr_index or
+mask value [, status index])
+</p>
+<h2>Description:</h2>
+<p>
+This command reads or writes the status mask of a remote
+Ethercat I/O device. With a status mask system, errors triggered by an
+IO_STATUS of a device can be masked out thus preventing a 
+<a href="SYSTEM_ERROR.html">SYSTEM_ERROR</a>
+. If the same bit is set in 
+<a href="IO_STATUS.html">IO_STATUS</a>
+ and IO_STATUSMASK on the same device, a
+system error is triggered.
+</p>
+<p>
+Status bit representation depends on the device
+implementation. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Success
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Failure
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot: 
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot which the Ethercat I/O module is connected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Network address of the I/O device from which the status
+  is read. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Function:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read status mask
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write status mask
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+<a name="_Function_=_2"></a>
+An Omron “block-type” device has one
+general status value for all I/O so only status_index 0 is valid. A Beckhoff
+E-bus device has one status value per channel/point. Therefore, for each
+channel the status can be read by using the status index. Here the valid range
+of status_index is 0..(number of channels - 1).
+</p>
+</body>
+</html>

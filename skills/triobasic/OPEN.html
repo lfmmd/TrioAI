@@ -1,0 +1,1395 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>OPEN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="OPEN">
+</head>
+<body>
+<h1>OPEN</h1>
+<h2>Type: </h2>
+<p class="Category">
+File Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = OPEN #channel AS &quot;[location:]name&quot; FOR access
+</p>
+<h2>Description:</h2>
+<p>
+OPEN provides access to a file on the controller. The text
+file can be initialised as a file that 
+<i>Motion</i> Perfect can synchronise
+with, a temporary file, a file on the SD card or as a FIFO buffer. All files
+are in the controller file directory however only a text file can be viewed or
+edited in 
+<i>Motion</i> Perfect.
+</p>
+<p>
+Once the file has been opened then it can be manipulated by
+the standard TrioBASIC channel commands. If the file is opened with read access
+then any TrioBASIC GET type commands such as 
+<a href="GET.html">GET</a>
+, 
+<a href="INPUT.html">INPUT</a>
+, 
+<a href="LINPUT.html">LINPUT</a>
+ and 
+<a href="KEY.html">KEY</a>
+ can be used on the channel. If the file is opened with
+write access, then the PRINT type commands can be used on the channel.
+</p>
+<p>
+The channel should be closed using TrioBASIC command 
+<a href="CLOSE.html">CLOSE</a>
+ when you have finished with it.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 
+<a href="_Errors.html">TrioBASIC error</a>
+ that
+  occurred during the file open operation. If there is no error, then value is
+  0.
+</p>
+
+  
+<p class="tablecontent">
+If you are opening TCP or UDP, the value returned is
+  True (-1) when successful, otherwise False (0).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td colspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The TrioBASIC 
+<a href="Hash.html">#</a>
+ channel to be
+  associated with the file. The channel range depends on the type of file:
+</p>
+
+  
+<p class="tablecontent">
+40 to 48 for files and string variables. 
+</p>
+
+  
+<p class="tablecontent">
+20 to 29 for TCP and UDP multi-client connections on
+  ARM base controllers. (Firmware version 2.0256 onwards).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="9" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+location:
+</p>
+
+  
+</td>
+<td width="519" colspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specifies what the following “name” represents:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="106" rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Files and string variables
+</p>
+
+  
+</td>
+<td width="119" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="293" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A file stored in the controller’s file system subject
+  to the OUTPUT(mode) specified (see below)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="119" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RAM
+</p>
+
+  
+</td>
+<td width="293" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A file stored in the controller’s RAM (volatile)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="119" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SD
+</p>
+
+  
+</td>
+<td width="293" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A file stored on the controller’s SD-card
+  (non-volatile)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="119" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+USB1
+<br>
+
+  or
+<br>
+
+  USB2
+</p>
+
+  
+</td>
+<td width="293" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A file stored on a USB flash memory stick, plugged into
+  one of the controller’s USB sockets (Flex-7 only, non-volatile)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="119" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+STRING
+</p>
+
+  
+</td>
+<td width="293" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A string variable
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="106" rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Protocols
+</p>
+
+  
+</td>
+<td width="119" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TCP
+</p>
+
+  
+</td>
+<td width="293" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The IP address and port number of a TCP connection
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="119" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DGRAM
+</p>
+
+  
+</td>
+<td width="293" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The IP address and port number of a UDP connection
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="119" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TCPSERVER
+</p>
+
+  
+</td>
+<td width="293" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The port number of the TCP server
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td colspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+For files and string variables (channels 40 to 48),
+  this is the name of the file to be opened, for example, “data_points”,
+  “SD:process_log”, “RAM:temp_data”, or “STRING:my_var”.
+</p>
+
+  
+<p class="tablecontent">
+For TCP and DGRAM connections (channels 20 to 29), the
+  IP address is in dot notation and port number is enclosed in brackets, for
+  example, “TCP:192.168.8.152(3000)”, or “DGRAM:192.168.0.250(1000)”.
+</p>
+
+  
+<p class="tablecontent">
+For TCP servers (channels 20 to 29), only the port
+  number is required, enclosed in brackets, for example, “TCPSERVER:(790)”.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="13" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+access:
+</p>
+
+  
+</td>
+<td colspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The operations permitted on the file.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>INPUT</b></p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The file will be opened for reading. When the end of
+  the file is reached 
+<a href="KEY.html">KEY</a>
+ will return 
+<a href="FALSE.html">FALSE</a>
+, and the 
+<a href="GET.html">GET</a>
+ and 
+<a href="INPUT.html">INPUT</a>
+ functions will fail.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="3" rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>OUTPUT(mode)</b></p>
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The file will be opened for writing. If the file does
+  not exist, then it will be created. If the file already exists, then it will
+  be cleared.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>Mode</b></p>
+
+  
+</td>
+<td width="218" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>Function</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="218" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Opens a non-volatile text file that 
+<i>Motion</i>
+  Perfect can read, edit, and save into the project. The file is synchronised
+  with the PC directory as the rest of the Motion Perfect files.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="218" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Opens a non-volatile text file that is only accessible
+  by the controller. The file is not synchronised, but it can be potentially
+  added to the project with Motion Perfect.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="218" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Opens a temporary file (RAM) that is only accessible by
+  the controller.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="218" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Opens a non-volatile text file only accessible by the
+  controller.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="235" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>READ_WRITE</b></p>
+
+  
+</td>
+<td width="284" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The channel will be opened for read/write operations.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="235" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>APPEND</b></p>
+
+  
+</td>
+<td width="284" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The file will be opened for writing. The file must
+  exist. All data is written to the end of the file.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="235" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>FIFO_READ[(mode[, terminator])]</b></p>
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="284" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The file will be opened for reading and will be managed
+  as a circular buffer. This is only valid for files stored in internal RAM.
+</p>
+
+  
+<p class="tablecontent">
+mode defaults to zero. If mode is 0 then the KEY
+  command will return the number of characters in the FIFO. If mode is 1 then
+  the 
+<a href="KEY.html">KEY</a>
+ command will return the number of lines in the
+  FIFO.
+</p>
+
+  
+<p class="tablecontent">
+terminator defaults to 13 (carriage return). If mode is
+  1 and this character is added to the FIFO then the line count will be
+  incremented by 1. If mode is 1 and this character is removed from the FIFO
+  then the line count is decremented by 1.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>FIFO_WRITE(size[, mode[, terminator]])</b></p>
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The file will be opened for writing and will be managed
+  as a circular buffer. This is only valid for files in internal RAM. If the
+  file does not exist it will be created (size) bytes long (free memory
+  permitting). Note that the minimum size created will be 256 bytes.
+</p>
+
+  
+<p class="tablecontent">
+If the file does exist then it must be of type FIFO, the
+  size parameter is ignored, and the contents are cleared.
+</p>
+
+  
+<p class="tablecontent">
+If mode bit 0 is set, then the FIFO will be opened in
+  line mode. If mode bit 1 is set, then the FIFO will be opened in non-blocking
+  mode, which will allow the FIFO to overwrite. If the FIFO is in non-blocking
+  and line modes, then when a line overflows it will clear the next line, up to
+  the terminator character.
+</p>
+
+  
+<p class="tablecontent">
+If the FIFO is in line mode, then terminator contains
+  the end of line characters.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>OUTPUT_PROGRAM_TYPE(type)</b></p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open a file in RAM for output with an explicit program
+  type.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr height="0">
+
+  
+<td width="71">
+</td>
+
+  
+<td width="130">
+</td>
+
+  
+<td width="134">
+</td>
+
+  
+<td width="9">
+</td>
+
+  
+<td width="99">
+</td>
+
+  
+<td width="264">
+</td>
+
+ 
+</tr>
+
+
+</table>
+<p class="note">
+If you are creating a file on the SD card you will need to append
+the file extension. A text file stored in controller memory will be saved as a
+.txt file in the project by Motion Perfect. This enables you to generate and
+read files on the SD card in any text-based format.
+</p>
+<p class="warning">
+If you are writing to a text file that Motion Perfect can read,
+then be aware that Motion Perfect will not see the changes until you perform a
+Project Check. Be very careful when writing to a text file while connected to
+Motion perfect. If it is required to write to a file while connected to Motion
+perfect it is recommended to use the temp file, or one on the SD card. 
+</p>
+<p>
+Type list used with OUTPUT_PROGRAM_TYPE
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+type:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ 0 =&gt; Trio BASIC
+</p>
+
+  
+<p class="tablecontent">
+ 1 =&gt; Trio BASIC Encrypted
+</p>
+
+  
+<p class="tablecontent">
+ 2 =&gt; G CODE
+</p>
+
+  
+<p class="tablecontent">
+ 3 =&gt; TEXT
+</p>
+
+  
+<p class="tablecontent">
+ 4 =&gt; IEC
+</p>
+
+  
+<p class="tablecontent">
+ 5 =&gt; FIFO
+</p>
+
+  
+<p class="tablecontent">
+ 6 =&gt; TEMP
+</p>
+
+  
+<p class="tablecontent">
+ 7 =&gt; PROJECT
+</p>
+
+  
+<p class="tablecontent">
+ 8 =&gt; BINARY
+</p>
+
+  
+<p class="tablecontent">
+ 9 =&gt; MC_CONFIG
+</p>
+
+  
+<p class="tablecontent">
+10 =&gt; IEC Library
+</p>
+
+  
+<p class="tablecontent">
+11 =&gt; HMI
+</p>
+
+  
+<p class="tablecontent">
+12 =&gt; Trio BASIC Library
+</p>
+
+  
+<p class="tablecontent">
+13 =&gt; Trio BASIC Library Encrypted
+</p>
+
+  
+<p class="tablecontent">
+14 =&gt; HMI Library
+</p>
+
+  
+<p class="tablecontent">
+15 =&gt; Volatile text (Not preserved across controller
+  restarts)
+</p>
+
+  
+<p class="tablecontent">
+16 =&gt; ROBOT
+</p>
+
+  
+<p class="tablecontent">
+17 =&gt; ROBOT Trio BASIC
+</p>
+
+  
+<p class="tablecontent">
+18 =&gt; TEMP TEXT
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Open a file that can be used to log information to a .txt
+file on the SD card then print end of shift information to the file.
+</p>
+<p class="codeexample">
+IF (OPEN #40 AS &quot;SD:product_log.txt&quot; FOR
+OUTPUT(0)) = 0 THEN
+</p>
+<p class="codeexample">
+  PRINT #40, DATE$ 'Print the date
+</p>
+<p class="codeexample">
+  PRINT #40, products_complete[0]; &quot; products
+completed&quot;
+</p>
+<p class="codeexample">
+  PRINT #40, product_failures[0]; &quot; products
+failed&quot;
+</p>
+<p class="codeexample">
+  CLOSE #40
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+   PRINT &quot;Error opening product log&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+A G-Code file is loaded from a serial port into the
+controller, it is saved into a temp file on the controller for later use. 
+</p>
+<p class="codeexample">
+OPEN #41 AS &quot;gcodeprogram&quot; FOR OUTPUT(1)
+</p>
+<p class="codeexample">
+WHILE file_downloading
+</p>
+<p class="codeexample">
+  IF KEY #1
+</p>
+<p class="codeexample">
+    GET #1, char
+</p>
+<p class="codeexample">
+    PRINT #41, char;
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+  Length = length + 1
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+CLOSE #41
+</p>
+<h3>Example 3:</h3>
+<p>
+The G-Code program has been downloaded to a temp file; it
+then should be transferred to a FIFO so that it can be interpreted into motion.
+
+</p>
+<p class="codeexample">
+OPEN #41 AS &quot;gcodeprogram&quot; FOR INPUT
+</p>
+<p class="codeexample">
+OPEN #42 AS &quot;gcodefifo&quot; FOR FIFO_WRITE(length)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WHILE KEY #41
+</p>
+<p class="codeexample">
+  GET #41, char
+</p>
+<p class="codeexample">
+  PRINT #42, char;
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+CLOSE #42
+</p>
+<p class="codeexample">
+CLOSE #41
+</p>
+<h3>Example 4:</h3>
+<p>
+Read a UDP packet received from a remote peer.
+</p>
+<p class="codeexample">
+OPEN #20 AS &quot;DGRAM:192.168.0.250(1000)&quot; FOR READ_WRITE
+</p>
+<p class="codeexample">
+CHANNEL_READ(20, strInput)
+</p>
+<p class="codeexample">
+CLOSE #20
+</p>
+<h3>Example 5:</h3>
+<p>
+Open a connection to a TCP server and exchange some ASCII
+data over TCP/IP port 3000. The IP address is the address of the remote server.
+</p>
+<p class="codeexample">
+OPEN #21 AS &quot;TCP:192.168.8.152(3000)&quot; FOR READ_WRITE
+</p>
+<p class="codeexample">
+WA(20)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+PRINT #21, &quot;LDA20,300&quot;; CHR($0D);
+</p>
+<p class="codeexample">
+WA(20)
+</p>
+<p class="codeexample">
+TICKS = 500
+</p>
+<p class="codeexample">
+WHILE TICKS &gt; 0 AND KEY #21
+</p>
+<p class="codeexample">
+  GET #21, k
+</p>
+<p class="codeexample">
+  PRINT #5, CHR(k); 'Print answer to MPv3 terminal #5
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+PRINT #5, &quot;&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WA(50)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+CLOSE #21
+</p>
+<h3>Example 6:</h3>
+<p>
+Open a connection as a TCP server and wait for clients to
+connect over TCP/IP port 790.  Once connected, the server sends a message back
+to client that includes the connection time, VR(0) value and Encoder axis 0
+value.
+</p>
+<p>
+When client sends a message “exit”, the connection is then
+closed.
+</p>
+<p class="codeexample">
+DIM time_to_leave AS INTEGER
+</p>
+<p class="codeexample">
+DIM server_message AS STRING(512)
+</p>
+<p class="codeexample">
+DIM tcpserver_channel AS INTEGER
+</p>
+<p class="codeexample">
+DIM tcp_port AS INTEGER
+</p>
+<p class="codeexample">
+DIM tcpserver_id AS STRING(50)
+</p>
+<p class="codeexample">
+DIM local AS STRING(20)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+tcpserver_channel = 25
+</p>
+<p class="codeexample">
+tcp_port = 790
+</p>
+<p class="codeexample">
+time_to_leave = 0
+</p>
+<p class="codeexample">
+tcpserver_id = &quot;TCPSERVER:(&quot; + STR(tcp_port, 0)
++ &quot;)&quot;
+</p>
+<p class="codeexample">
+OPEN #tcpserver_channel AS tcpserver_id FOR READ_WRITE
+</p>
+<p class="codeexample">
+PRINT #5, &quot;Awaiting connection for &quot; +
+tcpserver_id
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+  IF KEY #tcpserver_channel THEN
+</p>
+<p class="codeexample">
+    CHANNEL_READ(tcpserver_channel , server_message,
+CHR(10))
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    'We can also write back to the client. Here we send
+back what we received
+</p>
+<p class="codeexample">
+    local = STR(VR(0), 0)
+</p>
+<p class="codeexample">
+    CHANNEL_WRITE(tcpserver_channel, &quot; &quot; + TIME$
++ &quot; &quot; + STR(VR(0), 0) + &quot; &quot; + STR(ENCODER AXIS(0)))
+</p>
+<p class="codeexample">
+    PRINT #5, &quot;Received: &quot; + server_message
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    IF LEFT(server_message, 4) = &quot;exit&quot; THEN
+</p>
+<p class="codeexample">
+      PRINT #0, &quot;EXITING &quot; + tcpserver_id
+</p>
+<p class="codeexample">
+      CLOSE #tcpserver_channel
+</p>
+<p class="codeexample">
+      time_to_leave = 1
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+UNTIL time_to_leave &gt; 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'CHANNEL_WRITE(tcpserver_channel, &quot; &quot; + TIME$ +
+&quot; &quot; + CHR(VR(0)) + &quot; &quot; + CHR(VR(1)) )'CHR(DRIVE_CURRENT
+AXIS(2)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 7:</h3>
+<p>
+As a client, connect to a server on port 790 and send a
+message to the server
+</p>
+<p class="codeexample">
+DIM time_to_leave AS INTEGER
+</p>
+<p class="codeexample">
+DIM server_message AS STRING(512)
+</p>
+<p class="codeexample">
+DIM tcpserver_channel AS INTEGER
+</p>
+<p class="codeexample">
+DIM tcp_port AS INTEGER
+</p>
+<p class="codeexample">
+DIM tcpserver_id AS STRING(50)
+</p>
+<p class="codeexample">
+DIM tcpserver_ip_address AS STRING(15)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+tcpserver_channel = 25
+</p>
+<p class="codeexample">
+tcp_port = 790
+</p>
+<p class="codeexample">
+tcpserver_ip_address = &quot;192.168.0.250&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+tcpserver_id = &quot;TCP:&quot; + tcpserver_ip_address +
+&quot;(&quot; + STR(tcp_port, 0) + &quot;)&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+OPEN #tcpserver_channel AS tcpserver_id FOR READ_WRITE
+</p>
+<p class="codeexample">
+PRINT #5, &quot;Connecting to server:  &quot; +
+tcpserver_id
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WA(20)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+PRINT #tcpserver_channel, &quot;Hello, server!&quot;; CHR($0D);
+'$0d = Carriage return
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+    time_to_leave = VR(0) 'Evaluate if it's time to leave
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    WHILE KEY #tcpserver_channel
+</p>
+<p class="codeexample">
+        GET #tcpserver_channel, k
+</p>
+<p class="codeexample">
+        PRINT #5, CHR(k); 'Print answer from serve to
+terminal #5
+</p>
+<p class="codeexample">
+    WEND    
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    IF VR(0) = 1 THEN
+</p>
+<p class="codeexample">
+        PRINT #tcpserver_channel, &quot;exit&quot;; CHR($0D);
+'$0d = Carriage return
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+UNTIL time_to_leave &gt; 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+CLOSE #tcpserver_channel
+</p>
+<p class="codeexample">
+PRINT #5, &quot;Communication is closed.&quot;
+</p>
+<h3>Example 8:</h3>
+<p>
+Send output to a string variable, which can be useful when the
+output requires scanning. 
+</p>
+<p class="codeexample">
+DIM my_var AS STRING(1000)
+</p>
+<p class="codeexample">
+OPEN #41 AS &quot;STRING:my_var&quot; FOR OUTPUT(0)
+</p>
+<p class="codeexample">
+PRINT #41, &quot;Pi = &quot;, PI
+</p>
+<p class="codeexample">
+CLOSE #41
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+PRINT #5, my_var
+</p>
+<p>
+Will display “Pi = 3.1416” on terminal 5.
+</p>
+<h3>Example 9:</h3>
+<p>
+Send the output of a command to a string variable, which can
+be useful when the output requires scanning. 
+</p>
+<p class="codeexample">
+DIM dir_output AS STRING(10000)
+</p>
+<p class="codeexample">
+DIM output_dev AS INTEGER
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+OPEN #41 AS &quot;STRING:dir_output&quot; FOR OUTPUT(0)
+</p>
+<p class="codeexample">
+output_dev = OUTDEVICE
+</p>
+<p class="codeexample">
+OUTDEVICE = 41
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+DIR 'Output from this command will go to channel 41 (a
+string variable)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+OUTDEVICE = output_dev
+</p>
+<p class="codeexample">
+CLOSE #41
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Do stuff with the directory listing stored in the string
+variable &quot;dir_output&quot;
+</p>
+<h2>See also: </h2>
+<p>
+<a href="CLOSE.html">CLOSE</a>
+, 
+<a href="GET.html">GET</a>
+, 
+<a href="INPUT.html">INPUT</a>
+, 
+<a href="INDEVICE.html">INDEVICE</a>
+, 
+<a href="IS_OPEN.html">IS_OPEN</a>
+, 
+<a href="KEY.html">KEY</a>
+, 
+<a href="LINPUT.html">LINPUT</a>
+, 
+<a href="OUTDEVICE.html">OUTDEVICE</a>
+, 
+<a href="PRINT.html">PRINT</a>
+, 
+<a href="SEEK.html">SEEK</a>
+</p>
+</body>
+</html>

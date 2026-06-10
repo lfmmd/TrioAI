@@ -1,0 +1,50 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IP_ADDRESS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IP_ADDRESS">
+</head>
+<body>
+<h1>IP_ADDRESS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG / FLASH) 
+</p>
+<h2>Description:</h2>
+<p>
+IP_ADDRESS is used to set the Ethernet IPv4 address of the
+main Ethernet port of the Motion Coordinator. This parameter uses the standard
+dot-decimal notation to define the 4 separate octets of the IP address that
+define the IP address’s 32-bit value.
+</p>
+<p>
+The value is held in flash EPROM and can be set in the
+MC_CONFIG script. 
+</p>
+<h2>Value:</h2>
+<p>
+Network IP address in dot-decimal notation, which consists
+of four decimal numbers separated by dots, where each number is an 8-bit value
+(an octet), and so has the range 0 to 255.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+IP_ADDRESS = 192.168.0.250
+</p>
+<h3>Example 2:</h3>
+<p>
+Set IP address in the MC_CONFIG file:
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+IP_ADDRESS = 192.168.2.100
+</p>
+<p>
+<span style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+</body>
+</html>

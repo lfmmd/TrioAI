@@ -1,0 +1,172 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NODE_INDEX</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NODE_INDEX">
+</head>
+<body>
+<h1>NODE_INDEX</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+NODE_INDEX(slot, node) = value
+</p>
+<h2>Description:</h2>
+<p>
+This 2D array can be used to set the pointer to a block of
+VRs used by the EtherCAT node. It can be used to define a user specific Input Output
+map from different data sources including Boolean and Integer data within the
+EtherCAT node.
+</p>
+<p>
+There is one VR mapped per PDO object, starting with the values
+from slave to master, (e.g. slave actual values, DIN, status word, actual
+position, etc.) then the values from master to slave (e.g. slave target values,
+DOUT, control word, target position, etc.)
+</p>
+<p>
+The array is 2-dimensional, the first dimension is the
+master slot identifier, the second dimension is the position of the node within
+that master network.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot number of the EtherCAT port. (0 on MC4N, MC6N
+  and Flex-6 Nano)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+node:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Address determined by the position of the node on the
+  EtherCAT network. The first node is address 0.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to 65535
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT cyclic data is mapped to a block of VRs
+  starting at this VR index. (MC664, MC6N, Flex-6 Nano)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to 4095
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT cyclic data is mapped to a block of VRs
+  starting at this VR index. (MC4N)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+To allocate offsets based on the EtherCAT configured address, use
+NW_NODE_INDEX
+</p>
+<h2>Example:</h2>
+<p>
+In the EC_EXTEND the VRs are mapped to start at addresses
+100 and 200.  There are 2 slave devices using the same EC_EXTEND.  Map the
+first one to use 100 and 200, the second device uses VRs starting at 120 and
+220.
+</p>
+<p class="codeexample">
+NODE_INDEX(0, 0) = 0
+<br>
+
+NODE_INDEX(0, 1) = 20
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="NODE_AXIS.html">NODE_AXIS</a>
+, 
+<a href="NODE_AXIS_COUNT.html">NODE_AXIS_COUNT</a>
+, 
+<a href="NODE_PROFILE.html">NODE_PROFILE</a>
+,
+
+<a href="NW_NODE_INDEX.html">NW_NODE_INDEX</a>
+</p>
+</body>
+</html>

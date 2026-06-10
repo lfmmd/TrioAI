@@ -1,0 +1,137 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REVERSE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REVERSE">
+</head>
+<body>
+<h1>REVERSE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+REVERSE
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+RE
+</p>
+<h2>Description:</h2>
+<p>
+Sets continuous reverse movement.  The axis accelerates at
+the programmed 
+<a href="ACCEL.html">ACCEL</a>
+ rate and continues moving at the 
+<a href="SPEED.html">SPEED</a>
+ value until either a 
+<a href="CANCEL.html">CANCEL</a>
+
+or 
+<a href="RAPIDSTOP.html">RAPIDSTOP</a>
+ command are encountered.  It then
+decelerates to a stop at the programmed DECEL rate.
+</p>
+<p class="note">
+If the axis reaches either the reverse limit switch or reverse
+soft limit, the REVERSE will be cancelled and the axis will decelerate to a
+stop.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Run an axis in reverse.  When an input signal is detected on
+input 5, stop the axis.
+</p>
+<p>
+back: 
+</p>
+<p class="codeexample">
+REVERSE
+</p>
+<p class="codeexample">
+'Wait for stop signal:
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(5)=ON
+</p>
+<p class="codeexample">
+CANCEL
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<h3>Example 2:</h3>
+<p>
+Run an axis in reverse.  When it reaches a certain position,
+slow down.
+</p>
+<p>
+<img border="0" width="286" height="203" id="Picture 1" src="REVERSE_files/image001.png">
+</p>
+<p class="codeexample">
+DEFPOS(0)      'set starting position to zero
+</p>
+<p class="codeexample">
+REVERSE
+</p>
+<p class="codeexample">
+WAIT UNTIL MPOS&lt;-129.45
+</p>
+<p class="codeexample">
+SPEED=slow_speed
+</p>
+<p class="codeexample">
+WAIT UNTIL VP_SPEED=slow_speed 'wait until the axis slows
+</p>
+<p class="codeexample">
+OP(11,ON)  'turn on an output to show that speed is now
+slow
+</p>
+<h3>Example 3:</h3>
+<p>
+A joystick is used to control the speed of a platform.  A
+dead-band is required to prevent oscillations from the joystick midpoint.  This
+is achieved through setting reverse, which sets the correct direction relative
+to the operator, the joystick then adjusts the speed through analogue input 0.
+</p>
+<p>
+<img border="0" width="533" height="310" id="Picture 3" src="REVERSE_files/image002.png">
+</p>
+<p class="codeexample">
+REVERSE
+</p>
+<p class="codeexample">
+WHILE IN(2)=ON
+</p>
+<p class="codeexample">
+  IF AIN(0)&lt;50 AND AIN(0)&gt;-50 THEN 'sets a dead-band
+in the input
+</p>
+<p class="codeexample">
+    SPEED=0
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    SPEED=AIN(0)*100   'sets speed to a scale of AIN
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+CANCEL
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FORWARD.html">FORWARD</a>
+</p>
+</body>
+</html>

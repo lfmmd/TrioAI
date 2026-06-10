@@ -1,0 +1,3842 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MS_BUS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MS_BUS">
+</head>
+<body>
+<h1>MS_BUS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+return code = MS_BUS(function, slot[, parameters...])
+</p>
+<h2>Description:</h2>
+<p>
+The command MS_BUS is used to perform advanced operations on
+the MS-Bus network. In normal use the MS-Bus network will start automatically
+without the need for any commands in a startup program. MS_BUS command
+functions may be useful when debugging and setting up a MS-Bus system.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="15" valign="top" class="tablegrid">
+
+  
+<p>
+function
+</p>
+
+  
+</td>
+<td width="477" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Function to be performed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_0">$00</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Start MS-Bus network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_1">$01</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Stop MS-Bus network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$02:_1">$02</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Check slice online
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$03:">$03</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Check number of slices
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$04:_1">$04</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Print slice modules
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$05:_1">$05</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Read errors on the network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$06:_1">$06</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Returns status of network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$07:_1">$07</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Print network error information
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$08:_1">$08</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Asynchronous read from slice register
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$09:_1">$09</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Asynchronous write to slice register
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$0A:_1">$0A</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Read slice serial number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$0B:_2">$0B</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Read slice type
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$0C:">$0C</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Read slice status register
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_$0D:">$0D</a>
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+Read slice warning bitmap
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+slot
+</p>
+
+  
+</td>
+<td width="477" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="437" valign="top" class="tablegrid">
+
+  
+<p>
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+<a name="Function_0">&nbsp;</a>
+</p>
+<h2>Function = $00: Start MS-Bus network</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+error = MS_BUS(0, slot[, silent])
+</p>
+<h3>Description:</h3>
+<p>
+Initialise MS-Bus network and put it onto operational mode.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+slot
+</p>
+
+  
+</td>
+<td width="523" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="79" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+silent
+</p>
+
+  
+</td>
+<td width="523" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Limits the detail printed to the terminal (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="79" valign="top" class="tablegrid">
+
+  
+<p>
+omitted
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Print full detail to the device specified by 
+<a href="OUTDEVICE.html">OUTDEVICE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="79" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Suppress printing (silent)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="79" valign="top" class="tablegrid">
+
+  
+<p>
+1 (bit-0)
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Prints list of slices found with FPGA version number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="79" valign="top" class="tablegrid">
+
+  
+<p>
+2 (bit-1)
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Prints list of slices found with hardware version number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="79" valign="top" class="tablegrid">
+
+  
+<p>
+4 (bit-2)
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Prints list of slices found with serial number 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Note: ‘silent’ bit can be combined to print additional data
+</p>
+<h3>Returns:</h3>
+<p>
+TRUE if the network initialised successfully. 
+</p>
+<p>
+FALSE if errors occurred during initialisation. 
+</p>
+<h3>Example:</h3>
+<p>
+Check the MS-Bus state and if not in Operational State,
+restart the MS-Bus and set an output to indicate that a re-start is in
+progress.
+</p>
+<p class="codeexample">
+'--Init MS-Bus if needed.
+</p>
+<p class="codeexample">
+chk = MS_BUS($06, 1) 'Test state
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+IF (chk &lt;&gt; 3) THEN
+</p>
+<p class="codeexample">
+  OP(9, ON)
+</p>
+<p class="codeexample">
+  WA(1500) 'wait 1.5sec for drive to power up
+</p>
+<p class="codeexample">
+  MS_BUS(0, 1, 0) 'Initialise MS-Bus with no terminal
+output
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+<span style='font-family:"Calibri",sans-serif'>Example
+of command line usage with verbose output.  The example below shows the result
+for a system with 2 slices.</span></p>
+<p class="codeexample">
+&gt;&gt;MS_BUS(0,1)
+<br>
+
+MS-Bus
+<br>
+
+|_ Number of Slices: 16
+<br>
+
+|_ Slice 0 : Digital Output 16 PNP
+<br>
+
+&nbsp;&nbsp;|_ FPGA Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 100.9
+<br>
+
+&nbsp;&nbsp;|_ Hardware Version : 1
+<br>
+
+&nbsp;&nbsp;|_ Serial Number&nbsp;&nbsp;&nbsp;&nbsp;: 125
+<br>
+
+|_ Slice 1 : Digital Output 16 PNP
+<br>
+
+&nbsp;&nbsp;|_ FPGA Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 100.9
+<br>
+
+&nbsp;&nbsp;|_ Hardware Version : 1
+<br>
+
+&nbsp;&nbsp;|_ Serial Number&nbsp;&nbsp;&nbsp;&nbsp;: 126
+</p>
+<p>
+<a name="Function_1"></a>
+<a name="_Function_=_1:"></a>
+&nbsp;
+</p>
+<h2>Function = $01: Stop MS-Bus network</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+error = MS_BUS(1, slot)
+</p>
+<h3>Description:</h3>
+<p>
+Stop the MS-Bus network.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+slot
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Returns:</h3>
+<p>
+TRUE if the network stopped successfully. 
+</p>
+<p>
+FALSE if errors occurred during network shutdown. 
+</p>
+<h3>Example:</h3>
+<p>
+Stop the MS-Bus protocol from the terminal and then re-start
+it.
+</p>
+<p class="codeexample">
+&gt;&gt;MS_BUS(1, 1)
+</p>
+<p class="codeexample">
+&gt;&gt;MS_BUS(0, 1)
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p>
+<a name="Function_21"></a>
+<a name="_Function_=_$02:"></a>
+&nbsp;
+</p>
+<h2><a name="_Function_=_$02:_1"></a>
+Function = $02: Check slice online</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+state = MS_BUS(2, slot, slice_id)
+</p>
+<h3>Description:</h3>
+<p>
+Check whether given slice is online. Returns TRUE if a slice
+with a given slice ID is online.
+</p>
+<p class="note">
+If there is an MS-Bus error, then the online status of all slices
+is returned as FALSE.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="89" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="394" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slice_id
+</p>
+
+  
+</td>
+<td width="483" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slice number on MS-Bus Network
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Returns:</h3>
+<p>
+TRUE if a slice is online. 
+</p>
+<p>
+FALSE if a slice is offline.
+</p>
+<h3>Example:</h3>
+<p>
+Check if the slices at network positions 0 to 7 have gone
+offline.
+</p>
+<p class="codeexample">
+FOR posn = 0 TO 7
+<br>
+
+  IF MS_BUS(2, 1, posn) = FALSE THEN
+<br>
+
+    PRINT &quot;MS I/O Slice at &quot;; posn[0]; &quot; is offline&quot;
+<br>
+
+  ENDIF
+<br>
+
+NEXT posn
+</p>
+<p>
+&nbsp;
+</p>
+<h2><a name="_Function_=_$03:"></a>
+Function = $03: Check number of slices</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+slice count = MS_BUS(3, slot)
+</p>
+<h3>Description:</h3>
+<p>
+Determine the number of slices on the network. This function
+returns the number of slices on the network. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="503" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="458" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Returns:</h3>
+<p>
+Number of slices on the network.
+</p>
+<h3>Example:</h3>
+<p>
+Check to see the number of slices on the MS-Bus network.
+</p>
+<p class="codeexample">
+  num_slices = MS_BUS(3, 1)
+<br>
+
+  PRINT &quot;There are &quot;; num_slices ; &quot; slices on the MS-Bus network&quot;
+</p>
+<p>
+<a name="_Function_=_$04:"></a>
+&nbsp;
+</p>
+<h2><a name="_Function_=_$04:_1"></a>
+Function = $04: Print MS-Bus Information</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+error = MS_BUS(4, slot)
+</p>
+<h3>Description:</h3>
+<p>
+Prints detail of all slices attached to the controller to 
+<a href="OUTDEVICE.html">OUTDEVICE</a>
+.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+slot
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Returns:</h3>
+<p>
+TRUE if the command completed successfully. 
+</p>
+<p>
+FALSE if the command failed to complete successfully. 
+</p>
+<h3>Example:</h3>
+<p>
+The example below shows the result for a system with 4
+slices.
+</p>
+<p class="codeexample">
+&gt;&gt;MS_BUS(
+4, 1
+)
+</p>
+<p class="codeexample">
+MS-Bus
+<br>
+
+|_ Number of Slices: 4
+<br>
+
+|_ Slice 0 : Digital Output 16 PNP
+<br>
+
+&nbsp;&nbsp;|_ FPGA Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 100.9
+<br>
+
+&nbsp;&nbsp;|_ Hardware Version : 1
+<br>
+
+&nbsp;&nbsp;|_ Serial Number&nbsp;&nbsp;&nbsp;&nbsp;: 164
+<br>
+
+|_ Slice 1 : Digital Output 16 PNP
+<br>
+
+&nbsp;&nbsp;|_ FPGA Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 100.9
+<br>
+
+&nbsp;&nbsp;|_ Hardware Version : 1
+<br>
+
+&nbsp;&nbsp;|_ Serial Number&nbsp;&nbsp;&nbsp;&nbsp;: 176
+<br>
+
+|_ Slice 2 : Digital Output 16 PNP
+<br>
+
+&nbsp;&nbsp;|_ FPGA Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 100.9
+<br>
+
+&nbsp;&nbsp;|_ Hardware Version : 1
+<br>
+
+&nbsp;&nbsp;|_ Serial Number&nbsp;&nbsp;&nbsp;&nbsp;: 138
+<br>
+
+|_ Slice 3 : Digital Input 16 PNP
+<br>
+
+&nbsp;&nbsp;|_ FPGA Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 100.9
+<br>
+
+&nbsp;&nbsp;|_ Hardware Version : 1
+<br>
+
+&nbsp;&nbsp;|_ Serial Number&nbsp;&nbsp;&nbsp;&nbsp;: 113
+</p>
+<p>
+<a name="_Function_=_$05:"></a>
+&nbsp;
+</p>
+<h2><a name="_Function_=_$05:_1"></a>
+Function = $05: Read error type</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+error bitmap = MS_BUS(5, slot)
+</p>
+<h3>Description:</h3>
+<p>
+In the case of an error on the MS-BUS, 
+<a href="SYSTEM_ERROR.html">SYSTEM_ERROR</a>
+ will show bit-21 (0x00200000).
+Additional detail about the MS-BUS error can be found by reading the MS-BUS
+error type.
+</p>
+<p>
+A value of zero indicates no error. 
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Error bit</b></p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Value</b></p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 0
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+CRC error has occurred on the network. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 1
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+Frame error has occurred on the network. This indicates a
+  slice did not respond with the correct frame.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 2
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+Break error has occurred on the network. This indicates a
+  physical break in the connection between slices
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 3
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+8
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+Timeout error has occurred on the network. This indicates
+  a slice has failed to respond within its time deadline.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 4
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+16
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+<i>Reserved</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 5
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+32
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+Slice ID Incorrect.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 6
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+64
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+Slice failed to reset.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 7
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+128
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+Too many slices
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 8
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+256
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+Slice config invalid. Check MC_CONFIG.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 9
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+512
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+Slice info invalid.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 10
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+1028
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+Command timeout.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+Bit 11
+</p>
+
+  
+</td>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p>
+2046
+</p>
+
+  
+</td>
+<td width="387" valign="top" class="tablegrid">
+
+  
+<p>
+Empty FIFO.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="503" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="458" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Returns:</h3>
+<p>
+Error bitmap.
+</p>
+<h3>Example:</h3>
+<p>
+Print network error. This error indicates there are too many
+slices on the network. 
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT MS_BUS(5,1)&nbsp;
+<br>
+
+128
+</p>
+<p>
+<a name="_Function_=_$06:"></a>
+&nbsp;
+</p>
+<h2><a name="_Function_=_$06:_1"></a>
+Function = $06: Check network status</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+status = MS_BUS(6, slot)
+</p>
+<h3>Description:</h3>
+<p>
+Returns the state of the network. 
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Bus State</b></p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p>
+Waiting for initialisation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p>
+Configured (Network not running, but slices are
+  configured)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p>
+<i>Reserved</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td width="454" valign="top" class="tablegrid">
+
+  
+<p>
+Active (Network is running, cyclic data is being
+  exchanged)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="503" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="458" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Returns:</h3>
+<p>
+State of the MS-Bus network.
+</p>
+<h3>Example:</h3>
+<p>
+Print network status. Value 3 means the network is in Active
+State. 
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT MS_BUS(6, 1)&nbsp;
+<br>
+
+3
+</p>
+<p>
+<a name="_Function_=_$07:"></a>
+&nbsp;
+</p>
+<h2><a name="_Function_=_$07:_1"></a>
+Function = $07: Print network error
+information</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+error = MS_BUS(7, slot)
+</p>
+<h3>Description:</h3>
+<p>
+Prints network error information to the controller to 
+<a href="OUTDEVICE.html">OUTDEVICE</a>
+.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+slot
+</p>
+
+  
+</td>
+<td width="357" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Returns:</h3>
+<p>
+TRUE if the command completed successfully. 
+</p>
+<p>
+FALSE if the command failed to complete successfully. 
+</p>
+<h3>Example:</h3>
+<p>
+Print any errors that might have occurred on the network.
+</p>
+<p class="codeexample">
+&gt;&gt;MS_BUS(7,1)
+<br>
+
+Total Errors : 0
+<br>
+
+Error Latched on read number 1
+<br>
+
+Last Error
+<br>
+
+|_ CRC Error&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 0
+<br>
+
+|_ Frame Error&nbsp;&nbsp;&nbsp;: 0
+<br>
+
+|_ Break Error&nbsp;&nbsp;&nbsp;: 0
+<br>
+
+|_ Timeout Error : 1
+<br>
+
+|_ Error Counter : 1
+</p>
+<p>
+<a name="_Function_=_$0A:"></a>
+<a name="_Function_=_$08:"></a>
+&nbsp;
+</p>
+<h2><a name="_Function_=_$08:_1"></a>
+Function = $08: Asynchronous read from
+Slice register</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = MS_BUS($8, slot, slice_id, reg_addr[, vr_index])
+</p>
+<p>
+This function operates differently depending on the optional
+parameter passed.
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+If vr_index is omitted, then the returned value is the async read data.
+</li>
+<li class="indent-list-middle">
+If vr_index is -1, then the returned value is the async read data.
+</li>
+<li class="indent-list-last">
+If vr_index is 0 or above, then the returned value is the error code.
+</li>
+</ul>
+<h3>Description:</h3>
+<p>
+Read a register from a slice.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="100" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slice_id:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slice number on MS-Bus Network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+reg_addr:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Address of the register in a Slice
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td width="100" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 - VRmax
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Result is placed in the selected VR variable.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Result is returned.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Function_=_$0B:"></a>
+<a name="_Function_=_$09:"></a>
+Returns:</h3>
+<p>
+If using VR for read data:
+</p>
+<p style="margin-left:36.0pt">
+TRUE if the command completed
+successfully. 
+</p>
+<p style="margin-left:36.0pt">
+FALSE if the command failed to
+complete successfully. 
+</p>
+<p>
+If not using VR for read data:
+</p>
+<p>
+            Value read from slice.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Address</b></p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+$70
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p>
+Slice Information
+</p>
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Bits
+  0...7: Slice Type</span></p>
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Bits
+  8...11: <i>reserved</i></span></p>
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Bits
+  12...15: hardware version</span></p>
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Bits
+  16...23: FPGA version</span></p>
+
+  
+<p>
+<span style='font-family:"Segoe UI",sans-serif'>Bits
+  24...31: Firmware version</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+$44
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p>
+Bitmap of Digital Output state when MS-Bus is not
+  operational, see 
+<a href="MS_BUS_CONFIG.html">MS_BUS_CONFIG</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+$43
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p>
+Analogue Input range selection, see 
+<a href="MS_BUS_CONFIG.html">MS_BUS_CONFIG</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+$47
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p>
+Digital Input filter time, see 
+<a href="MS_BUS_CONFIG.html">MS_BUS_CONFIG</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Example:
+</p>
+<p>
+Example below reads data and uses a VR location to store the
+data.
+</p>
+<p class="fixed">
+‘Check for valid read of reg $47 from slice 12, store in VR(2)
+</p>
+<p class="fixed">
+If MS_BUS(1, 8, 12, $47, 2) = TRUE then
+</p>
+<p class="fixed" style="text-indent:36.0pt">
+PRINT “Slice data “;VR(2)
+</p>
+<p class="fixed">
+ELSE
+</p>
+<p class="fixed" style="text-indent:36.0pt">
+PRINT “ASYNC read failed”
+</p>
+<p class="fixed">
+ENDIF
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+Example below reads data and uses a VR location to store the
+data.
+</p>
+<p class="fixed">
+‘Read of reg $47 from slice 12, store in VR(2)
+</p>
+<p class="fixed">
+rd_value = MS_BUS(1, 8, 12, $47)
+</p>
+<p class="fixed">
+PRINT “Slice data “;rd_value
+</p>
+<p>
+&nbsp;
+</p>
+<h2><a name="_Function_=_$09:_1"></a>
+Function = $09: Asynchronous write to
+Slice register</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+error = MS_BUS($9, slot, slice_id, reg_addr, value)
+</p>
+<h3>Description:</h3>
+<p>
+Writes a register value to a slice.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="483" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slice_id:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slice number on MS-Bus Network
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+reg_addr:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Address of the register in a Slice
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value to write into reg_addr
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Valid address locations are:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Address</b></p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+$44
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p>
+Bitmap of Digital Output state when MS-Bus is not
+  operational, see 
+<a href="MS_BUS_CONFIG.html">MS_BUS_CONFIG</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+$43
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p>
+Analogue Input range selection, see 
+<a href="MS_BUS_CONFIG.html">MS_BUS_CONFIG</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+$47
+</p>
+
+  
+</td>
+<td width="510" valign="top" class="tablegrid">
+
+  
+<p>
+Digital Input filter time, see 
+<a href="MS_BUS_CONFIG.html">MS_BUS_CONFIG</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Returns:</h3>
+<p>
+TRUE if the command completed successfully. 
+</p>
+<p>
+FALSE if the command failed to complete successfully. 
+</p>
+<p>
+Example:
+</p>
+<p>
+Example below write a value of 1 to register $47 on slice
+10.
+</p>
+<p class="fixed">
+‘Check for valid write to reg $47 on slice 10
+</p>
+<p class="fixed">
+If MS_BUS(1, 9, 10, $47, 1) = TRUE then
+</p>
+<p class="fixed" style="text-indent:36.0pt">
+PRINT “Slice write OK“
+</p>
+<p class="fixed">
+ELSE
+</p>
+<p class="fixed" style="text-indent:36.0pt">
+PRINT “Slice write failed”
+</p>
+<p class="fixed">
+ENDIF
+</p>
+<p>
+&nbsp;
+</p>
+<h2><a name="_Function_=_$0A:_1"></a>
+Function = $0A: Read slice serial number</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+serial number = MS_BUS($0A, slot, slice_id)
+</p>
+<h3>Description:</h3>
+<p>
+Returns the serial number of a given slice.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="517" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slice_id:
+</p>
+
+  
+</td>
+<td width="517" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slice number on MS-Bus Network
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Returns:</h3>
+<p>
+Serial number. 
+</p>
+<h3>Example:</h3>
+<p>
+Read the serial number of slice 5.
+</p>
+<p class="codeexample">
+&gt;&gt;?MS_BUS($A,1,5)
+<br>
+
+164
+</p>
+<p>
+<a name="_Function_=_$0B:_1"></a>
+&nbsp;
+</p>
+<h2><a name="_Function_=_$0B:_2"></a>
+Function = $0B: Read slice type</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+slice type = MS_BUS($0B, slot, slice_id)
+</p>
+<h3>Description:</h3>
+<p>
+Returns the type of slice for a given slice ID.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="517" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to MS-Bus port slot number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MotionPLC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slice_id:
+</p>
+
+  
+</td>
+<td width="517" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slice number on MS-Bus Network
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Returns</h3>
+<p>
+Slice Type.  The following table describes all supported
+slice types:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Slice type</b></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+Digital input 16 NPN
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+Digital input 16 PNP
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+Digital output 16 NPN
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+Digital output 16 PNP
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+Analogue input 4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+Analogue output 4 Voltage
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p>
+7
+</p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+Analogue output 4 Current
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Read the slice type of slice 4.
+</p>
+<p class="codeexample">
+&gt;&gt;?MS_BUS($B,1,4)
+<br>
+
+4
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2><a name="_Function_=_$0C:"></a>
+Function = $0C: Read slice status</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+slice_status = MS_BUS($0C, slot, slice_id, [mode])
+</p>
+<h3>Description:</h3>
+<p>
+Returns slice status. This value is read from every slice to
+monitor any warnings or errors on the slice.
+</p>
+<p>
+The 8-bit slice status register is defined as:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Bit</b></p>
+
+  
+</td>
+<td width="323" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Digital Slice bitmap</b></p>
+
+  
+</td>
+<td width="284" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Analogue Slices bitmap</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="323" valign="top" class="tablegrid">
+
+  
+<p>
+Sync manager status [0]
+</p>
+
+  
+</td>
+<td width="284" valign="top" class="tablegrid">
+
+  
+<p>
+Sync manager status [0]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="323" valign="top" class="tablegrid">
+
+  
+<p>
+Sync manager status [1]
+</p>
+
+  
+</td>
+<td width="284" valign="top" class="tablegrid">
+
+  
+<p>
+Sync manager status [1]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="323" valign="top" class="tablegrid">
+
+  
+<p>
+Sync manager status [2]
+</p>
+
+  
+</td>
+<td width="284" valign="top" class="tablegrid">
+
+  
+<p>
+Sync manager status [2]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td width="323" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 or Channel 1 CRC error
+</p>
+
+  
+</td>
+<td width="284" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 or Channel 1 CRC error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td width="323" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 or Channel 1 Frame error
+</p>
+
+  
+</td>
+<td width="284" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 or Channel 1 Frame error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td width="323" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 or Channel 1 Break error
+</p>
+
+  
+</td>
+<td width="284" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 or Channel 1 Break error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td width="323" valign="top" class="tablegrid">
+
+  
+<p>
+Output Bank 1 fault or temperature warning
+</p>
+
+  
+</td>
+<td width="284" valign="top" class="tablegrid">
+
+  
+<p>
+Unused
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="34" valign="top" class="tablegrid">
+
+  
+<p>
+7
+</p>
+
+  
+</td>
+<td width="323" valign="top" class="tablegrid">
+
+  
+<p>
+Output Bank 0 fault or temperature warning
+</p>
+
+  
+</td>
+<td width="284" valign="top" class="tablegrid">
+
+  
+<p>
+Unused
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+The 16-bit slice status register is defined as:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Bit</b></p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+0 
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 RX CRC Error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 RX Frame Error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 RX Break Error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 RX Timeout Error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 1 RX CRC error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 1 RX Frame error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 1 RX Break error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+7
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 1 RX Timeout error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+8
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Sync Timeout Error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+9
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Temperature Monitor Flag (Active Low)  (Supported in FPGA
+  Version &gt;= 11)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+10
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 0 Output driver flag (Supported in FPGA Version
+  &gt;= 11)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+11
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Channel 1 Output driver flag (Supported in FPGA Version
+  &gt;= 11)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p>
+12 - 31
+</p>
+
+  
+</td>
+<td width="526" valign="top" class="tablegrid">
+
+  
+<p>
+Unused
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>mode</b></p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+0 [Default]
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+Returns slice’s status register
+  read during cyclic transfer (8-bit)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+1
+</p>
+
+  
+</td>
+<td width="406" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+Asynchronous read of extended
+  slice status register (16-bit)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p style="margin-left:0cm">
+&nbsp;
+</p>
+<h3>Example 1:</h3>
+<p>
+Read the cyclic slice status register from slice 2.
+</p>
+<p class="codeexample">
+slice_status = MS_BUS($c, 1, 2)
+<br>
+
+IF slice_status AND 64 THEN
+<br>
+
+   PRINT “Channel 1 warning on slice 2”
+<br>
+
+ENDIF
+</p>
+<p>
+&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Read extended slice status register from slice 5.
+</p>
+<p class="codeexample">
+extended_status = MS_BUS($c, 1, 5, 2)
+<br>
+
+IF enteded_status AND 512 THEN
+<br>
+
+   PRINT “Temperature fault on slice 5”
+<br>
+
+ENDIF
+</p>
+<h2><a name="_Function_=_$0D:"></a>
+Function = $0D: Read slice status bitmap</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+warning_slices = MS_BUS($0D, slot)
+</p>
+<h3>Description:</h3>
+<p>
+Returns a bitmap of slices that caused SYSTEM_WARNING to be
+set.
+</p>
+<p style="margin-left:0cm">
+&nbsp;
+</p>
+<h3>Example:</h3>
+<p>
+Pring slices that raised a SYSTEM_WARNING.
+</p>
+<p class="codeexample">
+IF SYSTEM_WARNING AND $40 THEN
+<br>
+
+    warning_map = MS_BUS($d, 1)
+<br>
+
+    FOR i = 0 to 15 
+<br>
+
+       IF warning_map AND (1 &lt;&lt; i) THEN
+<br>
+
+          PRINT “Slice “;i;”raised a warning”
+<br>
+
+       ENDIF
+<br>
+
+    NEXT i
+<br>
+
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MS_BUS_IO.html">MS_BUS_IO</a>
+, 
+<a href="MS_BUS_CONFIG.html">MS_BUS_CONFIG</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

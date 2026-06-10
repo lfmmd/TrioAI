@@ -1,0 +1,1079 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>EDPROG1</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="EDPROG1">
+</head>
+<body>
+<h1>EDPROG1</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+EDPROG1 prog_name,[parameters,] function
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+! prog_name,  prog_name, function[, parameters]
+</p>
+<h2>Description:</h2>
+<p>
+This is a special command that may be used to manipulate the
+
+<a href="SELECT.html">SELECT</a>
+ed programs on the controller.
+</p>
+<p class="note">
+It is not normally used except by Motion Perfect.
+</p>
+<h2>Functions:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_I:">I</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Insert string
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_Z:">S</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Search for string
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_D:">D</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Delete line
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_L:">L</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Print lines
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_N:_1">N</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Print number of lines
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_C:">A</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Print label addresses
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_C:_1">C</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Prints the name of the currently selected program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_R:">R</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Replace line
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_K:">K</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Print checksum
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_Z:_1">Z</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Print checksum of specified program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_X:_1">X</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Print object code checksum
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+12
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_Q:">Q</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Checks if the controller directory is corrupt
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+13
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+V
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Print variable list
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+14
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+M
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Commit changes
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_C:"></a>
+<a name="_Function_=_A:"></a>
+Function = A:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG16, to_line, from_line
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, from_line, to_line A
+</p>
+<h3>Description:</h3>
+<p>
+Prints all label names in the region defined in the 
+<a href="SELECT.html">SELECT</a>
+ed program.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+from_line:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The first line of the 
+<a href="SELECT.html">SELECT</a>
+ed
+  program to search
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+to_line:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The last line of the 
+<a href="SELECT.html">SELECT</a>
+ed
+  program to search
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_C:_1"></a>
+Function = C:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1C
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, C
+</p>
+<h3>Description:</h3>
+<p>
+Prints the name of the currently 
+<a href="SELECT.html">SELECT</a>
+ed
+program.
+</p>
+<h2><a name="_Function_=_D:"></a>
+Function = D:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, 3, line_no
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, line_no D
+</p>
+<h3>Description:</h3>
+<p>
+Deletes the specified line
+</p>
+<h3>Parameter:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+line_no:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid line number form the 
+<a href="SELECT.html">SELECT</a>
+ed
+  program
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_I:"></a>
+Function = I:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, string, 1, line_no
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, line_no I,string
+</p>
+<h3>Description:</h3>
+<p>
+Insert the text string in the currently selected program at
+the specified line.
+</p>
+<p class="note">
+You should NOT enclose the string in quotes unless they need to
+be inserted into the program.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+line_no:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The line to insert the string
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+string:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The text string to insert into the 
+<a href="SELECT.html">SELECT</a>
+ed
+  program
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_K:"></a>
+Function = K:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, 10
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, K
+</p>
+<h3>Description:</h3>
+<p>
+Print the checksum of the system software
+</p>
+<h2><a name="_Function_=_L:"></a>
+Function = L:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, 4, end, start
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, start, end L
+</p>
+<h3>Description:</h3>
+<p>
+Print the lines of the currently selected program between
+start and end
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The first line to print from the 
+<a href="SELECT.html">SELECT</a>
+ed
+  program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The last line to print from the 
+<a href="SELECT.html">SELECT</a>
+ed
+  program
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_N:"></a>
+<a name="_Function_=_M:"></a>
+Function = M:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, 14
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, M
+</p>
+<h3>Description:</h3>
+<p>
+Saves all program changes to flash.
+</p>
+<h2><a name="_Function_N:_1"></a>
+Function N:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, 5
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, N
+</p>
+<h3>Description:</h3>
+<p>
+Print the number of lines in the currently 
+<a href="SELECT.html">SELECT</a>
+ed program
+</p>
+<h2><a name="_Function_=_Q:"></a>
+Function = Q:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, 12
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, Q
+</p>
+<h3>Description:</h3>
+<p>
+Returns the state of the controllers program memory.
+</p>
+<h3>Return Value:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Controller memory OK
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Controller memory corrupted
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_R:"></a>
+Function = R:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, string, 8, line
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, line R, string
+</p>
+<h3>Description:</h3>
+<p>
+Replace the line &lt;line&gt; in the currently 
+<a href="SELECT.html">SELECT</a>
+ed program with the text &lt;string&gt;.
+</p>
+<p class="note">
+You should NOT enclose the string in quotes unless they need to
+be inserted into the program.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+line_no:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The line to replace
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+string:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The text string to replace the line in the 
+<a href="SELECT.html">SELECT</a>
+ed program
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_Z:"></a>
+<a name="_Function_=_S:"></a>
+Function = S:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, string, 2, to_line, from_line
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, from_line, to_line S string
+</p>
+<h3>Description:</h3>
+<p>
+Prints the line number of the first occurrence of the string
+in the region defined in the 
+<a href="SELECT.html">SELECT</a>
+ed program.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+from_line:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The first line of the 
+<a href="SELECT.html">SELECT</a>
+ed
+  program to search
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+to_line:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The last line of the 
+<a href="SELECT.html">SELECT</a>
+ed
+  program to search
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+string
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The string to search for
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_X:"></a>
+<a name="_Function_=_V:"></a>
+Function = V:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, 13
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, V
+</p>
+<h3>Description:</h3>
+<p>
+Print all variables defined in the 
+<a href="SELECT.html">SELECT</a>
+ed
+program. 
+</p>
+<h2><a name="_Function_=_X:_1"></a>
+Function = X:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, 11
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, X
+</p>
+<h3>Description:</h3>
+<p>
+Print the 16bit CRC checksum of the 
+<a href="SELECT.html">SELECT</a>
+ed
+program. 
+</p>
+<h2><a name="_Function_=_Z:_1"></a>
+Function = Z:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+EDPROG1 prog_name, progname, 10
+</p>
+<h3>Alternate Syntax:</h3>
+<p class="fixed">
+! prog_name, Z, progname
+</p>
+<h3>Description:</h3>
+<p>
+Print the CRC checksum of the specified program. 
+</p>
+<h3>Return Value:</h3>
+<p>
+Returns the checksum using standard CCITT 16 bit generator
+polynomial.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SELECT.html">SELECT</a>
+</p>
+</body>
+</html>

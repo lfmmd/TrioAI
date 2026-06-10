@@ -1,0 +1,108 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVE_COUNT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVE_COUNT">
+</head>
+<body>
+<h1>MOVE_COUNT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+MOVE_COUNT increments every time a motion command loads into
+the 
+<a href="MTYPE.html">MTYPE</a>
+ buffer or when a command is automatically
+re-loaded such as 
+<a href="MOVELINK.html">MOVELINK</a>
+, 
+<a href="CAMBOX.html">CAMBOX</a>
+
+and 
+<a href="FLEXLINK.html">FLEXLINK</a>
+<span class="MsoHyperlink"> </span>when using option value 4.  (Auto
+Repeat)
+</p>
+<p class="tip">
+MOVE_COUNT can be written to set an initial value.
+</p>
+<h2>Value:</h2>
+<p>
+The number of movements loaded into the 
+<a href="MTYPE.html">MTYPE</a>
+
+buffer. 
+</p>
+<p class="note">
+A move with zero length will not be loaded into the MTYPE buffer
+and therefore will not be counted.
+</p>
+<p class="note">
+Fwd and Rev Jog moves are not counted.
+</p>
+<h2>Examples:</h2>
+<h3>Example1:</h3>
+<p>
+Run the motion program and then turn on the OP(11) after 10
+moves have been loaded.
+</p>
+<p class="codeexample">
+MOVE_COUNT = 0
+</p>
+<p class="codeexample">
+RUN &quot;MOTION&quot;
+</p>
+<p class="codeexample">
+WAIT UNTIL MOVE_COUNT &gt; 10
+</p>
+<p class="codeexample">
+OP(11,ON)
+</p>
+<h3>Example2:</h3>
+<p>
+Run a continuous MOVELINK and stop it after 250 cycles,
+stopping at the end of the last complete MOVELINK length.
+</p>
+<p class="codeexample">
+motion_axis = 0
+</p>
+<p class="codeexample">
+link_axis = 1
+</p>
+<p class="codeexample">
+BASE(motion_axis)
+</p>
+<p class="codeexample">
+MOVE_COUNT = 0
+</p>
+<p class="codeexample">
+MOVELINK(10,12,2,2,link_axis,4)
+</p>
+<p class="codeexample">
+IF IDLE AXIS(link_axis) THEN
+</p>
+<p class="codeexample">
+    FORWARD AXIS(link_axis)
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+WAIT UNTIL MOVE_COUNT &gt;= 250
+</p>
+<p class="codeexample">
+REP_OPTION.1 = 1
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

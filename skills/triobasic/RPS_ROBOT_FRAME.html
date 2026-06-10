@@ -1,0 +1,719 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ROBOT_FRAME</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ROBOT_FRAME">
+</head>
+<body>
+<h1>ROBOT_FRAME</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Frame
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+ROBOT_FRAME[(function[, identity])]
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+ROBOT_FRAME(identity | name)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+ROBOT_FRAME(identity, name, x offset, y offset, z offset,
+x rotation, y rotation, z rotation)
+</p>
+<h2>Description:</h2>
+<p>
+Frames are 4x4 orthogonal matrices that define a position
+and orientation in XYZ space. They are defined for a 3-axis translation and
+rotation. The rotations are applied using the Euler ZYX convention. This means
+that the Z rotation is applied first, then the Y is applied on the new
+coordinate system and finally the X is applied. The coordinate system is
+defined using the ‘right hand rule’ and the rotation of the origin is defined
+using the ‘right hand turn’.
+</p>
+<p class="note">
+Frames are applied on the axis KINEMATIC_GROUP. If no
+KINEMATIC_GROUP is defined, then a runtime error will be generated.
+</p>
+<p>
+Movements are loaded with the selected frame and tool. This
+means that you can buffer a sequence of moves on different frames and tools.
+The active frame and tool are the one associated with the move in the MTYPE. If
+the KINEMATIC_GROUP is IDLE, then the active frame and tool is the selected
+frame and tool.
+</p>
+<p>
+Robot Frame is located on the robot base. Its position and
+orientation are relative to the World Frame. It can change the position and
+orientation of the robot relative to the active coordinate system (the World
+Frame as default or the OBJECT_FRAME). Setting this frame, the TCP (Tool Centre
+Point) is always related to the World Frame or OBJECT_FRAME, no matter what
+position the robot is.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+function
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>-</span></em><em><span style='font-family:"Calibri",sans-serif'>1 = display existing frame(s). </span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>-2 = remove frame(s).</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame index. Value: 0..31. Index 0 is default frame “RF_default”
+  which cannot be modified or removed.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>name</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Name of the frame. It can be left blank. However, if
+  specified, the name must be unique (no duplicates); otherwise “Duplicate
+  Identifier” run time error will be thrown.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z offset</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame </span></em>position (in mm) relative to the World
+  Frame
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z rotation</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame </span></em>orientation (in degrees) relative to the
+  World Frame
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Parameter name can be left as an empty String. However, when not
+blank, the name must be unique. “Duplicate Identifier” run time error is thrown
+when this is not the case.
+</p>
+<p class="note">
+Default robot frame “RF_default” (index 0) cannot be modified or
+deleted.
+</p>
+<h2>Create or Modify a Robot Frame</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+ROBOT_FRAME(identity, name, x offset, y offset, z offset,
+x rotation, y rotation, z rotation)
+</p>
+<h3>Description:</h3>
+<p>
+Robot frames must be created first using the corresponding
+syntax command with the desired values before using them.
+</p>
+<p>
+Existing robot frames (except “RF_default”) can be modified
+at any time, except when the robot frame is active. To do this, use the same
+command as creating the robot frame. This will overwrite the robot frame with a
+new set of values in the same index.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame index. Value: 1..31. Index 0 is default frame “RF_default”
+  which cannot be modified or removed.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>name</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Name of the frame. It can be left blank. However, if
+  specified, the name must be unique (no duplicates); otherwise “Duplicate
+  Identifier” run time error will be thrown.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z offset</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame </span></em>position (in mm) relative to the World
+  Frame
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z rotation</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame </span></em>orientation (in degrees) relative to the
+  World Frame
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Create a robot frame on index 1 with name “rbt1” located at
+(1000,500,655) from the World Frame with no rotation.</span></em></p>
+<p class="codeexample">
+ROBOT_FRAME
+(
+1
+,
+&quot;rbt1&quot;
+,
+1000
+,
+500
+,
+655
+,
+0
+,
+0
+,
+0
+)
+</p>
+<h4>Example 2:</h4>
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>Create a robot frame on index 2 with no name located at (1000,-500,655)
+rotated 90 degrees on the Z from the World Frame.</span></em></p>
+<p class="codeexample">
+ROBOT_FRAME
+(
+2
+,
+&quot;&quot;
+,
+1000
+,-
+500
+,
+655
+,
+0
+,
+0
+,9
+0
+)
+</p>
+<h4>Example 3:</h4>
+<p class="MsoNoSpacing">
+Modify robot frame index 2 position to (1000,-350,655)
+and name it “rbt2”. Note: to be able to modify the entries, robot frame index 2
+cannot be active/selected.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;robot_frame(-1) 'display all robot frames
+<br>
+
+0 [RF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [rbt1] : 1000.00000, 500.00000, 655.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 : 1000.00000, -500.00000, 655.00000, 0.00000, 0.00000, 90.00000
+<br>
+
+&gt;&gt;robot_frame(0) 'activate robot frame 0 to deselect robot frame 2
+<br>
+
+&gt;&gt;ROBOT_FRAME(2, &quot;rbt2&quot;, 1000, -350, 655, 0, 0, 90) 'modify
+robot frame 2
+<br>
+
+&gt;&gt;robot_frame(-1)&nbsp;'display all robot
+frames&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [RF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [rbt1] : 1000.00000, 500.00000, 655.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [rbt2] : 1000.00000, -350.00000, 655.00000, 0.00000, 0.00000, 90.00000
+</p>
+<h2>Display Robot Frame Data</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+ROBOT_FRAME(-1[, identity])
+</p>
+<h3>Description:</h3>
+<p>
+To display a robot frame, use function -1 followed by the
+frame’s index. If the index is not specified, all robot frames will be
+displayed.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame index. Value: 0..31. </span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1:</span></em></h4>
+<p>
+Show all existing robot frames.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;robot_frame(-1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [RF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [rbt1] : 1000.00000, 500.00000, 655.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [rbt2] : 1000.00000, -350.00000, 655.00000, 0.00000, 0.00000, 90.00000
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2:</span></em></h4>
+<p>
+Display robot frame index 1.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;robot_frame(-1,1)
+<br>
+
+1 [rbt1] : 1000.00000, 500.00000, 655.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h2>Remove a Robot Frame</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+ROBOT_FRAME(-2[, identity])
+</p>
+<h3>Description:</h3>
+<p class="MsoNoSpacing">
+To remove a robot frame, use function -2 followed by the
+frame’s index. If the index is not specified, all robot frames will be deleted.
+</p>
+<p class="note">
+An active robot frame cannot be modified or deleted. Trying to do
+so will throw a runtime error “TOOL cannot be modifying or delete while
+selected”.
+</p>
+<p class="note">
+Default robot frame “RF_default” (index 0) cannot be modified or
+deleted.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame index. Value: 1..31. Index 0 is default robot frame
+  “RF_default” which cannot be modified or removed.</span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1:</span></em></h4>
+<p>
+Remove robot frame “rbt2”.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;robot_frame(-1)&nbsp;‘ display all robot
+frames&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [RF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [rbt1] : 1000.00000, 500.00000, 655.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [rbt2] : 1000.00000, -350.00000, 655.00000, 0.00000, 0.00000, 90.00000
+</p>
+<p class="codeexample">
+&gt;&gt;robot_frame(-2,2) ‘ remove robot frame 2
+<br>
+
+&gt;&gt;robot_frame(-1)&nbsp;&nbsp;‘ display remaining robot frames
+<br>
+
+0 [RF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [rbt1] : 1000.00000, 500.00000, 655.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2:</span></em></h4>
+<p>
+Remove all robot frames.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;robot_frame(-2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+&gt;&gt;robot_frame(-1) ‘ display remaining robot frames
+<br>
+
+0 [RF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h2>Select a Robot Frame</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+ROBOT_FRAME(identity | name)
+</p>
+<h3>Description:</h3>
+<p>
+To make a robot frame active, the robot frame must be
+selected. To do this, use 
+<span class="codeexampleChar">ROBOT_FRAME</span> command with the robot frame’s index or name
+as the parameter.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Frame index. Value: 0..31. </span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>name</span></em></p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Name of the frame. </span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1:</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Select robot frame 1.</span></em></p>
+<p class="codeexample">
+ROBOT_FRAME(1)
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2:</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Select robot frame “rbt1”.</span></em></p>
+<p class="codeexample">
+ROBOT_FRAME(&quot;rbt1&quot;)
+</p>
+<h2>Identify Active Robot Frame</h2>
+<h3>Syntax:</h3>
+<p class="codeexample">
+value = ROBOT_FRAME
+</p>
+<h3>Description:</h3>
+<p>
+To know which object frame is active, assign the return
+value to the 
+<span class="codeexampleChar">ROBOT_FRAME</span>
+command with no parameters. The command will return the index of the active robot
+frame.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p>
+Value
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p>
+Index of the active robot frame. Value: 0..31.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1:</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Assign variable ‘i’ to the index of the active robot frame. </span></em></p>
+<p class="codeexample">
+i = ROBOT_FRAME
+</p>
+<h4>Example 2:</h4>
+<p>
+Check the active robot frame and print the index of the
+robot frame on the terminal.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;kinematic_group(0) 'Check active robot frame
+<br>
+
+0 [1000] [41] : 0, 1, 2, 3, 4, 5 TO={0[TO_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} RF={1[rbt1]:1000.00000, 500.00000, 655.00000,
+0.00000, 0.00000, 0.00000} OF={0[OF_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000,&nbsp;0.00000} CO={0}
+<br>
+
+&gt;&gt;print robot_frame 'Check active robot frame
+<br>
+
+1
+<br>
+
+&gt;&gt;robot_frame(0) 'Select robot frame 0 to be active
+<br>
+
+&gt;&gt;kinematic_group(0) 'Check active robot frame
+<br>
+
+0 [1000] [41] : 0, 1, 2, 3, 4, 5 TO={0[TO_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} RF={0[RF_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} OF={0[OF_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000,&nbsp;0.00000} CO={0}
+<br>
+
+&gt;&gt;print robot_frame&nbsp;'Check active robot frame
+<br>
+
+0
+</p>
+<h2>See also:</h2>
+<p>
+<a href="RPS_OBJECT_FRAME.html">OBJECT_FRAME</a>
+, 
+<a href="RPS_TOOL_OFFSET.html">TOOL_OFFSET</a>
+, 
+<a href="RPS_KINEMATIC_GROUP.html">KINEMATIC_GROUP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

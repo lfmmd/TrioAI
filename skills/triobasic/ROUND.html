@@ -1,0 +1,172 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ROUND</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ROUND">
+</head>
+<body>
+<h1>ROUND</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = ROUND(expression)
+</p>
+<p class="fixed">
+value = ROUND(expression, precision)
+</p>
+<h2>Description:</h2>
+<p>
+The ROUND function returns the floating-point value rounded (towards
+zero) to the specified precision with the result being floating-point.
+</p>
+<p>
+If the precision is omitted or is zero, the value is rounded
+to the nearest whole value.
+</p>
+<p class="tip">
+Despite the result being floating-point, integer values up to ±(2
+<sup>53</sup>-1)
+are represented accurately, but bear in mind that values outside of this range
+will round less accurately as they are subject to the same inaccuracies as
+using INT with an offset of ±0.5
+</p>
+<p>
+If the precision is positive, the fractional part is rounded
+to the specified precision (number of decimal places, i.e. to the nearest
+tenth, hundredth, thousandth, etc.).
+</p>
+<p>
+If the precision is negative, the integer part value is
+rounded to the specified precision (to the nearest ten, hundred, thousand,
+etc.).
+</p>
+<p>
+When rounding with a non-zero precision, the result is
+rounded using INT(&lt;value&gt; * 10 ^ &lt;precision&gt; + 0.5) / 10 ^
+&lt;precision&gt; for positive values and INT(&lt;value&gt; * 10 ^
+&lt;precision&gt; - 0.5) / 10 ^ &lt;precision&gt; for negative values.
+</p>
+<p>
+When the precision is either omitted or is zero, this is
+equivalent to INT(&lt;value&gt; + 0.5) for positive values, and
+INT(&lt;value&gt; - 0.5) for negative values.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The floating-point value that requires rounding
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+precision:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The precision with which to round to (zero assumed if
+  omitted)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print a floating-point value rounded to the nearest whole
+value on the command line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT ROUND(PI)
+</p>
+<p class="codeexample">
+3.0000
+</p>
+<h3>Example 2:</h3>
+<p>
+Print a floating-point value with the integer part rounded
+to a varying number of decimal places on the command line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT ROUND(PI, 1), ROUND(PI, 2), ROUND(PI, 3), ROUND(PI,
+4)
+</p>
+<p class="codeexample">
+3.1000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1400&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1420&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1416
+</p>
+<h3>Example 3:</h3>
+<p>
+Print a floating-point value with the integer part rounded
+to a varying number of places on the command line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT ROUND(1000 * PI, -1)
+</p>
+<p class="codeexample">
+3140.0000
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT ROUND(1000 * PI, -2)
+</p>
+<p class="codeexample">
+3100.0000
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT ROUND(1000 * PI, -3)
+</p>
+<p class="codeexample">
+3000.0000
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT ROUND(1000 * PI, -4)
+</p>
+<p class="codeexample">
+0.0000
+</p>
+<h2>See also:</h2>
+<p>
+<a href="FRAC.html">FRAC</a>
+, 
+<a href="INT.html">INT</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

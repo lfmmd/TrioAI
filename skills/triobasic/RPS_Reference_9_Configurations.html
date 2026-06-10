@@ -1,0 +1,420 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Configurations</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Configurations</h1>
+<p>
+The system can solve the kinematics for a particular
+position and orientation of the TCP in up to eight different axis
+configurations. The different configurations can be specified by the embedded
+motion parameter “C”.
+</p>
+<h2>SCARA</h2>
+<p>
+There are 2 configurations for Scara robots: right-handed
+and left-handed.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="113" valign="top" class="tablegrid">
+
+  
+<p>
+Configuration
+</p>
+
+  
+</td>
+<td width="302" valign="top" class="tablegrid">
+
+  
+<p>
+Meaning
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="113" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="302" valign="top" class="tablegrid">
+
+  
+<p>
+Left-handed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="113" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="302" valign="top" class="tablegrid">
+
+  
+<p>
+Right-handed
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>6 DOF Robot</h2>
+<p class="note">
+C parameter can be only used in MOVEJ instruction with values
+from 0 to 7.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="106" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Configuration</b></p>
+
+  
+</td>
+<td width="310" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Meaning</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Base</b></p>
+
+  
+</td>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Elbow</b></p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Wrist</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="106" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="83" rowspan="4" valign="top" class="tablegrid">
+
+  
+<p>
+Forward
+</p>
+
+  
+</td>
+<td width="76" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Above
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p>
+Not flipped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="106" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p>
+Flipped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="106" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="76" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Below
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p>
+Not flipped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="106" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p>
+Flipped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="106" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td width="83" rowspan="4" valign="top" class="tablegrid">
+
+  
+<p>
+Backward
+</p>
+
+  
+</td>
+<td width="76" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Above
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p>
+Not flipped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="106" valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p>
+Flipped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="106" valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td width="76" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Below
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p>
+Not flipped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="106" valign="top" class="tablegrid">
+
+  
+<p>
+7
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p>
+Flipped
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>C := 0 – Wrist no flip, elbow above, base forward</h2>
+<p>
+<img width="322" height="337" id="Canvas 17" src="RPS_Reference_9_Configurations_files/image001.png">
+</p>
+<h2>C := 1 – Wrist flip, elbow above, base forward</h2>
+<p>
+&nbsp;
+</p>
+<p>
+<img width="322" height="337" id="Canvas 27" src="RPS_Reference_9_Configurations_files/image002.png">
+</p>
+<h2>C := 2 – Wrist no flip, elbow below, base forward</h2>
+<p>
+<img width="322" height="337" id="Canvas 36" src="RPS_Reference_9_Configurations_files/image003.png">
+</p>
+<h2>C := 3 – Wrist flip, elbow below, base forward</h2>
+<p>
+<img width="322" height="337" id="Canvas 40" src="RPS_Reference_9_Configurations_files/image004.png">
+</p>
+<h2>C := 4 – Wrist no flip, elbow below, base backward</h2>
+<p>
+<img width="329" height="337" id="Canvas 43" src="RPS_Reference_9_Configurations_files/image005.png">
+</p>
+<h2>C := 5 – Wrist flip, elbow below, base backward</h2>
+<p>
+<img width="329" height="337" id="Canvas 46" src="RPS_Reference_9_Configurations_files/image006.png">
+</p>
+<h2>C := 6 – Wrist no flip, elbow above, base backward</h2>
+<p>
+<img width="321" height="337" id="Canvas 49" src="RPS_Reference_9_Configurations_files/image007.png">
+</p>
+<h2>C := 7 – Wrist flip, elbow above, base backward</h2>
+<p>
+<img width="317" height="337" id="Canvas 52" src="RPS_Reference_9_Configurations_files/image008.png">
+</p>
+</body>
+</html>

@@ -1,0 +1,214 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HMI_GET_STATUS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HMI_GET_STATUS">
+</head>
+<body>
+<h1>HMI_GET_STATUS</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = HMI_GET_STATUS[(&lt;ip&gt;)]
+</p>
+<h2>Description:</h2>
+<p>
+Return the status of the given HMI Client. If the IP address
+is not specified then the current page for the lowest active session will be
+returned.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Client is not connected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Client is Connected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Page is loading
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Page is running
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Client is in error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IP
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IP address of the HMI Client to which this message must
+  be sent.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_3:"></a>
+Example:</h2>
+<h3>Example 1:</h3>
+<p>
+Wait for the HMI Client to initialise correctly, change to
+the start page and wait for the change to complete.
+</p>
+<p class="codeexample">
+WAIT UNTIL HMI_GET_STATUS=3
+</p>
+<p class="codeexample">
+HMI_SET_PAGE(&quot;START&quot;)
+</p>
+<p class="codeexample">
+WAIT UNTIL HMI_GET_STATUS=3 AND HMI_GET_PAGE=&quot;START&quot;
+</p>
+<h3>Example 2:</h3>
+<p>
+Get the status from 2 HMIs and combine them into one VR
+value.  Upper 16 bits for first HMI, lower 16 bits for second HMI.
+</p>
+<p class="codeexample">
+hmi1 = HMI_GET_STATUS(192.168.0.231)
+</p>
+<p class="codeexample">
+hmi2 = HMI_GET_STATUS(192.168.0.232)
+</p>
+<p class="codeexample">
+VR(hmi_stats) = (hmi1&lt;&lt;16) OR hmi2
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="HMI_CONNECTIONS.html">HMI_CONNECTIONS</a>
+, 
+<a href="HMI_GET_PAGE.html">HMI_GET_PAGE</a>
+, 
+<a href="HMI_SERVER.html">HMI_SERVER</a>
+,
+
+<a href="HMI_SET_PAGE.html">HMI_SET_PAGE</a>
+</p>
+</body>
+</html>

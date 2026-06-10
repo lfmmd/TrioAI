@@ -1,0 +1,405 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STICK_WRITEVR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STICK_WRITEVR">
+</head>
+<body>
+<h1>STICK_WRITEVR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = STICK_WRITEVR(flash_file, vr_start [,length [,format
+[,device]]])
+</p>
+<h2>Description:</h2>
+<p>
+Used to store 
+<a href="VR.html">VR</a>
+ data to the SD card
+in one of two formats.
+</p>
+<p class="warning">
+If this file already exists, it is overwritten.
+</p>
+<p class="note">
+If you want to store the data without losing any precision use
+the Binary format.
+</p>
+<h2>Parameters:     </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="485" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+ = the function was
+  successful
+</p>
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+ = the function was not
+  successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+flash_file:
+</p>
+
+  
+</td>
+<td width="485" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A number which when appended to the characters “SD”
+  will form the data filename.
+</p>
+
+  
+<p class="tablecontent">
+A hardcoded string or STRING variable will form the
+  data filename.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_start:
+</p>
+
+  
+</td>
+<td width="485" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start point in the VRs where the data values will
+  be transferred from.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+length:
+</p>
+
+  
+</td>
+<td width="485" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of the 
+<a href="VR.html">VR</a>
+ values to be
+  transferred (default 128 values)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+format:
+</p>
+
+  
+</td>
+<td width="485" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Binary 64bit floating point format, BIN file
+  (default)
+</p>
+
+  
+<p class="tablecontent">
+1 = ASCII comma separated values, CSV
+  file, no index
+</p>
+
+  
+<p class="tablecontent">
+2 = ASCII CSV file with format: Index, value &lt;cr&gt;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+device:
+<br>
+
+  (Flex-7 only)
+</p>
+
+  
+</td>
+<td width="485" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = SD card
+</p>
+
+  
+<p class="tablecontent">
+1 = USB 1 (upper)
+</p>
+
+  
+<p class="tablecontent">
+2 = USB 2 (lower)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+When storing in format=0 the data is stored in IEEE floating
+point binary format little-endian, i.e. the least significant byte first.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Transfer 2000 values starting at VR(1000) to the SD Card
+file 'called SD1501.BIN
+</p>
+<p class="codeexample">
+success = STICK_WRITEVR (1501, 1000, 2000, 0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Transfer 2000 values starting at VR(1000) to the SD Card
+file 'called MYDATALOG1_VR.BIN
+</p>
+<p class="codeexample">
+DIM flash_file AS STRING(20)
+</p>
+<p class="codeexample">
+flash_file = &quot;MYDATALOG1_VR&quot;
+</p>
+<p class="codeexample">
+success = STICK_WRITEVR (flash_file, 1000, 2000, 0)
+</p>
+<h3>Example 3:</h3>
+<p>
+Transfer 20 values starting at VR(2080) to the SD Card file
+'called DATA1_VR.CSV
+</p>
+<p class="codeexample">
+  
+DIM
+ flash_file 
+AS
+ STRING
+(
+20
+)
+<br>
+
+  
+DIM
+ s 
+AS
+ BOOLEAN
+<br>
+
+  flash_file = 
+&quot;DATA1_VR&quot;
+<br>
+
+  s = 
+STICK_WRITEVR
+(flash_file, 
+2080
+, 
+20
+, 
+2
+)
+<br>
+
+  
+IF
+ s = 
+TRUE
+
+
+THEN
+<br>
+
+    
+PRINT
+ flash_file; 
+&quot; saved OK&quot;
+<br>
+
+  
+ELSE
+<br>
+
+    
+PRINT
+ &quot;Error
+saving &quot;
+; flash_file
+<br>
+
+  
+ENDIF
+<br>
+
+  
+<br>
+
+  
+FILE
+ &quot;Type&quot;
+
+flash_file + 
+&quot;.CSV&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+Terminal #0 output:
+</p>
+<p class="codeexample">
+DATA1_VR saved OK
+<br>
+
+2080,34.0000
+<br>
+
+2081,56.0000
+<br>
+
+2082,76.0000
+<br>
+
+2083,55.0000
+<br>
+
+2084,30.0000
+<br>
+
+2085,34.0000
+<br>
+
+2086,3.2367
+<br>
+
+2087,23.4000
+<br>
+
+2088,100.0000
+<br>
+
+2089,105.0000
+<br>
+
+2090,110.0000
+<br>
+
+2091,1024.0000
+<br>
+
+2092,-3700.0000
+<br>
+
+2093,-4.0000
+<br>
+
+2094,0.0000
+<br>
+
+2095,200.0000
+<br>
+
+2096,201.0000
+<br>
+
+2097,202.0000
+<br>
+
+2098,203.0000
+<br>
+
+2099,204.0000
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="STICK_WRITE.html">STICK_WRITE</a>
+, 
+<a href="STICK_READ.html">STICK_READ</a>
+, 
+<a href="STICK_READVR.html">STICK_READVR</a>
+,
+
+<a href="FILE.html">FILE</a>
+</p>
+</body>
+</html>

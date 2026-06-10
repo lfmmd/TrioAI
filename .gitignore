@@ -33,3 +33,7 @@ desktop.ini
 # Logs
 *.log
 perf_log.txt
+
+# CHM extracted index files (#/$ prefixed) — 插件运行时不读，build_skills.py 副产物
+skills/**/#*
+skills/**/$*

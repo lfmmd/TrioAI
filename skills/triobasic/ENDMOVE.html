@@ -1,0 +1,72 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENDMOVE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENDMOVE">
+</head>
+<body>
+<h1>ENDMOVE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter holds the absolute position of the end of the
+current move in user units. It is normally only read back although may be
+written to if required provided that 
+<a href="SERVO.html">SERVO</a>
+=
+<a href="ON.html">ON</a>
+ and no move is in progress.  
+</p>
+<p class="warning">
+Writing to 
+<a href="DPOS.html">DPOS</a>
+ will make a step
+changes. This can easily lead to “Following error exceeds limit” errors unless
+the steps are small or the 
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+ is high.
+</p>
+<p class="tip">
+As it is an absolute value ENDMOVE is adjusted by 
+<a href="OFFPOS.html">OFFPOS</a>
+/
+<a href="DEFPOS.html">DEFPOS</a>
+.  The individual
+moves in the buffer are incremental and are not adjusted by 
+<a href="OFFPOS.html">OFFPOS</a>
+.
+</p>
+<h2>Value:</h2>
+<p>
+The absolute position of the end of the current move in user
+
+<a href="UNITS.html">UNITS</a>
+.
+</p>
+<h2>Example:</h2>
+<p>
+Check the value of ENDMOVE to confirm you calculated move is
+correct.
+</p>
+<p class="codeexample">
+MOVE(distance*pitch)
+</p>
+<p class="codeexample">
+IF ENDMOVE&gt;200 THEN
+</p>
+<p class="codeexample">
+  CANCEL
+</p>
+<p class="codeexample">
+  PRINT#5, “Calculated distance to large”
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+</body>
+</html>

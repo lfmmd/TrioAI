@@ -1,0 +1,172 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CONNPATH</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CONNPATH">
+</head>
+<body>
+<h1>CONNPATH</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CONNPATH(ratio , driving_axis)
+</p>
+<h2>Description:</h2>
+<p>
+Enables you to link to the path of an interpolated movement
+by linking the demand position of the base axis, to the interpolated path
+distance of the driving axis. 
+</p>
+<p>
+The ratio can be changed at any time by issuing another CONNPATH
+command which will automatically update the ratio at 
+<a href="CLUTCH_RATE.html">CLUTCH_RATE</a>
+
+without the previous CONNPATH being cancelled. The command can be cancelled
+with a 
+<a href="CANCEL.html">CANCEL</a>
+ or 
+<a href="RAPIDSTOP.html">RAPIDSTOP</a>
+
+command. 
+</p>
+<p class="note">
+As CONNPATH uses encoder data it is not affected by 
+<a href="UNITS.html">UNITS</a>
+, if you need to change the scale of your encoder
+feedback you should use 
+<a href="ENCODER_RATIO.html">ENCODER_RATIO</a>
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+ratio:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+This is the ratio between the interpolated distance moved
+  on the driving axis to the distance moved on the base axis.  
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+driving_axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+This parameter specifies the axis to link to. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A glue laying robot uses a screw feed for the adhesive, this
+needs to turn a quarter of a revolution for every unit of distance moved. 
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+SERVO=ON
+</p>
+<p class="codeexample">
+CONNPATH (0.25,1)
+</p>
+<h3>Example 2:</h3>
+<p>
+It is required to move 156mm on axis 0 through an
+interpolated path distance of 100mm on axes 1,2 and 3. This is achieved by
+using virtual axis 4 as the path distance of the interpolated group and
+applying a 
+<a href="MOVELINK.html">MOVELINK</a>
+ from axis 0 to it. 
+<a href="SPEED.html">SPEED</a>
+ is initially set to zero so that the 
+<a href="MOVE.html">MOVE</a>
+ and 
+<a href="MOVELINK.html">MOVELINK</a>
+ start at the
+same time. 
+</p>
+<p class="codeexample">
+CONNPATH(1,1)AXIS(4) 
+<br>
+
+a=100 
+<br>
+
+b=100 
+<br>
+
+c=100 
+<br>
+
+
+<br>
+
+BASE(1,2,3) 
+<br>
+
+SPEED=0 
+<br>
+
+MERGE=ON 
+<br>
+
+
+<br>
+
+MOVE(a,b,c) 
+<br>
+
+WA(1) 
+<br>
+
+MOVELINK(156,REMAIN AXIS(1),0,0,4)AXIS(0) 
+<br>
+
+SPEED=10 
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CLUTCH_RATE.html">CLUTCH_RATE</a>
+, 
+<a href="ENCODER_RATIO.html">ENCODER_RATIO</a>
+</p>
+</body>
+</html>

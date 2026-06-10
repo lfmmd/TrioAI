@@ -1,0 +1,491 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CANIO_ADDRESS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CANIO_ADDRESS">
+</head>
+<body>
+<h1>CANIO_ADDRESS</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O Parameter (MC_CONFIG only / FLASH) 
+</p>
+<h2>Description:</h2>
+<p>
+CANIO_ADDRESS is used to set the operating mode of the
+CANbus. You can select between Trio CAN, DeviceNet, CANopen or a user
+configuration when you want to implement your own CANbus protocol using the 
+<a href="CAN.html">CAN</a>
+ command.
+</p>
+<p>
+For most systems CANIO_ADDRESS does not need to be changed
+from the default value of 32.
+</p>
+<p>
+The upper byte of CANIO_ADDRESS is used to set extra
+functions. For example, the CANbus Baud rate in bits per second and some
+special modes of operation. Certain special functions may need a firmware
+update to the Trio CAN I/O module. 
+</p>
+<p class="warning">
+The value must be set to 32 to enable connection to Trio CAN
+I/O
+</p>
+<p class="note">
+The following Motion Coordinators do not set CANIO_ADDRESS in
+Flash: MC4N-ECAT, MC4N-RTEX, MC404-Z, MC508, MC6N-ECAT, MC664 and Flex 7.
+MC_CONFIG must be used.
+</p>
+<p class="note">
+Motion Coordinators MC403(z), MC405, Euro404 and Euro408 with
+firmware 2.0255 and below do not support bits 8 and 9.
+</p>
+<h2>Values:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit Field
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="8" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 - 7
+</p>
+
+  
+</td>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CAN function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Trio protocol CAN I/O Master 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+33
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DeviceNet Slave (see also 
+<a href="DEVICENET.html">DEVICENET</a>
+)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+34...39
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+User range
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+40
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen I/O Master 64in/64out
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+41
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen I/O Master 128in/128out
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+42
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen I/O Master custom mapping
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8 - 9
+</p>
+
+  
+</td>
+<td width="320" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Baud rate
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bits
+</p>
+
+  
+</td>
+<td width="61" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td width="200" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+00
+</p>
+
+  
+</td>
+<td width="61" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="200" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+500&nbsp;kbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+01
+</p>
+
+  
+</td>
+<td width="61" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="200" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+250&nbsp;kbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td width="61" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="200" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+125&nbsp;kbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td width="61" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="200" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1&nbsp;Mbps
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+In MC_CONFIG, set up the CANbus port to use the pre-defined CANopen
+mode with 2 slave nodes, running at 250&nbsp;kbps.
+</p>
+<p class="codeexample">
+CANIO_ADDRESS = $100 + 
+41
+</p>
+<h3>Example 2:</h3>
+<p>
+In MC_CONFIG, set up the CANbus port to be a DeviceNet slave
+at 125&nbsp;kbps. This enables the port to come online at the correct Baud rate
+(required for some PLC DeviceNet masters).
+</p>
+<p class="codeexample">
+CANIO_ADDRESS = $200 + 
+33
+</p>
+<p>
+In a BASIC program, initialise the DeviceNet slave to the
+following state:
+</p>
+<ol style="list_style_type:decimal">
+<li class="indent-list-first">
+125&nbsp;kbps
+</li>
+<li class="indent-list-middle">
+Mac
+ID = 3
+</li>
+<li class="indent-list-middle">
+Polling
+data starts at TABLE(20)
+</li>
+<li class="indent-list-middle">
+Polled
+I/O input data = 2 words
+</li>
+<li class="indent-list-last">
+Polled
+I/O output data = 4 words
+</li>
+</ol>
+<p class="codeexample">
+DEVICENET(-1, 0, 125, 3, 20, 2, 4)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CAN.html">CAN</a>
+, 
+<a href="CANIO_ENABLE.html">CANIO_ENABLE</a>
+,
+
+<a href="CANIO_STATUS.html">CANIO_STATUS</a>
+, 
+<a href="DEVICENET.html">DEVICENET</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8"/>
+      <meta name="GENERATOR" content="Trio&reg; HelpGen">
+      <link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+      <title>TrioBASIC Help File</title>
+<script src="http://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous" ></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js" integrity="sha256-DI6NdAhhFRnO2k51mumYeDShet3I8AKCQf/tf7ARNhI=" crossorigin="anonymous"></script>
+      <script>
+function selectContentsMenu()
+{
+	$("#help-menu-frame").attr("src", "_twh-Contents.html");				
+	$("#contents-button").parent().css("background-color", "white").css("border-color", "black");
+	$("#index-button").parent().css("background-color", "transparent").css("border-color", "transparent");
+};
+
+function selectIndexMenu()
+{
+	$("#help-menu-frame").attr("src", "_twh-Index.html");				
+	$("#index-button").parent().css("background-color", "white").css("border-color", "black");
+	$("#contents-button").parent().css("background-color", "transparent").css("border-color", "transparent");
+};
+
+function selectCurrentLocationInMenu()
+{
+	var location = $("#help-content-frame").contents().get(0).location.href;
+	var sPos = location.lastIndexOf("/");
+	var shortLocation;
+	var fileName;
+
+	if (sPos > 0)
+		shortLocation = location.substr(sPos + 1);
+	else
+		shortLocation = location;
+		
+	sPos = shortLocation.indexOf("#");
+	if (sPos > 0)
+		fileName = shortLocation.substr(0, sPos);
+	else
+		fileName = shortLocation;
+		
+	$("#debug").text(fileName);
+	$("#help-menu-frame")[0].contentWindow.$("body").trigger("help-page-changed", fileName);
+};						
+
+var originalVDivideColour = "blue";
+const dragBackgroundColour = "black";
+
+$(document).ready(function()
+{
+	$("#debug").css("color", "transparent");
+	originalVDivideColour = $("#vdivide").css("background-color");
+	selectContentsMenu();
+	$("#help-content-frame").attr("src", "Introduction.html");
+
+	$("#index-button").click(function()
+	{
+		selectIndexMenu();
+		$("#debug").text($("#debug").text() + "-");
+	});
+	
+	$("#contents-button").click(function()
+	{
+		selectContentsMenu();
+		$("#debug").text($("#debug").text() + "+");
+	});
+	
+	$("#vdivide").draggable(
+	{
+		axis: "x",
+		containment: "parent",
+		helper: "clone",
+		drag: function(event, ui)
+		{
+			var leftWidth = ui.offset.left;
+
+			if (leftWidth < $("left-panel").css("min-width"))
+				leftWidth = $("left-panel").css("min-width");							
+			$("#left-panel").width(leftWidth);
+			$("#help-menu-panel").width(leftWidth);
+			$("#help-menu-frame").width(leftWidth);
+			$(this).css("left", leftWidth);
+			$("#right-panel").css("left", leftWidth + $(this).width());
+		},
+		
+		start: function(event, ui)
+		{
+			$(this).css("background-color", dragBackgroundColour);
+			$(".frame-overlay").fadeIn("fast");						
+		},
+		
+		stop: function(event, ui)
+		{
+			$(this).css("background-color", originalVDivideColour);						
+			$(".frame-overlay").fadeOut("fast");						
+		}
+	});
+	
+	$("#help-content-frame").load(function()
+	{
+		selectCurrentLocationInMenu();
+	});
+	
+	$("#help-menu-frame").load(function()
+	{
+		selectCurrentLocationInMenu(); 
+	});
+});
+      </script>
+   </head>
+
+   <body>
+      <div id="help-title-box">
+		    <div id="help-title">TrioBASIC Help File</div>
+         <div id="debug">...</div>
+      </div>
+      <div id="helpdoc">
+         <div id="left-panel">
+            <div class="tab-button-div" id="contents-button-div">
+		          <button class="tab-button" id="contents-button">Contents</button>
+            </div>
+            <div class="tab-button-div" id="index-button-div">
+               <button class="tab-button" id="index-button">Index</button>
+            </div>
+            <div class="menu-frame-panel" id="menu-frame-panel">
+               <iframe id="help-menu-frame" name="help-menu-frame"> </iframe>
+            </div>
+         </div>
+         <div id="vdivide" class="draggable"> </div>
+         <div id="right-panel">
+            <iframe id="help-content-frame" name="help-content-frame"> </iframe>
+         </div>
+         <div id="overlay-for-iframefix" class="frame-overlay"> </div>
+      </div>
+   </body>
+</html>

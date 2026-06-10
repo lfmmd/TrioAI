@@ -1,0 +1,170 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REMAIN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REMAIN">
+</head>
+
+
+
+<body>
+<h1>REMAIN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+This is the distance, in 
+<a href="UNITS.html">UNITS</a>
+,
+remaining to the end of the current move. It may be tested to see what amount
+of the move has been completed.
+</p>
+<p class="note">
+When WAIT UNTIL REMAIN command is used after a MOVE command, use
+a time delay 
+<a href="WA.html">WA</a>
+ command, or use the WAIT LOADED command
+to allow the MOVE command to be loaded into 
+<a href="MTYPE.html">MTYPE</a>
+. 
+</p>
+<h2>Value:</h2>
+<p>
+The distance remaining in user 
+<a href="UNITS.html">UNITS</a>
+
+of the current move
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+To change the speed to a slower value 5&nbsp;mm from the end
+of a move. A WAIT&nbsp;LOADED command is used to allow motion command to be
+loaded into MTYPE before REMAIN is polled.
+</p>
+<p class="codeexample">
+SPEED = 
+10
+<br>
+
+
+MOVE
+(
+45
+)
+<br>
+
+
+WAIT
+ LOADED
+<br>
+
+
+WAIT
+ UNTIL
+
+REMAIN &lt; 
+5
+<br>
+
+SPEED = 
+1
+<br>
+
+
+WAIT
+ IDLE
+</p>
+<h3>Example 2:</h3>
+<p>
+Turn on output 0 when it is 25 units away from the end of
+the move. Time delay is used to allow motion command to be loaded into MTYPE.
+</p>
+<p class="codeexample">
+BASE
+(
+0
+)
+<br>
+
+UNITS = 
+1
+<br>
+
+SPEED = 
+10
+<br>
+
+ACCEL = 
+10 
+* SPEED
+<br>
+
+DECEL = ACCEL
+<br>
+
+
+<br>
+
+
+OP
+(
+0
+, 
+OFF
+)
+<br>
+
+
+MOVE
+(
+100
+)
+<br>
+
+
+WA
+(
+2
+)
+<br>
+
+
+WAIT
+ UNTIL
+
+REMAIN &lt; 
+25
+<br>
+
+
+OP
+(
+0
+, 
+ON
+)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REMAIN_TIME.html">REMAIN_TIME</a>
+, 
+<a href="STOPPING_DISTANCE.html">STOPPING_DISTANCE</a>
+, 
+<a href="WAIT.html">WAIT</a>
+,
+
+<a href="WA.html">WA</a>
+</p>
+</body>
+
+
+
+</html>

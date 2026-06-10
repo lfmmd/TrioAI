@@ -1,0 +1,297 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CMP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CMP">
+</head>
+<body>
+<h1><a name="_Toc317749378"></a>
+<a name="O_1401"></a>
+CMP</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+Comparison with detailed outputs for integer inputs.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second value.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="property">LT</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="property">BOOL</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="propertyvalue">TRUE </span>if IN1 &lt; IN2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="property">EQ</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="property">BOOL</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="propertyvalue">TRUE </span>if IN1 = IN2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="property">GT</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="property">BOOL</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="propertyvalue">TRUE </span>if IN1 &gt; IN2
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+In LD language, the rung input (EN) validates the operation.
+The rung output is the result of LT (lower than comparison).
+</p>
+<h2>ST Language</h2>
+<p>
+MyCmp is declared as an instance of CMP function block:
+</p>
+<p class="codeexample">
+MyCMP (IN1, IN2);
+<br>
+
+bLT := MyCmp.LT;
+<br>
+
+bEQ := MyCmp.EQ;
+<br>
+
+bGT := MyCmp.GT;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="118" height="88" src="Comp-CMP_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The comparison is performed only if EN is TRUE:
+<br>
+<img width="217" height="78" src="Comp-CMP_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Comp-GT.html">&gt; GT</a>
+</p>
+<p>
+<a href="Comp-LT.html">&lt; LT</a>
+</p>
+<p>
+<a href="Comp-GE.html">&gt;= GE</a>
+</p>
+<p>
+<a href="Comp-LE.html">&lt;=  LE</a>
+</p>
+<p>
+<a href="Comp-EQ.html">= EQ</a>
+</p>
+<p>
+<a href="Comp-NE.html">&lt;&gt; NE</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

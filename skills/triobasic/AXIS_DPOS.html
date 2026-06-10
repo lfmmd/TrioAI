@@ -1,0 +1,81 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXIS_DPOS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXIS_DPOS">
+</head>
+<body>
+<h1>AXIS_DPOS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+TRANS_DPOS
+</p>
+<h2>Description:</h2>
+<p>
+AXIS_DPOS is the axis demand position at the output of the 
+<a href="FRAME.html">FRAME</a>
+ transformation.
+</p>
+<p>
+AXIS_DPOS is equal to 
+<a href="DPOS.html">DPOS</a>
+ on each
+axis when the frame transformation is 1:1 for each axis (
+<a href="FRAME.html">FRAME</a>
+
+= 0). However, some machinery configurations, typically machines such as
+robotic arms or machines with parasitic motions on the axes, require a frame
+transformation that is not 1:1, and in this situation (
+<a href="FRAME.html">FRAME</a>
+
+&gt; 0), AXIS_DPOS returns the demand position for the actual motor.
+</p>
+<p>
+AXIS_DPOS is set to 
+<a href="MPOS.html">MPOS</a>
+ when 
+<a href="SERVO.html">SERVO</a>
+ or 
+<a href="WDOG.html">WDOG</a>
+ are 
+<a href="OFF.html">OFF</a>
+</p>
+<h2>Value:</h2>
+<p>
+The axis demand position at the output of the 
+<a href="FRAME.html">FRAME</a>
+ transformation in 
+<a href="AXIS_UNITS.html">AXIS_UNITS</a>
+.
+Default 0 on power up.
+</p>
+<h2>Example:</h2>
+<p>
+Return the axis position in user 
+<a href="AXIS_UNITS.html">AXIS_UNITS</a>
+
+using the command line.
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT AXIS_DPOS
+</p>
+<p class="codeexample">
+125.22
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXIS_UNITS.html">AXIS_UNITS</a>
+, 
+<a href="FRAME.html">FRAME</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REP_DIST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REP_DIST">
+</head>
+<body>
+<h1>REP_DIST</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+The repeat distance contains the allowable range of movement
+for an axis before the position count overflows or underflows.
+</p>
+<p>
+When 
+<a href="MPOS.html">MPOS</a>
+ and 
+<a href="DPOS.html">DPOS</a>
+
+reach REP_DIST they will wrap to either 0 or -REP_DIST depending on REP_OPTION,
+and the same applies in reverse, so when 
+<a href="MPOS.html">MPOS</a>
+ and 
+<a href="DPOS.html">DPOS</a>
+ reach either 0 or -REP_DIST they wrap to REP_DIST.
+</p>
+<p class="warning">
+By default REP_DIST is less than the software limits. If you
+increase REP_DIST from the default value you may accidently activate 
+<a href="FS_LIMIT.html">FS_LIMIT</a>
+ or 
+<a href="RS_LIMIT.html">RS_LIMIT</a>
+. 
+</p>
+<p class="note">
+If a position is outside REP_DIST then it is adjusted by REP_DIST
+every 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+, until the position is
+within REP_DIST. It is recommended to set the position within REP_DIST using 
+<a href="DEFPOS.html">DEFPOS</a>
+ or 
+<a href="OFFPOS.html">OFFPOS</a>
+ before
+setting REP_DIST. 
+</p>
+<h2>Value:</h2>
+<p>
+The position in user units where the axis position wraps. 
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Units are set so that the axis is in degrees, and the
+working range desired is 0-360, which requires REP_OPTION&nbsp;=&nbsp;1.
+</p>
+<p class="codeexample">
+REP_OPTION = 1
+</p>
+<p class="codeexample">
+DEFPOS(0)
+</p>
+<p class="codeexample">
+REP_DIST = 360
+</p>
+<h3>Example 2:</h3>
+<p>
+<a href="MOVETANG.html">MOVETANG</a>
+ requires the axis to be
+configured to Pi radians for half a revolution, and a 4000 counts per revolution
+encoder will need a symmetrical range of -2000 and 2000, which requires
+REP_OPTION&nbsp;=&nbsp;0.
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+UNITS = 1
+</p>
+<p class="codeexample">
+DEFPOS(0)
+</p>
+<p class="codeexample">
+REP_OPTION = 0
+</p>
+<p class="codeexample">
+REP_DIST = 2000
+</p>
+<p class="codeexample">
+MOVETANG(0, 1)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FS_LIMIT.html">FS_LIMIT</a>
+, 
+<a href="REP_OPTION.html">REP_OPTION</a>
+, 
+<a href="RS_LIMIT.html">RS_LIMIT</a>
+</p>
+</body>
+</html>

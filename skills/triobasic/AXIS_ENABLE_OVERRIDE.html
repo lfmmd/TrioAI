@@ -1,0 +1,49 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXIS_ENABLE_OVERRIDE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXIS_ENABLE_OVERRIDE">
+</head>
+<body>
+<h1>AXIS_ENABLE_OVERRIDE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Can be used to independently enable an axis. OFF by default,
+this parameter is set to ON to enable the axis even though WDOG and AXIS_ENABLE
+may be OFF.  The purpose is to allow Motion Perfect to Jog and set up the drive
+tuning of an EtherCAT or similar slave servo-drive.
+</p>
+<p class="note">
+Requires firmware version 2.0305 or later
+</p>
+<h2>Value:</h2>
+<p>
+Accepts the values 
+<a href="ON.html">ON</a>
+ or 
+<a href="OFF.html">OFF</a>
+, default is OFF. 
+</p>
+<h2>Example:</h2>
+<p>
+Enable a single axis for setup purposes.
+</p>
+<p class="codeexample">
+BASE(axis_number)
+</p>
+<p class="codeexample">
+AXIS_ENABLE_OVERRIDE = ON  ' Enable the axis (no need to
+put WDOG ON)
+</p>
+<h2>See Also:</h2>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

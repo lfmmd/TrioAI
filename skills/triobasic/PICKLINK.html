@@ -1,0 +1,452 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PICKLINK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PICKLINK">
+</head>
+
+
+
+<body>
+<h1>PICKLINK</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+PICKLINK(
+mode, x, y, z, withdraw, link
+axis, link distance, overlap control A, overlap control B , u, v, w ,withdraw
+control, xy control, approach control
+)
+</p>
+<h2>Description:</h2>
+<p>
+PICKLINK is a move type aimed at making it much simpler to
+program fast pick and place operations.  Associated move type MOVEPICK is a profiled
+move equivalent to PICKLINK.
+</p>
+<p>
+<img width="418" height="343" id="Picture 1" src="PICKLINK_files/image001.png">
+</p>
+<p>
+PICKLINK is an absolute move to a position in 3..6 axes,
+linked to a distance on the controlling link axis.  The motion includes an
+incremental “withdraw” amount and special controls for the move speed profile
+to allow fast pick and place moves.
+</p>
+<p class="note">
+Multi-axis interpolation uses the UNITS, SPEED, ACCEL and DECEL
+of the BASE axis.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specify the number of axes 0 = xyz, 1 = xyzu, 2 = xyzuv,
+  3 = xyzuvw
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+x:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target x absolute position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+y:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target y absolute position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+z:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target z absolute position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+withdraw:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Incremental withdraw distance from the start position
+  on z axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link axis
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis to link motion profile to
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link distance
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link distance on link axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+overlap_control_A:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 .. 0.9 Specify rounding on corner A (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+overlap_control_B:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 .. 0.9 Specify rounding on corner B (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+u:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target u absolute position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+v:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target v absolute position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+w:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target w absolute position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+withdraw_control:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0..1 Adjust the speed for withdraw section (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+xy_control:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0..1 Adjust the speed for xy section (optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+approach_control:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0..1 Adjust the speed for approach section (optional)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Arch control parameters</h2>
+<p>
+overlap control A – 0 to 0.9; larger number for more
+rounding at first corner (default = 0.5)
+</p>
+<p>
+overlap control B – 0 to 0.9; larger number for more
+rounding at second corner (default = 0.5)
+</p>
+<p>
+<img width="576" height="307" id="Picture 2" src="PICKLINK_files/image002.png">
+</p>
+<p>
+Overlap Control A and B above are 0.6, 0.6
+</p>
+<p>
+<img width="576" height="308" id="Picture 4" src="PICKLINK_files/image003.png">
+</p>
+<p>
+Overlap Control A and B above are 0.0, 0.0
+</p>
+<p>
+<img width="576" height="305" id="Picture 5" src="PICKLINK_files/image004.png">
+</p>
+<p>
+Overlap Control A and B above are 0.4, 0.8
+</p>
+<p class="note">
+Note that the overlap control parameters should always be less
+than 1.0 Values 0-&gt;0.8 are recommended.
+</p>
+<h2>Speed override control parameters</h2>
+<p>
+The following optional parameters can be used to override
+the speed in each of the 3 motion sections.  A value of 1 produces the
+specified SPEED value.  Lower values generate lower speeds.
+</p>
+<p>
+withdraw_control – Adjust the speed for withdraw section
+<br>
+
+xy_control – Adjust the speed for xy section
+<br>
+
+approach_control – Adjust the speed for approach section
+</p>
+<p>
+In MOVEPICK the acceleration rate is controlled by the
+length of the shortest move.  Therefore, if one of the moves is substantially
+smaller than the others it can result in high acceleration rates.  The 3
+parameters: withdraw_control, xy_control, and approach_control allow a slower
+speed to be assigned to shorter moves to allow lower acceleration rates.
+</p>
+<p class="warning">
+MOVEPICK does not currently support a lower speed at the end
+of the approach movement.  This will be supported in future versions.
+</p>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<h2>See Also:</h2>
+<p>
+<a href="MOVEPICK.html">MOVEPICK</a>
+</p>
+</body>
+
+
+
+</html>

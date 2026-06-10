@@ -1,0 +1,1155 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PSWITCH</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PSWITCH">
+</head>
+<body>
+<h1>PSWITCH</h1>
+<h2>Type:</h2>
+<p class="Category">
+Command
+</p>
+<h2>Syntax:</h2>
+<p>
+Cyclic mode
+</p>
+<p class="fixed">
+PSWITCH(switch, enable[, axis, output, state, setpos, resetpos])
+</p>
+<p class="fixed">
+&nbsp;
+</p>
+<p>
+Turn OFF
+</p>
+<p class="fixed">
+PSWITCH(switch, OFF[, hold])
+</p>
+<p class="fixed">
+&nbsp;
+</p>
+<p>
+Sequence mode
+</p>
+<p class="fixed">
+PSWITCH(switch, mode, axis, output, state, table_start,
+table_end[, pulse_time])
+</p>
+<h2>Description:</h2>
+<p>
+The PSWITCH command allows an output to be set when a
+predefined position is reached, and to be reset when a second position is
+reached.  Normally the setpos must be a lower value than resetpos, however from
+V2.0313 the setpos can be higher if bit 1 of the enable value is set.
+</p>
+<p>
+There are 64 position switches each of which can be assigned
+to any axis and to any output, virtual or real. These two positions define a
+window where a specific output will behave as the 
+<i>state</i> parameter
+indicates, hence regardless of the direction of the motion, it will always
+work.
+</p>
+<p>
+From firmware 2.0309 and later, an alternative operation is
+available that turns the output on and off at selected positions loaded from
+the TABLE memory.
+</p>
+<p>
+Multiple PSWITCH’s can be assigned to a single output. 
+</p>
+<p class="note">
+The actual output is the 
+<a href="OR.html">OR</a>
+ of all position
+switches on the output 
+<a href="OR.html">OR</a>
+ the 
+<a href="OP.html">OP</a>
+
+setting. This means that 
+<a href="OP.html">OP</a>
+(output, 
+<a href="ON.html">ON</a>
+)
+can override a PSWITCH.
+</p>
+<p class="note">
+When switching the PSWITCH 
+<a href="OFF.html">OFF</a>
+, the output
+will remain at the current state unless the hold parameter is set to 1. (Hold requires
+firmware 2.0226 or later)
+</p>
+<h2>Parameters:</h2>
+<h3>Cyclic Mode</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+switch:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+The switch number in the range 0..63
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p>
+enable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1 or 
+<a href="ON.html">ON</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Enable software PSWITCH with Setpos &lt; Resetpos
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Enable PSWITCH with Setpos &gt; Resetpos
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Enable PSWITCH on 
+<a href="DPOS.html">DPOS</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0  or 
+<a href="OFF.html">OFF</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Disable PSWITCH
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+axis:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Axis to link the PSWITCH to, may be any real or virtual
+  axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+output:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Selects the output to set, can be any real or virtual
+  output.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+state:
+</p>
+
+  
+</td>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+1 or 
+<a href="ON.html">ON</a>
+</p>
+
+  
+</td>
+<td width="441" valign="top" class="tablegrid">
+
+  
+<p>
+turn the output 
+<a href="ON.html">ON</a>
+ at setpos
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+0 or 
+<a href="OFF.html">OFF</a>
+</p>
+
+  
+</td>
+<td width="441" valign="top" class="tablegrid">
+
+  
+<p>
+turn the output 
+<a href="OFF.html">OFF</a>
+ at setpos
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+setpos:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+The position at which output is set or reset, in user
+  units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+resetpos:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+The position at which output is set or reset, in user
+  units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+hold:
+</p>
+
+  
+</td>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="441" valign="top" class="tablegrid">
+
+  
+<p>
+The PSWITCH output will hold in the same state
+<br>
+
+  it was when the PSWITCH is set to 
+<a href="OFF.html">OFF</a>
+. (Default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="74" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="441" valign="top" class="tablegrid">
+
+  
+<p>
+The PSWITCH output is forced 
+<a href="OFF.html">OFF</a>
+
+  even if it was 
+<a href="ON.html">ON</a>
+<br>
+
+  when the PSWTICH is set to 
+<a href="OFF.html">OFF</a>
+.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Sequence Mode</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+switch:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+The switch number in the range 0..63
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="8" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Bit #
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0: Disable PSwitch, 1: Enable PSwitch
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0: Limit setpos to resetpos, 1: Allow setpos to exceed
+  resetpos
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0: MPOS, 1: DPOS
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0: Single Pswitch, 1: Multi Pswitch (Bits 4..6 determine
+  multi mode behaviour)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0: Positions on/off, 1: Timer mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0: Positive Direction, 1: Negative
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0: Digital output, 1:Z-Out
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+axis:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Axis to link the PSWITCH to, may be any real or virtual
+  axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+output:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Selects the output to set, can be any real or virtual
+  output.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+state:
+</p>
+
+  
+</td>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+1 or 
+<a href="ON.html">ON</a>
+</p>
+
+  
+</td>
+<td width="427" valign="top" class="tablegrid">
+
+  
+<p>
+turn the output 
+<a href="ON.html">ON</a>
+ at first position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p>
+0 or 
+<a href="OFF.html">OFF</a>
+</p>
+
+  
+</td>
+<td width="427" valign="top" class="tablegrid">
+
+  
+<p>
+turn the output 
+<a href="OFF.html">OFF</a>
+ at first
+  position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+table_start:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+TABLE index for start of PSWITCH data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+table_end:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+TABLE index for end of PSWITCH data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+pulse_time:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Time in servo-cycles when pulse output mode bit 4 is set
+</p>
+
+  
+<p>
+e.g., SERVO_PERIOD is 500 and pulse_time is 10, pulse
+  output is 5&nbsp;ms
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+A rotating shaft has a cam operated switch which must be
+changed for different size work pieces. There is also a proximity switch on the
+shaft to indicate TDC (top-dead-centre) of the machine. With a mechanical cam
+the change from job to job is time consuming but this can be eased by using the
+PSWITCH as a software 'cam switch'. The proximity switch is wired to input 7
+and the output is fired by output 11. The shaft is controlled by axis 0 of a 3-axis
+system. The motor has a 900&nbsp;ppr encoder. The output must be on from 80°
+after TDC for a period of 120°. It can be assumed that the machine starts from
+TDC.
+</p>
+<p>
+The PSWITCH command uses the unit conversion factor to allow
+the positions to be set in convenient units. So first the unit conversion
+factor must be calculated and set. Each pulse on an encoder gives four edges
+which the controller counts, therefore there are 3600 edges/rev or 10 edges/°.
+If we set the unit conversion factor to 10 we can then work in degrees.
+</p>
+<p>
+Next we have to determine a value for all the PSWITCH
+parameters.
+</p>
+<p>
+This can all be put together to form the two lines of Trio
+BASIC code that set up the position switch:                                                                                                       
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+axis
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+We are told that the shaft is controlled by axis 0, thus
+  axis is set to 0.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+output
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+We are told that output 11 is the one to fire, so this is
+  11.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+state
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+When the output is set it should be 
+<a href="ON.html">ON</a>
+.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+setpos
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The output is to fire at 80° after TDC hence the set
+  position is 80 as we are working in degrees.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+resetpos
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The output is to be on for a period of 120° after 80°
+  therefore it goes off at 200°, so the reset position is 200.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="codeexample">
+switch:
+</p>
+<p class="codeexample">
+  UNITS AXIS(0) = 10 'Set unit conversion factor (°)
+</p>
+<p class="codeexample">
+  REPDIST = 360
+</p>
+<p class="codeexample">
+  REP_OPTION = ON
+</p>
+<p class="codeexample">
+  PSWITCH(0, ON, 0, 11, ON, 80, 200)
+</p>
+<p>
+This program uses the repeat distance set to 360 degrees and
+the repeat option 
+<a href="ON.html">ON</a>
+ so that the axis position will be
+maintained in the range 0..360 degrees.
+</p>
+<h3>Example 2:</h3>
+<p>
+PSWITCH number 7 has been running on axis 5 controlling
+output 14. It must be disabled and the output set to OFF at the same time.
+</p>
+<p class="codeexample">
+PSWITCH(7, OFF, 1)
+</p>
+<p>
+Or the same PSWITCH must be disabled but the output not
+changed until some event later. The later event is controlled by a reset push button
+on input 23.
+</p>
+<p class="codeexample">
+PSWITCH(7, OFF, 0)
+<br>
+
+WA(1) 'Wait one servo cycle for the PSWITCH to disable
+<br>
+
+IF READ_OP(14) = ON THEN
+<br>
+
+  WAIT UNTIL IN(23) = ON
+<br>
+
+  OP(14, OFF)
+<br>
+
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Imagine the same situation as in Example 1, where output 11
+must give a falling edge signal to the “cam switch” system, so that the output
+must be off from 80° after TDC for a period of 120°. 
+</p>
+<p>
+The values for all the PSWITCH parameters:
+</p>
+<p class="fixed">
+axis_number = 0
+<br>
+
+op_number = 11
+<br>
+
+op_state = OFF
+<br>
+
+setpos = 80 'Degrees after TDC
+<br>
+
+reset_pos = setpos + 120 'Degrees 
+</p>
+<p class="fixed">
+<br>
+
+PSWITCH(24, ON, axis_number, op_number, op_state, setpos, reset_pos)
+</p>
+<h3>Example 4:</h3>
+<p>
+Set output 64 according to a sequence of ON/OFF positions
+held in the TABLE. First position is ON.
+</p>
+<p class="codeexample">
+'[1000-1015]
+</p>
+<p class="codeexample">
+TABLE(1000, 2.67, 9.07, 18.63, 20.37, 25.98, 29.99, 34.92,
+38.1, 46.48, 56.06)
+<br>
+
+TABLE(1010, 62.99, 67.97, 73.52, 80.82, 89.66, 99.02)
+<br>
+
+
+<br>
+
+psw_output = 64
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+mode = 0
+</p>
+<p class="codeexample">
+mode.0 = 1
+</p>
+<p class="codeexample">
+mode.3 = 1
+</p>
+<p class="codeexample">
+mode.4 = 0 '0:Positions on/off 1:Timer mode
+</p>
+<p class="codeexample">
+mode.5 = 0 '0:Positive Direction 1:Negative
+</p>
+<p class="codeexample">
+mode.6 = 0 '0:Digital output 1:Z-Out
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+PSWITCH(1, mode, 10, psw_output, ON, 1000, 1099)
+</p>
+<h3>Example 5:</h3>
+<p>
+Set output 12 according to a sequence of positions held in
+the TABLE. Pulse the output for 8&nbsp;ms based on having the SERVO_PERIOD set
+to 1000. Axis moving in reverse so descending order of values.
+</p>
+<p class="codeexample">
+'[1100-1115]
+</p>
+<p class="codeexample">
+TABLE(1100, 550, 544.963, 540.203, 535.534, 530.679, 525.809,
+520.498, 515.582)
+<br>
+
+TABLE(1108, 510.869, 506.078, 500.766, 495.875, 490.841, 485.614, 480.276, 475.723)
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+psw_output = 12
+</p>
+<p class="codeexample">
+<br>
+
+mode = 0
+</p>
+<p class="codeexample">
+mode.0 = 1
+</p>
+<p class="codeexample">
+mode.3 = 1
+</p>
+<p class="codeexample">
+mode.4 = 1 '0:Positions on/off 1:Timer mode
+</p>
+<p class="codeexample">
+mode.5 = 1 '0:Positive Direction 1:Negative
+</p>
+<p class="codeexample">
+mode.6 = 0 '0:Digital output 1:Z-Out
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+PSWITCH(1, mode, 10, psw_output, ON, 1100, 1115, 8)
+</p>
+</body>
+</html>

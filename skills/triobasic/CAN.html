@@ -1,0 +1,2406 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CAN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CAN">
+</head>
+<body>
+<h1>CAN</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CAN(channel, function[, parameters])
+</p>
+<h2>Description:</h2>
+<p>
+This function allows the CAN communication channels to be
+controlled from the Trio BASIC. All 
+<i>Motion Coordinator’s</i> have a single
+built-in CAN channel which is normally used for digital and analogue I/O using
+Trio’s I/O modules. 
+</p>
+<p>
+In addition to using the CAN command to control CAN
+channels, there are specific protocol functions into the firmware. These
+functions are dedicated software modules that interface to specific devices.
+The built-in CAN channel will automatically scan for Trio I/O modules if the
+system parameter 
+<a href="CANIO_ADDRESS.html">CANIO_ADDRESS</a>
+ is set to its
+default value of 32.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Channel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Channel number:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Maximum baud rate:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Built-in CAN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1&nbsp;MHz
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+There are 16 message buffers in the controller
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="75" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot: 
+</p>
+
+  
+</td>
+<td width="515" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to -1 for the built in CAN port
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="75" rowspan="18" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+function: 
+</p>
+
+  
+</td>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read Register, do not use unless instructed by Trio or
+  a Distributor.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write Register, do not use unless instructed by Trio or
+  a Distributor.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_2">2</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initialise baud rate
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_3">3</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Check for message received
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_4">4</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Transmit OK
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_5">5</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initialise message
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_6">6</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read message
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_7">7</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write message
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_8">8</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read CANopen Object
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_9">9</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write CANopen Object
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_11">11</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initialise 29 bit message
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_20">20</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CAN mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_21">21</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable CAN driver
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_22">22</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reset CAN message buffer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_23:">23</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specify CAN VR map
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_24:">24</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable and configure a Sync telegram
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_25:">25</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set up Heartbeat consumer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_26:">26</a>
+</p>
+
+  
+</td>
+<td width="470" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable Heartbeat monitor
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_2"></a>
+Function = 2:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 2, baudrate)
+</p>
+<h3>Description:</h3>
+<p>
+Initialise the baud rate of the CANBus
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="92" rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+baudrate:
+</p>
+
+  
+</td>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1&nbsp;MHz
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+500&nbsp;kHz (default value)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+250&nbsp;kHz
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+125&nbsp;kHz
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_3"></a>
+Function = 3:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = CAN(channel, 3, message)
+</p>
+<h3>Description:</h3>
+<p>
+Check to see if there is a new message in the message buffer
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message buffer to check
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+new message available
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+no new message
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_4"></a>
+Function = 4:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = CAN(channel, 4, message)
+</p>
+<h3>Description:</h3>
+<p>
+Checks that it is OK to transmit a message
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message buffer to transmit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+OK to transmit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Network busy
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_5"></a>
+Function = 5:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 5, message, identifier, length, rw)
+</p>
+<h3>Description:</h3>
+<p>
+Initialise a message by configuring its buffers size and specifying
+whether it is for transmit or receive.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message buffer to initialise
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+identifier:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the identifier which the message buffer appears on the
+  CANBus
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+length:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the size of the message buffer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+rw:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+read buffer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+write buffer
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_6"></a>
+Function = 6:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 6, message, variable)
+</p>
+<h3>Description:</h3>
+<p>
+Read in the message from the specified buffer to a 
+<a href="VR.html">VR</a>
+ array.
+</p>
+<p>
+The first 
+<a href="VR.html">VR</a>
+ holds the identifier. The
+subsequent values hold the data bytes from the CAN packet.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the message buffer to read in
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the start position in the VR memory for the message to
+  be written
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_7"></a>
+Function = 7:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 7, message, byte0, byte1, ...)
+</p>
+<h3>Description:</h3>
+<p>
+Write a message to a message buffer.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the message buffer to write the message in 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte0:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the first byte of the message
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+byte1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the second byte of the message
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+...
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+subsequent bytes
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_8"></a>
+Function = 8:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 8, transbuf, recbuf, object, subindex, variable)
+</p>
+<h3>Description:</h3>
+<p>
+Read a CANopen object. The first VR holds the variable data
+type. The subsequent values hold the data bytes from the CAN packet.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+transbuf:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the message buffer used to transmit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+recbuf:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the message buffer used to receive
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+object:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the CANopen object to read
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+subindex:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the sub index of the CANopen object to read
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the start position in the VR memory for the message to
+  be written
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_9"></a>
+Function = 9:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 9, transbuf, recbuf, format, object, subindex, value_ls[,
+value_ms])
+</p>
+<h3>Description:</h3>
+<p>
+Write a CANopen object. This function automatically requests
+the send so you do not need to use function 4.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+transbuf:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the message buffer used to transmit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+recbuf:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the message buffer used to receive
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+format:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data size in bits 8, 16 or 32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+object:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the CANopen object to write to
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+subindex:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the sub index of the CANopen object to write to
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value_ls:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the least significant 16 bits of the value to write
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value_ms:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the most significant 16 bits of the value to write (if
+  required)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_11"></a>
+Function = 11:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 11, message, identifier_ms, identifier_ls, length, rw)
+</p>
+<h3>Description:</h3>
+<p>
+Initialise a message by configuring its buffers size and specifying
+whether it is for transmit or receive using 29-bit identifiers. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message buffer to initialise
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+identifier_ms:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the most significant 13 bits of the identifier
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+identifier_ls:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the least significant 16 bits if the identifier
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+length:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the size of the message buffer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+rw:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+read buffer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+write buffer
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_20"></a>
+Function = 20:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 20, mode)
+</p>
+<h3>Description:</h3>
+<p>
+Sets the CAN mode, normally this is done using 
+<a href="CANIO_ADDRESS.html">CANIO_ADDRESS</a>
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Disable all CAN operations
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CAN command mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANIO mode (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen I/O mode (
+<a href="CANOPEN_OP_RATE.html">CANOPEN_OP_RATE</a>
+
+  controls the cycle period, default = 5&nbsp;ms)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+Unlike 
+<a href="CANIO_ADDRESS.html">CANIO_ADDRESS</a>
+ this is
+NOT stored in flash EPROM
+</p>
+<h2><a name="_Function_=_21"></a>
+Function = 21:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 21, enable)
+</p>
+<h3>Description:</h3>
+<p>
+Provides the ability to reset the CAN driver. Do not use
+unless instructed by Trio or a Distributor.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Disable
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable (default)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_22"></a>
+Function = 22:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 22, message)
+</p>
+<h3>Description:</h3>
+<p>
+Reset a message buffer
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the message buffer to reset
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_23"></a>
+<a name="_Function_=_23:"></a>
+Function = 23:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 23, [message, map, offset, length, order, variable,
+direction[, data_type]])
+</p>
+<h3>Description:</h3>
+<p>
+Specify CAN 
+<a href="VR.html">VR</a>
+ map for use with CANopen
+I/O mode
+</p>
+<p>
+If no parameters are provided, then current mappings are
+displayed
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message buffer (0..15)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+map: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MAP number (0..7)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+offset:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CAN buffer byte offset (0..7)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+length:  
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CAN buffer byte length (1..8)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+order:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Endian Byte order (0&nbsp;=&nbsp;Little, 1&nbsp;=&nbsp;Big)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Index of variable in the controller
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+direction:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Direction (0&nbsp;=&nbsp;Receive, 1&nbsp;=&nbsp;Transmit)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data_type:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0 = Inactive 1 = VR (default), 2 = Digital I/O, 3 =
+  Analogue I/O
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_24:"></a>
+Function = 24:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 24, enable, message, period)
+</p>
+<h3>Description:</h3>
+<p>
+Set up a Cyclic Sync Telegram for CANopen I/O mode. After
+CANIO_ENABLE is set to 1, the firmware will send the sync telegram at the
+specified period, synchronised with the internal servo cycle of the Motion
+Coordinator.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+enable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 = enable sync telegram, 0 = disable
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message buffer (0..63)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+period:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sync period in milliseconds
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="codeexample">
+  CAN(-1, 5, 14, 128, 0, 1) 'Set buffer 14 for SYNC
+CobID=$80 (128)
+</p>
+<p class="codeexample">
+  CAN(-1, 24, 1, 14, 4) 'Sync telegram every 4 ms
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  CAN(-1, 7, 15, 1, 0) 'Set the CANopen slave modules to
+run state
+</p>
+<p class="codeexample">
+  CANIO_ENABLE = 1
+</p>
+<h2><a name="_Function_=_25:"></a>
+Function = 25:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 25, message, node, period)
+</p>
+<p class="fixed">
+&nbsp;
+</p>
+<h3>Description:</h3>
+<p>
+Set up a CAN message buffer to monitor a produced heartbeat
+telegram and trigger a fault if the heartbeat is not received within the
+designated time. Each node that has a heartbeat function needs a separate CAN
+message buffer defined in the controller for the heartbeat telegrams.
+</p>
+<p class="note">
+It is not necessary to set up the COB-ID using CAN function 5.
+Function 25 includes automatic setting up of the heartbeat COB-ID in the
+selected CAN buffer.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+message buffer (0..63)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+node:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen node address of the heartbeat producer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+period:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sync period in milliseconds
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Set up 3 slave devices as heartbeat producers and the
+corresponding heartbeat consumer channels in the Motion Coordinator. CAN
+buffers 41 to 43 are available in this example. CAN buffers 62 and 63 are used
+for the SDO Tx and Rx telegrams.
+</p>
+<p class="codeexample">
+  'Configure slaves to send a heartbeat every 30 ms
+</p>
+<p class="codeexample">
+  'Set up SDO buffers for slave node
+</p>
+<p class="codeexample">
+  node = 1
+</p>
+<p class="codeexample">
+  CAN(-1, 5, 62, $580 + node, 8, 0) 'Receieve for SDO
+</p>
+<p class="codeexample">
+  CAN(-1, 5, 63, $600 + node, 8, 1) 'Transmit for SDO
+</p>
+<p class="codeexample">
+  'Send SDO write
+</p>
+<p class="codeexample">
+  CAN(-1, 9, 63, 62, 16, $1017, 0, 30)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Set up heartbeat monitor in master with timeout 40 ms
+</p>
+<p class="codeexample">
+  CAN(-1, 25, 40 + node, node, 40)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Repeat for nodes 2 and 3
+</p>
+<p class="codeexample">
+  node = 2
+</p>
+<p class="codeexample">
+  CAN(-1, 5, 62, $580 + node, 8, 0)
+</p>
+<p class="codeexample">
+  CAN(-1, 5, 63, $600 + node, 8, 1)
+</p>
+<p class="codeexample">
+  CAN(-1, 9, 63, 62, 16, $1017, 0, 30)
+</p>
+<p class="codeexample">
+  CAN(-1, 25, 40 + node, node, 40)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  node = 3
+</p>
+<p class="codeexample">
+  CAN(-1, 5, 62, $580 + node, 8, 0)
+</p>
+<p class="codeexample">
+  CAN(-1, 5, 63, $600 + node, 8, 1)
+</p>
+<p class="codeexample">
+  CAN(-1, 9, 63, 62, 16, $1017, 0, 30)
+</p>
+<p class="codeexample">
+  CAN(-1, 25, 40 + node, node, 40)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2><a name="_Function_=_26:"></a>
+Function = 26:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CAN(channel, 26, enable)
+</p>
+<h3>Description:</h3>
+<p>
+Enable and disable the CANopen Heartbeat monitor in the
+Motion Coordinator. When enabled, the designated Heartbeat CAN buffers will be
+monitored periodically as set up in CAN function 25. If the slave device
+(heartbeat producer) does not send a heartbeat telegram within the defined
+period, then the WDOG is set to OFF and a CANIO_STATUS bit is set to indicate
+the error slave identity.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+enable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 = enable heartbeat, 0 = disable
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Set up one CiA 401 Input/Output module to use the CANopen
+Heartbeat and configure the Motion Coordinator to monitor the Heartbeat telegram
+from the slave. The slave must support the CANopen object 0x1017 Heartbeat Time
+(ms). The Motion Coordinator will send output values cyclically, or the sync
+telegram to act as the heartbeat input to the slave device.
+</p>
+<p class="codeexample">
+  node = 2 'Slave node number
+</p>
+<p class="codeexample">
+  heartbeat_buf = 40 'CAN buffer number for heartbeat Rx
+</p>
+<p class="codeexample">
+  txbuf = 62 'CAN buffers for SDO Tx/Rx
+</p>
+<p class="codeexample">
+  rxbuf = 63
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  CAN(-1, 26, 0) 'Disable the heartbeat system during
+setup
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Configure slave to send a heartbeat every 25 ms
+</p>
+<p class="codeexample">
+  CAN(-1, 9, txbuf, rxbuf, 16, $1017, 0, 25)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Set up heartbeat monitor in master with timeout 50 ms
+</p>
+<p class="codeexample">
+  CAN(-1, 25, heartbeat_buf, node, 50)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  CANIO_ENABLE = 1 'Start the CAN I/O PDO transmissions
+</p>
+<p class="codeexample">
+  CAN(-1, 26, 1) 'Enable the heartbeat system
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CANIO_ADDRESS.html">CANIO_ADDRESS</a>
+, 
+<a href="CANOPEN_OP_RATE.html">CANOPEN_OP_RATE</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,380 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DAC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DAC">
+</head>
+<body>
+<h1>DAC</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Writing to this parameter when SERVO = OFF and AXIS_ENABLE =
+ON allows the user to force a demand value for that axis. On an analogue axis
+this will set a voltage on the output. On a digital axis this will be the
+demand value. For example, an EtherCAT CSV axis that has target speed. 
+</p>
+<p class="tip">
+When using a FlexAxis as a stepper or encoder output or anytime
+with SERVO = OFF the voltage outputs are available for user control.
+</p>
+<p>
+The WDOG and AXIS_ENABLE must be ON for the demand value to
+be set. When the WDOG or AXIS_ENABLE is OFF you can write a value to DAC but
+the actual output (
+<a href="DAC_OUT.html">DAC_OUT</a>
+) will be at 0.
+</p>
+<p class="note">
+The maximum output value is limited by OUTLIMIT. Set OUTLIMIT to
+a suitable value that matches the axis type and the connected device.
+</p>
+<h2>Value:</h2>
+<p>
+The demand value for an analogue axis depends on the
+resolution of the D to A converter. The stand-alone Motion Coordinators, MC403,
+MC405, MC508 have 12-bit D to A converters. FlexAxis modules P874 and P879 on
+the MC664(X) have 16-bit D to A converters.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+&nbsp;
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+DAC value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Voltage
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+12-bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+16-bit
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+10&nbsp;V
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2047
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+32767
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0&nbsp;V
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-10&nbsp;V
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-2048
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-32768
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+When a drive is connected to the EtherCAT master in CSV
+(cyclic synchronous velocity) mode, the DAC value is sent directly to the drive
+as the Target Speed. The values below are for open-loop control with SERVO =
+OFF.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+DX4 Speed (RPM)
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+DAC value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+3000
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+300000
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+100
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+10000
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-100
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+10000
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-3000
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-300000
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+For other digital axes check the drive specification for
+suitable DAC values.
+</p>
+<h2>Example:</h2>
+<p>
+To force a square wave of amplitude ±5&nbsp;V and period of
+approximately 500&nbsp;ms on axis 0.
+</p>
+<p class="codeexample">
+WDOG = ON
+</p>
+<p class="codeexample">
+SERVO AXIS(0) = OFF
+</p>
+<p class="codeexample">
+square:
+</p>
+<p class="codeexample">
+  DAC AXIS(0) = 1024
+</p>
+<p class="codeexample">
+  WA(250)
+</p>
+<p class="codeexample">
+  DAC AXIS(0) = -1024
+</p>
+<p class="codeexample">
+  WA(250)
+</p>
+<p class="codeexample">
+GOTO square
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DAC_OUT.html">DAC_OUT</a>
+, 
+<a href="DAC_SCALE.html">DAC_SCALE</a>
+,
+
+<a href="SERVO.html">SERVO</a>
+<span class="MsoHyperlink">, </span><a href="OUTLIMIT.html">OUTLIMIT</a>
+</p>
+</body>
+</html>

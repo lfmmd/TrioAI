@@ -1,0 +1,365 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Collision Detection</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Collision Detection</h1>
+<p>
+A collision between an Oriented Bounding Box (OBB specified
+by COLLISION_OBJECT) around a real object and the OBB specified in
+TOOL_COLLISION can be detected and controlled by the collision detection
+algorithm.
+</p>
+<p>
+The distance between the TOOL_COLLISION and the active
+COLLISION_OBJECT(s) is checked every servo period and the robot will decelerate
+at FAST_DEC in the case of the collision distance is smaller than the
+deceleration distance.
+</p>
+<p class="note">
+It is recommended to specify the COLLISION_OBJECT and the
+TOOL_COLLISION slightly bigger than the real object to have a margin where the
+tool will stop.
+</p>
+<p>
+Tool collision object is depicted in green. Collision object
+is depicted in blue and OBBs bounding robot 
+</p>
+<p>
+links are in red.
+</p>
+<p>
+<img width="669" height="415" id="Canvas 66" src="RPS_Reference_13_Collision_Detection_files/image001.png">
+</p>
+<p>
+The collision algorithm measures the distance between the
+tool collision object and collision objects and OBBs of the robot links. If the
+distance is less than the fast deceleration distance then, the robot will stop
+securely to avoid the collision. Be aware that the algorithm uses the tool
+collision against other objects, so it remains possible that the robot links
+can collide with collision objects.
+</p>
+<h2>Syntax</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+COLLISION_OBJECT(function[, identity]) 
+</p>
+
+  
+<p class="codeexample">
+&nbsp;
+</p>
+
+  
+<p class="codeexample">
+COLLISION_OBJECT(identity, activate)
+</p>
+
+  
+<p class="codeexample">
+&nbsp;
+</p>
+
+  
+<p class="codeexample">
+COLLISION_OBJECT(identity[, name],
+<em><span style='font-family:"Courier New"'> x centre, y centre, z
+  centre, x rotation, y rotation, z rotation</span></em>,
+<em><span style='font-family:"Courier New"'> x half distance, y half
+  distance, z half distance)</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p>
+function
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>-</span></em><em><span style='font-family:"Calibri",sans-serif'>1 = display existing collision objects. </span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>-2 = remove collision objects.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p>
+identity
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Collision Object index</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p>
+activate
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>ON = </span></em>activate
+<em><span style='font-family:   "Calibri",sans-serif'> the specified collision object.</span></em><em><span style='font-family:"Calibri",sans-serif'> </span></em><em><b><u><span style='font-family:"Calibri",sans-serif'>Note</span></u></b></em><em><span style='font-family:"Calibri",sans-serif'>: Once activated,
+  a collision object cannot be edited. To edit, it needs be deactivated first
+  from all kinematic groups. Use KINEMATIC_GROUP command to see if the relevant
+  collision object is being activated or not.</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>OFF = d</span></em>eactivate
+<em><span style='font-family:   "Calibri",sans-serif'> the specified collision object</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>(optional) name</span></em></p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Unique name of the collision object (no duplicates).</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z centre</span></em></p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Centre position of the OBB on the object in mm
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z rotation</span></em></p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Orientation of the OBB on the object in degrees
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z half distance</span></em></p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p>
+Half distances measured in every vector of the OBB in mm
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Maximum number of COLLISION_OBJECTs active is 10.
+</p>
+<p class="note">
+Once created, a collision object needs to be enabled by
+active_status ‘ON’. It is not automatically enabled by default upon creation. 
+</p>
+<p class="note">
+A collision object can be activated in one kinematic group and
+deactivated in others.
+</p>
+<p>
+The following illustration shows the parameters of a
+Collision Object. The Collision object frame is located in the centre
+representing the position and orientation of the object.
+</p>
+<p>
+Half distance parameters are shown colour-coded in
+accordance with their respective XYZ vector.
+</p>
+<p>
+&nbsp;
+</p>
+<h2><table>
+<tr>
+<td width="2" height="0">
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+<img width="667" height="266" src="RPS_Reference_13_Collision_Detection_files/image002.png">
+</td>
+</tr>
+</table>
+<br clear="ALL">
+Examples</h2>
+<h3><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Create a collision object with the name of ‘co1’ on index 0
+and enable it.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;collision_object(0, &quot;co1&quot;, 100, 100, 100,
+0, 0, 0, 50, 50, 50)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Display all collision objects on Terminal.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;collision_object(-1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [co1] : 100.00000, 100.00000, 100.00000, 0.00000, 0.00000, 0.00000, 50.00000,
+50.00000, 50.00000
+<br>
+
+1 [co2] : 333.00000, 444.00000, 555.00000, 0.00000, 0.00000, 0.00000, 22.00000,
+33.00000, 44.00000
+<br>
+
+2 [co3] : 200.00000, 200.00000, 200.00000, 0.00000, 0.00000, 0.00000, 10.00000,
+10.00000, 10.00000
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+&nbsp;
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 3</span></em></h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Remove collision object index 1.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;collision_object(-2, 1)
+</p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></em></p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 4</span></em></h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Deactivate collision object index 0.</span></em></p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;collision_object(0, OFF)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<span style='font-family:"Courier New"'><br clear="all">
+
+</span><p>
+&nbsp;
+</p>
+
+
+
+</body>
+</html>

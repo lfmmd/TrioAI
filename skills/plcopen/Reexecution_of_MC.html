@@ -1,0 +1,51 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Re-execution of Motion Control Instructions</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+
+
+
+<body>
+<h1>Re-execution of Motion Control Instructions</h1>
+<h2>Description:</h2>
+<p>
+Re-execution of motion control instructions means that you
+can change the input variables for a motion control instruction during
+execution and execute the instruction again to change the target values during
+operation.
+</p>
+<p>
+Re-execution of Trio MC_xx motion control instructions is
+effective for those function blocks with 
+<i>Execute</i> input but without the 
+<i>ContinuousUpdate</i>
+input.
+</p>
+<p>
+If the values of the input variables to the same instance
+which has no 
+<i>ContinuousUpdate</i> input are changed while the motion control
+instruction is under execution and 
+<i>Execute</i> is toggled from TRUE to FALSE
+and back to TRUE, operation will follow the new values.
+</p>
+<p>
+All changed values will be ignored while the function block
+with the 
+<i>ContinuousUpdate</i> input is under execution.
+</p>
+<h2>See also: </h2>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

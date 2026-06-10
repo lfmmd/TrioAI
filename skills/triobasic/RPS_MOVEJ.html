@@ -1,0 +1,1251 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVEJ</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVEJ">
+</head>
+<body>
+<h1>MOVEJ</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command 
+</p>
+<h2>Syntax:</h2>
+<p class="MsoNoSpacing">
+MOVEJ target [S:= T:= O:= C:=]
+</p>
+<h2>Description:</h2>
+<p>
+MOVEJ is used to move the robot
+from one point to another along a non-linear path. All axes reach the
+destination position at the same time. It is the fastest type of movement due
+to the axes move the exact number of degrees needed to reach the desired
+position. 
+</p>
+<p>
+The speed of the move is an
+interpolated speed and NOT the speed of any individual axis or the end
+effector. 
+</p>
+<p>
+For example, a robot is to move
+from 10.5,0,20,0,0,0 in joint position to 90.21,44.2,24.1,4.1,0.0,12.2 with the
+speed 50. 
+</p>
+<p>
+The total position change is
+144.33 as detailed below:
+</p>
+<p>
+J1: 90.21 - 10.5 = 79.71
+</p>
+<p>
+J2: 44.22 – 0 = 44.22
+</p>
+<p>
+J3: 24.1 – 20 = 4.1
+</p>
+<p>
+J4: 4.1 - 0 = 4.1
+</p>
+<p>
+J5: 0 – 0 = 0 
+</p>
+<p>
+J6: 12.2 – 0 = 12.2
+</p>
+<p>
+The robot will cover the distance
+144.33 degrees with the speed 50. Individual axes may travel at a higher or a
+lower speed than 50 but all of them will reach end position at the same time.
+</p>
+<p class="note">
+KINEMATIC_GROUP requires the 
+<a href="Glossary.html#RPS">RPS</a>
+
+runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Data type
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TARGET
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cartesian or joint target that the robot is moving to. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Embedded parameters:
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+See 
+<a href="RPS_Reference_6_Move_Commands.html">RPS
+  Move Commands</a>
+ for details
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+GTA(0) = 350, 0, 50, 180, 0, 0, &quot;p1&quot;
+<br>
+
+GTA(1) = 400, 100, 20, 180, 0, 0, &quot;p2&quot;
+<br>
+
+GTA(2) = 450, -300, 60, 180, 0, 0, &quot;p3&quot;
+<br>
+
+OBJECT_FRAME(1,&quot;of1&quot;, -10, 0, 0, 0, 0, 15)
+<br>
+
+TOOL_OFFSET(1,&quot;tool1&quot;, 0, 0, 50, 0, 0, 0)
+</p>
+<p class="codeexample">
+ROBOT(0)
+<br>
+
+MOVEJ GTA(&quot;p1&quot;)
+<br>
+
+MOVEJ GTA(&quot;p2&quot;)
+<br>
+
+MOVEJ GTA(&quot;p3&quot;)
+<br>
+
+STOP
+</p>
+<p>
+The three move instructions commands Robot 0 to move
+linearly to target point 2 (GTA 2 with name “p3”) from target point 0 (GTA 0
+with name “p1”). Note that there are no other embedded parameters in any of the
+MOVEJ instructions. This instruction will therefore move the robot using the
+following parameters.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Embedded Parameter
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Unit
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object Frame
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Currently active object frame
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Offset
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Currently active tool offset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Speed
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+°/s
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_ORI_SPEED * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+°/s
+<sup>2</sup></p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_ORI_MAX_ACC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+°/s
+<sup>3</sup></p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_ORI_MAX_JERK
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Blend radius
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mm
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configuration
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The object frame and tool offset declarations above do not
+automatically set the object frame and tool offset as the currently active
+object frame and tool offset. The currently active object frame and tool offset
+have not been modified.
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 2:</span></em></h3>
+<p class="codeexample">
+MOVEJ GTA(&quot;p1&quot;) S:=100
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Unit
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Speed
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+°/s
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+100 * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 3:</span></em></h3>
+<p class="codeexample">
+MOVEJ GTA(&quot;p1&quot;) O:=&quot;of1&quot;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Unit
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object Frame
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+of1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Speed
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+°/s
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_ORI_SPEED * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+of1 is not set as the active object frame. This instruction only
+takes of1 into consideration for this move.
+</p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></em></p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 4:</span></em></h3>
+<p class="codeexample">
+MOVEJ GTA(&quot;p1&quot;) T:=&quot;tool1&quot;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Unit
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object Frame
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Current active object frame
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Offset
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+tool1
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+tool1 is not set as the active tool frame. This instruction only
+takes tool1 into consideration for this move.
+</p>
+<p>
+&nbsp;
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 5:</span></em></h3>
+<p class="codeexample">
+MOVEJ GTA(
+<span>&quot;p1&quot;</span>)
+Z:=
+<span>67</span><br>
+
+MOVEJ GTA(
+<span>&quot;p2&quot;</span>)
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Unit
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool offset
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Current active tool offset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Blend radius
+</p>
+
+  
+</td>
+<td width="115" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mm
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+67 mm
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The robot will move towards target p1. 67mm before reaching the
+target, it will blend the next move and go to target p2. 
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<span class="Heading3Char">Example
+6:</span></p>
+<p class="codeexample">
+MOVEJ GTA(&quot;p1&quot;) S:=150 O:=&quot;of1&quot;
+T:=&quot;tool1&quot; Z:=42 C:=0
+<br>
+
+MOVEJ GTA(&quot;p2&quot;) S:= 100 C:=1
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="126" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Unit
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter in MOVEJ GTA(“p1”)
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter in MOVEJ GTA(“p2”)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="126" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object Frame
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Current active object frame
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Current active object frame
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="126" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Offset
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Currently active tool offset
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Currently active tool offset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="126" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Speed
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+°/s
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+150 * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+100 * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="126" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+°/s
+<sup>2</sup></p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_MAX_ACC * JOG_ACC_FACTOR
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_MAX_ACC * JOG_ACC_FACTOR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="126" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+°/s
+<sup>3</sup></p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_MAX_JERK
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WORLD_POS_MAX_JERK
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="126" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Blend radius
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mm
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+42&nbsp;mm 
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0          
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="126" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configuration
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 
+</p>
+
+  
+</td>
+<td width="310" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><em><span style='font-family:"Cambria",serif'>Example 7:</span></em></h3>
+<p class="codeexample">
+GTA(0) = 350, 0, 50, 180, 0, 0, &quot;p1&quot;
+<br>
+
+GTA(1) = 400, 100, 20, 180, 0, 0, &quot;p2&quot;
+<br>
+
+GTA(2) = 450, -300, 60, 180, 0, 0, &quot;p3&quot;
+<br>
+
+OBJECT_FRAME(1,&quot;of1&quot;, -10, 0, 0, 0, 0, 15)
+<br>
+
+TOOL_OFFSET(1,&quot;tool1&quot;, 0, 0, 50, 0, 0, 0)
+</p>
+<p class="codeexample">
+ROBOT(0)
+<br>
+
+MOVEJ GTA(&quot;p1&quot;) S:=80 O:=1 T:=1 Z:=159 C:=1
+<br>
+
+MOVEJ GTA(&quot;p2&quot;) S:= 60 C:=0
+<br>
+
+MOVEJ GTA(&quot;p3&quot;)
+<br>
+
+STOP
+</p>
+<p>
+<img border="0" width="664" height="390" id="Canvas 44" src="RPS_MOVEJ_files/image001.png">
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_MOVEC.html">MOVEC</a>
+, 
+<a href="RPS_MOVEL.html">MOVEL</a>
+,
+
+<a href="RPS_Reference_12_Errors.html">RPS Errors</a>
+, 
+<a href="RPS_Reference_6_Move_Commands.html">RPS Move Commands</a>
+</p>
+</body>
+</html>

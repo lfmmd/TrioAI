@@ -1,0 +1,86 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PROTOCOL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PROTOCOL">
+</head>
+<body>
+<h1>PROTOCOL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Port Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter allows the user to check which protocol is
+running on the specified 
+<a href="PORT.html">PORT</a>
+. 
+</p>
+<p class="tip">
+You can write to this parameter however it is advisable to
+initialise the communication protocol through 
+<a href="SETCOM.html">SETCOM</a>
+,
+
+<a href="ANYBUS.html">ANYBUS</a>
+ etc. 
+</p>
+<p class="warning">
+Do not write a value to 
+<a href="PORT.html">PORT</a>
+(0) as you
+will disable communications with Motion Perfect.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value depends on port hardware and firmware
+  version.  Contact Trio for details.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Check that Modbus is running on the RS485 channel (PORT(2)
+)
+</p>
+<p class="codeexample">
+IF PROTOCOL PORT(2) &lt;&gt;3 THEN
+</p>
+<p class="codeexample">
+  PRINT#user, “MODBUS has stopped”
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ANYBUS.html">ANYBUS</a>
+, 
+<a href="SETCOM.html">SETCOM</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,134 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>END_DIR_LAST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="END_DIR_LAST">
+</head>
+<body>
+<h1>END_DIR_LAST</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+Returns the direction in radians of the end of the last
+loaded advanced speed control interpolated motion command (those suffixed “SP”).
+</p>
+<p>
+The direction is that of the first two axes of the move
+loaded, the direction being relative to the Y axis, so 0 is up the Y axis, PI/2
+is up X axis, +PI and -PI are down the Y axis, and -PI/2 is down the X axis.
+</p>
+<p>
+You can use the parameter to set an initial direction before
+loading a SP motion command.
+</p>
+<p class="tip">
+Write to END_DIR_LAST of the base axis when initialising a system
+or after a sequence of moves which are not SP commands. 
+</p>
+<p class="note">
+Note that this parameter is relevant to SP motion commands only, such
+as 
+<a href="MOVESP.html">MOVESP</a>
+, 
+<a href="MOVEABSSP.html">MOVEABSSP</a>
+
+etc.
+</p>
+<p class="note">
+Note that as this parameter is an angle, it is primarily intended
+for 2D direction mode, and if used when 3D direction mode is enabled will set
+the direction of the first two axes only (direction mode is set with 
+<a href="AXIS_MODE.html">AXIS_MODE</a>
+ bit 2), i.e. there will be no Z component.
+</p>
+<h2>Value:</h2>
+<p>
+The move’s end direction in radians between -
+<a href="PI.html">PI</a>
+ and 
+<a href="PI.html">PI</a>
+. 
+</p>
+<h2>Examples:</h2>
+<h3>Example1:</h3>
+<p>
+Return the end direction of a move. 
+</p>
+<p class="codeexample">
+&gt;&gt;MOVESP(10000, -10000)
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT END_DIR_LAST
+</p>
+<p class="codeexample">
+2.3562
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+This shows the same two move sequences, the first using the
+calculated END_DIR_LAST to determine the direction change, and the second
+adjusting the end direction of the first move (by 5 degrees) before loading the
+second move, illustrating that the resulting direction change has been altered
+by the expected amount (5 degrees).
+</p>
+<p class="codeexample">
+MOVESP(100, 100)
+<br>
+
+PRINT &quot;End 1 = &quot;; END_DIR_LAST * 180 / PI
+<br>
+
+MOVESP(100, 0)
+<br>
+
+PRINT &quot;Change 1 = &quot;; CHANGE_DIR_LAST * 180 / PI
+<br>
+
+WAIT IDLE
+<br>
+
+
+<br>
+
+MOVESP(100, 100)
+<br>
+
+END_DIR_LAST = 40 * PI / 180 'Modify the previous move's end direction
+<br>
+
+MOVESP(100, 0)
+<br>
+
+PRINT &quot;Change 2 = &quot;; CHANGE_DIR_LAST * 180 / PI
+<br>
+
+WAIT IDLE
+</p>
+<p>
+Produces the following output:
+</p>
+<p class="codeexample">
+End 1 = 45.0000
+<br>
+
+Change 1 = 45.0000
+<br>
+
+Change 2 = 40.0000
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CHANGE_DIR_LAST.html">CHANGE_DIR_LAST</a>
+, 
+<a href="START_DIR_LAST.html">START_DIR_LAST</a>
+</p>
+</body>
+</html>

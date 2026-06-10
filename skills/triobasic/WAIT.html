@@ -1,0 +1,220 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>WAIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="WAIT">
+</head>
+
+
+
+<body>
+<h1>WAIT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+WAIT UNTIL &lt;expression&gt;
+</p>
+<p class="fixed">
+WAIT IDLE [AXIS(&lt;axis-number&gt;)]
+</p>
+<p class="fixed">
+WAIT IN_POS [AXIS(&lt;axis-number&gt;)]
+</p>
+<p class="fixed">
+WAIT LOADED [AXIS(&lt;axis-number&gt;)]
+</p>
+<h2>Description:</h2>
+<p>
+Suspends program execution until the specified condition is
+satisfied.
+</p>
+<p>
+The most generic form of this statement is WAIT UNTIL
+&lt;expression&gt;, as any valid numeric expression may be used. However, there
+are some shorthand forms used for common tasks, like WAIT IDLE, WAIT IN_POS and
+WAIT LOADED.
+</p>
+<p class="note">
+It is very common to use only WAIT&nbsp;IDLE and WAIT&nbsp;LOADED,
+and in this situation the UNTIL is optional. However, when 
+<a href="IDLE.html">IDLE</a>
+
+and 
+<a href="LOADED.html">LOADED</a>
+ are part of a more complex expression, the
+UNTIL is required.
+</p>
+<p class="note">
+Note that the shorthand forms used to behave differently to the generic
+form using UNTIL, as the shorthand form would put the process to sleep until
+the condition was met, whereas using WAIT UNTIL would constantly poll the axis,
+which is less efficient. This is no longer the case, and both variants now put
+the process to sleep until the axis has become IDLE/IN_POS/LOADED.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+The program waits until the measured position on axis 0
+exceeds 150 then starts a movement on axis 7.
+</p>
+<p class="codeexample">
+WAIT UNTIL MPOS AXIS(0) &gt; 150
+<br>
+
+MOVE(100) AXIS(7)
+</p>
+<h3>Example 2:</h3>
+<p>
+Force the program to wait until either the current move has
+finished, or an input turns 
+<a href="ON.html">ON</a>
+.
+</p>
+<p class="note">
+Note that because the expression contains IN(12), the UNTIL is
+required.
+</p>
+<p class="codeexample">
+MOVELINK(distance, link_dist, acceldist, deceldist,
+linkaxis)
+</p>
+<p class="codeexample">
+WAIT UNTIL IDLE OR IN(12) = ON
+</p>
+<h3>Example 3:</h3>
+<p>
+Start a move and then suspend program execution until the
+move has finished (note that this does not necessarily imply that the axis is
+stationary in a servo motor system).
+</p>
+<p class="codeexample">
+MOVE(100)
+<br>
+
+WAIT UNTIL IDLE
+<br>
+
+PRINT &quot;Move Done&quot;
+</p>
+<h3>Example 4:</h3>
+<p>
+Start a move and then suspend program execution until the
+move satisfies the conditions of IN_POS.
+</p>
+<p class="codeexample">
+MOVE(100)
+<br>
+
+WAIT UNTIL IN_POS
+<br>
+
+PRINT &quot;Move in position&quot;
+</p>
+<h3>Example 5:</h3>
+<p>
+Switch output 45 
+<a href="ON.html">ON</a>
+ at start of 
+<a href="MOVE.html">MOVE</a>
+(350) and 
+<a href="OFF.html">OFF</a>
+ at the end of
+that move.
+</p>
+<p class="codeexample">
+MOVE(100)
+<br>
+
+MOVE(350)
+<br>
+
+WAIT UNTIL LOADED
+<br>
+
+OP(45, ON)
+<br>
+
+MOVE(200)
+<br>
+
+WAIT UNTIL LOADED
+<br>
+
+OP(45, OFF)
+</p>
+<h3>Example 6:</h3>
+<p>
+This behaves identically to example 3.
+</p>
+<p class="codeexample">
+MOVE(100)
+<br>
+
+WAIT IDLE
+<br>
+
+PRINT &quot;Move Done&quot;
+</p>
+<h3>Example 7:</h3>
+<p>
+This behaves identically to example 4.
+</p>
+<p class="codeexample">
+MOVE(100)
+<br>
+
+WAIT IN_POS
+<br>
+
+PRINT &quot;Move in position&quot;
+</p>
+<h3>Example 8:</h3>
+<p>
+This behaves identically to example 5.
+</p>
+<p class="codeexample">
+MOVE(100)
+<br>
+
+MOVE(350)
+<br>
+
+WAIT LOADED
+<br>
+
+OP(45, ON)
+<br>
+
+MOVE(200)
+<br>
+
+WAIT LOADED
+<br>
+
+OP(45, OFF)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="IDLE.html">IDLE</a>
+, 
+<a href="IN_POS.html">IN_POS</a>
+,
+
+<a href="LOADED.html">LOADED</a>
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

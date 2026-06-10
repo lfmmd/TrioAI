@@ -1,0 +1,54 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IP_BIND_ADDRESS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IP_BIND_ADDRESS">
+</head>
+<body>
+<h1>IP_BIND_ADDRESS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+IP_BIND_ADDRESS is used to set the Ethernet IPv4 UDP and
+TCPSERVER bind address for client connections. By default, when a TrioBASIC
+client connection is opened with the 
+<a href="OPEN.html">OPEN</a>
+ command, the
+local socket is bound to the source IP address, 0.0.0.0. This is a synonym for
+all current local IP addresses.
+</p>
+<p>
+When a UDP or TCPSERVER client is created, the 
+<a href="OPEN.html">OPEN</a>
+ statement only specifies one port, which is used to
+create both the source and destination sockets. If IP_BIND_ADDRESS is 0.0.0.0,
+then we cannot talk to applications that are running on the same device. To
+avoid this situation, we set IP_BIND_ADDRESS to a specific local IP address,
+for example 127.0.0.1.
+</p>
+<p>
+The default value is 0.0.0.0. 
+</p>
+<p class="note">
+Note that this parameter is applicable to PC-MCAT only.
+</p>
+<h2>Value:</h2>
+<p>
+Network IP address in dot-decimal notation, which consists
+of four decimal numbers separated by dots, where each number is an 8-bit value
+(an octet), and so has the range 0 to 255.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+IP_BIND_ADDRESS = 192.168.0.250
+</p>
+<p>
+<span style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+</body>
+</html>

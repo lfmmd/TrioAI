@@ -1,0 +1,49 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IP_NETMASK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IP_NETMASK">
+</head>
+<body>
+<h1>IP_NETMASK</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG / FLASH) 
+</p>
+<h2>Description:</h2>
+<p>
+IP_NETMASK is used to set the Ethernet IPv4 subnet mask of
+the main Ethernet port of the 
+<i>Motion Coordinator</i>. This parameter uses
+the standard dot (.) notation to define the 4 separate octets of the IP subnet
+mask.
+</p>
+<p>
+The value is held in flash EPROM and can be set in the
+MC_CONFIG script. 
+</p>
+<h2>Value:</h2>
+<p>
+Network subnet mask in dot (.) format.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+IP_NETMASK = 255.255.255.0
+</p>
+<h3>Example 2:</h3>
+<p>
+Set IP subnet mask in the MC_CONFIG file:
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+IP_NETMASK = 255.255.255.0
+</p>
+<p>
+<span style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+</body>
+</html>

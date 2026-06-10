@@ -1,0 +1,75 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>START_DIR_LAST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="START_DIR_LAST">
+</head>
+<body>
+<h1>START_DIR_LAST</h1>
+<h2>Type: </h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the direction in radians of the start of the last
+loaded advanced speed control interpolated motion command (those suffixed “SP”).
+</p>
+<p>
+The direction is that of the first two axes of the move
+loaded, the direction being relative to the Y axis, so 0 is up the Y axis, PI/2
+is up X axis, +PI and -PI are down the Y axis, and -PI/2 is down the X axis.
+</p>
+<p class="note">
+Note that this parameter is relevant to SP motion commands only, such
+as 
+<a href="MOVESP.html">MOVESP</a>
+, 
+<a href="MOVEABSSP.html">MOVEABSSP</a>
+
+etc.
+</p>
+<h2>Value:</h2>
+<p>
+The move’s start direction in radians between -
+<a href="PI.html">PI</a>
+ and 
+<a href="PI.html">PI</a>
+. 
+</p>
+<h2>Example:</h2>
+<p>
+Run two moves the first starting at a direction of 45
+degrees and the second 0 degrees. 
+</p>
+<p class="codeexample">
+&gt;&gt;MOVESP(10000, 10000)
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT START_DIR_LAST
+</p>
+<p class="codeexample">
+0.7854
+</p>
+<p class="codeexample">
+&gt;&gt;MOVESP(0, 10000)
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT START_DIR_LAST
+</p>
+<p class="codeexample">
+0.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CHANGE_DIR_LAST.html">CHANGE_DIR_LAST</a>
+, 
+<a href="END_DIR_LAST.html">END_DIR_LAST</a>
+</p>
+</body>
+</html>

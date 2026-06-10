@@ -1,0 +1,869 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CRC16</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CRC16">
+</head>
+<body>
+<h1>CRC16</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+result = CRC16(mode,{parameters})
+</p>
+<h2>Description:</h2>
+<p>
+Calculates a 16 bit Cyclic Redundancy Check (CRC)
+of data stored in contiguous Table Memory or 
+<a href="VR.html">VR</a>
+ Memory
+locations.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Mode_=_0:">0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initialise the polynomial
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Mode_=_1:">1</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Calculate the  CRC (legacy mode)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Mode_=_2:">2</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Calculate the  CRC
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+<a name="_Mode_=_0:"></a>
+CRC16 must be initialised at least once
+by Mode 0 before running the Mode 1 calculations.
+</p>
+<h2>Mode = 0:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+result = CRC16(0, poly[, reverse_input [,reverse_output [, bits]]])
+</p>
+<h3>Description:</h3>
+<p>
+Initialises the command with the Polynomial
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+result:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Always returns -1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+poly:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Polynomial used as seed for CRC check range 0-65535 (or
+  0-$FFFF)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+reverse_input:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If reverse_input is 0 then the most significant bit of
+  each character in the input is on the left, otherwise it is on the right.
+  This parameter defaults to 0.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+reverse_output:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If reverse_output is 0 then the most significant bit of
+  the CRC is on the left, otherwise it is on the right. This parameter defaults
+  to 0.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+bits:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of bits in the CRC calculation this must be
+  in the range 8 to 32. This parameter defaults to 16.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Mode_=_1:"></a>
+Mode = 1:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+result = CRC16(1, source, start, end, initial) 
+</p>
+<h3>Description:</h3>
+<p>
+Calculates the CRC in legacy mode. This mode has the
+following restrictions:
+</p>
+<ol style="list_style_type:decimal">
+<li class="indent-list-first">
+The optional
+parameters are ignored and should not be specified in the CRC16(0,...) command.
+</li>
+<li class="indent-list-middle">
+The
+calculated CRC value must be “flushed” by either appending to two ASCII NUL
+(numeric 0) characters at the end of the data to be processed, or performing an
+additional CRC16(1,...) on 2 ASCII NUL characters
+</li>
+<li class="indent-list-last">
+Once
+the CRC has been flushed it cannot be used to carry on processing more data.
+</li>
+</ol>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+result:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns the result of the CRC calculation.  Returns 0
+  if the calculation fails or the CRC16 was not initialised.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Defines where the data is loaded
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table Memory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ 
+<a href="VR.html">VR</a>
+ Memory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start location of first byte
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End Location of last byte
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+initial:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initial CRC value.  Normally $0 - $FFFF
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Mode_=_2:"></a>
+Mode = 2:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+result = CRC16(2, source, start, end, initial) 
+</p>
+<h3>Description:</h3>
+<p>
+Calculates the CRC. The reverse_input and reverse_output
+flags are respected and no additional processing is required. As no flush is
+required we can add more data to the CRC calculation at any time.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+result:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns the result of the CRC calculation.  Returns 0
+  if the calculation fails or the CRC16 was not initialised.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Defines where the data is loaded
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table Memory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ 
+<a href="VR.html">VR</a>
+ Memory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start location of first byte
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End Location of last byte
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+initial:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initial CRC value.  Normally $0 - $FFFF
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Examlpe 1:</h3>
+<p>
+Calculate the CRC using Table Memory (legacy mode):
+</p>
+<p class="codeexample">
+poly = $8005
+<br>
+
+CRC16(0, poly)&nbsp;'Initialise internal CRC table memory
+<br>
+
+
+<br>
+
+'Load data into&nbsp;TABLE&nbsp;memory location&nbsp;0-7
+</p>
+<p class="codeexample">
+'Load flush data into TABLE memory at location 8-9
+</p>
+<p class="codeexample">
+TABLE(0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 0)
+</p>
+<p class="codeexample">
+reginit =&nbsp;0
+<br>
+
+calc_crc =&nbsp;CRC16(1, 0, 0, 9, reginit)&nbsp;'Source Data = TABLE(0..7)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Calculate the CRC using TABLE and flush from VR (legacy
+mode):
+</p>
+<p class="codeexample">
+poly = $8005
+<br>
+
+CRC16(0, poly)&nbsp;'Initialise internal CRC table memory
+<br>
+
+
+<br>
+
+'Load data into&nbsp;TABLE&nbsp;memory location&nbsp;0-7
+</p>
+<p class="codeexample">
+TABLE(0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 0)
+</p>
+<p class="codeexample">
+'Load flush data into VR memory at location 0
+</p>
+<p class="codeexample">
+VR(0) = 0
+</p>
+<p class="codeexample">
+reginit =&nbsp;0
+<br>
+
+calc_crc =&nbsp;CRC16(1, 0, 0, 7, reginit)&nbsp;'Source Data = TABLE(0..7)
+</p>
+<p class="codeexample">
+calc_crc = CRC16(1, 1, 0, 0, calc_crc) 'Flush first byte
+</p>
+<p class="codeexample">
+calc_crc = CRC16(1, 1, 0, 0, calc_crc) 'Flush second byte
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p>
+Calculate the CRC using VRs (legacy mode):
+</p>
+<p class="codeexample">
+'Generate CRC lookup table
+<br>
+
+poly=$8005
+<br>
+
+CRC16(0, poly)
+<br>
+
+
+<br>
+
+'Create test data as &quot;hello&quot;
+<br>
+
+VR(100) = 104
+<br>
+
+VR(101) = 101
+<br>
+
+VR(102) = 108
+<br>
+
+VR(103) = 108
+<br>
+
+VR(104) = 111
+<br>
+
+VR(105) = 0
+<br>
+
+VR(106) = 0
+<br>
+
+PRINT&nbsp;VRSTRING(100)
+<br>
+
+
+<br>
+
+'Calculate the crc16
+<br>
+
+crc = 0
+<br>
+
+crc = CRC16(1, 1, 100, 106, crc)
+<br>
+
+
+<br>
+
+'Print the result
+<br>
+
+PRINT&nbsp;HEX(crc)
+</p>
+<h3>Example 4:</h3>
+<p>
+Calculate the CRC using VRs:
+</p>
+<p class="codeexample">
+'Generate CRC lookup table
+<br>
+
+poly = $8005
+<br>
+
+CRC16(0, poly)
+<br>
+
+
+<br>
+
+'Create test data as &quot;hello&quot;
+<br>
+
+VR(100) = 104
+<br>
+
+VR(101) = 101
+<br>
+
+VR(102) = 108
+<br>
+
+VR(103) = 108
+<br>
+
+VR(104) = 111
+<br>
+
+VR(105) = 0
+<br>
+
+PRINT&nbsp;VRSTRING(100)
+<br>
+
+
+<br>
+
+'Calculate the crc16
+<br>
+
+crc = 0
+<br>
+
+crc = CRC16(2, 1, 100, 104, crc)
+<br>
+
+
+<br>
+
+'Print the result
+<br>
+
+PRINT&nbsp;HEX(crc)
+</p>
+<h3>Example 5:</h3>
+<p>
+Calculate the MODBUS CRC using VRs:
+</p>
+<p class="codeexample">
+'Generate CRC lookup table
+<br>
+
+poly = $8005
+<br>
+
+CRC16(0, poly, TRUE, FALSE, 16)
+<br>
+
+
+<br>
+
+'Create test data as &quot;hello&quot;
+<br>
+
+VR(100) = 104
+<br>
+
+VR(101) = 101
+<br>
+
+VR(102) = 108
+<br>
+
+VR(103) = 108
+<br>
+
+VR(104) = 111
+<br>
+
+VR(105) = 0
+<br>
+
+PRINT&nbsp;VRSTRING(100)
+<br>
+
+
+<br>
+
+'Calculate the crc16
+<br>
+
+crc = $FFFF
+<br>
+
+crc = CRC16(2, 1, 100, 104, crc)
+<br>
+
+
+<br>
+
+'Print the result
+<br>
+
+PRINT&nbsp;HEX(crc)
+</p>
+<p class="codeexample">
+<span style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+<p class="codeexample">
+<span style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+</body>
+</html>

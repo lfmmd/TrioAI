@@ -1,0 +1,411 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DISABLE_GROUP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DISABLE_GROUP">
+</head>
+<body>
+<h1>DISABLE_GROUP</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DISABLE_GROUP(parameter[, parameters…])
+</p>
+<h2>Description:</h2>
+<p>
+Used to create a group of axes which will be disabled if
+there is a motion error in one or more of the group. After the group is
+created, when an error occurs all the axes in the group will have their 
+<a href="AXIS_ENABLE.html">AXIS_ENABLE</a>
+ set to 
+<a href="OFF.html">OFF</a>
+ and 
+<a href="SERVO.html">SERVO</a>
+ set to 
+<a href="OFF.html">OFF</a>
+.
+</p>
+<p class="note">
+Multiple groups can be made, although one axis cannot belong to
+more than one group.
+</p>
+<p class="warning">
+Only axes that have individual enables should be used in a
+disable group. Such as Digital drives and Steppers. 
+</p>
+<h2>DISABLE_GROUP(-1)</h2>
+<h3>Syntax:</h3>
+<p>
+DISABLE_GROUP(-1)
+</p>
+<h3>Description:</h3>
+<p>
+Clears all groups
+</p>
+<h2>DISABLE_GROUP(axis1…)</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+DISABLE_GROUP(axis1 [,axis2[, axis3[, axis4.....]]])
+</p>
+<h3>Description:</h3>
+<p>
+Assigns the listed axis to a group
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number of first axis in group
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number of second axis in group.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axisN:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number of n
+<sup>th</sup> axis in group.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+As many parameters as axes on the system may be specified.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A machine has 2 functionally separate systems, which have
+their own emergency stop and operator protection guarding. If there is an error
+on one part of the machine, the other part can safely remain running while the
+cause of the error is removed, and the axis group re-started. We need to set up
+2 separate axis groupings.
+</p>
+<p class="codeexample">
+DISABLE_GROUP(-1)          'remove any previous axis
+groupings
+</p>
+<p class="codeexample">
+DISABLE_GROUP(0, 1, 2, 6)  'group axes 0 to 2 and 6
+</p>
+<p class="codeexample">
+DISABLE_GROUP(3, 4, 5, 7)  'group axes 3 to 5 and 7
+</p>
+<p class="codeexample">
+WDOG = ON 'turn on the enable relay and the remote drive
+enable
+</p>
+<p class="codeexample">
+FOR ax = 0 TO 7
+</p>
+<p class="codeexample">
+  AXIS_ENABLE AXIS(ax) = ON 'enable the 8 axes
+</p>
+<p class="codeexample">
+  SERVO AXIS(ax) = ON       'start position loop servo for
+each axis
+</p>
+<p class="codeexample">
+NEXT ax
+</p>
+<h3>Example 2:</h3>
+<p>
+Two conveyors operated by the same 
+<i>Motion Coordinator</i>
+are required to run independently so that if one has a “jam” it will not stop
+the second conveyor.
+</p>
+<p>
+<img border="0" width="576" height="336" id="Picture 1" src="DISABLE_GROUP_files/image001.jpg">
+</p>
+<p class="codeexample">
+DISABLE_GROUP(0) 'put axis 0 in its own group
+</p>
+<p class="codeexample">
+DISABLE_GROUP(1) 'put axis 1 in another group
+</p>
+<p class="codeexample">
+GOSUB group_enable0
+</p>
+<p class="codeexample">
+GOSUB group_enable1
+</p>
+<p class="codeexample">
+WDOG = ON
+</p>
+<p class="codeexample">
+FORWARD AXIS(0)
+</p>
+<p class="codeexample">
+FORWARD AXIS(1)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WHILE TRUE
+</p>
+<p class="codeexample">
+  IF AXIS_ENABLE AXIS(0) = 0 THEN
+</p>
+<p class="codeexample">
+    PRINT &quot;motion error axis 0&quot;
+</p>
+<p class="codeexample">
+    reset_0_flag = 1
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+  IF AXIS_ENABLE AXIS(1) = 0 THEN
+</p>
+<p class="codeexample">
+    PRINT &quot;motion error axis 1&quot;
+</p>
+<p class="codeexample">
+    reset_1_flag = 1
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+  IF reset_0_flag = 1 AND IN(0) = ON THEN
+</p>
+<p class="codeexample">
+    GOSUB group_enable0
+</p>
+<p class="codeexample">
+    FORWARD AXIS(0)
+</p>
+<p class="codeexample">
+    reset_0_flag = 0
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+  IF reset_1_flag = 1 AND IN(1) = ON THEN
+</p>
+<p class="codeexample">
+    GOSUB group_enable1
+</p>
+<p class="codeexample">
+    FORWARD AXIS(1)
+</p>
+<p class="codeexample">
+    reset_1_flag = 0
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+group_enable0:
+</p>
+<p class="codeexample">
+  BASE(0)
+</p>
+<p class="codeexample">
+  DATUM(7) 'clear motion error on axis 0
+</p>
+<p class="codeexample">
+  WA(10)
+</p>
+<p class="codeexample">
+  AXIS_ENABLE = ON
+</p>
+<p class="codeexample">
+  SERVO = ON
+</p>
+<p class="codeexample">
+RETURN
+</p>
+<p class="codeexample">
+group_enable1:
+</p>
+<p class="codeexample">
+  BASE(1)
+</p>
+<p class="codeexample">
+  DATUM(7) 'clear motion error on axis 0
+</p>
+<p class="codeexample">
+  WA(10)
+</p>
+<p class="codeexample">
+  AXIS_ENABLE = ON
+</p>
+<p class="codeexample">
+  SERVO = ON
+</p>
+<p class="codeexample">
+RETURN
+</p>
+<h3>Example 3:</h3>
+<p>
+One group of axes in a machine requires resetting, without
+affecting the remaining axes, if a motion error occurs. This should be done
+manually by clearing the cause of the error, pressing a button to clear the
+controllers’ error flags and re-enabling the motion.
+</p>
+<p class="codeexample">
+  DISABLE_GROUP(-1)      'remove any previous axis
+groupings
+</p>
+<p class="codeexample">
+  DISABLE_GROUP(0, 1, 2) 'group axes 0 to 2 
+</p>
+<p class="codeexample">
+  GOSUB group_enable     'enable the axes and clear errors
+</p>
+<p class="codeexample">
+  WDOG = ON
+</p>
+<p class="codeexample">
+  SPEED = 1000
+</p>
+<p class="codeexample">
+  FORWARD
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  WHILE IN(2) = ON   'check axis 0, but all axes in the
+group
+</p>
+<p class="codeexample">
+                     'will disable together
+</p>
+<p class="codeexample">
+    IF AXIS_ENABLE = 0 THEN
+</p>
+<p class="codeexample">
+      PRINT &quot;Motion error in group 0&quot;
+</p>
+<p class="codeexample">
+      PRINT &quot;Press input 0 to reset&quot;
+</p>
+<p class="codeexample">
+      IF IN(0) = 0 THEN     'checks if reset button is
+pressed
+</p>
+<p class="codeexample">
+        GOSUB group_enable  'clear errors and enable axis
+</p>
+<p class="codeexample">
+        FORWARD             'restarts the motion
+</p>
+<p class="codeexample">
+      ENDIF
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+  WEND
+</p>
+<p class="codeexample">
+  STOP            'stop program running into sub routine
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+group_enable:     'Clear group errors and enable axes
+</p>
+<p class="codeexample">
+  DATUM(0)        'clear any motion errors
+</p>
+<p class="codeexample">
+  WA(10)
+</p>
+<p class="codeexample">
+  FOR axis_no = 0 TO 2
+</p>
+<p class="codeexample">
+    AXIS_ENABLE AXIS(axis_no) = ON 'enable axes
+</p>
+<p class="codeexample">
+    SERVO AXIS(axis_no) = ON       'start position loop
+servo
+</p>
+<p class="codeexample">
+  NEXT axis_no
+</p>
+<p class="codeexample">
+  RETURN
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXIS_ENABLE.html">AXIS_ENABLE</a>
+, 
+<a href="SERVO.html">SERVO</a>
+</p>
+</body>
+</html>

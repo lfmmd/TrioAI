@@ -1,0 +1,312 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Controlling a SFC child program</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="O_1416"></a>
+Controlling a SFC child program</h1>
+<p>
+Controlling a child program may be simply achieved by
+specifying the name of the child program as an action block in a step of its
+parent program. Below are possible qualifiers that can be applied to an action
+block for handling a child program:
+</p>
+<table class="tablegrid">
+
+ 
+<thead>
+<tr>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Qualifier
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Description
+</p>
+
+   
+</td>
+</tr>
+</thead>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContentFiexed">
+<span class="STCode">Child&nbsp;(N);</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Starts the child program when the step is activated and
+  stops (kills) it when the step is de-activated.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContentFiexed">
+<span class="STCode">Child&nbsp;(S);</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Starts the child program when the step is activated.
+<br>
+
+  (Inital steps of the child program are activated)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContentFiexed">
+<span class="STCode">Child&nbsp;(R);</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Stops (kills) the child program when the step is
+  activated.
+<br>
+
+  (All active steps of the child program are deactivated)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;Alternatively, you can use the following statements in
+an action block programmed in ST language. In the following table, prog
+represents the name of the child program:
+</p>
+<table class="tablegrid">
+
+ 
+<thead>
+<tr>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Statement
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Description
+</p>
+
+   
+</td>
+</tr>
+</thead>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContentFiexed">
+<span class="STCode">GSTART&nbsp;(prog);</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Starts the child program when the step is activated.
+<br>
+
+  (Inital steps of the child program are activated)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContentFiexed">
+<span class="STCode">GKILL&nbsp;(prog);</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Stops (kills) the child program when the step is
+  activated.
+<br>
+
+  (All active steps of the child program are deactivated)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContentFiexed">
+<span class="STCode">GFREEZE&nbsp;(prog);</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Suspends the execution of a child program.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContentFiexed">
+<span class="STCode">GRST&nbsp;(prog);</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Restarts a program suspended by a GFREEZE command.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;You can also use the &quot;GSTATUS&quot; function in
+expressions. This function returns the current state of a child SFC program:
+</p>
+<table class="tablegrid">
+
+ 
+<thead>
+<tr>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Statement
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Description
+</p>
+
+   
+</td>
+</tr>
+</thead>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContentFiexed">
+<span class="STCode">GSTATIS&nbsp;(prog);</span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returns the current state of a child SFC program:
+<br>
+
+  &nbsp;&nbsp; 0: program is inactive
+<br>
+
+  &nbsp;&nbsp; 1: program is active
+<br>
+
+  &nbsp;&nbsp; 2: program is suspended
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+&nbsp;When a child program is started by its parent program, it
+keeps the inactive status until it is executed (further in the cycle). If you
+start a child program in a SFC chart, GSTATUS will return 1 (active) on the
+next cycle.
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

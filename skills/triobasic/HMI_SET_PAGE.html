@@ -1,0 +1,213 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HMI_SET_PAGE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HMI_SET_PAGE">
+</head>
+<body>
+<h1>HMI_SET_PAGE</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+HMI_SET_PAGE(&lt;name&gt;[,&lt;ip&gt;])
+</p>
+<h2>Description:</h2>
+<p>
+Request that the HMI Client change to the given page. If the
+IP address is not specified the request will be sent to all currently connected
+clients. This command will wait for all pending HMI Client requests to complete
+before submitting the new request, but it will not wait for the HMI Client to
+complete the request. This means the controller will continue to run the
+software without waiting for the requested page to show on the HMI Client.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of the page in the HMI Design on the HMI Client.
+  This name is case sensitive.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IP
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IP address of the HMI Client to which this message must
+  be sent.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_3:"></a>
+Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Automatically scroll through three pages at a time interval
+of 5 seconds. If a page is manually selected then hold a page for 30 seconds.
+The page value is set from the HMI to a value greater than 3 to put the page on
+manual mode. 
+</p>
+<p class="codeexample">
+page = 0
+</p>
+<p class="codeexample">
+page_time = 5000
+</p>
+<p class="codeexample">
+manual_time = 30000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WHILE(1)
+</p>
+<p class="codeexample">
+  IF page = 0 THEN
+</p>
+<p class="codeexample">
+    HMI_SET_PAGE(&quot;PAGE1&quot;)
+</p>
+<p class="codeexample">
+    page = 1
+</p>
+<p class="codeexample">
+    WA(page_time)
+</p>
+<p class="codeexample">
+  ELSEIF&nbsp;page = 1 THEN
+</p>
+<p class="codeexample">
+    HMI_SET_PAGE(&quot;PAGE2&quot;)
+</p>
+<p class="codeexample">
+    page = 2
+</p>
+<p class="codeexample">
+    WA(page_time)
+</p>
+<p class="codeexample">
+  ELSEIF&nbsp;page = 2 THEN
+</p>
+<p class="codeexample">
+    HMI_SET_PAGE(&quot;PAGE3&quot;)
+</p>
+<p class="codeexample">
+    page = 3
+</p>
+<p class="codeexample">
+    WA(page_time)
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    'in manual mode
+</p>
+<p class="codeexample">
+    page = 0
+</p>
+<p class="codeexample">
+    TICKS = manual_time
+</p>
+<p class="codeexample">
+    WHILE TICKS&gt;0
+</p>
+<p class="codeexample">
+      IF page &lt;&gt; 0 THEN
+</p>
+<p class="codeexample">
+        TICKS = manual_time
+</p>
+<p class="codeexample">
+        page = 0
+</p>
+<p class="codeexample">
+      ENDIF
+</p>
+<p class="codeexample">
+      WA(1)
+</p>
+<p class="codeexample">
+    WEND
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3>Example 2:</h3>
+<p>
+Set pages to display on multiple Uniplay HMIs connected to
+the Motion Coordinator. 
+</p>
+<p class="codeexample">
+HMI_SET_PAGE(&quot;PAGE1&quot;,
+&quot;10.200.0.20&quot;)
+</p>
+<p class="codeexample">
+HMI_SET_PAGE(&quot;PAGE1A&quot;,
+&quot;10.200.0.21&quot;)
+</p>
+<p class="codeexample">
+HMI_SET_PAGE(&quot;PAGE3B&quot;,
+&quot;10.200.0.22&quot;)
+</p>
+<p class="note">
+Only one HMI can interact with a page at a time.  Best practise
+is to have multiple copies of the page if 2 or more HMIs must display the same
+information.  E.g. PAGE1 and PAGE1A are 2 copies of the same page in the Motion
+Coordinator.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="HMI_CONNECTIONS.html">HMI_CONNECTIONS</a>
+, 
+<a href="HMI_GET_PAGE.html">HMI_GET_PAGE</a>
+, 
+<a href="HMI_GET_STATUS.html">HMI_GET_STATUS</a>
+,
+
+<a href="HMI_SERVER.html">HMI_SERVER</a>
+</p>
+</body>
+</html>

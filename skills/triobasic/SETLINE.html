@@ -1,0 +1,169 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SETLINE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SETLINE">
+</head>
+<body>
+<h1>SETLINE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+SETLINE “program”, process, line_number, base_index, robot_index
+</p>
+<p class="fixed">
+&nbsp;
+</p>
+<h2>Description:</h2>
+<p>
+Set program pointer on the selected line of a program.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p>
+Program name
+</p>
+
+  
+</td>
+<td width="488" valign="top" class="tablegrid">
+
+  
+<p>
+Any name a program can accept. It has to
+  be specified between double quotes.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p>
+Process number
+</p>
+
+  
+</td>
+<td width="488" valign="top" class="tablegrid">
+
+  
+<p>
+If the program is already running over a
+  process or the process wants to be specified. In the case of program is not
+  already running set this value as -1 and the system will select an available
+  process.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p>
+Line number
+</p>
+
+  
+</td>
+<td width="488" valign="top" class="tablegrid">
+
+  
+<p>
+Line number where program pointer will be
+  set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p>
+Base index
+</p>
+
+  
+</td>
+<td width="488" valign="top" class="tablegrid">
+
+  
+<p>
+If the process where the line will be set
+  is not already running, it will not have any BASE selected. This parameter
+  will set the BASE index. Set it as -1 to leave the process BASE as it is.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p>
+Robot index
+</p>
+
+  
+</td>
+<td width="488" valign="top" class="tablegrid">
+
+  
+<p>
+If the process where the line will be set
+  is not already running, it will not have any ROBOT selected. This parameter
+  will set the ROBOT index. Set it as -1 to leave the process ROBOT as it is.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Set program pointer on line 13, leaving no
+BASE selected, for ROBOT(0), in program PICK_AND_PLACE that is not already
+running.
+</p>
+<p>
+SETLINE
+&quot;PICK_AND_PLACE_CUPS&quot;
+,-
+1
+,
+13
+,-
+1
+,
+0
+</p>
+</body>
+</html>

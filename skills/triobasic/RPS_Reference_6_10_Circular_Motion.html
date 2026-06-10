@@ -1,0 +1,201 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Circular Motion</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Circular Motion</h1>
+<p class="MsoNoSpacing">
+MOVEC is used to move the robot from one point to another
+along a circular path. All axes reach the destination position at the same
+time.
+</p>
+<h2>Syntax</h2>
+<p>
+MOVEC target_centre target_end [S:= T:= O:= A:= D:=]
+</p>
+<h2>Examples</h2>
+<h3><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h3>
+<p class="codeexample">
+GTA(0) = 350, 0, 50, 180, 0, 0
+<br>
+
+GTA(1) = 400, 100, 20, 180, 0, 0
+<br>
+
+GTA(2) = 450, 0, 60, 180, 0, 0
+<br>
+
+OBJECT_FRAME(1,&quot;of1&quot;, -10, 0, 0, 0, 0, 15)
+<br>
+
+TOOL_OFFSET(1,&quot;tool1&quot;, 0, 0, 50, 0, 0, 0)
+</p>
+<p class="codeexample">
+ROBOT(0)
+<br>
+
+MOVEC GTA(&quot;p1&quot;) GTA(&quot;p2&quot;)
+<br>
+
+MOVEL GTA(&quot;p3&quot;)
+<br>
+
+STOP
+</p>
+<p>
+This example commands Robot 0 to Move linearly to target
+point 0. Note that there are no other embedded instructions in the MOVE. This
+instruction will MOVE the robot to target point 1 using the following
+parameters.
+</p>
+<table>
+<tr>
+<td width="196" class="tablegrid">
+
+  
+<p>
+<b><span style='font-family:"Trebuchet MS",sans-serif'>Type</span></b></p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Parameter</b></p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p>
+Object Frame
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p>
+Currently active object frame
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p>
+Tool Offset
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p>
+Currently active tool
+  offset
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p>
+Speed (mm/s)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p>
+WORLD_ORI_SPEED * LOOKAHEAD_FACTOR
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p>
+Acceleration (mm/s
+<sup>2</sup>)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p>
+WORLD_ORI_MAX_ACC * JOG_ACC_FACTOR
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p>
+Jerk (mm/s
+<sup>3</sup>)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p>
+WORLD_ORI_MAX_JERK
+</p>
+
+  
+</td>
+</tr>
+<tr>
+<td width="196" valign="top" class="tablegrid">
+
+  
+<p>
+Blend radius (mm)
+</p>
+
+  
+</td>
+<td width="353" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+</table>
+<p class="MsoNoSpacing">
+&nbsp;
+</p>
+</body>
+</html>

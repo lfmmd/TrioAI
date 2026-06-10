@@ -1,0 +1,66 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DAY$</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DAY$">
+</head>
+<body>
+<h1>DAY$</h1>
+<h2>Type:</h2>
+<p class="Category">
+String Function
+</p>
+<h2>Syntax:</h2>
+<p>
+value = DAY$
+</p>
+<h3>Description:</h3>
+<p>
+Used as part of a 
+<a href="PRINT.html">PRINT</a>
+ statement or
+a 
+<a href="DIM.html">STRING</a>
+ variable to write the current day as a string.
+</p>
+<p class="note">
+The DAY$ is set through the 
+<a href="DATE.html">DATE</a>
+ command
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print the day as part of a welcome message.
+</p>
+<p class="codeexample">
+PRINT#5, &quot;Welcome to Trio on &quot;; DAY$
+</p>
+<h3>Example 2:</h3>
+<p>
+Create a header to be used when writing a log to the SD
+card. 
+</p>
+<p class="codeexample">
+DIM header AS STRING(30)
+</p>
+<p class="codeexample">
+header = DAY$ + &quot;Start of production&quot;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DATE.html">DATE</a>
+, 
+<a href="DATE$.html">DATE$</a>
+,
+
+<a href="DAY.html">DAY</a>
+, 
+<a href="PRINT.html">PRINT</a>
+, 
+<a href="DIM.html">STRING</a>
+</p>
+</body>
+</html>

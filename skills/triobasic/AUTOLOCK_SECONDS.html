@@ -1,0 +1,105 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AUTOLOCK_SECONDS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AUTOLOCK_SECONDS">
+</head>
+<body>
+<h1>AUTOLOCK_SECONDS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command (MC_CONFIG only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+AUTOLOCK_SECONDS = value
+</p>
+<h2>Description:</h2>
+<p>
+The AUTOLOCK_SECONDS command is designed to automatically
+lock the controller following a disconnection with Motion Perfect, either when
+a certain amount of time elapsed, or immediately after the ethernet connection
+to Motion Perfect is disrupted. 
+</p>
+<p>
+This command can be activated within MC_CONFIG to enable the
+feature immediately on start-up, or later, either in a program or via the
+command line.
+</p>
+<p>
+When a 
+<i>Motion Coordinator</i> is locked, it is not
+possible to view, edit or save any programs and command line instructions are
+limited to those required to execute the program.
+</p>
+<p class="tip">
+This feature is initiated once it is locked via Motion Perfect. 
+</p>
+<p class="tip">
+You should use Motion Perfect to LOCK and UNLOCK your controller.
+</p>
+<p class="tip">
+Once locked, controller will remain locked following a power
+cycle.
+</p>
+<p>
+To unlock the controller, the UNLOCK command should be
+entered using the same lock code number which was used originally to LOCK it.
+</p>
+<p>
+The lock code number may be any integer and is held in
+encoded form. Once LOCKed, the only way to gain full access to the 
+<i>Motion
+Coordinator</i> is to 
+<a href="UNLOCK.html">UNLOCK</a>
+ it with the correct
+code.  For best security the lock number should be 7 digits. 
+</p>
+<p class="note">
+ Limitation on Flex6-Nano for immediate lock mechanism on
+ethernet disruption. This feature is currently not implemented on Flex6-Nano.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Duration in seconds when controller is locked after
+  being disconnected from Motion Perfect.
+</p>
+
+  
+<p class="tablecontent">
+-1 = Default value. AUTOLOCK_SECONDS is disabled (as
+  with any negative values) 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See Also:</h2>
+<p>
+<a href="LOCK.html">LOCK</a>
+, 
+<a href="UNLOCK.html">UNLOCK</a>
+</p>
+</body>
+</html>

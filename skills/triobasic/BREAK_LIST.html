@@ -1,0 +1,82 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>BREAK_LIST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="BREAK_LIST">
+</head>
+<body>
+<h1>BREAK_LIST</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command (command line only)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+BREAK_LIST &quot;program name&quot;
+</p>
+<h2>Description:</h2>
+<p>
+Displays a list of all the breakpoints in the given program
+name. The output consists of the program name followed by each breakpoint’s line
+number and the code on that line.
+</p>
+<p>
+Primarily for use by 
+<i>Motion</i> Perfect.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+program name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the name of any program existing on your controller
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Show the breakpoints from a program called
+&quot;simpletest&quot; that has breakpoints inserted on lines 8 and 11.
+</p>
+<p class="codeexample">
+&gt;&gt;BREAK_LIST &quot;simpletest&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+Program: SIMPLETEST
+</p>
+<p class="codeexample">
+Line 8: SERVO = ON
+</p>
+<p class="codeexample">
+Line 11: BASE(0)
+</p>
+<p>
+<span style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,110 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>USER_FRAMEB</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="USER_FRAMEB">
+</head>
+<body>
+<h1>USER_FRAMEB</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax</h2>
+<p>
+USER_FRAMEB(identity)
+</p>
+<h2>Description:</h2>
+<p>
+USER_FRAMEB is only used with 
+<a href="SYNC.html">SYNC</a>
+.
+It defines the new 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ to resynchronise to
+when performing the 
+<a href="SYNC.html">SYNC</a>
+(20) operation. When the
+resynchronisation is complete USER_FRAMEB is the active 
+<a href="USER_FRAME.html">USER_FRAME</a>
+. USER_FRAMEB selects one of the defined 
+<a href="USER_FRAME.html">USER_FRAME</a>
+s. 
+</p>
+<h2>Example:</h2>
+<p>
+The robot must pick up the components from one conveyor and
+place them on a second conveyor which is in a different 
+<a href="USER_FRAME.html">USER_FRAME</a>
+. 
+</p>
+<p class="codeexample">
+  WHILE(running)
+</p>
+<p class="codeexample">
+    USER_FRAMEB(conv1)
+</p>
+<p class="codeexample">
+    REGIST(20,0,0,0,0) AXIS(10)
+</p>
+<p class="codeexample">
+    WAIT UNTIL MARK AXIS(10)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    SYNC(1, 1000, REG_POS, 10, sen_xpos , conv1_yoff)
+</p>
+<p class="codeexample">
+    WAIT UNTIL SYNC_CONTROL AXIS(0)=3
+</p>
+<p class="codeexample">
+    'Now synchronised
+</p>
+<p class="codeexample">
+    GOSUB pick
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    USER_FRAMEB(conv2)
+</p>
+<p class="codeexample">
+    
+SYNC(20, 1000, place_pos, 11, conv2_xoff,
+conv2_yoff)
+</p>
+<p class="codeexample">
+    
+WAIT UNTIL SYNC_CONTROL AXIS(0)=3
+</p>
+<p class="codeexample">
+    'Now synchronised
+</p>
+<p class="codeexample">
+    GOSUB place
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    SYNC(4, 500)
+</p>
+<p class="codeexample">
+    place_pos = place_pos + 100
+</p>
+<p class="codeexample">
+  WEND
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SYNC.html">SYNC</a>
+, 
+<a href="USER_FRAME.html">USER_FRAME</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,295 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ADDAX</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ADDAX">
+</head>
+<body>
+<h1>ADDAX</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ADDAX(axis)
+</p>
+<h2>Description:</h2>
+<p>
+The ADDAX command is used to superimpose two or more
+movements to build up a more complex movement profile.
+</p>
+<p>
+The ADDAX command takes the demand position changes from the
+specified axis and adds them to any movements running on the base axis.
+</p>
+<p>
+After the ADDAX command has been issued the link between the
+two axes remains until broken and any further moves on the specified axis will
+be added to the base axis.
+</p>
+<p class="tip">
+The specified axis can be any axis and does not have to physically
+exist in the system.
+</p>
+<p>
+The ADDAX command therefore allows an axis to perform the
+moves specified on two axes added together.
+</p>
+<p class="tip">
+When using an encoder with 
+<a href="SERVO.html">SERVO</a>
+ = 
+<a href="OFF.html">OFF</a>
+ the 
+<a href="MPOS.html">MPOS</a>
+ is copied into the 
+<a href="DPOS.html">DPOS</a>
+. This allows ADDAX to be used to sum encoder inputs.
+</p>
+<p>
+Since ADDAX results in motion that is a function of motion
+from itself and one or more other axes, when a software or hardware limit is
+triggered there is a choice of behaviours regarding how the master axis or axes
+are handled. The default is to effectively ignore the limit, but if the limit
+should be adhered to, then this can be achieved by setting bit 17 of AXIS_MODE,
+which will cause all master axes to be cancelled.
+</p>
+<h2>Parameter:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis to superimpose.
+<br>
+
+  -1 breaks the link with the other axis.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The ADDAX command sums the movements in encoder edge units. 
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Using ADDAX on axis with different 
+<a href="UNITS.html">UNITS</a>
+,
+axis 0 will move 1 * 1000 + 2 * 20 = 1040 edges.
+</p>
+<p>
+<img border="0" width="576" height="295" id="Picture 1" src="ADDAX_files/image001.jpg">
+</p>
+<p class="codeexample">
+UNITS AXIS(0) = 1000
+</p>
+<p class="codeexample">
+UNITS AXIS(1) = 20
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Superimpose axis 1 on axis 0
+</p>
+<p class="codeexample">
+ADDAX(1) AXIS(0)
+</p>
+<p class="codeexample">
+MOVE(1) AXIS(0)
+</p>
+<p class="codeexample">
+MOVE(2) AXIS(1)
+</p>
+<h3>Example 2:</h3>
+<p>
+Pieces are placed randomly onto a continuously moving belt
+and further along the line are transferred to a second flighted belt. A
+detection system gives an indication as to whether a piece is in front of or
+behind its nominal position, and how far.
+</p>
+<p>
+<img border="0" width="478" height="358" id="Picture 2" src="ADDAX_files/image002.png">
+</p>
+<p class="codeexample">
+  expected = 2000 'Sets expected position
+</p>
+<p class="codeexample">
+  BASE(0)
+</p>
+<p class="codeexample">
+  ADDAX(1)
+</p>
+<p class="codeexample">
+  CONNECT(1, 2) 'Continuous geared connection to flighted
+belt
+</p>
+<p class="codeexample">
+  REPEAT
+</p>
+<p class="codeexample">
+    GOSUB getoffset 'Get offset to apply
+</p>
+<p class="codeexample">
+    MOVE(offset) AXIS(1) 'Make correcting move on virtual
+axis
+</p>
+<p class="codeexample">
+  UNTIL IN(2) = OFF 'Repeat until stop signal on input 2
+</p>
+<p class="codeexample">
+  RAPIDSTOP
+</p>
+<p class="codeexample">
+  ADDAX(-1) 'Clear ADDAX connection
+</p>
+<p class="codeexample">
+  STOP
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+Getoffset: 'Subroutine to register the position of the
+</p>
+<p class="codeexample">
+           'piece and calculate the offset
+</p>
+<p class="codeexample">
+  BASE(0)
+</p>
+<p class="codeexample">
+  REGIST(3)
+</p>
+<p class="codeexample">
+  WAIT UNTIL MARK
+</p>
+<p class="codeexample">
+  seenat = REG_POS
+</p>
+<p class="codeexample">
+  offset = expected - seenat
+</p>
+<p class="codeexample">
+  RETURN
+</p>
+<p>
+Axis 0 in this example is connected to the second conveyor’s
+encoder and a superimposed 
+<a href="MOVE.html">MOVE</a>
+ on axis 1 is used to
+apply offsets.
+</p>
+<h3>Example 3:</h3>
+<p>
+An XY marking machine must mark boxes as they move along a
+conveyor. Using 
+<a href="CONNECT.html">CONNECT</a>
+ enables the X marking axis
+to follow the conveyor. A virtual axis is used to program the marking absolute
+positions; this is then superimposed onto the X axis using ADDAX.
+</p>
+<p>
+<img border="0" width="442" height="331" id="Picture 3" src="ADDAX_files/image003.png">
+</p>
+<p class="codeexample">
+ATYPE AXIS(3) = 0 'Set axis 3 as virtual axis
+</p>
+<p class="codeexample">
+SERVO AXIS(3) = ON
+</p>
+<p class="codeexample">
+DEFPOS(0) AXIS(3)
+</p>
+<p class="codeexample">
+ADDAX(3) AXIS(0) 'Connect axis 3 requirement to axis 0
+</p>
+<p class="codeexample">
+WHILE IN(2) = ON
+</p>
+<p class="codeexample">
+  REGIST(3) 'Registration input detects a box on the
+conveyor
+</p>
+<p class="codeexample">
+  WAIT UNTIL MARK OR IN(2) = OFF
+</p>
+<p class="codeexample">
+  IF MARK THEN
+</p>
+<p class="codeexample">
+    CONNECT(1, 2) AXIS(0) 'Connect axis 0 to the moving
+belt
+</p>
+<p class="codeexample">
+    BASE(3, 1) 'Set the drawing motion to axis 3 and 1
+</p>
+<p class="codeexample">
+    'Draw the M
+</p>
+<p class="codeexample">
+    MOVEABS(1200, 0) 'Move A &gt; B
+</p>
+<p class="codeexample">
+    MOVEABS(600, 1500) 'Move B &gt; C
+</p>
+<p class="codeexample">
+    MOVEABS(1200, 3000) 'Move C &gt; D
+</p>
+<p class="codeexample">
+    MOVEABS(0, 0) 'Move D &gt; E
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+    BASE(0)
+</p>
+<p class="codeexample">
+    CANCEL 'Stop axis 0 from following the belt
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+    MOVEABS(0) 'Move axis 0 to home position
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+CANCEL
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXIS_MODE.html">AXIS_MODE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

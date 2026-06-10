@@ -1,0 +1,889 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PID</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PID">
+</head>
+<body>
+<h1><a name="_Toc317749505"></a>
+<a name="O_1705"></a>
+PID</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+PID loop.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<thead>
+<tr>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Name
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Type
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Description
+</p>
+
+   
+</td>
+</tr>
+</thead>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>AUTO</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="PropertyValue"><b><span style='font-family:"Calibri",sans-serif'>TRUE</span></b></span><span class="PropertyValue"><span style='font-family:"Calibri",sans-serif'> </span></span>= normal mode - 
+<span class="PropertyValue"><b><span style='font-family:"Calibri",sans-serif'>FALSE</span></b></span><span class="PropertyValue"><span style='font-family:"Calibri",sans-serif'> </span></span>=
+  manual mode.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>PV</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Process value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>SP</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set point.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Xout_Manu</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Output value in manual mode.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>KP</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Gain.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>TI</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integration time.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>TD</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Derivation time.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>TS</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>TIME</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sampling period.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>XMIN</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Minimum allowed output value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>XMAX</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Maximum output value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>I_SEL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If 
+<span class="PropertyValue"><b><span style='font-family:   "Calibri",sans-serif'>FALSE</span></b></span>, the
+  integrated value is ignored.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>INT_HOLD</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If 
+<span class="PropertyValue"><b><span style='font-family:   "Calibri",sans-serif'>TRUE</span></b></span>, the
+  integrated value is frozen.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>I_ITL_ON</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If 
+<span class="PropertyValue"><b><span style='font-family:   "Calibri",sans-serif'>TRUE</span></b></span>, the
+  integrated value is reset to I_ITLVAL.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>I_ITLVAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reset value for integration when I_ITL_ON is 
+<span class="PropertyValue"><b><span style='font-family:"Calibri",sans-serif'>TRUE</span></b></span><span class="PropertyValue"><span style='font-family:"Calibri",sans-serif'>.</span></span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>DEADB_ERR</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Hysteresis on PV. PV will be considered as unchanged if
+  greater than (PVprev - DEADBAND_W) and less that (PRprev + DEADBAND_W).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>FFD</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Disturbance value on output.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs&nbsp;</h2>
+<table class="tablegrid">
+
+ 
+<thead>
+<tr>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Name
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Type
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Description
+</p>
+
+   
+</td>
+</tr>
+</thead>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Xout</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Output command value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>ER</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last calculated error.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Xout_P</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last calculated proportional value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Xout_I</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last calculated integrated value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Xout_D</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>REAL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last calculated derivated value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Xout_HLM</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="PropertyValue"><b><span style='font-family:   "Calibri",sans-serif'>TRUE</span></b></span><span class="PropertyValue"><span style='font-family:"Calibri",sans-serif'> </span></span>if the output valie is saturated to XMIN.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Xout_LLM</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="PropertyValue"><b><span style='font-family:   "Calibri",sans-serif'>TRUE</span></b></span><span class="PropertyValue"><span style='font-family:"Calibri",sans-serif'> </span></span>if the output value is saturated to XMAX.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Diagram</h2>
+<p>
+<img width="674" height="657" src="AO-PID_files/image001.gif">
+</p>
+<h2>Remarks</h2>
+<p>
+It is important for the stability of the control that the TS
+sampling period is much bigger than the cycle time.
+</p>
+<p>
+In LD language, the output rung has the same value as the
+AUTO input, corresponding to the input rung.
+</p>
+<h2>ST Language</h2>
+<p>
+MyPID is a declared instance of PID function block.
+</p>
+<p class="codeexample">
+MyPID (AUTO, PV, SP, XOUT_MANU, KP, TI, TD,
+TS, XMIN, XMAX,
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I_SEL, I_ITL_ON, I_ITLVAL, DEADB_ERR,
+FFD);
+<br>
+
+XOUT := MyPID.XOUT;
+<br>
+
+ER := MyPID.ER;
+<br>
+
+XOUT_P := MyPID.XOUT_P;
+<br>
+
+XOUT_I := MyPID.XOUT_I;
+<br>
+
+XOUT_D := MyPID.XOUT_D;
+<br>
+
+XOUT_HLM := MyPID.XOUT_HLM;
+<br>
+
+XOUT_LLM := MyPID.XOUT_LLM;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="258" height="351" src="AO-PID_files/image002.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+ENO has the same state as the input rung.
+<br>
+<img width="256" height="346" src="AO-PID_files/image003.gif">
+</p>
+<h2>IL Language</h2>
+<p>
+MyPID is a declared instance of PID function block.
+</p>
+<p class="codeexample">
+Op1: CAL MyPID (AUTO, PV, SP, XOUT_MANU, KP,
+TI, TD, TS,
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+XMIN, XMAX, I_SEL, I_ITL_ON, I_ITLVAL,
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DEADB_ERR, FFD)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyPID.XOUT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; XOUT
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyPID.ER
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; ER
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyPID.XOUT_P
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; XOUT_P
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyPID.XOUT_I
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; XOUT_I
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyPID.XOUT_D
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; XOUT_D
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyPID.XOUT_HLM
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; XOUT_HLM
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyPID.XOUT_LLM
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; XOUT_LLM
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

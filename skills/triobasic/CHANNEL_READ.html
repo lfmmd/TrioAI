@@ -1,0 +1,665 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CHANNEL_READ</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CHANNEL_READ">
+</head>
+<body>
+<h1>CHANNEL_READ</h1>
+<h2>Type: </h2>
+<p class="Category">
+File Function
+</p>
+<h3>Syntax:</h3>
+<p class="fixed">
+x = CHANNEL_READ(channel, storage_buffer[, delimiter_buffer[,
+escape_character[, crc]]])
+</p>
+<h2>Description:</h2>
+<p>
+CHANNEL_READ will read bytes from the channel and store them
+into the storage buffer.
+</p>
+<p class="note">
+The VR and STRING implementations have the same behaviour respect
+parsing characters from the channel, however the data they return are different.
+</p>
+<p>
+If the storage buffer is in VR then the first value
+specifies why the CHANNEL_READ stopped: 0 for end of file, 1 for the first
+delimiter character, 2 for the second delimiter character, etc, and the command
+returns the number of characters read. The string is null terminated so the 
+<a href="VRSTRING.html">VRSTRING</a>
+ command can be used to view the buffer as a
+string.
+</p>
+<p>
+If the storage buffer is a named string variable then the
+command returns why the CHANNEL_READ stopped: if the return value is less than
+zero then the CHANNEL_READ found a delimiter, -1 for the first delimiter, -2
+for the second, and so on, otherwise there are no more characters in the
+channel to read, or no more space in the string variable to write. The number
+of characters read can be obtained using the LEN command on the named string
+variable.
+</p>
+<p>
+CHANNEL_READ will stop when it has read size bytes, the
+channel is empty, or the character read from the channel is specified in the
+delimiter buffer.
+</p>
+<p>
+If the escape character received, then the next character is
+not interpreted. This allows delimiter characters to be received without
+stopping the CHANNEL_READ.
+</p>
+<p>
+The calculated CRC will be stored in the 
+<a href="VR.html">VR</a>
+(crc).
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Communication or file channel.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+storage_buffer
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A named string variable, or two numeric expressions
+  that specify the 
+<a href="VR.html">VR</a>
+ base and length.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+delimiter_buffer
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A string expression, or two numeric expressions that
+  specify the 
+<a href="VR.html">VR</a>
+ base and length.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+escape_character
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+When this character is received the following character
+  is not interpreted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+crc
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in the 
+<a href="VR.html">VR</a>
+ data where the
+  CRC will be stored.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example 1:</h2>
+<p>
+Read numbers from a file, one number per line, using VR
+storage and delimiter buffers.
+</p>
+<p class="codeexample">
+'Create a temp file in RAM that contains the numbers 1 to
+10,
+<br>
+
+'one line per number
+<br>
+
+OPEN&nbsp;#40&nbsp;AS&nbsp;&quot;ram:test&quot;&nbsp;FOR&nbsp;OUTPUT(1)
+<br>
+
+FOR&nbsp;i = 1&nbsp;TO&nbsp;10
+<br>
+
+&nbsp;&nbsp;PRINT&nbsp;#40, i
+<br>
+
+NEXT&nbsp;i
+<br>
+
+CLOSE&nbsp;#40
+<br>
+
+
+<br>
+
+'Set the delimiters
+<br>
+
+VR(10) = 13 'carriage return
+<br>
+
+VR(11) = 10 'line feed
+<br>
+
+
+<br>
+
+'Test VR functionality
+<br>
+
+OPEN&nbsp;#40&nbsp;AS&nbsp;&quot;ram:test&quot;&nbsp;FOR&nbsp;INPUT
+<br>
+
+PRINT&nbsp;&quot;-------------------- START VR ---------------------&quot;
+<br>
+
+REPEAT
+<br>
+
+&nbsp;&nbsp;'Read channel 40
+<br>
+
+&nbsp;&nbsp;'VR(100) has the end status
+<br>
+
+&nbsp;&nbsp;'VR(101)-VR(199) hold the data
+<br>
+
+&nbsp;&nbsp;'VR(10)-VR(11) hold the delimiters
+<br>
+
+&nbsp;&nbsp;c = CHANNEL_READ(40, 100, 100, 10, 2)
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;'If we have characters then print them
+<br>
+
+&nbsp;&nbsp;IF&nbsp;c &gt;&nbsp;0&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;c[0],&nbsp;VR(100)[0],&nbsp;VRSTRING(101)
+<br>
+
+&nbsp;&nbsp;ENDIF
+<br>
+
+&nbsp;&nbsp;IF&nbsp;VR(100) =&nbsp;1&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;--- CARRIAGE RETURN ----&quot;
+<br>
+
+&nbsp;&nbsp;ELSEIF&nbsp;VR(100) = 2&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;--- LINE FEED ----&quot;
+<br>
+
+&nbsp;&nbsp;ENDIF
+<br>
+
+UNTIL NOT KEY #40
+<br>
+
+PRINT&nbsp;&quot;-------------------- STOP VR ---------------------&quot;
+<br>
+
+CLOSE&nbsp;#40
+</p>
+<h2>Example 2:</h2>
+<p>
+Read numbers from a file, one number per line, using string
+storage and delimiter buffers.
+</p>
+<p class="codeexample">
+'Create a temp file in RAM that contains the numbers 1 to
+10,
+<br>
+
+'one line per number
+<br>
+
+OPEN&nbsp;#40&nbsp;AS&nbsp;&quot;ram:test&quot;&nbsp;FOR&nbsp;OUTPUT(1)
+<br>
+
+FOR&nbsp;i = 1&nbsp;TO&nbsp;10
+<br>
+
+&nbsp;&nbsp;PRINT&nbsp;#40, i
+<br>
+
+NEXT&nbsp;i
+<br>
+
+CLOSE&nbsp;#40
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+'Declare the buffers
+</p>
+<p class="codeexample">
+DIM&nbsp;b&nbsp;AS&nbsp;STRING(100)
+<br>
+
+DIM&nbsp;d&nbsp;AS&nbsp;STRING(2)
+<br>
+
+
+<br>
+
+'Set the delimiters
+<br>
+
+d = CHR(13) + CHR(10)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Test string functionality
+<br>
+
+OPEN&nbsp;#40&nbsp;AS&nbsp;&quot;ram:test&quot;&nbsp;FOR&nbsp;INPUT
+<br>
+
+PRINT&nbsp;&quot;-------------------- START STRING ---------------------&quot;
+<br>
+
+REPEAT
+<br>
+
+&nbsp;&nbsp;'Read channel 40
+<br>
+
+&nbsp;&nbsp;s = CHANNEL_READ(40, b, d)
+<br>
+
+&nbsp;&nbsp;c = LEN(b)
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;'If we have characters then print them
+<br>
+
+&nbsp;&nbsp;IF&nbsp;c &gt;&nbsp;0&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;c[0], s[0], b
+<br>
+
+&nbsp;&nbsp;ENDIF
+<br>
+
+&nbsp;&nbsp;IF&nbsp;s =&nbsp;-1&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;--- CARRIAGE RETURN ----&quot;
+<br>
+
+&nbsp;&nbsp;ELSEIF&nbsp;s = -2&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;--- LINE FEED ----&quot;
+<br>
+
+ &nbsp;ENDIF
+<br>
+
+UNTIL&nbsp;NOT&nbsp;KEY #40
+<br>
+
+PRINT&nbsp;&quot;-------------------- STOP STRING ---------------------&quot;
+<br>
+
+CLOSE&nbsp;#40
+</p>
+<h2>Example 3:</h2>
+<p>
+Read numbers from a file, one number per line, using string
+storage buffer and VR delimiter buffer.
+</p>
+<p class="codeexample">
+'Create a temp file in RAM that contains the numbers 1 to
+10,
+<br>
+
+'one line per number
+<br>
+
+OPEN&nbsp;#40&nbsp;AS&nbsp;&quot;ram:test&quot;&nbsp;FOR&nbsp;OUTPUT(1)
+<br>
+
+FOR&nbsp;i = 1&nbsp;TO&nbsp;10
+<br>
+
+&nbsp;&nbsp;PRINT&nbsp;#40, i
+<br>
+
+NEXT&nbsp;i
+<br>
+
+CLOSE&nbsp;#40
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+'Declare the buffers
+</p>
+<p class="codeexample">
+DIM&nbsp;b&nbsp;AS&nbsp;STRING(100)
+<br>
+
+
+<br>
+
+'Set the delimiters
+<br>
+
+VR(10) = 13 'carriage return
+<br>
+
+VR(11) = 10 'line feed
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+'Test string functionality
+<br>
+
+OPEN&nbsp;#40&nbsp;AS&nbsp;&quot;ram:test&quot;&nbsp;FOR&nbsp;INPUT
+<br>
+
+PRINT&nbsp;&quot;-------------------- START STRING ---------------------&quot;
+<br>
+
+REPEAT
+<br>
+
+&nbsp;&nbsp;'Read channel 40
+<br>
+
+&nbsp;&nbsp;s = CHANNEL_READ(40, b, 10, 2)
+<br>
+
+&nbsp;&nbsp;c = LEN(b)
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;'If we have characters then print them
+<br>
+
+&nbsp;&nbsp;IF&nbsp;c &gt;&nbsp;0&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;c[0], s[0], b
+<br>
+
+&nbsp;&nbsp;ENDIF
+<br>
+
+&nbsp;&nbsp;IF&nbsp;s =&nbsp;-1&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;--- CARRIAGE RETURN ----&quot;
+<br>
+
+&nbsp;&nbsp;ELSEIF&nbsp;s = -2&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;--- LINE FEED ----&quot;
+<br>
+
+&nbsp;&nbsp;ENDIF
+<br>
+
+UNTIL&nbsp;NOT&nbsp;KEY #40
+<br>
+
+PRINT&nbsp;&quot;-------------------- STOP STRING ---------------------&quot;
+<br>
+
+CLOSE&nbsp;#40
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>Example 4:</h2>
+<p>
+Read a complete buffer from the channel when we don’t know
+how many characters are going to be there.
+</p>
+<p class="codeexample">
+'Create a temp file in RAM that contains a large buffer
+<br>
+
+OPEN&nbsp;#40&nbsp;AS&nbsp;&quot;ram:test&quot;&nbsp;FOR&nbsp;OUTPUT(1)
+<br>
+
+FOR j = 1&nbsp;TO&nbsp;10
+<br>
+
+  FOR&nbsp;i = 32&nbsp;TO&nbsp;127
+<br>
+
+&nbsp;&nbsp;  PRINT&nbsp;#40, CHR(i)
+<br>
+
+  NEXT&nbsp;i
+<br>
+
+NEXT&nbsp;j
+<br>
+
+CLOSE&nbsp;#40
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+'Declare the buffers
+</p>
+<p class="codeexample">
+DIM&nbsp;b&nbsp;AS&nbsp;STRING(100)
+<br>
+
+DIM&nbsp;d&nbsp;AS&nbsp;STRING(2)
+<br>
+
+
+<br>
+
+'Set the delimiters
+<br>
+
+d = CHR(13) + CHR(10)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Test string functionality
+<br>
+
+OPEN&nbsp;#40&nbsp;AS&nbsp;&quot;ram:test&quot;&nbsp;FOR&nbsp;INPUT
+<br>
+
+PRINT&nbsp;&quot;-------------------- START STRING ---------------------&quot;
+<br>
+
+REPEAT
+<br>
+
+&nbsp;&nbsp;'Read channel 40
+<br>
+
+&nbsp;&nbsp;s = CHANNEL_READ(40, b, d)
+<br>
+
+&nbsp;&nbsp;c = LEN(b)
+<br>
+
+
+<br>
+
+&nbsp;&nbsp;'If we have characters then print them
+<br>
+
+&nbsp;&nbsp;IF&nbsp;s &lt; 0&nbsp;THEN
+<br>
+
+  &nbsp;&nbsp;IF&nbsp;s =&nbsp;-1&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;--- CARRIAGE RETURN
+----&quot;
+<br>
+
+  &nbsp;&nbsp;ELSEIF&nbsp;s = -2&nbsp;THEN
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;--- LINE FEED ----&quot;
+<br>
+
+  &nbsp;&nbsp;ENDIF
+<br>
+
+&nbsp;&nbsp;ELSEIF&nbsp;c =&nbsp;100&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;c[0], s[0], b
+<br>
+
+&nbsp;&nbsp;ELSE 
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;c[0], s[0], b
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;--- END OF BUFFER ----&quot;
+<br>
+
+&nbsp;&nbsp;ENDIF
+<br>
+
+UNTIL&nbsp;NOT&nbsp;KEY#40
+<br>
+
+PRINT&nbsp;&quot;-------------------- STOP STRING ---------------------&quot;
+<br>
+
+CLOSE&nbsp;#40
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CHANNEL_WRITE.html">CHANNEL_WRITE</a>
+, 
+<a href="OPEN.html">OPEN</a>
+</p>
+</body>
+</html>

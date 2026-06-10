@@ -1,0 +1,99 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FLASH_STATUS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FLASH_STATUS">
+</head>
+<body>
+<h1>FLASH_STATUS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = FLASH_STATUS
+</p>
+<h2>Description:</h2>
+<p>
+This read-only parameter returns the status of the flash
+memory.
+</p>
+<p class="note">
+The Flash memory can be busy when programs have been edited or
+new programs downloaded. Flash re-programming is done as a background process
+and large files take some time to store.
+</p>
+<p class="warning">
+On Flex-7, flash read/write time is fixed regardless of the
+number of VRs written, unlike other controllers where it increases with data
+size.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p>
+Bit
+</p>
+
+  
+</td>
+<td width="460" valign="top" class="tablegrid">
+
+  
+<p>
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="460" valign="top" class="tablegrid">
+
+  
+<p>
+1 = flash busy (data may be lost if the controller is
+  powered off)
+<br>
+
+  0 = flash idle (data saved, so safe to power off the controller)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+PRINT FLASH_STATUS
+</p>
+<h2>See also: </h2>
+<p>
+<a href="FLASHTABLE.html">FLASHTABLE</a>
+, 
+<a href="FLASHVR.html">FLASHVR</a>
+</p>
+</body>
+</html>

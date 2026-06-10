@@ -1,0 +1,467 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NW_NODE_AIO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NW_NODE_AIO">
+</head>
+<body>
+<h1>NW_NODE_AIO</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+NW_NODE_AIO(slot, alias_address) = offset_value
+</p>
+<h2>Description:</h2>
+<p>
+This 2D array can be used to set the start address of any EtherCAT
+node analogue I/O channels. This can be used to define a user specific I/O map
+to fix I/O points from different sources in place.
+</p>
+<p>
+The array is 2-dimensional, the first dimension is the
+master slot identifier, the second dimension is the Configured Station Alias
+address of the node within that master network.
+</p>
+<p class="tip">
+When using multiple I/O types, it is best to configure the I/O
+order with the I/O base modifier parameters. See NODE_IO.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot number of the EtherCAT port. (0 on MC4N, MC6N
+  and Flex-6 Nano)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+alias_address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The configured alias address of the slave device.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+offset_value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT I/O allocated automatically (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&gt;= 1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT I/O for the defined Node starts at this I/O
+  point address 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+A system with MC4N-ECAT, with built-in EtherCAT master (slot
+0) and 10 servo drives with 2 analogue inputs per drive. It is required that if
+one or more drives are removed, the analogue I/O addresses do not change.
+</p>
+<p class="codeexample">
+NW_NODE_AIO(0, 1) = 10
+</p>
+<p class="codeexample">
+NW_NODE_AIO(0, 2) = 12
+</p>
+<p class="codeexample">
+NW_NODE_AIO(0, 3) = 14
+</p>
+<p class="codeexample">
+NW_NODE_AIO(0, 4) = 16
+</p>
+<p class="codeexample">
+NW_NODE_AIO(0, 5) = 18
+</p>
+<p class="codeexample">
+NW_NODE_AIO(0, 6) = 20
+</p>
+<p class="codeexample">
+NW_NODE_AIO(0, 7) = 22
+</p>
+<p class="codeexample">
+NW_NODE_AIO(0, 8) = 24
+</p>
+<p class="codeexample">
+NW_NODE_AIO(0, 9) = 26
+</p>
+<p class="codeexample">
+NW_NODE_AIO(0, 10) = 28
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+AIN #
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Location
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Built in analogue inputs (N/A on MC4N)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10-11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First servo drive – node 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12-13
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First servo drive – node 2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+14-15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First servo drive – node 3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16-17
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First servo drive – node 4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+18-19
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First servo drive – node 5
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+20-21
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First servo drive – node 6
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+22-23
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First servo drive – node 7
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+24-25
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First servo drive – node 8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+26-27
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First servo drive – node 9
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+28-29
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First servo drive – node 10
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+If a node is removed, the Analogue I/O addresses do not
+change. They are tied to the Configured Station Alias address in the remaining
+drives.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CANIO_BASE.html">CANIO_BASE</a>
+, 
+<a href="MODULEIO_BASE.html">MODULEIO_BASE</a>
+, 
+<a href="DRIVEIO_BASE.html">DRIVEIO_BASE</a>
+,
+
+<a href="NODE_IO.html">NODE_IO</a>
+, 
+<a href="MODULE_IO_MODE.html">MODULE_IO_MODE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

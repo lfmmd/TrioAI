@@ -1,0 +1,110 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DISABLE_ROBOT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DISABLE_ROBOT">
+</head>
+<body>
+<h1>DISABLE_ROBOT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DISABLE_ROBOT(value)
+</p>
+<h2>Description:</h2>
+<p>
+This command inhibits any robot programs from running. Any
+running robot programs will be stopped and move buffers will be cleared.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:  
+</p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+TRUE = the command is activated. No robot programs will be
+  running and buffers are cleared. 
+</p>
+
+  
+<p>
+FALSE = the command is deactivated.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+When input 12 is triggered, disable robot 1.
+</p>
+<p class="codeexample">
+ROBOT
+(
+1
+)
+<br>
+
+
+<br>
+
+
+WHILE
+ IN
+(
+12
+)=
+ON
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+DISABLE_ROBOT(
+TRUE
+)
+<br>
+
+
+WEND
+<br>
+
+
+<br>
+
+
+ROBOT
+(-
+1
+)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_STOP_ROBOT.html">STOP_ROBOT</a>
+, 
+<a href="RPS_ROBOT.html">ROBOT</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

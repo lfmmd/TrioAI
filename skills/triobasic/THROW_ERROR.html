@@ -1,0 +1,115 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>THROW_ERROR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="THROW_ERROR">
+</head>
+<body>
+<h1>THROW_ERROR</h1>
+<h2>Type:</h2>
+<p class="Category">
+Open Architecture Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+THROW_ERROR(error_message)
+</p>
+<h2>Description:</h2>
+<p>
+This command throws an error with a given error message. It
+generates a RUN_ERROR number 268. When an error is generated, the given error
+message is displayed. 
+</p>
+<p>
+This command can be used with ‘Open Moves’ to throw an error
+if a move cannot be loaded. It can also be used in functions or programs to
+stop a program with a custom error message.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="91" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+error_message:
+</p>
+
+  
+</td>
+<td width="499" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Message to display when throwing an error as STRING.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Function_=_2"></a>
+Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+Throw an error if function parameters are invalid.
+</p>
+<p class="codeexample">
+FUNCTION set_frame(num as INTEGER)
+</p>
+<p class="codeexample">
+   IF num &gt; 121 THEN
+<br>
+
+      THROW_ERROR(&quot;FRAME number invalid&quot;)
+</p>
+<p class="codeexample">
+   ELSE
+</p>
+<p class="codeexample">
+      FRAME = num
+</p>
+<p class="codeexample">
+   ENDIF
+</p>
+<p class="codeexample">
+ENDFUNC
+</p>
+<h4>Example 2:</h4>
+<p>
+Throw an error if a move takes too long. This will generate
+a RUN_ERROR and stop the program. 
+</p>
+<p class="fixed" style="text-indent:14.2pt">
+BASE(0)
+</p>
+<p class="fixed" style="text-indent:14.2pt">
+MOVEABS(100, 200, 10)
+</p>
+<p class="fixed" style="text-indent:14.2pt">
+TICKS = 2000
+</p>
+<p class="fixed" style="text-indent:14.2pt">
+WHILE NOT IDLE
+</p>
+<p class="fixed" style="text-indent:14.2pt">
+   IF TICKS &lt; 0 THEN
+</p>
+<p class="fixed" style="text-indent:14.2pt">
+      THROW(&quot;Move failed to
+finish in time&quot;)
+</p>
+<p class="fixed" style="text-indent:14.2pt">
+   ENDIF
+</p>
+<p class="fixed" style="text-indent:14.2pt">
+WEND
+</p>
+</body>
+</html>

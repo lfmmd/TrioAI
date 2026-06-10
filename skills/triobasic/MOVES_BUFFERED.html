@@ -1,0 +1,86 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVES_BUFFERED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVES_BUFFERED">
+</head>
+<body>
+<h1>MOVES_BUFFERED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read only)
+</p>
+<h2>Description:</h2>
+<p>
+This returns the number of moves being buffered by the axis.
+
+</p>
+<p class="note">
+The value does not include the move in the 
+<a href="MTYPE.html">MTYPE</a>
+
+buffer.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+number of commands in the move buffers.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Check if there is room in the move buffer before adding in
+another command.
+</p>
+<p class="codeexample">
+IF MOVES_BUFFERED &lt; 64 THEN
+</p>
+<p class="codeexample">
+  xpos = TABLE(count + x)
+</p>
+<p class="codeexample">
+  ypos = TABLE(count + y)
+</p>
+<p class="codeexample">
+  MOVEABS(xpos, ypos)
+</p>
+<p class="codeexample">
+  count = count + 1
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="LOADED.html">LOADED</a>
+, 
+<a href="WAIT.html">WAIT</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

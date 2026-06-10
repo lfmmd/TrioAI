@@ -1,0 +1,717 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ROBOT_STATE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ROBOT_STATE">
+</head>
+<body>
+<h1>ROBOT_STATE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Parameter (Read Only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ROBOT_STATE(group)
+</p>
+<h2>Description:</h2>
+<p>
+Allows the reading of the RPS 2.0 kernel’s state.
+</p>
+<p class="note">
+ROBOT_STATE requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+<p class="note">
+RPS 2.0 kernel must be activated using the RPS_KERNEL_V2 keyword
+to enable its use.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+State
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initialise 
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set RPS kernel internal data to
+  initial values
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initialised
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initial values set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configure
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Waiting for the kinematic group and
+  its I/O to be set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configured
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Kinematic group fully specified
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Validate
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Check the kinematic group for errors
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Validated
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Kinematic group is free from errors
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Activate kinematic group
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ask the firmware to start frame
+  transformations
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Kinematic group activated
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Frame transformation have started
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Awaiting operating mode
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Key switch is being sampled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Operating mode set
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sampling is complete and the operating
+  profile set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Operational
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The operating profile is being
+  executed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error arbiter
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Decide the nature of the error and set
+  ERO
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Minor error
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jump to state ‘Reset errors’
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+13
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Major error
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Need to do an emergency stop
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+14
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Emergency stop
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Abort motion and robot programs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+15
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Monitor stop
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Wait for motion to stop
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Stopped
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Motion has stopped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reset errors
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Wait for REI to be pulsed high and low
+  (falling edge trigger
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+18
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Errors reset
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Clear ERO and jump to state
+  ‘Configure’
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+19
+</p>
+
+  
+</td>
+<td width="189" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Shutdown
+</p>
+
+  
+</td>
+<td width="362" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sets outputs low and jump to state ‘Initialise’
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Detect if Robot(0) motion has stopped.
+</p>
+<p class="codeexample">
+IF ROBOT_STATE(0) = 16 THEN
+<br>
+
+   ‘Robot motion has stopped. Action here.
+<br>
+
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_RPS_KERNEL_V2.html">RPS_KERNEL_V2</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

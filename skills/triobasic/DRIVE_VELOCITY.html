@@ -1,0 +1,50 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_VELOCITY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_VELOCITY">
+</head>
+<body>
+<h1>DRIVE_VELOCITY</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Returns the actual velocity value from a remote drive.  For
+this value to be active, the cyclic data transfer from the drive must be first
+configured to return the drive actual velocity value.  For a drive connected by
+CANOpen over EtherCAT (CoE) the value will be configured as part of the Process
+Data Object. (PDO)
+</p>
+<h2>Value:</h2>
+<p>
+The motor speed is returned in drive units.
+</p>
+<h2>Example:</h2>
+<h3>Example1</h3>
+<p>
+Display the motor actual speed to Motion Perfect terminal 5.
+</p>
+<p class="codeexample">
+PRINT #5,&quot;Drive current value = &quot;;DRIVE_VELOCITY
+AXIS(2)
+</p>
+<h3>Example2</h3>
+<p>
+Wait for the motor speed value to go below a pre-defined level.
+</p>
+<p class="codeexample">
+BASE(16)
+</p>
+<p class="codeexample">
+WAIT UNTIL DRIVE_VELOCITY &lt; 500
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

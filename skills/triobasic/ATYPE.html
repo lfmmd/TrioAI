@@ -1,0 +1,1539 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ATYPE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ATYPE">
+</head>
+<body>
+<h1>ATYPE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (MC_CONFIG)
+</p>
+<h2>Description:</h2>
+<p>
+The ATYPE axis parameter indicates the type of axis fitted.
+By default, this will be set to match the hardware, but some modules allow
+configuration of different operation. 
+</p>
+<p>
+If you are setting an ATYPE, this must be done during
+initialisation through the MC_CONFIG.bas program.
+</p>
+<p class="note">
+When using ATYPE in MC_CONFIG you must use the AXIS modifier,
+BASE is not allowed.
+</p>
+<h2>Value:</h2>
+<p>
+The following ATYPE’s are currently active values. 
+<sup>(1)</sup></p>
+<p>
+Group 1; Standard product axis types.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No axis fitted/ virtual axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+18
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen position axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+19
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen speed axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+26
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen position axis, DS402 predefined PDO3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+27
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CANopen speed axis, DS402 predefined PDO3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+30
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue feedback Servo
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+31
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue output Servo (Using FlexSlice I/O)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+35
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pulse and direction output with 
+<a href="PWM_CONTROL.html">PWM</a>
+
+  output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+36
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Incremental encoder Servo with 
+<a href="PWM_CONTROL.html">PWM</a>
+
+  output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+37
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PWM output with pulse and direction
+  input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+43
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pulse and direction output with enable output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+44
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue Servo with Incremental encoder and Z input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+45
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quadrature encoder output with enable output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+46
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue Servo with Tamagawa absolute feedback
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+47
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue Servo with Endat absolute feedback 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+48
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue Servo with SSI absolute feedback
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+50
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RTEX position 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+51
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RTEX speed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+52
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RTEX torque
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+53
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos velocity
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+54
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+55
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos torque
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+56
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos open
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+57
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos velocity with drive registration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+58
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos position with drive registration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+59
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sercos spare
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+60
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue Servo with Pulse and Direction feedback and Z
+  input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+61
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SLM
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+62
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PLM
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+63
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pulse and direction output with Z input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quadrature encoder output with Z input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+65
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+66
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT speed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+67
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT Torque
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+68
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT Open Speed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+69
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT Reference Encoder
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+70
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT encoder input with Analogue output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+71
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Trio Flexslice pulse output Position mode axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+75
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SSI 32 Absolute Slave
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+76
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Incremental encoder with Z input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+77
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue Servo with Incremental Encoder and Enable
+  output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+78
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pulse and direction with 
+<a href="VFF_GAIN.html">VFF_GAIN</a>
+<span class="MsoHyperlink"><span style='font-family:"Calibri",sans-serif'> </span></span>and
+  Enable output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+79
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pulse and direction feedback with Z input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+84
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quadrature encoder output with 
+<a href="VFF_GAIN.html">VFF_GAIN</a>
+<span class="MsoHyperlink"><span style='font-family:"Calibri",sans-serif'> </span></span>and
+  enable output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+85
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Used for monitoring difference between 2 axes with AXESDIFF
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+86
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tamagawa absolute encoder input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+87
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Endat absolute encoder input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+88
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SSI absolute encoder input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+92
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue Servo with Biss absolute encoder
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+93
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Biss absolute encoder input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+94
+</p>
+
+  
+</td>
+<td width="439" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PWM output servo with incremental encoder feedback
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+&nbsp;
+</p>
+<p>
+Group 2; High density axis connector.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+100
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pulse and Direction output (High Density)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+101
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quadrature output (High Density)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+102
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue Servo with Incremental encoder (High Density)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+103
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue Servo with Pulse and Direction feedback (High
+  Density)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+104
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Incremental encoder (High Density)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+105
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SSI absolute encoder input (High Density) 
+<sup>(2)</sup></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip" style="margin-left:39.25pt;text-indent:-18.0pt">
+(1)
+<span style='font:7.0pt "Times New Roman"'> </span>Which ATYPEs are supported is
+controller and module dependent.
+</p>
+<p class="tip" style="margin-left:39.25pt;text-indent:-18.0pt">
+(2)
+<span style='font:7.0pt "Times New Roman"'> </span>MC508 axis 8 only.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set a stepper on axis 0 and SSI encoder on axis 1. The
+default for a flexible axis is servo.
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+ATYPE = 43
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+binary = 1
+</p>
+<p class="codeexample">
+gray = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Set the number of bits
+</p>
+<p class="codeexample">
+ENCODER_BITS = 24
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Set gray or binary code
+</p>
+<p class="codeexample">
+ENCODER_BITS.6 = gray
+</p>
+<p class="codeexample">
+ATYPE = 48
+</p>
+<h3>Example 2:</h3>
+<p>
+Set up 16 high density axes on the MC508. Note that encoder
+inputs have no Z channel, only A and B. Stepper outputs have no RS422 Enable
+signal, only Step and Direction. (There is an enable signal on the solid-state
+relay output).
+</p>
+<p class="codeexample">
+ATYPE AXIS(0) = 102 'Analogue Servo with Incremental
+encoder
+</p>
+<p class="codeexample">
+ATYPE AXIS(1) = 102 'Analogue Servo with Incremental
+encoder
+</p>
+<p class="codeexample">
+ATYPE AXIS(2) = 102 'Analogue Servo with Incremental
+encoder
+</p>
+<p class="codeexample">
+ATYPE AXIS(3) = 102 'Analogue Servo with Incremental
+encoder
+</p>
+<p class="codeexample">
+ATYPE AXIS(4) = 102 'Analogue Servo with Incremental
+encoder
+</p>
+<p class="codeexample">
+ATYPE AXIS(5) = 102 'Analogue Servo with Incremental
+encoder
+</p>
+<p class="codeexample">
+ATYPE AXIS(6) = 104 'Incremental encoder
+</p>
+<p class="codeexample">
+ATYPE AXIS(7) = 104 'Incremental encoder
+</p>
+<p class="codeexample">
+ATYPE AXIS(8) = 100 'Pulse and Direction output
+</p>
+<p class="codeexample">
+ATYPE AXIS(9) = 100 'Pulse and Direction output
+</p>
+<p class="codeexample">
+ATYPE AXIS(10) = 100 'Pulse and Direction output
+</p>
+<p class="codeexample">
+ATYPE AXIS(11) = 100 'Pulse and Direction output
+</p>
+<p class="codeexample">
+ATYPE AXIS(12) = 100 'Pulse and Direction output
+</p>
+<p class="codeexample">
+ATYPE AXIS(13) = 100 'Pulse and Direction output
+</p>
+<p class="codeexample">
+ATYPE AXIS(14) = 100 'Pulse and Direction output
+</p>
+<p class="codeexample">
+ATYPE AXIS(15) = 100 'Pulse and Direction output
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<p class="note">
+Standard ATYPEs should be used to set up 8 axes when not using
+the high density capability of the MC508. ATYPE 43 for step+direction, 44 for
+analogue servo etc.
+</p>
+<h3>Example 3:</h3>
+<p>
+Setting the ATYPE for the first 4 axis in the MC_CONFIG file
+so that the first two axes are SSI and the rest incremental servo. 
+</p>
+<p class="codeexample">
+ATYPE AXIS(0) = 48
+</p>
+<p class="codeexample">
+ATYPE AXIS(1) = 48
+</p>
+<p class="codeexample">
+ATYPE AXIS(2) = 44
+</p>
+<p class="codeexample">
+ATYPE AXIS(2) = 44
+</p>
+<h3>Example 4:</h3>
+<p>
+Set a EnDAT encoder on AXIS(0). 
+</p>
+<p class="codeexample">
+ENCODER_BITS = 25 + 256 * 12
+</p>
+<p class="codeexample">
+ATYPE = 47
+</p>
+<h3>Example 5:</h3>
+<p>
+Set a Tamagawa encoder on AXIS(0).  You may need to change
+the FPGA_PROGRAM to use the Tamagawa encoder.
+</p>
+<p class="codeexample">
+ATYPE = 46
+</p>
+<h3>Example 6:</h3>
+<p>
+Use analogue feedback input 56 for axis 0. 
+</p>
+<p class="codeexample">
+BASE(0) 'Set up analogue feedback axis 0
+</p>
+<p class="codeexample">
+AXIS_ADDRESS = 56 'Uses analogue input AIN(56)
+</p>
+<p class="codeexample">
+ATYPE = 30 'Set axis type for analogue feedback
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DRIVE_MODE.html">DRIVE_MODE</a>
+, 
+<a href="DRIVE_PROFILE.html">DRIVE_PROFILE</a>
+</p>
+</body>
+</html>

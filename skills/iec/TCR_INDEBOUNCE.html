@@ -1,0 +1,79 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TCR_INDEBOUNCE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TCR_INDEBOUNCE">
+</head>
+<body>
+<h1>TCR_INDEBOUNCE</h1>
+<h2>Type:</h2>
+<p>
+I/O Function.
+</p>
+<h2>Function:</h2>
+<p>
+Read the IN_DEBOUNCE time.
+</p>
+<h2>Inputs:</h2>
+<h2>Outputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q : SINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of servo cycles for which the input must
+  remain in a steady state for before the ON/OFF value is passed to a program. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+The inputs go to the set state after the voltage has been
+either 24 or 0 for the IN_DEBOUNCE time in servo cycles.  The selected debounce
+time is applied to all inputs when read in a program using the Motion iX IN
+function or the equivalent IN binding in the IEC 61131-3 language.
+</p>
+<p class="note">
+Registration input functionality is not affected by the
+IN_DEBOUNCE value.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample">
+Value = TCR_INDEBOUNCE;
+</p>
+<h2>FBD Language:</h2>
+<p>
+<img width="217" height="78" src="TCR_INDEBOUNCE_files/image001.png">
+</p>
+<h2>LD Language:</h2>
+<p>
+<img width="379" height="78" src="TCR_INDEBOUNCE_files/image002.png">
+</p>
+<h2>IL Language: </h2>
+<p>
+Not available.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

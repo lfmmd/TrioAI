@@ -1,0 +1,141 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_MODE">
+</head>
+<body>
+<h1>DRIVE_MODE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DRIVE_MODE AXIS(n) = value
+</p>
+<h2>Description:</h2>
+<p>
+DRIVE_MODE sets the mode of operation to be used by a remote
+drive over EtherCAT. This MUST be set in MC_CONFIG if the EtherCAT is to be
+initialised on power up in the required mode. DRIVE_MODE automatically sets the
+drive’s mode of operation and the axis ATYPE.
+</p>
+<p>
+This axis parameter can be added to the MC_CONFIG.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="473" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1: Cyclic Synchronous Position mode (CSP)
+</p>
+
+  
+<p class="tablecontent">
+2: Cyclic Synchronous Velocity mode (CSV)
+</p>
+
+  
+<p class="tablecontent">
+3: Cyclic Synchronous Torque mode (CST)
+</p>
+
+  
+<p class="tablecontent">
+4: Open-loop speed (Inverter drive)
+</p>
+
+  
+<p class="tablecontent">
+5: Reference Encoder
+</p>
+
+  
+<p class="tablecontent">
+6: Open loop position (Stepper drive)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Four EtherCAT axes are to be set up, 2 axes in position
+mode, 1 axis in velocity mode and 1 axis in torque mode. Note that the Motion
+Coordinator can close the position loop when the drive is in CSV or CST mode,
+or the axis can be operated open-loop.
+</p>
+<p class="codeexample">
+'Setup 4 axes in MC_CONFIG
+<br>
+
+'Note: ATYPE is set automatically, do not set in MC_CONFIG
+<br>
+
+DRIVE_MODE AXIS(0)=1 ' position mode
+<br>
+
+DRIVE_MODE AXIS(1)=1 ' position mode
+<br>
+
+DRIVE_MODE AXIS(2)=2 ' velocity mode
+<br>
+
+DRIVE_MODE AXIS(3)=3 ' torque mode
+</p>
+<h3>Example 2:</h3>
+<p>
+The EtherCAT axes are stepper drives in position mode but
+with no encoder for position verification. Mode 6 simply makes MPOS a direct
+copy of DPOS so that the axes run normally for REP_DIST and linked axes.
+</p>
+<p class="codeexample">
+'Setup 2 axes in MC_CONFIG
+<br>
+
+'Note: ATYPE is set automatically, do not set in MC_CONFIG
+<br>
+
+DRIVE_MODE AXIS(0)=6 ' position mode with no feedback
+<br>
+
+DRIVE_MODE AXIS(1)=6 ' position mode with no feedback
+<br>
+
+
+<br>
+
+
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DRIVE_PROFILE.html">DRIVE_PROFILE</a>
+, 
+<a href="ATYPE.html">ATYPE</a>
+</p>
+<p class="Category">
+&nbsp;
+</p>
+</body>
+</html>

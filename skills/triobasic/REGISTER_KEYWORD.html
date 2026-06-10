@@ -1,0 +1,207 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REGISTER_KEYWORD</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REGISTER_KEYWORD">
+</head>
+<body>
+<h1>REGISTER_KEYWORD</h1>
+<h2>Type:</h2>
+<p class="Category">
+Open Architecture Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+REGISTER_KEYWORD(keywordName, funcName, minParams, maxParams)
+</p>
+<h2>Description:</h2>
+<p>
+This command registers a keyword as a part of the TrioBASIC
+language. Each keyword must be linked to a BASIC function that holds the
+implementation of the keyword. It enables users to extend the language using
+their own keywords.
+<br>
+
+Note that a new keyword cannot be the same as an existing keyword.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="91" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+keywordName: 
+</p>
+
+  
+</td>
+<td width="499" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of your keyword.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="91" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+funcName: 
+</p>
+
+  
+</td>
+<td width="499" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of your BASIC function.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="91" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+minParams: 
+</p>
+
+  
+</td>
+<td width="499" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Minimum number of parameters for BASIC function.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="91" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+maxParams:
+</p>
+
+  
+</td>
+<td width="499" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Maximum number of parameters for BASIC function.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Function_=_2"></a>
+Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+Register 2 keywords. 
+</p>
+<p>
+<b>In MC_CONFIG :</b></p>
+<p class="codeexample">
+REGISTER_KEYWORD(&quot;RUN_TEST1&quot;,
+&quot;test_int&quot;, 0, 2)
+<br>
+
+REGISTER_KEYWORD(&quot;RUN_TEST2&quot;, &quot;test_float&quot;, 0, 1)
+</p>
+<p>
+<br>
+<b>In TEST_LIB.BAL</b> <b>:</b> </p>
+<p class="codeexample">
+FUNCTION test_int(param1 AS INTEGER)
+<br>
+
+   IF param1 = 2 THEN
+<br>
+
+      PRINT &quot;test_int passed&quot;
+<br>
+
+   ELSE
+<br>
+
+      PRINT &quot;test_int failed&quot;
+<br>
+
+   ENDIF
+<br>
+
+ENDFUNC
+<br>
+
+
+<br>
+
+
+<br>
+
+
+<br>
+
+FUNCTION test_float(param1 AS FLOAT)
+<br>
+
+   IF param1 = 4.12 THEN
+<br>
+
+      PRINT &quot;test_float passed&quot;
+<br>
+
+   ELSE
+<br>
+
+      PRINT &quot;test_float failed&quot;
+<br>
+
+   ENDIF
+<br>
+
+ENDFUNC
+</p>
+<p>
+<br>
+<b>In TEST.BAS : </b></p>
+<p class="codeexample">
+RUN_TEST1(2)
+<br>
+
+RUN_TEST1(0)
+<br>
+
+RUN_TEST2(4.12)
+<br>
+
+RUN_TEST2(2.31)
+</p>
+</body>
+</html>

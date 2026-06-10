@@ -1,0 +1,173 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LIST_GLOBAL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LIST_GLOBAL">
+</head>
+<body>
+<h1>LIST_GLOBAL</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command (command line only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+LIST_GLOBAL [offset[, length]]
+</p>
+<h2>Description:</h2>
+<p>
+Prints the selected 
+<a href="GLOBAL.html">GLOBAL</a>
+ and 
+<a href="CONSTANT.html">CONSTANT</a>
+ definitions to the current output channel.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+none:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Prints all the defined GLOBAL and CONSTANT values.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+offset:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of the first GLOBAL or CONSTANT value to be
+  printed.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+length:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of GLOBAL and CONSTANT values to be printed. If
+  length is -1 then all values are printed.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Check all global data in an application where the following 
+<a href="GLOBAL.html">GLOBAL</a>
+ and 
+<a href="CONSTANT.html">CONSTANT</a>
+ have
+been set.
+</p>
+<p class="codeexample">
+CONSTANT &quot;cutter&quot;, 23
+</p>
+<p class="codeexample">
+GLOBAL &quot;conveyor&quot;,5
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&gt;&gt;LIST_GLOBAL
+</p>
+<p class="codeexample">
+Global                           VR
+</p>
+<p class="codeexample">
+----------------                 ----
+</p>
+<p class="codeexample">
+conveyor                         5
+</p>
+<p class="codeexample">
+Constant                         Value
+</p>
+<p class="codeexample">
+----------------                 -------
+</p>
+<p class="codeexample">
+cutter                           23.00000
+</p>
+<p class="codeexample">
+&gt;&gt;LIST_GLOBAL 1
+</p>
+<p class="codeexample">
+Global                           VR
+</p>
+<p class="codeexample">
+----------------                 ----
+</p>
+<p class="codeexample">
+conveyor                         5
+</p>
+<p class="codeexample">
+&gt;&gt;LIST_GLOBAL 0,1
+</p>
+<p class="codeexample">
+Constant                         Value
+</p>
+<p class="codeexample">
+----------------                 -------
+</p>
+<p class="codeexample">
+cutter                           23.00000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CONSTANT.html">CONSTANT</a>
+, 
+<a href="GLOBAL.html">GLOBAL</a>
+</p>
+</body>
+</html>

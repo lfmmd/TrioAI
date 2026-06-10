@@ -1,0 +1,233 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FUNCTION_LIST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FUNCTION_LIST">
+</head>
+<body>
+<h1>FUNCTION_LIST</h1>
+<h2>Type:</h2>
+<p class="Category">
+Command and Function
+</p>
+<h2>Syntax:</h2>
+<h2><span style='font-family:"Calibri",sans-serif'>There are two different syntaxes:</span></h2>
+<p>
+<b>First parameter is a string</b></p>
+<p class="fixed">
+FUNCTION_LIST(function[, parameter]])
+</p>
+<p>
+<b>First parameter is not a string</b></p>
+<p class="fixed">
+FUNCTION_LIST[([option[, library[, start index[, end index]]]])]
+</p>
+<h2>Description:</h2>
+<p>
+FUNCTION_LIST outputs a list of currently available
+FUNCTIONs with parameter and return data definitions.
+</p>
+<h2>Parameters:</h2>
+<p>
+<b>First parameter is a string</b></p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+function:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If there is only one parameter, then print the number
+  of parameters for this function.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 0 based index of the function parameter of which to
+  print the data type. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+<b>First parameter is not a string</b></p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+option:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If option is 1 then, print the function names,
+  otherwise print the function details.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+library:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If library is empty then, print functions from all
+  libraries, otherwise print functions from the specified library.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 0 based index of the first function to print.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 0 based index of the last function to print.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+<b>&nbsp;</b></p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Type FUNCTION_LIST in the Motion Perfect command line
+terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;FUNCTION_LIST
+<br>
+
+f1(param1:INTEGER,param2:INTEGER,param3:BOOLEAN):INTEGER
+<br>
+
+enable_axes(ax0:INTEGER,ax1:INTEGER,ax2:INTEGER):NONE
+<br>
+
+disable_axes(ax0:INTEGER,ax1:INTEGER,ax2:INTEGER):NONE
+<br>
+
+set_rs232(baudrate:INTEGER):NONE
+<br>
+
+blink_3(op_number:INTEGER):NONE
+<br>
+
+get_decel_distance(f_decel:FLOAT,f_vel:FLOAT):FLOAT
+<br>
+
+f_cube(param1:FLOAT):FLOAT
+<br>
+
+&gt;&gt;
+</p>
+<h3>Example 2:</h3>
+<p class="codeexample">
+DIM funclist AS
+STRING(256)
+</p>
+<p class="codeexample">
+funclist = 
+FUNCTION_LIST
+<br>
+
+  
+</p>
+<h2>See also:</h2>
+<p>
+<a href="FUNCTION.html">FUNCTION</a>
+</p>
+</body>
+</html>

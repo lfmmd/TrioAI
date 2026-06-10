@@ -1,0 +1,102 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_FE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_FE">
+</head>
+<body>
+<h1>DRIVE_FE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Returns the value of following error calculated by a remote
+drive in position mode.  For this value to be active, the cyclic data transfer
+from the drive must be first configured to return the drive’s 
+<i>Position Error
+Actual</i> value. For a drive connected by CANopen over EtherCAT (CoE) the
+value will be configured as part of the Process Data Object (PDO).
+</p>
+<p>
+DRIVE_FE is a more precise value of the following error than
+FE. With a remote drive in position mode, the bus cycle time results in the
+Motion Coordinator FE value increasing with speed regardless of the true
+following error.
+</p>
+<p class="warning">
+When DRIVE_FE is active, the DRIVE_FE_LIMIT must be set in the
+axis start-up as well as the normal FE_LIMIT.
+</p>
+<p class="note">
+When ABS(DRIVE_FE) &gt; DRIVE_FE_LIMIT, the E flag, bit 8 of
+AXISSTATUS is set and a MOTION_ERROR will occur.
+</p>
+<h2>Value:</h2>
+<p>
+The drive position error returned in drive units.
+</p>
+<h2>Example:</h2>
+<h3>Example1</h3>
+<p>
+Display the drive’s position error to Motion Perfect
+terminal 5.
+</p>
+<p class="codeexample">
+PRINT #5,&quot;Drive Position Error = &quot;; DRIVE_FE
+AXIS(3)
+</p>
+<h3>Example2</h3>
+<p>
+Set up the axis to use the reported DRIVE_FE (Following
+Error Actual value) from the servo drive connected by EtherCAT.
+</p>
+<p>
+MC_CONFIG:
+</p>
+<p class="codeexample">
+DRIVE_PROFILE AXIS(2) = 1 'Select built-in profile with
+following error in the PDO
+</p>
+<p class="codeexample">
+DRIVE_MODE = 1 'Select position mode (CSP)
+</p>
+<p>
+STARTUP:
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+UNITS = 2 ^ 21 / 5 '21 bit encoder. Ball screw with 5 mm
+pitch.
+<br>
+
+FE_LIMIT = 2.5 'Following error limit 2.5 mm
+</p>
+<p class="codeexample">
+DRIVE_FE_LIMIT = 1.0 'Drive fe limit 1.0 mm
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Also set the internal position error limit in the drive
+</p>
+<p class="codeexample">
+CO_WRITE_AXIS(2, $6065, 0, 7, -1, 2 ^ 20) 'Set to 0.5 x
+turn
+</p>
+<h2>See Also:</h2>
+<p class="codeexample">
+<a href="DRIVE_FE_LIMIT.html">DRIVE_FE_LIMIT</a>
+, 
+<a href="FE.html">FE</a>
+, 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+</p>
+</body>
+</html>

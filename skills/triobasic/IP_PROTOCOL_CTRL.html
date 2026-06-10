@@ -1,0 +1,495 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IP_PROTOCOL_CTRL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IP_PROTOCOL_CTRL">
+</head>
+<body>
+<h1>IP_PROTOCOL_CTRL</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG) 
+</p>
+<h2>Description:</h2>
+<p>
+This parameter allows the user to disable the operation of one
+or more of the communication ports on Ethernet. If a bit is at 0, the port is
+enabled. If the bit is a 1, then the port is disabled and will not respond when
+a client tries to open it. It can be used to temporarily disable a port while a
+BASIC program configures the protocol settings on power up. The port will then
+be enabled in the program after the setup.
+</p>
+<p>
+By default all ports are enabled. 
+</p>
+<h2>Value:</h2>
+<p>
+Up to 2 bits can be selected, the default value is 0.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Motion Perfect (Telnet)
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n/a
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+PCMotion 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n/a
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Modbus
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+EthernetIP
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+IEC61131-3 programming
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n/a
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Uniplay
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n/a
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Transparent protocol text file loader
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n/a
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Reserved bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n/a
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Reserved bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n/a
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+MC4xx protocol text file loader 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n/a
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+It is not possible to disable any port marked as n/a. 
+</p>
+<h2>Example 1:</h2>
+<p>
+Disable the Modbus TCP port until it has been set up for 32
+bit data size in the BASIC startup program.
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+a)
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>In the MC_CONFIG set: 
+</p>
+<p class="codeexample">
+IP_PROTOCOL_CTRL = 4
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+b)
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>In the Startup BASIC program set: 
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 0, 2, 1) '32 bit integer support
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 0, 1, 4) 'Data to/from TABLE memory
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 0, 6, 1) 'Use &quot;Address
+Halving&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+IP_PROTOCOL_CTRL = 0 'Start the Modbus TCP protocol
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>Example 2:</h2>
+<p>
+Disable the Ethernet IP port until the data end-points have
+been set up in the BASIC startup program.
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+a)
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>In the MC_CONFIG set: 
+</p>
+<p class="codeexample">
+IP_PROTOCOL_CTRL = 8
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+b)
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>In the Startup BASIC program set: 
+</p>
+<p class="codeexample">
+'--Config *PLC INPUT* Instance (100), data to PLC from
+Trio.
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 1, 0, 200) '200 = set VR starting
+address
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 1, 1, 3) '3 = use VR for data location
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 1, 2, 1) '1 = use 32 bit integer data 
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 1, 3, 120) '120 = number of data
+values
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'--Config *PLC OUTPUT* Instance (101), data from PLC to
+Trio.
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 2, 0, 400) '400 = set VR starting
+address
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 2, 1, 3) '3 = use VR for data location
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 2, 2, 1) '1 = use 32 bit integer data 
+</p>
+<p class="codeexample">
+ETHERNET(1, -1, 14, 2, 3, 120) '120 = number of data
+values
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'-------------------------------------------------------------
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+IP_PROTOCOL_CTRL = 0 'enable Ethernet IP
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,283 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SYNC_TO_OBJECT_FRAME</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SYNC_TO_OBJECT_FRAME">
+</head>
+<body>
+<h1>SYNC_TO_OBJECT_FRAME</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+SYNC_TO_OBJECT_FRAME(control, time[, object frame, GTA])
+</p>
+<h2>Description:</h2>
+<p class="MsoNoSpacing">
+It is possible to synchronise the robot TCP with a moving
+object or with another machine or robot. This means the robot TCP will move or
+rotate in the same directions than the synchronised object and absolute
+movements on top of it.
+</p>
+<p class="MsoNoSpacing">
+There are two types of synchronisations:
+</p>
+<p class="MsoNoSpacing" style="margin-left:36.0pt;text-indent: -18.0pt">
+1.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Object frame synchronisation 
+</p>
+<p class="MsoNoSpacing" style="margin-left:36.0pt;text-indent: -18.0pt">
+2.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>GTA synchronisation
+</p>
+<p>
+For object frame synchronisation, an object frame must be
+attached to at least an axis first before the robot can synchronise with.
+</p>
+<p class="note">
+As synchronisation and attachment process do not get loaded into
+the move buffer, they are not cancelled by CANCEL or RAPIDSTOP commands. A
+desynchronisation or detachment process must be performed for this purpose.
+When a software or hardware limit is reached, synchronisation and attachment
+are immediately stopped without deceleration.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Data type
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+control
+</p>
+
+  
+</td>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+1 = Start synchronisation
+</p>
+
+  
+<p>
+4 = Stop synchronisation. 
+</p>
+
+  
+<p class="tablecontent">
+10 = Resynchronisation to another attached object frame
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+time
+</p>
+
+  
+</td>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Time to complete the synchronisation in milliseconds.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(optional) object frame
+</p>
+
+  
+</td>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer/String
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Object frame already attached. 
+</p>
+
+  
+<p>
+Value = index or name of the object frame. 
+</p>
+
+  
+<p>
+Not needed for control 4 (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(optional) 
+<em><span style='font-family:"Calibri",sans-serif'>GTA</span></em></p>
+
+  
+</td>
+<td width="50" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer/String
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+GTA related to the object frame synchronised. 
+</p>
+
+  
+<p>
+Value = index or name of GTA, or -1 for no GTA. 
+</p>
+
+  
+<p>
+Not needed for control value 4 (Stop synchronisation).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></em></p>
+<p>
+<i><img width="646" height="336" id="Canvas 24" src="RPS_SYNC_TO_OBJECT_FRAME_files/image001.png">
+</i></p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>After having attached the Object Frame onto the pallet, the
+robot has to be synchronised with the Object Frame and, in this particular
+case, placed over a specific object (GTA related to the Object Frame “pallet”
+previously taught).</span></em></p>
+<p class="codeexample">
+SYNC_TO_OBJECT_FRAME
+(
+1
+,
+1000
+, 
+&quot;pallet&quot;
+, 
+&quot;object_1&quot;
+)
+</p>
+<h3><em><span style='font-family:"Cambria",serif'>Example 2:</span></em></h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Stop synchronisation within 250ms.</span></em></p>
+<p class="codeexample">
+SYNC_TO_OBJECT_FRAME
+(
+4
+, 
+250
+)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_ATTACH_OBJECT_FRAME.html">ATTACH_OBJECT_FRAME</a>
+,
+
+<a href="RPS_SYNC_TO_GTA.html">SYNC_TO_GTA</a>
+</p>
+</body>
+</html>

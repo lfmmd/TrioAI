@@ -1,0 +1,167 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>: Colon</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>: - Colon</h1>
+<h2>Type:</h2>
+<p class="Category">
+Special Character
+</p>
+<h2>Description:</h2>
+<p>
+The colon character is used as a label terminator and as a
+command separator.
+</p>
+<h2>Label Terminator</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+label:
+</p>
+<h3>Description:</h3>
+<p>
+The colon character is used to terminate labels used as
+destinations for 
+<a href="GOTO.html">GOTO</a>
+ and 
+<a href="GOSUB.html">GOSUB</a>
+
+commands.
+</p>
+<p class="tip">
+Labels can also be used to aid readability of code.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Label
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+may be character strings of any length but only the
+  first 32 characters are significant. Labels must be the first item on a line
+  and should have no leading spaces.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Use an ON…
+<a href="GOTO.html">GOTO</a>
+ structure to assign a
+value into VR 10 depending on a local variable ‘attempts’.
+</p>
+<p class="codeexample">
+ON attempts GOTO label1, label2, label3
+</p>
+<p class="codeexample">
+GOTO continue
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+label1:
+</p>
+<p class="codeexample">
+VR(10)=1
+</p>
+<p class="codeexample">
+GOTO continue
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+Label2:
+</p>
+<p class="codeexample">
+VR(10)=5
+</p>
+<p class="codeexample">
+GOTO continue
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+Label3:
+</p>
+<p class="codeexample">
+VR(10)=2
+</p>
+<p class="codeexample">
+GOTO continue
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+continue:
+</p>
+<h2>Command Seperator</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+statement: statement
+</p>
+<h3>Description:</h3>
+<p>
+The colon is also used to separate TrioBASIC statements on a
+multi-statement line. 
+</p>
+<h3>Parameters:</h3>
+<p>
+Statement: any valid TrioBASIC statement. The colon
+separator must not be used after a THEN command in a multi-line IF..THEN
+construct.
+</p>
+<p class="warning">
+If a multi-statement line contains a GOTO the remaining
+statements will not be executed. Similarly with GOSUB because subroutine calls
+return to the following line. 
+</p>
+<h3>Examples:</h3>
+<h4>Example 1:</h4>
+<p>
+Use of 
+<a href="GOTO.html">GOTO</a>
+ in the line means that
+any command following it will never be executed. This can be used as a
+debugging technique but usually happens due to a programming error.
+</p>
+<p class="codeexample">
+PRINT &quot;Hello&quot;:GOTO Routine:PRINT
+&quot;Goodbye&quot;
+</p>
+<p>
+“Goodbye” will not be printed.
+</p>
+<h4>Example 2:</h4>
+<p>
+Set the speed, a position in the table and execute a move
+all in one line. 
+</p>
+<p class="codeexample">
+SPEED=100:TABLE(10,123):MOVE(TABLE(10)
+</p>
+</body>
+</html>

@@ -1,0 +1,2035 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FILE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FILE">
+</head>
+<body>
+<h1>FILE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = FILE &quot;function&quot; [parameters]
+</p>
+<h2>Description:</h2>
+<p>
+This command enables the user to manage the data on the SD Card.
+</p>
+<p class="tip">
+When the command prints to the selected channel, this channel can
+be selected using 
+<a href="OUTDEVICE.html">OUTDEVICE</a>
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="25" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+function:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_CD:">CD</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Change directory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_COMPARE:">COMPARE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Compare two files
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_COPY:_1">COPY</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Copy a file
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_CRC16:">CRC16</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Print the CRC-16 (Cyclic Redundancy Check) of the file.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_DEL:">DEL</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Delete a file
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_DETECT:">DETECT</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Check for SD Card
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_DISK_FREE:">DISK_FREE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Get the amount of free space on the SD card
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_DISK_SIZE:">DISK_SIZE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Get the SD card size
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_DIR:">DIR</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Print the current directory contents
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_FIND_CLOSE:">FIND_CLOSE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ends the find session
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_FIND_FIRST:">FIND_FIRST</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Finds the first entry in the directory structure of the
+  specified file type
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_FIND_NEXT:">FIND_NEXT</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Finds the next entry in the directory structure of the
+  specified file type
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_FIND_PREV:">FIND_PREV</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Finds the previous entry in the directory structure of
+  the specified file type
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_FORMAT:">FORMAT</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Format the SD card using the FAT32 structure
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_LOAD_PROGRAM:">LOAD_PROGRAM</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Loads the specified program to the controllers memory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_LOAD_PROJECT:">LOAD_PROJECT</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Loads the specified project into the controllers memory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_LOAD_SYSTEM:">LOAD_SYSTEM</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Loads the specified firmware into the controller
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_MD:">MD</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Make (create) a directory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_PWD:">PWD</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Prints the working (current) directory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_RD:">RD</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Remove (delete) a directory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_REN:">REN</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rename a file
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_SAVE_PROGRAM:">SAVE_PROGRAM</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Saves the specified program to the SD Card
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_SAVE_PROJECT:">SAVE_PROJECT</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Saves all programs from the controller to the SD Card
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_SIZE:">SIZE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Return the size of a file on the SD Card
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_TYPE:">TYPE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Prints the selected file
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameters:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+dependent on the function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+returns 
+<a href="TRUE.html">TRUE</a>
+ if the function
+  was successful otherwise returns 
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+<a name="_Function_=_CD:"></a>
+When the FILE command is used in
+the Motion Perfect terminal 0, it does not return a value.  Instead, it reports
+an error message to the terminal.
+</p>
+<h2>Function = CD:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;CD&quot; &quot;directory&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Change to the given directory. There is one active directory
+on the controller all SD Card commands are relative to this directory.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+directory:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+string
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the child directory to move to
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+\\
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Move to the root directory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+..
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Move up one level to the parent directory
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<h4>Example 1</h4>
+<p>
+Use the command line to change to a new directory
+</p>
+<p class="codeexample">
+&gt;&gt;file &quot;CD&quot; &quot;new_directory&quot;
+</p>
+<p class="codeexample">
+OK \NEW_DIRECTORY
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h4>Example 2</h4>
+<p>
+Use the command line to change to a new directory 3 levels
+below
+</p>
+<p class="codeexample">
+&gt;&gt;file &quot;CD&quot; &quot;
+project1\\project2\\project3&quot;
+</p>
+<p class="codeexample">
+OK \PROJECT1\PROJECT2\PROJECT3
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h4>Example 3</h4>
+<p>
+Use the command line to move to the root directory
+</p>
+<p class="codeexample">
+&gt;&gt;file &quot;CD&quot; &quot;\\&quot;
+</p>
+<p class="codeexample">
+OK \
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="_Function_=_DEL:"></a>
+<a name="_Function_=_COPY:"></a>
+<a name="_Function_=_COMPARE:"></a>
+Function = COMPARE:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;COMPARE&quot; &quot;file1&quot; &quot;file2&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Compare the file named in string “file1” with the file given
+the name in string “file2”. If the files are identical, TRUE is returned (-1),
+otherwise FALSE is returned (0).
+</p>
+<p class="note">
+Files may only be compared that are in the same directory (folder).
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+File1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the first file, including the file’s
+  extension
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+File2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the second file, including the file’s
+  extension
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Compare the files DATA1.TXT and DATA2.TXT.
+</p>
+<p class="codeexample">
+DIM filesSame AS BOOLEAN
+</p>
+<p class="codeexample">
+filesSame = FILE &quot;COMPARE&quot; &quot;DATA1.TXT&quot;
+&quot;DATA2.TXT&quot;
+</p>
+<p class="codeexample">
+IF filesSame THEN
+</p>
+<p class="codeexample">
+   PRINT &quot;Files are identical&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+   PRINT &quot;Files are different&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2><a name="_Function_=_COPY:_1"></a>
+Function = COPY:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;COPY&quot; &quot;file1&quot; &quot;file2&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Copy the file named in string “file1” to a new file given
+the name in string “file2”.
+</p>
+<p class="note">
+Files may only be copied to the same directory (folder) as the
+source file.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+File1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the source file, you must include the file
+  extension
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+File2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name for the copy file including the extension
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Create a copy of a Text file on the SD Card.  The copy will
+be in the same directory as the original.
+</p>
+<p class="codeexample">
+FILE &quot;COPY&quot; &quot;13OKLZ-9.TXT&quot;
+&quot;13OKLZ-A.TXT&quot;
+</p>
+<h2><a name="_Function_=_CRC16:"></a>
+Function = CRC16:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;CRC16&quot; &quot;file&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Print the CRC-16 of the given file inside the current
+directory to the current output channel.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+file:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the file to have its CRC-16 computed
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Display the CRC-16 of the STARTUP.BAS file using the command
+line.
+</p>
+<p class="codeexample">
+&gt;&gt;FILE &quot;CRC16&quot; &quot;STARTUP.bas&quot;
+</p>
+<p class="codeexample">
+51612
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p>
+An example of how to obtain the CRC as a value is given in 
+<a href="OUTDEVICE.html">OUTDEVICE</a>
+.
+</p>
+<h2>Function = DEL:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;DEL&quot; &quot;file&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Delete the given file inside the current directory.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+file:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the file to be deleted, you must include
+  the file extension
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Delete a BASIC program from the SD Card using the command
+line.
+</p>
+<p class="codeexample">
+&gt;&gt;FILE &quot;DEL&quot; &quot;STARTUP.bas&quot;
+</p>
+<p class="codeexample">
+OK
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="_Function_=_DETECT:"></a>
+<a name="_Function_=_DISK_FREE:"></a>
+Function
+= DISK_FREE:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;DISK_FREE&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Returns the amount of free memory on the SD card in bytes as
+an integer value.
+</p>
+<h3>Example:</h3>
+<p>
+Check size of the inserted SD card.
+</p>
+<p class="codeexample">
+DIM sd_free AS INTEGER
+<br>
+
+sd_free = FILE &quot;DISK_FREE&quot;
+</p>
+<p class="codeexample">
+PRINT &quot;SD card Free memory = &quot;; sd_free / 1024;&quot;
+kB&quot;
+</p>
+<h2><a name="_Function_=_DISK_SIZE:"></a>
+Function = DISK_SIZE:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;DISK_SIZE&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Returns the size of the SD Card in Bytes as an Integer
+value.
+</p>
+<h3>Example:</h3>
+<p>
+Check size of the inserted SD card.
+</p>
+<p class="codeexample">
+DIM sd_size AS INTEGER
+<br>
+
+sd_size = FILE &quot;DISK_SIZE&quot;
+</p>
+<p class="codeexample">
+IF sd_size &lt; 30000000000 THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Please insert 32GB or greater&quot;
+<br>
+
+ENDIF
+</p>
+<h2>Function = DETECT:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;DETECT&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Checks if a SD Card is present in the slot
+</p>
+<h3>Return Value:</h3>
+<p>
+<a href="TRUE.html">TRUE</a>
+ if an SD Card is detected
+correctly, otherwise 
+<a href="FALSE.html">FALSE</a>
+.
+</p>
+<h3>Example:</h3>
+<p>
+Check if an SD card is present before saving the table data.
+</p>
+<p class="codeexample">
+IF FILE &quot;DETECT&quot; THEN
+</p>
+<p class="codeexample">
+  STICK_WRITE(1501, 1000, 2000, 0)
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2><a name="_Function_=_DIR:"></a>
+Function = DIR:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;DIR&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Print the contents of the current directory to the current
+output channel.
+</p>
+<h3>Example:</h3>
+<p>
+Print the contents of the SD card on the command line.
+</p>
+<p class="codeexample">
+&gt;&gt;FILE &quot;DIR&quot;
+</p>
+<p class="codeexample">
+ Volume is NO NAME    
+</p>
+<p class="codeexample">
+ Volume Serial Number is 00C8-B79F
+</p>
+<p class="codeexample">
+ Directory of \
+</p>
+<p class="codeexample">
+07/Aug/2009 15:50    1169978 MC60CC~1.OUT MC464_20055__BOOT_013.out
+</p>
+<p class="codeexample">
+20/Nov/2009 15:25 &lt;DIR&gt;      MC464_~1    
+MC464_Panasonic_Home
+</p>
+<p class="codeexample">
+16/Feb/2009 13:16       1619 TRIOINIT.BAS
+TRIOINIT.BAS
+</p>
+<p class="codeexample">
+20/Nov/2009 15:21 &lt;DIR&gt;      SHOW1        Show1
+</p>
+<p class="codeexample">
+07/Jan/2000 04:54 &lt;DIR&gt;      NEW_DI~1     NEW_DIRECTORY
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="_Function_=_FIND_FIRST:"></a>
+<a name="_Function_=_FIND_CLOSE:"></a>
+Function
+= FIND_CLOSE:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;FIND_CLOSE&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Closes the internal FIND structure. Use when you have
+finished with FIND_NEXT and FIND_PREVIOUS.
+</p>
+<h2>Function = FIND_FIRST:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;FIND_FIRST&quot;, type, vr_index
+</p>
+<h3>Description:</h3>
+<p>
+Initialises the internal FIND structures and locates the
+first directory entry of the given type. The found directory entries name is
+stored in a 
+<a href="VRSTRING.html">VRSTRING</a>
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+ if a directory entry is
+  found otherwise 
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+type:
+</p>
+
+  
+</td>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="385" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FILE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="39" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="385" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DIRECTORY
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start position in 
+<a href="VR.html">VR</a>
+ memory
+  where the 
+<a href="VRSTRING.html">VRSTRING</a>
+ is stored
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If there is an error initialising the internal FIND structures
+then the function returns 
+<a href="FALSE.html">FALSE</a>
+.
+</p>
+<h2><a name="_Function_=_FIND_NEXT:"></a>
+Function = FIND_NEXT:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;FIND_NEXT&quot;, vr_index
+</p>
+<h3>Description:</h3>
+<p>
+Finds the next directory entry of the type given in the
+corresponding 
+<a href="#_Function_=_FIND_FIRST:">FIND_FIRST</a>
+ command. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+ if a directory entry is
+  found otherwise 
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start position in 
+<a href="VR.html">VR</a>
+ memory
+  where the 
+<a href="VRSTRING.html">VRSTRING</a>
+ is stored
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If there is an error initialising the internal FIND structures
+then the function returns 
+<a href="FALSE.html">FALSE</a>
+.
+</p>
+<h2><a name="_Function_=_FIND_PREV:"></a>
+Function = FIND_PREV:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE  &quot;FIND_PREV&quot;, vr_index
+</p>
+<h3>Description:</h3>
+<p>
+Finds the previous directory entry of the type given in the
+corresponding 
+<a href="#_Function_=_FIND_FIRST:">FIND_FIRST</a>
+ command.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+ if a directory entry is
+  found otherwise 
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start position in 
+<a href="VR.html">VR</a>
+ memory
+  where the 
+<a href="VRSTRING.html">VRSTRING</a>
+ is stored
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If there is an error initialising the internal FIND structures
+then the function returns 
+<a href="FALSE.html">FALSE</a>
+.
+</p>
+<h2><a name="_Function_=_LOAD_PROGRAM:"></a>
+<a name="_Function_=_FORMAT:"></a>
+Function
+= FORMAT:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;FORMAT&quot; &quot;volume_name&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Format the SD card using the FAT32 standard.  Note that this
+operation will erase all files on the SD card.  The text given in &quot;volume_name&quot;
+will be applied to the card name.  Only alpha-numeric and underscore ( _ )
+characters may be used.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+volume_name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name to be used as the top level name for the card. 
+  Maximum 11 characters.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<h4>Example 1</h4>
+<p>
+Format a new SD card and give it a volume name.
+</p>
+<p class="codeexample">
+&gt;&gt;FILE &quot;FORMAT&quot; &quot;MACHINE_1&quot;
+</p>
+<p class="codeexample">
+100%
+</p>
+<p class="codeexample">
+OK
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>Function = LOAD_PROGRAM:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;LOAD_PROGRAM&quot; &quot;file&quot; [&quot;txt&quot;]
+</p>
+<h3>Description:</h3>
+<p>
+Load the given program into the 
+<i>Motion Coordinator</i>.  If
+the optional &quot;txt&quot; string is left off then the command will load a
+.BAS file to a BASIC program.  If the &quot;txt&quot; is present then the
+target file will be loaded into the Motion Coordinator as a program type Text.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+file:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the file that you wish to load.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+<a name="_Function_=_LOAD_PROJECT:"></a>
+If Motion Perfect is
+connected in Synchronised mode then the firmware will prevent a file being
+loaded in this way.  To allow files to be loaded during development, run the
+function COORDINATOR_DATA(53, 1) ' allow files to be loaded while in Sync
+connection mode to MPv4.
+</p>
+<p class="note">
+After file load, it will be necessary to re-sync Motion Perfect
+to the project.
+</p>
+<h2>Function = LOAD_PROJECT:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;LOAD_PROJECT&quot; &quot;name&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Read the given 
+<i>Motion</i> Perfect project file and load
+all the programs into the 
+<i>Motion Coordinator</i>, once loaded any 
+<a href="RUNTYPE.html">RUNTYPE</a>
+s are automatically set.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the project that you wish to load.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2><a name="_Function_=_LOAD_SYSTEM:"></a>
+Function = LOAD_SYSTEM:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;LOAD_SYSTEM&quot; &quot;name&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Loads system firmware onto the controller.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the firmware file that you wish to load.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+Loading incorrect firmware can prevent your controller from
+operating
+</p>
+<p class="note">
+The name of the system file specified in the command should not
+include the extender, as “.OUT” is assumed and automatically added
+</p>
+<h2><a name="_Function_=_RD:"></a>
+<a name="_Function_=_MD:"></a>
+Function = RD:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;RD&quot; &quot;name&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Delete the given directory inside the current directory.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the directory that you wish to delete.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_REN:"></a>
+Function = REN:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;REN&quot; &quot;old-name&quot;
+&quot;new-name&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Rename a file.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+old-name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The old/existing name of the file you wish to rename.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+new-name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The new name that you would like the file to have.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Function = MD:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;MD&quot; &quot;name&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Create the given directory inside the current directory.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the directory that you wish to create.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+Using the command line create a new directory.
+</p>
+<p class="codeexample">
+&gt;&gt;FILE &quot;MD&quot; &quot;new_directory&quot;
+</p>
+<p class="codeexample">
+OK
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2><a name="_Function_=_PWD:"></a>
+Function = PWD:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;PWD&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Prints the working directory (the directory currently
+within) to the current output channel.
+</p>
+<h2><a name="_Function_=_SAVE_PROGRAM:"></a>
+Function = SAVE_PROGRAM:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;SAVE_PROGRAM&quot; &quot;name&quot; [&quot;extension&quot;]
+</p>
+<h3>Description:</h3>
+<p>
+Save the named file from the controller’s memory to the SD
+card. If the extension is omitted then the default file extensions BAS, TXT or
+TEMP are used. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The name of the file that you wish to save to the SD Card.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+extension:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Optional to define the file extension to be used
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_SAVE_PROJECT:"></a>
+Function = SAVE_PROJECT:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;SAVE_PROJECT&quot; &quot;name&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Create a 
+<i>Motion</i> Perfect project with the given name
+inside the current directory. This implies creating the directory and the
+corresponding project and program files within this directory. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the project that you are creating on the SD
+  Card
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_TYPE:"></a>
+<a name="_Function_=_SIZE:"></a>
+Function =
+SIZE:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;SIZE&quot; &quot;name&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Get the size of the named file in bytes.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the file on the SD Card
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Function = TYPE:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = FILE &quot;TYPE&quot; &quot;name&quot;
+</p>
+<h3>Description:</h3>
+<p>
+Read the contents of the file inside the current directory
+and print it to the current output channel.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the file that you wish to print
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See also </h2>
+<p>
+<a href="OUTDEVICE.html">OUTDEVICE</a>
+, 
+<a href="STICK_READ.html">STICK_READ</a>
+, 
+<a href="STICK_WRITE.html">STICK_WRITE</a>
+,
+
+<a href="STICK_READVR.html">STICK_READVR</a>
+, 
+<a href="STICK_WRITEVR.html">STICK_WRITEVR</a>
+</p>
+</body>
+</html>

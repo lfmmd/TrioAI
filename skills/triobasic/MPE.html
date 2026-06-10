@@ -1,0 +1,220 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MPE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MPE">
+</head>
+
+
+
+<body>
+<h1>MPE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MPE(mode)
+</p>
+<h2>Description:</h2>
+<p>
+Sets the type of channel handshaking to be performed on the command
+line. 
+</p>
+<p class="note">
+This is normally only used by the Motion Perfect program, but can
+be used for user applications with the PCMotion ActiveX control in asynchronous
+mode. 
+</p>
+<p class="warning">
+There is only one Command Line process.  If Trio PCMotion
+connects and uses the Motion Perfect command line port, then Motion Perfect
+will not be able to connect at the same time.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+No protocol.  Motion Perfect is in Direct Mode or not
+  connected.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+No longer used.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+No longer used. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Motion Perfect version 3 connected in either tool or
+  synchronised mode. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Motion Perfect version 4 connected in tool mode.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Motion Perfect version 4 connected in synchronised mode.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Check the mode before attempting to reset the Motion
+Coordinator.
+</p>
+<p class="codeexample">
+IF MPE = 0 THEN
+</p>
+<p class="codeexample">
+  ' OK to reset the controller
+</p>
+<p class="codeexample">
+  EX
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT #5,&quot;Cannot reset when Motion Perfect is
+connected&quot;
+</p>
+<p class="codeexample" style="margin-left:0cm">
+  ENDIF
+</p>
+<h2>See also:</h2>
+<p>
+<a href="MPE_MODE.html">MPE_MODE</a>
+</p>
+</body>
+
+
+
+</html>

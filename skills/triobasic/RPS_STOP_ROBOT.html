@@ -1,0 +1,145 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STOP_ROBOT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STOP_ROBOT">
+</head>
+<body>
+<h1>STOP_ROBOT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+STOP_ROBOT(identity)
+</p>
+<h2>Description:</h2>
+<p>
+This command cancels all moves, clears buffers and stops
+process belonging from the selected robot index. It can be invoked from other
+processes, making it possible to control a robot or group of robots from a main
+program. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+identity:            
+</p>
+
+  
+</td>
+<td width="350" valign="top" class="tablegrid">
+
+  
+<p>
+Robot identity number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Move robot 0 between 2 defined points whilst input 303 is
+active. When input 296 is active, stop the robot move and cancel all buffered
+moves.
+</p>
+<p class="codeexample">
+ROBOT
+(
+0
+)
+<br>
+
+
+<br>
+
+
+WHILE
+ IN
+(
+303
+) = 
+ON
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MOVEJ
+ GTA
+(
+&quot;pInfeed_pt1&quot;
+)
+S:=
+10
+ O:=
+&quot;infeed&quot;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+MOVEJ
+ GTA
+(
+&quot;pOutfeed_pt1&quot;
+)
+S:=
+10
+ O:=
+&quot;outfeed&quot;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ IN
+(
+296
+) = 
+ON
+ THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+STOP_ROBOT
+(
+0
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ENDIF
+<br>
+
+
+WEND
+<br>
+
+
+<br>
+
+
+ROBOT
+(-
+1
+)
+</p>
+<h2>See Also:</h2>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

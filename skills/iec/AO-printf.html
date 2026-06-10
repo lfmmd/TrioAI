@@ -1,0 +1,227 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>printf</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="printf">
+</head>
+<body>
+<h1><a name="_Toc317749506"></a>
+<a name="O_1710"></a>
+printf</h1>
+<p class="Category">
+Function
+</p>
+<p>
+Display a trace output.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>FMT</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>STRING</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Trace message.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>ARG1..ARG4</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>DINT</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Numerical arguments to be included in the trace.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Q</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Return check.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+This function works as the famous &quot;printf&quot;
+function of the &quot;C&quot; language, with up to 4 integer arguments. You can
+use the following pragmas in the FMT trace message to represent the arguments
+according to their left to the right order:
+</p>
+<p>
+%ld      signed value in decimal
+<br>
+
+%lu      unsigned value in decimal
+<br>
+
+%lx       value in hexadecimal
+</p>
+<p>
+The trace message is displayed in the LOG window with
+runtime messages. Trace is supported by the simulator.
+</p>
+<p class="warning">
+Your target platform may not support trace functions. Please
+refer to OEM instructions for further details on available features.
+</p>
+<h2>Example</h2>
+<p class="codeexample">
+<span class="CodeComment">(* i1, i2, i3, i4 are declared as DINT *)</span><br>
+
+
+<span class="STCode">i1 := 1;</span><br>
+
+
+<span class="STCode">i2 := 2;</span><br>
+
+
+<span class="STCode">i3 := 3;</span><br>
+
+
+<span class="STCode">i4 := 4;</span><br>
+
+
+<span class="STCode">printf ('i1=%ld; i2=%ld;
+i3=%ld; i4=%ld', i1, i2, i3, i4);</span></p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+Output message:
+</p>
+<p>
+i1=1; i2=2; i3=3; i4=4;
+</p>
+</body>
+</html>

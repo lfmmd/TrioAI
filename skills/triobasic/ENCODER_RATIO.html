@@ -1,0 +1,192 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENCODER_RATIO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENCODER_RATIO">
+</head>
+<body>
+<h1>ENCODER_RATIO</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ENCODER_RATIO(mpos_count, input_count)
+</p>
+<h2>Description:</h2>
+<p>
+This command allows the incoming encoder count to be scaled
+by a non integer ratio:
+</p>
+<p>
+<a href="MPOS.html">MPOS</a>
+ = (mpos_count / input_count) x
+encoder_edges_input
+</p>
+<p class="warning">
+When using the servo loop you will need to adjust the gains to
+maintain performance and stability. 
+</p>
+<p>
+Unlike the 
+<a href="UNITS.html">UNITS</a>
+ parameter, which
+only affects the scaling seen by the user programs, ENCODER_RATIO affects all
+motion commands.
+</p>
+<p class="note">
+ENCODER_RATIO does not replace 
+<a href="UNITS.html">UNITS</a>
+. 
+Only use ENCODER_RATIO where absolutely necessary.  
+<a href="PP_STEP.html">PP_STEP</a>
+
+and ENCODER_RATIO cannot be used at the same time on the same axis.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mpos_count:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+An integer number which defines the numerator 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+input_count:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+An integer number which defines the denominator
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Large ratios should be avoided as they will lead to either loss
+of resolution or much reduced smoothness in the motion.  The actual physical
+encoder count is the basic resolution of the axis and use of this command may
+reduce the ability of the Motion Coordinator to accurately achieve all
+positions.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A rotary table has a servo motor connected directly to its
+centre of rotation.  An encoder is mounted to the rear of the servo motor and
+returns a value of 8192 counts per rev.  The application requires the table to
+be calibrated in degrees so that each degree is an integer number of counts.
+</p>
+<p>
+As 8192 cannot be exactly divided into 360 ENCODER_RATIO is
+used to adjust the encoder feedback.
+</p>
+<p>
+The highest value that is less than 8192 yet divides into
+360 should be chosen. This is 7200 (7200 / 20 = 360). This reduces the
+resolution from 0.044 to 0.055 degrees, but enables you to program easily in
+degrees. 
+</p>
+<p class="codeexample">
+ENCODER_RATIO(7200,8192) 
+</p>
+<p class="codeexample">
+UNITS = 20 ‘ axis calibrated in degrees
+</p>
+<h3>Example 2:</h3>
+<p>
+An X-Y system has 2 different gearboxes on its vertical and
+horizontal axes.  The software needs to use interpolated moves, including 
+<a href="MOVECIRC.html">MOVECIRC</a>
+ and MUST therefore have 
+<a href="UNITS.html">UNITS</a>
+
+on the 2 axes set the same.  Axis 3 (X) is 409 counts per mm and axis 4 (Y) has
+560 counts per mm.  So as to use the maximum resolution available, set both
+axes to be 560 counts per mm with the ENCODER_RATIO command.
+</p>
+<p class="codeexample">
+ENCODER_RATIO(560,409) AXIS(3) 'axis 3 is now 560
+counts/mm
+</p>
+<p class="codeexample">
+UNITS AXIS(3) = 56 'X axis calibrated in mm x 10
+</p>
+<p class="codeexample">
+UNTIS AXIS(4) = 56 'Y axis calibrated in mm x 10
+</p>
+<p class="codeexample">
+MOVECIRC(200,100,100,0,1) 'move axes in a semicircle
+</p>
+<h3>Example 3:</h3>
+<p>
+Set up an axis to work in the reverse direction.  For a
+servo axis, both the ENCODER_RATIO and the DAC_SCALE must be set to minus
+values.
+</p>
+<p class="codeexample">
+BASE(5) ' set axis 5 to work in reverse direction
+</p>
+<p class="codeexample">
+DAC_SCALE = -1
+</p>
+<p class="codeexample">
+ENCODER_RATIO(-1,1)
+</p>
+<h3>Example 4:</h3>
+<p>
+Set up a digital position control axis, for example EtherCAT
+Position, to work in the reverse direction.  For an axis where the servo-drive
+closes the position loop, both the ENCODER_RATIO and the STEP_RATIO must be set
+to minus values.
+</p>
+<p class="codeexample">
+BASE(30) ' set axis 30 to work in reverse direction
+</p>
+<p class="codeexample">
+ENCODER_RATIO(-1,1)
+</p>
+<p class="codeexample">
+STEP_RATIO(-1,1)
+</p>
+<h2>See also:</h2>
+<p>
+<a href="STEP_RATIO.html">STEP_RATIO</a>
+, 
+<a href="DAC_SCALE.html">DAC_SCALE</a>
+</p>
+</body>
+</html>

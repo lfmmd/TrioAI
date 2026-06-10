@@ -1,0 +1,358 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TARGETE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TARGETE">
+</head>
+<body>
+<h1>TARGETE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Type
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+DIM &lt;var-list&gt; AS TARGETE
+</p>
+<p class="codeexample">
+&lt;target-variable&gt; = x, y, z, u, v, w, ptype, rnum,
+rconf, revs, of, tool, rf, userdata
+</p>
+<p class="codeexample">
+&lt;target-variable&gt; = &lt;target-variable&gt;
+</p>
+<h2>Description:</h2>
+<p>
+TARGETE is an extended version of 
+<a href="RPS_TARGET.html">TARGET</a>
+
+datatype able to store additional data, and is used in robotics move commands,
+such as 
+<a href="RPS_MOVEC.html">MOVEC</a>
+, 
+<a href="RPS_MOVEJ.html">MOVEJ</a>
+
+and 
+<a href="RPS_MOVEL.html">MOVEL</a>
+. TARGETE variables are for local use
+only and can be defined just as other variables in a program. For global use,
+use the global target array (see 
+<a href="RPS_GTAE.html">GTAE</a>
+). 
+</p>
+<p class="MsoNoSpacing">
+It is possible to have an array of local targets by
+defining the dimensions it in the declaration statement:
+</p>
+<p class="codeexample">
+DIM targetArray AS TARGETE(12)
+</p>
+<p>
+It is possible read from and write into the target’s
+elements using the ‘dot’ notation (“.”) as shown in the table below:
+</p>
+<p class="codeexample">
+my_variable = my_target.x
+</p>
+<p class="codeexample">
+my_target.y = 12.2
+</p>
+<p class="MsoNoSpacing">
+Assignment between targets, both local and global, is
+possible:
+</p>
+<p class="codeexample">
+GTAE(20) = GTAE(14)
+</p>
+<p class="codeexample">
+GTAE(10).x = GTAE(11).x
+</p>
+<p class="codeexample">
+my_target_1 = GTAE(10)
+</p>
+<p class="codeexample">
+GTAE(11) = my_target_2
+</p>
+<p class="note">
+TARGETE requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+.
+
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="177" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td width="397" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+x, y, z, u, v , w:
+  Float
+</p>
+
+  
+</td>
+<td width="397" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cartesian position (mm) and orientation (degrees), or
+  joint positions (mm or degrees as required by the robot type).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+ptype: Integer
+</p>
+
+  
+</td>
+<td width="397" class="tablegrid">
+
+  
+<p class="tablecontent">
+Point type. 
+</p>
+
+  
+<p class="tablecontent">
+Value:  0 = cartesian, 1 = joint.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+rnum: Integer
+</p>
+
+  
+</td>
+<td width="397" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot number used for the target.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+rconf: Integer
+</p>
+
+  
+</td>
+<td width="397" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot configuration setup for the target.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+revs: Integer
+</p>
+
+  
+</td>
+<td width="397" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last axis revolution value from calibration point when
+  target was taken.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+of: Integer
+</p>
+
+  
+</td>
+<td width="397" class="tablegrid">
+
+  
+<p class="tablecontent">
+Object frame used for the target.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+tool: Integer
+</p>
+
+  
+</td>
+<td width="397" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool offset used for the target.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+rf: Integer
+</p>
+
+  
+</td>
+<td width="397" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot frame used for the target.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="177" class="tablegrid">
+
+  
+<p class="tablecontent" align="right">
+userdata: Float
+</p>
+
+  
+</td>
+<td width="397" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any useful numeric value can be stored here.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The naming convention x, y, z, u, v, w was chosen to reflect
+Cartesian coordinates, as this was originally their sole purpose. While joint
+targets expanded this capability (see 
+<a href="RPS_TARGETJ.html">TARGETJ</a>
+),
+the TARGETE data-type extends it further to encompass Cartesian, joint and
+user-defined point types, while retaining the same naming convention for the
+positions.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Define an array of 2 extended targets.
+</p>
+<p class="codeexample">
+DIM targets AS TARGETE(2)
+<br>
+
+targets(0) = 104, -400, -29, 180, 0, -68, 0, 2, 0, 10, 3, 13, 23, 69.420
+<br>
+
+targets(1) = 114, -410, -29, 180, 0, -68, 0, 2, 0, 10, 3, 13, 23, 79.420
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_GTA.html">GTA</a>
+, 
+<a href="RPS_GTAE.html">GTAE</a>
+,
+
+<a href="RPS_GTAJ.html">GTAJ</a>
+, 
+<a href="RPS_TARGET.html">TARGET</a>
+, 
+<a href="RPS_TARGETJ.html">TARGETJ</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

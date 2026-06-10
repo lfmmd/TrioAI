@@ -1,0 +1,1859 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>USER_PID</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="USER_PID">
+</head>
+<body>
+<h1>USER_PID</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax</h2>
+<p class="fixed">
+USER_PID(mode, input data VR index, output data VR index)
+</p>
+<h2>Description:</h2>
+<p>
+The USER_PID is a PID function for general purpose use. The
+function mirrors the PID found in a typical IEC 61131-3 PLC programming system.
+The function uses global variables (VR) to pass input, output, and control
+values to the USER_PID.
+</p>
+<p>
+In 
+<b>Mode 1</b>, the USER_PID runs one
+cycle each time it is called from a BASIC program. It is designed to be used in
+a program loop with a consistent, repeatable period. Increasing the value of 
+<b>TS</b>
+reduces the update frequency of the PID output values. However, unless you add
+a WA delay in the loop, the controller will still call USER_PID continuously,
+which can waste CPU resources.
+</p>
+<p class="tip">
+For example, if you want a 10 ms update rate, setting TS = 10 or
+setting TS = 1 with WA(10) will both give almost the same output frequency. But
+the latter approach makes better use of processor resources.
+</p>
+<p style="text-indent:21.25pt">
+<i>Please
+check</i> <a href="SCHEDULE_TYPE.html">SCHEDULE_TYPE</a>
+ <i>for more details.</i></p>
+<p>
+In Mode 2, the USER_PID is called once only and runs in the
+Kernel at the SERVO_PERIOD rate. The execution frequency is tied to the servo
+period, while the update of the output values is governed by the TS input.
+</p>
+<p class="note">
+In both Mode 1 and Mode 2, the TS input determines the scan time.
+The value of TS must always be greater than the controller’s configured servo
+period. If TS is set lower than the servo period, the instruction will still
+execute at the servo period rate.
+</p>
+<p>
+&nbsp;
+</p>
+<h2>Function diagram:</h2>
+<p>
+<img border="0" width="576" height="533" id="Picture 2" src="USER_PID_files/image001.jpg">
+</p>
+<h2>Parameters</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1 = Run one pass of the PID control per call.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2 = Run continuously and automatically in the controller
+  at the SERVO_PERIOD rate.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Input_data_index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The base address of a block of VRs that contain the input
+  data.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Output_data_index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The base address of a block of VRs that contain the output
+  data.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Input data</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="614" colspan="3" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+Input values (offset from VR(input_data))
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+   VR offset
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+Name
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  0
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+AUTO
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+TRUE = auto / FALSE = manual
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  1
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+PV 
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  2
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+SP
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+set point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  3
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+XOUT_MANU
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+output value for manual mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  4
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+KP
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+gain
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  5
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+TI
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+integral time constant
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  6
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+TD
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+derivate time constant
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  7
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+TS
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+scan time
+<span style='font-family:"Calibri",sans-serif'> (ms)</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  8
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+XMIN
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+minimum allowed output value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  9
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+XMAX
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+maximum output value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  10
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+I_SEL 
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+If FALSE the integral term is ignored
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  11
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+INT_HOLD
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+TRUE = hold integral sum
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  12
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+I_ITL_ON
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+TRUE = reset integral sum to I_ITLVAL
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  13
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+I_ITLVAL 
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+integral sum reset value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  14
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+DEADB_ERR
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+Hysteresis on PV. PV will be considered as
+  unchanged if greater than (PVprev - DEADBAND_W) and less that (PRprev +
+  DEADBAND_W).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+  15
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+FFD
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+disturbance on output
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Output data</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="614" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+Output Values (offset from VR(output_data))
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+VR offset
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Name
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+XOUT
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+Output value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+ER
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+Error value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+XOUT_P
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+Last calculated proportional value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+XOUT_I
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+Last calculated integral value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+XOUT_D
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+Last calculated derivative value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+XOUT_HLM
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+TRUE if high limit reached
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+XOUT_LLM
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+TRUE if low limit reached
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+7
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+LASTCALL
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+Reserved – Internal use only
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+8
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+ERR      
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+Reserved – Internal use only
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+9
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+INT      
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+Reserved – Internal use only
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="top" class="tablegrid">
+
+  
+<p>
+10
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+OVER     
+</p>
+
+  
+</td>
+<td width="396" valign="top" class="tablegrid">
+
+  
+<p>
+Reserved – Internal use only
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Using a virtual axis to simulate the process to be
+controlled by USER_PID.
+</p>
+<p class="TrioBASIC">
+input_data_index = 
+100
+<br>
+
+
+GLOBAL
+ &quot;p_auto&quot;, 
+100
+<br>
+
+
+GLOBAL
+ &quot;p_pv&quot;, 
+101
+<br>
+
+
+GLOBAL
+ &quot;p_sp&quot;, 
+102
+<br>
+
+
+GLOBAL
+ &quot;p_xout_manu&quot;, 
+103
+<br>
+
+
+GLOBAL
+ &quot;p_kp&quot;, 
+104
+<br>
+
+
+GLOBAL
+ &quot;p_ti&quot;, 
+105
+<br>
+
+
+GLOBAL
+ &quot;p_td&quot;, 
+106
+<br>
+
+
+GLOBAL
+ &quot;p_ts&quot;, 
+107
+<br>
+
+
+GLOBAL
+ &quot;p_xmin&quot;, 
+108
+<br>
+
+
+GLOBAL
+ &quot;p_xmax&quot;, 
+109
+<br>
+
+
+GLOBAL
+ &quot;p_i_sel&quot;, 
+110
+<br>
+
+
+GLOBAL
+ &quot;p_int_hold&quot;, 
+111
+<br>
+
+
+GLOBAL
+ &quot;p_i_itl_on&quot;, 
+112
+<br>
+
+
+GLOBAL
+ &quot;p_i_itlval&quot;, 
+113
+<br>
+
+
+GLOBAL
+ &quot;p_deadb_err&quot;, 
+114
+<br>
+
+
+GLOBAL
+ &quot;p_ffd&quot;, 
+115
+<br>
+
+
+<br>
+
+output_data_index = 
+120
+<br>
+
+
+GLOBAL
+ &quot;p_xout&quot;, 
+120
+<br>
+
+
+GLOBAL
+ &quot;p_er&quot;, 
+121
+<br>
+
+
+GLOBAL
+ &quot;p_xout_p&quot;, 
+122
+<br>
+
+
+GLOBAL
+ &quot;p_xout_i&quot;, 
+123
+<br>
+
+
+GLOBAL
+ &quot;p_xout_d&quot;, 
+124
+<br>
+
+
+GLOBAL
+ &quot;p_xout_hlm&quot;, 
+125
+<br>
+
+
+GLOBAL
+ &quot;p_xout_llm&quot;, 
+126
+<br>
+
+
+<br>
+
+
+'Initialise PID settings
+<br>
+
+p_xout_manu = 
+0
+<br>
+
+p_kp = 
+70.0
+<br>
+
+p_ti = 
+300
+<br>
+
+p_td = 
+2
+<br>
+
+p_ts = 
+1
+<br>
+
+p_xmin = -
+2048
+<br>
+
+p_xmax = 
+2048
+<br>
+
+p_i_sel = 
+TRUE
+<br>
+
+p_int_hold = 
+FALSE
+<br>
+
+p_deadb_err = 
+0
+<br>
+
+p_ffd = 
+0
+<br>
+
+
+<br>
+
+
+'Start the virtual &quot;target process&quot;
+<br>
+
+
+GOSUB
+ set_test_target
+<br>
+
+
+<br>
+
+
+'Reset the USER_PID
+<br>
+
+p_auto = 
+FALSE
+<br>
+
+p_i_itlval = 
+0
+<br>
+
+p_i_itl_on = 
+TRUE
+<br>
+
+
+USER_PID
+(
+1
+,
+input_data_index, output_data_index)
+<br>
+
+
+<br>
+
+p_auto = 
+TRUE
+<br>
+
+p_i_itl_on = 
+FALSE
+<br>
+
+
+<br>
+
+
+WHILE
+ TRUE
+<br>
+
+  
+BASE
+(
+10
+)
+<br>
+
+  p_pv = 
+MPOS
+<br>
+
+  
+USER_PID
+(
+1
+,
+input_data_index, output_data_index)
+<br>
+
+  
+SPEED
+ = p_xout
+<br>
+
+  
+ACCEL
+ = 
+ABS
+(
+SPEED
+) * 
+40
+<br>
+
+  
+DECEL
+ = 
+ACCEL
+<br>
+
+  
+WA
+(
+10
+)
+<br>
+
+
+WEND
+<br>
+
+
+<br>
+
+
+set_test_target:
+<br>
+
+
+'Set up a virtual axis to act as the process value
+being controlled
+<br>
+
+
+BASE
+(
+10
+)
+<br>
+
+
+DEFPOS
+(
+0
+)
+<br>
+
+
+ATYPE
+ = 
+0
+<br>
+
+
+UNITS
+ = 
+1000
+<br>
+
+
+SERVO
+ = 
+ON
+<br>
+
+
+WDOG
+ = 
+ON
+<br>
+
+
+SPEED
+ = 
+0
+
+
+'Initial speed is 0
+<br>
+
+
+ACCEL
+ = 
+10000000
+
+
+'Instant accel
+<br>
+
+
+DECEL
+ = 
+ACCEL
+<br>
+
+
+IF
+ IDLE
+
+
+THEN
+ FORWARD
+<br>
+
+
+'The PID output will set the speed value
+<br>
+
+'The MPOS will be the feedback PV value
+<br>
+
+
+RETURN
+</p>
+<h3>Example 2</h3>
+<p>
+Uses AIN(0) as the feedback from the external process and
+AOUT(2) as the control output.
+</p>
+<p class="TrioBASIC">
+input_data_index = 
+100
+<br>
+
+
+GLOBAL
+ &quot;p_auto&quot;, 
+100
+<br>
+
+
+GLOBAL
+ &quot;p_pv&quot;, 
+101
+<br>
+
+
+GLOBAL
+ &quot;p_sp&quot;, 
+102
+<br>
+
+
+GLOBAL
+ &quot;p_xout_manu&quot;, 
+103
+<br>
+
+
+GLOBAL
+ &quot;p_kp&quot;, 
+104
+<br>
+
+
+GLOBAL
+ &quot;p_ti&quot;, 
+105
+<br>
+
+
+GLOBAL
+ &quot;p_td&quot;, 
+106
+<br>
+
+
+GLOBAL
+ &quot;p_ts&quot;, 
+107
+<br>
+
+
+GLOBAL
+ &quot;p_xmin&quot;, 
+108
+<br>
+
+
+GLOBAL
+ &quot;p_xmax&quot;, 
+109
+<br>
+
+
+GLOBAL
+ &quot;p_i_sel&quot;, 
+110
+<br>
+
+
+GLOBAL
+ &quot;p_int_hold&quot;, 
+111
+<br>
+
+
+GLOBAL
+ &quot;p_i_itl_on&quot;, 
+112
+<br>
+
+
+GLOBAL
+ &quot;p_i_itlval&quot;, 
+113
+<br>
+
+
+GLOBAL
+ &quot;p_deadb_err&quot;, 
+114
+<br>
+
+
+GLOBAL
+ &quot;p_ffd&quot;, 
+115
+<br>
+
+
+<br>
+
+output_data_index = 
+120
+<br>
+
+
+GLOBAL
+ &quot;p_xout&quot;, 
+120
+<br>
+
+
+GLOBAL
+ &quot;p_er&quot;, 
+121
+<br>
+
+
+GLOBAL
+ &quot;p_xout_p&quot;, 
+122
+<br>
+
+
+GLOBAL
+ &quot;p_xout_i&quot;, 
+123
+<br>
+
+
+GLOBAL
+ &quot;p_xout_d&quot;, 
+124
+<br>
+
+
+GLOBAL
+ &quot;p_xout_hlm&quot;, 
+125
+<br>
+
+
+GLOBAL
+ &quot;p_xout_llm&quot;, 
+126
+<br>
+
+
+<br>
+
+
+'Initialise PID settings
+<br>
+
+p_xout_manu = 
+0
+<br>
+
+p_kp = 
+5.0
+<br>
+
+p_ti = 
+40
+<br>
+
+p_td = 
+0.5
+<br>
+
+p_ts = 
+1
+<br>
+
+p_xmin = -
+2048
+<br>
+
+p_xmax = 
+2048
+<br>
+
+p_i_sel = 
+TRUE
+<br>
+
+p_int_hold = 
+FALSE
+<br>
+
+p_deadb_err = 
+0
+<br>
+
+p_ffd = 
+0
+<br>
+
+
+<br>
+
+
+'Reset the USER_PID
+<br>
+
+p_auto = 
+FALSE
+<br>
+
+p_i_itlval = 
+0
+<br>
+
+p_i_itl_on = 
+TRUE
+<br>
+
+
+USER_PID
+(
+1
+,
+input_data_index, output_data_index)
+<br>
+
+
+<br>
+
+p_auto = 
+TRUE
+<br>
+
+p_i_itl_on = 
+FALSE
+<br>
+
+
+<br>
+
+
+WHILE
+ TRUE
+<br>
+
+  
+TICKS = 20 
+'Set
+cycle time
+<br>
+
+  p_pv = 
+AIN(0)
+<br>
+
+  
+USER_PID
+(
+1
+,
+input_data_index, output_data_index)
+<br>
+
+  
+AOUT(2)
+ = p_xout
+<br>
+
+  
+REPEAT
+<br>
+
+    WA(1) 
+'Sleep the task for remainder of
+cycle time
+<br>
+
+  UNTIL TICKS &lt;= 0
+<br>
+
+
+WEND
+</p>
+<h3>Example 3</h3>
+<p>
+Using the same GLOBAL initialisation as example 2, the
+USER_PID is started in mode 2, after which it runs in the kernel at the
+SERVO_PERIOD rate.
+</p>
+<p class="TrioBASIC">
+'Reset the USER_PID
+<br>
+
+p_auto = 
+FALSE
+<br>
+
+p_i_itlval = 
+0
+<br>
+
+p_i_itl_on = 
+TRUE
+<br>
+
+
+USER_PID
+(
+1
+,
+input_data_index, output_data_index)
+<br>
+
+
+<br>
+
+p_auto = 
+TRUE
+<br>
+
+p_i_itl_on = 
+FALSE
+<br>
+
+
+<br>
+
+
+USER_PID
+(
+2
+,
+input_data_index, output_data_index)
+<br>
+
+
+<br>
+
+
+</p>
+<p class="TrioBASIC">
+'VR(101) has the process value
+<br>
+
+'VR(102) has the setpoint value
+<br>
+
+'VR(120) contains the output value
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

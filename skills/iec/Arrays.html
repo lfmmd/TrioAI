@@ -1,0 +1,73 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Arrays</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+<h1><a name="_Toc317749323"></a>
+<a name="O_1369"></a>
+Arrays</h1>
+<p>
+You can declare an array variable by specifying
+dimensions. All dimensions are 0 based, so in case of single dimension array
+the first element is identified by index 0 (e.g. MyArrayName[0]).
+</p>
+<p>
+To declare an array, enter its dimension in the
+corresponding column of the variable editor. For a multi-dimension array, enter
+dimensions separated by comas (e.g. 2, 10, 4).
+</p>
+<h2>Use in Structured Text</h2>
+<p>
+To specify an item of an array in ST language, enter the name
+of the array followed by the indices entered between &quot;[&quot; and
+&quot;]&quot; characters. For multi-dimension arrays, enter indices separated
+by comas. Indices may be either constant or complex expressions.
+</p>
+<h2>Example</h2>
+<p class="codeexample">
+<span class="STCode">VAR</span></p>
+<p class="codeexample">
+<span class="STCode"> 
+MyArray: ARRAY[2, 8] OF REAL</span></p>
+<p class="codeexample">
+<span class="STCode">END_VAR</span></p>
+<p class="codeexample">
+<span class="STCode">MyArray[1,
+7] := value;</span><br>
+
+
+<span class="STCode">result := MyArray[j, i + 2];</span></p>
+<h2>Use in FBD and LD languages</h2>
+<p>
+For get blocks, the first input is the array to read, and
+the remaining inputs are indices. The output is the value of the array element
+indexed.
+</p>
+<p>
+For put blocks, the first input is the value to assign, the
+second input is the array, and the remaining inputs are indices.
+</p>
+<p class="note">
+Arrays have at most 3 dimensions.
+</p>
+<p class="note">
+All dimensions are 0 based.
+</p>
+<p class="note">
+The total number of items in an array (merging all dimensions)
+cannot exceed 65535.
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,128 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Introduction to Trio Function Blocks</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Introduction to Trio Function Blocks</h1>
+<h2>Overview</h2>
+<p>
+In addition to the well-established Trio BASIC programming
+language, select Trio Motion Coordinators also have capability to be programmed
+using the international standard IEC 61131-3 range of languages.
+</p>
+<p>
+<i>Motion</i> Perfect has editors for the four languages:
+Ladder (LD), Structured Text (ST), Function Block Diagram (FBD) and Sequential
+Function Chart (SFC). The use of the 
+<i>Motion</i> Perfect editor is covered in
+the 
+<i>Motion</i> Perfect section of the manual. 
+<i>Motion</i> Perfect compiles
+the IEC 61131-3 programs and loads the compiled code into the Motion
+Coordinator. The code is run in the Motion Coordinator by run-time execution
+software that operates in parallel to the Trio BASIC run-time environment, thus
+allowing both programming systems to be used together within the same 
+<i>Motion
+</i>Perfect project and on the same Motion Coordinator.
+</p>
+<p>
+<i><img width="672" height="503" id="Picture 1" src="Introduction_TrioFB_files/image001.png">
+</i></p>
+<p>
+The main functions of the IEC 61131-3 languages adhere to
+the standard, thus allowing a programmer already familiar with IEC 61131-3 will
+be able to start creating programs with ease. The only new features a
+programmer needs to learn is how to work within the 
+<i>Motion</i> Perfect
+environment. The IEC 61131-3 editor and toolbox allows for rapid development of
+standard programs. Inputs, Outputs, VRs and TABLE can be bound to named IEC
+61131-3 variables, giving access from any programming method to the Motion
+Coordinator’s I/O space.
+</p>
+<h2>Trio Motion Library</h2>
+<p>
+The motion functions used by TrioBASIC cover a wide range of
+motion from simple point-to-point moves, through multi-axis interpolated
+motion, gearing and linked moves, to sophisticated robotics. Application areas
+include cutting, gluing, packaging machines, printing machines, pick and place,
+and production lines of all kinds. The functionality of TrioBASIC has been put
+into function block form to allow it to be immediately recognised by
+programmers familiar with TrioBASIC.
+</p>
+<p>
+Although it is not a strict match for the PLCopen motion
+control part of IEC 61131-3, it does have many parallel move types which can be
+used in place of the standard functions. What is more, the motion library has
+the full set of Trio motion functions that have been proven to enable complex
+axis synchronisation to be achieved in a very straight-forward way. Setting up
+complex, repeatable motion in a very short time is now available in the IEC
+61131-3 languages.
+</p>
+<h2>Function Blocks</h2>
+<p>
+Each Trio Motion function is available as a function block.
+The function blocks can be added to any of the four supported programming
+methods, including the Ladder Diagram (LD). Function blocks run either when an
+enable input is set to TRUE or are triggered by a rising edge on the Execute
+input. For example, a TC_MOVE1 function block may be set up with the axis
+number set on one input and the move distance set on the second input. The move
+only starts when the Execute input changes from FALSE to TRUE.
+</p>
+<p>
+In the IEC 61131-3 programming system, the program is
+continuously scanned. Therefore, it is not possible to have the equivalent of a
+WAIT IDLE that is commonly used in BASIC. Each function block therefore has several
+outputs that can be used to determine whether the move is buffered, running,
+completed or if there was an error. The common outputs are:
+</p>
+<p>
+<i>Busy</i>: This BOOL output is TRUE after the 
+<i>Execute</i>
+input has triggered the function. It goes back to FALSE once the motion
+function has completed.
+</p>
+<p>
+<i>Done</i>: This BOOL output is TRUE after the motion
+function has completed its task normally.
+</p>
+<p>
+<i>Buffered</i>: This BOOL output is TRUE to show that the
+motion command is waiting in NTYPE buffer.
+</p>
+<p>
+<i>Active</i>: This BOOL output is TRUE when the motion
+command is running. i.e. in MTYPE.
+</p>
+<p>
+<i>Aborted</i>: This BOOL output goes TRUE if the motion is terminated
+due to a CANCEL or reaching an end-limit. It indicates that the motion did not
+run to completion.
+</p>
+<p>
+<i>Error</i>: This BOOL output is set TRUE if a program
+error is detected. For example, if an input value is out of range.
+</p>
+<p>
+<i>ErrorID</i>: A UINT value which gives the error number.
+This value is available when the 
+<i>Error</i> output is TRUE. The meaning of
+the 
+<i>ErrorID</i> value is the same as a Trio BASIC run-time error value.
+</p>
+<h2>Function Block Descriptions</h2>
+<p>
+Each function block is described in the usual format for IEC
+61131-3 library components. The details are limited to those required to add
+the function block to a program. For a full description of the associated
+motion command, see the Trio BASIC commands in chapter 2. Function block
+TC_MOVELINK, for example, has the same operation as the Trio BASIC MOVELINK
+command, and the entry in chapter 2 includes examples of how it may be used.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Calling a function block</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="_Toc317749333"></a>
+<a name="O_1395"></a>
+Calling a function block</h1>
+<h2>CAL&nbsp;&nbsp; CALC&nbsp;&nbsp; CALNC &nbsp;&nbsp; CALCN</h2>
+<p>
+A function block groups an algorithm and a set of private
+data. It has inputs and outputs. A function block can be:
+</p>
+<p class="MsoListNumber">
+1.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>A standard function block (RS, TON...).
+</p>
+<p class="MsoListNumber">
+2.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>A block written in &quot;C&quot; language and embedded on the target.
+</p>
+<p class="MsoListNumber">
+3.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>A User Defined Function Block (UDFB) written in ST, FBD, LD or IL.
+</p>
+<p>
+To use a function block, you have to declare an instance of
+the block as a variable, identified by a unique name. Each instance of a
+function block as its own set of private data and can be called separately. A
+call to a function block instance processes the block algorithm on the private
+data of the instance, using the specified input parameters.
+</p>
+<h2>ST Language</h2>
+<p>
+To call a function block in ST, you have to specify the name
+of the instance, followed by the input parameters written between parenthesis
+and separated by comas. To have access to an output parameter, use the name of
+the instance followed by a dot '.' and the name of the wished parameter. The
+following example demonstrates a call to an instance of TON
+<span class="PropertyValue"> </span>function
+block (MyTimer is declared as an instance of TON):
+</p>
+<h3>Example</h3>
+<p class="codeexample">
+<span class="STCode">MyTimer (bTrig, t#2s);</span><br>
+
+
+<span class="STCode">TimerOutput := MyTimer.Q;</span><br>
+
+
+<span class="STCode">ElapsedTime := MyTimer.ET;</span></p>
+<h2>FBD and LD Languages</h2>
+<p>
+To call a function block in FBD or LD languages, you just
+need to insert the block in the diagram and to connect its inputs and outputs.
+The name of the instance must be specified upon the rectangle of the block.
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_INPUTS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_INPUTS">
+</head>
+<body>
+<h1>DRIVE_INPUTS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+Value = DRIVE_INPUTS AXIS(n)
+</p>
+<h2>Description:</h2>
+<p>
+Returns a numerical value that represents the bit pattern of
+the digital inputs on a remote axis. EtherCAT axes commonly have either a 16-bit
+word or 32-bit long-word in the cyclic data that is mapped to the Drive’s
+digital inputs. The data may also be mapped to the Motion Coordinator I/O Map.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+In the Motion Perfect command line terminal, find the bit
+pattern of the drive inputs on axis 2.
+</p>
+<p class="codeexample">
+&gt;&gt;BASE(2)
+<br>
+
+&gt;&gt;?HEX(drive_inputs)
+<br>
+
+90000
+</p>
+<p>
+Bits 16 and 19 are 1. The slave has inputs offset by 16 bits,
+so this is inputs 0 and 3 on the drive.
+</p>
+<h3>Example 2:</h3>
+<p>
+A program must wait for input 3 to be ON. Input 3 is mapped
+to bit 19 in DRIVE_INPUTS.
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+WAIT UNTIL (DRIVE_INPUTS AND $80000) &lt;&gt; 0
+</p>
+<p class="note">
+Note that the inputs are also in the I/O map so WAIT UNTIL IN(x) =
+ON will do the same job.  Where x is the IN number mapped to the bit in the
+drive cyclic data.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="IOMAP.html">IOMAP</a>
+, 
+<a href="IN.html">IN</a>
+</p>
+</body>
+</html>

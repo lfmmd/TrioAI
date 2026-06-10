@@ -1,0 +1,297 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>=  Equals</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>=  Equal</h1>
+<h2>Type:</h2>
+<p class="Category">
+Comparison Operator
+</p>
+<h3>Syntax:</h3>
+<p class="fixed">
+&lt;expression-1&gt; = &lt;expression-2&gt;
+</p>
+<h3>Description:</h3>
+<p>
+Returns 
+<a href="TRUE.html">TRUE</a>
+ if &lt;expression-1&gt;
+is equal to &lt;expression-2&gt;, otherwise returns 
+<a href="FALSE.html">FALSE</a>
+.
+</p>
+<p>
+When comparing floating-point values, remember that they
+tend not to be exactly equal apart from in special circumstances, so you will
+usually have to compare them using an alternative method, for example an
+absolute or relative difference combined with a suitably small tolerance.
+</p>
+<p>
+The comparison operators are typically used in conditional
+statements like 
+<a href="IF.html">IF</a>
+, 
+<a href="REPEAT.html">REPEAT</a>
+ and 
+<a href="WHILE.html">WHILE</a>
+, though can be used anywhere an expression is
+valid.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Expression1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Expression2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The following TrioBASIC expressions are valid:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Expression 1</b></p>
+
+  
+</td>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Expression 2</b></p>
+
+  
+</td>
+<td width="416" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p>
+NUMERIC
+</p>
+
+  
+</td>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p>
+NUMERIC
+</p>
+
+  
+</td>
+<td width="416" valign="top" class="tablegrid">
+
+  
+<p>
+FLOAT, INTEGER, IP
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p>
+STRING
+</p>
+
+  
+</td>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p>
+STRING
+</p>
+
+  
+</td>
+<td width="416" valign="top" class="tablegrid">
+
+  
+<p>
+Case sensitive lexical comparison
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p>
+IP
+</p>
+
+  
+</td>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p>
+STRING
+</p>
+
+  
+</td>
+<td width="416" valign="top" class="tablegrid">
+
+  
+<p>
+Converts the string to an integer
+  ignoring spaces
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p>
+STRING
+</p>
+
+  
+</td>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p>
+IP
+</p>
+
+  
+</td>
+<td width="416" valign="top" class="tablegrid">
+
+  
+<p>
+Converts the string to an integer
+  ignoring spaces
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+It is not permitted to compare arrays.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+If input 7 is ON then program execution will continue at
+line starting “label:”
+</p>
+<p class="codeexample">
+IF IN(7) = ON THEN GOTO label
+</p>
+<h3>Example 2:</h3>
+<p>
+Call subroutine ‘threshold_1’ when analogue input 0 reads
+2.1&nbsp;V.
+</p>
+<p class="note">
+This example avoids the direct comparison of a floating-point
+value (IF AIN(0) = 2.1 THEN…), as this is unlikely to ever be true, instead
+using the absolute value of an absolute difference combined with a comparison
+tolerance.
+</p>
+<p class="codeexample">
+IF ABS(AIN(0) – 2.1) &lt; 0.5e-6 THEN GOSUB threshold_1
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="NotEqual.html">&lt;&gt; Not Equal</a>
+, 
+<a href="LessThan.html">&lt; Less Than</a>
+, 
+<a href="LessThan_or_Equal.html">&lt;=
+Less Than or Equal</a>
+, 
+<a href="GreaterThan_or_Equal.html">&gt;= Greater Than
+or Equal</a>
+, 
+<a href="GreaterThan.html">&gt; Greater Than</a>
+, 
+<a href="ULPDIFF.html">ULPDIFF</a>
+</p>
+</body>
+</html>

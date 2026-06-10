@@ -1,0 +1,296 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CTU/CTUr</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="_Toc317749426"></a>
+<a name="O_1427"></a>
+CTU/CTUr</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+Count up.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CU
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enables counting. Counter is increased on each call
+  when CU is TRUE.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RESET
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Resets command. Counter is reset to 0 when called with
+  RESET to TRUE.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PV
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Programmed maximum value.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when counter is full, i.e. when CV = PV.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CV
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DINT
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Current value of the counter.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+The counter is empty (CV = 0) when the application starts.
+The counter does not include a pulse detection for CU input. Use R_TRIG or
+F_TRIG function block for counting pulses of CU input signal. In LD language,
+CU is the input rung. The output rung is the Q output.
+</p>
+<p>
+CTUr, CTDr, CTUDr function blocks operate exactly as other
+counters, except that all boolean inputs (CU, CD, RESET, LOAD) have an implicit
+rising edge detection included. Not that these counters may be not supported on
+some target systems.
+</p>
+<h2>ST Language</h2>
+<p>
+MyCounter is a declared instance of CTU function block.
+</p>
+<p class="codeexample">
+MyCounter (CU, RESET, PV);
+<br>
+
+Q := MyCounter.Q;
+<br>
+
+CV := MyCounter.CV;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="134" height="88" src="Count-CTU_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+<img width="218" height="76" src="Count-CTU_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Count-CTD.html">CTD/CTDr</a>
+</p>
+<p>
+<a href="Count-CTUD.html">CTUD/CTUDr</a>
+<a name="H_993"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

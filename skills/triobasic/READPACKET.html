@@ -1,0 +1,451 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>READPACKET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="READPACKET">
+</head>
+<body>
+<h1>READPACKET</h1>
+<h2>Type:</h2>
+<p class="Category">
+Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+READPACKET(port, variable, count [,format])
+</p>
+<h2>Description:</h2>
+<p>
+READPACKET is used to read in data to the 
+<a href="VR.html">VR</a>
+
+variables over a serial communications port. The data is transmitted from the
+PC in binary format with a CRC 16-bit checksum. There are four different data
+formats, all use the same packet structure:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="320" nowrap="" colspan="5" valign="bottom" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data
+</p>
+
+  
+</td>
+<td width="128" nowrap="" colspan="2" valign="bottom" class="tablegrid">
+
+  
+<p class="tablecontent">
+CRC
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" nowrap="" valign="bottom" class="tablegrid">
+
+  
+<p class="tablecontent">
+Byte 0
+</p>
+
+  
+</td>
+<td width="73" nowrap="" valign="bottom" class="tablegrid">
+
+  
+<p class="tablecontent">
+Byte 1
+</p>
+
+  
+</td>
+<td width="73" nowrap="" valign="bottom" class="tablegrid">
+
+  
+<p class="tablecontent">
+Byte 2
+</p>
+
+  
+</td>
+<td width="28" nowrap="" valign="bottom" class="tablegrid">
+
+  
+<p class="tablecontent">
+…
+</p>
+
+  
+</td>
+<td width="73" nowrap="" valign="bottom" class="tablegrid">
+
+  
+<p class="tablecontent">
+Byte n
+</p>
+
+  
+</td>
+<td width="64" nowrap="" valign="bottom" class="tablegrid">
+
+  
+<p class="tablecontent">
+Byte 0
+</p>
+
+  
+</td>
+<td width="64" nowrap="" valign="bottom" class="tablegrid">
+
+  
+<p class="tablecontent">
+Byte 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr height="0">
+
+  
+<td width="73">
+</td>
+
+  
+<td width="73">
+</td>
+
+  
+<td width="73">
+</td>
+
+  
+<td width="28">
+</td>
+
+  
+<td width="73">
+</td>
+
+  
+<td width="64">
+</td>
+
+  
+<td width="64">
+</td>
+
+ 
+</tr>
+
+
+</table>
+<p class="note">
+The 16bit checksum uses the generator polynomial:
+<br>
+
+x
+<sup>16</sup>+x
+<sup>15</sup>+x
+<sup>2</sup>+x
+<sup>0</sup> or $8005
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+port:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This value should be 0 to 2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This value tells the 
+<i>Motion Coordinator</i> where to
+  start setting the variables in the VR global memory array.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR count:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of variables to download, maximum 250
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+format:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number format for the numbers being downloaded
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Standard character
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Standard integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Standard long
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7 bits long
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Depending on the format used the data may be split over
+multiple bytes. It is up to the user to recombine these to get the final value.
+</p>
+<h3>Format = 0 (standard character) </h3>
+<p>
+Each value is in each Byte:
+</p>
+<p>
+Value0 = Byte 0 
+<br>
+
+Value1 = Byte 1
+<br>
+
+…
+</p>
+<h3>Format = 1 (standard integer)</h3>
+<p>
+Each value is split over 2Bytes:
+</p>
+<p>
+Value0 = Byte1 * 256 + Byte0
+<br>
+
+Value1 = Byte3 * 256 + Byte2
+<br>
+
+…
+</p>
+<h3>Format = 2 (standard long)</h3>
+<p>
+Each value is split over 4Bytes
+</p>
+<p>
+Value0 = ((Byte3 * 256 + Byte2) * 256 + Byte1) * 256 +Byte0
+<br>
+
+Value1 = ((Byte7 * 256 + Byte6) * 256 + Byte5) * 256 +Byte4
+<br>
+
+…
+</p>
+<h3>Format = 4 (7 bits long)</h3>
+<p>
+Each value is split over 4Bytes, but only uses 7 bits of
+each byte. Only Byte 0 (including the CRC) has bit 7 set . The values sent are
+therefore 24bits in length. 
+</p>
+<p>
+Bits 15 and Bits 7 of the CRC are not sent and so ignored by
+the check.
+</p>
+<p>
+Value0 = ((Byte3 * 128 + Byte2) * 128 +
+Byte1) * 128 + Byte0
+<br>
+
+Value1 = ((Byte7 * 128 + Byte6) * 128 + Byte5) * 128 + Byte4
+<br>
+
+…
+</p>
+<h2>Example:</h2>
+<p>
+Using Standard Long (format = 2) read in the values to a
+sequence of 
+<a href="VR.html">VR</a>
+’s starting at 0 from port 1. The bytes
+from the READPACKET command are stored in 
+<a href="VR.html">VR</a>
+(100) and
+onwards. 
+</p>
+<p class="codeexample">
+READPACKET(1, 100, 10, 2)
+</p>
+<p class="codeexample">
+FOR value = 0 to 9
+</p>
+<p class="codeexample">
+  'Offset the bytes
+</p>
+<p class="codeexample">
+  VR(value * 4 + 103) = VR(value * 4 + 103) * (2 ^ 32)
+</p>
+<p class="codeexample">
+  VR(value * 4 + 102) = VR(value * 4 + 103) * (2 ^ 16)
+</p>
+<p class="codeexample">
+  VR(value * 4 + 101) = VR(value * 4 + 103) * (2 ^ 8)
+</p>
+<p class="codeexample">
+  VR(value) = (value * 4 + 103) + VR(value * 4 + 102)) + VR(value
+* 4 + 101))_
+</p>
+<p class="codeexample">
+    + VR(value * 4 + 100)
+</p>
+<p class="codeexample">
+NEXT value
+</p>
+</body>
+</html>

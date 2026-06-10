@@ -1,0 +1,289 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>On-line Program Change</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>On-line Program Change</h1>
+<p>
+Sometimes a change in a running program’s code might be
+needed, for example, to update a counter increment value. Usually, the task
+needs to be stopped (if it is running), the change made and the task recompiled
+and restarted.
+</p>
+<p>
+Now 
+<i>Motion</i> Perfect supports On-line Change, which
+allows a running program’s code to be modified while the task is running and
+the changes applied online (i.e. without stopping the running task).
+</p>
+<p>
+To enable this feature for a task, go to the task settings
+and select the On-line change settings page and click on the “Enable Online
+Change” check box to enable or disable the on-line change feature.
+</p>
+<p>
+By default, this functionality is not enabled, because it
+brings some limitations to the IEC 61131-3 task.
+</p>
+<p>
+<img width="404" height="293" id="Image1" src="OnLineChange_files/image001.png">
+</p>
+<p>
+The settings page presents a table with four columns:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Column
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of the resources required for On-line change. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Used
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value of used resources. This usually is the number
+  of variables declared in the variables editor of the specified type.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Allocated
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value of allocated resources. This value needs to
+  be greater by the “Used” resources value. This is the predefined maximum
+  number of variables that could be created and used with online change,
+  without rebuilding the whole task.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Status
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The status column is a quick visual indicator whether
+  the used resources exceed the allocated resources. In this case a small
+  warning icon is displayed instead of the green check mark to indicate
+  possible problem.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Resource usage</h2>
+<p>
+In order to allow the declaration of new variables and
+blocks, you have to define the amount of memory to be allocated in the task for
+each type of data. This includes:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+The number of variables for each type (8, 16, 32 or 64 variables,
+character strings)
+</li>
+<li class="indent-list-middle">
+The number of function block instances
+</li>
+<li class="indent-list-middle">
+The amount of memory for storing character strings
+</li>
+<li class="indent-list-last">
+The amount of memory for private data of function block instances
+</li>
+</ul>
+<p>
+The number of variables of each type actually used in the
+task is given as a report at the end of each build. Changes are allowed until
+you exceed the sizing for at least one type of data. At this time, if you need
+to declare new variables, you have to stop the task, change the configuration
+of memory sizing rebuild the task.
+</p>
+<p>
+When the used resources exceed the allocated resources (e.g.
+the number of variables in the variables editor exceeds the specified number of
+allocated variables) on-line change might not be possible so a corresponding
+warning is issued during compilation and on this settings page:
+</p>
+<p>
+<img width="505" height="510" id="Image2" src="OnLineChange_files/image002.png">
+</p>
+<p>
+When enabling On-line change, 
+<i>Motion</i> Perfect will
+suggest automatically configuring the default values for resources. It is best
+that this happens after a fresh compilation of the IEC 61131-3 task to ensure
+that the values for the used resources are up to date.
+</p>
+<p>
+<img width="467" height="295" id="Image3" src="OnLineChange_files/image003.png">
+</p>
+<h2>Limitations</h2>
+<p>
+When On Line change is enabled, you can perform on the fly
+the following kinds of changes:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Change the code of a program
+</li>
+<li class="indent-list-middle">
+Change the condition of a SFC transition or the actions of a SFC
+step
+</li>
+<li class="indent-list-middle">
+Create, rename or delete task and local variables
+</li>
+<li class="indent-list-last">
+Create, rename or delete task and local function block instances
+</li>
+</ul>
+<p>
+The following kinds of changes are not allowed:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Create, delete or rename a program
+</li>
+<li class="indent-list-middle">
+Change SFC charts
+</li>
+<li class="indent-list-middle">
+Change the local parameters and variables of a user-defined FB
+</li>
+<li class="indent-list-middle">
+Change the type or dimension (or string length) of a variable or
+function block instance 
+</li>
+<li class="indent-list-last">
+Change the definition of RETAIN variables
+</li>
+</ul>
+<p>
+In addition, the following programming features that are not
+safe during a change are forbidden:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Pulse (P or N) contacts and coils (edge detection)
+<br>
+
+Instead, you must use declared instances of R_TRIG and F_TRIG function blocks
+</li>
+<li class="indent-list-last">
+Loops in FBD with no declared variable linked
+<br>
+
+You need to explicitly insert a variable in the loop
+</li>
+</ul>
+<h2>Editing a program online</h2>
+<p>
+When a program needs to be edited while the task is running,
+it needs to be open inside an editor in 
+<i>Motion</i> Perfect. 
+</p>
+<p>
+The on-line editor is a popup modal dialog that is displayed
+on top of the original source code editor and is launched by a button on the
+toolbar:
+</p>
+<p>
+<img width="665" height="283" id="Image4" src="OnLineChange_files/image004.jpg">
+</p>
+<p>
+This editor is a limited version of the normal source code
+editor that provides functionality for modifying the source code of the program
+and applying the changes without stopping the running task. The modified source
+code change happens between two consecutive cycles of the task on the
+controller.
+</p>
+<p>
+<img width="665" height="431" id="Image5" src="OnLineChange_files/image005.jpg">
+</p>
+</body>
+</html>

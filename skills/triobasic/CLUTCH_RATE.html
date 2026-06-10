@@ -1,0 +1,49 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CLUTCH_RATE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CLUTCH_RATE">
+</head>
+<body>
+<h1>CLUTCH_RATE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This affects operation of 
+<a href="CONNECT.html">CONNECT</a>
+
+by changing the connection ratio at the specified rate/second. 
+</p>
+<p>
+Default CLUTCH_RATE is set very high to ensure compatibility
+with earlier versions.
+</p>
+<h2>Value:</h2>
+<p>
+Change in connection ratio per second (default 1000000)
+</p>
+<h2>Example:</h2>
+<p>
+The connection ratio will be changed from 0 to 6 when an
+input is set. It is required to take 2 second to accelerate the linked axis so
+the ratio must change at 3 per second. 
+</p>
+<p class="codeexample">
+CLUTCH_RATE = 3
+</p>
+<p class="codeexample">
+CONNECT(0,0)
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(1)=ON
+</p>
+<p class="codeexample">
+CONNECT(6,0)
+</p>
+</body>
+</html>

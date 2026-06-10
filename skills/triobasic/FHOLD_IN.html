@@ -1,0 +1,193 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FHOLD_IN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FHOLD_IN">
+</head>
+<body>
+<h1>FHOLD_IN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+FH_IN
+</p>
+<h2>Description:</h2>
+<p>
+This parameter specifies the input number to be used as the
+feed-hold input. 
+</p>
+<p>
+When the feed-hold input is active, motion on the specified
+axis has its speed overridden to the feed-hold speed (
+<a href="FHSPEED.html">FHSPEED</a>
+)
+without cancelling the move in progress. The change in speed uses 
+<a href="ACCEL.html">ACCEL</a>
+, 
+<a href="DECEL.html">DECEL</a>
+ and 
+<a href="JERK.html">JERK</a>
+. When the input is reset, any move in progress when
+the input was set will revert to its programmed speed. 
+</p>
+<p class="tip">
+The default setting of FHSPEED is zero, which will cause motion to
+pause on that axis
+</p>
+<p>
+Moves that are not speed controlled, such as 
+<a href="CONNECT.html">CONNECT</a>
+, 
+<a href="CAMBOX.html">CAMBOX</a>
+, 
+<a href="MOVELINK.html">MOVELINK</a>
+, are not affected.
+</p>
+<p class="note">
+The input used for FHOLD_IN is active low. 
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+disable the input as feed-hold (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0..
+<a href="IOSIZE.html">IOSIZE</a>
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+input to use as feed-hold
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+Any type of input can be used, built in, Trio CAN I/O, CANopen or
+virtual. 
+</p>
+<h2>Example:</h2>
+<p>
+Configure input 32 (virtual) as the feed-hold input for axis
+0, and make sure 
+<a href="FHSPEED.html">FHSPEED</a>
+ is 0 so that motion will be
+paused when the feed-hold input (inverted input) is activated.
+</p>
+<p class="codeexample">
+INVERT_IN
+(
+32
+,
+ 1
+) 
+<br>
+
+FHOLD_IN = 
+32
+<br>
+
+FHSPEED = 
+0
+<br>
+
+
+WAIT
+ UNTIL
+ IN
+(
+32
+) = 
+OFF
+<br>
+
+
+BASE
+(
+0
+)
+<br>
+
+ATYPE = 
+0
+<br>
+
+SPEED = 
+10000
+<br>
+
+ACCEL = 
+1000000
+<br>
+
+DECEL = ACCEL
+<br>
+
+
+MOVE
+(
+999999
+)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+<img border="0" width="252" height="157" id="Picture 1" src="FHOLD_IN_files/image001.png">
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+Axis status will be “H” indicating in feed-hold mode.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FHSPEED.html">FHSPEED</a>
+<span class="MsoHyperlink">, </span><a href="IOSIZE.html">IOSIZE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

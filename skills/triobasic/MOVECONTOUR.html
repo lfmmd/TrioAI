@@ -1,0 +1,1652 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVECONTOUR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVECONTOUR">
+</head>
+<body>
+<h1>MOVECONTOUR</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+[value = ]MOVECONTOUR(table_pointer, axes, npoints, options,
+speed_option, output_table_area, short_len, corner_acc)
+</p>
+<h2>Description:</h2>
+<p>
+The MOVECONTOUR command allows a sequence of 5 axis
+movements to be loaded via a set of TABLE values. A single move is loaded which
+interpolates the speed and the positions of the 5 axes simultaneously to allow
+for “contouring control”.
+<a name="_Hlk210658109"></a>
+</p>
+<p class="warning">
+Since the export of software for greater than 4 axes of
+contouring control is controlled by international treaties, this 5 axis
+MOVECONTOUR functionality is not built into Trio motion controllers. However,
+where an export licence is available, the software (product code P980) may be
+used to purchase 5 axis contouring control firmware.
+</p>
+<p class="note">
+The 4-axis version can be used without the licence.
+</p>
+<p>
+<a href="MOVE_COUNT.html">MOVE_COUNT</a>
+ is incremented on
+every move loaded. This parameter may be set by a user program.
+</p>
+<p>
+The return value indicates various types of error and the
+number of vectors processed (see table below).
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="141" rowspan="9" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 0
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The move was not loaded
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 1
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+XYZ angle exceeds STOP_ANGLE.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 2
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Increment exceeds short_len
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 3
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+U exceeds STOP_ANGLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 4
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+V exceeds STOP_ANGLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 5
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+W exceeds STOP_ANGLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 6
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+XYZ angle exceeds RAISE_ANGLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 7
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Increment is zero
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 8..31
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of vectors processed.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="141" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_pointer:
+</p>
+
+  
+</td>
+<td width="449" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Location of the absolute points in TABLE memory.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="141" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axes:
+</p>
+
+  
+</td>
+<td width="449" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of axes 2 to 5.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="141" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+npoints:
+</p>
+
+  
+</td>
+<td width="449" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of points, each point requires 2-6 table
+  values. 6 are only used when a speed profile along a 5-axis path is also
+  embedded in the TABLE.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="141" rowspan="18" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+options:
+</p>
+
+  
+</td>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0..4
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 4
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Process the move and load it
+</p>
+
+  
+<p class="tablecontent">
+1 = Process the move but without loading it
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 5
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Embed a speed profile together with axis position
+  points in input TABLE data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 6
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Take initial direction of XYZ from END_DIR_LAST axis
+  parameters (requires AXIS_MODE.2 = ON)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 7
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+UVW in degrees (otherwise radians)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 8..13
+</p>
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specifies an offset between data points other than
+  “Axes”. Note that this is ESSENTIAL if Bit 5 is set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 14
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Apply ACCEL and DECEL limits to the embedded speed
+  profile
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 15
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Calculate 2D XY direction for plotter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 16
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Calculate point radii and required speed at point (set
+  automatically if corner_acc &gt; 0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 17
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slow down, don’t return from MOVECONTOUR when
+  STOP_ANGLE exceeded
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 18
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set initial values for (Bit 5) speed profile from SPEED
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 19..20
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 = B-spline interpolation
+</p>
+
+  
+<p class="tablecontent">
+2 = C-spline interpolation
+</p>
+
+  
+<p class="tablecontent">
+3 = Cubic spline
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 21
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Copy interpolation mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 22
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+GCODE N field is copied into output table in lieu of W
+  axis position
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 23
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Return on angle change exceeding RAISE_ANGLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 24
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set CORNER_STATE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 25
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Expand number of output points when length &gt;
+  short_len
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 30
+</p>
+
+  
+</td>
+<td width="374" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Copy MOVECONTOUR/MOVEDISPENSE setting
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="141" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+speed_option:
+</p>
+
+  
+</td>
+<td width="449" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to 1 to embed an initial speed for the start of the
+  path in the data table.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="141" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+output_table_area:
+</p>
+
+  
+</td>
+<td width="449" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Output of data to TABLE at this area. Controller will
+  write 15 x Npoints of output data.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="141" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+short_len:
+</p>
+
+  
+</td>
+<td width="449" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameter - Moves greater than this length in
+  the TABLE entries will cause the MOVECONTOUR to finish. They can then
+  normally be processed with MOVEABS.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="141" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+corner_acc:
+</p>
+
+  
+</td>
+<td width="449" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameter – If specified, the speed entries in
+  the TABLE can be reduced (not increased) depending on the effective radius
+  between segments.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+<span class="MsoIntenseEmphasis">The number of points that may be interpolated is limited by
+the size of the TABLE area available in the controller and the pre-processing
+time required for the move. The maximum size of MOVECONTOUR that is feasible
+given a 512000 TABLE location controller type would be approximately 10,000
+lines of G-Code.</span></p>
+<h2>Embedded speed profile:</h2>
+<p>
+The MOVECONTOUR function can optionally have a speed value
+attached to each target position. To apply this function the speed is entered
+in the TABLE after each position set. The Options bit 5 must then be set to
+tell the controller to work in this way.
+</p>
+<p>
+The data points will need to be spaced further apart to
+allow for this additional data. The Options bits 8..13 are set to specify this
+quantity.
+</p>
+<p>
+Example:
+</p>
+<p>
+Suppose the input data points for a 5 axis MOVECONTOUR are
+spaced 10 TABLE points apart:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+TABLE 
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+X
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+Y
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+Z
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+A
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+B
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+SPEED
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+U
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+U
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+U
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="bottom">
+
+  
+<p>
+U
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+1000
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+100
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+50
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+200
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+1010
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+99.98477
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0.87262
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+51
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0.5
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+200
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+1020
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+99.93908
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+1.74497
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+52.1
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+200
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+1030
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+99.86295
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+2.6168
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+53.2
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+1.5
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+200
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+1040
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+99.75641
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+3.48782
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+54.3
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+100
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+1050
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+99.61947
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+4.35779
+</p>
+
+  
+</td>
+<td width="9%" nowrap="" valign="top">
+
+  
+<p>
+55.4
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+2.5
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+100
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="9%" valign="top">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+U = Unused
+</p>
+<p>
+An example MOVECONTOUR command would be:
+</p>
+<p class="codeexample">
+stride = 10 
+<br>
+
+MOVECONTOUR(1000, 5, 361, 32 + (stride * 256) + $4000, 0, 20000)
+</p>
+<p>
+Note that the MOVECONTOUR sets bit 5 and bit 14 of the
+“options” word. Bit 5 sets to use the embedded speed values. Bit 14 makes the
+MOVECONTOUR adjust the speed values to allow for ACCEL and DECEL. Without bit
+14 being set the programmer must profile the requested speed values. With bit
+14 set the axis ACCEL and DECEL rates will be applied as maximum limit values.
+Using a small amount of SRAMP the profile can be further smoothed.
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<table>
+<tr>
+<td width="448" height="0">
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+<img width="576" height="538" src="MOVECONTOUR_files/image001.png">
+</td>
+</tr>
+</table>
+<br clear="ALL">
+</p>
+<p class="MsoCaption">
+Scope trace showing an example profile that is limited by
+ACCEL and DECEL
+</p>
+<h2>See also:</h2>
+<p class="codeexample">
+<a href="MOVESEQ.html">MOVESEQ</a>
+</p>
+</body>
+</html>

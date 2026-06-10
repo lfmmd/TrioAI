@@ -1,0 +1,235 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PROCESS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PROCESS">
+</head>
+<body>
+<h1>PROCESS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command (Command line only)
+</p>
+<h2>Description:</h2>
+<p>
+Displays information about the running processes. 
+</p>
+<p class="note">
+There are some system processes that you cannot stop.
+</p>
+<h2>Returned Values:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Process:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The process number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Type:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The Type of process executing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Status:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The execution state of the process
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Program:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The name of the program running in the process
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Line:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The line number of a program that is executing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Time:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The length of time that the process has been running
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+CPU:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The percentage of CPU time used by the process
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+From V2.0298 onwards, when an IEC program is running, the
+multi-tasking is flat with no fast processes.  Use SCHEDULE_TYPE.8 = 1 in
+MC_CONFIG to enable fast processes with IEC 61131-3.
+</p>
+<h2>Example:</h2>
+<p>
+Check the state of the processes in the command line.
+</p>
+<p class="codeexample">
+&gt;&gt;process
+</p>
+<p class="codeexample">
+Process  Type  Status   Program                   Line  
+hhhh:mm:ss.ms  [CPU  %]
+</p>
+<p class="codeexample">
+-------  ----  -------  ------------------------  ----- 
+-----------------------
+</p>
+<p class="codeexample">
+     21  Fast  Sleep[0] TEST                          1 
+0000:00:02.634 [ 0.23%]
+</p>
+<p class="codeexample">
+     22  SYS   Run      Command Line                    
+0001:14:05.570 [ 0.16%]
+</p>
+<p class="codeexample">
+     23  SYS   Run      IO Server                       
+0001:14:01.183 [90.46%]
+</p>
+<p class="codeexample">
+     24  SYS   Sleep[8] MPE                             
+0001:14:05.571 [ 0.00%]
+</p>
+<p class="codeexample">
+     25  SYS   Sleep[6] CAN Server                      
+0001:14:05.571 [ 0.00%]
+</p>
+<p class="codeexample">
+ KERNEL  SYS   Run      Motion/Housekeeping             
+0001:14:05.571 [ 9.16%]
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SCHEDULE_TYPE.html">SCHEDULE_TYPE</a>
+, 
+<a href="SLOTn_TIME.html">SLOTn_TIME</a>
+</p>
+</body>
+</html>

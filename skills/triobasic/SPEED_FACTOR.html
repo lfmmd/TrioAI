@@ -1,0 +1,87 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SPEED_FACTOR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SPEED_FACTOR">
+</head>
+<body>
+<h1>SPEED_FACTOR</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter is used to reduce the speed specified in 
+<a href="SPEED.html">SPEED</a>
+ axis parameter by the per-unit value entered when 
+<a href="VP_MODE.html">VP_MODE</a>
+ is 5 or 6. 
+</p>
+<p>
+Speed factor range is 0-1, where 1 represents using 100% of
+the speed value.
+</p>
+<h2>Example:</h2>
+<h3>Example 1</h3>
+<p>
+An analogue input from a potentiometer is used to adjust the
+speed of the motion on axes 2. 
+</p>
+<p class="codeexample">
+IF VR(200) = 1 THEN
+</p>
+<p class="codeexample">
+  'Start the speed control routine
+</p>
+<p class="codeexample">
+  BASE(2)
+</p>
+<p class="codeexample">
+  REPEAT
+</p>
+<p class="codeexample">
+    SPEED_FACTOR = AIN(0) / 4096    
+</p>
+<p class="codeexample">
+    WA(100)
+</p>
+<p class="codeexample">
+  UNTIL VR(200) = 0
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 2</h3>
+<p>
+Set the speed of axis 4 to 50% of the programmed speed. 
+</p>
+<p class="codeexample">
+SPEED_FACTOR AXIS(4) = 0.5
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ACCEL_FACTOR.html">ACCEL_FACTOR</a>
+, 
+<a href="FEED_OVERRIDE.html">FEED_OVERRIDE</a>
+, 
+<a href="JERK_FACTOR.html">JERK_FACTOR</a>
+,
+
+<a href="LOOKAHEAD_FACTOR.html">LOOKAHEAD_FACTOR</a>
+, 
+<a href="VP_MODE.html">VP_MODE</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,152 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ULPDIFF</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ULPDIFF">
+</head>
+
+
+
+<body>
+<h1>ULPDIFF</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = ULPDIFF(expression-1, expression-2)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the difference between two floating-point values in
+terms of units in the last place (ULP).
+</p>
+<p>
+A floating-point value can be viewed as being an integer
+(the significand, or mantissa) with a scaling (the exponent), so altering the
+least significant bit of the significand by one will create a floating-point
+value that is one unit in the last place (or unit of least precision)
+different, which is the smallest difference possible.
+</p>
+<p>
+This function provides a measure of how many units in the
+last place need to be added to one value to get to the other value, which is
+like a measure of how many values exist between the two supplied values (plus
+one). This can be useful when comparing floating-point values to determine how
+close they are to each other (how nearly equal they are).
+</p>
+<p>
+This concept is best illustrated by an example, so if we had
+a simplified fixed-point number system where the smallest fraction was
+one-tenth, then the ULP difference between 12.6 and 12.6 is 0, and between 12.6
+and 12.7 is 1, and between 12.6 and 13.1 is 5, and so on.
+</p>
+<p>
+The number system used on Trio controllers is more complex
+than this simplified system, utilising the double precision IEEE 754 standard,
+which is a floating-point format, so an ULP difference of 1 between two values
+can be either exceptionally small in absolute terms when the exponent is small,
+or exceptionally large when the exponent is large, and this is because the ULP
+is part of the significand and so is scaled by the exponent.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of floating-point values between the two
+  parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression-1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC numeric expression
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression-2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC numeric expression
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Print the ULP difference between 10.0 and 10.00000001 on the
+command line.
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT ULPDIFF(10.0, 10.00000001)
+</p>
+<p class="codeexample">
+5629500
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="Equals.html">= (Equal)</a>
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

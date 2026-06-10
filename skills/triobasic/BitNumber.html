@@ -1,0 +1,182 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>. Bit operator</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>.  Bit operator</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical operator
+</p>
+<h3><a name="_Comparison_Operator:"></a>
+Syntax:</h3>
+<p class="fixed">
+&lt;expression&gt;.bit_number
+</p>
+<h3>Description:</h3>
+<p>
+Accesses the specified bit of the expression, either
+returning its value (0 or 1) if read or allowing it to be set or unset if
+written to. 
+</p>
+<p>
+Typically, this is used to access a specific bit of a
+variable, but can be used with any numeric expression, even a literal value.
+</p>
+<p class="warning">
+Since the bit operator is also used as a decimal point, be
+careful that it is not interpreted as part of a value.
+</p>
+<p class="warning">
+There should be no spaces before or after the bit operator.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+bit_number:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The bit number of the expression to return
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<h3>Example 1:</h3>
+<p>
+<a name="_Assignment_Operator:"></a>
+Check the AXISSTATUS for
+remote drive errors (bit 3)
+</p>
+<p class="codeexample">
+IF AXISSTATUS.3 = 1 THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Remote drive error&quot;
+</p>
+<p class="codeexample">
+ENDIF 
+</p>
+<h3>Example 2:</h3>
+<p>
+Set VR(10) to 54.2, then read bit 2 of 54.
+</p>
+<p class="codeexample">
+VR(10) = 54.2
+</p>
+<p class="codeexample">
+PRINT (54).2
+</p>
+<h3>Example 3:</h3>
+<p>
+Show how a local variable can have bits set and cleared in a
+program.
+</p>
+<p class="codeexample">
+DIM a AS INTEGER
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+a = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+a.8 = 1
+</p>
+<p class="codeexample">
+PRINT a 'Prints 256
+</p>
+<p class="codeexample">
+a.2 = 1
+</p>
+<p class="codeexample">
+PRINT a 'Prints 260
+</p>
+<p class="codeexample">
+a.8 = 0
+</p>
+<p class="codeexample">
+PRINT a 'Prints 4
+</p>
+<h3>Example 4:</h3>
+<p>
+The commands CLEAR_BIT, READ_BIT and SET_BIT are
+specifically for manipulating the bits within a VR variable, but this can be
+achieved using the bit operator.
+</p>
+<p class="codeexample">
+VR(23).6 = 0 'Same as CLEAR_BIT(6, 23)
+</p>
+<p class="codeexample">
+PRINT VR(13).4 'Same as PRINT READ_BIT(4, 13)
+</p>
+<p class="codeexample">
+VR(7).3 = 1 'Same as SET_BIT(7, 3)
+</p>
+<h3>Example 5:</h3>
+<p>
+Display axis status bit 3 (remote drive error) for axis 1.
+</p>
+<p class="codeexample">
+PRINT AXISSTATUS AXIS(1).3
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="Field_operator.html">. Field operator</a>
+, 
+<a href="CLEAR_BIT.html">CLEAR_BIT</a>
+, 
+<a href="READ_BIT.html">READ_BIT</a>
+, 
+<a href="SET_BIT.html">SET_BIT</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

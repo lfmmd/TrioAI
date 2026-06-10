@@ -1,0 +1,166 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STEP_RATIO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STEP_RATIO">
+</head>
+<body>
+<h1>STEP_RATIO</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+STEP_RATIO(output_count, dpos_count)
+</p>
+<h2>Description:</h2>
+<p>
+This command sets up an integer ratio for the axis’ demanded
+positon.  Usually this is used on a stepper (pulse+direction) output.  It can
+also be applied to a networked axis in positon mode, such as EtherCAT and RTEX
+position servo.  Every servo-period the change in position is passed through
+the STEP_RATIO function before it goes to the step pulse or network drive output.
+</p>
+<p class="note">
+The STEP_RATIO function operates before the divide by 16 factor (divide
+by 256 in Flexslice P375) in the stepper axis.  This maintains the good timing
+resolution of the stepper output circuit.
+</p>
+<p class="warning">
+STEP_RATIO does not replace 
+<a href="UNITS.html">UNITS.</a>
+ </p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+output_count:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of counts to output for the given dpos_count
+  value.  Range: 0 to 16777215.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+dpos_count:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Change in 
+<a href="DPOS.html">DPOS</a>
+ value for
+  corresponding output count.  Range: 0 to 16777215.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Large ratios should be avoided as they will lead to either loss
+of resolution or much reduced smoothness in the motion.  The actual physical
+step size x 16 is the basic resolution of the axis and use of this command may
+reduce the ability of the Motion Coordinator to accurately achieve all
+positions.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Two axes are set up as X and Y but the axes’ steps per mm
+are not the same.  Interpolated moves require identical 
+<a href="UNITS.html">UNITS</a>
+
+values on both axes in order to keep the path speed constant and for 
+<a href="MOVECIRC.html">MOVECIRC</a>
+ to work correctly.  The axis with the lower
+resolution is changed to match the higher step resolution axis so as to
+maintain the best accuracy for both axes.
+</p>
+<p>
+&nbsp;
+</p>
+<p class="codeexample">
+'Axis 0: 500 counts per mm (31.25 steps per mm)
+</p>
+<p class="codeexample">
+'Axis 1: 800 counts per mm (50.00 steps per mm)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+STEP_RATIO(500,800)
+</p>
+<p class="codeexample">
+UNITS = 800
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+UNITS = 800
+</p>
+<h3>Example 2:</h3>
+<p>
+A stepper motor has 400 steps per revolution and the
+installation requires that it is controlled in degrees.  As there are 360
+degrees in one revolution, it would be better from the programmer’s point of
+view if there are 360 counts per revolution.
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+STEP_RATIO(400, 360)
+</p>
+<p class="codeexample">
+'Note: this has reduced resolution of the stepper axis
+</p>
+<p class="codeexample">
+MOVE(360*16) 'move 1 revolution
+</p>
+<h3>Example 3:</h3>
+<p>
+Remove the step ratio from an axis.
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+STEP_RATIO(1, 1)
+</p>
+</body>
+</html>

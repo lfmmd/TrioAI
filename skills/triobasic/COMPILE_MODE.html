@@ -1,0 +1,102 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>COMPILE_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="COMPILE_MODE">
+</head>
+<body>
+<h1>COMPILE_MODE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Startup Parameter (MC_CONFIG only)
+</p>
+<h2>Description:</h2>
+<p>
+COMPILE_MODE controls whether all used variables must be
+defined within a 
+<a href="DIM.html">DIM</a>
+<span class="MsoHyperlink"> </span>statement
+as a prerequisite before use or not.
+</p>
+<p>
+The default setting (0) is the traditional compile mode
+where variables can be used without any need for declaration. However, by
+changing this parameter to 1, either within MC_CONFIG or at any time after
+startup, means that all new program compilations will require variables to be
+declared using 
+<a href="DIM.html">DIM</a>
+.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Local variables do not require explicit declaration
+  (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Local variables require explicit declaration using 
+<a href="DIM.html">DIM</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+COMPILE_MODE = 0 'No enforced variable declarations
+</p>
+<h3>Example 2:</h3>
+<p class="codeexample">
+COMPILE_MODE = 1 'Force variable declarations via DIM
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DIM.html">DIM</a>
+, 
+<a href="COMPILE.html">COMPILE</a>
+,
+
+<a href="COMPILE_ALL.html">COMPILE_ALL</a>
+</p>
+</body>
+</html>

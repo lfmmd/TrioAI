@@ -1,0 +1,47 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENCODER_FILTER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENCODER_FILTER">
+</head>
+<body>
+<h1>ENCODER_FILTER</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter allows filtering to be applied to an encoder
+feedback to reduce the impact of jitter. The smaller the value the larger the
+time constant and so the less impact jitter will have on the system. 
+</p>
+<p class="tip">
+This parameter can be used to reduce jitter on a master axis which
+is linked to another axis. 
+</p>
+<h2>Value:</h2>
+<p>
+Filter parameter range 0.001 to 1 (default 1).
+</p>
+<h2>Example:</h2>
+<p>
+Apply a filter to a line encoder so that the connected axes
+are not affected by any jitter:
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+ENCODER_FILTER = 0.95
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+CONNECT(1,0)
+</p>
+</body>
+</html>

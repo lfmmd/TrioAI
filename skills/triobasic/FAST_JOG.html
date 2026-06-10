@@ -1,0 +1,103 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FAST_JOG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FAST_JOG">
+</head>
+<body>
+<h1>FAST_JOG</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter holds the input number to be used as the fast
+jog input. If the FAST_JOG is active then the jog inputs use the axis 
+<a href="SPEED.html">SPEED</a>
+ for the jog functions, otherwise the 
+<a href="JOGSPEED.html">JOGSPEED</a>
+ will be used.
+</p>
+<p class="note">
+The input used for FAST_JOG is active low.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+disable the input as FAST_JOG (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0-63
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input to use as datum input
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+Any type of input can be used, built in, Trio CAN I/O, CANopen or
+virtual. 
+</p>
+<h2>Example:</h2>
+<p>
+Configure input 12 and 13 as jog inputs
+</p>
+<p class="codeexample">
+FWD_JOG = 12
+</p>
+<p class="codeexample">
+FAST_JOG = 13
+</p>
+<p class="codeexample">
+JOGSPEED = 200
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FWD_JOG.html">FWD_JOG</a>
+, 
+<a href="JOGSPEED.html">JOGSPEED</a>
+,
+
+<a href="REV_JOG.html">REV_JOG</a>
+</p>
+</body>
+</html>

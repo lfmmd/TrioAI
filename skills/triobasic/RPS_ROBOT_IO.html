@@ -1,0 +1,436 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ROBOT_IO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ROBOT_IO">
+</head>
+<body>
+<h1>ROBOT_IO</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Parameter (Read Only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ROBOT_IO(group)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the states of the kinematic group’s digital I/O as a
+bit pattern. 
+</p>
+<p>
+The least significant 16 bits
+contain the kernel’s digital input states. The most significant 16 bits contain
+the kernel’s digital output states.
+</p>
+<p class="note">
+ROBOT_IO requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+<p class="note">
+RPS 2.0 kernel must be activated using the RPS_KERNEL_V2 keyword
+to enable its use.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Code
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Meaning
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+KMI
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Key switch manual input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+KAI
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Key switch automatic input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ESI
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Emergency stop input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DMI
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Demand input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+REI
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reset errors input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SAI
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Safety input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DEI
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Drive enabled input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MEI
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Master enable input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MPO
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Motor powered output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+REO
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot energised output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+18
+</p>
+
+  
+</td>
+<td width="60" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ERO
+</p>
+
+  
+</td>
+<td width="494" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error output
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Check if Robot(0) is enabled.
+</p>
+<p class="codeexample">
+IF ROBOT_IO(0).7 = 1 THEN
+<br>
+
+   ‘Robot is enabled. Further action here.
+<br>
+
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_RPS_KERNEL_V2.html">RPS_KERNEL_V2</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

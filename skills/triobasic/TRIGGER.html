@@ -1,0 +1,107 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TRIGGER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TRIGGER">
+</head>
+<body>
+<h1>TRIGGER</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+TRIGGER[(autotrigger)] 
+</p>
+<h2>Description:</h2>
+<p>
+Starts a previously set up 
+<a href="SCOPE.html">SCOPE</a>
+
+command. This allows you to start the scope capture at a specific part of your
+program. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+autotrigger:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If this parameter is specified and is not 0 then the
+  SCOPE will automatically retrigger at the end of each scan.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example 1:</h2>
+<p>
+The 
+<em><span style='font-family:"Calibri",sans-serif'>Motion</span></em>
+Perfect oscilloscope is set to record 
+<a href="MPOS.html">MPOS</a>
+ and 
+<a href="DPOS.html">DPOS</a>
+ of axis 0. The settings allow for program trigger and
+a repeat trigger. This loop can then be used as part of a PID tuning routine. 
+</p>
+<p class="codeexample">
+WHILE IN(tuning)=ON
+</p>
+<p class="codeexample">
+DEFPOS(0)
+</p>
+<p class="codeexample">
+TRIGGER
+</p>
+<p class="codeexample">
+ WA(5) ’Allow the scope to start
+</p>
+<p class="codeexample">
+ MOVE(100)
+</p>
+<p class="codeexample">
+ WAIT IDLE
+</p>
+<p class="codeexample">
+ WA(100)
+</p>
+<p class="codeexample">
+ MOVE(-100)
+</p>
+<p class="codeexample">
+ WA(100)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h2>Example 2:</h2>
+<p>
+Continuously sample the SCOPE
+</p>
+<p class="codeexample">
+TRIGGER(1)
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+</body>
+</html>

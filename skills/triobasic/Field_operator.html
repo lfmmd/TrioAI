@@ -1,0 +1,190 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>. Field operator</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>.  Field operator</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Variable
+</p>
+<h3><a name="_Comparison_Operator:"></a>
+Syntax:</h3>
+<p class="fixed">
+&lt;variable&gt;.field_name
+</p>
+<h3>Description:</h3>
+<p>
+Accesses the specified field of the given variable, allowing
+its contents to be read or written.
+</p>
+<p>
+A field, also known as a structure member or property,
+allows access to data contained within a variable by using the field’s name,
+which follows the same naming rules as identifiers used elsewhere to name
+things like variables and functions.
+</p>
+<p>
+Fields have limited use in Trio BASIC, as there is no
+facility to declare arbitrary user-defined structures. The following shows
+where they may be used:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Variables of type TARGET, TARGETE and TARGETJ (see specific pages
+for details)
+</li>
+<li class="indent-list-middle">
+Variables have the following fields:
+<ul style="list_style_type:disc">
+<li class="indent-list-middle">
+“dims” – returns the number of dimensions the variable has (0 if
+not an array)
+</li>
+<li class="indent-list-last">
+“dimsize” – returns the number of elements in the dimension
+specified within round brackets (numbered from 0, but no parameters are allowed
+for non-array variables)
+</li>
+</ul>
+</li>
+</ul>
+<p class="warning">
+There should be no spaces before or after the field operator.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of a variable or function parameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+field_name:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the field to be accessed
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples:</h3>
+<h3>Example 1:</h3>
+<p>
+<a name="_Assignment_Operator:"></a>
+Dimension a variable of
+type TARGETE and set the “x”, “y” and “z” fields to the measured position of
+axes 0, 1 and 2 respectively.
+</p>
+<p class="codeexample">
+DIM t AS TARGETE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+t.x = MPOS AXIS(0)
+</p>
+<p class="codeexample">
+t.y = MPOS AXIS(1)
+</p>
+<p class="codeexample">
+t.z = MPOS AXIS(2)
+</p>
+<h3>Example2:</h3>
+<p>
+Display the number of dimensions and the size of each
+dimension for an array function parameter.
+</p>
+<p class="codeexample">
+FUNCTION test(arr AS FLOAT())
+</p>
+<p class="codeexample">
+  DIM i AS INTEGER
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  PRINT &quot;Number of dimensions: &quot;; arr.dims
+</p>
+<p class="codeexample">
+  FOR i = 1 to arr.dims
+</p>
+<p class="codeexample">
+    PRINT &quot;Dimension &quot;; i; &quot;: &quot;;
+arr.dimsize(i - 1)
+</p>
+<p class="codeexample">
+  NEXT i
+</p>
+<p class="codeexample">
+ENDFUNC
+</p>
+<h3>Example3:</h3>
+<p>
+Assign to GTA element 10 the average X coordinate from GTA
+elements 20 and 42.
+</p>
+<p class="codeexample">
+GTA(10).x = (GTA(20).x + GTA(42).x) / 2
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="BitNumber.html">. Bit operator</a>
+, 
+<a href="DIM.html">DIM</a>
+, 
+<a href="RPS_GTA.html">GTA</a>
+, 
+<a href="RPS_GTAE.html">GTAE</a>
+,
+
+<a href="RPS_GTAJ.html">GTAJ</a>
+, 
+<a href="STATIC.html">STATIC</a>
+, 
+<a href="RPS_TARGET.html">TARGET</a>
+, 
+<a href="RPS_TARGETE.html">TARGETE</a>
+, 
+<a href="RPS_TARGETJ.html">TARGETJ</a>
+</p>
+</body>
+</html>

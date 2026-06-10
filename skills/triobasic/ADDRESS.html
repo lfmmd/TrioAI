@@ -1,0 +1,42 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ADDRESS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ADDRESS">
+</head>
+<body>
+<h1>ADDRESS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Sets the RS485 or Modbus multi-drop address for the controller.
+
+</p>
+<h2>Value:</h2>
+<p>
+Node address, should be in the range of 1..32. If it is set
+to 255 addressing is not used and all 8 characters from the packet are sent through
+to the user.
+</p>
+<h2>Example:</h2>
+<p>
+Initialise Modbus as node 5
+</p>
+<p class="codeexample">
+ADDRESS = 5
+</p>
+<p class="codeexample">
+SETCOM(19200, 8, 1, 2, 1, 4)
+</p>
+<p>
+<span style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

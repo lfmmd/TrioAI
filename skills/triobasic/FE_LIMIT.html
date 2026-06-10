@@ -1,0 +1,86 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FE_LIMIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FE_LIMIT">
+</head>
+<body>
+<h1>FE_LIMIT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+FELIMIT
+</p>
+<h2>Description:</h2>
+<p>
+This is the maximum allowable following error. When exceeded
+the controller will generate an 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+ error,
+by default this will also generate a 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+.
+The 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+ will disable the 
+<a href="WDOG.html">WDOG</a>
+ relay thus stopping further motor operation. 
+</p>
+<p class="tip">
+This limit may be used to guard against fault conditions such as
+mechanical lock-up, loss of encoder feedback, etc. 
+</p>
+<h2>Value:</h2>
+<p>
+The maximum allowable following error in user units. The
+default value is 2000 encoder edges.
+</p>
+<h2>Example:</h2>
+<p>
+Initialise the axis as part of a STARTUP routine
+</p>
+<p class="codeexample">
+FOR x = 0 to 4
+</p>
+<p class="codeexample">
+  BASE(x)
+</p>
+<p class="codeexample">
+  UNITS = 100
+</p>
+<p class="codeexample">
+  FE_LIMIT = 10
+</p>
+<p class="codeexample">
+  SPEED = 100  
+</p>
+<p class="codeexample">
+  ACCEL = 1000
+</p>
+<p class="codeexample">
+  DECEL = ACCEL
+</p>
+<p class="codeexample">
+NEXT x 
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FE.html">FE</a>
+, 
+<a href="FE_LATCH.html">FE_LATCH</a>
+,
+
+<a href="FE_LIMIT_MODE.html">FE_LIMIT_MODE</a>
+, 
+<a href="FE_RANGE.html">FE_RANGE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

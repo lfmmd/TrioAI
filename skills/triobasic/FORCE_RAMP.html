@@ -1,0 +1,104 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FORCE_RAMP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FORCE_RAMP">
+</head>
+<body>
+<h1>FORCE_RAMP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+FORCE_RAMP AXIS(n) = &lt;value&gt;
+</p>
+<h2>Description:</h2>
+<p>
+FORCE_RAMP programs a change to the FORCE_SPEED over the
+length of the move and can be applied to advanced speed control moves (those
+suffixed with “SP”, like MOVESP, MOVEABSSP, MOVECIRCSP etc.).
+</p>
+<p>
+The ramp is defined by the acceleration required to change
+from one speed to another over the length of the move with an increasing speed
+having a positive value and a decreasing speed a negative value. This is
+calculated by determining the duration of the move (from the move’s distance
+divided by the average speed (the sum of the initial and final speeds divided
+by 2)), and the acceleration required is determined from the speed change over
+the move divided by the duration just calculated.
+</p>
+<p class="note">
+After setting a ramp for a move, it is necessary to set
+FORCE_RAMP to zero before loading subsequent moves that do not require a ramp.
+</p>
+<p>
+Since the way that this works is by constantly adjusting the
+move’s FORCE_SPEED value, this will result in many small changes in speed, and
+if using a VP_MODE that uses JERK, this will result in repeated application of
+jerk all along the length of the move. If this is a problem, then the same
+value that was assigned to FORCE_RAMP can be assigned to FORCE_ACCEL if the
+ramp is increasing in speed or FORCE_DECEL if the ramp is decreasing in speed,
+and the ENDMOVE_SPEED setting to the speed required, and this will result in a
+single application of jerk to start the ramp and a single application of jerk
+to end the ramp.
+</p>
+<p>
+<img width="575" height="220" id="Picture 1" src="FORCE_RAMP_files/image001.jpg">
+</p>
+<h2>Value:</h2>
+<p>
+The acceleration required to change from one speed to the
+next over the length of the move.
+</p>
+<h2>Example:</h2>
+<p>
+Suppose the ENDMOVE_SPEED of the previous move was 100 and it
+is required that the next move programs a deceleration to 75 over the length of
+the move:
+</p>
+<p class="codeexample">
+     start_sp = 100
+</p>
+<p class="codeexample">
+     end_sp = 75
+</p>
+<p class="codeexample">
+     dist = 1
+</p>
+<p class="codeexample">
+     t = dist * 2 / (start_sp + end_sp)
+</p>
+<p class="codeexample">
+     ramp = (end_sp - start_sp) / t
+</p>
+<p class="codeexample">
+     FORCE_SPEED = start_sp
+</p>
+<p class="codeexample">
+     ENDMOVE_SPEED = end_sp
+</p>
+<p class="codeexample">
+     FORCE_RAMP = ramp
+</p>
+<p class="codeexample">
+     MOVESP(dist)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ENDMOVE_SPEED.html">ENDMOVE_SPEED</a>
+, 
+<a href="STARTMOVE_SPEED.html">STARTMOVE_SPEED</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="FORCE_ACCEL.html">FORCE_ACCEL</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="FORCE_DECEL.html">FORCE_DECEL</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="FORCE_DWELL.html">FORCE_DWELL</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="FORCE_SPEED.html">FORCE_SPEED</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

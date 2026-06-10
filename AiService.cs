@@ -26,13 +26,19 @@ namespace TrioAI.MPPlugIn
         private string _apiUrl;
         private bool _showToolStatus = true;
         private bool _skillsInitialized;
+        private static bool _includeSkillImages = false;
         private readonly List<Dictionary<string, object>> _conversationHistory = new List<Dictionary<string, object>>();
         private string _currentSessionId;
         private static string _lastCompileError;
 
         private const int MaxHistoryKeep = 30;
         private const int MaxRecentKeep = 20;
-        private const int MaxToolResultLen = 10000;
+        private const int MaxToolResultLen = 8000;
+        // microCompact：旧 tool_result 的 content 替换为占位符，保留 tool_use_id 不破坏配对
+        private const int MaxRecentToolResults = 5;
+        private const string ClearedToolResult = "[Old tool result content cleared]";
+        // 按 token 估算触发裁剪（chars/4），而非按消息条数 — 30 条纯对话仅 5k token，但 5 个 lookup 就 20k+
+        private const int HistoryTokenBudget = 30000;
         private const int DefaultMaxTokens = 8192;
         private const int EscalatedMaxTokens = 64000;
         private int _currentMaxTokens = DefaultMaxTokens;
@@ -140,18 +146,28 @@ namespace TrioAI.MPPlugIn
                         bool b;
                         if (val != null && bool.TryParse(val.ToString(), out b)) _skillsInitialized = b;
                     }
+                    if (cfg.TryGetValue("includeSkillImages", out val))
+                    {
+                        bool b;
+                        if (val != null && bool.TryParse(val.ToString(), out b)) _includeSkillImages = b;
+                    }
                 }
             }
             catch { }
         }
 
-        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null)
+        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null)
         {
             _apiKey = apiKey;
             if (!string.IsNullOrEmpty(model)) _model = model;
             if (!string.IsNullOrEmpty(apiUrl)) _apiUrl = apiUrl;
             if (showToolStatus.HasValue) _showToolStatus = showToolStatus.Value;
-            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized });
+            if (includeSkillImages.HasValue && includeSkillImages.Value != _includeSkillImages)
+            {
+                _includeSkillImages = includeSkillImages.Value;
+                _skillDetailCache.Clear(); // img stripping is cached per page; force re-read
+            }
+            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages });
             File.WriteAllText(ConfigPath, json);
         }
 
@@ -174,6 +190,7 @@ namespace TrioAI.MPPlugIn
         public string CurrentConfig => _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus });
         public bool ShowToolStatus => _showToolStatus;
         public bool SkillsInitialized => _skillsInitialized;
+        public bool IncludeSkillImages => _includeSkillImages;
 
         public string InitializeSkills()
         {
@@ -200,7 +217,7 @@ namespace TrioAI.MPPlugIn
 
             _skillsInitialized = true;
             _index = null; // force reload
-            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true });
+            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages });
             File.WriteAllText(ConfigPath, json);
             return null;
         }
@@ -499,13 +516,36 @@ namespace TrioAI.MPPlugIn
 
         private StreamResult CallApiStream(string systemPrompt, CancellationToken ct)
         {
+            // Prompt caching: 把 system 转成 content-block 数组并打 cache_control 标记。
+            // 这样 system 前缀（含环境信息、可用 skills、参考库列表）只算一次完整 token，
+            // 5 分钟 TTL 内命中走缓存（输入 token 计费 1/10）。
+            var systemBlocks = new List<Dictionary<string, object>>
+            {
+                new Dictionary<string, object>
+                {
+                    { "type", "text" },
+                    { "text", systemPrompt },
+                    { "cache_control", new { type = "ephemeral" } }
+                }
+            };
+            var tools = GetToolDefinitions();
+            // tools 也打一个 breakpoint：tool schema 几乎不变，缓存命中率非常高。
+            if (tools.Count > 0)
+            {
+                var lastTool = new Dictionary<string, object>(tools[tools.Count - 1])
+                {
+                    { "cache_control", new { type = "ephemeral" } }
+                };
+                tools[tools.Count - 1] = lastTool;
+            }
+
             var body = new Dictionary<string, object>
             {
                 { "model", _model },
                 { "max_tokens", _currentMaxTokens },
-                { "system", systemPrompt },
+                { "system", systemBlocks },
                 { "messages", BuildTrimmedMessages() },
-                { "tools", GetToolDefinitions() },
+                { "tools", tools },
                 { "stream", true }
             };
 
@@ -550,7 +590,9 @@ namespace TrioAI.MPPlugIn
 
         private void TrimHistory()
         {
-            if (_conversationHistory.Count <= MaxHistoryKeep)
+            // token 估算（chars/4）超过预算才裁剪；条数兜底（防 token 估算漏判）
+            if (EstimateHistoryTokens() < HistoryTokenBudget
+                && _conversationHistory.Count <= MaxHistoryKeep)
                 return;
 
             int start = _conversationHistory.Count - MaxRecentKeep;
@@ -581,11 +623,71 @@ namespace TrioAI.MPPlugIn
             _conversationHistory.AddRange(trimmed);
         }
 
+        // 粗略估算历史 token：chars/4。仅用于裁剪触发判断，不要求精确。
+        private int EstimateHistoryTokens()
+        {
+            int chars = 0;
+            foreach (var m in _conversationHistory)
+            {
+                if (!m.ContainsKey("content")) continue;
+                var content = m["content"];
+                if (content is string s)
+                {
+                    chars += s.Length;
+                }
+                else if (content is List<Dictionary<string, object>> blocks)
+                {
+                    foreach (var b in blocks)
+                    {
+                        var c = GetStringValue(b, "content");
+                        if (c != null) chars += c.Length;
+                        var t = GetStringValue(b, "text");
+                        if (t != null) chars += t.Length;
+                    }
+                }
+            }
+            return chars / 4;
+        }
+
         private List<Dictionary<string, object>> BuildTrimmedMessages()
         {
             var messages = new List<Dictionary<string, object>>(_conversationHistory.Count);
-            foreach (var msg in _conversationHistory)
+
+            // microCompact：扫描全部 user 消息里的 tool_result，按出现顺序收集 tool_use_id。
+            // 保留最后 N 个完整内容，更早的 content 清空（保留 tool_use_id 防止 tool_use/tool_result 配对断裂）。
+            // 工具结果（HTML 帮助页、文件内容）是请求 token 的大头，旧的清空能省 30%+。
+            var allToolResultIds = new List<string>();
+            foreach (var m in _conversationHistory)
             {
+                if (GetStringValue(m, "role") != "user") continue;
+                if (!(m["content"] is List<Dictionary<string, object>> bl)) continue;
+                foreach (var b in bl)
+                {
+                    if (GetStringValue(b, "type") == "tool_result")
+                    {
+                        var id = GetStringValue(b, "tool_use_id");
+                        if (id != null) allToolResultIds.Add(id);
+                    }
+                }
+            }
+            var keepRecent = new HashSet<string>(
+                allToolResultIds.Skip(Math.Max(0, allToolResultIds.Count - MaxRecentToolResults)));
+
+            // 找到历史里最后一条 assistant 消息的下标，给它打 cache_control。
+            // 这样下一轮请求时，前缀 [system + tools + history up to last assistant] 命中缓存。
+            int lastAssistantIdx = -1;
+            for (int i = _conversationHistory.Count - 1; i >= 0; i--)
+            {
+                if (GetStringValue(_conversationHistory[i], "role") == "assistant")
+                {
+                    lastAssistantIdx = i;
+                    break;
+                }
+            }
+
+            for (int idx = 0; idx < _conversationHistory.Count; idx++)
+            {
+                var msg = _conversationHistory[idx];
                 var copy = new Dictionary<string, object>(msg);
                 var content = copy["content"];
 
@@ -598,9 +700,18 @@ namespace TrioAI.MPPlugIn
                         if (GetStringValue(block, "type") == "tool_result")
                         {
                             var tb = new Dictionary<string, object>(block);
-                            var c = GetStringValue(tb, "content");
-                            if (c != null && c.Length > MaxToolResultLen)
-                                tb["content"] = c.Substring(0, MaxToolResultLen) + "...[truncated]";
+                            var id = GetStringValue(tb, "tool_use_id");
+                            // microCompact：不在最近 N 个里 → content 替换为占位符（id 保留）
+                            if (id != null && !keepRecent.Contains(id))
+                            {
+                                tb["content"] = ClearedToolResult;
+                            }
+                            else
+                            {
+                                var c = GetStringValue(tb, "content");
+                                if (c != null && c.Length > MaxToolResultLen)
+                                    tb["content"] = SmartTruncate(c, MaxToolResultLen);
+                            }
                             trimmedBlocks.Add(tb);
                         }
                         else
@@ -611,9 +722,51 @@ namespace TrioAI.MPPlugIn
                     copy["content"] = trimmedBlocks;
                 }
 
+                // 给最后一条 assistant 消息的最后一个 content block 打 cache_control
+                if (idx == lastAssistantIdx && content is List<Dictionary<string, object>> asstBlocks && asstBlocks.Count > 0)
+                {
+                    var newBlocks = new List<Dictionary<string, object>>(asstBlocks.Count);
+                    for (int j = 0; j < asstBlocks.Count; j++)
+                    {
+                        if (j == asstBlocks.Count - 1)
+                        {
+                            var lastBlock = new Dictionary<string, object>(asstBlocks[j])
+                            {
+                                { "cache_control", new { type = "ephemeral" } }
+                            };
+                            newBlocks.Add(lastBlock);
+                        }
+                        else
+                        {
+                            newBlocks.Add(asstBlocks[j]);
+                        }
+                    }
+                    copy["content"] = newBlocks;
+                }
+
                 messages.Add(copy);
             }
             return messages;
+        }
+
+        // 智能截断：优先在 HTML heading / paragraph / table 边界处切，避免把语法表或参数说明截成半句。
+        // 比纯字符 cut 慢一点但只对超长 tool_result 触发（lookup_command 帮助页为主）。
+        private static readonly string[] _truncateBoundaries =
+            { "</h2>", "</h3>", "</h4>", "</h5>", "</table>", "</ul>", "</ol>", "</p>" };
+
+        private static string SmartTruncate(string s, int maxLen)
+        {
+            if (string.IsNullOrEmpty(s) || s.Length <= maxLen) return s;
+            int searchStart = (int)(maxLen * 0.7);
+            int best = -1;
+            foreach (var b in _truncateBoundaries)
+            {
+                int idx = s.LastIndexOf(b, maxLen, StringComparison.OrdinalIgnoreCase);
+                if (idx > searchStart && idx + b.Length > best)
+                    best = idx + b.Length;
+            }
+            int cut = best > 0 ? best : maxLen;
+            return s.Substring(0, cut) + "\n...[truncated " + cut + "/" + s.Length + " chars]";
         }
 
         private StreamResult ReadSseStream(HttpResponseMessage response, CancellationToken ct)
@@ -847,7 +1000,7 @@ namespace TrioAI.MPPlugIn
             "write_source", "patch_source", "write_vr", "write_table",
             "create_program", "delete_program", "rename_program",
             "upload", "download", "compile_program", "run_program", "stop_program",
-            "set_program_process"
+            "set_program_process", "write_iec_variables"
         };
 
         private string ExecuteTool(string name, Dictionary<string, object> input)
@@ -892,6 +1045,9 @@ namespace TrioAI.MPPlugIn
                 case "get_status": return Handlers.GetStatus();
                 case "list_programs": return Handlers.ListPrograms();
                 case "read_source": return Handlers.ReadSource(GetStr(input, "name"), input);
+                case "get_iec_task_detail": return Handlers.GetIecTaskDetail(GetStr(input, "name"));
+                case "read_iec_variables": return Handlers.ReadIecVariables(GetStr(input, "name"), GetStr(input, "scope"));
+                case "write_iec_variables": return Handlers.WriteIecVariables(GetStr(input, "name"), GetStr(input, "scope"), GetStr(input, "text"));
                 case "write_source": return Handlers.WriteSource(GetStr(input, "name"), input);
                 case "patch_source": return Handlers.PatchSource(GetStr(input, "name"), input);
                 case "read_vr": return Handlers.ReadVR(GetInt(input, "address"), GetInt(input, "count"));
@@ -899,6 +1055,42 @@ namespace TrioAI.MPPlugIn
                 case "read_table": return Handlers.ReadTable(GetInt(input, "address"), GetInt(input, "count"));
                 case "write_table": return Handlers.WriteTable(GetInt(input, "address"), input);
                 case "list_axes": return Handlers.ListAxes();
+                case "get_axis_detail": return Handlers.GetAxisDetail(GetInt(input, "index"));
+                case "copy_program": return Handlers.CopyProgram(GetStr(input, "name"), input);
+                case "get_sysvars": return Handlers.GetSystemVariables();
+                case "read_sysvar": return Handlers.ReadSysVar(GetStr(input, "name"));
+                case "write_sysvar": return Handlers.WriteSysVar(GetStr(input, "name"), input);
+                case "list_digital_io": return Handlers.ListDigitalIO();
+                case "read_digital_io": return Handlers.ReadDigitalIO(GetInt(input, "index"));
+                case "write_digital_io": return Handlers.WriteDigitalIO(GetInt(input, "index"), input);
+                case "list_analogue_io": return Handlers.ListAnalogueIO();
+                case "read_analogue_io": return Handlers.ReadAnalogueIO(GetInt(input, "index"));
+                case "write_analogue_io": return Handlers.WriteAnalogueIO(GetInt(input, "index"), input);
+                case "list_breakpoints": return Handlers.ListBreakpoints(GetStr(input, "name"));
+                case "set_breakpoint": return Handlers.SetBreakpoint(GetStr(input, "name"), input);
+                case "clear_all_breakpoints": return Handlers.ClearAllBreakpoints(GetStr(input, "name"));
+                case "list_processes": return Handlers.ListProcesses();
+                case "get_process_variable": return Handlers.GetProcessVariable(GetInt(input, "pid"), GetStr(input, "program"), GetStr(input, "variable"));
+                case "get_events": return Handlers.GetEvents(GetLong(input, "since"));
+                case "read_drive_param": return Handlers.ReadDriveParam(GetInt(input, "axis"), GetInt(input, "address"), GetInt(input, "nd", 4));
+                case "write_drive_param": return Handlers.WriteDriveParam(GetInt(input, "axis"), GetInt(input, "address"), input);
+                case "scan_ethercat": return Handlers.ScanEtherCAT(GetInt(input, "slot", 0));
+                case "read_ethercat_sdo":
+                    return Handlers.EtherCATReadSDO(GetInt(input, "slot", 0),
+                                                    (uint)GetLong(input, "position"),
+                                                    (uint)GetLong(input, "index"),
+                                                    (uint)GetLong(input, "subindex"),
+                                                    GetStr(input, "type") ?? "uint16");
+                case "write_ethercat_sdo": return Handlers.EtherCATWriteSDOFromDict(input);
+                case "scan_msbus": return Handlers.ScanMsBus(GetInt(input, "slot", 0));
+                case "list_remote_devices": return Handlers.ListRemoteDevices();
+                case "list_robots": return Handlers.ListRobots();
+                case "list_recipes": return Handlers.ListRecipes();
+                case "list_alarms": return Handlers.ListAlarms();
+                case "list_plugins": return Handlers.ListAttachedPlugins();
+                case "open_oscilloscope": return Handlers.OpenOscilloscope();
+                case "open_project": return Handlers.OpenProject(input);
+                case "list_project_items": return Handlers.ListProjectItems();
                 case "list_descriptors": return Handlers.ListDescriptors();
                 case "create_program": return Handlers.CreateProgram(input);
                 case "delete_program": return Handlers.DeleteProgram(GetStr(input, "name"));
@@ -913,26 +1105,39 @@ namespace TrioAI.MPPlugIn
                 case "get_program_process": return Handlers.GetProgramProcess(GetStr(input, "name"));
                 case "set_program_process": return Handlers.SetProgramProcess(GetStr(input, "name"), input);
                 case "lookup_command": return LookupCommand(GetStr(input, "query"));
+                case "read_skill": return ReadSkill(GetStr(input, "name"));
                 case "search_code": return Handlers.SearchCode(GetStr(input, "query"), GetBool(input, "caseSensitive"));
                 default: return new { error = $"Unknown tool: {name}" };
             }
         }
 
-        // ---- Command Lookup (two-tier: index for search, skills.json for details) ----
+        // ---- Command Lookup (index for search, HTML file per entry for details) ----
 
         private class SkillIndexEntry
         {
             public string Name;
             public string Type;
             public string Desc;
-            public int Start; // 1-based line number in skills.json
-            public int End;
+            public string File;  // HTML file name within Dir
             public string Dir;
+        }
+
+        // Markdown skill: skills/general/<name>/SKILL.md (cc-haha style, name + description frontmatter)
+        private class MdSkillEntry
+        {
+            public string Name;
+            public string Description;
+            public string Dir;
+            public string Body;
         }
 
         private static List<SkillIndexEntry> _index;
         private static DateTime _indexLoadTime;
         private static readonly Dictionary<string, Dictionary<string, object>> _skillDetailCache = new Dictionary<string, Dictionary<string, object>>(StringComparer.OrdinalIgnoreCase);
+
+        private static List<MdSkillEntry> _mdSkills;
+        private static DateTime _mdSkillsLoadTime;
+        private static readonly object _mdSkillLock = new object();
 
         private static List<SkillIndexEntry> LoadIndex()
         {
@@ -956,8 +1161,7 @@ namespace TrioAI.MPPlugIn
                             Name = GetStr(item, "name") ?? "",
                             Type = GetStr(item, "type") ?? "",
                             Desc = GetStr(item, "desc") ?? "",
-                            Start = GetInt(item, "start"),
-                            End = GetInt(item, "end"),
+                            File = GetStr(item, "file"),
                             Dir = dir
                         });
                 }
@@ -967,43 +1171,191 @@ namespace TrioAI.MPPlugIn
             return _index;
         }
 
-        private static Dictionary<string, object> LoadFullEntry(SkillIndexEntry entry)
-        {
-            if (entry == null) return null;
-            Dictionary<string, object> cached;
-            if (_skillDetailCache.TryGetValue(entry.Name, out cached))
-                return cached;
+        // ---- Markdown Skills (skills/general/<name>/SKILL.md) ----
 
-            var file = Path.Combine(entry.Dir, "skills.json");
-            if (!File.Exists(file)) return null;
+        private static List<MdSkillEntry> LoadMdSkills()
+        {
+            lock (_mdSkillLock)
+            {
+                if (_mdSkills != null && (DateTime.Now - _mdSkillsLoadTime).TotalMinutes < 10)
+                    return _mdSkills;
+                var list = new List<MdSkillEntry>();
+                try
+                {
+                    var generalDir = Path.Combine(SkillsDir, "general");
+                    if (Directory.Exists(generalDir))
+                    {
+                        foreach (var sub in Directory.GetDirectories(generalDir))
+                        {
+                            var skillFile = Path.Combine(sub, "SKILL.md");
+                            if (!File.Exists(skillFile)) continue;
+                            var entry = ParseSkillMd(skillFile, sub);
+                            if (entry != null) list.Add(entry);
+                        }
+                    }
+                    _mdSkills = list;
+                    _mdSkillsLoadTime = DateTime.Now;
+                }
+                catch { }
+                return _mdSkills;
+            }
+        }
+
+        // Minimal frontmatter parser: only reads `name` and `description` from a leading
+        // --- block. Trims surrounding quotes. Returns null if name is missing or no FM.
+        private static MdSkillEntry ParseSkillMd(string filePath, string dir)
+        {
             try
             {
-                // Read only the lines belonging to this entry, then parse that block.
-                // Block spans lines [Start, End] inclusive. The closing '  }' line may
-                // have a trailing comma ('  },'); strip it so wrapping in [ ] yields valid JSON.
-                var lines = File.ReadLines(file);
-                var block = new List<string>(entry.End - entry.Start + 3);
-                int i = 0;
-                foreach (var raw in lines)
+                var text = File.ReadAllText(filePath);
+                if (text.Length > 0 && text[0] == '﻿') text = text.Substring(1);
+                if (!text.StartsWith("---", StringComparison.Ordinal)) return null;
+                int start = 3;
+                if (start < text.Length && (text[start] == '\r' || text[start] == '\n')) start++;
+                int end = text.IndexOf("\n---", start, StringComparison.Ordinal);
+                if (end < 0) return null;
+                var frontmatter = text.Substring(start, end - start);
+                int bodyStart = end + 4;
+                if (bodyStart < text.Length && text[bodyStart] == '\r') bodyStart++;
+                if (bodyStart < text.Length && text[bodyStart] == '\n') bodyStart++;
+                var body = text.Substring(bodyStart).TrimEnd();
+
+                string name = null, desc = null;
+                foreach (var rawLine in frontmatter.Split('\n'))
                 {
-                    i++;
-                    if (i < entry.Start) continue;
-                    if (i > entry.End) break;
-                    var ln = raw;
-                    if (i == entry.End)
-                    {
-                        var trimmed = ln.TrimEnd();
-                        if (trimmed.EndsWith(",")) ln = ln.Substring(0, ln.LastIndexOf(','));
-                    }
-                    block.Add(ln);
+                    var line = rawLine.TrimEnd('\r');
+                    var idx = line.IndexOf(':');
+                    if (idx <= 0) continue;
+                    var key = line.Substring(0, idx).Trim().ToLowerInvariant();
+                    var val = line.Substring(idx + 1).Trim();
+                    if (val.Length >= 2 && ((val[0] == '"' && val[val.Length - 1] == '"') ||
+                                            (val[0] == '\'' && val[val.Length - 1] == '\'')))
+                        val = val.Substring(1, val.Length - 2);
+                    if (key == "name") name = val;
+                    else if (key == "description") desc = val;
                 }
-                var json = "[" + string.Join(Environment.NewLine, block) + "]";
-                var items = _json.Deserialize<List<Dictionary<string, object>>>(json);
-                if (items != null && items.Count > 0)
+                if (string.IsNullOrEmpty(name)) return null;
+                return new MdSkillEntry
                 {
-                    _skillDetailCache[entry.Name] = items[0];
-                    return items[0];
+                    Name = name,
+                    Description = desc ?? "",
+                    Dir = dir,
+                    Body = body,
+                };
+            }
+            catch { }
+            return null;
+        }
+
+        private static object ReadSkill(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return new { error = "name is required" };
+            var skills = LoadMdSkills();
+            if (skills.Count == 0)
+                return new { error = "No markdown skills installed. Place <name>/SKILL.md under skills/general/." };
+            var q = name.ToUpperInvariant();
+            var match = skills.Find(s => s.Name.ToUpperInvariant() == q);
+            if (match == null)
+                return new { error = $"Skill '{name}' not found. Available: " + string.Join(", ", skills.ConvertAll(s => s.Name)) };
+            return new
+            {
+                name = match.Name,
+                description = match.Description,
+                markdown = match.Body,
+            };
+        }
+
+        private static string BuildSkillsCatalog()
+        {
+            var sb = new StringBuilder();
+            // HTML 参考库（lookup_command 索引）— 让 AI 知道这些库存在且应主动查
+            var index = LoadIndex();
+            if (index.Count > 0)
+            {
+                var byLib = new Dictionary<string, List<SkillIndexEntry>>(StringComparer.OrdinalIgnoreCase);
+                foreach (var e in index)
+                {
+                    var lib = Path.GetFileName(e.Dir ?? "");
+                    if (!byLib.ContainsKey(lib)) byLib[lib] = new List<SkillIndexEntry>();
+                    byLib[lib].Add(e);
                 }
+                sb.AppendLine("## Reference Libraries (lookup_command)");
+                sb.AppendLine("Use the **lookup_command** tool to verify ANY command/function/function-block before writing code. Coverage:");
+                foreach (var kv in byLib)
+                    sb.AppendFormat("- **{0}**: {1} entries\n", kv.Key, kv.Value.Count);
+                sb.AppendLine();
+                sb.AppendLine("MANDATORY: Before writing TrioBASIC, IEC ST/SFC/LD/FBD, or PLCopen code, call lookup_command for any identifier you are not 100% sure exists in the official reference. Do NOT trust your training-data memory of these dialects.");
+                sb.AppendLine();
+            }
+            // Markdown skill（read_skill 索引）
+            var skills = LoadMdSkills();
+            if (skills.Count > 0)
+            {
+                sb.AppendLine("## Available Skills");
+                sb.AppendLine("These markdown skills are installed. Use the read_skill tool to load full content.");
+                sb.AppendLine();
+                foreach (var s in skills)
+                    sb.AppendFormat("- **{0}**: {1}\n", s.Name, s.Description ?? "");
+            }
+            return sb.ToString();
+        }
+
+        // Strip noise tags (script/style/head/comments/img) from a help HTML page so
+        // the LLM gets a compact body. img is dropped unless IncludeSkillImages is set.
+        private static readonly System.Text.RegularExpressions.Regex _reHead =
+            new System.Text.RegularExpressions.Regex(@"<head\b.*?</head>",
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.Compiled);
+        private static readonly System.Text.RegularExpressions.Regex _reScript =
+            new System.Text.RegularExpressions.Regex(@"<script\b.*?</script>",
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.Compiled);
+        private static readonly System.Text.RegularExpressions.Regex _reStyle =
+            new System.Text.RegularExpressions.Regex(@"<style\b.*?</style>",
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.Compiled);
+        private static readonly System.Text.RegularExpressions.Regex _reComment =
+            new System.Text.RegularExpressions.Regex(@"<!--.*?-->",
+                System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.Compiled);
+        private static readonly System.Text.RegularExpressions.Regex _reImg =
+            new System.Text.RegularExpressions.Regex(@"<img\b[^>]*/?>",
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
+
+        private static string CleanHelpHtml(string html, bool includeImages)
+        {
+            if (string.IsNullOrEmpty(html)) return html;
+            html = _reComment.Replace(html, "");
+            html = _reHead.Replace(html, "");
+            html = _reScript.Replace(html, "");
+            html = _reStyle.Replace(html, "");
+            if (!includeImages)
+                html = _reImg.Replace(html, "");
+            // Collapse runs of blank lines left behind by the stripping above.
+            return System.Text.RegularExpressions.Regex.Replace(html, @"\n{3,}", "\n\n");
+        }
+
+        private static Dictionary<string, object> LoadFullEntry(SkillIndexEntry entry)
+        {
+            if (entry == null || string.IsNullOrEmpty(entry.File)) return null;
+            // Cache key includes Dir so two skills with same-named commands don't collide.
+            string cacheKey = (entry.Dir ?? "") + "|" + entry.Name;
+            Dictionary<string, object> cached;
+            if (_skillDetailCache.TryGetValue(cacheKey, out cached))
+                return cached;
+
+            var htmlPath = Path.Combine(entry.Dir, entry.File);
+            if (!File.Exists(htmlPath)) return null;
+            try
+            {
+                var raw = File.ReadAllText(htmlPath);
+                var body = CleanHelpHtml(raw, _includeSkillImages);
+                var dict = new Dictionary<string, object>
+                {
+                    { "name", entry.Name },
+                    { "type", entry.Type ?? "" },
+                    { "description", entry.Desc ?? "" },
+                    { "html", body },
+                };
+                _skillDetailCache[cacheKey] = dict;
+                return dict;
             }
             catch { }
             return null;
@@ -1028,7 +1380,7 @@ namespace TrioAI.MPPlugIn
 
             var index = LoadIndex();
             if (index.Count == 0)
-                return new { error = "No skill data found. Place index.json + skills.json in subfolders of " + SkillsDir };
+                return new { error = "No skill data found. Place index.json + HTML pages in subfolders of " + SkillsDir };
 
             var q = query.ToUpperInvariant().Trim();
 
@@ -1086,18 +1438,31 @@ namespace TrioAI.MPPlugIn
             {
                 Tool("get_status", "Get controller connection status, product name, firmware version, project name", NoParams()),
                 Tool("list_programs", "List all programs in the current MotionPerfect project", NoParams()),
-                Tool("read_source", "Read source code of a program. For files >200 lines or >8000 chars, auto-returns first chunk + totalLines + hint; use startLine/endLine to paginate subsequent chunks.", Props(
+                Tool("read_source", "Read source code of a program. For files >200 lines or >8000 chars, auto-returns first chunk + totalLines + hint; use startLine/endLine to paginate subsequent chunks. For IEC tasks, use pouName to read a specific POU (default: first POU). IEC ST POU returns local VAR...END_VAR block (from POU's variable group) PREPENDED to the code body — write_source expects this same shape.", Props(
                     ("name", "Program name", false),
+                    ("pouName", "For IEC tasks only: specific POU name to read. If omitted, reads the first POU. Use get_iec_task_detail to list available POUs.", true),
                     ("startLine", "Starting 1-based line number (optional, for pagination)", true),
                     ("endLine", "Ending 1-based line number (optional)", true)
                 )),
-                Tool("write_source", "Write full source code to a program (auto-backup, requires confirmation)", Props(
+                Tool("get_iec_task_detail", "Get the internal structure of an IEC task: list of POUs (programs), task/global/retain variable blocks (VAR...END_VAR text), and the user data type table. Use this first when working with an IEC task to see its full contents.", Props("name", "IEC task name")),
+                Tool("write_source", "Write full source code to a program (auto-backup, requires confirmation). For IEC tasks, use pouName to target a specific POU — POU is auto-created (as ST/Main) if it does not exist.", Props(
                     ("name", "Program name", false),
-                    ("sourceCode", "Full source code to write", false)
+                    ("sourceCode", "Full source code to write", false),
+                    ("pouName", "For IEC tasks only: target POU name. Auto-created if missing. If omitted, writes to first POU (or creates MAIN).", true)
                 )),
-                Tool("patch_source", "Apply line-level edits to a program (auto-backup, requires confirmation)", PropsMixed(
+                Tool("patch_source", "Apply line-level edits to a program (auto-backup, requires confirmation). For IEC tasks, pouName must point to an EXISTING POU (use get_iec_task_detail to list).", PropsMixed(
                     ("name", "Program name", false, "string"),
+                    ("pouName", "For IEC tasks only: target POU name (must exist; defaults to first POU)", true, "string"),
                     ("operations", "Array of {action:replace|insert|delete, line:number, content:string}", false, "array")
+                )),
+                Tool("read_iec_variables", "Read IEC task variable block as VAR...END_VAR text. scope: task (task-local globals), global (controller-wide), retain (retained across power cycle).", Props(
+                    ("name", "IEC task name", false),
+                    ("scope", "Variable scope: task | global | retain", false)
+                )),
+                Tool("write_iec_variables", "Replace an IEC task variable block from VAR...END_VAR text (requires confirmation). Same scope semantics as read_iec_variables.", Props(
+                    ("name", "IEC task name", false),
+                    ("scope", "Variable scope: task | global | retain", false),
+                    ("text", "Full VAR...END_VAR text to import (replaces existing variables in this scope)", false)
                 )),
                 Tool("read_vr", "Read VR variable values from controller", Props(
                     ("address", "Starting VR address (0-based)", false),
@@ -1146,10 +1511,96 @@ namespace TrioAI.MPPlugIn
                 Tool("lookup_command", "Look up TrioBASIC command/keyword reference from the official manual.", Props(
                     ("query", "Command name or keyword to search (e.g. MOVE, CONNECT, ACCEL, FOR)", false)
                 )),
+                Tool("read_skill", "Load full markdown content of a skill listed in the 'Available Skills' section of the system prompt.", Props(
+                    ("name", "Skill name from Available Skills", false)
+                )),
                 Tool("search_code", "Search for a text pattern across all programs in the project. Returns matching lines with line numbers.", Props(
                     ("query", "Search text or pattern", false),
                     ("caseSensitive", "Whether search is case sensitive (default false)", true)
-                ))
+                )),
+                Tool("get_axis_detail", "Get detailed info for a single axis (Type, IsEncoderType, DefaultFriendlyName, Motor type, plus all list_axes fields).", Props(
+                    ("index", "Axis index (0-based)", false)
+                )),
+                Tool("copy_program", "Copy an existing program to a new name (requires confirmation)", Props(
+                    ("name", "Source program name", false),
+                    ("newName", "New program name", false),
+                    ("storage", "Storage: internalStorage (default) or sdcardStorage", true)
+                )),
+                Tool("get_sysvars", "Read structured system variables (WDog, MotionError, ServoPeriod, UnitError, SystemError, FlashStatus)", NoParams()),
+                Tool("read_sysvar", "Read any named controller system variable (e.g. PROCESS_RUNNING)", Props("name", "Variable name")),
+                Tool("write_sysvar", "Write a named system variable (requires confirmation)", Props(
+                    ("name", "Variable name", false),
+                    ("value", "Value to write", false)
+                )),
+                Tool("list_digital_io", "List all digital IO lines", NoParams()),
+                Tool("read_digital_io", "Read digital IO state (input + output) at index", Props("index", "IO line index")),
+                Tool("write_digital_io", "Write a digital output (requires confirmation)", Props(
+                    ("index", "IO line index", false),
+                    ("value", "Bool value to write", false)
+                )),
+                Tool("list_analogue_io", "List all analogue IO lines", NoParams()),
+                Tool("read_analogue_io", "Read analogue IO state at index", Props("index", "IO line index")),
+                Tool("write_analogue_io", "Write an analogue output (requires confirmation)", Props(
+                    ("index", "IO line index", false),
+                    ("value", "Numeric value to write", false)
+                )),
+                Tool("list_processes", "List all running processes on the controller (pid, status, program, line)", NoParams()),
+                Tool("get_process_variable", "Read a runtime variable from a running BASIC program", Props(
+                    ("pid", "Process ID", false),
+                    ("program", "Program (module) name", false),
+                    ("variable", "Variable name", false)
+                )),
+                Tool("get_events", "Pull subscribed controller events since given UTC ticks (program_state, connection_state, async_message, io_changed, compile_state)", Props(
+                    ("since", "UTC ticks; default 0 = all buffered events", true)
+                )),
+                Tool("list_breakpoints", "List breakpoints in a TrioBASIC program (line numbers)", Props("name", "Program name")),
+                Tool("set_breakpoint", "Set or clear a breakpoint in a TrioBASIC program (requires confirmation)", Props(
+                    ("name", "Program name", false),
+                    ("line", "1-based line number", false),
+                    ("enable", "true to set, false to clear (default true)", true)
+                )),
+                Tool("clear_all_breakpoints", "Remove all breakpoints in a TrioBASIC program (requires confirmation)", Props("name", "Program name")),
+                Tool("read_drive_param", "Read a drive parameter via DRIVE_READ", Props(
+                    ("axis", "Axis number", false),
+                    ("address", "Hex drive parameter address", false),
+                    ("nd", "Number of fraction digits (default 4)", true)
+                )),
+                Tool("write_drive_param", "Write a drive parameter via DRIVE_WRITE (requires confirmation)", Props(
+                    ("axis", "Axis number", false),
+                    ("address", "Hex drive parameter address", false),
+                    ("value", "Value to write (number or string)", false)
+                )),
+                Tool("scan_ethercat", "Scan EtherCAT devices on a slot", Props(
+                    ("slot", "Slot number (default 0)", true)
+                )),
+                Tool("read_ethercat_sdo", "Read an EtherCAT SDO via CANopen", Props(
+                    ("slot", "Slot (default 0)", true),
+                    ("position", "Device position", false),
+                    ("index", "Object index (decimal; e.g. 0x1000 = 4096)", false),
+                    ("subindex", "Subindex", true),
+                    ("type", "uint16 (default) / int32 / real32 / bool / string / ...", true)
+                )),
+                Tool("write_ethercat_sdo", "Write an EtherCAT SDO via CANopen (requires confirmation)", Props(
+                    ("slot", "Slot (default 0)", true),
+                    ("position", "Device position", false),
+                    ("index", "Object index (decimal)", false),
+                    ("subindex", "Subindex", true),
+                    ("type", "Data type (default uint16)", true),
+                    ("value", "Value", false)
+                )),
+                Tool("scan_msbus", "Scan MS Bus modules on a slot", Props(
+                    ("slot", "Slot (default 0)", true)
+                )),
+                Tool("list_remote_devices", "List configured remote device gateways (Modbus TCP/RTU) and their devices", NoParams()),
+                Tool("list_robots", "List configured robots (index, name, model, type, axes)", NoParams()),
+                Tool("list_recipes", "List Recipe project items", NoParams()),
+                Tool("list_alarms", "List alarms from AlarmSupport project items", NoParams()),
+                Tool("list_plugins", "Probe which controller-attached plugin services are available (IRobotService, RemoteDeviceManager)", NoParams()),
+                Tool("open_oscilloscope", "Open the Oscilloscope tool window", NoParams()),
+                Tool("open_project", "Open an existing project from a path (requires confirmation)", Props(
+                    ("path", "Project file path", false)
+                )),
+                Tool("list_project_items", "List all project items with name/type/group", NoParams())
             };
         }
 
@@ -1238,9 +1689,13 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
             {
                 var prompt = File.Exists(PromptPath) ? File.ReadAllText(PromptPath) : DefaultPrompt;
                 var context = BuildProjectContext();
+                var skills = BuildSkillsCatalog();
                 var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
                 var langInstruction = GetLanguageInstruction(lang);
-                return prompt + "\n\n" + context + "\n\n" + langInstruction;
+                var parts = new List<string> { prompt, context };
+                if (!string.IsNullOrEmpty(skills)) parts.Add(skills);
+                parts.Add(langInstruction);
+                return string.Join("\n\n", parts);
             }
             catch { }
             return DefaultPrompt;
@@ -1276,19 +1731,23 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
                     {
                         sb.AppendFormat("- Project: {0}\n", proj.FileName ?? "?");
 
-                        // Program list summary
+                        // Program list summary — 数量+类型分布，不列每个名字（占 token 且每次重发）
                         var items = proj.Items;
                         if (items != null)
                         {
                             var itemList = items.ToList();
                             if (itemList.Count > 0)
                             {
-                                sb.AppendFormat("- Programs ({0}):", itemList.Count);
+                                var byType = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
                                 foreach (var item in itemList)
                                 {
-                                    sb.AppendFormat(" {0}({1})", item.ItemName, item.Type);
+                                    var t = item.Type.ToString();
+                                    if (!byType.ContainsKey(t)) byType[t] = 0;
+                                    byType[t]++;
                                 }
-                                sb.AppendLine();
+                                sb.AppendFormat("- Programs: {0} items ({1})\n",
+                                    itemList.Count,
+                                    string.Join(", ", byType.Select(kv => kv.Value + " " + kv.Key)));
                             }
                         }
                     }
@@ -1497,6 +1956,33 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
             {
                 int result;
                 if (int.TryParse(val.ToString(), out result)) return result;
+            }
+            return 0;
+        }
+
+        private static int GetInt(Dictionary<string, object> d, string key, int defaultValue)
+        {
+            object val;
+            if (d.TryGetValue(key, out val) && val != null)
+            {
+                if (val is double dd) return (int)dd;
+                if (val is long dl) return (int)dl;
+                int result;
+                if (int.TryParse(val.ToString(), out result)) return result;
+            }
+            return defaultValue;
+        }
+
+        private static long GetLong(Dictionary<string, object> d, string key)
+        {
+            object val;
+            if (d.TryGetValue(key, out val) && val != null)
+            {
+                if (val is double dd) return (long)dd;
+                if (val is long dl) return dl;
+                if (val is int di) return di;
+                long result;
+                if (long.TryParse(val.ToString(), out result)) return result;
             }
             return 0;
         }

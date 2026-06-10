@@ -1,0 +1,1209 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Target Position Data Types</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Target Position Data Types</h1>
+<p class="MsoNoSpacing">
+There are two types of positional target: Cartesian and
+Joint, and to distinguish between the two there is a data type for each,
+specifically TARGET and TARGETJ. As with other variables, variables of type
+TARGET or TARGETJ may be used locally or globally.
+</p>
+<p class="MsoNoSpacing">
+In addition to having variables of type TARGET and
+TARGETJ, there is a global target array that is accessed using the GTA and GTAJ
+keywords. Each element of the global target array represents either Cartesian
+or joint coordinates depending on whether GTA or GTAJ is used to access a
+particular element.
+</p>
+<p class="MsoNoSpacing">
+Finally, to provide additional flexibility, there is an
+extended target position called TARGETE that allows the storage of extended
+information, and a GTAE keyword to allow access from the global target array.
+</p>
+<div>
+<table>
+<tr>
+<td valign="top" align="left">
+
+  
+<div>
+<p class="Safetyinfo">
+<span style="font-family:Wingdings">M<span style='font:7.0pt "Times New Roman"'> </span></span>Targets are referenced to
+  the active coordinate system when they are created. If a target has been
+  stored referenced to a different coordinate system than the active one, the
+  robot will not move to the expected target. Make sure the selected frame or
+  tool offset for robot moves is the same one used for creating the target.
+</p>
+</div>
+
+  
+</td>
+</tr>
+</table>
+</div>
+<h2>Syntax</h2>
+<h3><em><span style='font-family:"Cambria",serif'>Global Target Array</span></em></h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="662" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+GTA(index) = x, y, z, u, v, w[, &quot;name&quot;]
+</p>
+
+  
+<p class="codeexample">
+GTAJ(index) = x, y, z, u, v, w[, &quot;name&quot;]
+</p>
+
+  
+<p class="codeexample">
+GTAE(index) = x, y, z, u, v, w[, &quot;name&quot;[,
+  ptype[, ...]]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="662" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Elements:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+x, y, z, u, v, w
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Float
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+Cartesian – Position (mm) and orientation (degrees) 
+</p>
+
+  
+<p>
+Joint – Angles (degrees)
+</p>
+
+  
+<p>
+Extended – Positions or angles, as required
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+(optional) name
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+String
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+All – Unique name for the target (duplicate names generate
+  an error)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+ptype
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Point type (0=Cartesian; 1=Joint)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+num
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Robot number used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+rconf
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Robot configuration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+revs
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Last axis revolution from calibration point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+of
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Object frame used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+tool
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Tool offset used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+rf
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Robot frame used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+userdata
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Float
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Any useful information
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="662" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Examples:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="662" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Example
+  1:</span></em></p>
+
+  
+<p class="codeexample">
+GTA
+(10) = 
+100
+, 
+0
+, 
+50
+, 
+180
+, 
+0
+, 
+180
+, 
+&quot;Cartesian_point1&quot;
+</p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Example
+  2:</span></em></p>
+
+  
+<p class="codeexample">
+GTAJ
+(20) = 
+-10
+, 
+50
+, 
+10
+, 
+0
+, 
+15
+, 
+0
+, &quot;Joint_point1&quot;
+<em><span style='font-family:"Courier New"'> </span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Example
+  3:</span></em></p>
+
+  
+<p class="codeexample">
+GTAE
+(20) = 
+100
+, 
+50
+, 
+10
+, 18
+0
+, 0, 18
+0
+, &quot;p1&quot;, 0, 0, 1, 10, 0, 0, 0, 1.5
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Local Target Variable</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="652" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+DIM my_target AS TARGET 'Or TARGETJ or TARGETE
+</p>
+
+  
+<p class="codeexample">
+my_target = x, y, z, u, v, w[, ptype[, ...]]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="652" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Elements:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p>
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p>
+x, y, z, u, v, w
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Float
+</p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p>
+Cartesian – Position (mm) and orientation (degrees) 
+</p>
+
+  
+<p>
+Joint – Angles (degrees)
+</p>
+
+  
+<p>
+Extended – Positions or angles, as required
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+ptype
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Point type (0=Cartesian; 1=Joint)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+num
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Robot number used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+rconf
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Robot configuration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+revs
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Last axis revolution from calibration point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+of
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Object frame used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+tool
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Tool offset used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+rf
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Integer
+</p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Robot frame used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="161" valign="top" class="tablegrid">
+
+  
+<p align="right">
+userdata
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Float
+</p>
+
+  
+</td>
+<td width="359" valign="top" class="tablegrid">
+
+  
+<p>
+Extended – Any useful information
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="652" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>Examples:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="652" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>Example
+  1:</span></em></p>
+
+  
+<p class="codeexample">
+DIM my_local_target AS TARGET
+</p>
+
+  
+<p class="codeexample">
+my_local_target = 
+250
+, 
+0
+, 
+150
+, 
+180
+, 
+0
+, 
+180
+</p>
+
+  
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>Example
+  2:</span></em></p>
+
+  
+<p class="codeexample">
+DIM targets AS TARGETE(2)
+</p>
+
+  
+<p class="codeexample">
+targets(0) = 
+250
+, 
+0
+, 
+150
+, 
+180
+, 
+0
+, 
+180, 0, 2, 0, 10, 3, 13, 23, 1.5
+</p>
+
+  
+<p class="codeexample">
+targets(1) = 
+270
+, 1
+0
+, 
+150
+, 
+180
+, 
+0
+, 
+180, 0, 2, 0, 10, 3, 13, 23, 1.75
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Using Target Positions</h2>
+<h3>Declaration</h3>
+<p>
+The data types TARGET, TARGETJ and TARGETE are used in the
+same manner as other TrioBASIC data types:
+</p>
+<p class="codeexample">
+DIM t1 AS TARGET
+</p>
+<p>
+And can be used as parameters to functions, and even the
+function’s result:
+</p>
+<p class="codeexample">
+FUNCTION myfunc(t1 AS TARGET, t2 AS TARGET) AS TARGET
+</p>
+<p class="codeexample">
+   DIM t AS TARGET
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+   t.x = (t1.x + t2.x) / 2.0
+</p>
+<p class="codeexample">
+   t.y = (t1.y + t2.y) / 2.0
+</p>
+<p class="codeexample">
+   t.z = (t1.z + t2.z) / 2.0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+   RETURN t
+</p>
+<p class="codeexample">
+ENDFUNC
+</p>
+<h3>Manipulation</h3>
+<p>
+Target variables may be initialised:
+</p>
+<p class="codeexample">
+DIM t1, t2 AS TARGET
+</p>
+<p class="codeexample">
+t1 = 0, 100, -50, 0, 0, 90
+</p>
+<p class="codeexample">
+GTA(10, 13) = 250, 0, 150, 180, 0, 180
+</p>
+<p>
+Target variables may be assigned:
+</p>
+<p class="codeexample">
+t2 = t1
+</p>
+<p class="codeexample">
+GTA(12) = t2
+</p>
+<p class="codeexample">
+t1 = GTA(10)
+</p>
+<p class="codeexample">
+GTA(20, 23) = GTA(10)
+</p>
+<p>
+Target variables may have their contents (the named elements
+in the tables above) accessed directly using the field operator (see 
+<a href="Field_operator.html">. Field Operator</a>
+):
+</p>
+<p class="codeexample">
+t2.z = -1
+</p>
+<p class="codeexample">
+GTA(10).x = 0
+</p>
+<p class="codeexample">
+GTA(10, 12).y = 35
+</p>
+<p>
+Target variables may be displayed:
+</p>
+<p class="codeexample">
+PRINT t1
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+0.00000,100.00000,-50.00000,0.00000,0.00000,90.00000,&quot;&quot;
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+PRINT GTA(10, 13)
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+250.00000,0.00000,150.00000,180.00000,0.00000,180.00000,&quot;&quot;
+<br>
+
+250.00000,0.00000,150.00000,180.00000,0.00000,180.00000,&quot;&quot;
+<br>
+
+250.00000,0.00000,150.00000,180.00000,0.00000,180.00000,&quot;&quot;
+<br>
+
+250.00000,0.00000,150.00000,180.00000,0.00000,180.00000,&quot;&quot;
+</p>
+<h3>Define Motion</h3>
+<p>
+The RPS motion commands MOVEL, MOVEJ and MOVEC accept target
+position of type TARGET, TARGETJ or TARGETE.
+</p>
+<p class="codeexample">
+MOVEL GTA(12)
+</p>
+<p class="codeexample">
+MOVEJ GTAJ(20)
+</p>
+<p class="codeexample">
+MOVEC GTA(10), GTA(12)
+</p>
+<p>
+See the next section 
+<a href="RPS_Reference_6_Move_Commands.html">Move Commands</a>
+ and pages 
+<a href="RPS_MOVEL.html">MOVEL</a>
+, 
+<a href="RPS_MOVEJ.html">MOVEJ</a>
+ and 
+<a href="RPS_MOVEC.html">MOVEC</a>
+ for more details.
+</p>
+<h4>Cartesian Coordinates</h4>
+<p>
+These are declared using the TARGET data type, or by
+accessing the global target array using GTA.
+</p>
+<p>
+MOVEL – The end effector will move along a linear path to
+the target.
+</p>
+<p>
+MOVEJ – The end effector will move along a non-linear path
+to the target because the robot will travel linearly in joint space.
+</p>
+<p>
+MOVEC – The end effector will move in a circular arc between
+the two supplied targets.
+</p>
+<p>
+All other combinations will trigger an error.
+</p>
+<h4>Joint Coordinates</h4>
+<p>
+These are declared using the TARGETJ data type, or by
+accessing the global target array using GTAJ.
+</p>
+<p>
+MOVEL – The end effector will move along a linear path to
+the target calculated from the joint coordinates.
+</p>
+<p>
+MOVEJ – The end effector will move along a non-linear path
+to the target because the robot will travel linearly in joint space.
+</p>
+<p>
+All other combinations will trigger an error.
+</p>
+<h3>Reading Position</h3>
+<p>
+The current position of the robot is stored in two system
+variables, ROBOT_LPOS and ROBOT_JPOS.
+</p>
+<p class="note">
+These are read-only system variables.
+</p>
+<h4>ROBOT_LPOS</h4>
+<p>
+ROBOT_LPOS is of type TARGET and stores the Cartesian
+position of the end effector.
+</p>
+<p>
+This can be used in programs to determine the position of
+the robot.
+</p>
+<p class="codeexample">
+DIM my_variable AS TARGET
+<br>
+
+DIM x_pos AS FLOAT
+<br>
+
+my_variable = ROBOT_LPOS
+<br>
+
+x_pos = my_variable.x
+</p>
+<h4>ROBOT_JPOS</h4>
+<p>
+ROBOTJ_POS is of datatype TARGETJ and stores the joint
+position of the end effector. 
+</p>
+<p>
+This can be used in programs to determine the position of
+the axes of the robot.
+</p>
+<p class="codeexample">
+DIM my_variable AS TARGETJ
+<br>
+
+DIM j3_pos AS FLOAT
+<br>
+
+my_variable = ROBOT_JPOS
+<br>
+
+j3_pos = my_variable.z
+</p>
+<span style='font-family:"Courier New"'><br clear="all">
+
+</span><p>
+&nbsp;
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VECTOR_MAG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VECTOR_MAG">
+</head>
+<body>
+<h1>VECTOR_MAG</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = VECTOR_MAG(expr-1[, expr-2[, ..., expr-6]])
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+value = HYPOT(expr-1[, expr-2[, ..., expr-6]])
+</p>
+<h2>Description:</h2>
+<p>
+The VECTOR_MAG function returns the magnitude of a vector
+defined by its components, which can number from 1 to 6.
+</p>
+<p>
+The vector’s magnitude is the square root of the sum of the squares
+of its components, so it is the same as the hypotenuse of a 2-D or 3-D
+triangle, hence its alternate function name of &quot;HYPOT&quot;.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expr-n:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The floating-point value of component ‘n’ of the
+  vector.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print the magnitude of a scalar value:
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT VECTOR_MAG(PI)
+</p>
+<p class="codeexample">
+3.1416
+</p>
+<h3>Example 2:</h3>
+<p>
+Print the magnitude of a two-dimensional vector:
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT VECTOR_MAG(3, 4)
+</p>
+<p class="codeexample">
+5.0000
+</p>
+<h3>Example 3:</h3>
+<p>
+Print the magnitude of a three-dimensional vector:
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT VECTOR_MAG(3, 4, 12)
+</p>
+<p class="codeexample">
+13.0000
+</p>
+<h3>Example 4:</h3>
+<p>
+Print the magnitude of a six-dimensional vector:
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT VECTOR_MAG(1, 2, 3, 4, 5, 6)
+</p>
+<p class="codeexample">
+9.5394
+</p>
+<h2>See also:</h2>
+<p>
+<a href="POWER.html">^ Power</a>
+, 
+<a href="SQR.html">SQR</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,98 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REMAIN_TIME</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REMAIN_TIME">
+</head>
+
+
+
+<body>
+<h1>REMAIN_TIME</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+This is the amount of time it will take to finish all the
+MOVES loaded in the buffer. The value can be used to turn ON/OFF outputs for
+example used in gluing applications.
+</p>
+<h2>Value:</h2>
+<p>
+The time remaining in seconds for the current sequence of
+buffered moves.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+To change the speed to a slower value in the last 750 msecs
+of the move.  A WAIT LOADED command is used to allow the motion command to be
+loaded onto MTYPE before checking the REMAIN_TIME.
+</p>
+<p class="codeexample">
+start:
+<br>
+
+SPEED=
+10
+</p>
+<p class="codeexample">
+ACCEL=
+200 
+'
+ 200 mm/s/s give 0.05
+second ramp time
+</p>
+<p class="codeexample">
+DECEL=
+200
+</p>
+<p class="codeexample">
+MOVE
+(
+45
+) 
+'
+ move takes approximately 4.5 seconds
+<br>
+
+
+WAIT
+ LOADED
+<br>
+
+
+WAIT
+ UNTIL
+
+REMAIN_TIME &lt; 
+0.750
+<br>
+
+SPEED=
+1
+<br>
+
+
+WAIT
+ IDLE
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REMAIN.html">REMAIN</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

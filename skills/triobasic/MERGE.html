@@ -1,0 +1,196 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MERGE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MERGE">
+</head>
+<body>
+<h1>MERGE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Velocity profiled moves can be MERGEd together so that the
+speed will not ramp down to zero between the current move and the buffered
+move. 
+</p>
+<p class="warning">
+It is up to the programmer to ensure that the merging is
+sensible. For example merging a MOVE(distance) with a MOVE(-distance) will
+cause an attempted instantaneous change of direction. 
+</p>
+<p>
+MERGE will only function if:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+The next move is loaded into the buffer
+</li>
+<li class="indent-list-last">
+The Axis Group does not change on multi-axis moves
+</li>
+</ul>
+<p class="note">
+If a 2 axis move is followed by a 3 axis move, or similar change
+in the number of axes, this results in a change to the Axis Group.
+</p>
+<p>
+Velocity profiled moves (
+<a href="MOVE.html">MOVE</a>
+, 
+<a href="MOVEABS.html">MOVEABS</a>
+, 
+<a href="MOVECIRC.html">MOVECIRC</a>
+, 
+<a href="MHELICAL.html">MHELICAL</a>
+, 
+<a href="REVERSE.html">REVERSE</a>
+, 
+<a href="FORWARD.html">FORWARD</a>
+) cannot be merged with linked moves (
+<a href="CONNECT.html">CONNECT</a>
+, 
+<a href="MOVELINK.html">MOVELINK</a>
+, 
+<a href="CAMBOX.html">CAMBOX</a>
+)
+</p>
+<p class="note">
+When merging multi-axis moves only the base axis MERGE flag needs
+to be set. 
+</p>
+<p class="tip">
+If you are merging short moves you may need to increase the number
+of buffered moves by increasing 
+<a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="ON.html">ON</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+motion commands are merged
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="OFF.html">OFF</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+motion commands decelerate to zero speed
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<h3>Example 1</h3>
+<p>
+Turn on MERGE before a sequence of moves, then disable at
+the end after all the moves have finished.
+</p>
+<p class="codeexample">
+BASE(0,1) 'set base array
+</p>
+<p class="codeexample">
+MERGE=ON 'set MERGE state
+</p>
+<p class="codeexample">
+MOVEABS(0,50) 'run a sequence of moves
+</p>
+<p class="codeexample">
+MOVE(0,100)
+</p>
+<p class="codeexample">
+MOVECIRC(50,50,50,0,1)
+</p>
+<p class="codeexample">
+MOVE(100,0)
+</p>
+<p class="codeexample">
+MOVECIRC(50,-50,0,-50,1)
+</p>
+<p class="codeexample">
+MOVE(0,-100)
+</p>
+<p class="codeexample">
+MOVECIRC(-50,-50,-50,0,1)
+</p>
+<p class="codeexample">
+MOVE(-100,0)
+</p>
+<p class="codeexample">
+MOVECIRC(-50,50,0,50,1)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+MERGE=OFF
+</p>
+<h3>Example 2</h3>
+<p>
+A 3 axis XYZ move is followed by a MOVECIRC to create an arc
+on axes X and Y.  To keep the Axis Group as 3 axes, the MHELICAL is used but
+with the 3
+<sup>rd</sup> axis at 0 distance.
+</p>
+<p class="codeexample">
+BASE(0, 1, 2) 'set base array
+</p>
+<p class="codeexample">
+MERGE=ON 'set MERGE state
+</p>
+<p class="codeexample">
+MOVEABS(0,50) ' When this move ends, the axis will decel
+to 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVE(0, 120, 20)
+</p>
+<p class="codeexample">
+MHELICAL(50, 50, 50, 0, 1, 0) ' Arc on XY with 0 on Z
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+</p>
+</body>
+</html>

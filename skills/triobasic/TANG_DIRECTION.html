@@ -1,0 +1,228 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TANG_DIRECTION</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TANG_DIRECTION">
+</head>
+<body>
+<h1>TANG_DIRECTION</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+When used with a 2 axis X-Y system, this parameter returns
+the angle in radians that represents the vector direction of the interpolated
+axes.  
+</p>
+<h2>Value:</h2>
+<p>
+The value returned is between -
+<a href="PI.html">PI</a>
+ and
++
+<a href="PI.html">PI</a>
+ and is determined by the directions of the
+interpolated axes.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="PI.html">PI</a>
+/2
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
++
+<a href="PI.html">PI</a>
+ or -
+<a href="PI.html">PI</a>
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-
+<a href="PI.html">PI</a>
+/2
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example1:</h3>
+<p>
+Note scale_factor_x must be the same as scale_factor_y
+</p>
+<p class="codeexample">
+UNITS AXIS(4) = scale_factor_x
+</p>
+<p class="codeexample">
+UNITS AXIS(5) = scale_factor_y
+</p>
+<p class="codeexample">
+BASE(4, 5)
+</p>
+<p class="codeexample">
+MOVE(100, 50)
+</p>
+<p class="codeexample">
+angle = TANG_DIRECTION
+</p>
+<h3>Example2:</h3>
+<p class="codeexample">
+BASE(0, 1)
+</p>
+<p class="codeexample">
+angle_deg = 180 * TANG_DIRECTION / PI
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MOVETANG.html">MOVETANG</a>
+</p>
+</body>
+</html>

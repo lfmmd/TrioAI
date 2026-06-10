@@ -1,0 +1,1076 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVELINK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVELINK">
+</head>
+<body>
+<h1>MOVELINK</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax: </h2>
+<p class="fixed">
+MOVELINK (distance, link_dist, link_acc, link_dec, link_axis[,
+link_options[, link_pos[, base_dist]]]).
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+ML()
+</p>
+<h2>Description:</h2>
+<p>
+The linked move command is designed for controlling movements
+such as:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Synchronisation to conveyors
+</li>
+<li class="indent-list-middle">
+Flying shears
+</li>
+<li class="indent-list-middle">
+Thread chasing, tapping etc.
+</li>
+<li class="indent-list-last">
+Coil winding                            
+</li>
+</ul>
+<p>
+The motion consists of a linear movement with separately
+variable acceleration and deceleration phases linked via a software gearbox to
+the MEASURED position (
+<a href="MPOS.html">MPOS</a>
+) of another axis. The
+command uses the 
+<a href="BASE.html">BASE</a>
+ and 
+<a href="AXIS.html">AXIS</a>
+,
+and unit conversion factors in a similar way to other move commands.
+</p>
+<p class="note">
+The “link” axis may move in either direction to drive the output
+motion. The link distances specified are always positive.
+</p>
+<h3>Motion profiles</h3>
+<p>
+<img width="576" height="297" src="MOVELINK_files/image001.jpg" alt="A close up of a map&#10;&#10;Description automatically generated">
+<br clear="ALL">
+
+Standard Trapezoidal profile
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<img width="576" height="306" src="MOVELINK_files/image002.jpg" alt="A picture containing text&#10;&#10;Description automatically generated">
+<br clear="ALL">
+
+Sinusoidal S-Curve (Bit 4 = 1 and Bits 10 &amp; 11 = 0)
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<img width="576" height="321" src="MOVELINK_files/image003.jpg" alt="A close up of a map&#10;&#10;Description automatically generated">
+<br clear="ALL">
+
+Power 5 polynomial S-Curve (Bit 4 = 1 and Bits 10 &amp; 11 = 3)
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+Parameters:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+distance:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+incremental distance in user units to be moved on the
+  current base axis, as a result of the measured movement on the “input” axis
+  which drives the move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link dist:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+positive incremental distance in user units which is
+  required to be measured on the “link” axis to result in the motion on the
+  base axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link acc:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+positive incremental distance in user units on the
+  input axis over which the base axis accelerates. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link dec:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+positive incremental distance in user units on the
+  input axis over which the base axis decelerates. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link axis:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specifies the axis to “link” to. It should be set to a
+  value between 0 and the number of available axes.      
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" rowspan="13" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link_options:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit value options to customise how MOVELINK operates
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 0
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Link commences exactly when registration event 
+<a href="MARK.html">MARK</a>
+ occurs on link axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 1
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Link commences at an absolute position on link axis
+  (see link_pos for start position)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 2
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MOVELINK repeats automatically and bi-directionally
+  when this bit is set. (This mode can be cleared by setting bit 1 of the 
+<a href="REP_OPTION.html">REP_OPTION</a>
+<span class="MsoHyperlink"> </span>axis
+  parameter)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 3
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved (see CAMBOX)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 4
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+If this bit is set the MOVELINK acceleration and
+  deceleration phases are constructed using an curved speed profile rather than
+  a trapezoidal speed profile. The curve type to use is specified in bits
+  10…12.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 5
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Link is only active during a positive move on the link
+  axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 6
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 7
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved (see CAMBOX)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 8
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Link commences exactly when registration event 
+<a href="MARKB.html">MARKB</a>
+ occurs on link axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 9
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Link commences exactly when registration event 
+<a href="R_MARK.html">R_MARK</a>
+ occurs on link axis. (see link_pos for channel
+  number)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 10…12
+</p>
+
+  
+</td>
+<td width="442" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+S-Ramp mode selection for use when bit 4 is set. Figure
+  shows peak acceleration compared to linear ramp.
+</p>
+
+  
+<p class="tablecontent">
+Contains a 3-bit integer value that represents the type
+  of curve for the excitation phase:
+</p>
+
+  
+<p class="tablecontent">
+0 - SINE speed Profile (1.55)
+</p>
+
+  
+<p class="tablecontent">
+1 - Power 9 polynomial speed profile
+  (2.42)
+</p>
+
+  
+<p class="tablecontent">
+2 - Power 7 polynomial speed profile
+  (2.16)
+</p>
+
+  
+<p class="tablecontent">
+3 - Power 5 polynomial speed
+  profile (1.86)
+<br>
+
+  4 – Linear ramp profile
+<br>
+
+  5..7 – Unused
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 13
+</p>
+
+  
+</td>
+<td width="442" class="tablegrid">
+
+  
+<p>
+Slave axis follows master axis DPOS
+  (otherwise MPOS)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td width="64" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 14
+</p>
+
+  
+</td>
+<td width="442" class="tablegrid">
+
+  
+<p class="tablecontent">
+Link is active during positive movement from a
+  threshold. The threshold is updated to the highest positive value.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link_pos:
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link_option bit 1 - the absolute position on the link
+  axis in user 
+<a href="UNITS.html">UNITS</a>
+ where the MOVELINK is to be
+  start. 
+</p>
+
+  
+<p>
+link_option bit 9 – the registration channel to start the
+  movement on
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="99" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+base_dist
+</p>
+
+  
+</td>
+<td width="506" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Firmware V2.0253 onwards. The “base distance” is the
+  distance that is to be travelled at the base speed and is part of the total
+  first “distance” parameter. See Examples 4 and 5 below.
+</p>
+
+  
+<p class="note">
+MOVELINK_MODIFY cannot be used when the base distance is in
+  use.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+If the sum of parameter 3 and parameter 4 is greater than
+parameter 2, they are both reduced in proportion until they equal parameter 2.
+</p>
+<p>
+<img border="0" width="585" height="193" id="Picture 5" src="MOVELINK_files/image004.png">
+</p>
+<p class="note">
+The link_dist is in the user units of the link axis and should
+always be specified as a positive distance.
+</p>
+<p class="note">
+The link options for start (bits 1, 2, 8 and 9) may be combined
+with the link options for repeat (bits 4 and 8) and direction.
+</p>
+<p class="note">
+start_pos cannot be at or within one servo period’s worth of
+movement of the REP_DIST position.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A flying shear cuts a long sheet of paper into cards every
+160&nbsp;m whilst moving at the speed of the material. The shear can travel up
+to 1.2&nbsp;m of which 1&nbsp;m is used in this example. The paper distance is
+measured by an encoder, the unit conversion factor being set to give units of
+metres on both axes: (Note that axis 7 is the link axis)
+</p>
+<p>
+<img border="0" width="484" height="282" id="Picture 6" src="MOVELINK_files/image005.png">
+</p>
+<p class="codeexample">
+WHILE IN(2) = ON
+</p>
+<p class="codeexample">
+  MOVELINK(0, 150, 0, 0, 7)        'Dwell (no movement)
+for 150m
+</p>
+<p class="codeexample">
+  MOVELINK(0.3, 0.6, 0.6, 0, 7)    'Accelerate to paper
+speed
+</p>
+<p class="codeexample">
+  MOVELINK(0.7, 1.0, 0, 0.6, 7)    'Track the paper then
+decelerate
+</p>
+<p class="codeexample">
+  WAIT LOADED 'Wait until acceleration movelink is
+finished
+</p>
+<p class="codeexample">
+  OP(8, ON)   'Activate cutter
+</p>
+<p class="codeexample">
+  MOVELINK(-1.0, 8.4, 0.5, 0.5, 7) 'Retract cutter back to
+start
+</p>
+<p class="codeexample">
+  WAIT LOADED
+</p>
+<p class="codeexample">
+  OP(8, OFF)  'Deactivate cutter at end of outward stroke
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p>
+In this program the controller firstly waits for the roll to
+feed out 150&nbsp;m in the first line. After this distance the shear
+accelerates up to match the speed of the paper, moves at the same speed then
+decelerates to a stop within the 1&nbsp;m stroke. This movement is specified
+using two separate MOVELINK commands. This allows the program to wait for the
+next move buffer to be clear, 
+<a href="NTYPE.html">NTYPE</a>
+&nbsp;=&nbsp;0,
+which indicates that the acceleration phase is complete. Note that the
+distances on the measurement axis (link distance in each MOVELINK command):
+150, 0.8, 1.0 and 8.2 add up to 160&nbsp;m.
+</p>
+<p>
+To ensure that speed and positions of the cutter and paper
+match during the cut process the parameters of the MOVELINK command must be
+correct: It is normally easiest to consider the acceleration, constant speed
+and deceleration phases separately then combine them as required:
+</p>
+<h4>Rule 1:</h4>
+<p>
+In an acceleration phase to a matching speed the link
+distance should be twice the movement distance. The acceleration phase could therefore
+be specified alone as:
+</p>
+<p class="codeexample">
+MOVELINK(0.3, 0.6, 0.6, 0, 1) 'Move is all accel
+</p>
+<h4>Rule 2:                        </h4>
+<p>
+In a constant speed phase with matching speed the two axes
+travel the same distance so distance to move should equal the link distance.
+The constant speed phase could therefore be specified as:
+</p>
+<p class="codeexample">
+MOVELINK(0.4, 0.4, 0, 0, 1) 'All constant speed
+</p>
+<p>
+The deceleration phase is set in this case to match the
+acceleration:
+</p>
+<p class="codeexample">
+MOVELINK(0.3, 0.6, 0, 0.6, 1) 'All decel
+</p>
+<p>
+The movements of each phase could now be added to give the
+total movement.
+</p>
+<p class="codeexample">
+MOVELINK(1, 1.6, 0.6, 0.6, 1) 'Same as 3 moves above
+</p>
+<p>
+But in the example above, the acceleration phase is kept
+separate:
+</p>
+<p class="codeexample">
+MOVELINK(0.3, 0.6, 0.6, 0, 1)
+</p>
+<p class="codeexample">
+MOVELINK(0.7, 1.0, 0, 0.6, 1)
+</p>
+<p>
+This allows the output to be switched on at the end of the
+acceleration phase.
+</p>
+<h2>Example 2:</h2>
+<h4>Exact Ratio Gearbox</h4>
+<p>
+MOVELINK can be used to create an exact ratio gearbox
+between two axes. Suppose it is required to create gearbox link of 4000 / 3072.
+This ratio is inexact (1.30208333) and if entered into a 
+<a href="CONNECT.html">CONNECT</a>
+
+command the axes will slowly creep out of synchronisation. Setting the “link
+option” to 4 allows a continuously repeating MOVELINK to eliminate this
+problem:
+</p>
+<p class="codeexample">
+MOVELINK(4000, 3072, 0, 0, linkaxis, 4)
+</p>
+<h3>Example 3:</h3>
+<h4>Coil Winding</h4>
+<p>
+In this example the unit conversion factors 
+<a href="UNITS.html">UNITS</a>
+ are set so that the pay-out movements are in mm and
+the spindle position is measured in revolutions. The pay-out eye therefore
+moves 50&nbsp;mm over 25 revolutions of the spindle with the command:
+</p>
+<p class="codeexample">
+MOVELINK(50, 25, 0, 0, linkax)
+</p>
+<p>
+If it were desired to accelerate up over the first spindle
+revolution and decelerate over the final 3 the command would be 
+</p>
+<p>
+<img border="0" width="551" height="321" id="Picture 7" src="MOVELINK_files/image006.png">
+</p>
+<p class="codeexample">
+MOVELINK(50, 25, 1, 3, linkax)
+</p>
+<p class="codeexample">
+OP(motor, ON)   'Switch spindle motor on
+</p>
+<p class="codeexample">
+FOR layer = 1 TO 10
+</p>
+<p class="codeexample">
+  MOVELINK(50, 25, 0, 0, 1)
+</p>
+<p class="codeexample">
+  MOVELINK(-50, 25, 0, 0, 1)
+</p>
+<p class="codeexample">
+NEXT layer
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+OP(motor, OFF)
+</p>
+<h3>Example 4:</h3>
+<h4>Using base distance</h4>
+<p>
+Add a MOVELINK profile on top of a constant ratio so that
+the MOVELINK starts and ends at that ratio and not at zero.
+</p>
+<p>
+<img border="0" width="332" height="168" id="Canvas 1" src="MOVELINK_files/image007.png">
+</p>
+<p>
+The “base distance” is the distance that is to be travelled
+at the base speed and is part of the total first “distance” parameter. So, for
+example, if the distance required for the blue, green and yellow sections above
+was 2000 and the “base distance” was 800 the MOVELINK command might be:
+</p>
+<p class="codeexample">
+MOVELINK(2800, link_dist, l_acc, l_dec, l_axis, 0, 0, 800)
+</p>
+<p class="tip">
+The “link options” and “link pos” 6
+<sup>th</sup> and 7
+<sup>th</sup>
+parameters MUST be present. If you don’t need these options just set them to
+zero.
+</p>
+<p class="codeexample">
+'Starting at a base ratio of 1,
+increase the slave speed
+</p>
+<p class="codeexample">
+'to cause it to advance by 110
+mm
+</p>
+<p class="codeexample">
+'base ratio is 40:40
+</p>
+<p class="codeexample">
+'total slave distance = 110 +
+40
+</p>
+<p class="codeexample">
+'total link distance on master
+axis = 110 + ((50+50)/2) + 40
+<br>
+
+MOVELINK
+(150, 200, 50, 50, 2, 16, 0, 40) 'Bit set in option to use S
+curve
+</p>
+<h3>Example 5:</h3>
+<h4>Compound MOVELINK profile</h4>
+<p>
+Profiles such as this one cannot be constructed using the
+standard MOVELINK without the base distance.
+</p>
+<p>
+<img border="0" width="482" height="132" id="Canvas 2" src="MOVELINK_files/image008.png">
+</p>
+<p>
+Using the base speed extension function it can be
+constructed from 3 MOVELINK commands which will be merged together
+automatically by the Motion Coordinator.
+</p>
+<p class="codeexample">
+MOVELINK
+(
+200
+, 
+250
+, 
+100
+, 
+0
+, 
+2
+, 
+16
+)     'Accel and
+const speed(blue and green)
+<br>
+
+
+MOVELINK
+(
+60
+, 
+90
+, 
+0
+, 
+90
+, 
+2
+, 
+16
+, 
+0
+, 
+30
+) '1st deceleration (orange and red)
+<br>
+
+
+MOVELINK
+(
+110
+,
+
+360
+, 
+0
+, 
+60
+, 
+2
+, 
+16
+)      'Second const speed and 2nd decel
+</p>
+<p>
+The first constant speed part has a ratio of 1:1.
+</p>
+<p>
+The first decel goes down to a ratio of 1:3.
+</p>
+<p>
+The final constant speed part has the ratio 1:3 and then
+decel to stopped.
+</p>
+<h3>Example 6:</h3>
+<p>
+Using the power 5 polynomial feature to provide reduced Jerk
+during acceleration and deceleration. The example uses a link distance of 200&nbsp;mm
+and applies 30% to accel, 40% to synchronised motion and 30% to deceleration.
+Total movement in the MOVELINK axis is 140&nbsp;mm.
+</p>
+<p class="codeexample">
+'Alternate S ramp modes (all need options bit 4 ON)
+<br>
+
+'
+<br>
+
+'0 - SIN speed Profile (1.55)
+<br>
+
+'1 - Power 9 polynomial speed (2.42)
+<br>
+
+'2 - Power 7 polynomial speed (2.16)
+<br>
+
+'3 - Power 5 polynomial speed (1.86)
+<br>
+
+'
+<br>
+
+'The higher polynomials give a smoother motion at the price of higher peak
+<br>
+
+'The number in brackets is the peak acceleration vs constant accel (BIT 4 = 0)
+<br>
+
+'
+<br>
+
+'Use &quot;s_mode&quot; = 3 for general use case
+<br>
+
+
+<br>
+
+s_mode = 
+1
+<br>
+
+
+<br>
+
+options
+.4
+ = 
+ON
+<br>
+
+options
+.10
+ = s_mode
+.0
+<br>
+
+options
+.11
+ = s_mode
+.1
+<br>
+
+
+<br>
+
+'Input link length and fraction that is in sync:
+<br>
+
+linklen = 
+200
+<br>
+
+const_frac = 
+0.4
+<br>
+
+
+<br>
+
+adist = (
+1
+ - const_frac) * linklen * 
+0.5
+<br>
+
+distance = (linklen * const_frac) + adist
+<br>
+
+
+<br>
+
+
+MOVELINK
+(distance, linklen, adist, adist, 
+1
+, options)
+</p>
+<h2>See also:</h2>
+<p>
+<a href="MOVELINK_MODIFY.html">MOVELINK_MODIFY</a>
+, 
+<a href="FLEXLINK.html">FLEXLINK</a>
+, 
+<a href="CAMBOX.html">CAMBOX</a>
+</p>
+</body>
+</html>

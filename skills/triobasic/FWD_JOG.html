@@ -1,0 +1,110 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FWD_JOG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FWD_JOG">
+</head>
+<body>
+<h1>FWD_JOG</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter holds the input number to be used as a jog
+forward input. 
+</p>
+<p>
+When the FWD_JOG input is active the axis moves forward at 
+<a href="JOGSPEED.html">JOGSPEED</a>
+.
+</p>
+<p class="note">
+The input used for FWD_JOG is active low. 
+</p>
+<p class="note">
+It is advisable to use
+<a href="INVERT_IN.html"> INVERT_IN</a>
+ on
+the input for FWD_JOG so that 0V at the input disables the jog.
+</p>
+<p class="note">
+FWD_JOG overrides 
+<a href="REV_JOG.html">REV_JOG</a>
+ if both are
+assigned to the same input and activated. If they are assigned to different
+inputs and activated one after the other, the first command takes precedence,
+the second command is ignored.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Disable the input as FWD_JOG (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&gt;0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input number as FWD_JOG
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Initialise the FWD_JOG so that it is active high on input 7
+</p>
+<p class="codeexample">
+INVERT_IN(7,ON)
+</p>
+<p class="codeexample">
+FWD_JOG=7
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FWD_START.html">FWD_START</a>
+, 
+<a href="REV_JOG.html">REV_JOG</a>
+, 
+<a href="REV_START.html">REV_START</a>
+</p>
+</body>
+</html>

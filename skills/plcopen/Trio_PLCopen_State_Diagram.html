@@ -1,0 +1,180 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Trio PLCopen State Diagram</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+
+
+
+<body>
+<h1>Trio PLCopen State Diagram</h1>
+<h2>Description:</h2>
+<p>
+All function blocks defined in Trio PLCopen Motion Control conform
+to the behaviour of the axis defined in the state diagram below. 
+</p>
+<p>
+The diagram is focused on a single axis. Multiple axis
+Function Blocks, 
+<a href="MC_CamIn.html">MC_CamIn</a>
+, 
+<a href="MC_GearIn.html">MC_GearIn</a>
+
+and MC_Phasing can be looked at, from the state diagram point of view, as
+multiple single axis blocks that are all in specific states. For instance, the CAM
+Master can be in the state ‘ContinuousMotion’. The corresponding slave is in
+the state ‘SynchronizedMotion’. Connecting a slave axis to a master axis has no
+influence on the master axis.
+</p>
+<h2>State Diagram:</h2>
+<p>
+Arrows within the state diagram show the possible state
+transitions between the states. State transitions due to an issued command are
+shown by full arrows. Dashed arrows are used for state transitions that occur
+when a command of an axis has terminated or a system related transition (like
+error related). The motion commands which transit the axis to the corresponding
+motion state are listed above the states. These motion commands may also be
+issued when the axis is already in the according motion state.
+</p>
+<p>
+<img border="0" width="549" height="592" src="Trio_PLCopen_State_Diagram_files/image001.png">
+</p>
+<p class="tip">
+Function blocks which are not listed in the State Diagram do not
+affect the state in the State Diagram, meaning that whenever they are called,
+the state does not change. Some of these function blocks are 
+<a href="MC_ReadStatus.html">MC_ReadStatus</a>
+, 
+<a href="MC_ReadAxisError.html">MC_ReadAxisError</a>
+,
+
+<a href="MC_ReadParameter.html">MC_ReadParameter</a>
+, etc.
+</p>
+<h2>Remarks on States:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="141" valign="top" class="tablegrid">
+
+  
+<p>
+Disabled
+</p>
+
+  
+</td>
+<td width="434" valign="top" class="tablegrid">
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+It is the initial state of the axis
+</li>
+<li class="indent-list-middle">
+In this state, the movement of the axis is not influenced by
+  the FBs. Power is OFF and there is no error in the axis.
+</li>
+<li class="indent-list-middle">
+State changes to Standstill from Disabled when MC_Power is
+  called with Enable = TRUE. Axis feedback is operational before entering the
+  Standstill state.
+</li>
+<li class="indent-list-last">
+State changes to Disabled (either directly or indirectly) from
+  any state, except Errorstop, when MC_Power is called with Enable = FALSE. Any
+  on-going motion commands on the axis are aborted (‘CommandAborted’)
+</li>
+</ul>
+
+  
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="141" valign="top" class="tablegrid">
+
+  
+<p>
+Errorstop
+</p>
+
+  
+</td>
+<td width="434" valign="top" class="tablegrid">
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+This state refers to errors from the axis and axis control, not
+  from the Function Block instances. 
+</li>
+<li class="indent-list-middle">
+This state is valid as highest priority and applicable in case
+  of an error. It remains in this state as long as the error is pending,
+  regardless the enabling or disabling of power on the axis by MC_Power.
+</li>
+<li class="indent-list-last">
+The intention of this state is that the axis goes to a stop if
+  possible. No further motion commands accepted until a reset from this state.
+</li>
+</ul>
+
+  
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="141" valign="top" class="tablegrid">
+
+  
+<p>
+Standstill
+</p>
+
+  
+</td>
+<td width="434" valign="top" class="tablegrid">
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Power is ON
+</li>
+<li class="indent-list-middle">
+No error in the axis
+</li>
+<li class="indent-list-last">
+No active motion commands on the axis
+</li>
+</ul>
+
+  
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See also: </h2>
+<p>
+<a href="Execution_and_Status_of_FB.html">Execution and
+Status of Function Blocks</a>
+</p>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

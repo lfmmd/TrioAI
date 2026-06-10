@@ -1,0 +1,73 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REGIST_DELAY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REGIST_DELAY">
+</head>
+<body>
+<h1>REGIST_DELAY</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+The value, in milliseconds, of the total system delays
+between a signal appearing on the registration input and the position being
+available to the time-based registration algorithm. A digital system will
+usually transfer the actual position information with a one servo period delay.
+Therefore, the REGIST_DELAY must be adjusted when the 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+ parameter is not at the default
+value.
+</p>
+<p class="tip">
+In most real-world systems there are delays built into the
+registration circuit; the external sensor and the input opto-isolator will have
+some fixed response time. As machine speed increases, the fixed electrical
+delays will influence the captured registration position.  REGIST_DELAY can be
+adjusted to take account of the total delays due to the servo period and input.
+</p>
+<h2>Value:</h2>
+<p>
+The total registration delay in milliseconds
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Compensate for fixed delay of one servo period plus 10
+microseconds sensor input delay when 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+
+is 1000.
+</p>
+<p class="codeexample">
+REGIST_DELAY = -1.01
+</p>
+<h3>Example 2:</h3>
+<p>
+Compensate for fixed delay of one servo period plus 15
+microseconds sensor input delay when 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+
+is 500.
+</p>
+<p class="codeexample">
+REGIST_DELAY = -0.515
+</p>
+<h3>Example 3:</h3>
+<p>
+Compensate for fixed delay of one servo period plus 10
+microseconds sensor input delay plus one additional SLM cycle of 125
+microseconds.
+</p>
+<p class="codeexample">
+REGIST_DELAY = -1.135
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

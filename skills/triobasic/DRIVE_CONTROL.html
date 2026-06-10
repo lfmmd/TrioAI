@@ -1,0 +1,371 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_CONTROL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_CONTROL">
+</head>
+<body>
+<h1>DRIVE_CONTROL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+DRIVE_CONTROL AXIS(n) = parameter_value
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+return_value = DRIVE_CONTROL AXIS(n)
+</p>
+<h2>Description:</h2>
+<p>
+This command is for support of the Omron G5 drive over
+EtherCAT.  The setting value identifies the object to be watched by
+DRIVE_MONITOR at runtime every servo period. 
+</p>
+<p>
+For this drive, a fixed mapping is used to implement
+DRIVE_MONITOR and DRIVE_CONTROL.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableHead">
+Code
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableHead">
+CANopen object
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableHead">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+01
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+603Fh-00h
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+Error code
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+02
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+6041h-00h
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+Status word
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+03
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+6064h-00h
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+Position actual value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+04
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+6077h-00h
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+Torque actual value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+05
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+60F4h-00h
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+Following error actual value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+06
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+60B9h-00h
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+Touch probe status
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+07
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+60BAh-00h
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+Touch probe pos1 pos value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+08
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+60BCh-00h
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+Touch probe pos2 pos value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+09
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+60FEh-00h
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContent">
+Digital inputs
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+To read the actual following error in the drive, one would
+do the following:
+</p>
+<p class="codeexample">
+DRIVE_CONTROL = 5
+</p>
+<p class="codeexample">
+fe_actual = DRIVE_MONITOR
+</p>
+<p>
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DRIVE_READ.html">DRIVE_READ</a>
+, 
+<a href="DRIVE_WRITE.html">DRIVE_WRITE</a>
+<span class="MsoHyperlink">, </span><a href="DRIVE_MONITOR.html">DRIVE_MONITOR</a>
+</p>
+</body>
+</html>

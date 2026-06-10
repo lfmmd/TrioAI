@@ -1,0 +1,124 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REPEAT.. UNTIL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REPEAT UNTIL">
+</head>
+<body>
+<h1>REPEAT .. UNTIL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Structure
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+REPEAT
+</p>
+<p class="fixed">
+  commands
+</p>
+<p class="fixed">
+UNTIL expression
+</p>
+<h2>Description:</h2>
+<p>
+The REPEAT..UNTIL construct allows a block of commands to be
+continuously repeated until an expression becomes 
+<a href="TRUE.html">TRUE</a>
+. 
+REPEAT..UNTIL loops can be nested without limit.
+</p>
+<p class="note">
+The commands inside a REPEAT..UNTIL loop will always be executed
+at least once, but if you want them to only be executed when the expression if
+TRUE, you can use a 
+<a href="WHILE.html">WHILE</a>
+..WEND loop instead.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+commands: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC statements that you wish to execute
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+A conveyor is to index 100&nbsp;mm at a speed of 1000&nbsp;mm/s
+wait for 0.5&nbsp;s and then repeat the cycle until an external counter signals
+it should stop by setting input 4 on.
+</p>
+<p class="codeexample">
+SPEED = 1000
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+  MOVE(100)
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+  WA(500)
+</p>
+<p class="codeexample">
+UNTIL IN(4) = ON
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CONTINUE.html">CONTINUE</a>
+, 
+<a href="EXIT_LOOP.html">EXIT_LOOP</a>
+, 
+<a href="FOR.html">FOR</a>
+, 
+<a href="WHILE.html">WHILE</a>
+</p>
+</body>
+</html>

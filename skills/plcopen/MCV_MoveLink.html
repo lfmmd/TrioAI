@@ -1,0 +1,643 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MCV_MoveLink</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MCV_MoveLink">
+</head>
+
+
+
+<body>
+<h1>MCV_MoveLink</h1>
+<p>
+Commands a linear move with separate acceleration and
+deceleration phases linked via a software gearbox to the measured position of master
+axis.
+</p>
+<p>
+<img width="405" height="253" src="MCV_MoveLink_files/image001.png">
+</p>
+<h2>Description:</h2>
+<p>
+MCV_MoveLink is used to for linear move with separate
+acceleration and deceleration phases linked via a software gearbox to the measured
+position of another axis.
+</p>
+<p>
+When MCV_MoveLink is executed, slave axis’ PLCopen state
+changes to ‘SynchronizedMotion’.
+</p>
+<p class="tip">
+Make sure the input and output parameters are of data type
+indicated in the table below.
+</p>
+<p class="note">
+The “link” axis may move in either direction to drive the output
+motion. The link distance specified is always positive.
+</p>
+<p class="note">
+If the sum of ‘LinkAccDist’ and ‘LinkDecDist’is greater than
+‘LinkDistance’, they are both reduced in proportion until they are equal to ‘LinkDistance’.
+</p>
+<p class="note">
+MCV_MoveLink is equivalent to TrioBASIC command MOVELINK. Please
+refer to TrioBasic Help for more information.
+</p>
+<h2>Inputs/Outputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Name</b></p>
+
+  
+</td>
+<td width="89" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>INPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start the motion at rising edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Master
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+AXIS_REF
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the master axis. It is
+  the same as ‘link_axis’ in MOVELINK. Please refer to TrioBasic Help on
+  MOVELINK for more information.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slave
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+AXIS_REF
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the slave axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Distance
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Incremental distance in user units
+  to be moved on the current base axis (Slave) due to the measured movement on
+  the “input” axis (Master) which drives the move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+LinkDistance
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Positive incremental distance in
+  user units which is required to be measured on the “link” axis (master) to
+  result in the motion on the slave axis. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+LinkAccDist
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Positive incremental distance in
+  user units on the input axis over which the slave axis accelerates. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+LinkDecDist
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Positive incremental distance in
+  user units on the input axis over which the slave axis decelerates.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+LinkOptions
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT 
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit value options to customize how
+  your MCV_MoveLink operates. Please refer to TrioBasic Help on MOVELINK for
+  more information.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+LinkPosition
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+LinkOptions
+  bit 1 - the absolute position on the link axis in user UNITS where it is to
+  be start. 
+</p>
+
+  
+<p class="tablecontent">
+LinkOptions bit 9 – the registration
+  channel to start the movement on 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+BaseDistance
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Firmware V2.0253 onwards.&nbsp; The
+  “base distance” is the distance that is to be travelled at the base speed and
+  is part of the total first “distance” parameter. . Please refer to TrioBasic
+  Help on MOVELINK for more information.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+<b>OUTPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="TableText">
+The
+  FB is not finished and new output value is to be expected.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Busy
+</p>
+
+  
+</td>
+<td width="89" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+The
+  FB is not finished and new output values are to be expected.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Active
+</p>
+
+  
+</td>
+<td width="89" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+Indicates
+  that the FB has control on the axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+CommandAborted
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="TableText">
+'Command'
+  is aborted by another command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="TableText">
+Signals
+  that an error has occurred within the FB
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="TableText">
+Error
+  identification
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<h2>See also: </h2>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

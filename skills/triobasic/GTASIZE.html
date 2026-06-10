@@ -1,0 +1,62 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>GTASIZE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="GTASIZE">
+</head>
+<body>
+<h1>GTASIZE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the size of the global target array, which varies
+across controller types.
+</p>
+<p>
+The global target array is indexed from zero, so the valid
+range of indices is 0 to GTASIZE - 1.
+</p>
+<p>
+This array shares elements between the three target types,
+TARGET, TARGETJ and TARGETE, so an element may be any one of these types
+depending on whether they were initialised with GTA, GTAJ, or GTAE.
+</p>
+<h2>Value:</h2>
+<p class="tablecontent">
+The number of elements in the global target array.
+</p>
+<h2>Example:</h2>
+<p>
+Set the last GTA element to 100, -10, 200, 90, -90, 0.
+</p>
+<p class="codeexample">
+&gt;&gt;GTA(GTASIZE – 1) = 100, -10, 200, 90, -90, 0
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See also:</h2>
+<p>
+<a href="RPS_GTA.html">GTA</a>
+, 
+<a href="RPS_GTAE.html">GTAE</a>
+,
+
+<a href="RPS_GTAJ.html">GTAJ</a>
+, 
+<a href="RPS_TARGET.html">TARGET</a>
+, 
+<a href="RPS_TARGETE.html">TARGETE</a>
+, 
+<a href="RPS_TARGETJ.html">TARGETJ</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

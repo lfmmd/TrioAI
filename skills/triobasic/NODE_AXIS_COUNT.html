@@ -1,0 +1,100 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NODE_AXIS_COUNT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NODE_AXIS_COUNT">
+</head>
+<body>
+<h1>NODE_AXIS_COUNT</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+NODE_AXIS_COUNT(slot, node) = value
+</p>
+<h2>Description:</h2>
+<p>
+This 2D array can be used to set the number of axes that are
+located at a single EtherCAT node. This can be used to define a user specific axis
+map when using multi-axis drives.
+</p>
+<p>
+The array is 2-dimensional, the first dimension is the
+master slot identifier, the second dimension is the position of the node within
+that master network.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Single axis EtherCAT node (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 - n
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of axes allocated to the EtherCAT node 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="NODE_AXIS.html">NODE_AXIS</a>
+, 
+<a href="NODE_INDEX.html">NODE_INDEX</a>
+, 
+<a href="NODE_PROFILE.html">NODE_PROFILE</a>
+,
+
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

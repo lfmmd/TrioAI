@@ -1,0 +1,71 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Labels</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="_Toc317749343"></a>
+<a name="O_1516"></a>
+Labels</h1>
+<p class="Category">
+Statement
+</p>
+<p>
+Destination of a Jump instruction.
+</p>
+<h2>Remarks</h2>
+<p>
+Labels are used as a destination of a jump instruction in
+FDB, LD or IL language. Labels and jumps cannot be used in structured ST
+language. A label must be represented by a unique name, followed by a colon
+(&quot;:&quot;). In FBD language, labels can be inserted anywhere in the diagram
+and are connected to nothing. In LD language, a label must identify a rung and
+is shown on the left side of the rung. In IL language, labels are destination
+for JMP, JMPC, JMPCN and JMPNC instructions. They must be written before the instruction
+at the beginning of the line, and should index the beginning of a valid IL
+statement: LD (load) instruction, or unconditional instructions such as CAL,
+JMP or RET. The label can also be written alone on a line before the indexed
+instruction. In all languages, it is not mandatory that a label be a target of
+a jump instruction. You can also use label for marking parts of the programs to
+increase its readability.
+</p>
+<h2>ST Language</h2>
+<p>
+Not available.
+</p>
+<h2>FBD Language</h2>
+<p>
+In this example the TON block will not be called if bEnable
+is TRUE:
+</p>
+<h3>Example</h3>
+<p class="BoxesText">
+<img width="184" height="145" src="Bas-Labels_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+In this example the second rung will be skipped if IN1 is
+TRUE:
+</p>
+<h3>Example</h3>
+<p class="BoxesText">
+<img width="283" height="155" src="Bas-Labels_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Bas-Jumps.html">Jumps</a>
+</p>
+<p>
+<a href="Bas-RETURN.html">RETURN</a>
+<a name="H_1212"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

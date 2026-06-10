@@ -1,0 +1,365 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IN_FILTER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IN_FILTER">
+</head>
+
+
+
+<body>
+<h1>IN_FILTER</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = IN_FILTER(input_no[, final_input], filter_value)
+</p>
+<h2>Description:</h2>
+<p>
+IN_FILTER is used configure digital filtering on digital Inputs.
+Digital I/O refers to the 24&nbsp;V inputs and outputs attached to the Motion Coordinator.
+Some controllers allow for a filter to be configured on these inputs. 
+</p>
+<p class="note">
+Filtering is only supported on MotionPLC controllers and
+MotionPLC Slices currently.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+input_no:
+</p>
+
+  
+</td>
+<td width="472" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input to return the value of/start of input group
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+final_input:
+</p>
+
+  
+</td>
+<td width="472" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last input of group
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="11" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+filter_value:
+</p>
+
+  
+</td>
+<td width="472" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Filtering range. The input state (ON/OFF) is registered
+  only after it has remained stable for the duration of the filter time.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>Description</b></p>
+
+  
+</td>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>Value</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No filtering
+</p>
+
+  
+</td>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+125&nbsp;µs
+</p>
+
+  
+</td>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+250&nbsp;µs
+</p>
+
+  
+</td>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+500&nbsp;µs
+</p>
+
+  
+</td>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1&nbsp;ms
+</p>
+
+  
+</td>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2&nbsp;ms
+</p>
+
+  
+</td>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4&nbsp;ms
+</p>
+
+  
+</td>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8&nbsp;ms
+</p>
+
+  
+</td>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="330" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16&nbsp;ms
+</p>
+
+  
+</td>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set up input filtering to filter at 2&nbsp;ms on input
+number 0:
+</p>
+<p class="codeexample">
+IN_FILTER(0, 5)
+</p>
+<h3>Example 2:</h3>
+<p>
+Set up input filtering to filter inputs at 8&nbsp;ms for a
+range of inputs
+</p>
+<p class="codeexample">
+filter_8ms = 7
+<br>
+
+IN_FILTER(0, 4, filter_8ms)
+</p>
+<h3>Example 3:</h3>
+<p>
+Turn off all filtering on inputs 0 to 7. 
+</p>
+<p class="codeexample">
+IN_FILTER(0, 7, 0)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="OP.html">OP</a>
+, 
+<a href="READ_OP.html">READ_OP</a>
+,
+
+<a href="IOMAP.html">IOMAP</a>
+</p>
+</body>
+
+
+
+</html>

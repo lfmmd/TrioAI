@@ -1,0 +1,457 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SYNC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SYNC">
+</head>
+<body>
+<h1>SYNC</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Description:</h2>
+<p>
+The SYNC command is used to synchronise one axis with a
+moving position on another axis. It does this by linking the DPOS of the slave
+axis to the MPOS of the master. So both axes must be programed in the same
+scale (for example mm). This can be used to synchronise a robot to a point on a
+conveyor. The user can define a time to synchronise and de-synchronise. 
+</p>
+<p>
+The synchronising movement on the base axis is the sum of
+two parts:
+</p>
+<ol style="list_style_type:decimal">
+<li class="indent-list-first">
+The
+conveyor movement from the ‘sync_pos’, this is the movement of the demand point
+along the conveyor.
+</li>
+<li class="indent-list-last">
+The
+movement to ‘pos1’, this is the position in the current 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ where the sync_pos was captured on the
+slave axis.  
+</li>
+</ol>
+<p>
+When the axis is synchronised it will follow the movements
+on the ‘sync_axis’. As the SYNC does not fill the 
+<a href="MTYPE.html">MTYPE</a>
+
+buffer you can perform movements while synchronised. 
+</p>
+<p class="note">
+To synchronise to a new 
+<a href="USER_FRAME.html">USER_FRAME</a>
+
+using SYNC(20) requires the kinematic runtime FEC
+</p>
+<p class="warning">
+As SYNC does not get loaded in to the move buffer it is not
+cancelled by 
+<a href="CANCEL.html">CANCEL</a>
+ or 
+<a href="RAPIDSTOP.html">RAPIDSTOP</a>
+,
+you have to perform SYNC(4). When a software or hardware limit is reached the
+SYNC is immediately stopped with no deceleration. 
+</p>
+<p class="tip">
+Typically you can use the captured position for example 
+<a href="REG_POS.html">REG_POS</a>
+, or a position from a vision system for the
+‘sync_position’. The pos1, pos2 and pos3 are typically the position of the
+sensor/ vision system in the current 
+<a href="USER_FRAME.html">USER_FRAME</a>
+. 
+</p>
+<h2>Syntax:</h2>
+<p>
+SYNC(control, sync_time, [sync_position, sync_axis,
+pos1[, pos2 [,pos3]]])
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+control:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 = Start synchronisation, requires minimum first 5
+  parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4 = Stop synchronisation, requires minimum first 2
+  parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10 = Re-synchronise to another axis, requires minimum
+  first 5 parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+20 = Re-synchronise to 
+<a href="USER_FRAMEB.html">USER_FRAMEB</a>
+,
+  requires minimum first 5 parameters
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+sync_time:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Time to complete the synchronisation movement in servo
+  period units.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+sync_position:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The captured position on the sync_axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+sync_axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis to synchronise with.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+pos1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Absolute position on the first axis on the base array
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+pos2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Absolute position on the second axis on the base array
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+pos3:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Absolute position on the third axis on the base array
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+The robot must pick up the components from one conveyor and
+place them at 100mm pitch on the second. The registration sensor is at 385mm
+from the robots origin and the start of the second conveyor is 400mm from the
+robots origin. 
+</p>
+<p>
+<img border="0" width="333" height="365" id="Picture 1" src="SYNC_files/image001.jpg">
+</p>
+<p class="codeexample">
+'axis(0) - robot axis x
+</p>
+<p class="codeexample">
+'axis(1) - robot axis y
+</p>
+<p class="codeexample">
+'axis(2) - robot axis z
+</p>
+<p class="codeexample">
+'axis(3) - robot wrist rotate
+</p>
+<p class="codeexample">
+'These are the actual robot axis, FRAME=14 can be applied
+to these
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'axis(10) - conveyor axis
+</p>
+<p class="codeexample">
+'axis(11) - conveyor axis
+</p>
+<p class="codeexample">
+'These are the real conveyors that you wish to link to
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Sensor and conveyor offsets
+</p>
+<p class="codeexample">
+  sen_xpos = 385
+</p>
+<p class="codeexample">
+  conv1_yoff = 200
+</p>
+<p class="codeexample">
+  conv2_yoff = -250
+</p>
+<p class="codeexample">
+  conv2_xoff = 40
+</p>
+<p class="codeexample">
+  place_pos = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  BASE(0,1)
+</p>
+<p class="codeexample">
+  'Move to home position.
+</p>
+<p class="codeexample">
+  MOVEABS(200,50)
+</p>
+<p class="codeexample">
+  'start conveyors
+</p>
+<p class="codeexample">
+  DEFPOS(0) AXIS(11) ' reset conveyor position for place
+</p>
+<p class="codeexample">
+  FORWARD AXIS(10)
+</p>
+<p class="codeexample">
+  FORWARD AXIS(11)
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  WHILE(running)
+</p>
+<p class="codeexample">
+    REGIST(20,0,0,0,0) AXIS(10)
+</p>
+<p class="codeexample">
+    WAIT UNTIL MARK AXIS(10)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    SYNC(1, 1000, REG_POS, 10, sen_xpos , conv1_yoff)
+</p>
+<p class="codeexample">
+    WAIT UNTIL SYNC_CONTROL AXIS(0)=3
+</p>
+<p class="codeexample">
+    'Now synchronised
+</p>
+<p class="codeexample">
+    GOSUB pick
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    SYNC(10, 1000, place_pos, 11, conv2_xoff, conv2_yoff)
+</p>
+<p class="codeexample">
+    WAIT UNTIL SYNC_CONTROL AXIS(0)=3
+</p>
+<p class="codeexample">
+    'Now synchronised
+</p>
+<p class="codeexample">
+    GOSUB place
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    SYNC(4, 500)
+</p>
+<p class="codeexample">
+    place_pos = place_pos + 100
+</p>
+<p class="codeexample">
+  WEND
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SYNC_CONTROL.html">SYNC_CONTROL</a>
+, 
+<a href="SYNC_TIMER.html">SYNC_TIMER</a>
+, 
+<a href="USER_FRAME.html">USER_FRAME</a>
+,
+
+<a href="USER_FRAMEB.html">USER_FRAMEB</a>
+</p>
+</body>
+</html>

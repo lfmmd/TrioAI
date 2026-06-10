@@ -1,0 +1,81 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FORCE_DWELL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FORCE_DWELL">
+</head>
+<body>
+<h1>FORCE_DWELL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+FORCE_DWELL AXIS(n) = &lt;value&gt;
+</p>
+<h2>Description:</h2>
+<p>
+FORCE_DWELL can be applied to SP type moves so that the
+programmed dwell time will occur ahead of the next move in the move buffer.
+This axis parameter sets a dwell time in milliseconds to take place at the end
+of the next SP move. 
+</p>
+<p class="note">
+After setting a dwell for a move, it is necessary to set
+FORCE_DWELL to zero before loading subsequent moves that do not require a
+dwell.
+</p>
+<p>
+<img width="575" height="220" id="Picture 1" src="FORCE_DWELL_files/image001.jpg">
+</p>
+<h2>Value:</h2>
+<p>
+Dwell time in milliseconds.
+</p>
+<h2>Example:</h2>
+<p>
+A 25 ms pause in the motion is needed at the end of the 3
+<sup>rd</sup>
+move in a sequence.
+</p>
+<p class="codeexample">
+SPEED = 100
+<br>
+
+FORCE_SPEED = 100
+<br>
+
+ENDMOVE_SPEED = 0
+</p>
+<p class="codeexample">
+MOVESP(distance1)
+</p>
+<p class="codeexample">
+MOVESP(distance2)
+</p>
+<p class="codeexample">
+FORCE_DWELL = 25
+</p>
+<p class="codeexample">
+MOVESP(distance3)
+</p>
+<p class="codeexample">
+FORCE_DWELL = 0
+</p>
+<p class="codeexample">
+MOVESP(distance4)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MOVESP.html">MOVESP</a>
+, 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+,
+
+<a href="FORCE_RAMP.html">FORCE_RAMP</a>
+</p>
+</body>
+</html>

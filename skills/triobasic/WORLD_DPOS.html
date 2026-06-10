@@ -1,0 +1,83 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>WORLD_DPOS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="WORLD_DPOS">
+</head>
+<body>
+<h1>WORLD_DPOS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+The WORLD_DPOS is the demand position in the 
+<a href="FRAME.html">FRAME</a>
+ coordinate system. It sits between the 
+<a href="DPOS.html">DPOS</a>
+ and 
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+. 
+</p>
+<p>
+With no 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ or TOOL_OFFSET,
+WORLD_DPOS is equal to 
+<a href="DPOS.html">DPOS</a>
+. With no 
+<a href="FRAME.html">FRAME</a>
+, WORLD_DPOS is equal to 
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+.
+For some machinery configurations it can be useful to install a frame
+transformation which is not 1:1, these are typically machines such as robotic
+arms or machines with parasitic motions on the axes. In this situation when 
+<a href="FRAME.html">FRAME</a>
+ is not zero WORLD_DPOS returns the demand position
+for the programming point of the 
+<a href="FRAME.html">FRAME</a>
+.
+</p>
+<p class="note">
+WORLD_DPOS can be scaled by UNITS
+</p>
+<h2>Value:</h2>
+<p>
+Demand position in user units of the 
+<a href="FRAME.html">FRAME</a>
+
+programming point. 
+</p>
+<h2>Example:</h2>
+<p>
+Read the world demand position for axis 10 in user units 
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT WORLD_DPOS AXIS(10) 
+</p>
+<p class="codeexample">
+5432
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FRAME.html">AXIS_DPOS</a>
+, 
+<a href="FRAME.html">DPOS</a>
+,
+
+<a href="FRAME.html">FRAME</a>
+, 
+<a href="RPS_TOOL_OFFSET.html">TOOL_OFFSET</a>
+,
+
+<a href="USER_FRAME.html">USER_FRAME</a>
+</p>
+</body>
+</html>

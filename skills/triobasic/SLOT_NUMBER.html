@@ -1,0 +1,101 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SLOT_NUMBER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SLOT_NUMBER">
+</head>
+<body>
+<h1>SLOT_NUMBER</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Returns the 
+<a href="SLOT.html">SLOT</a>
+ number where the
+axis is located.  Axis numbers can be allocated to hardware in a flexible way,
+so the physical location of the axis cannot be found by the 
+<a href="AXIS.html">AXIS</a>
+
+number alone.  SLOT_NUMBER returns the value from the 
+<a href="BASE.html">BASE</a>
+
+axis or if the 
+<a href="AXIS.html">AXIS</a>
+(number) modifier is used, it
+returns the 
+<a href="SLOT.html">SLOT</a>
+ associated with that axis.
+</p>
+<p>
+SLOT_NUMBER can be set for any virtual axis that requires
+time interpolated registration when the hardware allows it.
+</p>
+<h2>Example:</h2>
+<h3>Example 1:</h3>
+<p>
+Use the command line terminal 0 to find the SLOT_NUMBER for
+an axis:
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT SLOT_NUMBER AXIS(12)
+</p>
+<p class="codeexample">
+2
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+On startup, check the axis slot configuration of the
+MC464/MC664 is correct.
+</p>
+<p class="codeexample">
+IF SLOT_NUMBER AXIS(0)&lt;&gt;-1 THEN
+</p>
+<p class="codeexample">
+  PRINT “Warning – Built-in axis configuration incorrect”
+</p>
+<p class="codeexample">
+  PRINT “Axis 0 expected for this application.”
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Set up 2 virtual axes so that they may use time-interpolated
+registration inputs.  This requires the hardware features found in the MC4N,
+P876 and P871.
+</p>
+<p class="codeexample">
+SLOT_NUMBER AXIS(10)=1
+</p>
+<p class="codeexample">
+SLOT_NUMBER AXIS(11)=1
+</p>
+<p class="codeexample">
+…
+</p>
+<p class="codeexample">
+REGIST(21,4) AXIS(10) ' arm the registration using input 4
+</p>
+<p class="codeexample">
+REGIST(21,5) AXIS(11) ' arm the registration using input 5
+</p>
+<h2>See also:</h2>
+<p>
+<a href="SLOT.html">SLOT</a>
+, 
+<a href="AXIS_OFFSET.html">AXIS_OFFSET</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

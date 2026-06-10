@@ -1,0 +1,79 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MODBUS_TX_DELAY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MODBUS_TX_DELAY">
+</head>
+<body>
+<h1>MODBUS_TX_DELAY</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MODBUS_TX_DELAY = 
+<i>&lt;value&gt;</i></p>
+<h2>Description:</h2>
+<p>
+This parameter operates on the Modbus RTU (serial) server.
+It is the delay in milliseconds between the incoming Modbus request packet and
+the outgoing response. There is a built-in delay of approximately 3&nbsp;ms.
+The value entered in this parameter will be added to the normal delay.
+</p>
+<p class="tip">
+Set this delay if the HMI needs some time to switch to receive
+mode.  Especially useful to tune the timings on RS485 2-wire Modbus.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Time in milliseconds between end of request and start
+  of response.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+The HMI needs a 10&nbsp;ms delay between sending its request
+packet and starting to receive the response from the Motion Coordinator. Uses
+port 2 in 2-wire RS485 mode.
+</p>
+<p class="codeexample">
+MODBUS_TX_DELAY = 7 'There is a built-in 3 ms delay
+</p>
+<p class="codeexample">
+ADDRESS = 1
+</p>
+<p class="codeexample">
+SETCOM(19200, 8, 1, 0, 2, 4, 0, 3, 1)
+</p>
+<h2>See also: </h2>
+<p>
+<a href="SETCOM.html">SETCOM</a>
+</p>
+</body>
+</html>

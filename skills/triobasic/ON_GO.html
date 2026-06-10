@@ -1,0 +1,369 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ON.. GOSUB/ GOTO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ON GOSUB GOTO">
+</head>
+<body>
+<h1>ON .. GOSUB/GOTO</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Structure
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ON expression GOxxx label[, label2[, ...]]
+</p>
+<p class="fixed">
+...
+</p>
+<p class="fixed">
+label1:
+</p>
+<p class="fixed">
+commands
+</p>
+<p class="fixed">
+RETURN
+</p>
+<p class="fixed">
+...
+</p>
+<p class="fixed">
+label2:
+</p>
+<p class="fixed">
+commands
+</p>
+<p class="fixed">
+RETURN
+</p>
+<p>
+Where GOxxx can be 
+<a href="GOSUB.html">GOSUB</a>
+ or 
+<a href="GOTO.html">GOTO</a>
+</p>
+<h2>Description:</h2>
+<p>
+The expression is evaluated and then the integer part is
+used to select a label from the list. If the expression has the value 1 then
+the first label is used, 2 then the second label is used, and so on. Once a
+label is selected it is used with either 
+<a href="GOSUB.html">GOSUB</a>
+ or 
+<a href="GOTO.html">GOTO</a>
+</p>
+<p class="note">
+If the value of the expression is less than 1 or greater than the
+number of labels the command is stepped through with no action. Once the label
+is selected a 
+<a href="GOSUB.html">GOSUB</a>
+ is performed.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression, should return a value 1
+  or greater
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+commands: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC statements that you wish to execute
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+label:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A valid label that occurs in the program. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+GOxxx
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="GOSUB.html">GOSUB</a>
+ or 
+<a href="GOTO.html">GOTO</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If the label does not exist an error message will be displayed at
+run time and the program execution halted.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+  GET #3, char
+</p>
+<p class="codeexample">
+UNTIL char &gt;= 1 AND char &lt;= 3
+</p>
+<p class="codeexample">
+ON char GOSUB mover, stopper, change
+</p>
+<h3>Example 2:</h3>
+<p>
+Use inputs from a PLC to determine which program to run.
+</p>
+<p class="codeexample">
+ON (IN(4, 6) + 1) GOTO prog0, prog1, prog2, prog3, prog 'Select
+program
+</p>
+<p class="codeexample">
+GOTO continue 'Skip progs if unknown input selected
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+prog0:
+</p>
+<p class="codeexample">
+  RUN &quot;tuning&quot;, 2
+</p>
+<p class="codeexample">
+  GOTO continue
+</p>
+<p class="codeexample">
+prog1:
+</p>
+<p class="codeexample">
+  RUN &quot;cutting&quot;, 2
+</p>
+<p class="codeexample">
+  GOTO continue
+</p>
+<p class="codeexample">
+prog2:
+</p>
+<p class="codeexample">
+  RUN &quot;packing&quot;, 2
+</p>
+<p class="codeexample">
+  GOTO continue
+</p>
+<p class="codeexample">
+prog3:
+</p>
+<p class="codeexample">
+  RUN &quot;moving&quot;, 2
+</p>
+<p class="codeexample">
+  GOTO continue
+</p>
+<p class="codeexample">
+Prog4:
+</p>
+<p class="codeexample">
+  RUN &quot;lifting&quot;, 2
+</p>
+<p class="codeexample">
+  GOTO continue
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+continue:
+</p>
+<p class="codeexample">
+  ...
+</p>
+<h3>Example 3:</h3>
+<p>
+Prints “2” and “Done” onto Terminal 0. 
+</p>
+<p class="codeexample">
+DIM a AS INTEGER
+<br>
+
+
+<br>
+
+a = 2
+<br>
+
+
+<br>
+
+ON a GOSUB one, two, three
+<br>
+
+PRINT &quot;Done&quot;
+<br>
+
+
+<br>
+
+STOP 'Prevents running into subroutines when machine stopped.
+<br>
+
+
+<br>
+
+one:
+<br>
+
+PRINT &quot;1&quot;
+<br>
+
+RETURN
+<br>
+
+
+<br>
+
+two:
+<br>
+
+PRINT &quot;2&quot;
+<br>
+
+RETURN
+<br>
+
+
+<br>
+
+three:
+<br>
+
+PRINT &quot;3&quot;
+<br>
+
+RETURN
+</p>
+<h3>Example 4:</h3>
+<p>
+When a program error occurs, print the error to the terminal
+and stop all the motion only in case the error routine has not been executed
+due to a normal stopping of the program.
+</p>
+<p class="codeexample">
+ON BASICERROR GOTO error_routine
+</p>
+<p class="codeexample">
+'(rest of program)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Run time error handling
+</p>
+<p class="codeexample">
+error_routine:
+</p>
+<p class="codeexample">
+  IF RUN_ERROR &lt;&gt; 31 THEN
+</p>
+<p class="codeexample">
+    'If there is a run time error then stop the machine as
+per a program stop
+</p>
+<p class="codeexample">
+    RAPIDSTOP(2)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    'Print the run error if the program is not stopping
+normally
+</p>
+<p class="codeexample">
+    PRINT &quot;RUN_ERROR = &quot;; RUN_ERROR[0],
+&quot;ERROR_LINE = &quot;; ERROR_LINE[0]
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+STOP
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="BASICERROR.html">BASICERROR</a>
+, 
+<a href="GOSUB.html">GOSUB</a>
+, 
+<a href="GOTO.html">GOTO</a>
+</p>
+</body>
+</html>

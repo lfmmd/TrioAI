@@ -1,0 +1,268 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Jogging</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Jogging</h1>
+<p class="MsoNoSpacing">
+Jogging is the manual process of moving the axes of the
+robot. Individual axis jog can be positive or negative relative to the axis
+shaft. Multiple axes jog manipulates the TCP position in Cartesian coordinate
+system.
+</p>
+<p class="note">
+As a prerequisite for jogging the robot, FWD_IN and REV_IN must
+be set for each robot axis. Note: inputs for FWD_IN and REV_IN are active low.
+</p>
+<h2>Syntax</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+JOG_OPERATION(mode)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="94" rowspan="6" valign="top" class="tablegrid">
+
+  
+<p>
+mode
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+0 (Default)
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Jogging disabled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Joint jog
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+World Frame jog
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Base Frame jog
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Tool Frame jog
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Object Frame jog
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Behaviour</h2>
+<p class="MsoNoSpacing">
+Once FWD_IN and REV_IN for all axes are set, jog mode must
+be set using JOG_OPERATION command. Change the jog mode to activate the process
+and use FWD_JOG and REV_JOG inputs to jog the robot. Set jog mode back to 0 to
+release jog process for the execution of move instructions.
+</p>
+<p class="note">
+Jog cannot be performed until axes are idle.
+</p>
+<p class="note">
+JOG_OPERATION command must be executed in the same base array of
+the robot.
+</p>
+<p class="MsoNoSpacing">
+There are five modes to jog the robot, Joint mode (1),
+World mode (2), Base mode (3), Tool mode (4) and Object mode (5).
+</p>
+<h3>JOINT (mode = 1)</h3>
+<p>
+Each axis moves independently.
+</p>
+<h3><img width="240" height="265" src="RPS_Reference_7_Jogging_files/image001.png">
+<br clear="ALL">
+
+WORLD (mode = 2) and BASE (mode = 3)</h3>
+<p class="MsoNoSpacing">
+WORLD (mode = 2): The end effector moves straight along
+the world coordinate system. The orientation uses extrinsic rotations.
+</p>
+<p class="MsoNoSpacing">
+BASE (mode = 3): The end effector moves straight along
+the base coordinate system. The orientation uses extrinsic rotations. 
+</p>
+<h3><img width="239" height="265" src="RPS_Reference_7_Jogging_files/image002.png">
+<br clear="ALL">
+
+TOOL jog (mode = 4)</h3>
+<p class="MsoNoSpacing">
+The end effector moves straight along the tool coordinate
+system. The orientation uses intrinsic rotation.
+</p>
+<h3><img width="238" height="265" src="RPS_Reference_7_Jogging_files/image003.png">
+<br clear="ALL">
+
+OBJECT (mode = 5)</h3>
+<p class="MsoNoSpacing">
+The end effector moves straight along the active object
+frame. The orientation uses extrinsic rotations.
+</p>
+<p class="MsoNoSpacing">
+<img width="238" height="264" id="Picture 16" src="RPS_Reference_7_Jogging_files/image004.png">
+</p>
+<p class="note">
+Extrinsic rotations are elemental rotations that occur about the
+axes of the fixed coordinate system XYZ. The XYZ system rotates, while XYZ is
+fixed. Intrinsic rotations are elemental rotations that occur about the axes of
+the rotating coordinate system XYZ, which changes its orientation after each
+elemental rotation.
+</p>
+<h2>Examples</h2>
+<h3><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h3>
+<p class="codeexample">
+JOG_OPERATION(0) 'Disable jogging
+<br>
+
+JOG_OPERATION(1) 'Joint jog
+</p>
+<span style='font-family:"Courier New"'><br clear="all">
+
+</span><p class="MsoNoSpacing">
+&nbsp;
+</p>
+
+
+
+</body>
+</html>

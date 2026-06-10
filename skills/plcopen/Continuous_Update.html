@@ -1,0 +1,136 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ContinuousUpdate Input</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+
+
+
+<body>
+<h1>ContinuousUpdate Input</h1>
+<h2>Description:</h2>
+<p>
+The input 
+<i>ContinuousUpdate</i> is an extended input to
+all applicable function blocks. If it is TRUE, when the function block is
+triggered (rising 
+<i>Execute</i>), it will – as long as it stays TRUE – make
+the function block use the current values of the input variables and apply to
+the ongoing movement. This does not influence the general behaviour of the
+function block nor does it impact the state diagram. In other word, it only
+influences the ongoing movement and its impact ends as soon as the function
+block is no longer 
+<i>Busy</i> or the input 
+<i>ContinuousUpdate</i> is set to
+FALSE.
+</p>
+<p>
+If 
+<i>ContinuousUpdate</i> is FALSE with the rising edge of
+the 
+<i>Execute</i> input, a change in the input parameters is ignored during
+the whole movement and the original behaviour of previous version is
+applicable.
+</p>
+<p>
+The 
+<i>ContinuousUpdate</i> is not a retriggering of the 
+<i>Execute</i>
+input of the function block (a retriggering of a function block which was
+previously aborted, stopped, or completed, would regain control on the axis and
+modify its state diagram), so 
+<i>ContinuousUpdate</i> only affects ongoing
+motion.
+</p>
+<p>
+Also, a 
+<i>ContinuousUpdate</i> of relative inputs (e.g. the
+
+<i>Distance</i> input in MC_MoveRelative) always refers to the initial
+condition (i.e. at the rising edge of 
+<i>Execute</i>).
+<b></b></p>
+<h2>Examples:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="19" height="23" id="&#22270;&#29255; 560" src="Continuous_Update_files/image001.png">
+ Examples
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="MsoListParagraph" style="margin-left:18.0pt;text-indent:-18.0pt">
+<span style='font-family:"Times New Roman",serif'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span></span>MC_MoveRelative is started at 
+<i>Position</i>
+  0 with 
+<i>Distance</i> 100, 
+<i>Velocity</i> 10 and 
+<i>ContinuousUpdate</i>
+  set TRUE. 
+<i>Execute</i> is changed to TRUE and so the movement is started to
+  position 100
+</p>
+
+  
+<p class="MsoListParagraph" style="margin-left:18.0pt;text-indent:-18.0pt">
+<span style='font-family:"Times New Roman",serif'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span></span>While the movement is executed
+  (before finishing the movement), the input 
+<i>Distance</i> is changed to 150,
+  
+<i>Velocity</i> 20.
+</p>
+
+  
+<p class="MsoListParagraph" style="margin-left:18.0pt;text-indent:-18.0pt">
+<span style='font-family:"Times New Roman",serif'>•<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span></span>The axis will accelerate (to the new 
+<i>Velocity</i>
+  20) and stop at 
+<i>Position</i> 150 and set the output 
+<i>Done</i> and does
+  not accept any new values.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<span style='font-family:"Calibri",sans-serif'><br clear="all">
+
+</span><p>
+<img width="489" height="303" src="Continuous_Update_files/image002.png">
+</p>
+<h2>See also: </h2>
+<p>
+&nbsp;
+</p>
+
+
+
+</body>
+
+
+
+</html>

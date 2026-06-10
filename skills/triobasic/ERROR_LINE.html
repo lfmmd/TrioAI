@@ -1,0 +1,63 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ERROR_LINE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ERROR_LINE">
+</head>
+<body>
+<h1>ERROR_LINE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Process Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Stores the number of the line which caused the last Trio
+BASIC error. This value is only valid when the 
+<a href="BASICERROR.html">BASICERROR</a>
+
+is 
+<a href="TRUE.html">TRUE</a>
+.
+</p>
+<p class="note">
+This parameter is held independently for each process. 
+</p>
+<h2>Value:</h2>
+<p>
+The line number on the specified process that caused the
+error
+</p>
+<h2>Example:</h2>
+<p>
+Display the error code and error line as part of a
+subroutine called by ‘ON BASICERROR GOTO’
+</p>
+<p class="codeexample">
+error_routine:
+</p>
+<p class="codeexample">
+  VR(100) = RUN_ERROR
+</p>
+<p class="codeexample">
+  PRINT &quot;The error &quot;; RUN_ERROR[0];
+</p>
+<p class="codeexample">
+  PRINT &quot; occurred in line &quot;; ERROR_LINE[0]
+</p>
+<p class="codeexample">
+STOP
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="BASICERROR.html">BASICERROR</a>
+, 
+<a href="PROC.html">PROC</a>
+,
+
+<a href="RUN_ERROR.html">RUN_ERROR</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,294 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AIN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AIN">
+</head>
+<body>
+<h1>AIN</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+AIN(channel)
+</p>
+<h2>Description:</h2>
+<p>
+Reads a value from an analogue input. Analogue inputs are
+either built into the Motion Coordinator, from CAN Analogue modules or from
+EtherCAT Analogue input modules. 
+</p>
+<p>
+The value returned is the decimal equivalent of the binary
+number read from the analogue to digital (A to D) converter.
+</p>
+<p class="note">
+The built-in analogue inputs and EtherCAT analogue inputs are
+updated every servo cycle, set by 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+.
+
+</p>
+<p class="note">
+In standard mode, the CAN analogue inputs are updated every 10&nbsp;ms.
+In fast mode, the update rate is 2&nbsp;ms but this limits the maximum number
+of Input/Output modules on the CANbus network.
+</p>
+<h2>Parameters:</h2>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+1.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Motion Coordinator firmware versions 2.0252 and below.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue input channel number 0...35
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to 31
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CAN analogue input channel number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32 to 35
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Built in analogue input channel number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If no CAN Analogue modules are fitted, AIN(0) and AIN(1)
+will read the first two built-in channels so as to maintain compatibility with
+previous versions.
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+2.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Firmware versions 2.0252 to 2.0267.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue input channel number 0...63
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to 63
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CAN/EtherCAT analogue input channel number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+3.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Firmware versions 2.0268 and above.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue input channel number 0...127
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 to 127
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CAN/EtherCAT analogue input channel number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Material is to be fed off a roll at a constant speed. There
+is an ultrasonic height sensor that returns 4&nbsp;V when the roll is empty and
+0&nbsp;V when the roll is full. A lazy loop is written in the BASIC to control
+the speed of the roll.
+</p>
+<p class="codeexample">
+MOVE(-5000)
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+  a = AIN(1)
+</p>
+<p class="codeexample">
+  IF a &lt; 0 THEN a = 0
+</p>
+<p class="codeexample">
+  SPEED = a * 0.25
+</p>
+<p class="codeexample">
+  WA(10)
+</p>
+<p class="codeexample">
+UNTIL MTYPE = 0
+</p>
+<p>
+The analogue input value is checked to ensure it is above
+zero even though it always should be positive. This is to allow for any noise
+on the incoming signal which could make the value negative and cause an error
+because a negative speed is not valid for any move type except 
+<a href="FORWARD.html">FORWARD</a>
+ or 
+<a href="REVERSE.html">REVERSE</a>
+.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="IOMAP.html">IOMAP</a>
+, 
+<a href="IO_STATUS.html">IO_STATUS</a>
+,
+
+<a href="AIN_CONFIG.html">AIN_CONFIG</a>
+, 
+<a href="AIN0-3_AINBI0-3.html">AIN0..3</a>
+,
+
+<a href="AOUT.html">AOUT</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

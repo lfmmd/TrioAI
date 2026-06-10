@@ -1,0 +1,98 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FS_LIMIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FS_LIMIT">
+</head>
+<body>
+<h1>FS_LIMIT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+FSLIMIT
+</p>
+<h2>Description:</h2>
+<p>
+An end of travel limit may be set up in software thus
+allowing the program control of the working envelope of the machine. This
+parameter holds the absolute position of the forward travel limit in user
+units.
+</p>
+<p>
+Bit 9 of the 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+
+register is set when the axis position is greater than the FS_LIMIT.
+</p>
+<p class="note">
+When 
+<a href="DPOS.html">DPOS</a>
+ is greater than FS_LIMIT the
+controller will cancel the move, so the axis will decelerate at 
+<a href="FASTDEC.html">FASTDEC</a>
+ if specified, otherwise at 
+<a href="DECEL.html">DECEL</a>
+.
+
+</p>
+<p class="tip">
+FS_LIMIT is disabled when it has a value that is much greater than
+
+<a href="REP_DIST.html">REP_DIST</a>
+. The value must take account of the
+position lag on MPOS.
+</p>
+<h2>Value:</h2>
+<p>
+The absolute position of the software forward travel limit
+in user 
+<a href="UNITS.html">UNITS</a>
+.  (default = 200000000000)
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Datum axis 1, then define a forward limit from this point. 
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+DATUM(3)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+FS_LIMIT = 200
+</p>
+<p class="codeexample">
+FASTDEC = 1000
+</p>
+<h3>Example 2:</h3>
+<p>
+Disable the FS_LIMIT by setting it greater than 
+<a href="REP_DIST.html">REP_DIST</a>
+.
+</p>
+<p class="codeexample">
+FS_LIMIT = REPDIST + 100
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RS_LIMIT.html">RS_LIMIT</a>
+, 
+<a href="FWD_IN.html">FWD_IN</a>
+,
+
+<a href="REV_IN.html">REV_IN</a>
+, 
+<a href="FASTDEC.html">FASTDEC</a>
+</p>
+</body>
+</html>

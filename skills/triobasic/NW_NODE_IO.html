@@ -1,0 +1,410 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NW_NODE_IO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NW_NODE_IO">
+</head>
+<body>
+<h1>NW_NODE_IO</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+NW_NODE_IO(slot, alias_address) = offset_value
+</p>
+<h2>Description:</h2>
+<p>
+This 2D array can be used to set the start address of any EtherCAT
+node I/O channels. This can be used to define a user specific I/O map to fix I/O
+points from different sources in place.
+</p>
+<p class="note">
+The default I/O allocation order is; Controller I/O, Module I/O,
+CAN I/O, EtherCAT I/O (both drive I/O and independent EtherCAT I/O)
+</p>
+<p class="tip">
+When using multiple I/O types, it is best to configure the I/O
+order with the I/O base modifier parameters. See NODE_IO.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot number of the EtherCAT port.  (0 on MC4N, MC6N
+  and Flex-6 Nano)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+alias_address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The configured alias address of the slave device.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+offset_value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT I/O allocated automatically (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&gt;= 8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT I/O for the defined Node starts at this I/O
+  point address
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+A system with MC664, using the built-in EtherCAT port (slot
+0) and  5 EtherCAT servo drives with digital I/O. Configured Station Alias
+addresses are 1 to 5. It is required that if one drive is removed, the digital
+I/O do not change. Each servo drive has 16 inputs and 16 outputs.
+</p>
+<p class="codeexample">
+NW_NODE_IO(0, 1) = 32
+</p>
+<p class="codeexample">
+NW_NODE_IO(0, 2) = 48
+</p>
+<p class="codeexample">
+NW_NODE_IO(0, 3) = 64
+</p>
+<p class="codeexample">
+NW_NODE_IO(0, 4) = 80
+</p>
+<p class="codeexample">
+NW_NODE_IO(0, 5) = 96
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+I/O point
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Location of I/O
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0-7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Built in inputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8-15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Built in bi-directional I/O
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16-31
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+none
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32-47
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT inputs – node 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+48-63
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT inputs – node 2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64-79
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT inputs – node 3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+80-95
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT inputs – node 4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+96-112
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT inputs – node 5
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+112-1023
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Virtual I/O
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The I/O addresses for each node remain the same, even if an
+intermediate node is removed from the network.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CANIO_BASE.html">CANIO_BASE</a>
+, 
+<a href="MODULEIO_BASE.html">MODULEIO_BASE</a>
+, 
+<a href="DRIVEIO_BASE.html">DRIVEIO_BASE</a>
+,
+
+<a href="NODE_IO.html">NODE_IO</a>
+, 
+<a href="MODULE_IO_MODE.html">MODULE_IO_MODE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

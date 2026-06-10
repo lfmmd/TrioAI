@@ -1,0 +1,77 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AOUT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AOUT">
+</head>
+<body>
+<h1>AOUT</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+AOUT(channel)
+</p>
+<h2>Description:</h2>
+<p>
+Writes a value to an analogue output.  Analogue outputs
+available from the CAN Analogue module. 
+</p>
+<p>
+The value sent is the decimal equivalent of the binary
+number to be written to the D to A converter.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue output channel number 0...15
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+An output is to be set to the speed input of an open-loop
+inverter drive. 10V is 1500 rpm and the required speed is 300 rpm.
+</p>
+<p class="codeexample">
+value = 300 * 2048 / 1500
+</p>
+<p class="codeexample">
+AOUT(1) = value
+</p>
+<p>
+The analogue output voltage is set to 2V.
+</p>
+<p class="note">
+The voltage is approximate and the output must be calibrated by
+the user if high accuracy is required.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,86 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXIS_ERROR_COUNT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXIS_ERROR_COUNT">
+</head>
+<body>
+<h1>AXIS_ERROR_COUNT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter. 
+</p>
+<h2>Description:</h2>
+<p>
+Each time there is a communications error on a digital axis,
+the AXIS_ERROR_COUNT parameter is incremented.  Where supported, this value can
+be used as an indication of the error rate on a digital axis.  Not all digital
+axis types have the ability to count the errors.  Further information can be
+found in the description of each type of digital communications bus.
+</p>
+<h2>Value:</h2>
+<p>
+The communications error count since last reset.
+</p>
+<h2>Example:</h2>
+<p>
+Initialise the error counter
+</p>
+<p class="codeexample">
+AXIS_ERROR_COUNT = 0
+</p>
+<p>
+In the terminal, check the latest error count value.
+</p>
+<p class="codeexample">
+&gt;&gt;?AXIS_ERROR_COUNT AXIS(3)
+</p>
+<p class="codeexample">
+10.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p>
+Keep a record of the overall error rate for an axis.
+</p>
+<p class="codeexample">
+TICKS = 600000
+</p>
+<p class="codeexample">
+AXIS_ERROR_COUNT = 0
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+  IF TICKS&lt;0 THEN
+</p>
+<p class="codeexample">
+    VR(10) = AXIS_ERROR_COUNT ‘ number of errors counted
+in ten minutes
+</p>
+<p class="codeexample">
+    TICKS = 600000
+</p>
+<p class="codeexample">
+    AXIS_ERROR_COUNT = 0
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+  …
+</p>
+<p class="codeexample">
+  …
+</p>
+<p class="codeexample">
+UNTIL FALSE
+</p>
+<p>
+<span style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+</body>
+</html>

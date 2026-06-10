@@ -1,0 +1,722 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Robot Selection and Program Types</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Robot Selection and Program Types</h1>
+<p>
+RPS can configure up to 8 robots in the same system. To let
+the program knows what Robot should direct all subsequent motion commands and
+other parameters to read/write, a robot must be selected first.
+</p>
+<h2>Select and Release a Robot</h2>
+<p>
+When a Robot is selected, the robot will stay with that
+process until the movements produced in that process are finished and the
+program stops, i.e. the process has been terminated. Stopping a program will
+not automatically release a robot. Only until move buffers are all idle will
+the robot be released when a program stops (its process finishes).
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+ROBOT(function | identity)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" valign="top" class="tablegrid">
+
+  
+<p align="right">
+function: INTEGER
+</p>
+
+  
+</td>
+<td width="482" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>-</span></em><em><span style='font-family:"Calibri",sans-serif'>1 = deselect/release a robot from
+  its process. This function can only be executed from the same process as
+  where the robot is selected.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" valign="top" class="tablegrid">
+
+  
+<p align="right" style="margin-left:36.0pt">
+<em><span style='font-family:"Calibri",sans-serif'>identity:
+  INTEGER</span></em></p>
+
+  
+</td>
+<td width="482" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Robot
+  ID. Value: 0..7.</span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Robot will only be released from the process where it is
+selected, i.e. ROBOT(-1) is executed in the same program where the robot is
+selected.
+</p>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Select Robot 2 and move joint to a target.</span></em></p>
+<p class="codeexample">
+DIM jtgt1 AS TARGETJ
+<br>
+
+jtgt1 = 10,10,10,0,0,0
+<br>
+
+
+<br>
+
+ROBOT(2)
+<br>
+
+MOVEJ jtg1
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Release Robot 2 after moving to a target.</span></em></p>
+<p class="codeexample">
+DIM jtgt1 AS TARGETJ
+<br>
+
+jtgt1 = 10,10,10,0,0,0
+<br>
+
+
+<br>
+
+ROBOT(2)
+<br>
+
+MOVEJ jtg1
+<br>
+
+WAIT IDLE
+<br>
+
+
+<br>
+
+ROBOT(-1)
+</p>
+<h4>Example 3</h4>
+<p>
+Check what process hold Robot 2 and store it in a variable
+called “my_robot”.
+</p>
+<p class="codeexample">
+my_robot = ROBOT(2)
+</p>
+<h2>Stop a Robot</h2>
+<p>
+It is possible to stop a robot from another process. This
+enables controlling a robot from a main program.
+</p>
+<p>
+When a robot is stopped using STOP_ROBOT command, all the
+moves are cancelled, buffers are cleared, and the process that owns the robot
+is stopped.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+STOP_ROBOT(identity)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" valign="top" class="tablegrid">
+
+  
+<p align="right" style="margin-left:36.0pt">
+<em><span style='font-family:"Calibri",sans-serif'>identity:
+  INTEGER</span></em></p>
+
+  
+</td>
+<td width="482" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Robot
+  ID. Value: 0..7.</span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Disable a Robot</h2>
+<p class="MsoNoSpacing">
+It is possible to inhibit any robot programs from
+running. Any running programs will be stopped, and buffers will be cleared.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+DISABLE_ROBOT(flag)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="188" valign="top" class="tablegrid">
+
+  
+<p align="right" style="margin-left:36.0pt">
+<em><span style='font-family:"Calibri",sans-serif'>flag:
+  BOOLEAN</span></em></p>
+
+  
+</td>
+<td width="482" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Disable
+  flag. Value: TRUE to disable running robot programs; FALSE to enable running robot
+  programs.</span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Program Types</h2>
+<p class="MsoNoSpacing">
+There are two types of program to control robots: robot
+programs and robot Basic programs. Both can be edited in Motion Perfect.
+</p>
+<h3>Robot Program</h3>
+<p class="MsoNoSpacing">
+Robot programs contain only instructions that TPS can
+handle, among others, MOVE instructions, Structures (While, If, Repeat, For
+structures), function calls, and labels. Robot programs will have a ‘.ROB’ file
+extension.
+</p>
+<p class="MsoNoSpacing">
+Here is a list of commands that can be used in Robot
+Programs:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="85" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+AOUT
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+GTA
+</p>
+
+  
+</td>
+<td width="123" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+MOVEL
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+STRING
+</p>
+
+  
+</td>
+<td width="151" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+WORLD_ORI_SPEED
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+AS
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+GTAJ
+</p>
+
+  
+</td>
+<td width="123" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+MOVELREL
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+TARGET
+</p>
+
+  
+</td>
+<td width="151" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+WORLD_POS_SPEED
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+BASE
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+IDLE
+</p>
+
+  
+</td>
+<td width="123" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+OBJECT_FRAME
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+TARGETJ
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+BOOLEAN
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+IF-ELSE
+</p>
+
+  
+</td>
+<td width="123" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+REPEAT-UNTIL
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+TOOL_OFFSET
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+DIM
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+INTEGER
+</p>
+
+  
+</td>
+<td width="123" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+RETURN
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+VR
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+FLOAT
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+MOVEC
+</p>
+
+  
+</td>
+<td width="123" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+ROBOT
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+WA
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+FOR-NEXT
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+MOVEJ
+</p>
+
+  
+</td>
+<td width="123" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+STOP
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+WAIT
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="85" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+GOSUB
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+MOVEJREL
+</p>
+
+  
+</td>
+<td width="123" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+STOP_ROBOT
+</p>
+
+  
+</td>
+<td width="104" valign="bottom" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+WHILE-WEND
+</p>
+
+  
+</td>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p class="MsoNoSpacing">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Robot Basic Program</h3>
+<p class="MsoNoSpacing">
+Robot Basic Programs can contain all Trio instructions as
+in BASIC programs).
+</p>
+<p class="MsoNoSpacing">
+Robot Basic Program can be edited by TPS only for user
+level 1. The commands that are not in guided form will be inserted by direct
+form.
+</p>
+<p class="MsoNoSpacing">
+Users can write complex programs as Robot Basic programs
+to have more control over their application. It is important to use this type
+of program and NOT a BASIC program as the controllers can terminate this type
+of program in case of an emergency. 
+</p>
+<p class="MsoNoSpacing">
+This type of program will have ‘.RBS’ file extension
+</p>
+<h3>Robot Library</h3>
+<p class="MsoNoSpacing">
+Robot Library contains user functions for the robot
+application. TPS can read this file and list all the functions in the Teach
+pendant. Commands allowed in Robot Library files are the same as in Basic
+Library files. 
+</p>
+<p>
+This type of library will have a ‘.ROBLIB’ file extension.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

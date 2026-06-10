@@ -1,0 +1,105 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LINK_AXIS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LINK_AXIS">
+</head>
+<body>
+<h1>LINK_AXIS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Alternative format:</h2>
+<p class="fixed">
+LINKAX
+</p>
+<h2>Description:</h2>
+<p>
+Returns the axis number that the axis is linked to during
+any linked moves. 
+</p>
+<p class="note">
+Linked moves are where the demand position is a function of
+another axis e.g.  
+<a href="CONNECT.html">CONNECT</a>
+, 
+<a href="CAMBOX.html">CAMBOX</a>
+,
+
+<a href="MOVELINK.html">MOVELINK</a>
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis is not linked
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number the BASE axis is linked to
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example</h2>
+<p>
+<a href="CONNECT.html">CONNECT</a>
+ an axis , then check that
+it is linked. 
+</p>
+<p class="codeexample">
+&gt;&gt;BASE(0)
+</p>
+<p class="codeexample">
+&gt;&gt;CONNECT(12,4)
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT LINK_AXIS
+</p>
+<p class="codeexample">
+4.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+</body>
+</html>

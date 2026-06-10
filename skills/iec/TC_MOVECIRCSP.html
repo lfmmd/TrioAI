@@ -1,0 +1,457 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_MOVECIRCSP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_MOVECIRCSP">
+</head>
+<body>
+<h1>TC_MOVECIRCSP</h1>
+<h2>Type:</h2>
+<p>
+Motion Function
+</p>
+<h2>Function:</h2>
+<p>
+Issues a new MOVECIRCSP motion request for the axes
+specified by 'AxisNo'.
+</p>
+<h2>Inputs:</h2>
+<p class="fixed">
+   
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rising edge requests execution
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AxisNo : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End1 : LREAL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Relative end point X
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+End2 : LREAL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Relative end point Y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Centre1 : LREAL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Relative centre point X
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Centre2 : LREAL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Relative centre point Y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Direction : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Direction of rotation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ForceSpeed : REAL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FORCE_SPEED value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EndmoveSpeed : REAL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ENDMOVE_SPEED value
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Busy : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if function is running
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when function has completed normally
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Buffered : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when motion command is in NTYPE buffer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Active : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when motion command is in MTYPE buffer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Aborted : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if function terminates due to CANCEL
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if a program error is detected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID : UINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returned error number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+When the execute input changes from FALSE to TRUE (rising
+edge), the function block attempts to load the motion command into the required
+axis buffer.  If the buffer is unavailable, the function re-tries on each PLC
+scan.  Once the motion command has been loaded, the appropriate outputs will
+indicate the state of the motion; in NTYPE, MTYPE, aborted (Cancelled) or done.
+</p>
+<p>
+A programming error, such as parameter out of range, will
+set the Error output and return an error ID number.  For the Error ID
+reference, see the Trio Programming error list.
+</p>
+<p>
+The function must be in the processing scan and the Execute
+input TRUE for the outputs to correctly show the status of the move.
+</p>
+<p class="note">
+For output timing diagram, please refer to timing diagram section
+in 
+<a href="TC_MOVE.html">TC_MOVE</a>
+.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample">
+MyTC_MoveCircSP(Execute, AxisNo, End1, End2, Centre1, Centre2,
+Direction, ForceSpeed, EndmoveSpeed);
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Busy := MyTC_MoveCircSP.Busy;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Done := MyTC_MoveCircSP.Done;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Buffered :=
+MyTC_MoveCircSP.Buffered;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Active :=
+MyTC_MoveCircSP.Active;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Aborted :=
+MyTC_MoveCircSP.Aborted;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Error := MyTC_MoveCircSP.Error;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+ErrorID :=
+MyTC_MoveCircSP.ErrorID;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>FBD Language:</h2>
+<p align="center">
+<img border="0" width="474" height="276" id="Picture 2" src="TC_MOVECIRCSP_files/image001.png">
+</p>
+<h2>LD Language: </h2>
+<p align="center">
+<img border="0" width="479" height="303" id="Picture 3" src="TC_MOVECIRCSP_files/image002.png">
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBASIC Errors</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

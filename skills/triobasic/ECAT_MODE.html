@@ -1,0 +1,336 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ECAT_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ECAT_MODE">
+</head>
+<body>
+<h1>ECAT_MODE</h1>
+<h2>Type: </h2>
+<p class="Category">
+Slot parameter (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+ECAT_MODE SLOT(slot_number) = value
+</p>
+<h2>Description:</h2>
+<p>
+ECAT_MODE sets various actions within the EtherCAT part of
+the firmware.  Each bit in ECAT_MODE is used to turn on or off the feature
+described below.  The parameter can be set in MC_CONFIG, used on the command line
+or in a program.  The mode set will be active immediately after the parameter
+has been written.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot_number:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The slot which is running EtherCAT.  
+</p>
+
+  
+<p class="tablecontent">
+In the MC664(X) slot_number is the physical slot of the
+  EtherCAT module if fitted.  The built in EtherCAT port has the fixed
+  slot_number -2.
+</p>
+
+  
+<p class="tablecontent">
+IN the MC4N-ECAT, MC6N-ECAT and Flex-6 Nano, Flex-6X
+  Nano, the slot_number is 0.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="7" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Each bit operates as shown.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+bit
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+State
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Emergency message response.  The EtherCAT protocol
+  raises a SYSTEM_ERROR (0x100000) when an emergency message is received from a
+  slave and the controller logs the error.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The EtherCAT logs the error but no SYSTEM_ERROR is
+  raised.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Standard EtherCAT start-up.  The EtherCAT protocol waits
+  until all the sync0 start-up times have expired before requesting the Safe Op
+  to Operational state change. By default ( bit 1 = 0 ) 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Express EtherCAT start-up.  The EtherCAT protocol does
+  not wait for all the sync0 start-up times to expire.  It requests the Safe Op
+  to Operational state change at the earliest time.
+</p>
+
+  
+<p class="tablecontent">
+Note that some slaves might require the user program to
+  clear slave errors after the network is in Operational state.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2+
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+For future use
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr height="0">
+
+  
+<td width="54">
+</td>
+
+  
+<td width="32">
+</td>
+
+  
+<td width="24">
+</td>
+
+  
+<td width="24">
+</td>
+
+  
+<td width="574">
+</td>
+
+ 
+</tr>
+
+
+</table>
+<p class="note">
+Bits 0 and 1 implemented in firmware V2.0291 and later.
+</p>
+<h2>Example:</h2>
+<p>
+One or more slave nodes send emergency
+messages as well as setting the fault bit in the CoE status word.  It is OK to
+disable the emergency message action on SYSTEM_ERROR in this case so the ECAT_MODE
+bit 0 can be set in MC_CONFIG.  EtherCAT network is running on Slot 0 of the
+Motion Coordinator.
+</p>
+<p class="codeexample">
+ECAT_MODE SLOT(0) = 1
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SYSTEM_ERROR.html">SYSTEM_ERROR</a>
+, 
+<a href="ETHERCAT.html">ETHERCAT</a>
+</p>
+</body>
+</html>

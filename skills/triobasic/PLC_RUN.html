@@ -1,0 +1,116 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PLC_RUN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PLC_RUN">
+</head>
+<body>
+<h1>PLC_RUN</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+PLC_RUN shows a bit pattern to indicate which processes in
+the multitasking system are running IEC61131-3 PLC tasks. There is one bit per
+PLC task running in the 
+<i>Motion Coordinator</i>.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td width="286" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n
+</p>
+
+  
+</td>
+<td width="286" valign="top" class="tablegrid">
+
+  
+<p>
+A PLC task is running on process 
+<i>n.</i> </p>
+
+  
+</td>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+IEC61131-3 PLC tasks are set to run on Processes 2, 3 and 6.
+In the command line terminal, check the value of PLC_RUN.
+</p>
+<p class="codeexample">
+&gt;&gt;?HEX(PLC_RUN)
+</p>
+<p class="codeexample">
+4c
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="note">
+Checking the value in Hexadecimal shows the bit positions clearly
+than decimal.  $4c = 0100 1100 in binary. If preferred, the value can be shown
+in decimal by leaving off the HEX modifier, and in this case the value 76 will
+be returned.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

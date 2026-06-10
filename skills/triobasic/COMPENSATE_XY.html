@@ -1,0 +1,456 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>COMPENSATE_XY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="COMPENSATE_XY">
+</head>
+<body>
+<h1>COMPENSATE_XY</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+COMPENSATE_XY(table, opt, x_axis, x_div, x_dist, x_offset, Y_axis,
+y_div, y_dist, y_offset)
+</p>
+<h2>Description:</h2>
+<p>
+COMPENSATE_XY is designed to allow for
+corrections to be superimposed onto motion based on the measured position of
+the axes involved in the motion to compensate for errors introduced into the
+motion by things like ball screws.
+</p>
+<p>
+<img width="575" height="276" id="Picture 2" src="COMPENSATE_XY_files/image001.png">
+</p>
+<p>
+The table values are always laid out as a sequence of values
+for increasing X with the first Y value, then the increasing X with the second
+Y value etc: X0Y0, X1Y0, X2Y0, X3Y0… then X0Y1, X1Y1, X2Y1, X3Y1… X0Y2, X1Y2,
+X2Y2, X3Y2… etc. etc.
+</p>
+<p>
+The values must be evenly spread along the axis and the
+start and end values count towards the “X div” and “Y div” values:
+</p>
+<p>
+For example: 
+</p>
+<p>
+Suppose a 100&nbsp;mm X axis was divided into 10&nbsp;mm
+compensation values. The x_div value would be 11, as 11 compensation values
+would be required for 0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100&nbsp;mm.
+</p>
+<p>
+If the Y axis were 80&nbsp;mm and divided into 10&nbsp;mm
+compensation values, 9 rows of values would be required so a total of 11 x 9 =
+99 values.  
+</p>
+<p>
+The COMPENSATE_XY command linearly interpolates between the
+compensation table values in 2 dimensions. The programmer should allow for this
+when deciding on the number of compensation divisions.
+</p>
+<p>
+Working area:
+</p>
+<p>
+Using the x_dist, x_offset, y_dist and y_offset values, you
+can effectively define a working area for the compensation.
+</p>
+<p>
+For example:
+</p>
+<p class="codeexample">
+x_dist = 300
+</p>
+<p class="codeexample">
+x_offset = 25
+</p>
+<p class="codeexample">
+y_dist = 300
+</p>
+<p class="codeexample">
+y_offset = -150
+</p>
+<p>
+The working area is now effectively (25,&nbsp;-150) to (325,&nbsp;150)
+for the table of data points.
+</p>
+<p class="note">
+If the axis moves outside of the working area the nearest value
+inside the area will be applied as compensation.
+</p>
+<p>
+Starting position:
+</p>
+<p>
+When the COMPENSATE_XY command is first made, the
+compensation value for the current position (in or outside the working area) is
+calculated. This is then applied to all subsequent calculations as an offset to
+avoid the axis jumping when the command is first made. In this way the
+COMPENSATE_XY command can be started with the axes in any position.
+</p>
+<p class="note">
+To remove COMPENSATE_XY from the motion register MTYPE, use
+CANCEL.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start of offset data in TABLE memory
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+opt
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Command options
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 : Compensation follows MPOS
+</p>
+
+  
+<p class="tablecontent">
+1 : Compensation follows DPOS
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+x_axis
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X Axis number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+x_div
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of divisions of X data on grid
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+x_dist
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Length on X axis corresponding to the data points
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+x_offset
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Offset distance to the X axis to the first data point (positive
+  or negative)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+y_axis
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y Axis number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+y_div
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of divisions of Y data on grid
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+y_dist
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Length on X axis corresponding to the data points
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+y_offset
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Offset distance to the Y axis to the first data point (positive
+  or negative)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+<img width="576" height="481" id="Picture 5" src="COMPENSATE_XY_files/image002.png">
+</p>
+<p class="note">
+The number of divisions in the data depends on the grid of
+compensation values available and is independent of the distance. For example,
+a machine bed that is 500mm long (X) by 400 mm wide (Y) might have compensation
+values measured every 4mm. In this example the “X div” = 500 / 4 +1 = 126 and
+the “Y div” = 400 / 4 +1 = 101. This would require 501 x 101 (50601) data
+points for 1 COMPENSATE_XY command.
+</p>
+<p class="note">
+All distances x_dist, x_offset, y_dist, y_offset and TABLE data are
+in the axis units (for example mm).
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+In some applications, both axes of a machine bed require
+compensation for ball screw errors depending on their position:
+</p>
+<p>
+Axis 0   - Motor Axis    - COMPENSATE_XY AXIS(0) + ADDAX(8) 
+</p>
+<p>
+Axis 1   - Motor Axis    - COMPENSATE_XY AXIS(1) + ADDAX(9) 
+</p>
+<p>
+Axis 8   - Virtual Axis    - Run motion X axis commands
+</p>
+<p>
+Axis 9   - Virtual Axis    - Run motion Y axis commands
+</p>
+<p class="codeexample">
+'Define tables of offsets at table locations 1000 and
+3000:
+<br>
+
+
+<br>
+
+UNITS AXIS(0) = 1000
+<br>
+
+UNITS AXIS(1) = 1000
+<br>
+
+UNITS AXIS(8) = UNITS AXIS(0)
+<br>
+
+UNITS AXIS(9) = UNITS AXIS(1)
+<br>
+
+ADDAX(8) AXIS(0)
+<br>
+
+ADDAX(9) AXIS(1)
+<br>
+
+COMPENSATE_XY(1000, 0, 8, 51, 500, 0, 9, 41, 400, 0) AXIS(0)
+<br>
+
+COMPENSATE_XY(3000, 0, 8, 51, 500, 0, 9, 41, 400, 0) AXIS(1)
+<br>
+
+
+<br>
+
+'Moves on axes 8 and 9 here will be executed on axes 0 and 1 with compensation
+</p>
+<h2>See also: </h2>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

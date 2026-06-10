@@ -1,0 +1,113 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IS_OPEN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IS_OPEN">
+</head>
+<body>
+<h1>IS_OPEN</h1>
+<h2>Type:</h2>
+<p class="Category">
+File Function (Read Only)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+value = IS_OPEN #channel
+</p>
+<h2>Description:</h2>
+<p>
+IS_OPEN returns the state of the selected channel. The
+channel may be a communications port, a file or a temporary buffer. IS_OPEN
+state TRUE does not imply that the Ethernet connection is valid and open, it
+only refers to the channel in the controller firmware so as to find out if a
+channel number is already in use.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE (-1) if channel is open, 
+<br>
+
+  FALSE (0) if the channel is closed.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The channel number using the # channel notation
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+DIM comm_status AS BOOLEAN
+</p>
+<p class="codeexample">
+<br>
+
+comm_status = IS_OPEN #20
+</p>
+<h3>Example 2:</h3>
+<p>
+Check the status of the TCP/IP connection on channel 21 and
+if it is available, then open it as a TCP client on port 1000.
+</p>
+<p class="codeexample">
+IF FALSE = IS_OPEN #21 THEN 
+</p>
+<p class="codeexample">
+    OPEN #21 AS &quot;TCP:192.168.0.230(1000)&quot; FOR READ_WRITE
+</p>
+<p class="codeexample">
+    WA(20)
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See also:</h2>
+<p>
+<a href="OPEN.html">OPEN</a>
+, 
+<a href="CLOSE.html">CLOSE</a>
+</p>
+</body>
+</html>

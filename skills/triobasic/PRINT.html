@@ -1,0 +1,2062 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PRINT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PRINT">
+</head>
+<body>
+<h1>PRINT</h1>
+<h2>Type:</h2>
+<p class="Category">
+File Function
+</p>
+<h2>Alternative format:</h2>
+<p class="fixed">
+?
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+PRINT [#channel, ]expression-1[, expression-2[,
+...]]
+</p>
+<h2>Description:</h2>
+<p>
+The PRINT command allows the TrioBASIC program to output a
+series of characters to a channel. A channel may be a serial port or some other
+type of connection to the 
+<i>Motion Coordinator</i>.
+</p>
+<p>
+Multiple expressions may be printed in a single PRINT statement
+by separating each expression by a comma or semi-colon. Each expression may be
+modified using functions like 
+<a href="HEX.html">HEX</a>
+ and 
+<a href="CHR.html">CHR</a>
+,
+and the output format may be specified using a format specifier enclosed within
+square brackets (see below).
+</p>
+<p class="note">
+In the absence of a format specifier, a value is printed to 4
+decimal places.
+</p>
+<p class="note">
+Any value larger than 1e19 and smaller than 1e-18 will be printed
+using scientific notation.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+#channel,
+</p>
+
+  
+</td>
+<td width="775" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+See 
+<a href="Hash.html">#</a>
+ for the full channel list
+  (default 0 or by 
+<a href="OUTDEVICE.html">OUTDEVICE</a>
+ if omitted)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Expression-n:
+</p>
+
+  
+</td>
+<td width="775" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression, either numeric or
+  string, scalar or array, or any of the TARGET types
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The following elements may be used with an expression:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="131" valign="top" class="tablegrid">
+
+  
+<p>
+;
+</p>
+
+  
+</td>
+<td width="778" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+Punctuates expressions without any separation at all, and
+  if used after the final expression it suppresses the output of the carriage
+  return and line feed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="131" valign="top" class="tablegrid">
+
+  
+<p>
+,
+</p>
+
+  
+</td>
+<td width="778" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+Punctuates expressions, separating each expression with a tab
+  character
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="131" rowspan="13" valign="top" class="tablegrid">
+
+  
+<p>
+[format-specifier]
+</p>
+
+  
+</td>
+<td width="778" colspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+Specifies the format that the expression should be output
+  with, which may be either one or two numeric values, or a C format string.
+  Format specifiers are not allowed with IP, TARGET, TARGETJ or TARGETE expressions.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="105" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Values
+</p>
+
+  
+</td>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+[d]
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+Number of decimal places to display
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+[w, d]
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+The total width to output (negative for left
+  justification) and the number of decimal places 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="105" rowspan="10" valign="top" class="tablegrid">
+
+  
+<p>
+C format
+</p>
+
+  
+</td>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+“%f”
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+Floating-point output (64-bit)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+“%F”
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+Floating-point output in upper case (64-bit)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+“%e”
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+Floating-point output in scientific notation (64-bit)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+“%E”
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+Floating-point output in scientific notation in upper case
+  (64-bit)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+“%L”
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+Integer output in decimal (64-bit)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+“%W”
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+Unsigned integer output in decimal (64-bit)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+“%X”
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+Unsigned integer output in hexadecimal (64-bit)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+“%R”
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+String output (size + character array) – Raw byte output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+“%S”
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+String output (size + character array) – Unicode output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p>
+“%C”
+</p>
+
+  
+</td>
+<td width="616" valign="top" class="tablegrid">
+
+  
+<p>
+Character output
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If the number is too big to fit with the specified format, the
+field will be filled with question marks to signify that there was insufficient
+space to display the number.
+</p>
+<p class="note">
+If the number of characters of output is less than the width,
+then the output is padded with spaces, either ahead of the output if right
+justified (positive width), or after the output if left justified (negative
+width).
+</p>
+<p class="note">
+It is preferable to use the semi-colon separator to display two
+strings as one than to concatenate them (i.e., “PRINT str1; str2” produces the
+same output as “PRINT str1 + str2”), as this will not incur the overhead of
+having to perform a concatenation.
+</p>
+<h2>C Format Strings</h2>
+<p>
+These are quite powerful in that they offer more formatting
+possibilities than when using one or two values, but at the expense of some
+complication.
+</p>
+<p>
+The general format is that of a percent symbol followed by a
+character that represents the type of data to be output, and these are
+described in the table above. This provides no formatting at all, so to tailor
+the output produced, these two symbols may have flags, a width, and a precision
+placed between them, which are described below.
+</p>
+<p>
+The flags may be in any order and the following are
+recognised:
+</p>
+<p style="margin-left:36.0pt">
+“+” – Force output of the sign
+</p>
+<p style="margin-left:36.0pt">
+“-“ – Left justify the output
+</p>
+<p style="margin-left:36.0pt">
+“0” – Output leading zeroes
+</p>
+<p>
+The width is a decimal value, and the precision is a decimal
+point followed by a decimal value. A precision may be specified without a width
+being specified.
+</p>
+<p>
+String output can be controlled using two formats, “%R” and
+“%S”, and these are used instead of “%s” (lower case) because TrioBASIC strings
+are stored as a size and separate character array, whereas “%s” is of a pointer
+to the base of a character array terminated with a null. The default string
+format when using PRINT is “%R”, as this emits the characters in raw form, i.e.,
+without any decoding, which is useful for communication protocols, but it isn’t
+good if you want to correctly pad output when the string is Unicode, as
+characters may use multiple bytes. For Unicode strings, it is better to use
+“%S”, as this will decode the string’s characters and apply the correct padding
+and precision specified in the format string. Both “%R” and “%S” parse the
+whole string and do not stop at the first null character.
+</p>
+<p>
+Character output uses “%C” instead of “%c” because TrioBASIC
+integers are 64 bits in length and “%c” expects 8-bit values that require
+decoding differently. Character output is useful in avoiding having to convert
+the character’s code into a string before outputting it.
+</p>
+<p>
+In addition to the formatting aspect, characters may appear
+ahead of the leading percent symbol and after the trailing ‘type’ symbol, and
+these will simply be echoed. This feature is used in the example program to
+show the extent of the output produced by bracketing it within colon
+characters.
+</p>
+<h2>Motion Perfect terminal</h2>
+<p>
+When PRINT is used to output to a Motion Perfect terminal
+(#0, #5, #6 or #7) cursor control ESC sequences can be used. The following VT100
+type control sequences are supported from MPv4 version 4.4.1 onwards.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>Cursor Control</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Function
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sequence
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cursor Home
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[{ROW};{COLUMN}H
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sets the cursor position where subsequent text will
+  begin. If no row/column parameters are provided (i.e., &lt;ESC&gt;[H), the
+  cursor will move to the home position, at the upper left of the screen.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Force Cursor Position
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[{ROW};{COLUMN}f
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Identical to Cursor Home.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cursor Up
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[{COUNT}A
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Moves the cursor up by COUNT rows; the default count is
+  1.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cursor Down
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[{COUNT}B
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Moves the cursor down by COUNT rows; the default count
+  is 1.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cursor Forward
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[{COUNT}C
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Moves the cursor forward by COUNT columns; the default
+  count is 1.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cursor Backward
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[{COUNT}D
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Moves the cursor backward by COUNT columns; the default
+  count is 1.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>Erasing Text</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Function
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sequence
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erase End of Line
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[K
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erases from the current cursor position to the end of
+  the current line.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erase Start of Line
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[1K
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erases from the current cursor position to the start of
+  the current line.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erase Line
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[2K
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erases the entire current line.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erase Down
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[J
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erases the terminal window from the current line down
+  to the bottom of the window.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erase Up
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[1J
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erases the terminal window from the current line up to
+  the top of the window.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erase Screen
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&lt;ESC&gt;[2J
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Erases the terminal window with the background colour
+  and moves the cursor to home.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print a string using quotation marks combined with string
+variable.
+</p>
+<p class="codeexample">
+DIM string1, string2 AS STRING(20)
+</p>
+<p class="codeexample">
+string1 = &quot;OPEN&quot;
+</p>
+<p class="codeexample">
+string2 = &quot;CLOSED&quot;
+</p>
+<p class="codeexample">
+IF IN(4) = ON THEN
+</p>
+<p class="codeexample">
+  PRINT &quot;Guard status &quot;; string2
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT &quot;Guard status &quot;; string1
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+Print a number and a value from a 
+<a href="VR.html">VR</a>
+,
+separated by a comma to put the VR value in the next tab space.
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT 123.45, VR(1)
+</p>
+<p class="codeexample">
+123.4500     1.5000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p>
+Print a VR with 4 characters and 1 decimal place, then in
+the next tab a local variable with 2 decimal places.
+</p>
+<p class="codeexample">
+VR(1) = 6
+</p>
+<p class="codeexample">
+variable = 410.5
+</p>
+<p class="codeexample">
+PRINT VR(1)[4, 1], variable[2]
+</p>
+<p>
+print output will be:
+</p>
+<p class="codeexample">
+6.0     410.50
+</p>
+<h3>Example 4:</h3>
+<p>
+Print a string directly followed by a numerical value. Note
+how in this example the semi-colon separator is used. This does not tab into
+the next column, allowing the programmer more freedom in where the print items
+are put.
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT &quot;POSITION = &quot;; MPOS
+</p>
+<p class="codeexample">
+POSITION = 123.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 5:</h3>
+<p>
+Print a carriage return and no line feed at the end of a message.
+The semi-colon on the end of the print line suppresses the carriage return
+normally sent at the end of a print line. ASCII (13) generates CR without a
+line feed. The string is to output from serial port channel 1.
+</p>
+<p class="codeexample">
+PRINT #1, &quot;ITEM &quot;; total; &quot; OF &quot;; limit;
+ CHR(13);
+</p>
+<h3>Example 6: </h3>
+<p>
+Print 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+ for axis 6 in
+the hexadecimal format on the command line.  (bits 1 and 8 are set) 
+</p>
+<p class="codeexample">
+&gt;&gt;?HEX(AXISSTATUS AXIS(6))
+</p>
+<p class="codeexample">
+102
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 7: </h3>
+<p>
+Print to terminal #5 using an ANSI control sequence to
+position the cursor before sending the text string and values.
+</p>
+<p class="codeexample">
+'Need to print double escape code (ASCII 27) to output a single
+escape
+</p>
+<p class="codeexample">
+PRINT #5, CHR(27); CHR(27);
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Move cursor to row 14, column 10
+</p>
+<p class="codeexample">
+PRINT #5, &quot;[14;10H&quot;;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Display the temperature`
+</p>
+<p class="codeexample">
+PRINT #5, &quot;Temperature: &quot;; AIN(1);
+</p>
+<h3>Example 8:</h3>
+<p>
+The following program shows how the various C format string
+options are used and the output they produce.
+</p>
+<p class="codeexample">
+DIM i AS INTEGER
+<br>
+
+DIM f AS FLOAT
+<br>
+
+DIM s AS STRING(
+20
+)
+<br>
+
+
+<br>
+
+
+'Integer output examples
+<br>
+
+i = 
+$badf00d
+<br>
+
+PRINT i[
+&quot;:%L:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%25L:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%-25L:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%+25L:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%025L:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%+025L:&quot;
+]
+<br>
+
+
+<br>
+
+PRINT i[
+&quot;:%X:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%25X:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%-25X:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%+25X:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%025X:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%+025X:&quot;
+]
+<br>
+
+
+<br>
+
+i = -i
+<br>
+
+PRINT i[
+&quot;:%W:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%25W:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%-25W:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%+25W:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%025W:&quot;
+]
+<br>
+
+PRINT i[
+&quot;:%+025W:&quot;
+]
+<br>
+
+
+<br>
+
+
+'Float output examples
+<br>
+
+f = 
+1234.5678
+<br>
+
+PRINT f[
+&quot;:%f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%12f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%-12f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%.2f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%12.2f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%-12.2f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%012.2f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%0-12.2f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%+12.2f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%+-12.2f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%+012.2f:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%+-012.2f:&quot;
+]
+<br>
+
+
+<br>
+
+PRINT f[
+&quot;:%e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%12e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%-12e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%.2e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%12.2e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%-12.2e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%012.2e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%0-12.2e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%+12.2e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%+-12.2e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%+012.2e:&quot;
+]
+<br>
+
+PRINT f[
+&quot;:%+-012.2e:&quot;
+]
+<br>
+
+
+<br>
+
+
+'String output examples
+<br>
+
+s = 
+&quot;hello, world&quot;
+<br>
+
+PRINT s[
+&quot;:%S:&quot;
+]
+<br>
+
+PRINT s[
+&quot;:%10S:&quot;
+]
+<br>
+
+PRINT s[
+&quot;:%.10S:&quot;
+]
+<br>
+
+PRINT s[
+&quot;:%-10S:&quot;
+]
+<br>
+
+PRINT s[
+&quot;:%.15S:&quot;
+]
+<br>
+
+PRINT s[
+&quot;:%15S:&quot;
+]
+<br>
+
+PRINT s[
+&quot;:%-15S:&quot;
+]
+<br>
+
+PRINT s[
+&quot;:%15.10S:&quot;
+]
+<br>
+
+PRINT s[
+&quot;:%-15.10S:&quot;
+]
+<br>
+
+
+<br>
+
+
+'Character output examples
+<br>
+
+PRINT 
+74
+[
+&quot;:%c:&quot;
+]
+<br>
+
+PRINT 
+74
+[
+&quot;:%15c:&quot;
+]
+<br>
+
+PRINT 
+74
+[
+&quot;:%-15c:&quot;
+]
+</p>
+<p>
+Produces the output:
+</p>
+<p class="codeexample">
+:195948557:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;195948557:
+<br>
+
+:195948557&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+195948557:
+<br>
+
+:0000000000000000195948557:
+<br>
+
+:+000000000000000195948557:
+<br>
+
+:BADF00D:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BADF00D:
+<br>
+
+:BADF00D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BADF00D:
+<br>
+
+:000000000000000000BADF00D:
+<br>
+
+:000000000000000000BADF00D:
+<br>
+
+:18446744073513603059:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;18446744073513603059:
+<br>
+
+:18446744073513603059&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;18446744073513603059:
+<br>
+
+:0000018446744073513603059:
+<br>
+
+:0000018446744073513603059:
+<br>
+
+:1234.5678:
+<br>
+
+:&nbsp;&nbsp;&nbsp;1234.5678:
+<br>
+
+:1234.5678&nbsp;&nbsp;&nbsp;:
+<br>
+
+:1234.57:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1234.57:
+<br>
+
+:1234.57&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+<br>
+
+:000001234.57:
+<br>
+
+:1234.57&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;+1234.57:
+<br>
+
+:+1234.57&nbsp;&nbsp;&nbsp;&nbsp;:
+<br>
+
+:+00001234.57:
+<br>
+
+:+1234.57&nbsp;&nbsp;&nbsp;&nbsp;:
+<br>
+
+:1.2346e+03:
+<br>
+
+:&nbsp;&nbsp;1.2346e+03:
+<br>
+
+:1.2346e+03&nbsp;&nbsp;:
+<br>
+
+:1.23e+03:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;1.23e+03:
+<br>
+
+:1.23e+03&nbsp;&nbsp;&nbsp;&nbsp;:
+<br>
+
+:00001.23e+03:
+<br>
+
+:1.23e+03&nbsp;&nbsp;&nbsp;&nbsp;:
+<br>
+
+:&nbsp;&nbsp;&nbsp;+1.23e+03:
+<br>
+
+:+1.23e+03&nbsp;&nbsp;&nbsp;:
+<br>
+
+:+0001.23e+03:
+<br>
+
+:+1.23e+03&nbsp;&nbsp;&nbsp;:
+<br>
+
+:hello, world:
+<br>
+
+:hello, world:
+<br>
+
+:hello, wor:
+<br>
+
+:hello, world:
+<br>
+
+:hello, world:
+<br>
+
+:&nbsp;&nbsp;&nbsp;hello, world:
+<br>
+
+:hello, world&nbsp;&nbsp;&nbsp;:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hello, wor:
+<br>
+
+:hello, wor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+<br>
+
+:J:
+<br>
+
+:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J:
+<br>
+
+:J&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+</p>
+<h3>Example 9:</h3>
+<p>
+The following program shows how the “%R” and “%S” C format
+strings behave with Unicode strings and illustrates that while using PRINT
+without a format specifier (equivalent to “%R”) can output Unicode strings
+correctly, it cannot format them accurately.
+</p>
+<p class="codeexample">
+DIM
+ s1 
+AS
+ STRING
+(
+100
+)
+<br>
+
+
+DIM
+ s2 
+AS
+ STRING
+(
+100
+)
+<br>
+
+
+DIM
+ s3 
+AS
+ STRING
+(
+100
+)
+<br>
+
+
+<br>
+
+s1 = &quot;The rain in Spain falls mainly on the plain&quot;
+<br>
+
+s2 = &quot;Der Regen fällt in Spanien hauptsächlich auf die Ebene&quot;
+<br>
+
+s3 = &quot;&#919; &#946;&#961;&#959;&#967;&#942; &#963;&#964;&#951;&#957;
+&#921;&#963;&#960;&#945;&#957;&#943;&#945; &#960;&#941;&#966;&#964;&#949;&#953;
+&#954;&#965;&#961;&#943;&#969;&#962; &#963;&#964;&#951;&#957;
+&#960;&#949;&#948;&#953;&#940;&#948;&#945;&quot;
+<br>
+
+
+<br>
+
+
+PRINT
+<br>
+
+
+PRINT
+ &quot;=== No format string (%R)
+====================================&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s1; &quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s2; &quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s3; &quot;'&quot;
+<br>
+
+
+PRINT
+<br>
+
+
+<br>
+
+
+PRINT
+<br>
+
+
+PRINT
+ &quot;=== %60R
+=====================================================&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s1[&quot;%60R&quot;];
+&quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s2[&quot;%60R&quot;];
+&quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s3[&quot;%60R&quot;];
+&quot;'&quot;
+<br>
+
+
+<br>
+
+
+PRINT
+<br>
+
+
+PRINT
+ &quot;=== %60.30R
+==================================================&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s1[&quot;%60.30R&quot;];
+&quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s2[&quot;%60.30R&quot;];
+&quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s3[&quot;%60.30R&quot;];
+&quot;'&quot;
+<br>
+
+
+<br>
+
+
+PRINT
+<br>
+
+
+PRINT
+ &quot;=== %-60.30R
+=================================================&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;;
+s1[&quot;%-60.30R&quot;]; &quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;;
+s2[&quot;%-60.30R&quot;]; &quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;;
+s3[&quot;%-60.30R&quot;]; &quot;'&quot;
+<br>
+
+
+<br>
+
+
+PRINT
+<br>
+
+
+PRINT
+ &quot;=== %60S =====================================================&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s1[&quot;%60S&quot;];
+&quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s2[&quot;%60S&quot;];
+&quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s3[&quot;%60S&quot;];
+&quot;'&quot;
+<br>
+
+
+<br>
+
+
+PRINT
+<br>
+
+
+PRINT
+ &quot;=== %60.30S
+==================================================&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s1[&quot;%60.30S&quot;];
+&quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s2[&quot;%60.30S&quot;];
+&quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;; s3[&quot;%60.30S&quot;];
+&quot;'&quot;
+<br>
+
+
+<br>
+
+
+PRINT
+<br>
+
+
+PRINT
+ &quot;=== %-60.30S
+=================================================&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;;
+s1[&quot;%-60.30S&quot;]; &quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;;
+s2[&quot;%-60.30S&quot;]; &quot;'&quot;
+<br>
+
+
+PRINT
+ &quot;'&quot;;
+s3[&quot;%-60.30S&quot;]; &quot;'&quot;
+</p>
+<p>
+Produces the output:
+</p>
+<h2><span style='font-family:"Courier New"'>===
+No format string =========================================<br>
+
+'The rain in Spain falls mainly on the plain'<br>
+
+'Der Regen fällt in Spanien hauptsächlich auf die Ebene'<br>
+
+'&#919; &#946;&#961;&#959;&#967;&#942; &#963;&#964;&#951;&#957;
+&#921;&#963;&#960;&#945;&#957;&#943;&#945; &#960;&#941;&#966;&#964;&#949;&#953;
+&#954;&#965;&#961;&#943;&#969;&#962; &#963;&#964;&#951;&#957;
+&#960;&#949;&#948;&#953;&#940;&#948;&#945;'<br>
+
+<br>
+
+<br>
+
+=== %60R =====================================================<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The
+rain in Spain falls mainly on the plain'<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;Der Regen fällt in Spanien hauptsächlich auf die
+Ebene'<br>
+
+'&#919; &#946;&#961;&#959;&#967;&#942; &#963;&#964;&#951;&#957;
+&#921;&#963;&#960;&#945;&#957;&#943;&#945; &#960;&#941;&#966;&#964;&#949;&#953;
+&#954;&#965;&#961;&#943;&#969;&#962; &#963;&#964;&#951;&#957;
+&#960;&#949;&#948;&#953;&#940;&#948;&#945;'<br>
+
+<br>
+
+=== %60.30R ==================================================<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The
+rain in Spain falls mainly'<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Der
+Regen fällt in Spanien ha'<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#919;
+&#946;&#961;&#959;&#967;&#942; &#963;&#964;&#951;&#957; &#921;&#963;&#960;*'<br>
+
+<br>
+
+=== %-60.30R =================================================<br>
+
+'The rain in Spain falls
+mainly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'<br>
+
+'Der Regen fällt in Spanien
+ha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'<br>
+
+'&#919; &#946;&#961;&#959;&#967;&#942; &#963;&#964;&#951;&#957;
+&#921;&#963;&#960;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'<br>
+
+<br>
+
+=== %60S =====================================================<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The
+rain in Spain falls mainly on the plain'<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Der Regen fällt in Spanien hauptsächlich
+auf die Ebene'<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#919;
+&#946;&#961;&#959;&#967;&#942; &#963;&#964;&#951;&#957;
+&#921;&#963;&#960;&#945;&#957;&#943;&#945; &#960;&#941;&#966;&#964;&#949;&#953;
+&#954;&#965;&#961;&#943;&#969;&#962; &#963;&#964;&#951;&#957;
+&#960;&#949;&#948;&#953;&#940;&#948;&#945;'<br>
+
+<br>
+
+=== %60.30S ==================================================<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The
+rain in Spain falls mainly'<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Der
+Regen fällt in Spanien hau'<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#919;
+&#946;&#961;&#959;&#967;&#942; &#963;&#964;&#951;&#957; &#921;&#963;&#960;&#945;&#957;&#943;&#945;
+&#960;&#941;&#966;&#964;&#949;&#953; &#954;&#965;'<br>
+
+<br>
+
+=== %-60.30S =================================================<br>
+
+'The rain in Spain falls mainly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'<br>
+
+'Der Regen fällt in Spanien
+hau&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'<br>
+
+'&#919; &#946;&#961;&#959;&#967;&#942; &#963;&#964;&#951;&#957;
+&#921;&#963;&#960;&#945;&#957;&#943;&#945; &#960;&#941;&#966;&#964;&#949;&#953;
+&#954;&#965;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'</span></h2>
+<h2>See Also:</h2>
+<p>
+<a href="Hash.html">#</a>
+, 
+<a href="CHR.html">CHR</a>
+, 
+<a href="HEX.html">HEX</a>
+, 
+<a href="DATE$.html">DATE$</a>
+, 
+<a href="DAY$.html">DAY$</a>
+,
+
+<a href="TIME$.html">TIME$</a>
+</p>
+</body>
+</html>

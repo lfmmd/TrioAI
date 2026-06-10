@@ -1,0 +1,59 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STOP_ANGLE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STOP_ANGLE">
+</head>
+<body>
+<h1>STOP_ANGLE</h1>
+<h2>Type: </h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter is used with 
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+,
+it defines the maximum change in direction of a 2-axis interpolated move that
+will be merged at speed. When the change in direction (see CHANGE_DIR_LAST) between
+two moves is greater than the STOP_ANGLE, the speed is reduced to zero.
+</p>
+<p>
+When a move needs to stop its 
+<a href="STARTMOVE_SPEED.html">STARTMOVE_SPEED</a>
+
+is set to zero.
+</p>
+<h2>Value:</h2>
+<p>
+The angle (in radians) beyond which motion momentarily comes
+to rest at the move junction.
+</p>
+<p>
+Must be greater than or equal to zero (default value is zero),
+and when zero, no stop points will be detected.
+</p>
+<h2>Example:</h2>
+<p>
+Reduce the speed to zero on any move transition greater than
+25 degrees.
+</p>
+<p class="codeexample">
+CORNER_MODE.1 = 1
+</p>
+<p class="codeexample">
+STOP_ANGLE = 25 * PI / 180
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CHANGE_DIR_LAST.html">CHANGE_DIR_LAST</a>
+, 
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+, 
+<a href="DECEL_ANGLE.html">DECEL_ANGLE</a>
+</p>
+</body>
+</html>

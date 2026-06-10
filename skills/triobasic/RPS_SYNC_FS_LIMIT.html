@@ -1,0 +1,71 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SYNC_FS_LIMIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SYNC_FS_LIMIT">
+</head>
+<body>
+<h1>SYNC_FS_LIMIT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Parameter
+</p>
+<h2>Description:</h2>
+<p>
+An end of travel limit may be set up in software thus
+allowing synchronization to stop when the robot is going outside the limit. The
+robot will wait with SYNC_CONTROL = -1 if the controller is waiting for the
+synchronization point to move within range. 
+</p>
+<h2>Value:</h2>
+<p>
+The absolute position of the software forward travel limit
+in user 
+<a href="UNITS.html">UNITS</a>
+ for Robot Synchronization.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Define the forward synchronization limit to 100 units. The
+robot will start synchronization when the target point position on axis 0 is
+less than  SYNC_FS_LIMIT. SYNC_CONTROL will be -1 before starting
+synchronization. Synchronization will be stopped if the robot end effector
+travels outside the limits while in sync.
+</p>
+<p class="codeexample" style="margin-left:0cm">
+BASE
+(0)
+</p>
+<p class="codeexample" style="margin-left:0cm">
+SYNC_FS_LIMIT
+
+= 100
+</p>
+<p class="codeexample" style="margin-left:0cm">
+SYNC_TO_OBJECT_FRAME
+(
+1
+, 
+1000
+, 
+&quot;pallet&quot;
+, 
+&quot;object_1&quot;
+)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_SYNC_RS_LIMIT.html">SYNC_RS_LIMIT</a>
+, 
+<a href="RPS_SYNC_TO_OBJECT_FRAME.html">SYNC_TO_OBJECT_FRAME</a>
+, 
+<a href="SYNC_CONTROL.html">SYNC_CONTROL</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FREE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FREE">
+</head>
+<body>
+<h1>FREE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the amount of program memory available for user
+programs.
+</p>
+<p class="note">
+Each line takes a minimum of 4 characters (bytes) in memory. This
+is for the length of this line, the length of the previous line, number of
+spaces at the beginning of the line and a single command token. Additional
+commands need one byte per token, most other data is held as ASCII.
+</p>
+<p class="note">
+The Motion Coordinator compiles programs before they are run,
+this means that a little under twice the memory is required to be able to run a
+program.
+</p>
+<h2>Value:</h2>
+<p>
+The amount of available user memory in bytes.
+</p>
+<h2>Example:</h2>
+<p>
+Check the available memory on the command line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT FREE
+</p>
+<p class="codeexample">
+47104.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DIR.html">DIR</a>
+</p>
+</body>
+</html>

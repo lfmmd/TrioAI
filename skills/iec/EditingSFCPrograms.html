@@ -1,0 +1,426 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Editing SFC Programs</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Editing SFC Programs</h1>
+<p>
+The Sequential Function Chart is a graphical programming
+language whose main components are:
+</p>
+<p class="MsoListParagraph" style="margin-left:72.0pt;text-indent:-18.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Steps with associated actions
+</p>
+<p class="MsoListParagraph" style="margin-left:72.0pt;text-indent:-18.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Transitions with associated logic conditions
+</p>
+<p class="MsoListParagraph" style="margin-left:72.0pt;text-indent:-18.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Directed links between steps and transitions
+</p>
+<p>
+SFC steps can be active or inactive. Actions are only
+executed for active steps. A step can be active for one of two motives: (1) It
+is an initial step as specified by the programmer (2) It was activated during a
+scan cycle and not deactivated since
+</p>
+<p>
+The editor contents can be zoomed in and
+out via the toolbar buttons or using the shortcut combinations “Ctrl +” for
+zoom in and “Ctrl -” for zoom out.
+</p>
+<p>
+The SFC editor context menu has the
+following functionality:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Menu Entry
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Action
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open IEC 61131-3 variables
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open the IEC variables tool
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open IEC 61131-3 types
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open the IEC types tool
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Breakpoints
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Open breakpoints manager window
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Toggle Operating Mode
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Toggle operating mode of selected line
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Insert step
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inserts a new step in the program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Insert transition
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inserts a new transition element in
+  the program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Insert init step
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inserts an initialization step
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Insert jump
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inserts a jump element in the program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Renumber
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Renumbers the steps and transitions,
+  starting from the selected one
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Next item
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Navigates to the next logical element
+  of the program
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+SFC programs are divided into 2 levels:
+</p>
+<h3>Level 1</h3>
+<p>
+This level describes the steps and
+transitions and is edited by the SFC editor. 
+</p>
+<p>
+A step represents a stable state and is
+drawn as a square box in the chart. At runtime, a step can be either active or
+inactive. All actions linked to the steps are executed depending on the
+activity of the step. Initial steps represent the initial condition when the
+program is started. There must be at least one initial step in each SFC
+program, denoted with a double line.
+</p>
+<p>
+Transitions represent a condition the
+changes the program activity from one step to another. It is marked by a small
+horizontal line that crosses a link drawn between the two steps. The condition
+must be a BOOL expression. 
+Transitions define the dynamic behaviour according
+to the following rules:
+</p>
+<span style='font-family:"Calibri",sans-serif'><br clear="all">
+
+</span><p>
+A transition in crossed if: 
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+1.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Its condition is TRUE
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+2.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>All steps linked to the top of the transition (before) are active
+</p>
+<p>
+When a transition is crossed: 
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+1.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>All steps linked to the top of the transition (before) are de-activated
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+2.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>All steps linked to the bottom of the transition (after) are activated
+</p>
+<h4>Divergences</h4>
+<p>
+It is possible to link a step to several transitions and
+thus create a divergence. The divergence is represented by a horizontal line.
+Transitions after the divergence represent several possible changes in the situation
+of the program.
+</p>
+<p>
+All conditions are considered as exclusive, according to a
+left to right priority order. It means that a transition is considered as FALSE
+if at least one of the transitions connected to the same divergence on its left
+side is TRUE
+</p>
+<span style='font-family:"Calibri",sans-serif'><br clear="all">
+
+</span><h3>Level 2</h3>
+<p>
+This is the code for the actions,
+transitions and text for notes in the level 1 element.
+</p>
+<p>
+Each level 1 step has 5 level 2 elements,
+which can be open for editing by double-clicking on the corresponding element.
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+1.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Actions – Simple actions entered as text
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+2.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>P1 actions, that can be programmed in ST, LD or FBD, are executed
+only once when the step becomes active
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+3.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>N actions, that can be programmed in ST, LD or FBD, are executed on
+each cycle while the step is active
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+4.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>P0 actions, that can be programmed in ST, LD or FBD, are executed
+only once when the step becomes inactive
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+5.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Text notes
+</p>
+<p>
+While a level 2 item is open for editing,
+the contents of the parent level 1 SFC program is locked for editing. This is
+done to prevent renumbering or deleting of the parent level 1 element, for
+which the level 2 editor is open. Once the editing of the level 2 element is
+complete, and the user closes the child editor, the SFC editor is unlocked, and
+its normal operation is restored.
+</p>
+<p>
+<img width="670" height="688" src="EditingSFCPrograms_files/image001.jpg">
+</p>
+<p>
+When editing a level 2 SFC program, an
+additional combo box will appear in the status bar of the program editor
+</p>
+<p>
+<img width="671" height="30" id="Picture 4" src="EditingSFCPrograms_files/image002.jpg">
+</p>
+<p>
+From this combo box the language of the
+level 2 element can be chosen. The default is ST. When the language is changed,
+a prompt will appear notifying that the current contents of the program will be
+cleared.
+</p>
+<p>
+&nbsp;
+</p>
+
+
+
+
+
+
+</body>
+</html>

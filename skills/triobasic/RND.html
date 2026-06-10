@@ -1,0 +1,194 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>RND</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="RND">
+</head>
+<body>
+<h1>RND</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = RND
+</p>
+<p class="fixed">
+value = RND(&lt;upper-limit&gt;)
+</p>
+<p class="fixed">
+value = RND(&lt;lower-limit&gt;, &lt;upper-limit&gt;)
+</p>
+<h2>Description:</h2>
+<p>
+The RND function returns a pseudo-random unsigned integer value,
+either using the full range of a 32-bit unsigned integer with no parameters, or
+a value between 0 and limit-1 if an upper limit is specified.
+</p>
+<p class="tip">
+Note that the sequence generated varies with each program
+execution, which is usually desirable, but if you require the same sequence
+generated then use the RANDOMIZE command.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+lower-limit:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameter to specify the lower inclusive limit
+  of the random value, which if omitted defaults to 0 (zero)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+upper-limit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional parameter to specify the exclusive upper limit
+  of the random value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A pseudo-random unsigned integer value
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print a random 8-bit number on the command line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND(1&lt;&lt;8)
+</p>
+<p class="codeexample">
+173
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND(1&lt;&lt;8)
+</p>
+<p class="codeexample">
+98
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND(1&lt;&lt;8)
+</p>
+<p class="codeexample">
+225
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Print a random number from 0 to 99 inclusive on the command
+line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND(100)
+</p>
+<p class="codeexample">
+61
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND(100)
+</p>
+<p class="codeexample">
+3
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND(100)
+</p>
+<p class="codeexample">
+40
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p>
+Print a random number from -100 to 99 inclusive on the
+command line
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND(-100, 100)
+</p>
+<p class="codeexample">
+76
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND(-100, 100)
+</p>
+<p class="codeexample">
+-17
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT RND(-100, 100)
+</p>
+<p class="codeexample">
+-2
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See also:</h2>
+<p>
+<a href="RANDOMIZE.html">RANDOMIZE</a>
+, 
+<a href="RNDF.html">RNDF</a>
+</p>
+</body>
+</html>

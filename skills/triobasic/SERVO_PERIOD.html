@@ -1,0 +1,353 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SERVO_PERIOD</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SERVO_PERIOD">
+</head>
+<body>
+<h1>SERVO_PERIOD</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG / FLASH)
+</p>
+<h2>Description:</h2>
+<p>
+This parameter allows the controller servo period to be read
+or specified. This is the cycle time in which the target position updated and
+if applicable any positions are read, and closed loop calculations performed. 
+</p>
+<p>
+SERVO_PERIOD is a flash parameter and so should be set using
+the MC_CONFIG file. 
+</p>
+<p>
+When the servo period is reduced the maximum number of axes
+(including virtual) is reduced as per the following table.
+</p>
+<p class="warning">
+The number of supported axes for each SERVO_PERIOD value is
+tested with optimal conditions and light EtherCAT loads, the number supported
+in a real system may vary.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="148" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+SERVO_PERIOD
+</p>
+
+  
+</td>
+<td width="295" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Maximum axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Single Core
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Multi Core
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+50&nbsp;
+µs
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+N/A
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+125&nbsp;
+µs
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+24
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+250&nbsp;
+µs
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+24
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+48
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+500&nbsp;
+µs
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+48
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1000&nbsp;
+µs 
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64 
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+128
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2000&nbsp;
+µs
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64 
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+128
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4000&nbsp;
+µs
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64
+</p>
+
+  
+</td>
+<td width="148" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+128
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Value:</h2>
+<p>
+SERVO_PERIOD is specified in microseconds. Only the values above
+may be used, and the Motion Coordinator must be reset before the new servo
+period will be applied.
+</p>
+<p class="note">
+The permissible number of axes decreases as the SERVO_PERIOD is
+reduced, and this is because the servo period defines the time available within
+which processing of all the axes in use must be complete before the next servo
+cycle starts. Normally, the maximum number of axes a controller supports can be
+used when SERVO_PERIOD is set to 1&nbsp;ms or higher.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p class="codeexample">
+'Check controller servo period on startup
+</p>
+<p class="codeexample">
+IF SERVO_PERIOD &lt;&gt; 250 THEN
+</p>
+<p class="codeexample">
+  SERVO_PERIOD = 250
+</p>
+<p class="codeexample">
+  
+EX
+</p>
+<p class="codeexample">
+ENDIF 
+</p>
+<h3>Example 2:</h3>
+<p class="codeexample">
+'
+MC_CONFIG script file
+</p>
+<p class="codeexample">
+SERVO_PERIOD = 500 'This is the value set on power up
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SERVO_OFFSET.html">SERVO_OFFSET</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

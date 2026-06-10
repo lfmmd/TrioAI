@@ -1,0 +1,116 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LOADED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LOADED">
+</head>
+<body>
+<h1>LOADED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Checks if all the movements have been loaded into the 
+<a href="MTYPE.html">MTYPE</a>
+ buffer so will return a 
+<a href="TRUE.html">TRUE</a>
+
+value when there are no buffered movements, otherwise 
+<a href="FALSE.html">FALSE</a>
+.
+
+</p>
+<p class="tip">
+Although it is possible to use LOADED as part of any expression it
+is typically used with a 
+<a href="WAIT.html">WAIT</a>
+. 
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+when there are no buffered moves 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+when there are buffered moves. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Continue to load a sequence of moves when the 
+<a href="NTYPE.html">NTYPE</a>
+ buffer is free
+</p>
+<p class="codeexample">
+WHILE machine_on
+</p>
+<p class="codeexample">
+  WAIT UNTIL LOADED OR NOT machine_off
+</p>
+<p class="codeexample">
+  IF machine_on THEN
+</p>
+<p class="codeexample">
+    MOVE(TABLE(position)
+</p>
+<p class="codeexample">
+    position = position + 1
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MOVES_BUFFERED.html">MOVES_BUFFERED</a>
+, 
+<a href="WAIT.html">WAIT</a>
+</p>
+</body>
+</html>

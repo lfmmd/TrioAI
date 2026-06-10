@@ -1,0 +1,507 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DISPLAY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DISPLAY">
+</head>
+<body>
+<h1>DISPLAY</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Determines which group of the I/O channels are to be
+displayed on the LCD or LED bank. 
+</p>
+<h2>Value:</h2>
+<p>
+Controller with an LCD use the following values in DISPLAY
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits
+<br>
+
+  16 - 31
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits
+<br>
+
+  0 - 15
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inputs 0-15 (default value)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inputs 16-31
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Outputs 0-15 (0-7 unused on existing controllers) 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Outputs 16-31
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+User control of the LCD segments *
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+888
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved value
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+* MC405 only.  When bit 16 is set, user control of the 3x7
+segment characters is enabled.  By default this is disabled. 
+</p>
+<p>
+Controller with an LED display use the following values in
+DISPLAY
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits
+<br>
+
+  0 - 15
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inputs 0-7 (default value)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inputs 7-15
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inputs 16-23
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Inputs 24-31
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Outputs 0-7 (0-7 unused on existing controllers) 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Outputs 8-15
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Outputs 16-23
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="56" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="266" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Outputs 24-31
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>Example 1:</h2>
+<p>
+Show outputs 16-31 on the MC464
+</p>
+<p class="codeexample">
+&gt;&gt;DISPLAY=3
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>Example 2:</h2>
+<p>
+Enable user control of 3x7 segments on the MC405
+</p>
+<p class="codeexample">
+&gt;&gt;DISPLAY.16 = 1
+</p>
+<p class="codeexample">
+&gt;&gt;LCDSTR=”123”
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p class="codeexample">
+<a href="LCDSTR.html">LCDSTR</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+</body>
+</html>

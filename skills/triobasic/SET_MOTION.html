@@ -1,0 +1,171 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SET_MOTION</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SET_MOTION">
+</head>
+<body>
+<h1>SET_MOTION</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function 
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+SET_MOTION(axis, speed[, accel[, decel[, jerk]]])
+</p>
+<h2>Description:</h2>
+<p>
+SET_MOTION is used to pre-set the parameter list for a
+subsequent move using just one command.
+</p>
+<p class="note">
+This command requires the axis to be specified as a parameter and
+therefore does not use the current base axis nor will it accept the AXIS
+modifier.
+</p>
+<h2>Parameters:</h2>
+<p>
+Minimum of the first 2 parameters must be set.  All other
+parameters are optional.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number to be set up
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+speed:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value for SPEED to be set
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+accel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The required value for ACCEL
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+decel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The required value for DECEL
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+jerk:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The required value for JERK
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set up and run a move on axis 3 (setting JERK is not
+required, so the last parameter is not included).
+</p>
+<p class="codeexample">
+SET_MOTION(3, 20, 100, 120)
+<br>
+
+BASE(3)
+<br>
+
+MOVE(150)
+<br>
+
+WAIT IDLE
+</p>
+<h2>See also:</h2>
+<p>
+<a href="SET_MOTIONSP.html">SET_MOTIONSP</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,250 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IDLE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IDLE">
+</head>
+<body>
+<h1>IDLE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+&lt;value&gt; = IDLE
+</p>
+<p class="codeexample">
+&lt;value&gt; = IDLE AXIS(n)
+</p>
+<h2>Description:</h2>
+<p>
+IDLE returns whether the axis is stationary and has no moves
+loaded on it, a move being loaded when it is either in the motion move buffer
+(MTYPE), the next move buffer (NTYPE) or the process move buffer (PMOVE), and
+additionally when there is an additional movement (MOVEADD) active. 
+</p>
+<p class="warning">
+Note that if the axis has an additional axis (ADDAX) assigned
+to it, that this is not taken account of, neither in terms of being ‘loaded’
+nor in terms of having its velocity added to this axis.
+</p>
+<p class="note">
+The state of IDLE refers only to the Demanded Position of the
+axis, so when IDLE, while the axis has completed the moves velocity profiling, the
+servo system may still be settling into position.
+</p>
+<p class="note">
+Note that pausing a move by any means, like feed-hold (FHOLD_IN),
+does not cause an axis to be considered idle, as it still has a move or moves
+loaded on it.
+</p>
+<p>
+The most common usage of IDLE is to see if a move has
+completed using a WAIT statement, but it can be used anywhere a value is
+expected. When WAIT IDLE is used immediately after a move is loaded, since the
+move will be in PMOVE, IDLE will immediately be FALSE and the WAIT IDLE will wait
+until the move completes.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A move or moves are running on the axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+There are no moves running or buffered on the axis
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Start a move and then suspend program execution until the
+move has finished. Note: This does not necessarily imply that the motor is
+stationary as it may still be settling to position.
+</p>
+<p class="codeexample">
+MOVE(100)
+<br>
+
+WAIT IDLE
+<br>
+
+PRINT &quot;Move Done&quot;
+</p>
+<p class="codeexample">
+OP(move_finished, ON)
+</p>
+<h3>Example 2:</h3>
+<p>
+If the axis does not have any moves loaded, then load a new
+sequence. 
+</p>
+<p class="codeexample">
+IF IDLE AXIS(1) THEN
+</p>
+<p class="codeexample">
+  BASE(1)
+</p>
+<p class="codeexample">
+  MOVE(100)
+</p>
+<p class="codeexample">
+  MOVE(50)
+</p>
+<p class="codeexample">
+  MOVE(-150)
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Start a move, then wait until either a registration event
+has occurred, or the move has finished. 
+</p>
+<p class="codeexample">
+REGIST(20)
+</p>
+<p class="codeexample">
+MOVELINK(100, 120, 20, 20, 3)
+</p>
+<p class="codeexample">
+WAIT UNTIL MARK OR IDLE
+</p>
+<p class="codeexample">
+IF MARK THEN
+</p>
+<p class="codeexample">
+  captured_position = REG_POS
+</p>
+<p class="codeexample">
+  missed_mark = 0
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT #5, &quot;Failed to find MARK&quot;
+</p>
+<p class="codeexample">
+  missed_mark = missed_mark + 1
+</p>
+<p class="codeexample">
+  IF missed_mark &gt; 10 THEN
+</p>
+<p class="codeexample">
+    GOSUB flash_amber_lamp
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 4:</h3>
+<p>
+Buffer a sequence of merged 5 axis moves, then wait for the
+sequence to finish. Only the BASE axis needs to be checked for IDLE because all
+5 axes work together in an interpolated group. 
+</p>
+<p class="codeexample">
+BASE(4, 5, 6, 7, 8)
+</p>
+<p class="codeexample">
+MERGE = ON
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(7) = OFF 'Calculate vector speed for
+XYZ only
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(8) = OFF 'A and B axes simply follow in
+sync.
+</p>
+<p class="codeexample">
+MOVE(x1, y1, z1, a1, b1)
+</p>
+<p class="codeexample">
+MOVE(x2, y2, z2, a2, b2)
+</p>
+<p class="codeexample">
+MOVE(x3, y3, z3, a3, b3)
+</p>
+<p class="codeexample">
+MOVE(x4, y4, z4, a4, b4)
+</p>
+<p class="codeexample">
+MOVE(x5, y5, z5, a5, b5)
+</p>
+<p class="codeexample">
+MOVE(x6, y6, z6, a6, b6)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="tip">
+INTERP_FACTOR must be set back to ON after this sequence to allow
+individual axes to move singly.
+</p>
+<h2>See also:</h2>
+<p>
+<a href="IN_POS.html">IN_POS</a>
+, 
+<a href="LOADED.html">LOADED</a>
+,
+
+<a href="MTYPE.html">MTYPE</a>
+, 
+<a href="NTYPE.html">NTYPE</a>
+, 
+<a href="PMOVE.html">PMOVE</a>
+, 
+<a href="WAIT.html">WAIT</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

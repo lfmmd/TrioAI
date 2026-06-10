@@ -1,0 +1,345 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVE_PB</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVE_PB">
+</head>
+<body>
+<h1>MOVE_PB</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+MOVE_PB is a special axis parameter which pass through the
+motion buffers and become available during the motion for processing.
+</p>
+<p>
+This and 
+<a href="MOVE_PA.html">MOVE_PA</a>
+ are two axis
+parameters which can be freely set by BASIC.  Every time a move is loaded by
+BASIC a copy is made of both these parameters into the move queue buffers.
+</p>
+<p class="tip">
+This parameter is used to switch outputs linked to moves. For
+example switching ON a certain output once a move command is executed.
+</p>
+<p class="note">
+Every time a move is loaded by BASIC a copy is made of both these
+parameters into the move queue buffers:
+</p>
+<h2>Parameters:</h2>
+<h3>MOVE_PB_CONT = 1 or 3</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0…11:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set the output number to be switched
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 12:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sets ON/OFF 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>MOVE_PB_CONT = 2</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0…31:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value in MOVE_PA is placed in AXIS_DEBUG_B
+  synchronised with the loading of the move.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>MOVE_PB_CONT = 4</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0…11:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set the first output index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 12…19:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of outputs to be set/cleared
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 20…51:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The output bit pattern
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+Mode 4 is available in firmware V2.0284 and later
+</p>
+<h3>MOVE_PB_CONT = 5 or 6</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0…31:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue 32-bit value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 32…39:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue channel number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+Modes 5 and 6 are available in firmware v2.0339 and later
+</p>
+<p class="tip">
+&nbsp;
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Switching output number 14 during a move once the command is
+executed:
+</p>
+<p>
+&nbsp;
+</p>
+<p class="codeexample">
+SPEED = 15
+</p>
+<p class="codeexample">
+FORCE_SPEED = 15
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 15
+<br>
+
+MERGE = ON
+<br>
+
+LIMIT_BUFFERED = 8
+<br>
+
+ACCEL = SPEED * 20
+</p>
+<p class="codeexample">
+DECEL = SPEED * 20
+<br>
+
+TRIGGER
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVE_PB = 14
+</p>
+<p class="codeexample">
+MOVE_PB_CONT = 1
+</p>
+<p class="codeexample">
+MOVE_PB.12 = ON
+<br>
+
+MOVESP(200)
+<br>
+
+MOVE_PB.12 = OFF
+<br>
+
+MOVESP(20) 
+<br>
+
+MOVE_PB.12 = ON
+<br>
+
+MOVESP(100)
+</p>
+<h3>Example 2:</h3>
+<p>
+Set a bit pattern on outputs 28 to 37 to coincide with the
+start of the next move.
+</p>
+<p class="codeexample">
+SPEED = 15
+</p>
+<p class="codeexample">
+FORCE_SPEED = 15
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 15
+</p>
+<p class="codeexample">
+MOVE_PB_CONT = 4
+</p>
+<p class="codeexample">
+MOVE_PB = ($1C &lt;&lt; 20) + (10 &lt;&lt; 12) + 28
+<br>
+
+MOVEABSSP(45)
+<br>
+
+
+<br>
+
+
+</p>
+<h2>See also: </h2>
+<p>
+<a href="AXIS_DEBUG_B.html">AXIS_DEBUG_B</a>
+, 
+<a href="MOVE_PA.html">MOVE_PA</a>
+, 
+<a href="MOVE_PB_CONT.html">MOVE_PB_CONT</a>
+, 
+<a href="MOVE_PB_IDLE.html">MOVE_PB_IDLE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

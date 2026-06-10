@@ -1,0 +1,654 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Object Frames</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Object Frames</h1>
+<p>
+Object frames are manipulated with the OBJECT_FRAME keyword.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+OBJECT_FRAME[(function[, identity])]
+</p>
+
+  
+<p class="codeexample">
+&nbsp;
+</p>
+
+  
+<p class="codeexample">
+OBJECT_FRAME(identity | name)
+</p>
+
+  
+<p class="codeexample">
+&nbsp;
+</p>
+
+  
+<p class="codeexample">
+OBJECT_FRAME(identity, name, x offset, y offset, z
+  offset, x rotation, y rotation, z rotation)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Parameter name can be left as an empty String. However, when not
+blank, the name must be unique. “Duplicate Identifier” run time error is thrown
+when this is not the case.
+</p>
+<p class="note">
+Default object frame “OF_default” (index 0) cannot be modified or
+deleted.
+</p>
+<h2>Create or Modify an Object Frame</h2>
+<p>
+Object frames must be created first using the corresponding
+syntax command with the desired values before using them.
+</p>
+<p>
+Existing object frames (except “OF_default”) can be modified
+at any time, except when the object frame is active. To do this, use the same
+command as creating the object frame. This will overwrite the object frame with
+a new set of values in the same index.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+OBJECT_FRAME(identity, name, x offset, y offset, z
+  offset, x rotation, y rotation, z rotation)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Object frame index. Value: 1..31. Index 0 is default
+  object frame “OF_default” which cannot be modified or removed.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>name</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Name of the object frame. It can be left blank. However,
+  if specified, the name must be unique (no duplicates); otherwise “Duplicate
+  Identifier” run time error will be thrown.</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z offset</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Object frame </span></em>position (in mm) relative to World
+  Frame
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>x, y, z rotation</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Object frame </span></em>orientation (in degrees) relative
+  to World Frame
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Create an object frame on index 1 with name “wobj1” located
+at (200, 200, 400) from the World Frame with no rotation.</span></em></p>
+<p class="codeexample">
+OBJECT_FRAME(1, &quot;wobj1&quot;, 200, 200, 400, 0, 0, 0)
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p class="MsoNoSpacing">
+<em><span style='font-family:"Calibri",sans-serif'>Create an object frame on index 2 with no name located at
+(200, 0, 0) rotated 90 degrees on the Z from the World Frame.</span></em></p>
+<p class="codeexample">
+OBJECT_FRAME(2, &quot;&quot;, 200, 0, 0, 0, 0, 90)
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 3</span></em></h4>
+<p class="MsoNoSpacing">
+Modify object frame index 2 position to (200, 200, 0) and
+name it “wobj2”. Note: to be able to modify the entries, object frame index 2
+cannot be active/selected.
+</p>
+<p class="codeexample">
+Terminal: 
+</p>
+<p class="codeexample">
+&gt;&gt;object_frame(-1) 'display all object frames
+<br>
+
+0 [OF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [wobj1] : 200.00000, 200.00000, 400.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 : 200.00000, 0.00000, 0.00000, 0.00000, 0.00000, 90.00000
+</p>
+<p class="codeexample">
+&gt;&gt;object_frame(0) 'activate object frame 0 to
+deselect object frame 2
+<br>
+
+&gt;&gt;object_frame (2, &quot;wobj2&quot;, 200, 200, 0, 0, 0, 90) 'create
+wobj2
+<br>
+
+&gt;&gt;object_frame(-1)&nbsp;'display all object
+frames&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [OF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [wobj1] : 200.00000, 200.00000, 400.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [wobj2] : 200.00000, 200.00000, 0.00000, 0.00000, 0.00000, 90.00000
+</p>
+<h2>Display Object Frame Data</h2>
+<p>
+To display an object frame, use function -1 followed by the
+object frame’s index. If the index is not specified, all object frames will be
+displayed.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+OBJECT_FRAME(-1[, identity])
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Object frame index. Value: 0..31. </span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+Show all existing object frames.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;object_frame(-1)&nbsp;&nbsp;
+<br>
+
+0 [OF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [wobj1] : 100.00000, 200.00000, 300.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p>
+Display object frame index 1.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;object_frame(-1, 1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+1 [wobj1] : 100.00000, 200.00000, 300.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h2>Remove an Object Frame</h2>
+<p class="MsoNoSpacing">
+To remove an object frame, use function -2 followed by
+the object frame’s index. If the index is not specified, all object frames will
+be deleted.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+OBJECT_FRAME(-2[, identity])
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Object frame index. Value: 1..31. Index 0 is default
+  object frame “OF_default” which cannot be modified or removed.</span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+An active object frame cannot be modified or deleted. Trying to
+do so will throw a runtime error “TOOL cannot be modified or deleted while
+selected”.
+</p>
+<p class="note">
+Default object frame “OF_default” (index 0) cannot be modified or
+deleted.
+</p>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+Remove object frame “wobj2”.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;object_frame(-1)&nbsp;'display all object
+frames&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [OF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [wobj1] : 200.00000, 200.00000, 400.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+2 [wobj2] : 200.00000, 200.00000, 0.00000, 0.00000, 0.00000, 90.00000
+<br>
+
+&gt;&gt;object_frame(-2, 2)&nbsp;&nbsp;'remove robot frame
+2&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+&gt;&gt;object_frame(-1) 'display remaining object
+frames&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+0 [OF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+<br>
+
+1 [wobj1] : 200.00000, 200.00000, 400.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p>
+Remove all object frames.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;object_frame(-2)&nbsp;'remove all robot
+frames&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+&gt;&gt;object_frame(-1) 'display remaining object frames
+<br>
+
+0 [OF_default] : 0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000
+</p>
+<h2>Select an Object Frame</h2>
+<p>
+Robots will perform moves relative to the active object
+frame. To make an object frame active, the object frame must be selected either
+as a standalone command, or as an embedded parameter (see 
+<a href="RPS_Reference_6_Move_Commands.html">Move Commands</a>
+ section). As a
+standalone command, use 
+<span class="codeexampleChar">OBJECT_FRAME</span> command with the object frame’s index or
+name as the parameter.
+</p>
+<p>
+Once the move with the active object frame has completed, a
+different object frame can be selected. This gives the possibility of selecting
+a different object frame on-the-fly in the code.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+OBJECT_FRAME(identity | name)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>identity: INTEGER</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Object frame index. Value: 0..31. </span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="170" valign="top" class="tablegrid">
+
+  
+<p align="right">
+<em><span style='font-family:"Calibri",sans-serif'>name: STRING</span></em></p>
+
+  
+</td>
+<td width="501" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Name of the object frame. </span></em></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Select object frame 1.</span></em></p>
+<p class="codeexample">
+OBJECT_FRAME(1)
+</p>
+<h4><em><span style='font-family:"Cambria",serif'>Example 2</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Select object frame “wobj1”.</span></em></p>
+<p class="codeexample">
+OBJECT_FRAME(&quot;wobj1&quot;)
+</p>
+<h2>Identify Active Object Frame</h2>
+<p>
+To know which object frame is active, assign the return
+value to the 
+<span class="codeexampleChar">OBJECT_FRAME</span>
+command with no parameters. The command will return the index of the active
+object frame.
+</p>
+<h3>Syntax</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+OBJECT_FRAME
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" valign="top" class="tablegrid">
+
+  
+<p>
+<i>Return Value:</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" valign="top" class="tablegrid">
+
+  
+<p>
+Index of the active object frame. Value: 0..31.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h4>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Assign to variable ‘i’ the index of the active object frame.
+</span></em></p>
+<p class="codeexample">
+i = 
+OBJECT_FRAME
+</p>
+<h4>Example 2</h4>
+<p>
+Check the active object frame and print the index of the
+object frame on the terminal.
+</p>
+<p class="codeexample">
+Terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;kinematic_group(0) 'Check active object frame
+<br>
+
+0 [1000] [41] : 0, 1, 2, 3, 4, 5 TO={0[TO_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} RF={0[RF_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} OF={1[wobj1]:100.00000, 200.00000, 300.00000,
+0.00000, 0.00000,&nbsp;0.00000} CO={0}
+<br>
+
+&gt;&gt;print object_frame 'Check active object frame
+<br>
+
+1
+<br>
+
+&gt;&gt;object_frame(0)&nbsp;'Select object frame 0 to be active&nbsp;&nbsp;
+<br>
+
+&gt;&gt;kinematic_group(0) 'Check active object frame
+<br>
+
+0 [1000] [41] : 0, 1, 2, 3, 4, 5 TO={0[TO_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} RF={0[RF_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000, 0.00000} OF={0[OF_default]:0.00000, 0.00000, 0.00000,
+0.00000, 0.00000,&nbsp;0.00000} CO={0}
+<br>
+
+&gt;&gt;print object_frame 'Check active object frame
+<br>
+
+0
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

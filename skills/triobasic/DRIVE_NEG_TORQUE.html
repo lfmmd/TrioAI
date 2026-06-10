@@ -1,0 +1,44 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_NEG_TORQUE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_NEG_TORQUE">
+</head>
+<body>
+<h1>DRIVE_NEG_TORQUE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Sets the negative torque limit value in a remote drive.  For
+this value to be active, the cyclic data transfer from the drive must be first
+configured to set the NEGATIVE_TORQUE_LIMIT value.  For a drive connected by CANopen
+over EtherCAT (CoE) the value will be configured as part of the Process Data
+Object (PDO).
+</p>
+<p>
+Usually, the parameter is mapped to Object 0x60E1 sub index
+0x00, size 16 bits.
+</p>
+<h2>Value:</h2>
+<p>
+The drive negative torque limit is an INT16 in drive units,
+often it is percent x 10. See the drive’s manual for details.
+</p>
+<h2>Example:</h2>
+<h3>Example1</h3>
+<p>
+Set the drive’s negative torque limit to 50% from a program.
+</p>
+<p class="codeexample">
+DRIVE_NEG_TORQUE AXIS(2) = 500
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

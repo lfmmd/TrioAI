@@ -1,0 +1,430 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVE_PA_IDLE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVE_PA_IDLE">
+</head>
+<body>
+<h1>MOVE_PA_IDLE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This and 
+<a href="MOVE_PB_IDLE.html">MOVE_PB_IDLE</a>
+ are
+two axis parameters which can be freely set by BASIC.  When there are no moves
+available and the axis has MTYPE=0, the value of MOVE_PA_IDLE is used instead
+of 
+<a href="MOVE_PA.html">MOVE_PA</a>
+ to perform an action according to 
+<a href="MOVE_PA_CONT.html">MOVE_PA_CONT</a>
+.  
+</p>
+<p class="note">
+Using control value =3 the output settings set by the
+MOVE_PA_IDLE will be set if the axis is IDLE or if the VP_SPEED=0.
+</p>
+<h2>Parameters:</h2>
+<h3>MOVE_PA_CONT = 1 or 3</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0…11:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set the output number to be switched
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 12:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Sets ON/OFF 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>MOVE_PA_CONT = 2</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0…31:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value in MOVE_PA is placed in AXIS_DEBUG_A
+  synchronised with the loading of the move.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>MOVE_PA_CONT = 4</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0…11:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set the first output index
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 12…19:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of outputs to be set/cleared
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 20…51:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The output bit pattern
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+Mode 4 is available in firmware V2.0284 and later
+</p>
+<span style='font-family:"Calibri",sans-serif'><br clear="all">
+
+</span><p>
+<b><i>&nbsp;</i></b></p>
+<h3>MOVE_PA_CONT = 5 or 6</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0…31:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue 32-bit value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 32…39:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue channel number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+Modes 5 and 6 are available in firmware v2.0339 and later
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Switching output number 10 during a move by using the
+MOVE_PA_IDLE command and control value = 1:
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FOR a = 0 TO 1
+<br>
+
+    UNITS AXIS(a) = 10
+<br>
+
+NEXT a
+<br>
+
+
+<br>
+
+SPEED = 10
+<br>
+
+MERGE = ON
+<br>
+
+LIMIT_BUFFERED = 16
+<br>
+
+ACC(SPEED * 20)
+<br>
+
+TRIGGER
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVE_PA_CONT = 1
+<br>
+
+
+<br>
+
+MOVE_PA = 10
+<br>
+
+MOVE_PA.12 = ON
+<br>
+
+MOVE_PA_IDLE = 10
+</p>
+<p class="codeexample">
+MOVE_PA_IDLE.12 = OFF
+</p>
+<p class="codeexample">
+<br>
+
+MOVE(20)
+<br>
+
+WAIT IDLE
+<br>
+
+WA(2000)
+<br>
+
+MOVE(20)
+<br>
+
+WAIT IDLE
+<br>
+
+WA(2000)
+<br>
+
+MOVE(10)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Switching output number 10 during a move by using the
+MOVE_PA_IDLE command and control value = 3. When the move stops once SPEED=0 is
+executed, the speed must be reset through the command line for the program to
+continue:
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FOR a = 0 TO 1
+<br>
+
+    UNITS AXIS(a) = 10
+<br>
+
+NEXT a
+<br>
+
+
+<br>
+
+SPEED = 10
+<br>
+
+MERGE = ON
+<br>
+
+LIMIT_BUFFERED = 16
+<br>
+
+ACC(SPEED * 20)
+<br>
+
+TRIGGER
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVE_PA_CONT = 1
+<br>
+
+
+<br>
+
+MOVE_PA = 10
+<br>
+
+MOVE_PA.12 = ON
+<br>
+
+MOVE_PA_IDLE = 10
+<br>
+
+MOVE_PA_IDLE.12 = OFF
+</p>
+<p class="codeexample">
+<br>
+
+MOVE(20)
+<br>
+
+WAIT IDLE
+<br>
+
+WA(2000)
+<br>
+
+MOVE(20)
+<br>
+
+WA(2000)
+<br>
+
+SPEED = 0
+<br>
+
+MOVE(20)
+<br>
+
+WAIT IDLE
+<br>
+
+WA(2000)
+<br>
+
+MOVE(10)
+</p>
+<h2>See also: </h2>
+<p>
+<a href="MOVE_PB_IDLE.html">MOVE_PB_IDLE</a>
+, 
+<a href="MOVE_PA.html">MOVE_PA</a>
+, 
+<a href="MOVE_PA_CONT.html">MOVE_PA_CONT</a>
+</p>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+
+
+
+</body>
+</html>

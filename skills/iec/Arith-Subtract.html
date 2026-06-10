@@ -1,0 +1,229 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>- SUB</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SUB">
+</head>
+<body>
+<h1><a name="_Toc317749375"></a>
+<a name="O_1334"></a>
+- SUB</h1>
+<p class="Category">
+Operator
+</p>
+<p>
+Performs a subtraction of inputs.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY_NUM / TIME
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First input.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY_NUM / TIME
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second input.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY_NUM / TIME
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Result: IN1 - IN2.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+All inputs and the output must have the same type. In LD
+language, the input rung (EN) enables the operation, and the output rung keeps
+the same value as the input rung. In IL language, the SUB instruction performs
+a subtraction between the current result and the operand. The current result
+and the operand must have the same type.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+Q := IN1 - IN2;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="122" height="79" src="Arith-Subtract_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The subtraction is executed only if EN is 
+<b>TRUE</b>.
+<br>
+
+ENO is equal to EN.
+<br>
+<img width="222" height="85" src="Arith-Subtract_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Arith-Add.html">+ (ADD)</a>
+</p>
+<p>
+<a href="Arith-Multiply.html">* (MUL)</a>
+<a name="H_1120"></a>
+</p>
+<p>
+<a href="Arith-Divide.html">/ (DIV)</a>
+<a name="H_1009"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,466 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SERVO_OFFSET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SERVO_OFFSET">
+</head>
+<body>
+<h1>SERVO_OFFSET</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG only)
+</p>
+<h2>Description:</h2>
+<p>
+This parameter is a low-level scheduling parameter to allow
+fine tuning of when the cyclic servo activities start executing within the
+firmware in relation to the synchronization pulse received from controller
+FPGA.
+</p>
+<p class="tip">
+Modification to the default settings of this parameter may be
+required for certain systems that require more time for data to be collected
+from relatively slow serial encoders for example. 
+</p>
+<p>
+SERVO_OFFSET is an MC_CONFIG parameter, if an entry does not
+exist within the MC_CONFIG file then default settings will be used depending
+upon the selected SERVO_PERIOD but is approximately 25% of this time period.
+The accepted range of values is from 0 to 75% of SERVO_PERIOD.
+</p>
+<p>
+<img width="560" height="117" id="Picture 1" src="SERVO_OFFSET_files/image001.jpg">
+</p>
+<p class="MsoCaption">
+SERVO_OFFSET timing diagram
+</p>
+<h3>MC464 P871:</h3>
+<p>
+SERVO_OFFSET has recommended values when used in the MC464
+with a P871 RTEX module.  Set the value according to the table below.  MC464
+firmware 2.0205 or later.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SERVO_PERIOD
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Default SERVO_OFFSET
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Max Axes at default
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Recommended SERVO_OFFSET
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axes range at set value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+500
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+150
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11 - 16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1000
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+240
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+28
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+29 - 32
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+When the MC464 has mixed modules, e.g. P874/P879 and P871, the
+Flexaxis modules need the default SERVO_OFFSET value.
+</p>
+<p class="note">
+If using firmware V2.0204 or lower, the axes count will be
+lower.  Contact Trio for advice.
+</p>
+<h3>MC4N-ECAT:</h3>
+<p>
+Using the default values, the max number of axes shown below
+assumes the minimum data in the telegram to each drive and that no additional
+processing is being done.  For example, enabling the Kinematics will reduce the
+number of axes that can be run.  By reducing the value of SERVO_OFFSET, the
+processing of more axes may be possible.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SERVO_PERIOD
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Default SERVO_OFFSET
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Max Axes at default
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Recommended SERVO_OFFSET
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axes range at set value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+500
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+150
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+70
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9 - 12
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1000
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+240
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+140
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17 - 28
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="121" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2000
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+500
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+240
+</p>
+
+  
+</td>
+<td width="117" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+When the MC4N encoder port is used in Absolute mode, e.g. SSI
+or EnDat, the default SERVO_OFFSET value must be used.
+</p>
+<p class="note">
+The axes count is only to show what may be possible.  When
+additional information is passed in the cyclic data, for example Touch Probe
+and Digital/Analogue I/O, the maximum axes count will decrease.
+</p>
+<h2>Value:</h2>
+<p>
+SERVO_OFFSET is specified in microseconds.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set the SERVO_OFFSET in MC_CONFIG for the MC464 with more
+than 28 axes of Panasonic RTEX drives connected to a P871 RTEX module.
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+SERVO_PERIOD = 1000
+</p>
+<p class="codeexample">
+SERVO_OFFSET = 0
+</p>
+<h3>Example 2:</h3>
+<p>
+Set the SERVO_PERIOD and SERVO_OFFSET in MC_CONFIG for the
+MC4N-ECAT with 18 axes and Kinematic transforms enabled.
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+SERVO_PERIOD = 1000 'Servo period of 1000 us (1 kHz)
+</p>
+<p class="codeexample">
+SERVO_OFFSET = 140  'Servo data activity set to 140 us
+after the hardware sync.
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

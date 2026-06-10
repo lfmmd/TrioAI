@@ -1,0 +1,76 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MHELICALSP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MHELICALSP">
+</head>
+<body>
+<h1>MHELICALSP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MHELICALSP(end1, end2, centre1, centre2, direction, distance3[, mode])
+</p>
+<h2>Description:</h2>
+<p>
+Performs a helical move as per 
+<a href="MHELICAL.html">MHELICAL</a>
+
+but with advanced speed control (allows vector speed to be changed when using
+multiple moves in the buffer), using the axis parameters 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+, 
+<a href="ENDMOVE_SPEED.html">ENDMOVE_SPEED</a>
+.
+and 
+<a href="STARTMOVE_SPEED.html">STARTMOVE_SPEED</a>
+.
+</p>
+<p class="note">
+Multi-axis interpolation uses the UNITS, SPEED, ACCEL and DECEL
+of the BASE axis.  For correct XYZ vector operation, the UNITS of all 3 axes
+must be the same.
+</p>
+<h2>Example:</h2>
+<p>
+In a series of buffered moves using the look ahead buffer
+with 
+<a href="MERGE.html">MERGE</a>
+<span class="MsoHyperlink"> </span>= 
+<a href="ON.html">ON</a>
+ a helical move is required where the incoming vector
+speed is 40 
+<a href="UNITS.html">UNITS</a>
+/second and the finishing vector
+speed is 20 
+<a href="UNITS.html">UNITS</a>
+/second.
+</p>
+<p class="codeexample">
+FORCE_SPEED = 40
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 20
+</p>
+<p class="codeexample">
+MHELICALSP(100, 100, 0, 100, 1, 100)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+, 
+<a href="MOVECIRC.html">MOVECIRC</a>
+, 
+<a href="MOVECIRCSP.html">MOVECIRCSP</a>
+<span class="MsoHyperlink">, </span><a href="MHELICAL.html">MHELICAL</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

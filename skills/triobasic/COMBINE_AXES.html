@@ -1,0 +1,153 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>COMBINE_AXES</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="COMBINE_AXES">
+</head>
+<body>
+<h1>COMBINE_AXES</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+COMBINE_AXES(axis_a, axis_b)
+</p>
+<h2>Description:</h2>
+<p>
+The COMBINE_AXES command takes the position inputs from 2
+axes and performs a mathematical operation on them.  The result is output as
+the DPOS of the axis on which the COMBINE_AXES is run.
+</p>
+<p>
+The operation performed by COMBINE_AXES is set up in the
+COMBINE_CONTROL function.  There are 4 modes;
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Sum the axis position values
+</li>
+<li class="indent-list-middle">
+Difference the axis position values
+</li>
+<li class="indent-list-middle">
+Perform SQR ( axis_a
+<sup>2</sup> + axis_b
+<sup>2</sup> )
+</li>
+<li class="indent-list-last">
+Average the axis position values
+</li>
+</ul>
+<p>
+Either MPOS (actual positon) or DPOS (demand position) can
+be selected as the axis position source.  Mode 2 requires the input values to
+be MPOS only.
+</p>
+<p>
+DPOS = Fn[MPOS axis_a, MPOS axis_b]
+</p>
+<p class="tip">
+The specified axis can be any axis, including a virtual axis, and
+does not have to physically exist in the system.
+</p>
+<h2>Parameter:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis_a:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First axis input (MPOS or DPOS)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis_b:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second axis input (MPOS or DPOS)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Using COMBINE_AXES to evaluate the position on the
+hypotenuse of a pair of orthogonal axes.
+</p>
+<p class="codeexample">
+axis_a = 2
+</p>
+<p class="codeexample">
+axis_b = 3
+</p>
+<p class="codeexample">
+ca_axis = 10
+</p>
+<p class="codeexample">
+UNITS AXIS(axis_a) = 100
+</p>
+<p class="codeexample">
+UNITS AXIS(axis_b) = 100
+</p>
+<p class="codeexample">
+UNITS AXIS(ca_axis) = 100
+</p>
+<p class="codeexample">
+COMBINE_AXES(&lt;axis_a&gt;, &lt;axis_b&gt;)
+</p>
+<p class="codeexample">
+COMBINE_CONTROL(2, 0, 0) 'Mode 2, a &amp; b are combined
+to generate DPOS using sqrt(sqr(MPOS axis a) + sqr(MPOS axis b))
+</p>
+<p>
+DPOS of axis 10 is the Pythagoras result of the positions on
+axes 2 and 3.
+</p>
+<p>
+In Mode 2, the offsets are added to the MPOS values of the
+axes. Use negative values to subtract an offset.
+</p>
+<p class="codeexample">
+COMBINE_CONTROL(2, 500, -100)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="COMBINE_CONTROL.html">COMBINE_CONTROL</a>
+</p>
+</body>
+</html>

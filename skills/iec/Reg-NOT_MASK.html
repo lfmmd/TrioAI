@@ -1,0 +1,197 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NOT_MASK</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NOT_MASK">
+</head>
+<body>
+<h1><a name="_Toc317749411"></a>
+<a name="O_1563"></a>
+NOT_MASK</h1>
+<p class="Category">
+Function
+</p>
+<p>
+Performs a bit to bit negation of an integer value.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer input.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit to bit negation of the input.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+Arguments can be signed or unsigned integers from 8 to 32
+bits.
+</p>
+<p>
+In LD language, the input rung (EN) enables the operation,
+and the output rung keeps the same value as the input rung. In IL language, the
+parameter (IN) must be loaded in the current result before calling the function.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+Q := NOT_MASK (IN);
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="141" height="55" src="Reg-NOT_MASK_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The function is executed only if EN is TRUE.
+<br>
+
+ENO is equal to EN.
+<br>
+<img width="260" height="62" src="Reg-NOT_MASK_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<span class="HotSpot"><a href="Reg-AND_MASK.html">AND_MASK</a>
+</span></p>
+<p>
+<a href="Reg-OR_MASK.html">OR_MASK</a>
+</p>
+<p>
+<a href="Reg-XOR_MASK.html">XOR_MASK</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

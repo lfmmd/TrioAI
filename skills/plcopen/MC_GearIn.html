@@ -1,0 +1,1333 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MC_GearIn</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MC_GearIn">
+</head>
+
+
+
+<body>
+<h1>MC_GearIn</h1>
+<p>
+Commands a ratio between the VELOCITY of the slave and
+master axis.
+</p>
+<p>
+<img width="455" height="262" src="MC_GearIn_files/image001.png">
+</p>
+<h2>Description:</h2>
+<p>
+The slave ramps up to the ratio of the master velocity and
+locks in when this is reached. Any lost distance during synchronisation is not
+caught up.
+</p>
+<p>
+The gearing ratio can be changed while MC_GearIn is running,
+using a consecutive MC_GearIn command without the necessity to MC_GearOut
+first.
+</p>
+<p>
+After ‘
+<i>InGear</i><i>’</i> changes to TRUE, a position
+locking or just a velocity locking is system specific.
+</p>
+<p class="tip">
+Make sure the input and output parameters are of data type
+indicated in the table below.
+</p>
+<h2>Inputs/Outputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Name</b></p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>INPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start the gearing process at rising
+  edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Master
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AXIS_REF
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the master axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Slave
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AXIS_REF
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the slave axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ContinuousUpdate
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+TRUE:
+  when the function block is triggered (rising ‘Execute’), it  will - as long
+  as it stays TRUE – make the function block use the current values of the
+  input variables and apply it to the ongoing movement.
+</p>
+
+  
+<p class="tablecontent">
+FALSE: with the rising edge of the
+  ‘Execute’ input, a change in the input parameters is ignored during the whole
+  movement.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RatioNumerator
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+INT
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Gear ratio Numerator
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RatioDenominator
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Gear ratio Denominator
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MasterValueSource
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_SOURCE
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+Defines
+  the source for Synchronisation:
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+mcSetValue
+  - Synchronisation on master set value
+</p>
+
+  
+<p class="tablecontent">
+mcActualValue – Synchronisation on
+  master actual value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration for gearing in
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Deceleration
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+‘Deceleration’ for gearing in
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk of Gearing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+<b>OUTPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+InGear
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+TRUE:
+  set value = commanded value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Busy
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+The
+  FB is not finished and new output values are to be expected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Active
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+Indicates
+  that the FB has control on the axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+CommandAborted
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+‘Command’
+  is aborted by another command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+Signals
+  that an error has occurred within the FB
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="142" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID
+</p>
+
+  
+</td>
+<td width="98" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT
+</p>
+
+  
+</td>
+<td width="329" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+Error
+  identification
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+‘Axis1Master’ is the master axis and ‘Axis2Slave’ is the
+slave axis. The slave axis moves with the master axis based on a special ratio used
+in MC_GearIn. The slave axis disconnects from the master axis and maintains the
+last velocity after disengaging to master axis with MC_GearOut execution during
+the stopping stage of the master axis.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="19" height="23" id="&#22270;&#29255; 47" src="MC_GearIn_files/image002.png">
+ Example
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+VAR
+<br>
+
+  &nbsp;Inst_MC_Power : 
+MC_Power
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Enable master
+  axis*)
+<br>
+
+  &nbsp;Inst_MC_Power1 : 
+MC_Power
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Enable Slave
+  axis*)
+<br>
+
+  &nbsp;Axis1Master : 
+lib:AXIS_REF
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Master axis
+  in MC_CamIn which moving in constant velocity*)
+<br>
+
+  &nbsp;Axis2Slave : 
+lib:AXIS_REF
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Slave axis in
+  MC_CamIn which moving in constant velocity*)
+<br>
+
+  &nbsp;PowerAxes : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To power axes
+  on*)
+<br>
+
+  &nbsp;Inst_MC_MoveVelocity : 
+MC_MoveVelocity
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To move the
+  master axis with constant velocity*)
+<br>
+
+  &nbsp;MoveMaster : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To start
+  master axis moving*)
+<br>
+
+  &nbsp;mDir : 
+MC_DIRECTION
+ := mcPositiveDirection ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Motion
+  direction definition*)
+<br>
+
+  &nbsp;mBufferMode : 
+MC_BUFFER_MODE
+ := mcAborting ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Buffer mode
+  setting for master axis motion*)
+<br>
+
+  &nbsp;bInVelo : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Master axis
+  motion status*)
+<br>
+
+  &nbsp;bStaMaster : 
+BOOL
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Power status
+  of master axis*)
+<br>
+
+  &nbsp;bStaSlave : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Power status
+  of Slave axis*)
+<br>
+
+  &nbsp;mMasterSrc : 
+MC_SOURCE
+ := mcActualValue ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Define the
+  source for Synchronisation for master axis*)
+<br>
+
+  &nbsp;mStartMode : 
+MC_START_MODE
+ := mcAbsolute ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Start mode
+  setting*)
+<br>
+
+  &nbsp;Inst_MC_Stop : 
+MC_Stop
+ ;
+<br>
+
+  &nbsp;bStopSlave : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To stop the
+  slave axis*)
+<br>
+
+  &nbsp;bStopped : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Is slave axis
+  stopped*)
+<br>
+
+  &nbsp;bOutDone : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Is cam out
+  execution finished*)
+<br>
+
+  &nbsp;Inst_MC_GearIn : 
+MC_GearIn
+ ;
+<br>
+
+  &nbsp;Inst_MC_GearOut : 
+MC_GearOut
+ ;
+<br>
+
+  &nbsp;bGearOut : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Executing
+  disengaing gear motion variable*)
+<br>
+
+  &nbsp;bGearExe : 
+BOOL
+ := 
+TRUE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To engage the
+  slave axis with the master axis*)
+<br>
+
+  &nbsp;bInGear : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Gear motion
+  engaging status*)
+<br>
+
+  
+END_VAR
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p>
+<img width="553" height="371" id="&#22270;&#29255; 202" src="MC_GearIn_files/image003.jpg">
+</p>
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The timing diagram for the above example is shown below: 
+</p>
+<h3><img width="555" height="383" src="MC_GearIn_files/image004.png">
+Example 2:</h3>
+<p align="left">
+A machine has an automatic feed on axis 1
+which must move at a set ratio to axis 0. This ratio is selected using inputs 
+<span style='font-family:"Calibri",sans-serif'>1</span><span style='font-family:"Calibri",sans-serif'>-</span><span style='font-family:"Calibri",sans-serif'>3</span><span style='font-family:"Calibri",sans-serif'>&nbsp;to
+select a ‘gear’</span><span style='font-family: "Calibri",sans-serif'>. T</span>his ratio can be updated 
+<span style='font-family:"Calibri",sans-serif'>continuously</span><span style='font-family:"Calibri",sans-serif'>.&nbsp;
+Combinations of inputs will select intermediate gear ratios.&nbsp; For example:</span><span style='font-family:"Calibri",sans-serif'> when Input1
+= OFF, Input2 = ON, </span><span style='font-family: "Calibri",sans-serif'>and I</span>nput3 = ON, the
+<span style='font-family:"Calibri",sans-serif'> ratio is 6:1.</span></p>
+<p>
+<img width="548" height="273" src="MC_GearIn_files/image005.png">
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="568" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="19" height="23" id="&#22270;&#29255; 41" src="MC_GearIn_files/image002.png">
+ Example
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="568" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+VAR
+<br>
+
+  &nbsp;Inst_MC_Power : 
+MC_Power
+ ;
+<br>
+
+  &nbsp;Inst_MC_Power1 : 
+MC_Power
+ ;
+<br>
+
+  &nbsp;Axis0 : 
+lib:AXIS_REF
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Previous
+  axis*)
+<br>
+
+  &nbsp;bPower : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Two axes
+  enable variable which is bound to IO8*)
+<br>
+
+  &nbsp;&nbsp;
+(*$profile=IO*)
+<br>
+
+  &nbsp;&nbsp;
+(*$embed=(VERS=1&nbsp;&nbsp;&nbsp;&nbsp;MODE=0&nbsp;&nbsp;&nbsp;&nbsp;POINT=8)*)
+<br>
+
+  &nbsp;Axis1 : 
+lib:AXIS_REF
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=The slave
+  axis in gear engaging motion*)
+<br>
+
+  &nbsp;bPowerAxis0 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=The power
+  status of axis 0*)
+<br>
+
+  &nbsp;bPowerAxis1 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=The power
+  status of axis 1*)
+<br>
+
+  &nbsp;Inst_MC_MoveVelocity : 
+MC_MoveVelocity
+ ;
+<br>
+
+  &nbsp;bExeAxis0 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To start axis
+  0 motion which is bound to IN2*)
+<br>
+
+  &nbsp;&nbsp;
+(*$profile=IO*)
+<br>
+
+  &nbsp;&nbsp;
+(*$embed=(VERS=1&nbsp;&nbsp;&nbsp;&nbsp;MODE=0&nbsp;&nbsp;&nbsp;&nbsp;POINT=2)*)
+<br>
+
+  &nbsp;mDir : 
+MC_DIRECTION
+ := mcPositiveDirection ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Motion
+  direction*)
+<br>
+
+  &nbsp;mBufferMode : 
+MC_BUFFER_MODE
+ := mcAborting ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Buffer mode
+  setting for axis 0*)
+<br>
+
+  &nbsp;bInVelo : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Is in
+  constant velocity for axis 0*)
+<br>
+
+  &nbsp;Inst_MC_Stop : 
+MC_Stop
+ ;
+<br>
+
+  &nbsp;Inst_MC_Stop1 : 
+MC_Stop
+ ;
+<br>
+
+  &nbsp;bStop : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To stop two
+  axis and it is bound to IN3*)
+<br>
+
+  &nbsp;&nbsp;
+(*$profile=IO*)
+<br>
+
+  &nbsp;&nbsp;
+(*$embed=(VERS=1&nbsp;&nbsp;&nbsp;&nbsp;MODE=0&nbsp;&nbsp;&nbsp;&nbsp;POINT=3)*)
+<br>
+
+  &nbsp;bStopAxis0 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Axis0
+  stopping status, true--stopped*)
+<br>
+
+  &nbsp;bStopAxis1 : 
+BOOL
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Axis1
+  stopping status, true--stopped*)
+<br>
+
+  &nbsp;Inst_MC_ReadDigitalInput : 
+MC_ReadDigitalInput
+ ;
+<br>
+
+  &nbsp;Inst_MC_ReadDigitalInput1 : 
+MC_ReadDigitalInput
+ ;
+<br>
+
+  &nbsp;Inst_MC_ReadDigitalInput2 : 
+MC_ReadDigitalInput
+ ;
+<br>
+
+  &nbsp;Input1 : 
+INT
+ := 
+INT#10
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Gear ratio
+  setting input 1*)
+<br>
+
+  &nbsp;Input2 : 
+INT
+ := 
+INT#11
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Gear ratio
+  setting for Input2*)
+<br>
+
+  &nbsp;Input3 : 
+INT
+ := 
+INT#12
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Gear ratio
+  setting for input3*)
+<br>
+
+  &nbsp;bReadGear : 
+BOOL
+ := 
+TRUE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To read the
+  gear ratio input setting*)
+<br>
+
+  &nbsp;GearRatio : 
+INT
+ := 
+INT#1
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Gear ratio
+  setting value*)
+<br>
+
+  &nbsp;Inst_MC_GearIn : 
+MC_GearIn
+ ;
+<br>
+
+  &nbsp;lastGearRatio : 
+INT
+ := 
+INT#0
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Storing the
+  last gear ratio setting value*)
+<br>
+
+  &nbsp;mValueSrc : 
+MC_SOURCE
+ := mcActualValue ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=The value
+  source used for gear motion*)
+<br>
+
+  &nbsp;bInGear : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Synchronisation
+  motion status of gear motion*)
+<br>
+
+  
+END_VAR
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="568" valign="top" class="tablegrid">
+
+  
+<p>
+<img width="553" height="306" id="&#22270;&#29255; 205" src="MC_GearIn_files/image006.jpg">
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="568" valign="top" class="tablegrid">
+
+  
+<p>
+<img width="545" height="570" id="&#22270;&#29255; 208" src="MC_GearIn_files/image007.jpg">
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See also: </h2>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

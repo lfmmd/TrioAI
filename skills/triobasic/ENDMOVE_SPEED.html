@@ -1,0 +1,104 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENDMOVE_SPEED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENDMOVE_SPEED">
+</head>
+<body>
+<h1>ENDMOVE_SPEED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+This parameter sets the end speed for a motion command that
+supports advanced speed control (commands ending in SP). Subject to the
+AXIS_BLENDING mode, the 
+<a href="VP_SPEED.html">VP_SPEED</a>
+ will decelerate so
+that ENDMOVE_SPEED is reached at the end of the motion command.
+</p>
+<p>
+ENDMOVE_SPEED is loaded into the buffer at the same time as
+the move so you can set different speeds for subsequent moves. If there are no
+further motion commands in the buffer the current move will decelerate to a
+stop.
+</p>
+<p class="note">
+ENDMOVE_SPEED has a default value of -1 to disable its use.
+</p>
+<h2>Value:</h2>
+<p>
+The speed at which the SP motion command will end, in user 
+<a href="UNITS.html">UNITS</a>
+ (default -1).
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+In this example the controller will start ramping down the
+speed (at the specified rate of 
+<a href="DECEL.html">DECEL</a>
+) so at the end
+of the 
+<a href="MOVESP.html">MOVESP</a>
+(20) the 
+<a href="VP_SPEED.html">VP_SPEED</a>
+=10.
+The next move continues with a 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+ of
+10. The final ENDMOVE_SPEED is overwritten to zero as there are no more
+buffered moves.
+</p>
+<p class="codeexample">
+FORCE_SPEED = 15
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 10
+</p>
+<p class="codeexample">
+MOVESP(20)
+</p>
+<p class="codeexample">
+FORCE_SPEED = 10
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 5
+</p>
+<p class="codeexample">
+MOVESP(5)
+</p>
+<h3>Example 2:</h3>
+<p>
+A machine can merge interpolated moves however it must slow
+down to 50% of the speed for the transition.
+</p>
+<p class="codeexample">
+FORCE_SPEED = 1000
+</p>
+<p class="codeexample">
+ENDMOVE_SPEED = 500 '50% of FORCE_SPEED
+</p>
+<p class="codeexample">
+MOVESP(100, 10)
+</p>
+<p class="codeexample">
+MOVESP(70, -10)
+</p>
+<p class="codeexample">
+MOVESP(120, 15)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXIS_BLENDING.html">AXIS_BLENDING</a>
+, 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+, 
+<a href="STARTMOVE_SPEED.html">STARTMOVE_SPEED</a>
+</p>
+</body>
+</html>

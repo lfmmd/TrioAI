@@ -1,0 +1,231 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TABLE_POINTER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TABLE_POINTER">
+</head>
+<body>
+<h1>TABLE_POINTER</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = TABLE_POINTER
+</p>
+<h2>Description:</h2>
+<p>
+Using the TABLE_POINTER command it is possible to determine
+which 
+<a href="TABLE.html">TABLE</a>
+ memory location is currently being used by
+the 
+<a href="CAM.html">CAM</a>
+ or 
+<a href="CAMBOX.html">CAMBOX</a>
+.
+</p>
+<p>
+TABLE_POINTER returns the current table location that the 
+<a href="CAM.html">CAM</a>
+ function is using.  The returned number contains the
+table location and divides up the interpolated distance between the current and
+next 
+<a href="TABLE.html">TABLE</a>
+ location to indicate exact location. 
+</p>
+<p class="tip">
+The user can load new 
+<a href="CAM.html">CAM</a>
+ data into
+previously processed 
+<a href="TABLE.html">TABLE</a>
+ location ready for the next
+
+<a href="CAM.html">CAM</a>
+ cycle.  This is ideal for allowing a technician to
+finely tune a complex process or changing recipes on the fly whilst running.
+</p>
+<h2>Value:</h2>
+<p>
+The value is returned of type X.Y where X is the current 
+<a href="TABLE.html">TABLE</a>
+ location and Y represents the interpolated distance
+between the start and end location of the current 
+<a href="TABLE.html">TABLE</a>
+
+location.
+</p>
+<h2>Example:</h2>
+<p>
+In this example a 
+<a href="CAM.html">CAM</a>
+ profile is
+loaded into 
+<a href="TABLE.html">TABLE</a>
+ location 1000 and is setup on axis 0
+and is linked to a master axis 1.  A copy of the 
+<a href="CAM.html">CAM</a>
+
+table is added at location 100.  The Analogue input is then read, and the CAM
+TABLE value is updated when the table pointer is on the next value.
+</p>
+<p class="codeexample">
+'CAM Pointer demo
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Store the live table points
+</p>
+<p class="codeexample">
+TABLE(1000, 0, 0.8808, 6.5485, 19.5501, 39.001, 60.999, _
+</p>
+<p class="codeexample">
+      80.4499, 93.4515, 99.1192, 100)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Store another copy of original points
+</p>
+<p class="codeexample">
+TABLE(100, 0, 0.8808, 6.5485, 19.5501, 39.001, 60.999, _
+</p>
+<p class="codeexample">
+      80.4499, 93.4515, 99.1192, 100)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Initialise axes
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+WDOG = ON
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Set up CAM
+</p>
+<p class="codeexample">
+CAMBOX(1000, 1009, 10, 100, 1, 4, 0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Start Master axis
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+SPEED = 10
+</p>
+<p class="codeexample">
+FORWARD
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Read Analogue input and scale CAM based on input
+</p>
+<p class="codeexample">
+pointer = 0
+</p>
+<p class="codeexample">
+WHILE TRUE
+</p>
+<p class="codeexample">
+  'Read Analog Input (answer 0-10)
+</p>
+<p class="codeexample">
+  scale = AIN(32) * 0.01
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Detects change in table pointer
+</p>
+<p class="codeexample">
+  IF INT(TABLE_POINTER) &lt;&gt; pointer THEN
+</p>
+<p class="codeexample">
+    pointer = INT(TABLE_POINTER)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+    IF pointer = 1000 THEN
+</p>
+<p class="codeexample">
+      'First value so update last value
+</p>
+<p class="codeexample">
+      TABLE(1008, TABLE(108) * scale)
+</p>
+<p class="codeexample">
+    ELSEIF pointer = 1001 THEN
+</p>
+<p class="codeexample">
+      'Second value, so must update first and last but 1
+value
+</p>
+<p class="codeexample">
+      TABLE(1000, TABLE(100) * scale)
+</p>
+<p class="codeexample">
+      TABLE(1009, TABLE(109) * scale)
+</p>
+<p class="codeexample">
+    ELSE
+</p>
+<p class="codeexample">
+      'Update previous value
+</p>
+<p class="codeexample">
+      TABLE(pointer - 1, TABLE(pointer - 901) * scale)
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+STOP
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CAM.html">CAM</a>
+, 
+<a href="CAMBOX.html">CAMBOX</a>
+,
+
+<a href="TABLE.html">TABLE</a>
+</p>
+</body>
+</html>

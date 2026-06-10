@@ -1,0 +1,96 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>RPS_KERNEL_V2</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="RPS_KERNEL_V2">
+</head>
+
+
+
+<body>
+<h1>RPS_KERNEL_V2</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command (MC_CONFIG only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+RPS_KERNEL_V2 = value
+</p>
+<h2>Description:</h2>
+<p>
+RPS kernel is a controller state machine that allows motion
+only when certain conditions are met for specific operation profile. There are
+3 operation profiles: Auto, Manual, and External. Please refer to RPS Operation
+Profiles document for more information.
+</p>
+<p>
+The kernel provides faster response as a safety module than
+the previous RPS solution.
+</p>
+<p>
+The command can only be set in MC_CONFIG file, but it can be
+read in Motion iX (TrioBasic) programs and on the command line.
+</p>
+<p class="note">
+The kernel can only be activated once and cannot be deactivated
+manually. This is to ensure the integrity of the I/O operations within the
+operation profiles. To deactivate, a power cycle of the controller is needed. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value: boolean
+</p>
+
+  
+</td>
+<td width="331" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+True = RPS Kernel is activated.
+</p>
+
+  
+<p class="tablecontent">
+To deactivate, restart controller.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Activate RPS kernel (from MC_CONFIG).
+</p>
+<p class="codeexample">
+RPS_KERNEL_V2 = TRUE
+</p>
+<h2>See Also:</h2>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

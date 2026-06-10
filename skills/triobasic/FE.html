@@ -1,0 +1,69 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FE">
+</head>
+<body>
+<h1>FE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+This parameter returns the position error, which is equal to
+the demand position (
+<a href="DPOS.html">DPOS</a>
+) - measured position (
+<a href="MPOS.html">MPOS</a>
+). 
+</p>
+<h2>Value:</h2>
+<p>
+The following error returned in user 
+<a href="UNITS.html">UNITS</a>
+.
+</p>
+<h2>Example:</h2>
+<p>
+Wait for the position error to be below a value for 5 servo
+periods then pulse an output.
+</p>
+<p class="codeexample">
+MOVEABS(200)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+FOR x=0 to 4
+</p>
+<p class="codeexample">
+    WAIT UNTIL FE&lt;5
+</p>
+<p class="codeexample">
+NEXT x
+</p>
+<p class="codeexample">
+OP(5,ON)
+</p>
+<p class="codeexample">
+WA(2)
+</p>
+<p class="codeexample">
+OP(5,OFF)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FE_LATCH.html">FE_LATCH</a>
+, 
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+,
+
+<a href="FE_RANGE.html">FE_RANGE</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,473 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>User Defined Function Blocks programmed in SFC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="O_1847"></a>
+User Defined Function Blocks programmed in SFC</h1>
+<p>
+The Workbench enables you to create User Defined Function
+Blocks (UDFBs) programmed with SFC language. This section details specific
+features related to such function blocks.
+</p>
+<p>
+The execution of UDFBs written in SFC requires a runtime
+system version SR7-1 or later.
+</p>
+<h2>Declaration</h2>
+<p>
+From the Workspace contextual menu, run the Insert New
+Program command. Then specify a valid name for the function block. Select
+&quot;SFC&quot; language and &quot;UDFB&quot; execution style.
+</p>
+<h2>Parameters</h2>
+<p>
+When a UDFB programmed in SFC is created, the Workbench
+automatically declares 3 special inputs to the block:
+</p>
+<p>
+RUN: The SFC state machine is not activated when this input
+is FALSE.
+<br>
+
+RESET: The SFC chart is reset to its initial situation when this input is TRUE.
+<br>
+
+KILL: Any active step of the SFC chart is deactivated when this input is TRUE.
+</p>
+<p>
+You can freely add other input and output variables to the
+UDFB. You can also remove any of the automatically created input if not needed.
+If the RUN input is removed, then it is considered as always TRUE. If RESET or
+KILL inputs are removed, then they are considered as always FALSE.
+</p>
+<p>
+Below is the truth table showing priorities among special
+input:
+</p>
+<table class="tablegrid">
+
+ 
+<thead>
+<tr>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+RUN
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+RESET
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+KILL
+</p>
+
+   
+</td>
+<td valign="top" class="tablegrid">
+
+   
+<p class="tableheader">
+Description
+</p>
+
+   
+</td>
+</tr>
+</thead>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+do nothing
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+kill the SFC chart
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+reset the SFC chart
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+kill the SFC chart
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+activate the SFC chart
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+kill the SFC chart
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+reset the SFC chart
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FALSE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+kill the SFC chart
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Steps</h2>
+<p>
+All steps inserted in the SFC chart of the UDFB are
+automatically declared as local instances of special reserved function blocks
+with the local variables of the UDFBs. The following FB types are used:
+</p>
+<p>
+isfcSTEP : a normal step
+<br>
+
+isfcINITSTEP : an initial step
+</p>
+<p>
+The editor takes care of updating the list of declared step
+instances. You should never remove, rename or change them in the variable
+editor. All steps are named with  GS  followed by their number.
+</p>
+<h2>Execution</h2>
+<p>
+The SFC chart is operated only when the UDFB is called by
+its parent program.
+</p>
+<p>
+If the RESET input is TRUE, the SFC chart is reset to its
+initial situation. If the KILL input is TRUE, any active step of the SFC chart
+is deactivated.
+</p>
+<p>
+When the RUN input is TRUE and KILL/RESET are FALSE, the SFC
+chart is operated in the same way as for other SFC programs:
+</p>
+<p class="MsoListNumber">
+1.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Check valid transitions and evaluate related conditions.
+</p>
+<p class="MsoListNumber">
+2.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Cross TRUE valid transitions.
+</p>
+<p class="MsoListNumber">
+3.
+<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Execute relevant actions of the active steps.
+</p>
+<p class="note">
+In a UDFB programmed in SFC, you cannot use SFC actions to pilot
+a &quot;child SFC program&quot;. This feature is reserved for SFC programs
+only. Instead, a UDFB programmed in SFC can pilot from its actions another UDFB
+programmed in SFC.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

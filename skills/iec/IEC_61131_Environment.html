@@ -1,0 +1,52 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IEC 61131-3 Environment</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>The IEC 61131-3 Environment</h1>
+<h2>Tasks</h2>
+<p>
+Trio Series 4 
+<i>Motion</i> Coordinators run programs in a pre-emptive
+multitasking environment with a limited number of processes. Normally IEC 61131-3
+programs run on a single process (called a task) although it is possible to run
+more than one task in which case one process per task is used. Each task has
+its own IEC environment which holds &quot;Task Variables&quot; for that task.
+</p>
+<p class="note">
+From firmware V2.0298 onwards, when an IEC program is running,
+the multi-tasking is flat with no fast processes. Use SCHEDULE_TYPE.8 = 1 in
+MC_CONFIG to enable fast processes with IEC 61131-3.
+</p>
+<h2>Variables</h2>
+<p>
+IEC variables are defined as &quot;Local&quot; which only
+apply to a single program or &quot;Task&quot; which apply to all the variables
+in a task. 
+</p>
+<p class="note">
+<a name="_Hlk63695631">&quot;Task Variables&quot; are not shared
+between different tasks. IEC 61131-3 programs which need to share &quot;Task
+Variables&quot; must all be run in the same task.</a>
+</p>
+<p class="tip">
+Run all IEC 61131-3 programs should be run in the same task unless
+there is a compelling reason to do otherwise.
+</p>
+<p>
+During debugging variables can be monitored using task based
+&quot;Spy Lists&quot;, more than one of which can be defined for each task.
+</p>
+<h2>Compilation</h2>
+<p>
+When an IEC 61131-3 program is compiled, all the programs in
+that task are compiled into a single executable entity which can be executed on
+the controller and controlled using the usual 
+<i>Motion</i> Perfect
+RUN/STOP/AUTORUN etc. functionality.
+</p>
+</body>
+</html>

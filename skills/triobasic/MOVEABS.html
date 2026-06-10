@@ -1,0 +1,406 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVEABS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVEABS">
+</head>
+<body>
+<h1>MOVEABS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVEABS(position1[, position2[, position3[,
+position4, …]]])
+</p>
+<h2>Alternate Format:</h2>
+<p>
+MA()
+</p>
+<h2>Description:</h2>
+<p>
+Absolute position move. Move one axis or multiple axes to
+position(s) referenced with respect to the zero (home) position. The first
+parameter in the list is sent to the axis specified with the 
+<a href="AXIS.html">AXIS</a>
+
+command or to the current 
+<a href="BASE.html">BASE</a>
+ axis, the second to the
+next axis, and so on. 
+</p>
+<p>
+In the multi-axis form, the speed, acceleration, and
+deceleration employed for the movement are taken from the first axis in the 
+<a href="BASE.html">BASE</a>
+ group. The speeds of each axis are controlled to make
+the resulting vector of the movement run at the 
+<a href="SPEED.html">SPEED</a>
+
+setting.
+</p>
+<p class="note">
+Multi-axis interpolation uses the UNITS, SPEED, ACCEL and DECEL
+of the BASE axis. For correct XYZ vector operation, the UNITS of all 3 axes
+must be the same.
+</p>
+<p class="tip">
+If an axis needs to be 
+<u>not</u> included in the vector speed
+calculation, then 
+<a href="INTERP_FACTOR.html">INTERP_FACTOR</a>
+ can be set to
+0 for that axis.
+</p>
+<p>
+Uninterpolated, unsynchronised multi-axis motion can be
+achieved by simply placing MOVEABS commands on each axis independently. If
+needed, the target axis for an individual MOVEABS can be specified using the 
+<a href="AXIS.html">AXIS</a>
+ command. This overrides the 
+<a href="BASE.html">BASE</a>
+
+axis setting for one MOVEABS only. 
+</p>
+<p>
+The values specified are scaled using the unit conversion
+factor axis parameter; 
+<a href="UNITS.html">UNITS</a>
+. Therefore if, for
+example, an axis has 400 encoder edges/mm the 
+<a href="UNITS.html">UNITS</a>
+
+for that axis is 400. The command MOVEABS(6) would then move to a position 6&nbsp;mm
+from the zero position. When 
+<a href="MERGE.html">MERGE</a>
+ is set to 
+<a href="ON.html">ON</a>
+, absolute and relative moves are merged to make a
+continuous path movement.
+</p>
+<p class="note">
+The position of the axes’ zero(home) positions can be changed by
+the commands: 
+<a href="OFFPOS.html">OFFPOS</a>
+, 
+<a href="DEFPOS.html">DEFPOS</a>
+,
+
+<a href="REP_DIST.html">REP_DIST</a>
+, 
+<a href="REP_OPTION.html">REP_OPTION</a>
+,
+and 
+<a href="DATUM.html">DATUM</a>
+.
+</p>
+<p class="warning">
+If the number of axes in the move that follows on from the
+previous move are different, then they will not MERGE. Likewise, a FORWARD,
+REVERSE or any linked move (e.g., MOVELINK) will not MERGE with a MOVE or
+MOVEABS. The MOVEABS will go to the wrong endpoint.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+position1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+position to move to on base axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+position2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+position to move to on next axis in 
+<a href="BASE.html">BASE</a>
+
+  array.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+position3:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+position to move to on next axis in 
+<a href="BASE.html">BASE</a>
+
+  array.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+position4:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+position to move to on next axis in 
+<a href="BASE.html">BASE</a>
+
+  array
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note" style="margin-left:18.0pt">
+The MOVEABS command can interpolate up
+to the full number of axes available on the controller.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A machine must move to one of 3 positions depending on the
+selection made by 2 switches. The options are home, position 1 and position 2
+where both switches are off, first switch on and second switch on respectively.
+Position 2 has priority over position 1.
+</p>
+<p>
+<img border="0" width="576" height="336" id="Picture 1" src="MOVEABS_files/image002.png">
+</p>
+<p class="codeexample">
+'Define absolute positions
+</p>
+<p class="codeexample">
+Home = 1000
+</p>
+<p class="codeexample">
+position_1 = 2000
+</p>
+<p class="codeexample">
+position_2 = 3000
+</p>
+<p class="codeexample">
+WHILE IN(run_switch) = ON
+</p>
+<p class="codeexample">
+  IF IN(6) = ON THEN       'Switch 6 selects position 2
+</p>
+<p class="codeexample">
+    MOVEABS(position_2)
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+  ELSEIF IN(7) = ON THEN   'Switch 7 selects position 1
+</p>
+<p class="codeexample">
+    MOVEABS(position_1)
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    MOVEABS(home)
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3>Example 2:</h3>
+<p>
+An X-Y plotter has a pen carousel whose position is fixed
+relative to the plotter absolute zero position. To change pen an absolute move
+to the carousel position will find the target irrespective of the plot position
+when commanded.
+</p>
+<p class="codeexample">
+MOVEABS(28.5, 350) 'Move to just outside the pen holder
+area
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+SPEED = pen_pickup_speed
+</p>
+<p class="codeexample">
+MOVEABS(20.5, 350) 'Move in to pick up the pen
+</p>
+<h3>Example 3:</h3>
+<p>
+A pallet consists of a 6 by 8 grid in which gas canisters
+are inserted 185&nbsp;mm apart by a packaging machine. The canisters are picked
+up from a fixed point. The first position in the pallet is defined as position (0,&nbsp;0)
+using the 
+<a href="DEFPOS.html">DEFPOS</a>
+ command. The part of the program to
+position the canisters in the pallet is:
+</p>
+<p>
+<img border="0" width="576" height="336" id="Picture 2" src="MOVEABS_files/image003.png">
+</p>
+<p class="codeexample">
+FOR x = 0 TO 5
+</p>
+<p class="codeexample">
+  FOR y = 0 TO 7
+</p>
+<p class="codeexample">
+    MOVEABS(-340, -516.5)     'Move to pick-up point
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+    GOSUB pick                'Call pick up subroutine
+</p>
+<p class="codeexample">
+    PRINT &quot;Move to Position: &quot;; x * 6 + y + 1
+</p>
+<p class="codeexample">
+    MOVEABS(x * 185, y * 185) 'Move to position in grid
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+    GOSUB place               'Call place down subroutine
+</p>
+<p class="codeexample">
+  NEXT y
+</p>
+<p class="codeexample">
+NEXT x
+</p>
+<h2>Example 4:</h2>
+<p>
+Using MOVEABS with 
+<a href="REP_DIST.html">REP_DIST</a>
+ to
+move to a final position. 
+</p>
+<p class="codeexample">
+REPDIST = 360
+</p>
+<p class="codeexample">
+DEFPOS(0)
+</p>
+<p class="codeexample">
+MOVEABS(300)  'Will move through 300 degrees to 300
+</p>
+<p class="codeexample">
+MOVEABS(200)  'Will move back 100 degrees to 200
+</p>
+<p class="codeexample">
+MOVEABS(370)  'Will move through 170 degrees to 10
+crossing repdist
+</p>
+<p class="codeexample">
+MOVEABS(350)  'Will move through 340 degrees to 350
+</p>
+<p class="tip">
+<em><span style='font-family:"Calibri",sans-serif'>if
+you want to move in the shortest direction to the absolute position use </span></em><a href="MOVETANG.html">MOVETANG</a>
+</p>
+<h2>Example 5:</h2>
+<p>
+3 axis interpolated move with only X and Y used for the
+vector speed calculation. Axis Z follows. 
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(x) = 1
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(y) = 1
+</p>
+<p class="codeexample">
+INTERP_FACTOR AXIS(z) = 0
+</p>
+<p class="codeexample">
+BASE(x, y, z)
+</p>
+<p class="codeexample">
+SPEED = 10
+</p>
+<p class="codeexample">
+MOVE(100, 150, 20)
+</p>
+<p>
+Speeds of axes x and y are set to make the speed along the
+XY motion path equal 10. Z will move 20&nbsp;mm taking the same time as the XY
+pair so will be synchronised with them.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MOVETANG.html">MOVETANG</a>
+<span class="MsoHyperlink">, </span><a href="MOVEABSSP.html">MOVEABSSP</a>
+<span class="MsoHyperlink">, </span><a href="MOVE.html">MOVE</a>
+<span class="MsoHyperlink">, </span><a href="LIMIT_BUFFERED.html">LIMIT_BUFFERED</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="MERGE.html">MERGE</a>
+<span class="MsoHyperlink">,</span><span class="MsoHyperlink"> </span><a href="INTERP_FACTOR.html">INTERP_FACTOR</a>
+</p>
+</body>
+</html>

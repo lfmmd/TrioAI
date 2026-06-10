@@ -1,0 +1,237 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TABLE_PROTECT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TABLE_PROTECT">
+</head>
+<body>
+<h1>TABLE_PROTECT</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+TABLE_PROTECT(first[, last/lock[, lock]])
+</p>
+<h2>Description:</h2>
+<p>
+Sets a range of TABLE values to be write protected (i.e.
+read only). Can be used to define parts of the TABLE where setup data has been
+stored that must not be changed by any programs, data connections or direct
+user entry.
+</p>
+<p class="warning">
+TABLE_PROTECT is not available for Euro404/408, MC403,
+MC403-X, MC403-Z, MC404-Z, MC405, MC405-Y and P157.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+first:
+</p>
+
+  
+</td>
+<td width="312" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First 
+<a href="TABLE.html">TABLE</a>
+ address to be
+  locked
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+last:
+</p>
+
+  
+</td>
+<td width="312" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last 
+<a href="TABLE.html">TABLE</a>
+ address to be locked
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+lock:
+</p>
+
+  
+</td>
+<td width="312" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Lock/unlock 
+<a href="TABLE.html">TABLE</a>
+ values as
+  read-only
+<span class="MsoHyperlink"> </span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="28" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="283" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read and write is allowed (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="28" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="283" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read-only
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example 1:</h2>
+<p>
+Set TABLE value number 10 as a read- only value in the
+terminal:
+</p>
+<p class="codeexample">
+&gt;&gt;TABLE(10, 222) 
+</p>
+<p class="codeexample">
+&gt;&gt;?TABLE(10)
+</p>
+<p class="codeexample">
+222.0000
+</p>
+<p class="codeexample">
+&gt;&gt;TABLE_PROTECT(10, 1)
+</p>
+<p class="codeexample">
+&gt;&gt;?TABLE(10)         
+</p>
+<p class="codeexample">
+222.0000
+</p>
+<p class="codeexample">
+&gt;&gt;TABLE(10, 111)      
+</p>
+<p class="codeexample">
+%[COMMAND 224] TABLE location write protected  ((10))
+</p>
+<h2>Example 2:</h2>
+<p>
+Set TABLE values from 10 to 20 as a read- only values, then
+check in the terminal:
+</p>
+<p class="codeexample">
+' program sets the protected area
+<br>
+
+TABLE_PROTECT(10, 20, 1)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+In Motion Perfect terminal 0, check that it is read-only:
+</p>
+<p class="codeexample">
+&gt;&gt;?TABLE(10)         
+</p>
+<p class="codeexample">
+222.0000
+</p>
+<p class="codeexample">
+&gt;&gt;?TABLE(13)         
+</p>
+<p class="codeexample">
+125.0000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&gt;&gt;TABLE(13, 111)      
+</p>
+<p class="codeexample">
+%[COMMAND 224] TABLE location write protected  ((13))
+</p>
+<p class="codeexample">
+&gt;&gt;TABLE(16, 111)      
+</p>
+<p class="codeexample">
+%[COMMAND 224] TABLE location write protected  ((16))
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="TABLE.html">TABLE</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

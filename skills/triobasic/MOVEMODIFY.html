@@ -1,0 +1,209 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVEMODIFY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVEMODIFY">
+</head>
+<body>
+<h1>MOVEMODIFY</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVEMODIFY(position[, position[, ...]])
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+MM()
+</p>
+<h2>Description:</h2>
+<p>
+MOVEMODIFY will change the absolute end position of a linear
+move immediately ahead of it, either the currently active move if the move
+buffer is empty, or the last move loaded into the move buffer. If there is neither
+a motion command active nor one in the move buffer, or the last move loaded is
+not a linear move, then a MOVEMODIFY move is loaded.
+</p>
+<p class="note">
+A linear move type is one of 
+<a href="MOVE.html">MOVE</a>
+, 
+<a href="MOVEABS.html">MOVEABS</a>
+, 
+<a href="MOVESP.html">MOVESP</a>
+ or 
+<a href="MOVEABSSP.html">MOVEABSSP</a>
+.
+</p>
+<p class="note">
+If there are multiple linear moves in the move buffer, then
+MOVEMODIFY will only modify the last move loaded.
+</p>
+<p>
+If the change in end position requires a change in direction,
+then 
+<a href="CANCEL.html">CANCEL</a>
+ is issued. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Absolute position for the move to complete at.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A sheet of glass is fed on a conveyor and is required to be
+stopped 250&nbsp;mm after the leading edge is sensed by a proximity switch. The
+proximity switch is connected to the registration input:
+</p>
+<p>
+<img border="0" width="566" height="330" id="Picture 1" src="MOVEMODIFY_files/image001.png">
+</p>
+<p class="codeexample">
+MOVE(10000)           'Start a long move on conveyor
+</p>
+<p class="codeexample">
+REGIST(3)             'Set up registration
+</p>
+<p class="codeexample">
+WAIT UNTIL MARK       'MARK goes TRUE when sensor detects
+glass edge
+</p>
+<p class="codeexample">
+OFFPOS = -REG_POS     'Set position where mark was seen to
+0
+</p>
+<p class="codeexample">
+WAIT UNTIL OFFPOS = 0 'Wait for OFFPOS to take effect
+</p>
+<p class="codeexample">
+MOVEMODIFY(250)       'Change move to stop at 250mm
+</p>
+<p>
+<img border="0" width="365" height="125" id="Picture 6" src="MOVEMODIFY_files/image002.png">
+</p>
+<h2>Example 2:</h2>
+<p>
+A paper feed system slips, so to counteract this, a
+proximity sensor is positioned one third of the way into the movement that detects
+at which position the paper passes and so how much slip has occurred. The move
+is then modified to account for this variation.
+</p>
+<p>
+<img border="0" width="659" height="384" id="Picture 7" src="MOVEMODIFY_files/image003.png">
+</p>
+<p class="codeexample">
+paper_length = 4000
+</p>
+<p class="codeexample">
+DEFPOS(0)
+</p>
+<p class="codeexample">
+REGIST(3)
+</p>
+<p class="codeexample">
+MOVE(paper_length)
+</p>
+<p class="codeexample">
+WAIT UNTIL MARK
+</p>
+<p class="codeexample">
+slip = REG_POS - (paper_length / 3)
+</p>
+<p class="codeexample">
+offset = slip * 3
+</p>
+<p class="codeexample">
+MOVEMODIFY(paper_length + offset)
+</p>
+<h2>Example 3:</h2>
+<p>
+A satellite receiver sits on top of a van; it must align
+correctly to the satellite from data processed in a computer. This information
+is sent to the controller through the serial link and sets 
+<a href="VR.html">VR</a>
+
+indices 0 and 1. This information is used to control the two axes. MOVEMODIFY
+is used so that the position can be continuously changed even if the previous
+set position has not been achieved.
+</p>
+<p>
+<img border="0" width="359" height="277" id="Picture 8" src="MOVEMODIFY_files/image004.png">
+</p>
+<p class="codeexample">
+bearing = 0          'Set labels for VRs
+</p>
+<p class="codeexample">
+elevation = 1
+</p>
+<p class="codeexample">
+UNITS AXIS(0) = 360 / counts_per_rev0
+</p>
+<p class="codeexample">
+UNITS AXIS(1) = 360 / counts_per_rev1
+</p>
+<p class="codeexample">
+WHILE IN(2) = ON
+</p>
+<p class="codeexample">
+  MOVEMODIFY(VR(bearing)) AXIS(0)   'Adjust axis 0 to bearing
+in VR(0)
+</p>
+<p class="codeexample">
+  MOVEMODIFY(VR(elevation)) AXIS(1) 'Adjust axis 1 to elevation
+in VR(1)
+</p>
+<p class="codeexample">
+  WA(250)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+RAPIDSTOP            'Stop movement
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(0)
+</p>
+<p class="codeexample">
+MOVEABS(0) AXIS(0)   'Return to transport position
+</p>
+<p class="codeexample">
+WAIT IDLE AXIS(1)
+</p>
+<p class="codeexample">
+MOVEABS(0) AXIS(1)
+</p>
+<h2>See also:</h2>
+<p>
+<a href="ENDMOVE.html">ENDMOVE</a>
+</p>
+</body>
+</html>

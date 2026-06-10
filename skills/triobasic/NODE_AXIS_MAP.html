@@ -1,0 +1,336 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NODE_AXIS_MAP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NODE_AXIS_MAP">
+</head>
+<body>
+<h1>NODE_AXIS_MAP</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Array (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+NODE_AXIS_MAP(slot, node, axis_index) = value
+</p>
+<h2>Description:</h2>
+<p>
+This 3D array can be used to over-ride the drive to
+controller axis mapping for multi-axis drives of any EtherCAT sub-device. This
+can be used to define a user specific axis map to fix axes from different
+sources in place.
+</p>
+<p>
+The array is 3-dimensional, the first dimension is the
+master slot identifier, the second dimension is the position of the node within
+that master network, the third dimension is the axis index in the drive
+starting from 0.
+</p>
+<p class="note">
+An error is raised if the axis requested is already in use when the
+EtherCAT protocol is started.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT axis is allocated automatically (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&gt;= 1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EtherCAT drive is located at this axis 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example 1:</h2>
+<p>
+Configure single axis drive TRIO DX4 from axis number 1 to
+axis number 20 and P374 2 servo axis from axis number 10 and 11 to axis number
+10 and 11 respectively.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Unit
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+Old Axis No.
+</p>
+
+  
+</td>
+<td width="321" valign="top" class="tablegrid">
+
+  
+<p>
+New Axis No.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" rowspan="2" class="tablegrid">
+
+  
+<p>
+P374
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="321" valign="top" class="tablegrid">
+
+  
+<p>
+10
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td width="321" valign="top" class="tablegrid">
+
+  
+<p>
+11
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" class="tablegrid">
+
+  
+<p>
+TRIO DX4
+</p>
+
+  
+</td>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td width="321" valign="top" class="tablegrid">
+
+  
+<p>
+20
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+Initial configuration before commands in MC_CONFIG:
+</p>
+<p>
+<img width="452" height="650" id="Picture 1" src="NODE_AXIS_MAP_files/image001.png">
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+MC_CONFIG entries to change axis numbers:
+</p>
+<p>
+<img width="655" height="137" id="Picture 6" src="NODE_AXIS_MAP_files/image002.png">
+</p>
+<p>
+Text mode:
+</p>
+<p class="codeexample">
+NODE_AXIS_MAP
+(
+0
+, 
+3
+, 
+0
+) = 
+10
+ 'P374 1st
+axis
+<br>
+
+
+NODE_AXIS_MAP
+(
+0
+,
+
+3
+, 
+1
+) = 
+11
+ 'P374 2nd axis
+<br>
+
+
+NODE_AXIS
+(
+0
+,
+
+4
+) = 
+20
+ 'TRIO
+DX4 
+</p>
+<p>
+After Reset MC:
+</p>
+<p>
+<img width="457" height="657" id="Picture 7" src="NODE_AXIS_MAP_files/image003.png">
+</p>
+<h2>Example 2:</h2>
+<p>
+Configure double axis drive TRIO DX5 from axis number 0 to
+axis number 13 and axis number 1 to 23 respectively.
+</p>
+<p>
+Initial configuration before adding the required commands to
+MC_CONFIG:
+</p>
+<p>
+<img width="443" height="482" src="NODE_AXIS_MAP_files/image004.png" alt="Immagine che contiene testo, schermata, software, Icona del computer&#10;&#10;Descrizione generata automaticamente">
+</p>
+<p>
+MC_CONFIG entries to change the axis numbers:
+</p>
+<p>
+<img width="642" height="108" src="NODE_AXIS_MAP_files/image005.png" alt="Immagine che contiene testo, Carattere, linea, numero&#10;&#10;Descrizione generata automaticamente">
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+Text mode:
+</p>
+<p class="codeexample">
+'DX5 first axis
+</p>
+<p class="codeexample">
+NODE_AXIS_MAP(0, 1, 0) = 13
+</p>
+<p class="codeexample">
+'DX5 second axis
+</p>
+<p class="codeexample">
+NODE_AXIS_MAP(0, 1, 1) = 23
+</p>
+<p>
+After reset of the MC:
+</p>
+<p>
+<img width="418" height="452" id="Immagine 1" src="NODE_AXIS_MAP_files/image006.png" alt="Immagine che contiene testo, schermata, software, Icona del computer&#10;&#10;Descrizione generata automaticamente">
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="NODE_AXIS_COUNT.html">NODE_AXIS_COUNT</a>
+, 
+<a href="NODE_INDEX.html">NODE_INDEX</a>
+, 
+<a href="NODE_PROFILE.html">NODE_PROFILE</a>
+,
+
+<a href="NODE_AXIS.html">NODE_AXIS</a>
+, 
+<a href="NW_NODE_AXIS_MAP.html">NW_NODE_AXIS_MAP</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REGIST_SPEEDB</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REGIST_SPEEDB">
+</head>
+<body>
+<h1>REGIST_SPEEDB</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Stores the speed of the axis when a registration mark was
+seen user units per millisecond. This parameter is used with the second (B)
+hardware registration channel, or Z mark only. 
+</p>
+<p class="tip">
+In most real-world systems there are delays built into the
+registration circuit; the external sensor and the input opto-isolator will have
+some fixed response time. As machine speed increases, the fixed electrical
+delays will influence the captured registration position. 
+</p>
+<p>
+REGIST_SPEEDB returns the value of axis speed captured at
+the same time as 
+<a href="REG_POSB.html">REG_POSB</a>
+. The captured speed and
+position values can be used to calculate a registration position that does not
+vary with speed because of the fixed delays.
+</p>
+<h2>Value:</h2>
+<p>
+The speed of the axis in user units per millisecond at which
+the registration event occurred.
+</p>
+<p class="note">
+This parameter has the units of 
+<a href="UNITS.html">UNITS</a>
+/ms
+at all 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+ settings.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REGIST.html">REGIST</a>
+, 
+<a href="REGIST_SPEED.html">REGIST_SPEED</a>
+,
+
+<a href="R_REGISTSPEED.html">R_REGISTSPEED</a>
+</p>
+</body>
+</html>

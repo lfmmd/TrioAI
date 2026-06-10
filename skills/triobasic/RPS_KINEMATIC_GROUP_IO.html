@@ -1,0 +1,340 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>KINEMATIC_GROUP_IO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="KINEMATIC_GROUP_IO">
+</head>
+<body>
+<h1>KINEMATIC_GROUP_IO</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+KINEMATIC_GROUP_IO(group, KMI, KAI, ESI, DMI, REI, SAI, DEI,
+MEI, MPO, REO, ERO)
+</p>
+<p class="fixed">
+&nbsp;
+</p>
+<p class="fixed">
+KINEMATIC_GROUP_IO(group)
+</p>
+<h2>Description:</h2>
+<p class="MsoNoSpacing">
+This command allows the setting of the digital I/O used
+by the RPS 2.0 kernel.
+</p>
+<p class="note">
+KINEMATIC_GROUP_IO requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+<p class="note">
+RPS 2.0 kernel must be activated using the RPS_KERNEL_V2 keyword
+to enable its use.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+group:            
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The group number, 0-7. 
+</p>
+
+  
+<p class="tablecontent">
+When used as the only KINEMATIC_GROUP_IO parameter, it prints
+  the existing settings to the currently selected output channel (default
+  channel 0).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+KMI:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Key switch manual input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+KAI:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Key switch automatic input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ESI:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Emergency stop input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DMI:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Demand input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+REI:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reset errors input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SAI:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Safety input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DEI:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Drive enabled input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MEI:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Master enable input
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MPO:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Motor powered output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+REO:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot energised output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ERO:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error output
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set relevant I/O for Kinematic Group 0.
+</p>
+<p class="codeexample">
+&gt;&gt;kinematic_group_io
+<span class="normaltextrun">(0,&nbsp;6,
+7, 20, 8, 9, 21, 10, 11,&nbsp;12, 1, 2)</span><span class="eop">&nbsp;</span></p>
+<h3>Example 2:</h3>
+<p>
+Print I/O points being used for Kinematic Group 0
+</p>
+<p class="codeexample">
+&gt;&gt;kinematic_group_io(0)&nbsp;
+<br>
+
+0 [
+<span class="normaltextrun">6, 7, 20, 8, 9, 21, 10, 11,&nbsp;12, 1, 2</span>]&nbsp;
+<span class="eop">&nbsp;</span></p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_RPS_KERNEL_V2.html">RPS_KERNEL_V2</a>
+</p>
+</body>
+</html>

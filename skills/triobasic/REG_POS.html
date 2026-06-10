@@ -1,0 +1,223 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REG_POS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REG_POS">
+</head>
+<body>
+<h1>REG_POS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+RPOS
+</p>
+<h2>Description:</h2>
+<p>
+Stores the latest position at which a registration mark was
+seen on each axis in user 
+<a href="UNITS.html">UNITS</a>
+. This parameter is
+used with the first (A) hardware registration channel, or Z mark only. 
+</p>
+<h2>Value:</h2>
+<p>
+The absolute position in user 
+<a href="UNITS.html">UNITS</a>
+
+at which the registration event occurred.
+</p>
+<h2>Example 1:</h2>
+<p>
+A paper cutting machine uses a cam profile shape to quickly
+draw paper through servo driven rollers then stop it whilst it is cut. The
+paper is printed with a registration mark. This mark is detected and the length
+of the next sheet is adjusted by scaling the cam profile with the third
+parameter of the 
+<a href="CAM.html">CAM</a>
+ command:
+</p>
+<p class="codeexample">
+'Example Registration Program using CAM
+stretching:
+</p>
+<p class="codeexample">
+'Set window open and close:
+</p>
+<p class="codeexample">
+  Length = 200 
+</p>
+<p class="codeexample">
+  OPEN_WIN = 10
+</p>
+<p class="codeexample">
+  CLOSE_WIN = length - 10
+</p>
+<p class="codeexample">
+  GOSUB Initial
+</p>
+<p class="codeexample">
+Loop:
+</p>
+<p class="codeexample">
+  TICKS = 0      'Set millisecond counter to 0
+</p>
+<p class="codeexample">
+  IF MARK THEN
+</p>
+<p class="codeexample">
+    offset = REG_POS AXIS(0)
+</p>
+<p class="codeexample">
+    'This next line makes offset -ve if at end of sheet:
+</p>
+<p class="codeexample">
+    IF ABS(offset - length) &lt; offset THEN offset = offset
+- length
+</p>
+<p class="codeexample">
+    PRINT &quot;Mark seen at:&quot;; offset[5.1]
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    offset = 0
+</p>
+<p class="codeexample">
+    PRINT &quot;Mark not seen&quot;
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Reset registration prior to each move:
+</p>
+<p class="codeexample">
+  DEFPOS(0)
+</p>
+<p class="codeexample">
+  REGIST(3 + 768) 'Allow mark at first 10mm or last 10mm
+of sheet
+</p>
+<p class="codeexample">
+  CAM(0, 50, (length + offset * 0.5) * cf, 1000)
+</p>
+<p class="codeexample">
+  WAIT UNTIL TICKS &lt; -500
+</p>
+<p class="codeexample">
+  GOTO Loop
+</p>
+<p>
+(variable “cf” is a constant which would be calculated
+depending on the machine draw length per encoder edge)
+</p>
+<p>
+&nbsp;
+</p>
+<h2>Example 2:</h2>
+<p>
+In the code snippet below, example 1 has been modified to demonstrate
+the use of the BASE command instead of the axis modifier on the REG_POS
+command.
+</p>
+<p class="codeexample">
+'Example Registration Program using CAM
+stretching:
+</p>
+<p class="codeexample">
+'Set window open and close:
+</p>
+<p class="codeexample">
+  Length = 200 
+</p>
+<p class="codeexample">
+  OPEN_WIN = 10
+</p>
+<p class="codeexample">
+  CLOSE_WIN = length - 10
+</p>
+<p class="codeexample">
+  GOSUB Initial
+</p>
+<p class="codeexample">
+Loop:
+</p>
+<p class="codeexample">
+  BASE(0)
+</p>
+<p class="codeexample">
+  TICKS = 0      'Set millisecond counter to 0
+</p>
+<p class="codeexample">
+  IF MARK THEN
+</p>
+<p class="codeexample">
+    offset = REG_POS AXIS(0)
+</p>
+<p class="codeexample">
+    'This next line makes offset -ve if at end of sheet:
+</p>
+<p class="codeexample">
+    IF ABS(offset - length) &lt; offset THEN offset = offset
+- length
+</p>
+<p class="codeexample">
+    PRINT &quot;Mark seen at:&quot;; offset[5.1]
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    offset = 0
+</p>
+<p class="codeexample">
+    PRINT &quot;Mark not seen&quot;
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Reset registration prior to each move:
+</p>
+<p class="codeexample">
+  DEFPOS(0)
+</p>
+<p class="codeexample">
+  REGIST(3 + 768) 'Allow mark at first 10mm or last 10mm
+of sheet
+</p>
+<p class="codeexample">
+  CAM(0, 50, (length + offset * 0.5) * cf, 1000)
+</p>
+<p class="codeexample">
+  WAIT UNTIL TICKS &lt; -500
+</p>
+<p class="codeexample">
+  GOTO Loop
+</p>
+<p>
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REGIST.html">REGIST</a>
+, 
+<a href="REG_POSB.html">REG_POSB</a>
+,
+
+<a href="R_REGPOS.html">R_REGPOS</a>
+</p>
+</body>
+</html>

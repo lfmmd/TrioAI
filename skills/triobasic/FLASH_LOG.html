@@ -1,0 +1,879 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FLASH_LOG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FLASH_LOG">
+</head>
+<body>
+<h1>FLASH_LOG</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+FLASH_LOG([start[, finish]])
+</p>
+<h2>Description:</h2>
+<p class="note">
+Records up to
+8192 of the most recent controller system events. Most controllers support 4096
+messages but some record 2048 or 8192 events.
+</p>
+<p class="note">
+Each event is
+recorded with a timestamp of the current RTC value and the time since power-up
+of the controller.
+</p>
+<p class="note">
+Each event is
+also tagged with a checksum for verification.
+</p>
+<p class="note">
+When executing
+the command, either in the terminal or a Trio BASIC program, it will print the
+recorded event messages to the terminal.
+</p>
+<p class="note">
+Note : Before displaying a log entry the checksum for the log is
+validated, if it is invalid then the message '&lt;INVALID LOG ENTRY&gt;' will
+be displayed instead.
+</p>
+<h2>List of events recorded:</h2>
+<p>
+A list of the events and its corresponding recorded messages
+below:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="487" valign="top">
+
+  
+<p>
+Recorded System Events and message format
+</p>
+
+  
+<table class="tablegrid" border="1" cellspacing="0" cellpadding="0" width="472">
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Startup message with
+    Controller ID, serial number, servo period, boot version, firmware version,
+    FPGA version &amp; FEC codes
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Controller
+    ID&nbsp;:Serial Number@Servo Period [boot version, firmware version,  FPGA
+    version, 32-bit FEC codes]
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+NEW &quot;ALL&quot;
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Directory erased [proc
+    number:proc name
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+NEW &quot;TABLE&quot;
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+TABLE : unprotected
+    locations cleared [proc number: proc name]
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+CLEAR
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+VR : unprotected locations
+    cleared [proc number: proc name]
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Program deletion
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Program 'xyz' deleted
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Program creation
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Program 'xyz' created
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Program saved to flash
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Program 'xyz' saved to
+    flash
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Invalid VR/TABLE data at
+    startup
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+System error : E04
+    VR/TABLE integrity failures
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Axis configuration error
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+System error : Axes
+    configuration error
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Invalid MC_CONFIG request
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+System error : E05
+    MC_CONFIG invalid parameter
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+CPU exceptions
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+System error E09
+    CPU Exc Code 0/1/2 [#proc num]
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+CPU Watchdog trip error
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+System error : E06
+    Watchdog trip
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+FPGA not functioning
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+System error :
+E07 FPGA not OK
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Failure to communicate
+    with PSU device
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+System error : E15 PSU I2C
+    device not detected
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Failure to communicate
+    with RFID device
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+System warning : RFID not
+    detected
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Parameter out of range
+    runtime error
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Prog Name@Line
+    number[process number] Param #n out of range
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Parameter out of range
+    runtime error (BASIC Library Function)
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Prog Name:Function
+    Name@Line number[process number] Param #n out of range
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Other runtime errors
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Prog Name@Line
+    number[process number] &lt;error message&gt;
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Other runtime errors
+    (BASIC Library Function)
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Prog Name:Function
+    Name@Line number[process number] &lt;error message&gt;
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+FPGA reprogrammed
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+FPGA programmed with image
+    #n
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+EX
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Soft Restart (EX)
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Error writing VR/TABLE to
+    backup flash
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+ERROR : VR Backup @
+    $address
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Firmware download section
+    erased
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Flash area 'area' erased
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Firmware download section
+    programmed
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Flash area 'area'
+    programmed
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="274" valign="top">
+
+    
+<p>
+Firmware download section verified
+</p>
+
+    
+</td>
+<td width="198" valign="top">
+
+    
+<p>
+Flash area 'area' verified
+</p>
+
+    
+</td>
+</tr>
+
+  
+</table>
+
+  
+<p>
+</p>
+
+  
+</td>
+<td width="96" valign="top">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Displays all flash log entries starting from line
+  number 'start'.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="27" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Special case, erases log from flash memory (second
+  parameter is not needed).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="27" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-2
+</p>
+
+  
+</td>
+<td width="487" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Special case, will display the most recent ‘n’ entries
+  where ‘n’ is the second parameter.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+finish:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Displays all flash log entries starting from line
+  number 'start' until line number 'finish'.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>&nbsp;</h2>
+<span style='font-family:"Calibri",sans-serif'><br clear="all">
+
+</span><p>
+<b>&nbsp;</b></p>
+<h2>Example:</h2>
+<p>
+Example log file output:
+</p>
+<h2><span style='font-family:"Courier New"'>&gt;&gt;FLASH_LOG(10,15)<br>
+
+&nbsp;&nbsp;&nbsp;10 23/Oct/2024 11:23:21
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.002] 665:00103@1000[2.03
+99.0334001000 000f 0000001f]<br>
+
+&nbsp;&nbsp;&nbsp;11 23/Oct/2024 11:23:22
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.756] Directory erased [22:Command
+Line]<br>
+
+&nbsp;&nbsp;&nbsp;12 23/Oct/2024 12:19:14 [&nbsp;&nbsp;&nbsp;&nbsp;3358.280]
+Flash area 'System' erased<br>
+
+&nbsp;&nbsp;&nbsp;13 23/Oct/2024 12:19:21 [&nbsp;&nbsp;&nbsp;&nbsp;3365.685]
+Flash area 'System' programmed<br>
+
+&nbsp;&nbsp;&nbsp;14 23/Oct/2024 12:19:26 [&nbsp;&nbsp;&nbsp;&nbsp;3370.004]
+Flash area 'System' verified<br>
+
+&nbsp;&nbsp;&nbsp;15 23/Oct/2024 12:19:28 [&nbsp;&nbsp;&nbsp;&nbsp;3372.469]
+Soft Restart request (EX)<br>
+
+&lt;END OF LOG&gt;</span></h2>
+<p>
+<span style='font-family:"Courier New"'>&nbsp;</span></p>
+<h2><span style='font-family:"Courier New"'>&gt;&gt;FLASH_LOG(-2,20)<br>
+
+&nbsp;1005 29/Oct/2024 16:26:17
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.001] 405:00123@1000[2.13
+99.0334001000 0001 1fe40000]<br>
+
+&nbsp;1006 29/Oct/2024 16:26:25 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;13.613]
+Directory erased [10:Command Line]<br>
+
+&nbsp;1007 29/Oct/2024 16:28:27 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;135.357] Flash
+area 'Boot' erased<br>
+
+&nbsp;1008 29/Oct/2024 16:28:43 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;150.838] Flash
+area 'System' erased<br>
+
+&nbsp;1009 29/Oct/2024 16:28:48 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;151.184] Flash
+area 'Boot' programmed<br>
+
+&nbsp;1010 29/Oct/2024 16:28:48 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;156.895] Flash
+area 'System' programmed<br>
+
+&nbsp;1011 29/Oct/2024 16:28:49 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;157.034] Flash
+area 'Boot' verified<br>
+
+&nbsp;1012 29/Oct/2024 16:28:51 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;159.438] Flash
+area 'System' verified<br>
+
+&nbsp;1013 29/Oct/2024 16:28:51 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;159.648] Soft
+Restart request (EX)<br>
+
+&nbsp;1014 29/Oct/2024 16:29:04
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.001] 405:00123@1000[2.13
+99.0334003000 0001 1fe40000]<br>
+
+&nbsp;1015 29/Oct/2024 16:29:04
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.067] Directory erased [10:Command
+Line]<br>
+
+&nbsp;1016 30/Oct/2024 10:04:54
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.001] 405:00123@1000[2.13
+99.0334003000 0001 1fe40000]<br>
+
+&nbsp;1017 30/Oct/2024 13:59:26
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.001] 405:00123@1000[2.13
+99.0334003000 0001 1fe40000]<br>
+
+&nbsp;1018 30/Oct/2024 13:59:44 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;23.332]
+MPE_MODE change (1)<br>
+
+&nbsp;1019 30/Oct/2024 13:59:44 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;23.418]
+MPE_MODE change (0)<br>
+
+&nbsp;1020 30/Oct/2024 13:59:44 [&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;23.949]
+MPE_MODE change (4)<br>
+
+&nbsp;1021 30/Oct/2024 14:19:56
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.001] 405:00123@1000[2.13
+99.0334003000 0001 1fe40000]<br>
+
+&nbsp;1022 30/Oct/2024 14:19:56
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.021] MPE_MODE change (1)<br>
+
+&nbsp;1023 30/Oct/2024 14:19:56
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.031] MPE_MODE change (0)<br>
+
+&nbsp;1024 30/Oct/2024 14:19:56
+[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.067] MPE_MODE change (4)<br>
+
+&lt;END OF LOG&gt;</span></h2>
+<h2><span style='font-family:"Calibri",sans-serif'><br>
+
+&gt;&gt; </span>See Also:</h2>
+
+
+
+</body>
+</html>

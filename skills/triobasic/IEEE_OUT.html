@@ -1,0 +1,166 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IEEE_OUT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IEEE_OUT">
+</head>
+<body>
+<h1>IEEE_OUT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+byte_n = IEEE_OUT(value, n[, size])
+</p>
+<h2>Description:</h2>
+<p>
+The IEEE_OUT function returns a single byte extracted from
+the floating-point value encoded in IEEE 754 format, typically for transmission
+over a communication bus system. The function is called multiple times to
+extract each byte in turn, 4 times for IEEE 754 single precision, and 8 times
+for IEEE 754 double precision.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any TrioBASIC floating-point variable or parameter.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+n:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The byte number (0 - 7) to be extracted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+size:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of bits in the floating-point value (32 or 64),
+  default 32.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Byte 0 is the high byte of the IEEE 754 floating-point format.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Extract the 4 bytes from 
+<a href="MPOS.html">MPOS</a>
+ and
+store then in local variables ready for transmission over a communications bus.
+
+</p>
+<p class="codeexample">
+a = MPOS AXIS(2)
+</p>
+<p class="codeexample">
+byte0 = IEEE_OUT(a, 0)
+</p>
+<p class="codeexample">
+byte1 = IEEE_OUT(a, 1)
+</p>
+<p class="codeexample">
+byte2 = IEEE_OUT(a, 2)
+</p>
+<p class="codeexample">
+byte3 = IEEE_OUT(a, 3)
+</p>
+<h3>Example 2:</h3>
+<p>
+<span style='font-family:"Calibri",sans-serif'>Extract the 8 bytes from </span><a href="MPOS.html"><span style='font-family:"Calibri",sans-serif'>MPOS</span></a>
+<span style='font-family:"Calibri",sans-serif'> and store then in local variables
+ready for transmission over a communications bus.</span></p>
+<p class="codeexample">
+a = MPOS AXIS(2)
+</p>
+<p class="codeexample">
+byte0 = IEEE_OUT(a, 0, 64)
+</p>
+<p class="codeexample">
+byte1 = IEEE_OUT(a, 1, 64)
+</p>
+<p class="codeexample">
+byte2 = IEEE_OUT(a, 2, 64)
+</p>
+<p class="codeexample">
+byte3 = IEEE_OUT(a, 3, 64)
+</p>
+<p class="codeexample">
+byte4 = IEEE_OUT(a, 4, 64)
+</p>
+<p class="codeexample">
+byte5 = IEEE_OUT(a, 5, 64)
+</p>
+<p class="codeexample">
+byte6 = IEEE_OUT(a, 6, 64)
+</p>
+<p class="codeexample">
+byte7 = IEEE_OUT(a, 7, 64)
+</p>
+<h2>See also:</h2>
+<p>
+<a href="IEEE_IN.html">IEEE_IN</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

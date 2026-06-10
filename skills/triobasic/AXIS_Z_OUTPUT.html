@@ -1,0 +1,56 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXIS_Z_OUTPUT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXIS_Z_OUTPUT">
+</head>
+<body>
+<h1>AXIS_Z_OUTPUT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Controls the operation of the Z pins when used as outputs. 
+For example a Pulse + Direction axis with enable output uses the pins of the
+axis that are normally allocated to the Z encoder input as the Enable output. 
+This only applies to products where the line driver is bi-directional and can
+be input or output.
+</p>
+<h2>Value:</h2>
+<p>
+To be advised. 
+</p>
+<h2>Example:</h2>
+<p>
+Allow AXIS_ENABLE to control the enable/Z output.
+</p>
+<p class="codeexample">
+BASE(axis_number)
+</p>
+<p class="codeexample">
+ATYPE = 77 ' Servo with incremental encoder and enable
+output
+</p>
+<p class="codeexample">
+AXIS_Z_OUTPUT = 0 ' do not force the output, allow
+AXIS_ENABLE control
+</p>
+<p class="codeexample">
+AXIS_ENABLE = ON ' Enable the axis
+</p>
+<p class="codeexample">
+WDOG = ON ' enable all axes and set wdog relay to ON
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXIS_ENABLE.html">AXIS_ENABLE</a>
+, 
+<a href="WDOG.html">WDOG</a>
+</p>
+<h2>&nbsp;</h2>
+</body>
+</html>

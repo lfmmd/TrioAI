@@ -1,0 +1,116 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PLC_OVERFLOW</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PLC_OVERFLOW">
+</head>
+<body>
+<h1>PLC_OVERFLOW</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+PLC_OVERLOW can be used to check that PLC tasks are not
+exceeding the PLC scan time that has been set for the task. There is one bit
+per PLC task running in the 
+<i>Motion Coordinator</i>.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+n
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+PLC task running on process 
+<i>n</i> has overflowed the
+  configured PLC scan time.
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+An IEC61131-3 PLC task is set to run on Process 5 with a
+scan time of 5&nbsp;ms. In the command line terminal, check the value of
+PLC_OVERFLOW. Bit 5 is set, so the PLC task needs to be made smaller or the scan
+time must be increased.
+</p>
+<p class="codeexample">
+&gt;&gt;?HEX(PLC_OVERFLOW)
+</p>
+<p class="codeexample">
+20
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="note">
+Checking the value in Hexadecimal shows the bit position clearly.
+$20 = 0010 0000 in binary. If preferred, the value can be shown in decimal by leaving
+off the HEX modifier. In this case the value 32 will be returned.
+</p>
+</body>
+</html>

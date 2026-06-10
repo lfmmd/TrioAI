@@ -1,0 +1,70 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TIME$</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TIME$">
+</head>
+<body>
+<h1>TIME$</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+TIME$ is used as part of a 
+<a href="PRINT.html">PRINT</a>
+
+statement or a 
+<a href="DIM.html">STRING</a>
+ variable to write the current time
+from the real time clock. The date is printed in the format Hour:Minute:Second.
+
+</p>
+<p class="note">
+The TIME$ is set through the 
+<a href="TIME.html">TIME</a>
+ command
+</p>
+<h2>Parameters:</h2>
+<p>
+None.
+</p>
+<h2>Examples</h2>
+<h3>Example 1:</h3>
+<p>
+Print the current time from the real time clock to the
+command line. 
+</p>
+<p class="codeexample">
+&gt;&gt;print time$
+</p>
+<p class="codeexample">
+15:51:06
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Create an error message to print later in the program
+</p>
+<p class="codeexample">
+DIM string1 AS STRING(30)
+</p>
+<p class="codeexample">
+string1 = &quot;Error occurred at &quot; + TIME$
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="PRINT.html">PRINT</a>
+, 
+<a href="DIM.html">STRING</a>
+,
+
+<a href="TIME.html">TIME</a>
+</p>
+</body>
+</html>

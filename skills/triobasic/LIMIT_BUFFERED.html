@@ -1,0 +1,74 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>LIMIT_BUFFERED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="LIMIT_BUFFERED">
+</head>
+<body>
+<h1>LIMIT_BUFFERED</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This sets the maximum number of moves that the controller
+can buffer.
+</p>
+<p class="tip">
+You can increase the machine speed when using 
+<a href="MERGE.html">MERGE</a>
+
+or 
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+ by increasing the number of moves
+buffered.
+</p>
+<p class="tip">
+Each controller has its own maximum buffer size, indicated by 
+<a href="BUFFERSIZE.html">BUFFERSIZE</a>
+. 
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1..BUFFERSIZE
+</p>
+
+  
+</td>
+<td width="272" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of moves that can be buffered (default = 1)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Configure the Motion Coordinator to have a move buffer that
+can store 10 moves so that a sequence of small moves can be merged.
+</p>
+<p class="codeexample">
+LIMIT_BUFFERED = 10
+</p>
+<h2>See Also:</h2>
+<p class="codeexample">
+<a href="BUFFERSIZE.html">BUFFERSIZE</a>
+</p>
+</body>
+</html>

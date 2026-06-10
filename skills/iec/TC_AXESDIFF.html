@@ -1,0 +1,272 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_AXESDIFF</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_AXESDIFF">
+</head>
+<body>
+<h1>TC_AXESDIFF</h1>
+<h2>Type:</h2>
+<p>
+Motion Function.
+</p>
+<h2><a name="_Hlk200372526">Function:</a>
+</h2>
+<p>
+The TC_AXESDIFF command is used to configure the monitoring
+of 2 axes performed on an axis with ATYPE=85.  An axis of ATYPE=85 will produce
+an FE output based on the difference between MPOS of ‘axis2’ subtracted from
+MPOS of ‘axis1’, a DAC output will also be produced.
+</p>
+<p>
+If operation of the FE_LIMIT and FE_RANGE is required, set
+AXIS_MODE bit 13 to 1.  With that set, bits 1 and 8 in AXISSTATUS will respond
+when FE falls outside the limits set.
+</p>
+<p class="tip">
+The specified axis can be any axis and does not have to physically
+exist in the system
+</p>
+<p class="tip">
+&nbsp;
+</p>
+<h2><a name="_Hlk200372530">Inputs:</a>
+</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Rising edge requests execution
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+AxisNo : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Monitor Axis number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis1 : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First Axis to monitor
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis2 : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second Axis to monitor
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2><a name="_Hlk200372536">Outputs:</a>
+</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE when function has completed normally
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if a program error is detected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID : UINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returned error number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2><a name="_Hlk200372540">Description:</a>
+</h2>
+<p>
+When the Execute input changes from FALSE to TRUE (rising
+edge), the function block issues the command for execution in the velocity
+profile software. An axis of ATYPE=85 will produce an FE output based on the
+difference between MPOS of ‘axis2’ subtracted from MPOS of ‘axis1’, a DAC
+output will also be produced.
+</p>
+<p>
+When the monitor axis ATTPE is not 85, the error output is
+set and the error ID number 153 is returned.
+</p>
+<p>
+The axis of the monitor and the axis of the two monitored
+axes should be different, otherwise the error output is set and the error id
+number (errorid = 19) is returned.
+</p>
+<p>
+For the Error ID reference, see the Trio Programming error
+list.
+</p>
+<p>
+&nbsp;
+</p>
+<h2><a name="_Hlk200372544">ST Language:</a>
+</h2>
+<p class="codeexample">
+MyTC_AXESDIFF(Execute, AxisNo, Axis1, Axis2);
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Done:= MyTC_AXESDIFF.Done;
+<br>
+
+Error:= MyTC_AXESDIFF.Error;
+<br>
+
+ErrorID:= MyTC_AXESDIFF.ErrorID;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2><a name="_Hlk200372549">FBD Language:</a>
+</h2>
+<p>
+<img width="313" height="210" src="TC_AXESDIFF_files/image001.png">
+</p>
+<h2><a name="_Hlk200372555">LD Language:</a>
+</h2>
+<p>
+<img width="340" height="220" src="TC_AXESDIFF_files/image002.png">
+</p>
+<h2>IL Language: </h2>
+<p>
+Not available.
+</p>
+<p>
+&nbsp;
+</p>
+<h2><a name="_Hlk200372559">See Also:</a>
+</h2>
+<p>
+TrioBasic Error List
+</p>
+</body>
+</html>

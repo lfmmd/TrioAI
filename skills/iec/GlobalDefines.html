@@ -1,0 +1,300 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Editing Global Definitions</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Global Definitions</h1>
+<p>
+The compiler supports the definition of aliases. An alias is
+a unique identifier that can be used in programs to replace another text.
+Definitions are typically used for replacing a constant expression and ease the
+maintenance of programs.
+</p>
+<p>
+There are two levels of definitions:
+</p>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Global to all programs of a task
+</li>
+<li class="indent-list-last">
+Local to one program
+</li>
+</ul>
+<p>
+Global definitions can be edited from the “Defines” editor.
+The “Defines” item appears at the top of the programs tree view of every task.
+</p>
+<p>
+<img width="155" height="160" id="Picture 3" src="GlobalDefines_files/image001.png" alt="A screenshot of a cell phone&#10;&#10;Description automatically generated">
+</p>
+<p>
+Local definitions are edited together with the corresponding
+program.
+</p>
+<p class="note">
+Note: Library code uses the global defines of the task it is
+compiled with.
+</p>
+<p>
+<span style='font-family:"Times New Roman",serif'>Definitions
+are entered in a text editor. Each definition must be entered on one line of
+text according to the following syntax:</span></p>
+<p class="codeexample">
+#define Identifier  Equivalence  (*
+comments *)
+</p>
+<p>
+&nbsp;Example
+</p>
+<p class="codeexample">
+#define OFF    FALSE          (*
+redefinition of FALSE constant *)
+</p>
+<p class="codeexample">
+#define PI     3.14           (*
+numerical constant *)  
+</p>
+<p class="codeexample">
+#define ALARM  (bLevel &gt; 100) (*
+complex expression *)
+</p>
+<p>
+<span style='font-family:"Times New Roman",serif'>You
+can use a definition within the contents of another definition. The definition
+used in the other one must be declared first.</span></p>
+<p>
+Example:
+</p>
+<p class="codeexample">
+#define PI     3.14
+</p>
+<p class="codeexample">
+#define TWOPI  (PI * 2.0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="note">
+Note: A definition may be empty, for example:  #define
+CONDITION
+</p>
+<p class="note">
+Defined word can be used for directing the
+conditional compiling directives.
+</p>
+<p class="note">
+You can enter #define lines directly in the
+source code of programs in IL or ST languages.
+</p>
+<p class="note">
+The use of definitions may disturb the program
+monitoring and make error reports more complex. It is recommended to restrict
+the use of definitions to simple expressions that have no risk to lead to a
+misunderstanding when reading or debugging a program.
+</p>
+<h2>System definitions</h2>
+<p>
+The following words are predefined by the
+compiler and can be used in the programs:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Word
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+__DATE__
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Date stamp of compiling expressed as a
+  string constant expression
+</p>
+
+  
+<p class="tablecontent">
+Format is:
+  Year/Month/Day-Hours-Minutes.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+__MACHINE__
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of the host machine performing compilation,
+  expressed as a string constant expression.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+__USER__
+</p>
+
+  
+</td>
+<td width="336" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of the user performing the compilation,
+  expressed as a string constant expression.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Example:
+</p>
+<p>
+The following ST program sets variables
+declared as STRING(255):
+</p>
+<p class="codeexample">
+   strDate := __DATE__;
+</p>
+<p class="codeexample">
+   strMachine := __MACHINE__;
+</p>
+<p class="codeexample">
+   strUser := __USER__;
+</p>
+<p>
+Result:
+</p>
+<p>
+strDate is '2020/01/24-10:45'
+</p>
+<p>
+strMachine is 'LaptopJX'
+</p>
+<p>
+strUser is 'John'
+</p>
+<h2>Conditional compiling</h2>
+<p>
+The compiler supports conditional compiling directives in
+ST, LD, and FBD languages. Conditional compiling directives condition the
+inclusion of a part of the program in the generated code. Conditional compiling
+is an easy way to manage several various configurations and options in a unique
+application programming.
+</p>
+<p>
+Conditional compiling uses definitions as conditions. Below
+is the main syntax:
+</p>
+<p class="codeexample">
+#ifdef CONDITION
+</p>
+<p class="codeexample">
+    statementsYES...
+</p>
+<p class="codeexample">
+#else
+</p>
+<p class="codeexample">
+    statementsNO...
+</p>
+<p class="codeexample">
+#endif
+</p>
+<p>
+If CONDITION has been defined using #define syntax, then the
+
+<span class="propertyvalue">statementsYES</span> part is included in the code,
+else the 
+<span class="propertyvalue">statementsNO</span> part is included. The 
+<span class="propertyvalue">#else</span> statement is optional.
+</p>
+<p>
+In ST language, directives must be entered alone on one line
+of text. In FBD language, directives must be entered as the text of network
+brakes. In LD language, directives must be entered on comment lines.
+</p>
+<p>
+The condition __DEBUG
+<span class="propertyvalue"> </span>is
+automatically defined when the application is compiled in DEBUG
+<span class="propertyvalue"> </span>mode. This allows you to incorporate some
+additional statements (such as trace outputs) in your code that are not
+included in 
+<span class="propertyvalue">RELEASE </span>mode.
+</p>
+<h2>Handling exceptions</h2>
+<p>
+The compiler enables you to write your own exception
+programs for handling particular system events. 
+</p>
+<p>
+Please refer to 
+<a href="ExceptionHandling.html">Exception
+Handling document</a>
+ for more details.
+</p>
+<h2>See Also</h2>
+<p>
+<a href="ExceptionHandling.html">Exception Handling</a>
+</p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></em></p>
+</body>
+</html>

@@ -1,0 +1,564 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IS_PROG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IS_PROG">
+</head>
+<body>
+<h1>IS_PROG</h1>
+<h2>Type:</h2>
+<p class="Category">
+System function
+</p>
+<h2>Alternative:</h2>
+<p class="codeexample">
+IS_FILE
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+value = IS_PROG [path:]filename
+</p>
+<h2>Description:</h2>
+<p>
+IS_PROG returns a non-zero value if a file with the stated name
+exists on the selected path.  The optional pathname may indicate that the file
+is in local memory or on extended memory, e.g. a SD card.  If path is omitted
+then the local RAM directory is used.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The file/program does not exist.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The file/program does exist and is not open.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The file/program exists and it is open for reading.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The file/program does exist and it is open for writing.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The file/program does exist and it is open for both
+  reading and writing.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+path:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RAM:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Optional path name for internal memory.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SD:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Path name for optional SD card.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Filename:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Path is RAM or not applied; filename with no extension.
+</p>
+
+  
+<p class="tablecontent">
+Path is SD; the full filename with extension.  e.g.
+  file1.txt, program1.bas etc.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Check that a file is in local memory.
+</p>
+<p class="codeexample">
+file_status = IS_PROG &quot;program1&quot;
+</p>
+<p>
+Alternative syntax.
+</p>
+<p class="codeexample">
+file_status = IS_PROG(&quot;program1&quot;)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Show various ways to create the filename and combine with
+extension and SD: path indicator.
+</p>
+<p class="codeexample">
+DIM
+ result 
+AS
+ INTEGER
+<br>
+
+
+DIM
+ filename 
+AS
+
+
+STRING
+(
+20
+)
+<br>
+
+
+<br>
+
+result = 
+IS_PROG
+ &quot;SD:file1.txt&quot;
+<br>
+
+
+PRINT
+ result
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+result = 
+IS_PROG
+ &quot;SD:&quot;
++
+&quot;file1.txt&quot;
+<br>
+
+
+PRINT
+ result
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+filename = 
+&quot;file1.txt&quot;
+<br>
+
+result = 
+IS_PROG
+ &quot;SD:&quot;
++filename
+<br>
+
+
+PRINT
+ result
+<br>
+
+
+<br>
+
+
+IF
+ IS_PROG
+ &quot;SD:&quot;
++filename 
+THEN
+<br>
+
+    
+PRINT
+ &quot;Yes
+file &quot;
+;filename;
+&quot; is there&quot;
+<br>
+
+
+ENDIF
+<br>
+
+
+<br>
+
+
+VR
+(
+30000
+)=
+$66
+<br>
+
+
+VR
+(
+30001
+)=
+$69
+<br>
+
+
+VR
+(
+30002
+)=
+$6c
+<br>
+
+
+VR
+(
+30003
+)=
+$65
+<br>
+
+
+VR
+(
+30004
+)=
+$31
+<br>
+
+
+VR
+(
+30005
+)=
+$00
+<br>
+
+
+<br>
+
+filename = 
+VRSTRING
+(
+30000
+)
+<br>
+
+
+PRINT
+ filename
+<br>
+
+
+<br>
+
+
+IF
+ IS_PROG
+ &quot;SD:&quot;
++filename+
+&quot;.txt&quot;
+
+
+THEN
+<br>
+
+    
+PRINT
+ &quot;Checked
+file &quot;
+;filename;
+&quot; via VRSTRING&quot;
+<br>
+
+
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Check a file on the SD card and report file status to
+terminal 5.
+</p>
+<p class="codeexample">
+DIM
+ result 
+AS
+ INTEGER
+<br>
+
+
+DIM
+ filename 
+AS
+
+
+STRING
+(
+20
+)
+<br>
+
+
+<br>
+
+filename = 
+&quot;file1.txt&quot;
+<br>
+
+result = 
+IS_PROG
+ &quot;SD:&quot;
++filename
+<br>
+
+
+SELECT_CASE result
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+CASE 0
+</p>
+<p class="codeexample">
+  PRINT
+ #5,
+&quot;file not found&quot;
+<br>
+
+
+<br>
+
+
+CASE -1
+</p>
+<p class="codeexample">
+  PRINT
+ #5,
+&quot;file present on SD and not open&quot;
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+CASE -2
+</p>
+<p class="codeexample">
+  PRINT
+ #5,
+&quot;file open for reading&quot;
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+CASE -3
+</p>
+<p class="codeexample">
+  PRINT
+ #5,
+&quot;file open for writing&quot;
+<br>
+
+
+<br>
+
+
+CASE -4
+</p>
+<p class="codeexample">
+  PRINT
+ #5,
+&quot;file open for read/write&quot;
+<br>
+
+
+<br>
+
+END_CASE
+<br>
+
+
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+<span style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+</body>
+</html>

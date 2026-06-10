@@ -1,0 +1,312 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IP_TCP_TIMEOUT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IP_TCP_TIMEOUT">
+</head>
+<body>
+<h1>IP_TCP_TIMEOUT</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG) 
+</p>
+<h2>Description:</h2>
+<p>
+IP_TCP_TIMEOUT defines the duration in milliseconds for
+which the TCP connections (Ethernet/IP, ModbusTCP, HMI, Token and Telnet) will
+stay open without any activity. When this is exceeded, the TCP connection will
+be closed by the controller. The default is 3600 seconds. The parameter must be
+in the MC_CONFIG to be effective.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Size
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bits
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value (hexadecimal)
+</p>
+
+  
+</td>
+<td width="249" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Long word
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 0..11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$0000000000000ttt
+</p>
+
+  
+</td>
+<td width="249" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Telnet TCP timeout 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 12..23
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$0000000000ttt000
+</p>
+
+  
+</td>
+<td width="249" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Token system timeout
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 24..35
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$0000000ttt000000
+</p>
+
+  
+</td>
+<td width="249" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Modbus TCP timeout
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 36..47
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$0000ttt000000000
+</p>
+
+  
+</td>
+<td width="249" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ethernet IP timeout
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 48..59
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$0ttt000000000000
+</p>
+
+  
+</td>
+<td width="249" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Uniplay HMI channel timeout
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 60..63
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+$x00000000000000
+</p>
+
+  
+</td>
+<td width="249" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Not used
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+Setting this value away from the default may make the
+connection to Motion Perfect unstable. 
+</p>
+<p>
+Each 12 bits of this value sets the timeout period (in
+seconds) for that part of the Ethernet. If it is left at 0, then it becomes the
+default of 3600 seconds.
+</p>
+<p class="note">
+There is also a built-in timeout in the Ethernet stack of approximately
+8 seconds, so when you set the value in IP_TCP_TIMEOUT to 2 seconds, the total
+is 10.
+</p>
+<h2>Example 1:</h2>
+<p>
+Force the Ethernet processor to close the Modbus TCP socket
+after 20 seconds when there is no activity from the master, which enables the
+master to re-open the connection and continue after a break in communications. Remember
+that the value specified is in addition to the built-in overhead of around 8
+seconds (see note above), so we just need to add the extra onto this (in this
+case 12 seconds) to get an overall timeout of 20 seconds.
+</p>
+<p class="codeexample">
+'Modbus socket will close after 20 seconds (12 + 8)
+</p>
+<p class="codeexample">
+IP_TCP_TIMEOUT = $00C000000 
+</p>
+<h2>Example 2:</h2>
+<p>
+Set the Ethernet processor to close the Ethernet IP TCP
+socket after 12 seconds when there is no activity from the master, which
+enables the master to re-open the connection and continue after a break in
+communications. Remember that the value specified is in addition to the
+built-in overhead of around 8 seconds (see note above), so we just need to add
+the extra onto this (in this case 4 seconds) to get an overall timeout of 12
+seconds.
+</p>
+<p class="codeexample">
+'Modbus socket will close after 12 seconds (4 + 8)
+</p>
+<p class="codeexample">
+IP_TCP_TIMEOUT = $004000000000 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

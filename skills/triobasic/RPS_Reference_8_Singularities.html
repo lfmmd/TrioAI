@@ -1,0 +1,65 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Singularities</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Singularities</h1>
+<p>
+In a singular position, the end
+effector cannot move in certain direction, thus the manipulator loses one or
+more degrees of freedom (DOF). Furthermore, near singular configuration, some
+axes can move to a very large speed to maintain constant end effector speed.
+</p>
+<h2>Types</h2>
+<p>
+In a 6 DOF robot arm, the most
+common singular positions are described below.
+</p>
+<h3>Wrist Singularity</h3>
+<p>
+Wrist singularity occurs when the
+wrist and the first orientation axis are collinear.
+</p>
+<p class="MsoListParagraph">
+<img width="265" height="265" src="RPS_Reference_8_Singularities_files/image001.png">
+<br clear="ALL">
+
+
+</p>
+<h3>Elbow Singularity</h3>
+<p>
+Elbow singularity occurs when the
+arm is fully extended.
+</p>
+<p>
+<img width="265" height="265" src="RPS_Reference_8_Singularities_files/image002.png">
+<br clear="ALL">
+</p>
+<h3>Alignment Singularity</h3>
+<p>
+Alignment singularity occurs when
+the wrist and the base are aligned.
+</p>
+<p>
+<img width="265" height="265" src="RPS_Reference_8_Singularities_files/image003.png">
+<br clear="ALL">
+</p>
+<h2>Behaviour</h2>
+<p>
+When a singular position is
+reached or is close enough and the system is not in joint mode, a ROBOTSTATUS
+error will be triggered by the relevant axis and the robot will stop at the
+configured WORLD_FASTDEC.
+</p>
+<p class="note">
+To leave the singular position, the
+system must be in joint mode.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

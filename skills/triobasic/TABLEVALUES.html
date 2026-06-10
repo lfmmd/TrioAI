@@ -1,0 +1,160 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TABLEVALUES</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TABLEVALUES">
+</head>
+<body>
+<h1>TABLEVALUES</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+TABLEVALUES(first, last[, format])
+</p>
+<h2>Description:</h2>
+<p>
+Returns a list of table values starting at the table address
+specified. The output is a comma delimited list of values.
+</p>
+<p class="note">
+TABLEVALUES is provided for Motion Perfect to allow for fast
+access to banks of 
+<a href="TABLE.html">TABLE</a>
+ values.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+first:
+</p>
+
+  
+</td>
+<td width="517" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First 
+<a href="TABLE.html">TABLE</a>
+ address to be
+  returned
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+last:
+</p>
+
+  
+</td>
+<td width="517" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last 
+<a href="TABLE.html">TABLE</a>
+ address to be
+  returned
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+format:
+</p>
+
+  
+</td>
+<td width="517" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Format for the list.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="73" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="517" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Uncompressed comma delimited text (default)
+</p>
+
+  
+<p class="tablecontent">
+1 = Compressed comma delimited text, repeated values
+  are compressed using a repeat count before the value (k7,0.0000 representing
+  7 successive values of 0.0000). Single values do not have the repeat count;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+For a controller containing the values 0.0, 0.1, 0.1, 0.1,
+0.2, 0.2, 0.0 in addresses 1 to 7.
+</p>
+<p class="codeexample">
+&gt;&gt;TABLEVALUES(1, 7, 0)
+</p>
+<p class="codeexample">
+0.0000,0.1000,0.1000,0.1000,0.2000,0.2000,0.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p class="codeexample">
+&gt;&gt;TABLEVALUES(1, 7, 1)
+</p>
+<p class="codeexample">
+0.0000,k3,0.1000,k2,0.2000,0.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+</body>
+</html>

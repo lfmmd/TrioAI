@@ -1,0 +1,2234 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ANYBUS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ANYBUS">
+</head>
+<body>
+<h1>ANYBUS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ANYBUS(function, slot[, parameters...])
+</p>
+<h2>Description:</h2>
+<p>
+This function allows the user to configure the active Anybus
+module and set the network to an operation state. Some networks have
+limitations on data types and size, please refer the Anybus data sheet for
+details. 
+</p>
+<p class="note">
+Passive modules require no setup and will appear as a
+communication channel, they can then be used with 
+<a href="PRINT.html">PRINT</a>
+,
+
+<a href="GET.html">GET</a>
+ etc. These modules can be configured using the 
+<a href="SETCOM.html">SETCOM</a>
+ command. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+function:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_0;">0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configure map
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_1:">1</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configure module and start protocol
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_2:">2</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Stop protocol
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_3:">3</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read status byte
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_4:">4</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Auto configure mapping
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_0;"></a>
+Function = 0:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = ANYBUS(0, slot[, map, source[, index, type, count, direction[,
+endian]]])
+</p>
+<h3>Description:</h3>
+<p>
+Assigns a VR or table point to the memory area that is
+updated over the network. Individual or all maps can be deleted using the first
+4 parameters. 
+</p>
+<p>
+The current mapping can be printed to the terminal using the
+first 2 parameters. 
+</p>
+<h3>Parameters:         </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+ =  the command was
+  successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+ = the command was
+  unsuccessful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the Anybus is fitted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+map:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Map number, use -1 to delete all maps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Location for data on the controller
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+delete map
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start position in data source  
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="14" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+type:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The size and type of data that is sent across the bus
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+boolean
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+signed 8-bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+signed 16-bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+signed 32-bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+unsigned 8-bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+unsigned 16-bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+unsigned 32-bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+character
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+enumeration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9-15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<i>(reserved)</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+signed 64-bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+unsigned 64-bit integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+18
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+floating point/real number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+count:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of data types mapped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+direction:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data direction
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data received into the controller
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data transmitted from the controller
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+endian
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use default endian from network (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Swap endian
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_1:"></a>
+Function = 1:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = ANYBUS(1, slot[, address, baud])
+</p>
+<h3>Description:</h3>
+<p>
+Resets the Anybus module, loads the mapping and then sets
+the network to operational mode using the parameters provided.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was unsuccessful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the Anybus is fitted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+address:
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module address, node number, MAC id. etc 
+<i>(not
+  required for Profinet)</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+baud:
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<i>Baud rate CC Link - required</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" rowspan="11" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+156 kbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+625 kbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2.5 Mbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5 Mbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10 Mbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<i>Baud rate Devicenet – optional</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+125 kbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+250 kbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+500 kbps
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+autobaud (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<i>Baud rate Profibus – automatic, not required</i></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_2:"></a>
+Function = 2:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = ANYBUS(2, slot)
+</p>
+<h3>Description:</h3>
+<p>
+Stops the cyclic data transfer. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td width="451" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was unsuccessful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="508" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the Anybus is fitted
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_3:"></a>
+Function = 3:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = ANYBUS(3, slot)
+</p>
+<h3>Description:</h3>
+<p>
+Reads the status byte from the Anybus module. 
+</p>
+<h3>Parameters:          </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="68" rowspan="14" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="523" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Anybus status byte:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" rowspan="9" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0-2:
+</p>
+
+  
+</td>
+<td width="423" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Anybus State:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SETUP
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+NW_INIT
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+WAIT_PROCESS
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IDLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PROCESS_ACTIVE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ERROR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<i>(reserved)</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EXCEPTION
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 3                 
+</p>
+
+  
+</td>
+<td width="423" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Supervisory bit:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module is not supervised
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="66" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="356" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module is supervised by another network device
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 4-7
+</p>
+
+  
+</td>
+<td width="423" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<i>(reserved)</i></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="68" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td width="523" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the Anybus is fitted
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_4:"></a>
+Function = 4:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value = ANYBUS(4, slot[, address], type, inoff, outoff[, endian])
+</p>
+<h3>Description:</h3>
+<p>
+Auto-configure and start the cyclic network. The mapping can
+still be read using function 0.
+</p>
+<p class="note">
+This function only works with Profibus and Profinet.
+</p>
+<p class="note">
+Profinet does not require the address parameter. 
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="TRUE.html">TRUE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="FALSE.html">FALSE</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the command was unsuccessful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module slot in which the Anybus is fitted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+address:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Module address, node number, MAC address, etc.
+  (Profibus only)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+type:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data type and location
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR Integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table Integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR Float
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table Float
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+inoff:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Offset for inputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+outoff:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Offset for outputs
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+endian
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use default endian from network (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Swap endian
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Configure Device Net with 2 16-bit integer inputs and 2
+16-bit integer outputs. This data is transmitted cyclically using the ‘Polled
+Connection’ method. Ensure to configure the master identically to the slave
+otherwise the data will not transmit.  
+</p>
+<p class="codeexample">
+device_net:
+</p>
+<p class="codeexample">
+  slotnum = 0 'Local variable with module slot number
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Map received data
+</p>
+<p class="codeexample">
+  map = ANYBUS(0, slotnum, 1, 0, 0, 2, 4, 0) '4*16-bit Int
+Rx
+</p>
+<p class="codeexample">
+  IF map THEN
+</p>
+<p class="codeexample">
+    'Map transmit data
+</p>
+<p class="codeexample">
+    map = ANYBUS(0, slotnum, 2, 0, 4, 2, 4, 1) '4*16-bit
+Int Tx
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    PRINT#term, &quot;Mapping failed&quot;
+</p>
+<p class="codeexample">
+    STOP
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Print mapped data to the terminal
+</p>
+<p class="codeexample">
+  ANYBUS(0, slotnum)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Start Network
+</p>
+<p class="codeexample">
+  map = ANYBUS(1, slotnum, 3, 2)  'MAC ID = 3, Baud = 500k
+</p>
+<p class="codeexample">
+  IF map THEN
+</p>
+<p class="codeexample">
+    PRINT#term, &quot;Network Started&quot;
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    PRINT#term, &quot;Failed to start network&quot;
+</p>
+<p class="codeexample">
+    STOP
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  RETURN
+</p>
+<h3>Example 2:</h3>
+<p>
+Configure CC-Link with 2 stations, both with 16 bits in, 16
+bits out, 2 SINT16 in and 2 SINT16 out. Ensure that the master is configured
+identically and that the handshaking bits are implemented. 
+</p>
+<p class="codeexample">
+cc_link:
+</p>
+<p class="codeexample">
+  'Function 0 - Set up mapping
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Station 1
+</p>
+<p class="codeexample">
+  map = ANYBUS(0, slotnum, 0, 0, 0, 0, 16, 0) '16 * BOOL
+Rx
+</p>
+<p class="codeexample">
+  map = ANYBUS(0, slotnum, 1, 0, 1, 0, 16, 1) '16 * BOOL
+Tx
+</p>
+<p class="codeexample">
+  map = ANYBUS(0, slotnum, 2, 0, 2, 2, 2, 0)  '2 * 16-bit
+Int Rx
+</p>
+<p class="codeexample">
+  map = ANYBUS(0, slotnum, 3, 0, 4, 2, 2, 1)  '2 * 16-bit
+Int Tx
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Station 2
+</p>
+<p class="codeexample">
+  map = ANYBUS(0, slotnum, 4, 0, 6, 0, 16, 0) '16 * BOOL
+Rx
+</p>
+<p class="codeexample">
+  map = ANYBUS(0, slotnum, 5, 0, 7, 0, 16, 1) '16 * BOOL
+Tx
+</p>
+<p class="codeexample">
+  map = ANYBUS(0, slotnum, 6, 0, 8, 2, 2, 0)  '2 * 16-bit
+Int Rx
+</p>
+<p class="codeexample">
+  map = ANYBUS(0, slotnum, 7, 0, 10, 2, 2, 1) '2 * 16-bit
+Int Tx
+</p>
+<p class="codeexample">
+  
+</p>
+<p class="codeexample">
+  ANYBUS(0, slotnum) 'print mapping to terminal
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  'Function 1 - Start Protocol
+</p>
+<p class="codeexample">
+  IF NOT map THEN
+</p>
+<p class="codeexample">
+    map = ANYBUS(1, slotnum, 1, 2)
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p>
+&nbsp;
+</p>
+<h3>Example 3:</h3>
+<p>
+Configure Profibus using the automated mapping. 
+</p>
+<p class="codeexample">
+Profibus:
+</p>
+<p class="codeexample">
+  vrint = 0
+</p>
+<p class="codeexample">
+  tableint = 1
+</p>
+<p class="codeexample">
+  vrfloat = 2
+</p>
+<p class="codeexample">
+  tablefloat = 3 
+</p>
+<p class="codeexample">
+  s
+lotnum = 0
+</p>
+<p class="codeexample">
+ 
+</p>
+<p class="codeexample">
+  'Function 4, read network mapping, configure and start.
+</p>
+<p class="codeexample">
+  map = ANYBUS(4, slotnum, 5, vrint, 100, 200)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  IF map THEN
+</p>
+<p class="codeexample">
+    ANYBUS(0, slotnum) 'Print mapping to terminal
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    PRINT#term, &quot;Failed to start network&quot;
+</p>
+<p class="codeexample">
+    STOP
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  RETURN
+</p>
+<h3>Example 4:</h3>
+<p>
+Configure Profinet using the automated mapping. 
+</p>
+<p class="codeexample">
+Profinet:
+</p>
+<p class="codeexample">
+  vrint = 0
+</p>
+<p class="codeexample">
+  tableint = 1
+</p>
+<p class="codeexample">
+  vrfloat = 2
+</p>
+<p class="codeexample">
+  tablefloat = 3 
+</p>
+<p class="codeexample">
+  
+slotnum = 0
+</p>
+<p class="codeexample">
+ 
+</p>
+<p class="codeexample">
+  'Function 4, read network mapping, configure and start.
+</p>
+<p class="codeexample">
+  map = ANYBUS(4, slotnum, vrint, 100, 200)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  IF NOT map THEN
+</p>
+<p class="codeexample">
+    PRINT#term, &quot;Failed to start network&quot;
+</p>
+<p class="codeexample">
+    STOP
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  RETURN
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

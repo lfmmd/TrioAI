@@ -1,0 +1,138 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STOP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STOP">
+</head>
+<body>
+<h1>STOP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+STOP &quot;progname&quot;[, process_number]
+</p>
+<h2>Description:</h2>
+<p>
+Stops one program at its current line. A particular program
+name may be specified and an optional process number. The process number is
+required if there is more than one instance of the program running. If no name
+or process number is specified, then the currently selected program will be
+stopped.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+progname:
+</p>
+
+  
+</td>
+<td width="460" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+name of program to be stopped.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+process_number:
+</p>
+
+  
+</td>
+<td width="460" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+optional process number to be used when multiple
+  instances of the program are running and only one is to be stopped.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Stop a program called “axis_init” from the command line.
+Note that quotes are optional unless the program name is also a BASIC keyword.
+</p>
+<p class="codeexample">
+&gt;&gt;STOP axis_init
+</p>
+<h3>Example 2:</h3>
+<p>
+Stop the named programs when a digital input goes off.
+</p>
+<p class="codeexample">
+IF IN(12) = OFF THEN
+</p>
+<p class="codeexample">
+  STOP &quot;hmi_handler&quot;
+</p>
+<p class="codeexample">
+  STOP &quot;motion1&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Stop a specified instance of a named program while leaving
+other instances running.
+</p>
+<p class="codeexample">
+'Get the process to stop (which is put in VR by an HMI)
+</p>
+<p class="codeexample">
+proc_a = VR(45)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Stop the required instance of test_program
+</p>
+<p class="codeexample">
+STOP &quot;test_program&quot;, proc_a 
+</p>
+<h2>See also:</h2>
+<p>
+<a href="HALT.html">HALT</a>
+, 
+<a href="SELECT.html">SELECT</a>
+,
+
+<a href="SETLINE.html">SETLINE</a>
+, 
+<a href="STEPINTO.html">STEPINTO</a>
+, 
+<a href="STEPLINE.html">STEPLINE</a>
+, 
+<a href="RUN.html">RUN</a>
+</p>
+</body>
+</html>

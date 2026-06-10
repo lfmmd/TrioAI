@@ -1,0 +1,128 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STEPLINE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STEPLINE">
+</head>
+<body>
+<h1>STEPLINE</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+STEPLINE [&quot;program&quot;[, process]]
+</p>
+<h2>Description:</h2>
+<p>
+Steps one line in a program, but unlike the STEPINTO
+command, steps over any functions encountered rather than into them. This
+command is usually issued from the command line, but it can also be used as a statement
+within a program, in which case it will cause execution to pause when
+encountered.
+</p>
+<p>
+This command is also used by 
+<i>Motion</i> Perfect to
+control program stepping.
+</p>
+<p class="note">
+All copies of the named program will step unless the process
+number is also specified.
+</p>
+<p>
+If the program is not running it will step into either the
+specified process or the next available process if the process parameter is
+omitted, pausing execution at the first executable line.
+</p>
+<p>
+If the program name is not supplied, either the 
+<a href="SELECT.html">SELECT</a>
+ed program will step (if used from the command
+line), or the program that paused due to an embedded STEPLINE statement will
+step.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+program:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This specifies the program to be stepped.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+process:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specifies the process number.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Start the program conveyor running in the highest available
+process by stepping into the first executable line. 
+</p>
+<p class="codeexample">
+&gt;&gt;STEPLINE &quot;conveyor&quot;               
+</p>
+<p class="codeexample">
+OK
+</p>
+<p class="codeexample">
+%[Process 21:Line 19] – Paused
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RUN.html">RUN</a>
+, 
+<a href="SELECT.html">SELECT</a>
+,
+
+<a href="SETLINE.html">SETLINE</a>
+, 
+<a href="STEPINTO.html">STEPINTO</a>
+, 
+<a href="STOP.html">STOP</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,87 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CONTINUE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CONTINUE">
+</head>
+<body>
+<h1>CONTINUE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Structure
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CONTINUE
+</p>
+<h2>Description:</h2>
+<p>
+This command applies to the loop structures WHILE…WEND, FOR
+TO…NEXT and REPEAT…UNTIL.
+</p>
+<p>
+Once this command is executed within one of the structures
+mentioned above, the execution will jump directly to the next iteration,
+therefore the code below this instruction will not be executed during the
+current iteration of the loop.
+</p>
+<h2>Example:</h2>
+<p>
+While input 12 is off, move the base axis and flash an LED
+on output 10, if input 9 is active, the loop will jump to the next iteration
+after the base axis moves 200.
+</p>
+<p class="codeexample">
+WHILE IN(12) = OFF
+</p>
+<p class="codeexample">
+  MOVE(200)
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+  IF IN(9) = ON THEN
+</p>
+<p class="codeexample">
+    CONTINUE
+</p>
+<p class="codeexample">
+  ENDIF  
+</p>
+<p class="codeexample">
+  OP(10, OFF)
+</p>
+<p class="codeexample">
+  MOVE(-200)
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+  OP(10, ON)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also</h2>
+<p>
+<a href="EXIT_LOOP.html">EXIT_LOOP</a>
+, 
+<a href="WHILE.html">WHILE</a>
+,
+
+<a href="REPEAT.html">REPEAT</a>
+, 
+<a href="FOR.html">FOR</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

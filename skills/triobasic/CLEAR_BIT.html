@@ -1,0 +1,177 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CLEAR_BIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CLEAR_BIT">
+</head>
+<body>
+<h1>CLEAR_BIT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Logical and Bitwise operator
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CLEAR_BIT(bit, vr_index
+<a name="_Hlk213315004">[,
+mode]</a>
+)
+</p>
+<h2>Description:</h2>
+<p>
+CLEAR_BIT can be used to clear the value of a single bit
+within a 
+<a href="VR.html">VR</a>
+ variable.
+</p>
+<p>
+<a name="_Hlk213315040">You can change the mode for clear</a>
+ing
+a single bit to 
+<a name="_Hlk213315684"></a>
+<a href="TABLE.html">TABLE</a>
+.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+bit:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The bit number to clear, valid range is 0 to 52
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 
+<a href="VR.html">VR</a>
+ on which to operate
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit resets to 
+<a href="VR.html">VR</a>
+ (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit resets to 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set bit 6 in 
+<a href="VR.html">VR</a>
+(23) to zero.
+</p>
+<p class="codeexample">
+CLEAR_BIT(6, 23)
+</p>
+<h3>Example 2:</h3>
+<p class="codeexample" style="margin-left:0cm">
+Set bit 6 in 
+<a href="TABLE.html"><span style='font-family:"Calibri",sans-serif'>TABLE</span></a>
+<span style='font-family:"Calibri",sans-serif'>(23) to ze</span><span style='font-family:"Calibri",sans-serif'>ro.</span></p>
+<p class="codeexample">
+CLEAR_BIT(6, 23, 1)
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2>See also</h2>
+<p>
+<a href="BitNumber.html">. Bit operator</a>
+, 
+<a href="READ_BIT.html">READ_BIT</a>
+, 
+<a href="SET_BIT.html">SET_BIT</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

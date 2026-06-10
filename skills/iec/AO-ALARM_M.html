@@ -1,0 +1,305 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ALARM_M</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ALARM_M">
+</head>
+<body>
+<h1><a name="_Toc317749478"></a>
+<a name="O_1351"></a>
+ALARM_M</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+Alarm with manual reset.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>IN</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Process signal.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>ACK</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acknowledge command.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>RST</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reset command.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Name</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Type</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>Q</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if alarm is active.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>QACK</span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span class="Property"><span style='font-family:"Calibri",sans-serif'>BOOL
+  </span></span></p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if alarm is acknowledged.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Sequence</h2>
+<p>
+<a name="O_290"><img width="421" height="198" id="Picture 864" src="AO-ALARM_M_files/image001.png">
+</a>
+</p>
+<h2>Remarks</h2>
+<p>
+Combine this block with the 
+<a href="AO-LIM_ALRM.html">LIM_ALRM</a>
+
+block for managing analog alarms.
+</p>
+<h2>ST Language</h2>
+<p>
+MyALARM is declared as an instance of ALARM_M function
+block.
+</p>
+<p class="codeexample">
+MyALARM (IN, ACK, RST);
+<br>
+
+Q := MyALARM.Q;
+<br>
+
+QACK := MyALARM.QACK;
+</p>
+<h2>FBD Language</h2>
+<p>
+<img border="0" width="206" height="100" src="AO-ALARM_M_files/image002.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+<img border="0" width="286" height="99" src="AO-ALARM_M_files/image003.gif">
+</p>
+<h2>IL Language</h2>
+<p>
+MyALARM is declared as an instance of ALARM_M function
+block.
+</p>
+<p class="codeexample">
+Op1: CAL MyALARM (IN, ACK, RST)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyALARM.Q
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; Q
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; LD&nbsp; MyALARM.QACK
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp; ST&nbsp; QACK
+</p>
+<h2>See also</h2>
+<p>
+<a href="AO-ALARM_A.html">ALARM_A</a>
+</p>
+<p>
+<a href="AO-LIM_ALRM.html">LIM_ALRM</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

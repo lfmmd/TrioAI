@@ -1,0 +1,67 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REG_POSB</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REG_POSB">
+</head>
+<body>
+<h1>REG_POSB</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Stores the latest position at which a registration mark was
+seen on each axis in user units. This parameter is used with the second (B)
+hardware registration channel, or Z mark only. 
+</p>
+<h2>Value:</h2>
+<p>
+The absolute position in user 
+<a href="UNITS.html">UNITS</a>
+
+of where the registration event occurred.
+</p>
+<h2>Example:</h2>
+<p>
+Detect the front and rear edges of an object on a conveyor
+and measure its length.
+</p>
+<p class="codeexample">
+' Registration on rising edge R0 and falling edge R1
+</p>
+<p class="codeexample">
+REGIST(11) 
+</p>
+<p class="codeexample">
+WAIT UNTIL MARK
+</p>
+<p class="codeexample">
+position1 = REG_POS
+</p>
+<p class="codeexample">
+WAIT UNTIL MARKB
+</p>
+<p class="codeexample">
+position2 = REG_POSB
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+length = position2 – position1
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REGIST.html">REGIST</a>
+, 
+<a href="REG_POS.html">REG_POS</a>
+,
+
+<a href="R_REGPOS.html">R_REGPOS</a>
+</p>
+</body>
+</html>

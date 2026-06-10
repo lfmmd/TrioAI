@@ -1,0 +1,398 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MC_WriteDigitalOutput</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MC_WriteDigitalOutput">
+</head>
+
+
+
+<body>
+<h1>MC_WriteDigitalOutput</h1>
+<p>
+Writes a Boolean value to an output.
+</p>
+<p>
+<img width="361" height="136" src="MC_WriteDigitalOutput_files/image001.png">
+</p>
+<h2>Description:</h2>
+<p>
+The FB writes the value (input ‘Value) of the selected output
+(input ‘OutputNumber’) at the rising edge of ‘Execute’ input.
+</p>
+<p>
+FB will generate an error when invalid inputs are provided.
+</p>
+<p>
+This Function Block does not affect the PLCopen state
+machine.
+</p>
+<p class="tip">
+Make sure the input and output parameters are of data type
+indicated in the table below.
+</p>
+<p class="note">
+The ‘OutputNumber’ range is based on hardware configuration.
+</p>
+<h2>Inputs/Outputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Name</b></p>
+
+  
+</td>
+<td width="89" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="340" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>INPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write ‘Value’ to output
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+OutputNumber
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+INT
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the output.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value to be written to output.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+<b>OUTPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="TableText">
+Writing
+  process is done.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Busy
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="TableText">
+The
+  FB is not finished and a new output value is to be expected.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="TableText">
+Signals
+  that an error has occurred within the FB.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID
+</p>
+
+  
+</td>
+<td width="89" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT
+</p>
+
+  
+</td>
+<td width="340" class="tablegrid">
+
+  
+<p class="TableText">
+Error
+  identification
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="19" height="23" id="&#22270;&#29255; 28" src="MC_WriteDigitalOutput_files/image002.png">
+ Example
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+(*Example for
+  MC_WriteDigitalOutput*)
+&nbsp;
+<br>
+
+  OutNum := 
+INT#8
+;
+<br>
+
+  inst_WriteDigitalOutput ( Execute:=bExecute,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OutputNumber:=
+  OutNum,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value:=bValue
+  );
+<br>
+
+  bBusy := inst_WriteDigitalOutput.Busy;&nbsp;
+<br>
+
+  bDone := inst_WriteDigitalOutput.Done;&nbsp;
+<br>
+
+  bError := inst_WriteDigitalOutput.Error;&nbsp;
+<br>
+
+  ErrorId := inst_WriteDigitalOutput.ErrorID;
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See also: </h2>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

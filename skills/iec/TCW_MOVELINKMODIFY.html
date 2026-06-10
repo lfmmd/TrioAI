@@ -1,0 +1,123 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TCW_MOVELINKMODIFY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TCW_MOVELINKMODIFY">
+</head>
+<body>
+<h1>TCW_MOVELINKMODIFY</h1>
+<h2>Type:</h2>
+<p>
+Axis Parameter.
+</p>
+<h2>Function:</h2>
+<p>
+Reads the current value of MOVELINK_MODIFY.
+</p>
+<h2>Inputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+AxisNo: USINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+POS: LREAL;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+New value of MVELINK_MODIFY
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID: UINT;
+</p>
+
+  
+</td>
+<td width="408" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returned error number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+This function writes new value
+of MOVELINK_MODIFY, which allows MOVELINK motion commands to be modified whilst
+they are running by applying the specified positional offset.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample">
+(UINT):=TCW_MOVELINKMODIFY(AxisNo:= (USINT), Pos:=
+(LREAL)); 
+</p>
+<h2>FBD Language:</h2>
+<p align="center">
+<img width="434" height="66" id="&#22270;&#29255; 4" src="TCW_MOVELINKMODIFY_files/image001.png">
+</p>
+<h2>LD Language: </h2>
+<p align="center">
+<img width="258" height="160" id="&#22270;&#29255; 1" src="TCW_MOVELINKMODIFY_files/image002.png">
+</p>
+<h2>IL Language: </h2>
+<p>
+Not available.
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBasic Error List</a>
+</p>
+</body>
+</html>

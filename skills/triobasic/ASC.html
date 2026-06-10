@@ -1,0 +1,205 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ASC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ASC">
+</head>
+<body>
+<h1>ASC</h1>
+<h2>Type:</h2>
+<p class="Category">
+String Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = ASC(string[, offset])
+</p>
+<h2>Description:</h2>
+<p>
+ASC returns the ASCII value of the first character in the
+provided string parameter. If the string is empty, then 0 will be returned.
+</p>
+<p>
+When the optional second parameter is used, this provides an
+offset from the start of the string, so an offset of 0 will return the ASCII
+code of the first character, 1 the second character, 2 the third character,
+etc. An offset outside of the range of characters in the string will return 0.
+</p>
+<p>
+This function gets its name because it used to deal
+exclusively with characters encoded in ASCII. However, TrioBASIC strings use
+Unicode characters encoded in UTF-8, and so the value returned by ASC will be
+the Unicode value of the character.
+</p>
+<p>
+Parameters:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+string:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid 
+<a href="DIM.html">STRING</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+offset:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+An integer value (default 0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print the ASCII value of character ‘A’ contained within a
+longer string.
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT ASC(&quot;ABCDEF&quot;)
+</p>
+<p class="codeexample">
+65
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Find the position of the decimal point in a numerical
+string.
+</p>
+<p class="codeexample">
+  
+DIM
+ a 
+AS
+ STRING
+(
+20
+)
+<br>
+
+  
+DIM
+ i, x, dp_pos 
+AS
+
+
+INTEGER
+<br>
+
+  
+<br>
+
+  a = 
+&quot;112.234&quot;
+<br>
+
+  
+FOR
+ i = 
+0
+ TO
+ LEN
+(a) - 
+1
+<br>
+
+    x = 
+ASC
+(a, i)
+<br>
+
+    
+IF
+ x = 
+$2E
+
+
+THEN
+<br>
+
+      dp_pos = i
+<br>
+
+    
+ENDIF
+<br>
+
+  
+NEXT
+ i
+<br>
+
+  
+PRINT
+ dp_pos
+<br>
+
+
+<br>
+
+
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CHR.html">CHR</a>
+, 
+<a href="LEFT.html">LEFT</a>
+, 
+<a href="LEN.html">LEN</a>
+, 
+<a href="MID.html">MID</a>
+, 
+<a href="PRINT.html">PRINT</a>
+,
+
+<a href="RIGHT.html">RIGHT</a>
+<span class="MsoHyperlink"><span style='font-family: "Calibri",sans-serif'>, </span></span><a href="STR.html">STR</a>
+,
+
+<a href="DIM.html">STRING</a>
+<span class="MsoHyperlink"><span style='font-family: "Calibri",sans-serif'>, </span></span><a href="VAL.html">VAL</a>
+<span class="MsoHyperlink"><span style='font-family:"Calibri",sans-serif'> </span></span></p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

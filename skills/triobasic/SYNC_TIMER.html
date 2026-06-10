@@ -1,0 +1,53 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SYNC_TIMER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SYNC_TIMER">
+</head>
+<body>
+<h1>SYNC_TIMER</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+SYNC_TIMER returns the elapsed time of the synchronisation
+or re-synchronisation phase of 
+<a href="SYNC.html">SYNC</a>
+. Once the
+synchronisation is complete the SYNC_TIMER will return the completed
+synchronisation time. 
+</p>
+<h2>Value:</h2>
+<p>
+The elapsed time of the synchronisation phase in
+milliseconds 
+</p>
+<h2>Example:</h2>
+<p>
+Synchronise to a conveyor linking to a position defined from
+registration, then wait until synchronisation before picking a part
+</p>
+<p class="codeexample">
+'Set up start position and link to conveyor
+</p>
+<p class="codeexample">
+  
+SYNC(10, 500, REG_POS AXIS(5), 5) AXIS(0)
+</p>
+<p class="codeexample">
+  
+WAIT UNTIL SYNC_TIMER AXIS(0)= 500
+</p>
+<p class="codeexample">
+  GOSUB pick_part
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SYNC.html">SYNC</a>
+</p>
+</body>
+</html>

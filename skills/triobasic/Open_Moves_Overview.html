@@ -1,0 +1,822 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Open Moves Overview</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Open Moves</h1>
+<p>
+Trio Controllers support user defined move types, and this
+section explains how to setup, use and debug custom move types.
+</p>
+<h2>Setting up an open move</h2>
+<p style="margin-left:0cm">
+A keyword can be registered
+by using the command:
+</p>
+<p>
+REGISTER_MOVE(moveName, minAxes, maxAxis, posPerAxis,
+optParams)
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+<b>Parameter</b></p>
+
+  
+</td>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+<b>Data
+  Type</b></p>
+
+  
+</td>
+<td width="300" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+moveName
+</p>
+
+  
+</td>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+STRING
+</p>
+
+  
+</td>
+<td width="300" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Name
+  of your move.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+minAxes
+</p>
+
+  
+</td>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+INTEGER
+</p>
+
+  
+</td>
+<td width="300" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Minimum
+  number of axes for this move
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+maxAxis
+</p>
+
+  
+</td>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+INTEGER
+</p>
+
+  
+</td>
+<td width="300" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Maximum
+  number of axes for this move
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+posPerAxis
+</p>
+
+  
+</td>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+INTEGER
+</p>
+
+  
+</td>
+<td width="300" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Number
+  of position parameters per axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="149" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+optParams
+</p>
+
+  
+</td>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+INTEGER
+</p>
+
+  
+</td>
+<td width="300" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Number
+  of optional parameters
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h2>New commands for open moves</h2>
+<p>
+With the release of open moves, new commands have been added
+to the firmware to aid the development of a new user defined move.
+</p>
+<h3>THROW_ERROR</h3>
+<p>
+An error can be thrown at runtime error (number 268):
+</p>
+<p style="margin-left:0cm">
+THROW_ERROR(errorString)
+</p>
+<p>
+Example:
+</p>
+<p class="codeexample">
+THROW_ERROR
+(&quot;Move
+distance too short&quot;)
+</p>
+<p>
+&nbsp;
+</p>
+<h3>LOAD_OPEN_MOVE</h3>
+<p>
+Loads a move into the move buffer (this command is only
+allowed in Real-Time Basic libraries):
+</p>
+<p>
+LOAD_OPEN_MOVE(moveDist, moveData)
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+<b>Parameter</b></p>
+
+  
+</td>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+<b>Data
+  Type</b></p>
+
+  
+</td>
+<td width="319" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+moveDist
+</p>
+
+  
+</td>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+FLOAT
+</p>
+
+  
+</td>
+<td width="319" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Move
+  distance in units
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+moveData
+</p>
+
+  
+</td>
+<td width="104" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+FLOAT
+</p>
+
+  
+</td>
+<td width="319" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Pre-calculations
+  to be stored in the move buffer for use in the servo function
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+Example:
+</p>
+<p class="codeexample">
+FUNCTION
+
+move_sine_load(baseaxis 
+AS
+ INTEGER
+, _
+</p>
+<p class="codeexample">
+   
+posdemand 
+AS
+ FLOAT
+(),
+optparams 
+AS
+ FLOAT
+())
+<br>
+
+
+   DIM
+ movedata 
+AS
+
+
+FLOAT
+(
+10
+)
+<br>
+
+
+   DIM
+ movedist 
+AS
+
+
+FLOAT
+<br>
+
+
+<br>
+
+   movedist = posdemand(
+0
+) + posdemand(
+1
+) 
+'units
+<br>
+
+   movedata(
+0
+) = posdemand(
+0
+)
+<br>
+
+   movedata(
+1
+) = posdemand(
+1
+)
+<br>
+
+
+<br>
+
+
+   IF
+ movedist &lt; 
+5
+
+
+THEN
+<br>
+
+
+      THROW_ERROR
+(
+&quot;Move
+distance too short&quot;
+)
+<br>
+
+
+   ELSE
+<br>
+
+
+      LOAD_OPEN_MOVE
+(movedist, movedata)
+<br>
+
+
+   ENDIF
+<br>
+
+
+ENDFUNC
+</p>
+<p align="left">
+&nbsp;
+</p>
+<h3>UPDATE_OPEN_MOVE_POS</h3>
+<p style="margin-left:0cm">
+This command will set the
+DPOS of a given axis to a given value. This command is only allowed in
+Real-Time Basic libraries.
+</p>
+<p>
+Example:
+</p>
+<p class="codeexample">
+FUNCTION
+
+move_sine_servo(f 
+AS
+ FLOAT
+,
+baseaxis, _
+</p>
+<p class="codeexample">
+   
+currentaxis 
+AS
+ INTEGER
+,
+movedata 
+AS
+ FLOAT
+())
+<br>
+
+
+   DIM
+ p, q 
+AS
+
+
+FLOAT
+<br>
+
+
+<br>
+
+   p = f * movedata(
+0
+)
+<br>
+
+   q = f * -movedata(
+0
+)
+<br>
+
+
+<br>
+
+
+   OPEN_MOVE_DEBUG_A
+ AXIS
+(baseaxis) = f
+<br>
+
+
+<br>
+
+
+   IF
+ currentaxis = baseaxis 
+THEN
+<br>
+
+
+      UPDATE_OPEN_MOVE_POS
+(baseaxis, p)
+<br>
+
+
+   ELSE
+<br>
+
+
+      UPDATE_OPEN_MOVE_POS
+(currentaxis, q)
+<br>
+
+
+   ENDIF
+<br>
+
+
+ENDFUNC
+</p>
+<h2>Limitations</h2>
+<p align="left" style="margin-left:36.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif'>A new move name cannot have the same name as the existing
+keyword, otherwise the controller will throw an error</span></p>
+<p align="left" style="margin-left:36.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif'>The number of parameters defined in the TrioBASIC function
+has to match the number of parameters passed to the keyword</span></p>
+<p align="left" style="margin-left:36.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif'>A maximum of 5 moves can be registered</span></p>
+<p align="left" style="margin-left:36.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif'>The REGISTER_MOVE command can only be used in MC_CONFIG</span></p>
+<h2>Example</h2>
+<h3>In MC_CONFIG.MCC</h3>
+<p class="codeexample">
+REGISTER_MOVE(
+&quot;MOVE_SINE&quot;
+,
+
+2
+, 
+2
+, 
+1
+, 
+1
+)
+</p>
+<h3>In MYMOVE.BTBLIB</h3>
+<p class="codeexample">
+'This function is called to load your move into the move
+buffer
+<br>
+
+'Perform calculations and call the 'LOAD_OPEN_MOVE' function
+</p>
+<p class="codeexample">
+'to load a move into the buffer.
+<br>
+
+
+FUNCTION
+ move_sine_load(baseaxis 
+AS
+ INTEGER
+, _
+</p>
+<p class="codeexample">
+   posdemand 
+AS
+ FLOAT
+(), optparams 
+AS
+
+
+FLOAT
+())
+<br>
+
+
+   DIM
+ movedata 
+AS
+
+
+FLOAT
+(
+10
+)
+<br>
+
+
+   DIM
+ movedist 
+AS
+
+
+FLOAT
+<br>
+
+
+<br>
+
+   movedist = posdemand(
+0
+) + posdemand(
+1
+) 'units
+<br>
+
+   movedata(
+0
+) = posdemand(
+0
+)
+<br>
+
+   movedata(
+1
+) = posdemand(
+1
+)
+<br>
+
+
+<br>
+
+
+   IF
+ movedist &lt; 
+5
+
+
+THEN
+<br>
+
+
+      THROW_ERROR
+(
+&quot;Move
+distance too short&quot;
+)
+<br>
+
+
+   ELSE
+<br>
+
+
+      LOAD_OPEN_MOVE
+(movedist, movedata)
+<br>
+
+
+   ENDIF
+<br>
+
+
+ENDFUNC
+<br>
+
+
+<br>
+
+'This function is called in real-time to perform your move.
+<br>
+
+'f is a factor that goes from 0 to 1. 0 being the start of
+</p>
+<p class="codeexample">
+'the move and 1 being the end.
+<br>
+
+'&nbsp;&nbsp;&nbsp;&nbsp;This factor comes directly from the VPU.
+<br>
+
+'Note: Please keep this function as small as possible to
+</p>
+<p class="codeexample">
+'      reduce system load.
+<br>
+
+
+FUNCTION
+ move_sine_servo(f 
+AS
+ FLOAT
+,
+baseaxis, _
+</p>
+<p class="codeexample">
+   currentaxis 
+AS
+ INTEGER
+, movedata 
+AS
+
+
+FLOAT
+())
+</p>
+<p class="codeexample">
+   DIM
+ p, q 
+AS
+ FLOAT
+<br>
+
+
+<br>
+
+   p = f * movedata(
+0
+)
+<br>
+
+   q = f * -movedata(
+0
+)
+<br>
+
+
+<br>
+
+
+   OPEN_MOVE_DEBUG_A
+ AXIS
+(baseaxis) = f
+<br>
+
+
+<br>
+
+
+   IF
+ currentaxis = baseaxis 
+THEN
+<br>
+
+
+      UPDATE_OPEN_MOVE_POS
+(baseaxis, p)
+<br>
+
+
+   ELSE
+<br>
+
+
+      UPDATE_OPEN_MOVE_POS
+(currentaxis, q)
+<br>
+
+
+   ENDIF
+<br>
+
+
+ENDFUNC
+</p>
+<h3>In TEST.BAS</h3>
+<p class="codeexample">
+BASE(
+0
+)
+<br>
+
+DEFPOS(
+0
+)
+<br>
+
+WAIT UNTIL 
+DPOS
+ AXIS(
+0
+) = 
+0
+<br>
+
+MOVE_SINE(
+100
+, 
+0
+)
+<br>
+
+TRIGGER
+</p>
+</body>
+</html>

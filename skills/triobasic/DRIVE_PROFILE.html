@@ -1,0 +1,416 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_PROFILE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_PROFILE">
+</head>
+<body>
+<h1>DRIVE_PROFILE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DRIVE_PROFILE AXIS(n) = value
+</p>
+<h2>Description:</h2>
+<p>
+DRIVE_PROFILE allows the selection of different EtherCAT
+profiles from the internal database to be used with a remote drive over
+EtherCAT.  This MUST be set in MC_CONFIG if the EtherCAT is to be initialised
+on power up with the required profile.  
+</p>
+<p>
+This axis parameter can be added to the MC_CONFIG.
+</p>
+<p class="note">
+The EtherCAT drive must have an application specific profile
+within the Motion Coordinator’s internal database before this function can be
+used. 
+</p>
+<h2>Parameters:</h2>
+<p>
+For general third-party slave types:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="58" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 : 
+</p>
+
+  
+</td>
+<td width="479" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the default “standard profile” with minimum objects
+  passed between drive and Motion Coordinator.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 – n : 
+</p>
+
+  
+</td>
+<td width="479" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use the application profile numbered.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+For P375 Flexslice 3 axis EtherCAT module:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="590" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DRIVE_MODE = 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="120" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DRIVE_PROFILE
+</p>
+
+  
+</td>
+<td width="471" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td width="68" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="471" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pulse and Direction output.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="68" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 
+</p>
+
+  
+</td>
+<td width="471" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quadrature output.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="68" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="471" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Square wave and Direction output.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="68" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="471" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pulse and Direction output with Z input (registration).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="68" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="471" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Quadrature output with Z input (registration).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="68" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="471" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Square wave and Direction output with Z input
+  (registration)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="590" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DIRVE_MODE = 5
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="120" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DRIVE_PROFILE
+</p>
+
+  
+</td>
+<td width="471" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value
+</p>
+
+  
+</td>
+<td width="68" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="471" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Incremental encoder with Z input (registration).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="68" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="471" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Pulse and Direction counter with Z input
+  (registration).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set up 4 axes to use application profiles for the cyclic PDO
+telegram.  The EtherCAT axis profiles can be examined with the ETHERCAT($116,
+vendor_ID) command.
+</p>
+<p>
+In the Motion Perfect v4 Intelligent Drives, open the Browse
+Database funtion, select the vendor and then double click the drive model of
+interest.
+</p>
+<p>
+<img width="428" height="307" id="Picture 1" src="DRIVE_PROFILE_files/image001.png">
+</p>
+<p>
+<img width="387" height="506" id="Picture 2" src="DRIVE_PROFILE_files/image002.png">
+</p>
+<p>
+The # number is the profile number and the selected profile
+PDO details are shown on the right.
+</p>
+<p>
+In MC_CONFIG, put the required profile number for each axis.
+</p>
+<p class="codeexample">
+DRIVE_PROFILE AXIS(0)=2
+<br>
+
+DRIVE_PROFILE AXIS(1)=2
+<br>
+
+DRIVE_PROFILE AXIS(2)=2
+<br>
+
+DRIVE_PROFILE AXIS(3)=1
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DRIVE_MODE.html">DRIVE_MODE</a>
+, 
+<a href="ATYPE.html">ATYPE</a>
+</p>
+<p class="code">
+&nbsp;
+</p>
+</body>
+</html>

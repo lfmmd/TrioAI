@@ -1,0 +1,55 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MPOS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MPOS">
+</head>
+<body>
+<h1>MPOS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+This parameter is the position of the axis as measured by
+the encoder or resolver.
+</p>
+<p class="note">
+Unless using an absolute encoder MPOS is reset to 0 on power up
+or software reset.
+</p>
+<p>
+The value is adjusted using the 
+<a href="DEFPOS.html">DEFPOS</a>
+
+command or 
+<a href="OFFPOS.html">OFFPOS</a>
+ axis parameter to shift the datum
+position or when the 
+<a href="REP_DIST.html">REP_DIST</a>
+ is in operation. The
+position is reported in user 
+<a href="UNITS.html">UNITS</a>
+.
+</p>
+<h2>Value:</h2>
+<p>
+Actual axis position in user 
+<a href="UNITS.html">UNITS</a>
+.
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+WAIT UNTIL MPOS &gt;= 1250
+</p>
+<p class="codeexample">
+SPEED = 2.5
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

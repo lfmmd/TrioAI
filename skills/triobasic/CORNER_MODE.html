@@ -1,0 +1,704 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CORNER_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CORNER_MODE">
+</head>
+<body>
+<h1>CORNER_MODE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+The corner mode is a function that allows the program to
+control the cornering action of advanced speed control moves (those suffixed
+“SP”).
+</p>
+<p>
+Automatic corner speed control is any move type where the
+end angle of the previous move differs from the start angle of the next move
+(typically vectors), and allows the system to automatically reduce the speed
+based on 
+<a href="DECEL_ANGLE.html">DECEL_ANGLE</a>
+ and 
+<a href="STOP_ANGLE.html">STOP_ANGLE</a>
+.
+</p>
+<p class="warning">
+Note that corner speed control operates by setting the next
+move’s STARTMOVE_SPEED, and so the AXIS_BLENDING must be set to a mode that
+interrogates STARTMOVE_SPEED and uses the lowest value at the move boundary
+(because corner control requires a reduction in speed). Consequently, corner
+control will not function if AXIS_BLENDING is set to 0 (off), 2 (previous) or 4
+(high). 
+</p>
+<p>
+Automatic radius speed control is for moves that have a
+radius (like MOVECIRCSP, MHELICALSP and MSPHERICALSP) and allows the system to
+reduce the speed around a radius depending on its tightness. This can be
+achieved in two ways, either by factoring the speed by the ratio of the
+corner’s radius to the 
+<a href="FULL_SP_RADIUS.html">FULL_SP_RADIUS</a>
+, or by
+limiting the centripetal acceleration (v
+<sup>2</sup>&nbsp;/&nbsp;r), and this
+can either cap the centripetal acceleration to that at 
+<a href="FULL_SP_RADIUS.html">FULL_SP_RADIUS</a>
+ or to 
+<a href="ACCEL.html">ACCEL</a>
+.
+</p>
+<p class="tip">
+The ratio of radii method is for backward compatibility, as it
+does not accurately model the forces due to the severity of the radius, which
+the centripetal mode does.
+</p>
+<p class="warning">
+Note that radius speed control operates by overriding each
+move’s FORCE_SPEED and so, unlike corner speed control, is not dependant on the
+setting of AXIS_BLENDING.
+</p>
+<p>
+Automatic radius speed control can also be used with
+vectors, like MOVESP and MOVEABSSP, where the change in direction between two
+vectors is used to determine an effective radius that is used as per automatic
+radius speed control. The purpose of this is for the case of densely packed vectors
+that are almost inline, but which together describe a rapid change of direction,
+a case that conventional corner control using STOP_ANGLE and DECEL_ANGLE will
+not handle. This is intended to be used alongside conventional corner control.
+</p>
+<p class="tip">
+You can enable any combination of the speed control bits, but bit
+4 is only significant if bit 3 is set and bit 5 is only significant if bit 4 is
+set.
+</p>
+<p class="tip">
+When bits 4 and 5 are set (centripetal mode with centripetal
+acceleration limited to ACCEL), the value of FULL_SP_RADIUS is not used and may
+be left at its default value of zero.
+</p>
+<p class="tip">
+Note that corner control is processed when moves are loaded using
+current parameter values, and so are not subject to change.
+</p>
+<p>
+The 
+<a href="CORNER_STATE.html">CORNER_STATE</a>
+ machine
+allows interaction with a TrioBASIC program and the loading of buffered moves
+depending on 
+<a href="RAISE_ANGLE.html">RAISE_ANGLE</a>
+</p>
+<h2>Value:</h2>
+<p>
+32-bit value where each bit represents a different corner
+mode. 
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Automatic corner speed control using DECEL_ANGLE and/or
+  STOP_ANGLE
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Enable the CORNER_STATE machine
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Automatic radius speed control
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="146" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Centripetal
+</p>
+
+  
+<p class="tablecontent">
+mode
+</p>
+
+  
+</td>
+<td width="621" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Speed control using a ratio of the move’s radius to
+  FULL_SP_RADIUS
+</p>
+
+  
+<p class="tablecontent">
+1 = Speed control using centripetal acceleration
+</p>
+
+  
+<p class="tablecontent">
+Ignored unless bit 3 is set
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="146" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Use ACCEL
+</p>
+
+  
+</td>
+<td width="621" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Limit centripetal acceleration to that at
+  FULL_SP_RADIUS
+</p>
+
+  
+<p class="tablecontent">
+1 = Limit centripetal acceleration to not exceed ACCEL 
+</p>
+
+  
+<p class="tablecontent">
+Ignored unless bits 3 and 4 are set
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="146" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Vector radius
+</p>
+
+  
+<p class="tablecontent">
+control
+</p>
+
+  
+</td>
+<td width="621" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Speed control using vector radius disabled
+</p>
+
+  
+<p class="tablecontent">
+1 = Speed control using the radius of curvature between
+  two vectors
+</p>
+
+  
+<p class="tablecontent">
+Ignored unless bit 3 is set
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Enable the corner state machine and automatic corner speed
+control.
+</p>
+<p class="codeexample">
+CORNER_MODE = 2 + 4
+</p>
+<h3>Example 2:</h3>
+<p>
+Do the same as example 1 but using the bit operator.
+</p>
+<p class="codeexample">
+CORNER_MODE.1 = ON
+</p>
+<p class="codeexample">
+CORNER_MODE.2 = ON
+</p>
+<h3>Example 3:</h3>
+<p>
+Enable corner radius speed control using a simple ratio of
+move radius to FULL_SP_RADIUS.
+</p>
+<p class="codeexample">
+CORNER_MODE.3 = ON
+</p>
+<p class="codeexample">
+CORNER_MODE.4 = OFF
+</p>
+<h3>Example 4:</h3>
+<p>
+Enable corner radius speed control by limiting the
+centripetal acceleration to be no greater than that at FULL_SP_RADIUS.
+</p>
+<p class="codeexample">
+CORNER_MODE.3 = ON
+</p>
+<p class="codeexample">
+CORNER_MODE.4 = ON
+</p>
+<p class="codeexample">
+CORNER_MODE.5 = OFF
+</p>
+<h3>Example 5:</h3>
+<p>
+Enable corner radius speed control by limiting the
+centripetal acceleration to be no greater than ACCEL (FULL_SP_RADIUS is not
+used).
+</p>
+<p class="codeexample">
+CORNER_MODE.3 = ON
+</p>
+<p class="codeexample">
+CORNER_MODE.4 = ON
+</p>
+<p class="codeexample">
+CORNER_MODE.5 = ON
+</p>
+<h3>Example 6:</h3>
+<p>
+The following program illustrates corner radius control when
+applied to a MOVECIRC and an equivalent vector sequence.
+</p>
+<p class="codeexample">
+DEFCONST radius 4 'The radius of the semi-circle
+<br>
+
+
+<br>
+
+DIM n, i AS INTEGER
+<br>
+
+DIM angle, x, y, x0, y0 AS FLOAT
+<br>
+
+
+<br>
+
+CHANNEL_WRITE(9, &quot;%[USER] SCOPE ARM&quot;)
+<br>
+
+WA(2000)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+INITIALISE
+<br>
+
+
+<br>
+
+FOR i = 0 TO 1
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;BASE(i)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;ATYPE = 0
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;UNITS = 1000000
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;SPEED = 100
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;ACCEL = 1000
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;DECEL = 1000
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;JERK = 10000
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;SERVO = ON
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;STARTMOVE_SPEED = -1
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;ENDMOVE_SPEED = -1
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;AXIS_MODE.2 = 0 '0 = 2D mode; 1 = 3D mode
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;LIMIT_BUFFERED = BUFFERSIZE
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;MERGE = ON
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;DEFPOS(0)
+<br>
+
+NEXT i
+<br>
+
+
+<br>
+
+BASE(0, 1)
+<br>
+
+
+<br>
+
+CORNER_MODE.1 = 1 '1 = Automatic corner speed control enabled
+<br>
+
+CORNER_MODE.3 = 1 '1 = Automatic radius speed control enabled
+<br>
+
+CORNER_MODE.4 = 1 '0 = FULL_SP_RADIUS acceleration; 1 = Centripetal
+acceleration
+<br>
+
+CORNER_MODE.5 = 1 '0 = Limit to FULL_SP_RADIUS; 1 = not exceed ACCEL
+<br>
+
+CORNER_MODE.6 = 1 '0 = Vector radius speed control off; 1 = on
+<br>
+
+
+<br>
+
+n = BUFFERSIZE
+<br>
+
+FORCE_SPEED = SPEED
+<br>
+
+
+<br>
+
+TRIGGER
+<br>
+
+WA(500)
+<br>
+
+
+<br>
+
+'Vector up, semi-circle, vector down, semi-circle (composed of many small
+vectors), vector up
+<br>
+
+MOVESP(0, 100)
+<br>
+
+MOVECIRCSP(2 * radius, 0, radius, 0, 1)
+<br>
+
+MOVESP(0, -100)
+<br>
+
+x0 = -radius
+<br>
+
+y0 = 0
+<br>
+
+FOR i = 1 TO n
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;angle = -PI * (n - i) / n
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;x = radius * COS(angle)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;y = radius * SIN(angle)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;MOVESP(x - x0, y - y0)
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;x0 = x
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;y0 = y
+<br>
+
+NEXT i
+<br>
+
+MOVESP(0, 100)
+<br>
+
+
+<br>
+
+WAIT IDLE
+<br>
+
+
+<br>
+
+WA(500)
+<br>
+
+CHANNEL_WRITE(9, &quot;%[USER] SCOPE DISARM&quot;)
+</p>
+<p>
+The oscilloscope trace produced by the above program is
+shown below and illustrates how the speed slows down in the same manner in both
+cases:
+</p>
+<p class="codeexample">
+<img border="0" width="891" height="465" id="Picture 1" src="CORNER_MODE_files/image001.png" alt="A screen shot of a computer screen&#10;&#10;Description automatically generated">
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ACCEL.html">ACCEL</a>
+, 
+<a href="AXIS_BLENDING.html">AXIS_BLENDING</a>
+,
+
+<a href="CORNER_STATE.html">CORNER_STATE</a>
+, 
+<a href="DECEL_ANGLE.html">DECEL_ANGLE</a>
+,
+
+<a href="FULL_SP_RADIUS.html">FULL_SP_RADIUS</a>
+, 
+<a href="RAISE_ANGLE.html">RAISE_ANGLE</a>
+,
+
+<a href="STOP_ANGLE.html">STOP_ANGLE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

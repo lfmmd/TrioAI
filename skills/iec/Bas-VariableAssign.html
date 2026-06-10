@@ -1,0 +1,206 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>:= Assignment</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="_Toc317749330"></a>
+<a name="O_1376"></a>
+:= Assignment</h1>
+<p class="Category">
+Operator
+</p>
+<p>
+Variable assignment.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any variable or complex expression
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Forced variable
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+The output variable and the input expression must have the
+same type. The forced variable cannot have the 
+<span class="Property">read only</span>
+attribute.&nbsp;In LD and FBD languages, the 1 block is available to perform a
+&quot;1 gain&quot; data copy. In LD language, the input rung (EN) enables the
+assignment, and the output rung keeps the state of the input rung. In IL
+language, the LD instruction loads the first operand, and the ST instruction
+stores the current result into a variable. The current result and the operand
+of ST must have the same type. Both LD and ST instructions can be modified by N
+in case of a Boolean operand for performing a Boolean negation.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+Q := IN; 
+<span class="CodeComment">(*
+copy IN into variable Q *)</span><br>
+
+Q := (IN1 + (IN2 / IN 3)) * IN4; 
+<span class="CodeComment">(* assign the result of a complex expression *)</span><br>
+
+result := SIN (angle); 
+<span class="CodeComment">(*
+assign a variable with the result of a function *)</span><br>
+
+time := MyTon.ET; 
+<span class="CodeComment">(*
+assign a variable with an output parameter of a function block *)</span></p>
+<h2>FBD Language</h2>
+<p>
+<img width="107" height="59" src="Bas-VariableAssign_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+The copy is executed only if EN is TRUE.
+<br>
+
+ENO has the same value as EN.
+<br>
+<img width="221" height="65" src="Bas-VariableAssign_files/image002.gif">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Bas-Parentheses.html">Parentheses</a>
+<a name="H_1177"></a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

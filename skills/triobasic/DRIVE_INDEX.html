@@ -1,0 +1,113 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_INDEX</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_INDEX">
+</head>
+<body>
+<h1>DRIVE_INDEX</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DRIVE_INDEX AXIS(n) = value
+</p>
+<h2>Description:</h2>
+<p class="note" style="margin-left:0cm">
+DRIVE_INDEX is used to map additional PDO parameters in the EtherCAT
+servo drive into VR variables. The value given is the base VR address for the
+mapping. The non-standard PDO parameters are mapped one per VR, starting with
+the first PDO parameter following the standard objects.
+</p>
+<p class="note" style="margin-left:0cm">
+This axis parameter can be added to the MC_CONFIG.
+</p>
+<p class="note">
+The EtherCAT drive must be configured with an application
+specific profile before this function can be used. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="473" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The VR index where incoming PDO data will be mapped
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Transfer application data to and from the drive cyclically
+in the PDO telegram. The EtherCAT axis is pre-configured for special
+application software to run in the drive.
+</p>
+<p class="codeexample">
+DRIVE_INDEX = 100
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Get incoming cyclic data
+<br>
+
+user_status_1 = VR(100)
+<br>
+
+user_status_2 = VR(101)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Set outgoing data 
+<br>
+
+VR(102) = user_control_word
+<br>
+
+VR(103) = winder_mode
+<br>
+
+VR(104) = ref_value_1
+<br>
+
+VR(105) = ref_value_2
+<br>
+
+VR(106) = correction_value
+<br>
+
+VR(107) = program_state
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

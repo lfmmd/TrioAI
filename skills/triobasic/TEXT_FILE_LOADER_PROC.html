@@ -1,0 +1,104 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TEXT_FILE_LOADER_PROC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TEXT_FILE_LOADER_PROC">
+</head>
+<body>
+<h1>TEXT_FILE_LOADER_PROC</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG)
+</p>
+<h2>Description:</h2>
+<p>
+When the TrioPC ActiveX starts a text file transfer to the 
+<i>Motion
+Coordinator</i>, the TEXT_FILE_LOADER_PROGRAM is started on the highest
+available process.  TEXT_FILE_LOADER _PROC can be set to specify a different
+process for the TEXT_FILE_LOADER _PROGRAM.  If the defined process is in use,
+then the next lower available process will be used.
+</p>
+<p class="note">
+TEXT_FILE_LOADER _PROC can be set in the MC_CONFIG script file.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Use the highest available process (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0 to max process
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Run on defined process
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example1:</h3>
+<p>
+Set TEXT_FILE_LOADER _PROGRAM to start on process 19 or
+lower (using the command line terminal).
+</p>
+<p class="codeexample">
+&gt;&gt; TEXT_FILE_LOADER_PROC = 19
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example2:</h3>
+<p>
+Remove the TEXT_FILE_LOADER _PROC setting so that TEXT_FILE_LOADER
+_PROGRAM starts on default process (using MC_CONFIG).
+</p>
+<p class="codeexample">
+'MC_CONFIG script file
+</p>
+<p class="codeexample">
+TEXT_FILE_LOADER_PROC = -1 'Start on default process on connection
+</p>
+<h2>See Also:</h2>
+<p class="codeexample">
+<a href="TEXT_FILE_LOADER.html">TEXT_FILE_LOADER</a>
+</p>
+</body>
+</html>

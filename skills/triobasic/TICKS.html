@@ -1,0 +1,54 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TICKS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TICKS">
+</head>
+<body>
+<h1>TICKS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Process Parameter
+</p>
+<h2>Description:</h2>
+<p>
+The current count of the process clock ticks is stored in
+this parameter. The process parameter is a 64-bit counter which is DECREMENTED
+on each servo cycle. It can therefore be used to measure cycle times, add time
+delays, etc. The TICKS parameter can be written to and read.
+</p>
+<p class="note">
+As TICKS is a process parameter each process will have its own
+counter. 
+</p>
+<h2>Value:</h2>
+<p>
+The value of the 64-bit counter
+</p>
+<h2>Example:</h2>
+<p>
+With 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+ set to
+1000 use TICKS for a 3 second delay
+</p>
+<p class="codeexample">
+delay:
+</p>
+<p class="codeexample">
+ TICKS = 3000
+</p>
+<p class="codeexample">
+ OP(9, ON)
+</p>
+<p class="codeexample">
+test:
+</p>
+<p class="codeexample">
+ IF TICKS &lt;= 0 THEN OP(9, OFF) ELSE GOTO
+test
+</p>
+</body>
+</html>

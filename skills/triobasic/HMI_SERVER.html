@@ -1,0 +1,1280 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HMI_SERVER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HMI_SERVER">
+</head>
+<body>
+<h1>HMI_SERVER</h1>
+<h2>Type: </h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+HMI_SERVER[(function[, parameters, ...])]
+</p>
+<h2>Description:</h2>
+<p>
+This command allows the Trio HMI Server to be controlled, configured,
+and interrogated from a TrioBASIC program.
+</p>
+<p>
+If there are no parameters then the function is 0, and the
+parameter is 0.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Function
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_0:">0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Run the HMI_SERVER protocol
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_1:">1</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read the HMI Client error data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_2:">2</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write the HMI_SERVER event flags
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_3:">3</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read the HMI_SERVER status data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_4:">4</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set the HMI poll timeout
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_5:">5</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read the HMI Client version information
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h1><a name="_Function_=_0:"></a>
+Function = 0:</h1>
+<h2>Syntax:</h2>
+<p class="fixed">
+HMI_SERVER
+</p>
+<p class="fixed">
+HMI_SERVER(0[, debug])
+</p>
+<h2>Description:</h2>
+<p>
+This function starts the HMI_SERVER protocol. This function
+never stops, so no TrioBASIC statement after this command in a program will be
+executed. 
+</p>
+<p class="tip">
+The HMI_SERVER program is normally started automatically when the
+HMI Client connects to the Motion Coordinator. You can call it manually if you
+wish to specify which process it should run on and whether it should print
+debug information. 
+</p>
+<p class="warning">
+If you execute HMI_SERVER manually the program it runs in will
+suspend at the HMI_SERVER line. The HMI_SERVER therefore should be the last line
+of the program to execute.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Debug
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No debug information
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Debug information printed to channel 0 (only use when
+  requested by Trio)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h1><a name="_Ref322074726"></a>
+<a name="_Function_=_1:"></a>
+Function = 1:</h1>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = HMI_SERVER(1, error_parameter)
+</p>
+<h2>Description:</h2>
+<p>
+When an error occurs in the HMI Client, this event is sent
+to the HMI Server if possible. This command will return the data about the last
+error that occurred in the HMI Client.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+error_parameter
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error number
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specific to the HMI Client operating system
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error string
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Specific to the HMI Client operating system
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error program
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+When applicable, the name of the program on the Motion
+  Coordinator with which the HMI Client was communicating when the error
+  occurred.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error process
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+When applicable, the process number of the program on
+  the Motion Coordinator with which the HMI Client was communicating when the
+  error occurred.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Report an error on the HMI Client
+</p>
+<p class="codeexample">
+'Check for error
+</p>
+<p class="codeexample">
+IF HMI_SERVER(1, 0) THEN
+</p>
+<p class="codeexample">
+    PRINT &quot;HMI Client reports error&quot;
+</p>
+<p class="codeexample">
+    
+PRINT &quot;HMI Error=&quot;; HMI_SERVER(1,
+0)
+</p>
+<p class="codeexample">
+    
+PRINT &quot;HMI
+Description=&quot;; HMI_SERVER(1, 1)
+</p>
+<p class="codeexample">
+    PRINT &quot;MC Program=&quot;; HMI_SERVER(1, 2)
+</p>
+<p class="codeexample">
+    PRINT &quot;MC Process=&quot;; HMI_SERVER(1, 3)
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h1><a name="_Function_=_2:"></a>
+Function = 2:</h1>
+<h2>Syntax:</h2>
+<p class="fixed">
+HMI_SERVER(2, parameter[, string[, client_ip]])
+</p>
+<h2>Description:</h2>
+<p>
+The HMI Server can inform the HMI Client that certain events
+have occurred. These events are used by MotionPerfectV3. The optional client_ip
+is currently ignored by the HMI_SERVER command. The string parameter depends on
+value of parameter.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No event
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The Motion Coordinator has an updated HMI Design file,
+  the HMI Client must request it. String is the name of the file on the Motion
+  Coordinator to be read.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Request that the HMI Client send its’ current
+  configuration file. String is the name on the Motion Coordinator of the file
+  to be written.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The Motion Coordinator has an updated HMI configuration
+  file, the HMI Client must request it. String is the name of the file on the
+  Motion Coordinator to be read.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The Motion Coordinator has an updated HMI Client
+  firmware file, the HMI Client must request it. String is the name of the file
+  on the Motion Coordinator to be read.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set the current page on the HMI Client, the next
+  parameters specifies the page name. String is the name of the page to be
+  selected.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_3:"></a>
+Example:</h2>
+<p>
+Automatically scroll through three pages at a time interval
+of 5 seconds. If a page is manually selected then hold a page for 30 seconds.
+The page value is set from the HMI to a value greater than 3 to put the page on
+manual mode. 
+</p>
+<p class="codeexample">
+page = 0
+</p>
+<p class="codeexample">
+page_time = 5000
+</p>
+<p class="codeexample">
+manual_time = 30000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WHILE(1)
+</p>
+<p class="codeexample">
+  IF page = 0 THEN
+</p>
+<p class="codeexample">
+    HMI_SERVER(2, 32, &quot;PAGE1&quot;)
+</p>
+<p class="codeexample">
+    page = 1
+</p>
+<p class="codeexample">
+    WA(page_time)
+</p>
+<p class="codeexample">
+  ELSEIF&nbsp;page = 1 THEN
+</p>
+<p class="codeexample">
+    HMI_SERVER(2, 32, &quot;PAGE2&quot;)
+</p>
+<p class="codeexample">
+    page = 2
+</p>
+<p class="codeexample">
+    WA(page_time)
+</p>
+<p class="codeexample">
+  ELSEIF&nbsp;page = 2 THEN
+</p>
+<p class="codeexample">
+    HMI_SERVER(2, 32, &quot;PAGE3&quot;)
+</p>
+<p class="codeexample">
+    page = 3
+</p>
+<p class="codeexample">
+    WA(page_time)
+</p>
+<p class="codeexample">
+  ELSE
+</p>
+<p class="codeexample">
+    'In manual mode
+</p>
+<p class="codeexample">
+    page = 0
+</p>
+<p class="codeexample">
+    TICKS = manual_time
+</p>
+<p class="codeexample">
+    WHILE TICKS&gt;0
+</p>
+<p class="codeexample">
+      IF page &lt;&gt; 0 THEN
+</p>
+<p class="codeexample">
+        TICKS = manual_time
+</p>
+<p class="codeexample">
+        page = 0
+</p>
+<p class="codeexample">
+      ENDIF
+</p>
+<p class="codeexample">
+      WA(1)
+</p>
+<p class="codeexample">
+    WEND
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h1>Function = 3:</h1>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = HMI_SERVER(3, parameter, return_type)
+</p>
+<h2>Description:</h2>
+<p>
+Read the HMI Client status information. 
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="7" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter
+</p>
+
+  
+</td>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Client status:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Disconnected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Connected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI page loaded
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Running
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+In error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Current HMI Design page
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+return_type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+String
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h1><a name="_Function_=_4:"></a>
+Function = 4:</h1>
+<h2>Syntax:</h2>
+<p class="fixed">
+HMI_SERVER(4, parameter)
+</p>
+<h2>Description:</h2>
+<p>
+Set the number of milliseconds without activity that the HMI
+Server will wait before aborting a client connection.
+</p>
+<h1><a name="_Function_=_5:"></a>
+Function = 5:</h1>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = HMI_SERVER(5, parameter)
+</p>
+<h2>Description:</h2>
+<p>
+Return the HMI Client description. The HMI Client sends this
+data to the HMI Server during the protocol initialisation.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="13" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+parameter
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Client Engine major version number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Client Engine minor version number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Client Communications Protocol major version number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Client Communications Protocol minor version number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Client OS ID:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Windows CE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Windows Desktop
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Client OS Version:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 0-15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Minor number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 16-31
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Major number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HMI Client Canvas Size:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 0-15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Width in pixels
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 16-31
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Height in pixels
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>See Also:</h2>
+<p>
+<a href="HMI_CONNECTIONS.html">HMI_CONNECTIONS</a>
+, 
+<a href="HMI_GET_PAGE.html">HMI_GET_PAGE</a>
+, 
+<a href="HMI_GET_STATUS.html">HMI_GET_STATUS</a>
+, 
+
+<a href="HMI_SET_PAGE.html">HMI_SET_PAGE</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

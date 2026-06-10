@@ -1,0 +1,316 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REGIST_CONTROL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REGIST_CONTROL">
+</head>
+<body>
+<h1>REGIST_CONTROL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+REGIST_CONTROL = value
+</p>
+<p class="fixed">
+Variable = REGIST_CONTROL
+</p>
+<h2>Description:</h2>
+<p>
+Read or set the low-level bit pattern in the registration control
+register. REGIST_CONTROL is an 8-bit axis parameter that conforms to the
+standard use of BASE and the AXIS modifier.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p>
+Chan A
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Input (1) or Z-mark (0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Not used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Enable
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Falling (1) or rising (0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p>
+Chan B
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Input (1) or Z-mark (0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Not used
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Enable
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Falling (1) or rising (0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<h4>Example 1:</h4>
+<p>
+Set up registration on falling edge channel B using REGIST
+function 20. Then check that the registration mode has been set correctly.
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+REGIST(20, 1, 0, 1, 0)
+</p>
+<p class="codeexample">
+IF REGIST_CONTROL.4 = 1 THEN PRINT &quot;Input
+selected&quot;
+</p>
+<p class="codeexample">
+IF REGIST_CONTROL.6 = 1 THEN PRINT &quot;Registration
+enabled&quot;
+</p>
+<p class="codeexample">
+IF REGIST_CONTROL.7 = 1 THEN PRINT &quot;Falling edge
+selected&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h4>Example 2:</h4>
+<p>
+Disable a registration channel so that any signal received
+will NOT cause the mark to be TRUE and will NOT store a REG_POS.
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+REGIST_CONTROL.2 = 0 'Disable channel A regist but leave
+channel B active
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MARK.html">MARK</a>
+, 
+<a href="MARKB.html">MARKB</a>
+,
+
+<a href="REG_POS.html">REG_POS</a>
+, 
+<a href="REG_POSB.html">REG_POSB</a>
+, 
+<a href="REGIST.html">REGIST</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

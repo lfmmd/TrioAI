@@ -1,0 +1,279 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Automatic Update of System Functions and Function Blocks</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Automatic Update of System Functions and Function Blocks</h1>
+<p>
+Each firmware version supports a fixed set of IEC 61131-3
+functions and function blocks. The set of supported functions and function
+blocks is installed by 
+<i>Motion</i> Perfect setup on the PC, because it needs
+this set when compiling IEC 61131-3 tasks in a project.
+</p>
+<p>
+When new functions and function blocks are added in the
+controller firmware, the set of supported functions and function blocks needs
+to be updated, and this usually happens by installing a newer version of 
+<i>Motion</i>
+Perfect. However, with the latest 
+<i>Motion</i> Perfect version and controller
+firmware starting with v2.0274, there is an automated update mechanism, which
+allows 
+<i>Motion</i> Perfect to download the set of supported functions and
+function blocks from the controller to the PC.
+</p>
+<p>
+When 
+<i>Motion</i> Perfect detects that the remote
+(controller) version of the supported functions set is more recent than the
+local (PC), it displays the following dialog:
+</p>
+<p>
+<img width="424" height="400" src="AutomaticUpdateOfSystemFunctionsAndFunctionBlocks_files/image001.png" align="left">
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Command
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Download &amp; Install Now
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Download definitions and install them. Motion Perfect
+  restarts automatically to complete the update procedure.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Download &amp; Install Later
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Download definitions. They will be installed the next
+  time Motion Perfect is started.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancel
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Do not update. 
+<a name="__DdeLink__137_763880267"></a>
+This
+  message will be displayed again the next time Motion Perfect connects in Sync
+  mode to a controller and detects that the controller definitions are more up
+  to date.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+When “Download &amp; Install Now” or “Download &amp; Install
+Later” is chosen, 
+<i>Motion</i> Perfect starts downloading on the PC the set of
+supported functions and function blocks.
+</p>
+<p>
+<img width="263" height="101" id="Image2" src="AutomaticUpdateOfSystemFunctionsAndFunctionBlocks_files/image002.png">
+</p>
+<p>
+When the transfer has completed and the option “Download
+&amp; Install Now” has been chosen, a message to restart 
+<i>Motion</i> Perfect
+is displayed.
+</p>
+<p>
+<img width="345" height="164" id="Image3" src="AutomaticUpdateOfSystemFunctionsAndFunctionBlocks_files/image003.png">
+</p>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Command
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+OK
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Motion Perfect restarts automatically and updates are installed.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="108" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cancel
+</p>
+
+  
+</td>
+<td width="540" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The update procedure is canceled. The update message
+  will be displayed again the next time Motion Perfect connects in Sync mode to
+  a controller and detects that the controller definitions are more up to date.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

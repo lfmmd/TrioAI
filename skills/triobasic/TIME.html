@@ -1,0 +1,103 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TIME</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TIME">
+</head>
+<body>
+<h1>TIME</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter 
+</p>
+<h2>Description:</h2>
+<p>
+Allows the user to set and read the time from the real time
+clock.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="482" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read = the number of seconds since midnight (24:00
+  hours)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="482" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write = the time in 24hour format hh:mm:ss
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Sets the real time clock in 24 hour format; hh:mm:ss
+</p>
+<p class="codeexample">
+'Set the real time clock
+</p>
+<p class="codeexample">
+&gt;&gt;TIME = 13:20:00
+</p>
+<h3>Example 2:</h3>
+<p>
+Calculate elapsed time in seconds.
+</p>
+<p class="codeexample">
+time1 = TIME
+</p>
+<p class="codeexample">
+‘wait for event
+</p>
+<p class="codeexample">
+time2 = TIME
+</p>
+<p class="codeexample">
+timeelapsed = time1 - time2
+</p>
+<h3>Example 3:</h3>
+<p>
+Set the time from within a BASIC program.
+</p>
+<p class="codeexample">
+hh = 15
+</p>
+<p class="codeexample">
+mm = 23
+</p>
+<p class="codeexample">
+ss = 30
+</p>
+<p class="codeexample">
+TIME = hh:mm:ss
+</p>
+<h2>See also:</h2>
+<p>
+<a href="TIME$.html">TIME$</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

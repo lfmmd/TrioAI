@@ -1,0 +1,94 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IN_POS_SPEED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IN_POS_SPEED">
+</head>
+<body>
+<h1>IN_POS_SPEED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+IN_POS_SPEED AXIS(n) = &lt;value&gt;
+</p>
+<h2>Description:</h2>
+<p>
+This axis parameter is a speed, scaled using axis UNITS,
+indicating the required minimum measured speed before IN_POS signals that the
+axis move has finished and that the axis is in position. 
+</p>
+<p class="tip">
+The IN_POS_SPEED defaults to zero. Reaching zero position and
+speed error may take considerable time or not happen if this parameter is not
+set. 
+</p>
+<h2>Value:</h2>
+<p>
+The speed value in the units set for the axis
+</p>
+<h2>Example:</h2>
+<p>
+Make a move and wait for the axis to be in position before
+continuing.
+</p>
+<p class="codeexample">
+BASE(0) 
+<br>
+
+SERVO=ON 
+<br>
+
+UNITS=100000 
+<br>
+
+SPEED=5 
+<br>
+
+ACCEL=50
+<br>
+
+DECEL=50 
+<br>
+
+
+<br>
+
+IN_POS_DIST=0.002 
+<br>
+
+IN_POS_SPEED=0.1 
+<br>
+
+REPEAT 
+<br>
+
+TRIGGER 
+<br>
+
+  MOVE(1) 
+<br>
+
+  WAIT IN_POS 
+<br>
+
+  WA(50) 
+<br>
+
+UNTIL FALSE 
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="IN_POS.html">IN_POS</a>
+, 
+<a href="IN_POS_DIST.html">IN_POS_DIST</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

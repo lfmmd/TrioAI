@@ -1,0 +1,112 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_REP_DIST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_REP_DIST">
+</head>
+<body>
+<h1>DRIVE_REP_DIST</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Sets the wrap-around value that the axis is expecting from
+an EtherCAT or RTEX servodrive.  The default axis roll-over is at 2
+<sup>32</sup>
+as this is the data size for cyclic position transfers over the fieldbus, but
+if the drive or encoder wrap at a lower number than this, it will create an
+axis error if the Motion Coordinator is expecting the axis to continue counting
+up.
+</p>
+<p>
+The DRIVE_REP_DIST should be set in cases where the motor
+has a multi-turn absolute encoder fitted and the drive has been set up to roll-over
+to 0 at some position lower than 2
+<sup>32</sup>.  The value of DRIVE_REP_DIST
+must be the same as the position roll-over that is set in the drive or fieldbus
+encoder.
+</p>
+<p>
+This parameter enables the axis in the controller to
+coordinate the actual position reset to 0 with the remote device.  
+</p>
+<p class="warning">
+Do not use DRIVE_REP_DIST when the actual position value sent
+in the cyclic data from the drive or encoder counts up to the full 32 bit
+value.  Check the drive manual and settings.
+</p>
+<h2>Value:</h2>
+<p>
+The value at which the position actual value will reset to 0. 
+DRIVE_REP_DIST works with the ENCODER value and is always in encoder counts.
+</p>
+<h2>Example:</h2>
+<h3>Example1</h3>
+<p>
+An absolute encoder on the motor has 23 bits per turn and
+the motor is connected to a turntable through a 10:1 gearbox.  The drive has
+been set up to reset the position actual value at 10 turns of the motor.
+</p>
+<p class="codeexample">
+BASE(4)
+<br>
+
+' One turn 2^23 = 8388608
+<br>
+
+' 10 turns = 83886080
+<br>
+
+DRIVE_REP_DIST = 83886080
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+' Now set up units to scale the axis in degrees of the
+<br>
+
+' turntable.
+</p>
+<p class="codeexample">
+UNITS = 83886080 / 360
+<br>
+
+
+<br>
+
+' Set the axis repeat distance and mode to match the
+<br>
+
+' position roll-over. (these parameters affect MPOS)
+<br>
+
+REP_DIST = 360
+<br>
+
+REP_OPTION = 1
+</p>
+<h2>See also:</h2>
+<p>
+<a href="ENCODER.html">ENCODER</a>
+, 
+<a href="ENCODER_BITS.html">ENCODER_BITS</a>
+, 
+<a href="REP_DIST.html">REP_DIST</a>
+,
+
+<a href="REP_OPTION.html">REP_OPTION</a>
+, 
+<a href="MPOS.html">MPOS</a>
+, 
+<a href="DPOS.html">DPOS</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

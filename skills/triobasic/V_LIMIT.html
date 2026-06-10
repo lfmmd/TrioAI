@@ -1,0 +1,108 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>V_LIMIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="V_LIMIT">
+</head>
+<body>
+<h1>V_LIMIT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+V_LIMIT AXIS(n) = value
+</p>
+<h2>Description:</h2>
+<p>
+This parameter sets a speed limit for an axis such that the
+vector path speed is reduced as required to ensure that the speed of each axis
+with a limit set does not exceed its limit.
+</p>
+<p>
+When used with the MOVECIRC and MOVECIRCSP commands, the
+path speed is constant around the circumference, the rate being determined from
+the lowest V_LIMIT for each axis in the move.
+</p>
+<p class="warning">
+This parameter is supported by VP_MODE = 0 and VP_MODE = 6,
+but not by VP_MODE = 5.
+</p>
+<h2>Value:</h2>
+<p>
+The maximum speed allowed for the specific axis in user 
+<a href="UNITS.html">UNITS</a>
+, or a value less than or equal to zero to disable
+the speed limit.
+</p>
+<h2>Examples:</h2>
+<p>
+Set up an axis speed limits so that the x-axis operates at
+no more than 40&nbsp;mm/s and the y-axis operates at no more than 80&nbsp;mm/s.
+
+</p>
+<p class="codeexample">
+DIM x AS INTEGER = 0
+</p>
+<p class="codeexample">
+DIM y AS INTEGER = 1
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+V_LIMIT AXIS(x) = 40
+</p>
+<p class="codeexample">
+V_LIMIT AXIS(y) = 80
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(x, y)
+</p>
+<p class="codeexample">
+SPEED = 200
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVE(0, 500) 'This moves along the y-axis, so moves at 80
+mm/s
+</p>
+<p class="codeexample">
+WA(100)
+</p>
+<p class="codeexample">
+MOVE(500, 0) 'This moves along the x-axis, so moves at 40
+mm/s
+</p>
+<p class="codeexample">
+WA(10)
+</p>
+<p class="codeexample">
+MOVE(500, 500) 'This moves at 45 degrees so 
+<a href="VP_SPEED.html">VP_SPEED</a>
+ is 56.5685 mm/s
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="MOVE.html">MOVE</a>
+, 
+<a href="MOVESP.html">MOVESP</a>
+,
+
+<a href="MOVEABS.html">MOVEABS</a>
+, 
+<a href="MOVEABSSP.html">MOVEABSSP</a>
+</p>
+</body>
+</html>

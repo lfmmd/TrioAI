@@ -1,0 +1,3369 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FILLET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FILLET">
+</head>
+<body>
+<h1>FILLET</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+FILLET(data_in, data_out, options)
+</p>
+<h2>Description:</h2>
+<p>
+The FILLET function has 2 calculation functions:
+</p>
+<p>
+The first determines the dimensions of an arc that fillets
+or blends two 3-D vectors together 
+</p>
+<p>
+The second determines the dimensions of two 2D arcs that
+blends 2 points with directions
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data_in:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Location of the input data in TABLE memory.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+data_out:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Location of the output data in TABLE memory.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+options:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Used to calculate the arc between 2 straight lines in
+  3D.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Calculates a pair of arcs between 2 points with
+  directions.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Calculate the “dot product” and mid vector from 2 x 3D
+  vector.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Fillet 2D line and 2D arc with 1 arc.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Option = 0</h2>
+<h3>Description:</h3>
+<p>
+The function calculates the start, end, midpoint and centre
+of the 3D arc. The arc may easily be converted into motion using the 
+<a href="MSPHERICAL.html">MSPHERICAL</a>
+ command.
+</p>
+<p class="warning">
+FILLET only works in system version 2.0220 and higher which
+outputs 19 data values including the fillet angle and fillet length. 
+</p>
+<h3>Parameters:</h3>
+<p>
+Input data: (7 data values required) 
+</p>
+<p class="Default">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="7" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+x vector A
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+y vector A
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+z vector A
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+x vector B
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+y vector B
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+z vector B
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+radius
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="Default">
+&nbsp;
+</p>
+<p>
+Output data: (19 data values are output).
+</p>
+<p class="Default">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="19" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+x A remain
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+y A remain
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+z A remain
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end x
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+end z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mid x
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mid y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mid z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centre x
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centre y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+11
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+centre z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+12
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+13
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+output radius
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+14
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+x B remain
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+y B remain
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+z B remain
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+17
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+angle change
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+18
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+fillet length
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+A remain: the XYZ position of the start of arc relative to
+the start of the incoming vector.
+</p>
+<p>
+Mid: the XYZ position of a mid-point on the fillet arc
+relative to the start of arc. 
+</p>
+<p>
+Centre: the XYZ position of the arc centre relative to the
+start of arc.
+</p>
+<p>
+Error: set to 0 if no error, 1 = one or both vectors is zero
+length, 2 = vectors are co-linear. 
+</p>
+<p>
+Output radius: If the vectors are not long enough to allow
+the requested radius to be filleted (taking into account the options value) the
+output radius value will show the maximum possible otherwise will reflect the
+input radius.
+</p>
+<p>
+B remain: the XYZ position of the end of the outgoing vector
+relative to the end of the arc.
+</p>
+<h2>Example:</h2>
+<p>
+Calculate the fillet of two 3D vectors and represent them by
+MOVE command for the vectors and MSPHERICAL for the fillet.
+</p>
+<p>
+<img border="0" width="289" height="223" id="Picture 3" src="FILLET_files/image001.png">
+</p>
+<p>
+&nbsp;
+</p>
+<p class="codeexample">
+DEFPOS(150, 0, 0) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TRIGGER TABLE(100, -150, 0, 0) 
+</p>
+<p class="codeexample">
+TABLE(103, 50, 200, 100, 70)
+</p>
+<p class="codeexample">
+ 
+</p>
+<p class="codeexample">
+FILLET(100, 200, 0) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+xin = TABLE(200): yin = TABLE(201): zin = TABLE(202)
+</p>
+<p class="codeexample">
+ 
+</p>
+<p class="codeexample">
+MOVE(xin, yin, zin) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+xend = TABLE(203): yend = TABLE(204): zend = TABLE(205)
+</p>
+<p class="codeexample">
+xmid = TABLE(206): ymid = TABLE(207): zmid = TABLE(208)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MSPHERICAL(xend, yend, zend, xmid, ymid, zmid, 0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+xout = TABLE(214): yout = TABLE(215): zout = TABLE(216)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVE(xout, yout, zout) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+fillet_ang = TABLE(217): fillet_len = TABLE(218) 
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+PRINT fillet_ang, fillet_len
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>Option = 1</h2>
+<h3>Description:</h3>
+<p>
+The function calculates the start, end and centre of 2 arcs.
+The arc may be easily converted into motion using 
+<a href="MOVECIRC.html">MOVECIRC</a>
+
+or 
+<a href="MSPHERICAL.html">MSPHERICAL</a>
+ commands. 
+</p>
+<h3>Parameters:</h3>
+<p>
+Input data: (10 data values required).
+</p>
+<p class="Default">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" rowspan="10" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+0
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X value point A 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+1
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y value point A 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+2
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X direction point A 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+3
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y direction point A 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+4
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X value point B 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+5
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y value point B 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+6
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X direction point B 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+7
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y direction point B 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+8
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Radius control (Set to 0 to allow FILLET to calculate
+  the largest possible radius) 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+9
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Arc direction mode control:
+</p>
+
+  
+<p class="tablecontent">
+0 – Use shortest route
+<br>
+
+  1 – LEFT TURN – LEFT TURN arc forced
+<br>
+
+  2 – RIGHT TURN – RIGHT TURN arc forced
+<br>
+
+  3 – LEFT TURN then RIGHT TURN arc forced
+<br>
+
+  4 – RIGHT TURN then LEFT TURN arc forced
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<p>
+The direction at a point is specified using a pair of ±
+incremental values. This need not be normalised to a length of 1 by the user.
+For example a direction along the X axis can be specified as (1, 0) a direction
+in the negative X direction would be (-1, 0). A direction along the Y axis
+would be (0, 1). Considering an angle to be the ±PI angle from the Y axis. The
+direction is (sin(angle), cos(angle)). 
+</p>
+<p class="Default">
+&nbsp;
+</p>
+<p>
+Output data: (18 data values are output).
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="85" rowspan="18" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+0
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit 0 – Arc A Direction
+<br>
+
+  Bit 1 – Arc B Direction
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+1
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 – LEFT TURN arc A then LEFT TURN arc B
+<br>
+
+  2 – RIGHT TURN arc A then RIGHT TURN arc B
+<br>
+
+  3 – LEFT TURN arc A then RIGHT TURN arc B
+<br>
+
+  4 – RIGHT TURN arc A then LEFT TURN arc B
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+2
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X end position relative to start arc A 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+3
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y end position relative to start arc A
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+4
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X centre position relative to start arc A 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+5
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y centre position relative to start arc A 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+6
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X increment linking linear move (0 if radius unlimited)
+  
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+7
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y increment linking linear move (0 if radius unlimited)
+  
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+8
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X end position relative to start arc B 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+9
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y end position relative to start arc B 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+10
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X centre position relative to start arc B
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+11
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y centre position relative to start arc B
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+12
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error, 0 = no error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+13
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Arc A Length
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+14
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Linking Move Length
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+15
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Arc B Length                                      
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+16
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Total Length
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+17
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Radius calculated.  If the radius is limited by the
+  “radius control” input this value will be set to the limit radius.  
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2>Example:</h2>
+<p>
+Calculate the dimensions of two arcs that blends two points
+with directions and represent them by MCIRCLE command.
+</p>
+<p>
+<img border="0" width="182" height="157" src="FILLET_files/image002.png">
+</p>
+<p class="codeexample">
+max_r = 20
+<br>
+
+dir_o = 0
+<br>
+
+
+<br>
+
+TABLE(3000, 100, 100, 1, 0, 160, 10, 5, 5, max_r, dir_o)
+<br>
+
+
+<br>
+
+FILLET(3000, 3200, 1)
+<br>
+
+
+<br>
+
+IF TABLE(3212) THEN
+<br>
+
+    PRINT &quot;Error in data&quot;
+<br>
+
+    STOP
+<br>
+
+ENDIF
+<br>
+
+
+<br>
+
+direc1 = TABLE(3200).0
+<br>
+
+direc2 = TABLE(3200).1
+<br>
+
+
+<br>
+
+end1x = TABLE(3202)
+<br>
+
+end1y = TABLE(3203)
+<br>
+
+cen1x = TABLE(3204)
+<br>
+
+cen1y = TABLE(3205)
+<br>
+
+
+<br>
+
+px = TABLE(3206)
+<br>
+
+py = TABLE(3207)
+<br>
+
+
+<br>
+
+end2x = TABLE(3208)
+<br>
+
+end2y = TABLE(3209)
+<br>
+
+cen2x = TABLE(3210)
+<br>
+
+cen2y = TABLE(3211)
+<br>
+
+
+<br>
+
+arc1len = TABLE(3213)
+<br>
+
+midlen = TABLE(3214)
+<br>
+
+arc2len = TABLE(3215)
+<br>
+
+
+<br>
+
+TRIGGER
+<br>
+
+IF arc1len &gt; 0 THEN MOVECIRC(end1x, end1y, cen1x, cen1y, direc1)
+<br>
+
+IF midlen &gt; 0 THEN MOVE(px, py)
+<br>
+
+IF arc2len &gt; 0 THEN MOVECIRC(end2x, end2y, cen2x, cen2y, direc2)
+<br>
+
+
+<br>
+
+WAIT IDLE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>Option = 2</h2>
+<h3>Description:</h3>
+<p>
+Fillet option 2 generates the “Dot Product” of 2 x 3D
+vectors. This can be useful to determine many things including if the vectors
+are going in the same or opposite directions. Note that the dot product will be
+1 if the vectors are in the same direction and -1 if the vectors are in
+opposite directions.
+</p>
+<h3>Parameters:</h3>
+<p>
+Input data: (6 data values required).
+</p>
+<p class="Default">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+0
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X vector A 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+1
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y vector A
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+2
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z vector A
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+3
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X vector B 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+4
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y vector B
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+5
+</p>
+
+  
+</td>
+<td width="424" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z vector B
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+Output data: (13 data values are output).
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="85" rowspan="13" valign="top" class="tablegrid">
+
+  
+<p>
+Table data
+</p>
+
+  
+</td>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+0
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Mid vector X: Sum of 0.5 Norm. 
+Vector A X +
+  0.5 Norm. Vector B X
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+1
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Mid vector Y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+2
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Mid vector Z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+3
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Normalised A vector X
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+4
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Normalised A vector Y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+5
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Normalised A vector Z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+6
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Normalised B vector X
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+7
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Normalised B vector Y
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+8
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Normalised B vector Z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+9
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Dot product 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+10
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Length vector A
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+11
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Length vector B
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="38" valign="top" class="tablegrid">
+
+  
+<p align="center">
+12
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p>
+Error: 1 if either vector has zero length,  0 if both
+  vectors non zero length
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p align="left" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TABLE(100, 10, 0, 0, 0, -5,5)
+<br>
+
+FILLET(100, 200, 2)
+<br>
+
+
+<br>
+
+FOR t = 200 TO 212
+<br>
+
+   PRINT t, TABLE(t)
+<br>
+
+NEXT t
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+Output from example program:
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+200.0000     0.5000
+<br>
+
+201.0000     -0.3536
+<br>
+
+202.0000     0.3536
+<br>
+
+203.0000     1.0000
+<br>
+
+204.0000     0.0000
+<br>
+
+205.0000     0.0000
+<br>
+
+206.0000     0.0000
+<br>
+
+207.0000     -0.7071
+<br>
+
+208.0000     0.7071
+<br>
+
+209.0000     0.0000
+<br>
+
+210.0000     10.0000
+<br>
+
+211.0000     7.0711
+<br>
+
+212.0000     0.0000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>Option = 3</h2>
+<h3>Description:</h3>
+<p>
+The intersection between a line and an arc could be filleted
+with another arc. Different options are available like arc radius, direction or
+maximum radius.
+</p>
+<h3>Parameters:</h3>
+<p>
+Input data: (11 data values required).
+</p>
+<p class="Default">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" rowspan="11" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+0
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+X point A
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+First point of the vector.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+1
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Y point A
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+2
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+X point B
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Second point of the vector and start of the given arc.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+3
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Y point B
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+4
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+X point C
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Centre of the given arc.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+5
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Y point C
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+6
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+X point D
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+End point of the given arc. This point does not necessary
+  need to be exactly on the given arc.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+7
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Y point D
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+8
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Direction
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Direction of the given arc.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+9
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Fillet radius
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Fillet radius requested.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+10
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Max radius option
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+If 1 the function will calculate the maximum possible
+  radius if the requested radius is not achievable.  If 0 an unachievable
+  radius will generate an error.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<p align="center">
+<img border="0" width="410" height="410" id="Picture 1" src="FILLET_files/image003.png" alt="fillet_arc overview">
+</p>
+<p>
+Output data: (14 data values are output).
+</p>
+<p class="warning">
+All the values are relative position.
+</p>
+<p class="Default">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" rowspan="10" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table data
+</p>
+
+  
+</td>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+0
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Start fillet arc X
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+X position of the start of fillet arc
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+1
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Start fillet arc Y
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Y position of the start of fillet arc
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+2
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Mid fillet arc X
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+X position of the middle point of the fillet arc relative
+  to the start of the fillet arc
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+3
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Mid fillet arc Y
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Y position of the middle point of the fillet arc relative
+  to the start of the fillet arc
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+4
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+End fillet arc X
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+X position of the end of fillet arc relative to the start
+  of the fillet arc
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+5
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+End fillet arc Y
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Y position of the end of fillet arc relative to the start
+  of the fillet arc
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+6
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Centre fillet arc X
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+X position of the centre of fillet arc relative to the
+  start of the fillet arc
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+7
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Centre fillet arc Y
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Y position of the centre of fillet arc relative to the
+  start of the fillet arc
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+8
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Fillet radius
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+If the radius is not achievable and the “Max radius
+  option”=1, the radius achieved is returned here.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+9
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Fillet direction
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Direction of the fillet
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+10
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Line length
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Line length from A point to start fillet point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+11
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Fillet length
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+12
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Arc length
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+Arc length from end fillet point to end arc point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="30" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+13
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p>
+Error value
+</p>
+
+  
+</td>
+<td width="293" valign="top" class="tablegrid">
+
+  
+<p>
+0: No error.
+</p>
+
+  
+<p>
+1: Given line is tangent to the given arc.
+</p>
+
+  
+<p>
+2: The fillet radius is bigger than the given arc allows.
+</p>
+
+  
+<p>
+3: The fillet radius is bigger than the maximum allowed.
+</p>
+
+  
+<p>
+4: The given line is too short for the fillet radius
+  requested.
+</p>
+
+  
+<p>
+5: The given arc is too short for the fillet radius
+  requested.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p align="left">
+&nbsp;
+</p>
+<h2>Example:</h2>
+<p class="code">
+FOR x = 0 TO 1
+<br>
+
+  BASE(x)
+<br>
+
+  ATYPE = 0
+<br>
+
+  UNITS = 100
+<br>
+
+  ACCEL = 10000
+<br>
+
+  DECEL = ACCEL
+<br>
+
+  SERVO = ON
+<br>
+
+  SPEED = 400
+<br>
+
+NEXT x
+<br>
+
+
+<br>
+
+BASE(0, 1)
+<br>
+
+ax = 0
+<br>
+
+ay = -2
+<br>
+
+bx = 0.5
+<br>
+
+by = 0
+<br>
+
+cx = 1
+<br>
+
+cy = 1
+<br>
+
+dx = -4
+<br>
+
+dy = 2
+<br>
+
+filletr = 1
+<br>
+
+direction=0
+<br>
+
+
+<br>
+
+TABLE(3000, ax, ay, bx, by, cx, cy, dx, dy, filletr, direction, 1)
+<br>
+
+DEFPOS(ax, ay)
+<br>
+
+WA(50)
+<br>
+
+
+<br>
+
+TICKS = 0
+<br>
+
+FILLET(3000, 3011, 3)
+<br>
+
+PRINT TICKS
+<br>
+
+
+<br>
+
+err = TABLE(3011 + 7)
+<br>
+
+
+<br>
+
+xin = TABLE(3011): yin = TABLE(3012)
+<br>
+
+xend = TABLE(3013): yend = TABLE(3014)
+<br>
+
+xcentre = TABLE(3015): ycentre = TABLE(3016)
+<br>
+
+
+<br>
+
+TRIGGER 'Start scope
+<br>
+
+
+<br>
+
+MOVEABS(xin, yin)
+<br>
+
+
+<br>
+
+MOVECIRC(xend, yend, xcentre, ycentre, 1)
+<br>
+
+WAIT IDLE
+<br>
+
+eb0 = ENDMOVE_BUFFER AXIS(0)
+<br>
+
+eb1 = ENDMOVE_BUFFER AXIS(1)
+<br>
+
+
+<br>
+
+PRINT eb0, eb1
+<br>
+
+PRINT dx - eb0, dy - eb1, cx - eb0, cy - eb1, direction
+<br>
+
+MOVECIRC(dx - eb0, dy - eb1, cx - eb0, cy - eb1, direction)
+<br>
+
+
+<br>
+
+WA(2000)
+<br>
+
+STOP
+<br>
+
+
+<br>
+
+
+</p>
+<p>
+The intersection between the given line and given arc is
+outside. There are two options: clockwise and anticlockwise.
+</p>
+<p align="left" style="margin-left:0cm">
+<img width="155" height="263" src="FILLET_files/image004.png" align="left" hspace="12" vspace="5" alt="Input values:&#13;&#10;ax = 0&#13;&#10;ay = -2&#13;&#10;bx = 0.5&#13;&#10;by = 0&#13;&#10;cx = 1&#13;&#10;cy = 1&#13;&#10;dx = -4&#13;&#10;dy = 2&#13;&#10;direction = 0&#13;&#10;filletr = 1&#13;&#10;">
+<b><span style='font-family:"Courier New"'><img border="0" width="410" height="410" id="Picture 2" src="FILLET_files/image005.png" alt="fillet_arc-001">
+</span></b></p>
+<p class="code">
+&nbsp;
+</p>
+<p>
+The intersection between the given line and given arc is
+inside.
+</p>
+<p>
+<img width="154" height="240" src="FILLET_files/image006.png" align="left" hspace="12" vspace="5" alt="Input values:&#13;&#10;ax = 0&#13;&#10;ay = -2&#13;&#10;bx = 1.5&#13;&#10;by = 2&#13;&#10;cx = 1&#13;&#10;cy = 1&#13;&#10;dx = -4&#13;&#10;dy = 2&#13;&#10;direction = 0&#13;&#10;filletr = 0.2&#13;&#10;">
+<img border="0" width="410" height="410" id="Picture 4" src="FILLET_files/image007.png" alt="fillet_arc-003">
+</p>
+<p class="code">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,1739 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CHANNEL_TRANSACT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CHANNEL_TRANSACT">
+</head>
+
+
+
+<body>
+<h1>CHANNEL_TRANSACT</h1>
+<h2>Type: </h2>
+<p class="Category">
+File Function
+</p>
+<h3>Syntax:</h3>
+<p class="fixed">
+x = CHANNEL_TRANSACT(function, ...)
+</p>
+<h2>Description:</h2>
+<p>
+CHANNEL_TRANSACT will set up a communication channel between
+2 Motion Coordinators using the UDP protocol over Ethernet.
+</p>
+<p>
+The functionality is separated into 2 parts: server, and
+client. The server is started by the CHANNEL_TRANSACT(0, ...) function, and
+processes all the received packets until stopped by the CHANNEL_TRANSACT(1)
+function. The CHANNEL_TRANSACT server will accept any TrioBASIC file channel,
+however it only makes sense to use a UDP, TCP, or FIFO file channel.
+</p>
+<p>
+A CHANNEL_TRANSACT packet can be at most 1024 bytes long.
+</p>
+<p>
+A CHANNEL_TRANSACT packet has the following structure (all
+multibyte values are big-endian):
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="58" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bytes
+</p>
+
+  
+</td>
+<td width="535" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="535" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SOH (ASCII character 0x01)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" rowspan="13" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td width="535" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Packet header. SOH, STX, ETX, and ESC characters are
+  escaped by sending an ESC character followed by the character to be escaped
+  plus 0x20.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bytes
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Packet version number (0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Packet number (0, 1, 2, 3, ...)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data format. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Format
+</p>
+
+  
+</td>
+<td width="335" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="335" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="335" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="335" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="335" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64-bit IEEE floating point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Destination storage 
+area (0 -&gt; VR, 1
+  -&gt; TABLE)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Destination storage start
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of data points remaining to be sent. Not
+  necessarily the number of data points in this packet. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="535" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+STX (ASCII character 0x02)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+length
+</p>
+
+  
+</td>
+<td width="535" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data.
+</p>
+
+  
+<p class="tablecontent">
+Length is the number of data points in this packet multiplied
+  by the number of bytes required to store the data format.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data format
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Length
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of data points
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of data points * 4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of data points * 8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="100" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="435" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of data points * 8
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="535" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ETX (ASCII character 0x03)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="535" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Last packet
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value
+</p>
+
+  
+</td>
+<td width="476" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="476" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This is the last packet required to transfer all the
+  data points
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="476" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+There are more packets to come.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="58" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="535" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EOT (ASCII character 0x04)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr height="0">
+
+  
+<td width="58">
+</td>
+
+  
+<td width="58">
+</td>
+
+  
+<td width="42">
+</td>
+
+  
+<td width="100">
+</td>
+
+  
+<td width="335">
+</td>
+
+ 
+</tr>
+
+
+</table>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Function:
+</p>
+
+  
+</td>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start CHANNEL_TRANSACT server
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Stop CHANNEL_TRANSACT server
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Send data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="46" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="415" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Received transaction count
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="Function_0">Function = </a>
+0: Start CHANNEL_TRANSACT server</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+x = CHANNEL_TRANSACT(0, channel)
+</p>
+<h3>Description:</h3>
+<p>
+Initialise the TRANSACT_CHANNEL server and bind it to the
+channel that has been previously opened by the TrioBASIC 
+<a href="OPEN.html">OPEN</a>
+
+command.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td width="466" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC file channel.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example UDP:</h3>
+<p class="codeexample">
+OPEN #
+20
+ AS 
+&quot;DGRAM:192.168.0.250(8000)&quot;
+ FOR READ_WRITE
+<br>
+
+CHANNEL_TRANSACT(
+0
+, 
+20
+)
+</p>
+<h3>Example TCP client:</h3>
+<p class="codeexample">
+OPEN #
+20
+ AS 
+&quot;TCP:192.168.0.250(8000)&quot;
+ FOR READ_WRITE
+<br>
+
+CHANNEL_TRANSACT(
+0
+, 
+20
+)
+</p>
+<h3>Example TCP server:</h3>
+<p class="codeexample">
+OPEN #
+20
+ AS 
+&quot;TCPSERVER: (8000)&quot;
+ FOR READ_WRITE
+<br>
+
+CHANNEL_TRANSACT(
+0
+, 
+20
+)
+</p>
+<h2>Function = 1: Stop CHANNEL_TRANSACT server</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+x = CHANNEL_TRANSACT(1)
+</p>
+<h3>Description:</h3>
+<p>
+Stop the TRANSACT_CHANNEL server.
+</p>
+<h3>Example:</h3>
+<p class="codeexample">
+CHANNEL_TRANSACT(
+1
+)
+</p>
+<h2>Function = 2: Send data</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+CHANNEL_TRANSACT(2, channel, source_storage_area, source_start,
+length, format, destination_storage_area, destination_start)
+</p>
+<h3>Description:</h3>
+<p>
+Send data to a TRANSACT_CHANNEL server using the channel
+previously opened by the TrioBASIC 
+<a href="OPEN.html">OPEN</a>
+ command.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+channel:
+</p>
+
+  
+</td>
+<td width="398" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC file channel.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source_storage_area:
+</p>
+
+  
+</td>
+<td width="398" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read data from this area.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="84" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Area
+</p>
+
+  
+</td>
+<td width="313" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="84" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="313" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="84" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="313" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TABLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+source_start&nbsp;:
+</p>
+
+  
+</td>
+<td width="398" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Offset into the source storage area to the first
+  element to be read.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+length:
+</p>
+
+  
+</td>
+<td width="398" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of data points to be sent.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+format:
+</p>
+
+  
+</td>
+<td width="398" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Data format. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="69" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Format
+</p>
+
+  
+</td>
+<td width="329" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="69" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="329" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="69" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="329" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="69" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="329" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64-bit unsigned integer
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="69" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="329" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64-bit IEEE floating point
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+destination_storage_area:
+</p>
+
+  
+</td>
+<td width="398" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Write data to this area on the remote controller.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="69" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Area
+</p>
+
+  
+</td>
+<td width="329" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="69" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="329" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="69" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="329" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TABLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+destination_start&nbsp;:
+</p>
+
+  
+</td>
+<td width="398" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Offset into the destination storage area to the first
+  element to be written.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr height="0">
+
+  
+<td width="186">
+</td>
+
+  
+<td width="69">
+</td>
+
+  
+<td width="16">
+</td>
+
+  
+<td width="313">
+</td>
+
+ 
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="codeexample">
+OPEN #
+20
+ AS 
+&quot;DGRAM:192.168.0.250(8000)&quot;
+ FOR READ_WRITE
+<br>
+
+CHANNEL_TRANSACT(
+2
+, 
+0
+,
+
+0
+, 
+160
+, 
+3
+, 
+0
+, 
+200
+)
+</p>
+<h2>Function = 3: Received transaction count</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+x = CHANNEL_TRANSACT(3)
+</p>
+<h3>Description:</h3>
+<p>
+Stop the TRANSACT_CHANNEL server.
+</p>
+<h3>Example:</h3>
+<p class="codeexample">
+'Get the current transaction count.
+</p>
+<p class="codeexample">
+c = CHANNEL_TRANSACT(3)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Wait an incoming transaction.
+</p>
+<p class="codeexample">
+WAIT UNTIL c &lt;&gt; CHANNEL_TRANSACT(3)
+</p>
+<h2>Example:</h2>
+<p>
+Here is a full example of a TrioBASIC program sending and
+receiving data.
+</p>
+<p class="codeexample">
+'Declare the variables that we
+are going to use
+<br>
+
+
+DIM
+ c, i, t1, t2 
+AS
+
+
+INTEGER
+<br>
+
+
+<br>
+
+
+' Initialise the variables to send.
+<br>
+
+
+FOR
+ i = 
+0
+ TO
+ 159
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+VR
+(i) = 
+SIN
+(i)
+<br>
+
+
+NEXT
+ i
+<br>
+
+
+<br>
+
+
+'Open the channel that we are going to work on
+<br>
+
+
+OPEN
+ #
+20
+ AS
+ &quot;DGRAM:127.0.0.1(8000)&quot;
+
+
+FOR
+ READ_WRITE
+<br>
+
+
+<br>
+
+
+' If the CHANNEL_TRANSACT sever does not start then
+...
+<br>
+
+
+IF
+ NOT
+ CHANNEL_TRANSACT
+(
+0
+,
+
+20
+) 
+THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+ &quot;Error starting CHANNEL_TRANSACT server&quot;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+GOTO
+ close_channel
+<br>
+
+
+ENDIF
+<br>
+
+
+<br>
+
+
+'Get the current transaction count.
+<br>
+
+c = 
+CHANNEL_TRANSACT
+(
+3
+)
+<br>
+
+
+<br>
+
+
+'Send a transaction. Given that we opened the UDP
+socket on 127.0.0.1 this will come back to us
+<br>
+
+t1 = 
+TICKS
+<br>
+
+
+CHANNEL_TRANSACT
+(
+2
+,
+
+0
+, 
+0
+, 
+160
+, 
+3
+, 
+0
+, 
+200
+)
+<br>
+
+
+<br>
+
+
+'Wait for the incoming transaction to be processed.
+<br>
+
+
+WAIT
+ UNTIL
+
+c &lt;&gt; 
+CHANNEL_TRANSACT
+(
+3
+)
+<br>
+
+t2 = 
+TICKS
+<br>
+
+
+<br>
+
+
+'Validate the data received.
+<br>
+
+
+FOR
+ i = 
+0
+ TO
+ 159
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+ ABS
+(
+VR
+(i) - 
+VR
+(
+200 
++ i)) &gt; 
+0.001
+ THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+
+
+&quot;Error at &quot;
+; i[
+0
+]
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+GOTO
+
+
+stop_server
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+ENDIF
+<br>
+
+
+NEXT
+ i
+<br>
+
+
+<br>
+
+
+' Inform how we got on
+<br>
+
+
+PRINT
+ &quot;Duration=&quot;
+;
+t2 - t1[
+0
+]
+<br>
+
+
+<br>
+
+
+stop_server:
+<br>
+
+
+CHANNEL_TRANSACT
+(
+1
+)
+<br>
+
+
+<br>
+
+
+close_channel:
+<br>
+
+
+CLOSE
+ #
+20
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="OPEN.html">OPEN</a>
+</p>
+</body>
+
+
+
+</html>

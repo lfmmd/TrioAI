@@ -1,0 +1,55 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENCODER_TURNS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENCODER_TURNS">
+</head>
+<body>
+<h1>ENCODER_TURNS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Returns the number of multi-turn counts from EnDat or
+Tamagawa absolute encoders. 
+</p>
+<p class="note">
+The multi-turn data is not automatically applied to the axis 
+<a href="MPOS.html">MPOS</a>
+ after initialisation of a Tamagawa absolute encoder. 
+The application programmer must apply this from BASIC using 
+<a href="OFFPOS.html">OFFPOS</a>
+ or 
+<a href="DEFPOS.html">DEFPOS</a>
+ as required.
+</p>
+<h2>Value:</h2>
+<p>
+The number of multi-turn counts from the encoder. 
+</p>
+<h2>Example:</h2>
+<p>
+Initialise a Tamagawa encoder and apply the number of turns
+to 
+<a href="MPOS.html">MPOS</a>
+. The encoder returns 17bits for the position
+and 16bits for the number of turns. 
+</p>
+<p class="codeexample">
+ATYPE=46
+</p>
+<p class="codeexample">
+OFFPOS= ENCODER_TURNS*2^17
+</p>
+<p class="codeexample">
+WAIT UNTIL OFFPOS = 0
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,77 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MSPEEDF</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MSPEEDF">
+</head>
+<body>
+<h1>MSPEEDF</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+MSPEEDF is the value of 
+<a href="MSPEED.html">MSPEED</a>
+
+after a low pass filter has been applied. The filter helps to remove jitter and
+noise from the value which could otherwise produce misleading results when 
+<a href="MSPEED.html">MSPEED</a>
+ is read in a program. MSPEEDF represents the average
+speed measured as a change in measured position in user 
+<a href="UNITS.html">UNITS</a>
+
+(per second). 
+</p>
+<h2>Value:</h2>
+<p>
+Change in measured position per second in user 
+<a href="UNITS.html">UNITS</a>
+.
+</p>
+<h2>Example:</h2>
+<p>
+Monitor MSPEEDF to detect when the speed of axis 3 rises
+above a threshold value. 
+</p>
+<p class="codeexample">
+BASE(3)
+</p>
+<p class="codeexample">
+MSPEED_FILTER = 0.5 'Initialise the filter coefficient
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WHILE TRUE
+</p>
+<p class="codeexample">
+  IF MSPEEDF &gt; 5 THEN
+</p>
+<p class="codeexample">
+    GOSUB start_main
+</p>
+<p class="codeexample">
+  ENDIF
+</p>
+<p class="codeexample">
+  ...
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h2>See also:</h2>
+<p>
+<a href="MSPEED_FILTER.html">MSPEED_FILTER</a>
+, 
+<a href="MSPEED.html">MSPEED</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

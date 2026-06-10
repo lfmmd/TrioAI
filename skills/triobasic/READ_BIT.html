@@ -1,0 +1,187 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>READ_BIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="READ_BIT">
+</head>
+<body>
+<h1>READ_BIT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Logical and Bitwise operator
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+READ_BIT(bit, index
+[, mode]
+)
+</p>
+<h2>Description:</h2>
+<p>
+READ_BIT can be used to test the value of a single bit
+within a 
+<a href="VR.html">VR</a>
+ or 
+<a href="TABLE.html">TABLE</a>
+ element.
+</p>
+<p>
+By default, VR will be used, but the mode parameter can be
+changed to operate on 
+<a href="TABLE.html">TABLE</a>
+ data.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+bit:
+</p>
+
+  
+</td>
+<td width="334" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The bit number to clear, valid range is 0 to 52
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td width="334" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The 
+<a href="VR.html">VR</a>
+/ 
+<a href="TABLE.html">TABLE</a>
+
+  which to operate on
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Mode:
+</p>
+
+  
+</td>
+<td width="33" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="301" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit reads from 
+<a href="VR.html">VR</a>
+ (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td width="33" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="301" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bit reads from 
+<a href="TABLE.html">TABLE</a>
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+<a name="_Hlk213314898">Read bit 4 o</a>
+f 
+<a href="VR.html">VR</a>
+(13).
+</p>
+<p class="codeexample">
+result = READ_BIT(4, 13)
+</p>
+<h3>Example 2:</h3>
+<p>
+Read bit 4 of  
+<a href="TABLE.html">TABLE</a>
+(13)
+</p>
+<p class="codeexample">
+result = READ_BIT(4, 13, 1)
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2>See also:</h2>
+<p>
+<a href="BitNumber.html">. Bit operator</a>
+, 
+<a href="SET_BIT.html">SET_BIT</a>
+, 
+<a href="CLEAR_BIT.html">CLEAR_BIT</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,123 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VP_MODE_PLC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VP_MODE_PLC">
+</head>
+<body>
+<h1>VP_MODE_PLC</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG)
+</p>
+<h2>Syntax:</h2>
+<p class="codeexample">
+VP_MODE_PLC = value
+</p>
+<h2>Description:</h2>
+<p>
+Writing to this parameter allows the selection of the most
+suitable velocity profiling mode for your PLC (IEC 61131-3) application. The
+default value is 6 as this includes JERK and other axis parameters suitable for
+the PLCopen Motion Control (MC) function blocks.
+</p>
+<p>
+VP_MODE_PLC is an MC_CONFIG keyword in all Motion
+Coordinators that support PLCopen.
+</p>
+<p class="note">
+VP_MODE 5 or 6 is required for PLCopen Motion function blocks
+with prefix “MC_”
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a name="_VP_MODE=0:"></a>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Trapezoidal multi-axis interpolation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk limited multi-axis interpolation
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk limited multi-axis interpolation (default)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+For firmware versions prior to 2.0339, the default value is 5.
+</p>
+<h2>Example:</h2>
+<p>
+The IEC 61131-3 PLC program is to use the Trio TC_ motion
+functions using the traditional velocity profile mode (VP_MODE) 0. In
+MC_CONFIG, set the VP_MODE_PLC to 0 so that the required mode is set up at
+power-on.
+</p>
+<p class="codeexample">
+VP_MODE_PLC = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

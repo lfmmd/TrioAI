@@ -1,0 +1,305 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>STICK_READVR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="STICK_READVR">
+</head>
+<body>
+<h1>STICK_READVR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = STICK_READVR(flash_file, vr_start [,format [,device]])
+</p>
+<h2>Description:</h2>
+<p>
+Read VR data from the SD card to the controller.
+</p>
+<p class="warning">
+Any existing VR data will be overwritten.
+</p>
+<p class="note">
+The Binary format gives the best data precision.
+</p>
+<h2>Parameters:     </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="478" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE = the function was successful
+</p>
+
+  
+<p class="tablecontent">
+FALSE = the function was not successful
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+flash_file:
+</p>
+
+  
+</td>
+<td width="478" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A number which when appended to the characters “SD”
+  will form the data filename.
+</p>
+
+  
+<p class="tablecontent">
+A hardcoded string or STRING variable will form the
+  data filename.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+vr_start:
+</p>
+
+  
+</td>
+<td width="478" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start point in the 
+<a href="VR.html">VRs</a>
+ where
+  the data values will be transferred to.  (Ignored for format 2)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+format:
+</p>
+
+  
+</td>
+<td width="478" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = Binary 64bit floating point format, BIN file
+  (default)
+</p>
+
+  
+<p class="tablecontent">
+1 = ASCII comma separated values, CSV
+  file, no index
+</p>
+
+  
+<p class="tablecontent">
+2 = ASCII CSV with format: Index, value &lt;cr&gt;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="90" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+device:
+<br>
+
+  (Flex-7 only)
+</p>
+
+  
+</td>
+<td width="478" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = SD card
+</p>
+
+  
+<p class="tablecontent">
+1 = USB 1 (upper)
+</p>
+
+  
+<p class="tablecontent">
+2 = USB 2 (lower)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+When storing in format=0 the data is stored in IEEE floating
+point binary format little-endian, i.e. the least significant byte first.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Read the binary file SD002012.bin from the SD card and copy
+the data to the VR memory starting at VR(101)
+</p>
+<p class="codeexample">
+success = STICK_READVR(2012, 101, 0)
+</p>
+<p class="codeexample">
+IF success=TRUE THEN
+</p>
+<p class="codeexample">
+  PRINT #5,”SD card read OK”
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+Read the binary file MYDATALOG1_VR.BIN from the SD card and
+copy the data to the VR memory starting at VR(101)
+</p>
+<p class="codeexample">
+success = STICK_READVR(“MYDATALOG1”, 101, 0)
+</p>
+<p class="codeexample">
+IF success=TRUE THEN
+</p>
+<p class="codeexample">
+  PRINT #5,”SD card read OK”
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Read the CSV file DATA1_VR.CSV from the SD card and copy the
+data to the VR memory using the indices in the file.  Format is index, value
+&lt;cr&gt;.
+</p>
+<p class="codeexample">
+  
+DIM
+ flash_file 
+AS
+ STRING
+(
+20
+)
+<br>
+
+  
+DIM
+ s 
+AS
+ BOOLEAN
+<br>
+
+  flash_file = 
+&quot;DATA1_VR&quot;
+</p>
+<p class="codeexample">
+<br>
+
+  s = 
+STICK_READVR
+(flash_file, 
+0
+, 
+2
+)
+</p>
+<p class="codeexample">
+<br>
+
+  
+IF
+ s = 
+TRUE
+
+
+THEN
+<br>
+
+    
+PRINT
+ flash_file; 
+&quot; read OK&quot;
+<br>
+
+  
+ELSE
+<br>
+
+    
+PRINT
+ &quot;Error
+reading &quot;
+; flash_file
+<br>
+
+  
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="STICK_READ.html">STICK_READ</a>
+, 
+<a href="STICK_WRITE.html">STICK_WRITE</a>
+, 
+<a href="STICK_WRITEVR.html">STICK_WRITEVR</a>
+,
+
+<a href="FILE.html">FILE</a>
+</p>
+</body>
+</html>

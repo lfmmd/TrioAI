@@ -1,0 +1,168 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IF..THEN..ELSEIF..ELSE..ENDIF</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IF THEN ELSEIF ELSE ENDIF">
+</head>
+<body>
+<h1>IF..THEN..ELSEIF..ELSE..ENDIF</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Structure
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+IF condition THEN
+</p>
+<p class="fixed">
+  commands
+</p>
+<p class="fixed">
+ELSEIF expression THEN
+</p>
+<p class="fixed">
+  commands
+</p>
+<p class="fixed">
+ELSE
+</p>
+<p class="fixed">
+  commands
+</p>
+<p class="fixed">
+ENDIF
+</p>
+<h2>Description: </h2>
+<p>
+An IF program structure is used to execute a block of code
+after a valid expression. The structure will execute only one block of commands
+depending on the conditions. If multiple expressions are valid then the first
+will have its commands executed. If no expressions are valid and an ELSE
+is present the commands under the ELSE will be executed. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+condition: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid logical TrioBASIC expression
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+commands: 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC statements that you wish to execute
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Check for the batch to be complete, if it is then tell the
+user and process the batch
+</p>
+<p class="codeexample">
+IF count &gt;= batch_size THEN
+</p>
+<p class="codeexample">
+  PRINT #3, CURSOR(20); &quot;   BATCH COMPLETE   &quot;;
+</p>
+<p class="codeexample">
+  GOSUB index 'Index conveyor to clear batch
+</p>
+<p class="codeexample">
+  count = 0
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 2:</h3>
+<p>
+Use an IF statement to light a warning lamp when machine is
+running
+</p>
+<p class="codeexample">
+IF WDOG = ON THEN
+</p>
+<p class="codeexample">
+  OP(warning, ON)
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  OP(warning, OFF)
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h3>Example 3:</h3>
+<p>
+Use an IF structure to report the operating state of a
+machine. 
+</p>
+<p class="codeexample">
+IF operating_state = 0 THEN
+</p>
+<p class="codeexample">
+  PRINT#5, &quot;Machine Running&quot;
+</p>
+<p class="codeexample">
+ELSEIF operating_state = 1 THEN
+</p>
+<p class="codeexample">
+  PRINT#5, &quot;Machine Idle&quot;
+</p>
+<p class="codeexample">
+ELSEIF operating_state = 2 THEN
+</p>
+<p class="codeexample">
+  PRINT#5, &quot;Machine Jammed&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT#5, &quot;Machine in unknown state&quot;
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+</body>
+</html>

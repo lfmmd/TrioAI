@@ -1,0 +1,312 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FRAME_GROUP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FRAME_GROUP">
+</head>
+<body>
+<h1>FRAME_GROUP</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p>
+FRAME_GROUP(group, [table_offset, [axis0, axis1 …axisn]])
+</p>
+<h2><a name="_Ref266277180">Description:</a>
+</h2>
+<p>
+FRAME_GROUP is used to define the group of axes and the
+table offset which are used in a 
+<a href="FRAME.html">FRAME</a>
+ or 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ transformation. There are 8 groups
+available meaning that you can run a maximum of 8 
+<a href="FRAME.html">FRAME</a>
+s
+on the controller. 
+</p>
+<p class="note">
+FRAME_GROUP requires the kinematic runtime FEC
+</p>
+<p class="warning">
+Although 8 
+<a href="FRAME.html">FRAME</a>
+s can be initialised
+on a controller it may not be possible to process all 8 at a given 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+.
+The number that can be run depends on many factors including, which 
+<a href="FRAME.html">FRAME</a>
+ is selected, drive connection method, if 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ and TOOL_OFFSET are enabled and
+additional factory communications. 
+</p>
+<p>
+The number of axes in the group must match the number of
+axes used by the FRAME. The axes must also be ascending order though they do
+not have to be contiguous. If a group is deleted 
+<a href="FRAME.html">FRAME</a>
+
+and 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ are set to 0 for those axes. 
+</p>
+<p class="tip">
+To maintain backward compatibility if the 
+<a href="FRAME.html">FRAME</a>
+
+command is used on an axis that is not in a group, or no groups are configured
+then a default group is created using the lowest axes and table_offset=0. In
+this situation if FRAME_GROUP(0) is already configured it is overwritten. 
+</p>
+<p class="tip">
+When the group is deleted 
+<a href="FRAME.html">FRAME</a>
+ is set to
+0, 
+<a href="USER_FRAME.html">USER_FRAME</a>
+(0) is activated, TOOL_OFFSET(0) is
+activated and 
+<a href="VOLUME_LIMIT.html">VOLUME_LIMIT</a>
+(0) is activated. This
+means you can delete the FRAME_GROUP to reset all of these commands.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+group:  
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The group number, 0-7. When used as the only parameter
+  FRAME_GROUP prints the FRAME_GROUP, the active USER_FRAME and TOOL_OFFSET
+  information to the currently selected output channel (default channel 0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_offset:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1 = Delete group data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0+ = The start position in the table to store the FRAME
+  configuration.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis0:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The first axis in the group
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The second axis in the group
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axisn:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The last axis in the group
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The text returned when only printing FRAME_GROUP is in the
+following format:
+</p>
+<p>
+group [table_offset] : axes {
+<a href="USER_FRAME.html">USER_FRAME</a>
+:
+
+<a href="USER_FRAME.html">USER_FRAME</a>
+ parameters} TO={TOOL_OFFSET
+<br>
+
+: TOOL_OFFSET parameters} VL={
+<a href="VOLUME_LIMIT.html">VOLUME_LIMIT</a>
+
+parameters}
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Configure a FRAME_GROUP for axes 1,2 and 5 using table
+offset 100.
+</p>
+<p class="codeexample">
+'Initialise the FRAME_GROUP
+</p>
+<p class="codeexample">
+FRAME_GROUP(0,100, 1,2,5)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Configure the axes, FRAME table data and home the robot
+</p>
+<p class="codeexample">
+GOSUB configure_frame
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'PRINT the FRAME_GROUP information to the command line
+</p>
+<p class="codeexample">
+FRAME_GROUP(0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Enable the frame
+</p>
+<p class="codeexample">
+FRAME AXIS(1)=14
+</p>
+<h3>Example 2:</h3>
+<p>
+Reset the FRAME_GROUP to set: USER_FRAME(0), TOOL_OFFSET(0),
+FRAME = 0 and VOLUME_LIMIT(0)
+</p>
+<p class="codeexample">
+BASE(0) 'Select an axis in the FRAME_GROUP
+</p>
+<p class="codeexample">
+FRAME_GROUP(0,-1)
+</p>
+<h3>Example 3:</h3>
+<p>
+Print the FRAME_GROUP in the terminal. 
+</p>
+<p class="codeexample">
+&gt;&gt;FRAME_GROUP(0,1,2,3,4,5)
+<br>
+
+&gt;&gt;PRINT FRAME_GROUP(0)    
+<br>
+
+0 [1] : 2, 3, 4, 5 {0:0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000}
+TO={0
+<br>
+
+:0.00000, 0.00000, 0.00000} VL={0, 0}
+<br>
+
+0
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FRAME.html">FRAME</a>
+, 
+<a href="USER_FRAME.html">USER_FRAME</a>
+,
+
+<a href="VOLUME_LIMIT.html">VOLUME_LIMIT</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

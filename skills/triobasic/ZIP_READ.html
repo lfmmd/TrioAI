@@ -1,0 +1,1439 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ZIP_READ</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ZIP_READ">
+</head>
+<body>
+<h1>ZIP_READ</h1>
+<h2>Type: </h2>
+<p class="Category">
+Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ZIP_READ(function ,...)
+</p>
+<h2>Description:</h2>
+<p>
+This function will read a compressed file into RAM on the
+Motion Coordinator and then decompress it in blocks.
+</p>
+<p>
+The file must be transferred to the SD card on the Motion
+Coordinator using the 
+<a href="TEXT_FILE_LOADER.html">TextFileLoader</a>
+
+(executable or  ActiveX) with compression enabled and decompression disabled,
+that way the file will be stored in compressed format. 
+</p>
+<p>
+Internally we handle two buffer areas: compressed buffer and
+decompressed buffer. The compressed buffer is filled from the file, the
+decompressed buffer is filled from the compressed buffer. The data is
+transferred between the buffers when required.
+</p>
+<h2><a name="_Parameters:"></a>
+Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+function:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+description:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_0:">0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Initialise the ZIP_READ resources.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_1:">1</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Release all the ZIP_READ resources.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_2:">2</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Transfer a block of data from the decompressed buffer
+  to VR or TABLE memory.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_3:">3</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Skip a number of bytes in the decompressed buffer.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_4:">4</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Read buffer indices.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_5:">5</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Move to a position in the decompressed buffer.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_6:">6</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Decompress the next buffer.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_0:"></a>
+Function = 0:</h2>
+<h3>Syntax:</h3>
+<p>
+value =
+ZIP_READ(0,”filename”[,decompress_block_size[,decompress_block_count]])
+</p>
+<h3>Description:</h3>
+<p>
+This function initialises the ZIP_READ resources. 
+</p>
+<p>
+Due to the size of the internal decompression data
+structures both the 
+<a href="TEXT_FILE_LOADER.html">TEXT_FILE_LOADER</a>
+ and
+the ZIP_READ commands share the same data structure. This means that if the 
+<a href="TEXT_FILE_LOADER.html">TEXT_FILE_LOADER</a>
+ is decompressing data then
+the ZIP_READ function will fail, and vice versa the 
+<a href="TEXT_FILE_LOADER.html">TEXT_FILE_LOADER</a>
+ decompression will fail if
+the ZIP_READ function is running. This should not be a problem as the 
+<a href="TEXT_FILE_LOADER.html">TEXT_FILE_LOADER</a>
+ must not decompress files
+that will be processed by the ZIP_READ command.
+</p>
+<p>
+The file is decompressed in blocks. By default there is one
+32 KB block. This decompress_block_size parameter allows the block size to be
+reduced. The block size will be rounded down to the nearest power of 2.
+</p>
+<p>
+If decompress_block_count is greater than 1 then the
+ZIP_READ will perform double buffering. This means that one process may be
+decompressing the file whilst another process is using the decompressed data.
+The total amount of decompressed data is limited to 32 KB so the number of
+available decompression blocks is limited by the decompress_block_size
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The initialisation failed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The initialization succeeded but the complete
+  compressed file could not be loaded into memory. This means that at some
+  point another buffer will need to be read. This buffer read can take an
+  appreciable time so a double buffering scheme might be required.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The initialisation succeed and the complete compressed
+  file was loaded into memory.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Filename:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name of the file on the SD card to be opened.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+decompress_block_size:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2 – 32768 (default =32768 )
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+decompress_block_count:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 - (32768 / decompress_block_size)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="_Ref322074726">Example:</a>
+</h3>
+<p class="codeexample">
+IF&nbsp;ZIP_READ(0,&quot;myfile.tfl&quot;,2048)=0&nbsp;THEN
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Error
+initialising reader&quot;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;STOP
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2><a name="_Function_=_1:"></a>
+Function = 1:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+ZIP_READ(1)
+</p>
+<h3>Description:</h3>
+<p>
+Frees all the resources held by the ZIP_READ command.
+</p>
+<h3>Example:</h3>
+<p class="codeexample">
+IF&nbsp;ZIP_READ(0,&quot;myfile.tfl&quot;,2048)=0&nbsp;THEN
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Error initialising reader&quot;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;STOP
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+ZIP_READ(1)
+</p>
+<h2><a name="_Function_=_2:"></a>
+Function = 2:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value=ZIP_READ(2,format,destination,start,length)
+</p>
+<h3>Description:</h3>
+<p>
+This function reads a block of data from the decompressed
+buffer into VR or TABLE memory. If there is not enough decompressed data
+available then more data will be decompressed.
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of values stored
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="11" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+format:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8 bit integer (ASCII character data)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16 bit integer (little endian)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+16 bit integer (big endian)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32 bit integer (little endian)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32 bit integer (big endian)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64 bit integer (little endian)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64 bit integer (big endian)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32 bit float (little endian)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+32 bit float (big endian)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64 bit float (little endian)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+10
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+64 bit float (big endian)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+destination:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Store data
+  in TABLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Store data
+  in VR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+start:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 &#8804;start
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in the destination memory area at which to
+  start storing the data.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+length:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of values to store. The number of bytes
+  processed will depend on the format, for example if format  is 7 then a
+  length of 100 will process 400 bytes
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If the return value this is less than the length parameter then
+we have reached the end of the file and any further reads will cause a
+TrioBASIC error.
+</p>
+<h3>Example:</h3>
+<p class="codeexample">
+IF&nbsp;ZIP_READ(0,&quot;myfile.tfl&quot;,2048)=0&nbsp;THEN
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Error
+initialising reader&quot;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;STOP
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;c=ZIP_READ(2,0,0,1000,50)
+</p>
+<p class="codeexample">
+UNTIL&nbsp;c&lt;50
+</p>
+<p class="codeexample">
+ZIP_READ(1)
+</p>
+<h2><a name="_Function_=_3:"></a>
+Function = 3:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value=ZIP_READ(3,length)
+</p>
+<h3>Description:</h3>
+<p>
+This function skips a number of bytes in the decompressed
+buffer.
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of bytes skipped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+length:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of bytes to skip.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If the return value this is less than the length parameter then
+we have reached the end of the file and any further reads will cause a
+TrioBASIC error.
+</p>
+<h3>Example:</h3>
+<p class="codeexample">
+IF&nbsp;ZIP_READ(0,&quot;myfile.tfl&quot;,2048)=0&nbsp;THEN
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Error
+initialising reader&quot;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;STOP
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+ZIP_READ(3,23)
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;c=ZIP_READ(2,0,0,1000,50)
+</p>
+<p class="codeexample">
+UNTIL&nbsp;c&lt;50
+</p>
+<p class="codeexample">
+ZIP_READ(1)
+</p>
+<h2><a name="_Function_=_4:"></a>
+Function = 4:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value=ZIP_READ(4,index)
+</p>
+<h3>Description:</h3>
+<p>
+This function returns the value of the internal buffer
+indices.
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The value of the specified index.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+compressed buffer offset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+compressed buffer length
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+compressed file offset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+uncompressed buffer offset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+uncompressed buffer length
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+uncompressed file offset
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p class="codeexample">
+IF&nbsp;ZIP_READ(0,&quot;myfile.tfl&quot;,2048)=0&nbsp;THEN
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Error
+initialising reader&quot;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;STOP
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+ZIP_READ(3,23)
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;c=ZIP_READ(2,0,0,1000,50)
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Compressed file
+indices: &quot;;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;ZIP_READ(4,0),ZIP_READ(4,1),ZIP_READ(4,2)
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Decompressed file
+indices: &quot;;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;ZIP_READ(4,3),ZIP_READ(4,4),ZIP_READ(4,5)
+</p>
+<p class="codeexample">
+UNTIL&nbsp;c&lt;50
+</p>
+<p class="codeexample">
+ZIP_READ(1)
+</p>
+<h2><a name="_Function_=_5:"></a>
+Function = 5:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value=ZIP_READ(5[,position])
+</p>
+<h3>Description:</h3>
+<p>
+This function sets the absolute decompressed file position.
+If the optional position parameter is not specified then the default value of 0
+is used.
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+The absolute position of the decompressed file or -1 if
+  there is an error
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The absolute position in the decompressed file.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If the return value this is less than the length parameter then
+we have reached the end of the file and any further reads will cause a
+TrioBASIC error.
+</p>
+<h3>Example:</h3>
+<p class="codeexample">
+IF&nbsp;ZIP_READ(0,&quot;myfile.tfl&quot;,2048)=0&nbsp;THEN
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Error
+initialising reader&quot;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;STOP
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+ZIP_READ(3,23)
+</p>
+<p class="codeexample">
+VR(100)=-1
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;VR(100)&gt;=0&nbsp;THEN
+ZIP_READ(5,VR(100)):VR(100)=-1
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;c=ZIP_READ(2,0,0,1000,50)
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Compressed file
+indices: &quot;;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;ZIP_READ(4,0),ZIP_READ(4,1),ZIP_READ(4,2)
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Decompressed file
+indices: &quot;;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;ZIP_READ(4,3),ZIP_READ(4,4),ZIP_READ(4,5)
+</p>
+<p class="codeexample">
+UNTIL&nbsp;c&lt;50
+</p>
+<p class="codeexample">
+ZIP_READ(1)
+</p>
+<h2><a name="_Function_=_6:"></a>
+Function = 6:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+value=ZIP_READ(6)
+</p>
+<h3>Description:</h3>
+<p>
+This function decompresses the next buffer. This is only
+applicable when the 
+<a href="#_Function_=_0:">decompress_buffer_count</a>
+ is
+greater than 1.
+</p>
+<h3>Parameters: </h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The absolute position of the decompressed file or -1 if
+  there is an error.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+position
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The absolute position in the decompressed file.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If the return value this is less than the length parameter then
+we have reached the end of the file and any further reads will cause a
+TrioBASIC error.
+</p>
+<h3>Example:</h3>
+<p class="codeexample">
+IF&nbsp;ZIP_READ(0,&quot;myfile.tfl&quot;,2048,2)=0&nbsp;THEN
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Error
+initialising reader&quot;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;STOP
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<p class="codeexample">
+ZIP_READ(3,23)
+</p>
+<p class="codeexample">
+VR(100)=-1
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;VR(100)&gt;=0&nbsp;THEN
+ZIP_READ(5,VR(100)):VR(100)=-1
+</p>
+<p class="codeexample">
+    IF 2048-ZIP_READ(4,3)&lt;50 THEN ZIP_READ(6)
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;c=ZIP_READ(2,0,0,1000,50)
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Compressed file
+indices: &quot;;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;ZIP_READ(4,0),ZIP_READ(4,1),ZIP_READ(4,2)
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;&quot;Decompressed file
+indices: &quot;;
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;&nbsp;PRINT&nbsp;ZIP_READ(4,3),ZIP_READ(4,4),ZIP_READ(4,5)
+</p>
+<p class="codeexample">
+UNTIL&nbsp;c&lt;50
+</p>
+<p class="codeexample">
+ZIP_READ(1)
+</p>
+</body>
+</html>

@@ -1,0 +1,64 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MSPEED</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MSPEED">
+</head>
+<body>
+<h1>MSPEED</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+MSPEED can be used to represent the speed measured as it
+represents the change in measured position in user 
+<a href="UNITS.html">UNITS</a>
+
+(per second) in the last servo period. 
+</p>
+<p class="note">
+This value represents a snapshot of the speed and significant
+fluctuations can occur, particularly at low speeds. MPSEEDF can be used to
+obtain a filtered version of MSPEED.
+</p>
+<h2>Value:</h2>
+<p>
+Change in measured position per second in user 
+<a href="UNITS.html">UNITS</a>
+.
+</p>
+<h2>Example:</h2>
+<p>
+Check MSPEED in the command line terminal for axis 4. 
+</p>
+<p class="codeexample">
+&gt;&gt;BASE(4)
+</p>
+<p class="codeexample">
+&gt;&gt;? MSPEED
+</p>
+<p class="codeexample">
+12000.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<p class="note">
+MSPEED is change in MPOS per servo period * 1E6 / SERVO_PERIOD.
+This gives a scale of change in MPOS per second but does not use 1 second of
+data.
+</p>
+<h2>See also:</h2>
+<p>
+<a href="MSPEEDF.html">MSPEEDF</a>
+, 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+, 
+<a href="MPOS.html">MPOS</a>
+</p>
+</body>
+</html>

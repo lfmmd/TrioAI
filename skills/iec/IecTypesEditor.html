@@ -1,0 +1,271 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IEC Types Editor</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>IEC Types Editor</h1>
+<p>
+The types editor tool is an editor where the
+user can define, delete and modify custom types. It is a tab panel
+ with
+three
+ tabs
+ for S
+tructur
+e types
+, 
+E
+numerated types
+,
+ and 
+Bit
+F
+ields
+ types
+.
+</p>
+<h2>Structures Tab</h2>
+<p>
+The structures tab displays the custom
+structure types:
+</p>
+<p>
+<img width="626" height="244" id="Picture 5" src="IecTypesEditor_files/image001.png">
+</p>
+<p>
+The description of the fields available
+for editing is the same as for the 
+<a href="VariableEditor.html"><span>variables editor</span></a>
+ tool.
+</p>
+<p>
+To add a new structure, press the “Insert
+new structure” button. To delete an existing structure, select it and press the
+“Delete” key on the keyboard, or press the “Remove” button.
+</p>
+<p>
+Double-click on a selected structure
+displays the “Type properties” dialog, where a type name, comment and
+description can be edited.
+</p>
+<p>
+<img border="0" width="300" height="300" id="Picture 6" src="IecTypesEditor_files/image002.png">
+</p>
+<p>
+To add a new field in an existing
+structure, press the “Insert” key on the keyboard, or press the “Insert new
+variable” button. To delete an existing field in a structure, select it and
+press the “Delete” key on the keyboard, or press the “Remove” button.
+</p>
+<h2>Enumerated Tab</h2>
+<p>
+The enumerated tab displays the custom
+enumerated types:
+</p>
+<p>
+<img border="0" width="658" height="313" id="Picture 7" src="IecTypesEditor_files/image003.png">
+</p>
+<p>
+This tab editor has two columns:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Column
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContents">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContents">
+The name for the enumerated type
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContents">
+Value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContents">
+A coma separated list of symbolic values
+  which will be the enumerated type values available for use in programs
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+To add a new enumerated type, press the
+“Add new IEC type” button. To remove an existing enumerated type, select it and
+press the “Remove” button.
+</p>
+<p>
+To edit the name of an existing
+enumerated type, double-click on the selected type's Name column in the editor.
+</p>
+<p>
+To edit the enumerated values,
+double-click on the selected type's Value column.
+</p>
+<h2 style="margin-left: 28.8pt;text-indent:-28.8pt">Bit-fields Tab</h2>
+<p>
+The bit-fields tab displays the custom
+bit-field types:
+</p>
+<p>
+<img border="0" width="658" height="313" id="Picture 8" src="IecTypesEditor_files/image004.png">
+</p>
+<p>
+This tab editor has two columns:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Column
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContents">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContents">
+The
+  name for the bit-field type. Below the name, is the list with bits (number of
+  bits depends on the base type). The list can be expanded/collapsed via the
+  “+” button in front of the type name.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContents">
+Value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="TableContents">
+A combo
+  box with the available base types for the bit-field type. Depending on the
+  base type, the bit-field can have different number of bits. For example, a
+  bit-field, based on INT, has 16 bits. A bit-field, based on SINT, has 8 bits.
+  Each bit can be specified a symbolic name for use in code. For example,
+  user-friendly names can be assigned, like “Shared”, “None”, etc.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+To add a new bit-field type, press the
+“Add new IEC type” button. To remove an existing bit-field type, select it and
+press the “Remove” button.
+</p>
+<p>
+To edit the name of an existing bit-field
+type, double-click on the selected type's Type column in the editor.
+</p>
+<p>
+To change the base type of the selected
+bit-field type, use the combo box with available types.
+</p>
+<p>
+To edit the bit-field names, double-click
+on the selected bit-field bit in the value column.
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

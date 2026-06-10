@@ -1,0 +1,60 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ON</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="_Toc317749349"></a>
+<a name="O_3255"></a>
+ON</h1>
+<p class="Category">
+Statement
+</p>
+<p>
+Conditional execution of statements.
+</p>
+<h2>Syntax</h2>
+<p class="fixed">
+ON &lt;BOOL expression&gt; DO
+<br>
+
+&nbsp;&nbsp;&nbsp; &lt;statements&gt;
+<br>
+
+END_DO;
+</p>
+<h2>Remarks</h2>
+<p>
+Statements within the ON structure are executed only when
+the Boolean expression rises from FALSE to TRUE. The ON instruction avoids
+systematic use of the R_TRIG function block or other &quot;last state&quot;
+flags.
+</p>
+<p>
+The ON syntax is available in any program, sub-program or
+UDFB. It is available in both T5 p-code or native code compilation modes.
+</p>
+<p>
+This statement is an extension to the standard and is not
+IEC 61131-3 compliant.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+<span class="CodeComment">(*
+This example counts the rising edges of variable bIN *)</span><br>
+
+ON bIN DO
+<br>
+
+&nbsp;&nbsp; diCount := diCount + 1;
+<br>
+
+END_DO;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,106 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>GOTO</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="GOTO">
+</head>
+<body>
+<h1>GOTO</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Structure
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+GOTO label
+</p>
+<p class="fixed">
+…
+</p>
+<p class="fixed">
+label:
+</p>
+<h2>Description:</h2>
+<p>
+Identifies the next line of the program to be executed.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+label:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A valid label that exists in the program. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+If the label does not exist an error message will be displayed at
+run time and the program execution halted. 
+</p>
+<h2>Example:</h2>
+<p>
+Use a GOTO to repeat a section of your program after a bad
+input.
+</p>
+<p class="codeexample">
+start:
+</p>
+<p class="codeexample">
+PRINT#5, &quot;Press 'y' for YES and 'n' for NO.&quot;
+</p>
+<p class="codeexample">
+GET#5, char
+</p>
+<p class="codeexample">
+IF char = 121 THEN
+</p>
+<p class="codeexample">
+  PRINT#5, &quot;YES selected&quot;
+</p>
+<p class="codeexample">
+ELSEIF char = 110 THEN
+</p>
+<p class="codeexample">
+  PRINT#5, &quot;NO selected&quot;
+</p>
+<p class="codeexample">
+ELSE
+</p>
+<p class="codeexample">
+  PRINT#5, &quot;BAD selection&quot;
+</p>
+<p class="codeexample">
+  GOTO start
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="GOSUB.html">GOSUB</a>
+, 
+<a href="ON_GO.html">ON ..
+GOTO</a>
+</p>
+</body>
+</html>

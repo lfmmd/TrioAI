@@ -1,0 +1,708 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SYSTEM_ERROR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SYSTEM_ERROR">
+</head>
+<body>
+<h1>SYSTEM_ERROR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+SYSTEM_ERROR returns an integer value which
+indicates which active errors have been reported by the firmware.
+</p>
+<p class="warning">
+Any bits set in SYSTEM_ERROR will cause the 
+<a href="WDOG.html">WDOG</a>
+ to be
+automatically set to OFF, thus halting all motion.
+</p>
+<p>
+If it is necessary to prevent the
+occurrence of particular errors causing a WDOG OFF condition, then 
+<a href="SYSTEM_ERROR_MASK.html">SYSTEM_ERROR_MASK</a>
+ may be set.
+</p>
+<p class="warning">
+Masking SYSTEM_ERROR bits must be done with
+caution as it might create a condition where motors can run out of control.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="606" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The system errors are in blocks based on the following
+  byte masks:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+System errors
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$ff0010ff</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configuration errors
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000f00</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unit errors
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00ff0000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="606" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+System errors resulting in Exx on LCD display:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RAM error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000001</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Battery error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000002</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Invalid module error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000004</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VR/TABLE corrupt entry
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000008</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_CONFIG error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000010</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Watchdog trip error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000020</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FPGA error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000040</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Flash memory error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000080</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Processor exception
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$01000000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+FPGA communications error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$02000000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Core synchronisation failed
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$04000000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Too many axes
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$08000000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Servo period invalid
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$10000000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Power supply unit
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$20000000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Invalid board
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$40000000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Ethernet switch failed
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$80000000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="606" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Configuration errors resulting in Cxx on the LCD
+  display:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unit error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000100</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Station error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000200</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+I/O configuration error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000400</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axes configuration error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00000800</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="606" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unit errors resulting in Uxx on the LCD display:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unit Lost
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00010000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unit terminator lost
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00020000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unit station lost
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00040000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Invalid unit error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00080000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unit station error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00100000</span></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="203" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Unit communications error
+</p>
+
+  
+</td>
+<td width="403" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<span style='font-family:"Courier New"'>$00200000</span></p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

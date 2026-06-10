@@ -1,0 +1,118 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>BITCOUNT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="BITCOUNT">
+</head>
+<body>
+<h1>BITCOUNT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Mathematical Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = BITCOUNT(expression)
+</p>
+<h2>Description:</h2>
+<p class="fixed">
+<span style='font-family:"Verdana",sans-serif'>Returns
+the number of bits set (equal to 1) in the expression when processed as a
+64-bit integer. </span></p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of bits set in the 64-bit integer expression
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression representing a numerical
+  value
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<h2><span style='font-family:"Courier New"'>&gt;&gt;?bitcount(255)<br>
+
+8<br>
+
+&gt;&gt;?bitcount(65534)<br>
+
+15<br>
+
+&gt;&gt;?bitcount($1001200240048008)<br>
+
+8<br>
+
+&gt;&gt;?bitcount(-1)&nbsp;<br>
+
+64<br>
+
+&gt;&gt;?bitcount(-2)<br>
+
+63<br>
+
+&gt;&gt;?bitcount(4.8892)<br>
+
+1<br>
+
+&gt;&gt;?bitcount($2000+$C9)<br>
+
+5<br>
+
+&gt;&gt;</span></h2>
+<h2>See Also:</h2>
+<p>
+<a href="BitNumber.html">Bit Number</a>
+, 
+<a href="CLEAR_BIT.html">CLEAR_BIT</a>
+, 
+<a href="READ_BIT.html">READ_BIT</a>
+, 
+<a href="SET_BIT.html">SET_BIT</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

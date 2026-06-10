@@ -1,0 +1,199 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>INC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="INC">
+</head>
+<body>
+<h1><a name="_Toc317749341"></a>
+<a name="O_1505"></a>
+INC</h1>
+<p class="Category">
+Function
+</p>
+<p>
+Increases a numerical variable:
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+IN
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Numerical variable (increased after call).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<a name="O_1479"></a>
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Q
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ANY
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Increased value.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+When the function is called, the variable connected to the
+IN input is increased and copied to Q. All data types are supported except BOOL
+and STRING: for these types, the output is the copy of IN.
+</p>
+<p>
+For REAL values, variable is increased by 1.0. For TIME
+values, variable is increased by 1ms.
+</p>
+<p>
+The IN input must be directly connected to a variable and
+cannot be a constant or complex expression.
+</p>
+<p>
+This function is particularly designed for ST language. It
+allows simplified writing as assigning the result of the function is not
+mandatory.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+IN := 1;
+<br>
+
+Q := INC (IN);
+<br>
+
+(* now: IN = 2 ; Q = 2 *)
+</p>
+<p class="codeexample">
+INC (IN); 
+<span class="CodeComment">(*
+simplified call *)</span></p>
+<h2>FBD Language</h2>
+<p>
+<img width="123" height="61" src="Std-INC_files/image001.gif">
+</p>
+<h2>LD Language</h2>
+<p>
+<img width="246" height="81" src="Std-INC_files/image002.gif">
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

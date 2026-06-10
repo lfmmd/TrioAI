@@ -1,0 +1,83 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PROC</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PROC">
+</head>
+<body>
+<h1>PROC</h1>
+<h2>Type:</h2>
+<p class="Category">
+Modifier
+</p>
+<h2>Description:</h2>
+<p>
+Allows a particular process to be specified when using a
+Process Parameter, Function or Command.
+</p>
+<h2>Example:</h2>
+<p>
+Run a program on a particular process then watch that
+process to see when it finishes.
+</p>
+<p class="codeexample">
+RUN &quot;MOTION&quot;, 2
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Wait for the program to start running
+</p>
+<p class="codeexample">
+WAIT UNTIL PROC_STATUS PROC(2) &lt;&gt; 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Wait for the program to complete and flash an output
+while waiting
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+  OP(10, ON)
+</p>
+<p class="codeexample">
+  WA(100)
+</p>
+<p class="codeexample">
+  OP(10, OFF)
+</p>
+<p class="codeexample">
+  WA(50)
+</p>
+<p class="codeexample">
+UNTIL PROC_STATUS PROC(2) = 0
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="ERROR_LINE.html">ERROR_LINE</a>
+, 
+<a href="INDEVICE.html">INDEVICE</a>
+, 
+<a href="OUTDEVICE.html">OUTDEVICE</a>
+, 
+<a href="PMOVE.html">PMOVE</a>
+, 
+<a href="PROC_LINE.html">PROC_LINE</a>
+, PROC_NAME,
+
+<a href="PROC_STATUS.html">PROC_STATUS</a>
+, 
+<a href="RUN_ERROR.html">RUN_ERROR</a>
+,
+
+<a href="TICKS.html">TICKS</a>
+</p>
+</body>
+</html>

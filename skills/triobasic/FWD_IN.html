@@ -1,0 +1,114 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FWD_IN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FWD_IN">
+</head>
+<body>
+<h1>FWD_IN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter holds the input number to be used as a
+forward limit input. 
+</p>
+<p>
+When the forward limit input is active, 
+<a href="CANCEL.html">CANCEL</a>
+
+is issued on that axis.
+</p>
+<p>
+When FWD_IN is active 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+
+bit 4 is set.
+</p>
+<p class="note">
+The input used for FWD_IN is active low. 
+</p>
+<p class="note">
+When the forward limit input is active the controller will cancel
+the move, so the axis will decelerate at 
+<a href="FASTDEC.html">FASTDEC</a>
+ if
+specified, otherwise at 
+<a href="DECEL.html">DECEL</a>
+.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Disable the input as FWD_IN (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0-63
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Input to use as forward input switch
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="tip">
+Any type of input can be used, built in, Trio CAN I/O, CANopen or
+virtual. 
+</p>
+<h2>Example:</h2>
+<p>
+Initialise input 19 for the forward limit switch.
+</p>
+<p class="codeexample">
+FWD_IN AXIS(9) = 19
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REV_IN.html">REV_IN</a>
+, 
+<a href="FS_LIMIT.html">FS_LIMIT</a>
+,
+
+<a href="RS_LIMIT.html">RS_LIMIT</a>
+</p>
+</body>
+</html>

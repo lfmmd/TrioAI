@@ -1,0 +1,94 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NOT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NOT">
+</head>
+<body>
+<h1>NOT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Logical and Bitwise operator
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+NOT expression
+</p>
+<h2>Description:</h2>
+<p>
+The NOT operator inverts all the bits of the supplied integer
+value.
+</p>
+<p class="note">
+When supplied with a floating-point value, this is first truncated
+to an integer value.
+</p>
+<p class="warning">
+Be wary when using NOT with bit values 0 and 1, as while NOT 0
+will work as expected (returning TRUE (because NOT 0 is $FFFFFFFF (-1 in
+decimal)), NOT 1 will not return the expected 0 (FALSE), instead returning -2
+(which is not FALSE) , because NOT 1 is $FFFFFFFE in hexadecimal (-2 in
+decimal).
+</p>
+<h2>Parameter:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+expression:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid TrioBASIC expression.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Perform a bitwise conjunction (AND) of the value 7 with the
+bitwise inversion (NOT) of 1.5. The value 1.5 is first truncated to 1 prior to bitwise
+inversion, followed by a bitwise conjunction with 7 (in binary, using 8 bits
+for brevity, evaluates 00000111 AND 11111110, which equals 00000110).
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT 7 AND NOT 1.5
+</p>
+<p class="codeexample">
+6
+</p>
+<h3>Example 2:</h3>
+<p>
+If a function fails, then print an error message and stop
+the program
+</p>
+<p class="codeexample">
+IF NOT CAN(0, 9, 13, 1, 8, $6060, 0, $02) THEN
+</p>
+<p class="codeexample">
+  PRINT #user, &quot;Failed to set velocity mode&quot;
+</p>
+<p class="codeexample">
+  STOP
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+</body>
+</html>

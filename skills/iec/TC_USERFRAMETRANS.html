@@ -1,0 +1,323 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_USERFRAMETRANS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_USERFRAMETRANS">
+</head>
+<body>
+<h1>TC_USERFRAMETRANS</h1>
+<h2>Type:</h2>
+<p>
+Motion Function
+</p>
+<h2>Function:</h2>
+<p>
+Executes a single USER_FRAME_TRANS on the specified table
+data.
+</p>
+<h2>Inputs:</h2>
+<p class="fixed">
+   
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+EN : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set TRUE to enable the function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+UF1 : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+User Frame In; The USER_FRAME identity that the points
+  are supplied in
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+UF2 : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+User Frame Out; The USER_FRAME identity that the points
+  are transformed to
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TO1 : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Offset In; The TOOL_OFFSET identity that the
+  points are supplied in
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TO2 : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Tool Offset Out; The TOOL_OFFSET identity that the points
+  are transformed to
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DataIn : DINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The table index for the input positions
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DataOut : LINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The table index for the start of the generated
+  positions
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Scale : LREAL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Scale factor for the table values (default 1000)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs:<span style='font-family:"Courier New"'>  </span></h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ENO : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if function is enabled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error : BOOL;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE if a program error is detected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID : UINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Returned error number
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description:</h2>
+<p>
+When the EN input is TRUE, the function block applies the
+command. 
+</p>
+<p>
+A programming error, such as parameter out of range, will
+set the Error output and return an error ID number.  For the Error ID
+reference, see the Trio Programming error list.
+</p>
+<h2>ST Language:</h2>
+<p class="codeexample">
+MyTC_UserFrameTrans(EN, UF1, UF2, TO1, TO2, DataIn, DataOut,
+Scale);
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+ENO := MyTC_UserFrameTrans.ENO;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+Error := MyTC_UserFrameTrans.Error;
+</p>
+<p class="codeexample" style="margin-left:36.0pt">
+ErrorID := MyTC_UserFrameTrans.ErrorID;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>FBD Language:</h2>
+<p align="center">
+<img width="474" height="267" id="Picture 2" src="TC_USERFRAMETRANS_files/image001.png">
+</p>
+<h2>LD Language: </h2>
+<p align="center">
+<img width="480" height="271" id="Picture 3" src="TC_USERFRAMETRANS_files/image002.png">
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="_Errors.html">TrioBASIC Errors</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

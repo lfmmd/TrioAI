@@ -1,0 +1,847 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MC_MoveRelative</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MC_MoveRelative">
+</head>
+
+
+
+<body>
+<h1>MC_MoveRelative</h1>
+<p>
+Commands a controlled motion of a specified distance relative
+to the position at time of the execution.
+</p>
+<p>
+<img width="461" height="237" src="MC_MoveRelative_files/image001.png">
+</p>
+<h2>Description:</h2>
+<p>
+MC_MoveRelative commands a controlled motion of a specified
+distance relative to the position at time of the execution. 
+</p>
+<p>
+If input ‘Velocity’ is set to zero, it will report an error
+at the rising edge of ‘Execute’.
+</p>
+<p>
+If input ‘Acceleration’, ‘Deceleration’, and ‘Jerk’ are
+zero, these values will be set to the maximum values. 
+</p>
+<p>
+Input parameter ‘Jerk’ can be used to accelerate or
+decelerate smoothly.
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+MC_MoveRelative supports ‘ContinousUpdate’ functionality.
+This means that the input ‘Distance’ can be changed during positioning. 
+</p>
+<p>
+If the ‘ContinuousUpdate’ is enabled and inputs are
+available, the destination position will change, but NOT the starting point for
+‘Distance’. For example, an axis motion is started with MC_MoveRelative when the
+axis is stopped (not in motion). The values of ‘Distance0’, ‘Distance1’, ‘Distance2’
+for input ‘Distance’ are assumed to be positive, and ‘Distance2’ &gt; ‘Distance0’
+&gt; ‘Distance1’). 
+</p>
+<p>
+The black bold dash line shows the normal motion without any
+inputs changing after starting motion. The purple bold dash line shows the
+motion is changed with a smaller input distance ‘Distance1’ and different
+acceleration input parameters. The black bold line shows the motion is changed
+with a larger input distance ‘Distance2’.
+</p>
+<p>
+<img width="537" height="428" src="MC_MoveRelative_files/image002.png">
+</p>
+<p>
+The example above shows that the starting position for ‘Distance’
+will not change if the new ‘Distance’ input is given before the previous
+relative distance has finished.
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+The following figure demonstrates the behaviour of 3
+different ‘BufferMode’ setup on 2 MC_MoveAbsolute connection:
+</p>
+<p class="fmbul1" style="text-indent:0cm">
+<span style='font-family:"Calibri",sans-serif'><img width="554" height="245" id="&#22270;&#29255; 423" src="MC_MoveRelative_files/image003.jpg">
+</span></p>
+<p>
+<img width="576" height="444" src="MC_MoveRelative_files/image004.png">
+</p>
+<ol style="list_style_type:decimal">
+<li class="indent-list-first">
+‘BufferMode’
+= mcAborting: the left part of timing diagram illustrates the case if the 2
+<sup>nd</sup>
+move FB starts the execution while the 1
+<sup>st</sup> one is still executing.
+In this case the 1
+<sup>st</sup> motion is interrupted and aborted by the ‘Test’
+signal during the constant velocity of the 1
+<sup>st</sup> FB at position 3000.
+The 2
+<sup>nd</sup> FB will move 4000 distance to the target position7000.
+</li>
+<li class="indent-list-middle">
+‘BufferMode’
+= mcBuffered: the middle part of the timing diagram illustrates the case if the
+2
+<sup>nd</sup> move FB starts the execution while the 1
+<sup>st</sup> one is
+still executing. In this case, the 1
+<sup>st</sup> motion will not be
+interrupted. The 2
+<sup>nd</sup> motion waits until the 1
+<sup>st</sup> motion
+completed the position 6000 with velocity zero, and then starts to move 4000
+distance to target position 10000.
+</li>
+<li class="indent-list-last">
+‘BufferMode’
+= mcBlendingLow: the right part of the timing diagram illustrates the case if
+the 2
+<sup>nd</sup> move FB starts the execution while the 1
+<sup>st</sup> one is
+still executing. In this case, the 1
+<sup>st</sup> motion will not be
+interrupted. The 2
+<sup>nd</sup> motion waits until the 1
+<sup>st</sup> motion
+completed the position 6000 with special velocity 2000.
+</li>
+</ol>
+<p class="tip">
+Make sure the input and output parameters are of data type
+indicated in the table below.
+</p>
+<p class="note">
+If this command is aborted, the untraveled distance will be abandoned.
+</p>
+<p class="note">
+This action completes with velocity zero if no further actions
+are pending.
+</p>
+<p class="note">
+This FB can be executed when the axis state is ‘Synchronized
+Motion’, ‘Discrete Motion’, ‘Continuous Motion’ or ‘Standstill’. Otherwise, it
+will generate an error.
+</p>
+<h2>Inputs/Outputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Name</b></p>
+
+  
+</td>
+<td width="145" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="286" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>INPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start the motion at rising edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+AXIS_REF
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+ContinuousUpdate
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+TRUE:
+  when the function block is triggered (rising ‘Execute’),  it  will - as long
+  as it stays TRUE – make the function block use the current values of the
+  input variables and apply it to the ongoing movement.
+</p>
+
+  
+<p class="tablecontent">
+FALSE: with the rising edge of the
+  ‘Execute’ input, a change in the input parameters is ignored during the whole
+  movement.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Distance
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Relative distance for the motion (in
+  technical unit [u])
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Velocity
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the maximum ‘Velocity’ (not
+  necessarily reached) [u/s]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the ‘Acceleration’ (always
+  positive) (increasing energy of the motor) [u/
+<span style='font-family:"Calibri",sans-serif'><img width="15" height="27" src="MC_MoveRelative_files/image005.png">
+</span>]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Deceleration
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the ‘Deceleration’ (always
+  positive) (decreasing energy of the motor) [u/
+<span style='font-family:"Calibri",sans-serif'><img width="15" height="27" src="MC_MoveRelative_files/image005.png">
+</span>]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the ‘Jerk’ (always
+  positive) [u/
+<span style='font-family:"Calibri",sans-serif'><img width="15" height="27" src="MC_MoveRelative_files/image006.png">
+</span>]
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+BufferMode
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_BUFFER_MODE
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:0cm">
+Enumerated
+  type:
+</p>
+
+  
+<p class="TableText" style="margin-left:0cm">
+0:
+  mcAborting
+</p>
+
+  
+<p class="TableText" style="margin-left:0cm">
+1:
+  mcBuffered
+</p>
+
+  
+<p class="TableText" style="margin-left:0cm">
+2:
+  mcBlendingLow
+</p>
+
+  
+<p class="TableText" style="margin-left:0cm">
+3:
+  mcBlendingPrevious
+</p>
+
+  
+<p class="TableText" style="margin-left:0cm">
+4:
+  mcBlendingNext
+</p>
+
+  
+<p class="tablecontent">
+5: mcBlendingHigh )
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+<b>OUTPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Commanded
+  position finally reached
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Busy
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+The
+  FB is not finished and new output value is to be expected.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Active
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Indicates
+  that the FB has control on the axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+CommandAborted
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Command
+  is aborted by another command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Signals
+  that an error has occurred within the Function Block
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT
+</p>
+
+  
+</td>
+<td width="286" class="tablegrid">
+
+  
+<p class="TableText">
+Error
+  identification
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="19" height="23" id="&#22270;&#29255; 42" src="MC_MoveRelative_files/image007.png">
+ Example
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+(* Example
+  for MC_MoveRelative *)
+<br>
+
+  bExecute := 
+FALSE
+;
+<br>
+
+  inst_MoveRelative( Execute:=bExecute,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Axis:=Axis0Ref,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ContinuousUpdate:=bContinuousUpdate,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Distance:=lrPos,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Velocity:=lrVel,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acceleration:=lrAcc,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deceleration:=lrDec,
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jerk:=lrJerk,&nbsp;
+<br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BufferMode:=mcBuffered
+  );
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+<br>
+
+  bDone := inst_MoveRelative.Done;&nbsp;
+<br>
+
+  bBusy := inst_MoveRelative.Busy;&nbsp;
+<br>
+
+  bActive := inst_MoveRelative.Active;&nbsp;
+<br>
+
+  bCommAborted := inst_MoveRelative.CommandAborted;
+<br>
+
+  bError := inst_MoveRelative.Error;&nbsp;
+<br>
+
+  ErrorId := inst_MoveRelative.ErrorID; 
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example 2:</h3>
+<h3>Example 3:</h3>
+<p>
+Move Axis 0 to position 1000 with speed of 10, accel/decel
+of 100, jerk 1000, positive direction. After that, move 1000 units from that
+point with the same speed, accel/decel, and jerk setup as before.
+</p>
+<p>
+<img width="576" height="508" id="Picture 1" src="MC_MoveRelative_files/image008.png" alt="Graphical user interface&#10;&#10;Description automatically generated">
+</p>
+<p>
+<img width="576" height="323" id="Picture 2" src="MC_MoveRelative_files/image009.png" alt="Graphical user interface, application, table, Excel&#10;&#10;Description automatically generated">
+</p>
+<p class="note">
+Note: MC_Power enables axis 0 and switch Master Enable (WDOG) ON
+</p>
+<h2>See also: </h2>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

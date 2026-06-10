@@ -1,0 +1,118 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VRSTRING</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VRSTRING">
+</head>
+<body>
+<h1>VRSTRING</h1>
+<h2>Type:</h2>
+<p class="Category">
+String Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = VRSTRING(variable)
+</p>
+<h2>Description:</h2>
+<p>
+Combines the contents of an array of 
+<a href="VR.html">VR</a>
+
+variables so that they can be printed as a text string or used as part of a 
+<a href="DIM.html">STRING</a>
+ variable. All printable characters will be output,
+and the string will terminate at the first null character found (i.e., 
+<a href="VR.html">VR</a>
+(n) contains 0).
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The string value read from VR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Index of first character in the 
+<a href="VR.html">VR</a>
+
+  array
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example1:</h3>
+<p>
+Print a sequence of characters stored in the 
+<a href="VR.html">VR</a>
+s starting at position 100. 
+</p>
+<p class="codeexample">
+PRINT #5, VRSTRING(100)
+</p>
+<h3>Example2:</h3>
+<p>
+Store the characters saved in the 
+<a href="VR.html">VR</a>
+s into
+one 
+<a href="DIM.html">STRING</a>
+ variable.
+</p>
+<p>
+DIM string2 AS STRING(11)
+</p>
+<p class="codeexample">
+string2 = VRSTRING(0)
+</p>
+<h2>See also:</h2>
+<p>
+<a href="VR.html">VR</a>
+, 
+<a href="VRSIZE.html">VRSIZE</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

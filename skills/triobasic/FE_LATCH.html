@@ -1,0 +1,74 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FE_LATCH</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FE_LATCH">
+</head>
+<body>
+<h1>FE_LATCH</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+Contains the 
+<a href="FE.html">FE</a>
+ value which caused the
+axis to put the controller into 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+. 
+This value is only set when the 
+<a href="FE.html">FE</a>
+ exceeds the 
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+ and the 
+<a href="SERVO.html">SERVO</a>
+ = 
+<a href="OFF.html">OFF</a>
+.  
+</p>
+<h2>Value:</h2>
+<p>
+Returns the 
+<a href="FE.html">FE</a>
+ value that caused a 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+</p>
+<p class="note">
+FE_LATCH is reset to 0 when the axis 
+<a href="SERVO.html">SERVO</a>
+
+= 
+<a href="ON.html">ON</a>
+.
+</p>
+<h2>Example:</h2>
+<p>
+Read the LE_LATCH when there is a 
+<a href="MOTION_ERROR.html">MOTION_ERROR</a>
+</p>
+<p class="codeexample">
+IF MOTION_ERROR THEN
+</p>
+<p class="codeexample">
+  VR(10) = FE_LATCH AXIS(ERROR_AXIS)
+</p>
+<p class="codeexample">
+ENDIF
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FE.html">FE</a>
+, 
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+,
+
+<a href="FE_LIMIT_MODE.html">FE_LIMIT_MODE</a>
+, 
+<a href="FE_RANGE.html">FE_RANGE</a>
+</p>
+</body>
+</html>

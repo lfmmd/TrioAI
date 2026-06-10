@@ -1,0 +1,401 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ROBOT_INPUT_INDEX</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ROBOT_INPUT_INDEX">
+</head>
+<body>
+<h1>ROBOT_INPUT_INDEX</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Parameter (Read Only)
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ROBOT_INPUT_INDEX(group, index)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the digital input channel for the given frame
+group’s input.
+</p>
+<p class="note">
+ROBOT_IO requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+<p class="note">
+RPS 2.0 kernel must be activated using the RPS_KERNEL_V2 keyword
+to enable its use.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+group:  
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The group number, 0-7. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index:
+</p>
+
+  
+</td>
+<td width="502" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Robot input index as shown in
+  table below:
+</p>
+
+  
+<table class="tablegrid" border="1" cellspacing="0" cellpadding="0">
+
+   
+<tr>
+<td width="57" valign="top">
+
+    
+<p>
+<b>Index</b></p>
+
+    
+</td>
+<td width="55" valign="top">
+
+    
+<p>
+<b>Code</b></p>
+
+    
+</td>
+<td width="487" valign="top">
+
+    
+<p>
+<b>Meaning</b></p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="57" valign="top">
+
+    
+<p>
+0
+</p>
+
+    
+</td>
+<td width="55" valign="top">
+
+    
+<p>
+KMI
+</p>
+
+    
+</td>
+<td width="487" valign="top">
+
+    
+<p>
+Key
+    switch manual input
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="57" valign="top">
+
+    
+<p>
+1
+</p>
+
+    
+</td>
+<td width="55" valign="top">
+
+    
+<p>
+KAI
+</p>
+
+    
+</td>
+<td width="487" valign="top">
+
+    
+<p>
+Key
+    switch automatic input
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="57" valign="top">
+
+    
+<p>
+2
+</p>
+
+    
+</td>
+<td width="55" valign="top">
+
+    
+<p>
+ESI
+</p>
+
+    
+</td>
+<td width="487" valign="top">
+
+    
+<p>
+Emergency
+    stop input
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="57" valign="top">
+
+    
+<p>
+3
+</p>
+
+    
+</td>
+<td width="55" valign="top">
+
+    
+<p>
+DMI
+</p>
+
+    
+</td>
+<td width="487" valign="top">
+
+    
+<p>
+Demand
+    input
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="57" valign="top">
+
+    
+<p>
+4
+</p>
+
+    
+</td>
+<td width="55" valign="top">
+
+    
+<p>
+REI
+</p>
+
+    
+</td>
+<td width="487" valign="top">
+
+    
+<p>
+Reset
+    errors input
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="57" valign="top">
+
+    
+<p>
+5
+</p>
+
+    
+</td>
+<td width="55" valign="top">
+
+    
+<p>
+SAI
+</p>
+
+    
+</td>
+<td width="487" valign="top">
+
+    
+<p>
+Safety
+    input
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="57" valign="top">
+
+    
+<p>
+6
+</p>
+
+    
+</td>
+<td width="55" valign="top">
+
+    
+<p>
+DEI
+</p>
+
+    
+</td>
+<td width="487" valign="top">
+
+    
+<p>
+Drive
+    enabled input
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td width="57" valign="top">
+
+    
+<p>
+7
+</p>
+
+    
+</td>
+<td width="55" valign="top">
+
+    
+<p>
+MEI
+</p>
+
+    
+</td>
+<td width="487" valign="top">
+
+    
+<p>
+Master
+    enable input
+</p>
+
+    
+</td>
+</tr>
+
+  
+</table>
+
+  
+<p class="tablecontent">
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+&nbsp;
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Print the input channel mapped to drive enabled input (DEI).
+</p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;?ROBOT_INPUT_INDEX(0,6)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_RPS_KERNEL_V2.html">RPS_KERNEL_V2</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

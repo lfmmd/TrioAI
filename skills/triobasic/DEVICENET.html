@@ -1,0 +1,351 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DEVICENET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DEVICENET">
+</head>
+<body>
+<h1>DEVICENET</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DEVICENET(slot, function[, parameters...])
+</p>
+<h2>Description:</h2>
+<p>
+The command DEVICENET is used to start and stop the
+DeviceNet slave function which is built into the 
+<i>Motion Coordinator</i>.
+</p>
+<p>
+Polled I/O data is transferred periodically:
+</p>
+<p>
+From PLC to [
+<a href="TABLE.html">TABLE</a>
+(poll_base) -&gt;
+
+<a href="TABLE.html">TABLE</a>
+(poll_base + poll_in)]
+</p>
+<p>
+To PLC from [
+<a href="TABLE.html">TABLE</a>
+(poll_base +
+poll_in + 1) -&gt; 
+<a href="TABLE.html">TABLE</a>
+(poll_base + poll_in +
+poll_out)]
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+slot:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set -1 for built-in CAN port 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+function:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_0:">0</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start the DeviceNet slave protocol on the given slot.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_1:">1</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Stop the DeviceNet protocol.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a href="#_Function_=_2:">2</a>
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Put start-up baud rate into Flash EPROM
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_0:"></a>
+Function = 0:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+DEVICENET(slot, 0, baud, mac_id, poll_base, poll_in, poll_out)
+</p>
+<h3>Description:</h3>
+<p>
+Start the DeviceNet protocol using the specified parameters
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+baud:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to 125, 250 or 500 to specify the baud rate in kHz.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mac_id:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The ID which the 
+<i>Motion Coordinator</i> will use to
+  identify itself on the DeviceNet network. Range 0..63.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+poll_base:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The first 
+<a href="TABLE.html">TABLE</a>
+ location to be
+  transferred as poll data
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+poll_in:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of words to be received during poll. Range 0..4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+poll_out:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of words to be sent during poll. Range 0..4
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Function_=_1:"></a>
+Function = 1:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+DEVICENET(slot, 1)
+</p>
+<h3>Description:</h3>
+<p>
+Stop the DeviceNet protocol from running
+</p>
+<h2><a name="_Function_=_2:"></a>
+Function = 2:</h2>
+<h3>Syntax:</h3>
+<p class="fixed">
+DEVICENET(slot, 2, baud)
+</p>
+<h3>Description:</h3>
+<p>
+Store the baud rate in flash EPROM for power up.
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+baud:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Set to 125, 250 or 500 to specify the baud rate in kHz.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Start the DeviceNet protocol on the built-in CAN port
+</p>
+<p class="codeexample">
+DEVICENET(-1, 0, 500, 30, 0, 4, 2)
+</p>
+<h3>Example 2:</h3>
+<p>
+Stop the DeviceNet protocol on the CAN board in slot 2;
+</p>
+<p class="codeexample">
+DEVICENET(2, 1)
+</p>
+<h3>Example 3:</h3>
+<p>
+Set the CAN board in slot 0 to have a baud rate of 125&nbsp;kbps
+on power-up;
+</p>
+<p class="codeexample">
+DEVICENET(0, 2, 125)
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

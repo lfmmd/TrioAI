@@ -1,0 +1,270 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ROBOT_SP_MODE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ROBOT_SP_MODE">
+</head>
+<body>
+<h1>ROBOT_SP_MODE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+ROBOT_SP_MODE = value
+</p>
+<h2>Description:</h2>
+<p>
+The parameter puts the interpolation into a mode suitable
+for XYZ Cartesian robots with additional axes (UVW) that may control a tool
+head or “wrist”.
+</p>
+<p>
+When ROBOT_SP_MODE is ON, the system calculates the path
+lengths for the XYZ group (e.g. axes 0,1,2) and the UVW group (e.g. axes 3,4,5)
+separately. It will time the move based on which one will take longer assuming
+the XYZ group takes speed from axis 0 and the UVW wrist group takes speed from
+axis 3. It does this by adjusting the &quot;path length&quot; so the U axis
+speed only has an effect during move calculation time.
+</p>
+<p class="note">
+<span class="searchword0">INTERP_FACTOR</span> should be set to 1.0
+on all the axes in this mode.
+</p>
+<p class="warning">
+This parameter is designed to work with very specific axis
+layouts. It may not have the desired effect if used more generally. Contact
+Trio if in doubt.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Interpolation uses all axes in the group to calculate
+  the path.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Interpolation is in Robot mode 1
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+So that motion may be performed on the wrist axes while
+keeping the XYZ position stationary, set ROBOT_SP_MODE = ON and run 6 axis
+moves as required in the sequence.
+</p>
+<p class="codeexample">
+ROBOT_SP_MODE = 1
+</p>
+<p class="codeexample">
+FOR ax = 0 TO 5
+</p>
+<p class="codeexample">
+    INTERP_FACTOR AXIS(ax) = ON
+</p>
+<p class="codeexample">
+NEXT ax
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVEABS(0, 0, 0, 0, 0, 0)
+</p>
+<p class="codeexample">
+MOVEABS(5, 15, 20, u1, v1, w1) 'All 6 axes are moved
+</p>
+<p class="codeexample">
+MOVEABS(10, 20, 30, u1, v1, w1) 'Only the XYZ axes are
+moved
+</p>
+<p class="codeexample">
+MOVEABS(10, 20, 30, u2, v2, w2) 'Only the wrist axes are
+moved
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="note">
+<span class="searchword0">Setting INTERP_FACTOR</span> to OFF on
+axes 3, 4 and 5 would result in the last move failing to run as expected.
+</p>
+<h3>Example 2:</h3>
+<p>
+Demonstration of how the XYZ and UVW can have their own
+speed setting.  The axes taking the longest time to complete their move will
+have control of the completion time for both sets of axes, i.e. the “Faster”
+axes will be made to run slower.
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+ROBOT_SP_MODE = 1
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FOR ax = 0 TO 5
+</p>
+<p class="codeexample">
+   INTERP_FACTOR AXIS(ax) = ON
+</p>
+<p class="codeexample">
+NEXT ax
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVE_COUNT = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+UNITS AXIS(0) = 1000 'Gives mm on XYZ
+</p>
+<p class="codeexample">
+UNITS AXIS(1) = 1000 'Gives mm on XYZ
+</p>
+<p class="codeexample">
+UNITS AXIS(2) = 1000 'Gives mm on XYZ
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+UNITS AXIS(3) = 10000 / 360 'Gives deg on wrist
+</p>
+<p class="codeexample">
+UNITS AXIS(4) = 10000 / 360 'Gives deg on wrist
+</p>
+<p class="codeexample">
+UNITS AXIS(5) = 10000 / 360 'Gives deg on wrist
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+SPEED AXIS(0) = 100 'mm / sec
+</p>
+<p class="codeexample">
+SPEED AXIS(3) = 60 'deg / sec
+</p>
+<p class="codeexample">
+ACCEL AXIS(0) = 5000
+</p>
+<p class="codeexample">
+DECEL AXIS(0) = 5000
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+TRIGGER
+</p>
+<p class="codeexample">
+WA(20)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+DEFPOS(0, 0, 0, 0, 0, 0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'The XYZ and UVW distances calculated using 3D Pythagoras
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'All 6 axes move XYZ:25.5mm UVW:105 deg
+</p>
+<p class="codeexample">
+MOVEABS(5, 15, 20, 30, 45, 20)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'XYZ axes only move  XYZ:46.4mm UVW:0 deg
+</p>
+<p class="codeexample">
+MOVEABS(10, 60, 30, 30, 45, 20)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Wrist axes only move   XYZ:0mm    UVW:57.7 deg
+</p>
+<p class="codeexample">
+MOVEABS(10, 60, 30, 0, 0, 0)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See also: </h2>
+<p>
+<a href="INTERP_FACTOR.html">INTERP_FACTOR</a>
+</p>
+</body>
+</html>

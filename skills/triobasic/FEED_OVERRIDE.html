@@ -1,0 +1,122 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FEED_OVERRIDE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FEED_OVERRIDE">
+</head>
+<body>
+<h1>FEED_OVERRIDE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter can be used to override the feed rate when
+using an embedded speed profile such as MOVECONTOUR. 
+</p>
+<p>
+The default value is 100%, and a value between 0% and 150%
+can be set.
+</p>
+<p class="note">
+The path speed (feed-rate) is ramped up or down to the new value.
+
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+100
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Run at the speed set by the embedded profile
+  parameters.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0-150
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Run at a percentage of the set speed.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Use an analogue input to control the feed rate from a manual
+control.
+</p>
+<p class="codeexample">
+BASE(3) 'Control the feed rate on moves with base axis 3
+</p>
+<p class="codeexample">
+WHILE TRUE
+</p>
+<p class="codeexample">
+    feed_rate = AIN(1) * 150 / 2048
+</p>
+<p class="codeexample">
+    IF feed_rate &lt; 0 THEN feed_rate = 0
+</p>
+<p class="codeexample">
+    FEED_OVERRIDE = feed_rate
+</p>
+<p class="codeexample">
+    WA(100)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample" style="margin-left:0cm">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="FEED_OVERRIDE.html">FEED_OVERRIDE</a>
+, 
+<a href="MOVECONTOUR.html">MOVECONTOUR</a>
+, 
+<a href="MOVEABSSEQ.html">MOVEABSSEQ</a>
+,
+
+<a href="SPEED_FACTOR.html">SPEED_FACTOR</a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

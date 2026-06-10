@@ -1,0 +1,205 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TCR_AINCONFIG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TCR_AINCONFIG">
+</head>
+<body>
+<h1>TCR_AINCONFIG</h1>
+<h2><a name="_Hlk200374740">Type:</a>
+</h2>
+<p>
+I/O Function.
+</p>
+<h2><a name="_Hlk200374736">Function:</a>
+</h2>
+<p>
+Read the mode of operation for an analogue input.
+</p>
+<h2><a name="_Hlk200374656">Inputs:</a>
+</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Channel : INT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Analogue input channel number.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Hlk200374658">Outputs:</a>
+</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a name="_Hlk200374620">Q : </a>
+DINT;
+</p>
+
+  
+</td>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="332" valign="top" class="tablegrid">
+
+  
+<p>
+Bipolar, -10&nbsp;V .. +10&nbsp;V
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="332" valign="top" class="tablegrid">
+
+  
+<p>
+Unipolar, 0 .. +10&nbsp;V
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="332" valign="top" class="tablegrid">
+
+  
+<p>
+Bipolar, -5&nbsp;V .. +5&nbsp;V
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="76" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="332" valign="top" class="tablegrid">
+
+  
+<p>
+Unipolar, 0 .. +5&nbsp;V
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Hlk200374765">Description:</a>
+</h2>
+<p>
+Read the mode of operation for an analogue input. This
+operation can be performed on any external analogue input from a Trio CAN
+Analogue input module P326/P328. 
+</p>
+<p>
+This function requires CANIO firmware 2.3.2 or later.
+</p>
+<p class="note">
+The CAN analogue module P326 has 8 x 12 bit inputs.
+</p>
+<p class="note">
+The CAN analogue module P328 has 8 x 16 bit inputs.
+</p>
+<h2><a name="_Hlk200374662">ST </a>
+<a name="_Hlk200374773">Language:</a>
+</h2>
+<p class="codeexample">
+TCR_AINCONFIG (Channel, Value);
+</p>
+<h3><a name="_Hlk200374683">Examples:</a>
+</h3>
+<p>
+<a name="_Hlk200374673">Read the range of the analog input
+5.</a>
+</p>
+<p class="codeexample">
+TC
+R
+_AINCONFIG
+(
+5
+);
+</p>
+<h2>FBD Language:</h2>
+<p>
+<img width="293" height="69" src="TCR_AINCONFIG_files/image001.png">
+</p>
+<h2>LD Language:</h2>
+<p>
+<img width="395" height="81" src="TCR_AINCONFIG_files/image002.png">
+</p>
+<h2>IL Language: </h2>
+<p>
+Not available.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

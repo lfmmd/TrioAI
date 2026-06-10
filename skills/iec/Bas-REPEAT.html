@@ -1,0 +1,91 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>REPEAT UNTIL END_REPEAT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="REPEAT UNTIL END_REPEAT">
+</head>
+<body>
+<h1><a name="_Toc317749346"></a>
+<a name="O_1741"></a>
+REPEAT UNTIL END_REPEAT</h1>
+<p class="Category">
+Statement
+</p>
+<p>
+Repeat a list of statements.
+</p>
+<h2>Syntax</h2>
+<p class="fixed">
+REPEAT
+<br>
+
+&nbsp;&nbsp;&nbsp; &lt;statements&gt;
+<br>
+
+UNTIL &lt;BOOL expression&gt; END_REPEAT;
+</p>
+<h2>Remarks</h2>
+<p>
+The statements between REPEAT and UNTIL are executed until
+the Boolean expression is TRUE. The condition is evaluated after the statements
+are executed. Statements are executed at least once.
+</p>
+<p class="warning">
+Loop instructions may lead to infinite loops that block the
+target cycle. Never test the state of an input in the condition as the input
+will not be refreshed before the next cycle.
+</p>
+<h2>ST Language</h2>
+<p class="codeexample">
+iPos := 0;
+<br>
+
+REPEAT
+<br>
+
+&nbsp;&nbsp; MyArray[iPos] := 0;
+<br>
+
+&nbsp;&nbsp; iNbCleared := iNbCleared + 1;
+<br>
+
+&nbsp;&nbsp; iPos := iPos + 1;
+<br>
+
+UNTIL iPos = iMax END_REPEAT
+<span class="STCode">;</span></p>
+<h2>FBD Language</h2>
+<p>
+Not available.
+</p>
+<h2>LD Language</h2>
+<p>
+Not available.
+</p>
+<h2>See also</h2>
+<p>
+<a href="Bas-IF.html">IF</a>
+</p>
+<p>
+<a href="Bas-WHILE.html">WHILE</a>
+<a name="H_1324"></a>
+</p>
+<p>
+<a href="Bas-FOR.html">FOR</a>
+</p>
+<p>
+<a href="Bas-CASE.html">CASE</a>
+</p>
+<p>
+<a href="Bas-EXIT.html">EXIT</a>
+</p>
+<p>
+&nbsp;
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

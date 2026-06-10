@@ -1,0 +1,183 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Parasitic Compensation</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Parasitic Compensation</h1>
+<p>
+Some robots have a mechanical link between 2 axes. This
+causes one axis to move when the other linked axis moves, causing parasitic
+motion. To compensate this type of motion, COMP_RATIO can be used. 
+</p>
+<p class="note">
+This compensation should be done in ROBOT_DEFINITIONS file, using
+Motion Perfect robot setup tool.
+</p>
+<h2>Syntax</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+COMP_RATIO(function)
+</p>
+
+  
+<p class="codeexample">
+COMP_RATIO(driving_axis, ratio_numerator,
+  ratio_denominator)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="671" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Parameters:</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+function
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+-1 = delete any existing COMP_RATIO applied to base axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+driving_axis
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+Axis to link to.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+ratio_numerator
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+Number of edges the base axis is required to move per
+  increment of the driving axis. The value can be either positive or negative. It
+  is always specified as an encoder edge ratio.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="151" valign="top" class="tablegrid">
+
+  
+<p align="right">
+ratio_denominator
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+Number of edges the base axis is required to move per
+  increment of the driving axis. The value can be either positive or negative.
+  It is always specified as an encoder edge ratio.  
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Description</h2>
+<p>
+This function links the DEMAND_EDGES of base axis to the
+measured movements of the driving axes to compensate mechanical parasitic
+motion. It will add the compensation pulses to demand edges. When this function
+is called, an initial compensation amount will be added to AXIS_DPOS to account
+for previous compensation. No motion will occur during this. 
+</p>
+<h2>Examples</h2>
+<h3><em><span style='font-family:"Cambria",serif'>Example 1</span></em></h3>
+<p class="codeexample">
+master_axis = 3
+<br>
+
+slave_axis = 2
+<br>
+
+compensation_value = -18
+<br>
+
+num = UNITS AXIS(slave_axis) * compensation_value
+<br>
+
+denom = UNITS AXIS(master_axis) * 360
+<br>
+
+
+<br>
+
+COMP_RATIO(master_axis, num, denom) AXIS(slave_axis)
+<a name="_Function_=_2"></a>
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,306 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TIMER</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TIMER">
+</head>
+<body>
+<h1>TIMER </h1>
+<h2>Type: </h2>
+<p class="Category">
+Command
+</p>
+<h2>Syntax:</h2>
+<p>
+TIMER(switch, [output, pattern, time[, option]])
+</p>
+<h2>Description:</h2>
+<p>
+The TIMER command allows an output or a selection of outputs
+to be set or cleared for a predefined period of time. There are 64 timer slots
+available, each can be assigned to any outputs. The timer can be configured to
+turn the output ON or OFF.
+</p>
+<h2>Parameters: </h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+switch:
+</p>
+
+  
+</td>
+<td width="508" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The timer slot to program in the range 0-127
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+output:
+</p>
+
+  
+</td>
+<td width="508" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Selects the physical output or first output in a group
+  in the range 0-255
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+pattern:
+</p>
+
+  
+</td>
+<td width="508" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1 = for a single output.
+</p>
+
+  
+<p class="tablecontent">
+Number = If set to a number this represents a binary
+  array of outputs to be turned on. Range 0-65535.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+time:
+</p>
+
+  
+</td>
+<td width="508" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The period of operation in milliseconds
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="83" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+option:
+</p>
+
+  
+</td>
+<td width="508" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0 = ON at start and OFF at end (default)
+</p>
+
+  
+<p class="tablecontent">
+1 = OFF at start and ON at end
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Use the TIMER function to flash an output when there is a
+motion error. The output lamp should flash with a 50% duty cycle at 5&nbsp;Hz.
+</p>
+<p class="codeexample">
+WAIT UNTIL MOTION_ERROR
+</p>
+<p class="codeexample">
+ WHILE MOTION_ERROR
+</p>
+<p class="codeexample">
+ TIMER(0, 8, 1, 100) 'turns ON output 8 for 100&nbsp;milliseconds
+</p>
+<p class="codeexample">
+ WA(200) 'Waits 200 milliseconds to complete the 5&nbsp;Hz
+period
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3>Example 2:</h3>
+<p>
+Setting outputs 10, 12 and 13 OFF for 70 milliseconds
+following a registration event.  The first output is set to 10 and the pattern
+is set to 13 (1011 in binary) to enable the three outputs. Output 11 is still
+available for normal use. The option value is set to 1 to turn OFF the outputs
+for the period, they return to an ON state after the 70 milliseconds has
+elapsed. 
+</p>
+<p class="codeexample">
+WHILE running
+</p>
+<p class="codeexample">
+ REGIST(3)
+</p>
+<p class="codeexample">
+ WAIT UNTIL MARK
+</p>
+<p class="codeexample">
+ TIMER(1, 10, 13, 70, 1)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3>Example 3:</h3>
+<p>
+Firing output 140 for 250 milliseconds during the tracking
+phase of a 
+<a href="MOVELINK.html">MOVELINK</a>
+ Profile
+</p>
+<p class="codeexample">
+WHILE feed = ON
+</p>
+<p class="codeexample">
+ MOVELINK(30, 60, 60, 0, 1)
+</p>
+<p class="codeexample">
+ MOVELINK(70, 100, 0, 60, 1)
+</p>
+<p class="codeexample">
+ WAIT LOADED 'Wait until tracking phase starts
+</p>
+<p class="codeexample">
+ TIMER(42, 140, 1, 250) 'Fire output during tracking phase
+</p>
+<p class="codeexample">
+ MOVELINK(-100, 200, 50, 50, 1)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3>Example 4:</h3>
+<p>
+Output ‘n’ pulses with period and ON time programmed.
+</p>
+<p class="codeexample">
+  cycle_time = 
+1000 
+'Period
+of the pulses
+<br>
+
+  on_time = 
+200
+<br>
+
+  number_of_cycles = 
+10
+<br>
+
+  
+<br>
+
+  
+FOR
+ i = 
+1
+ TO
+ number_of_cycles
+<br>
+
+    
+TIMER
+(
+0
+, 
+13
+, 
+1
+, on_time)
+<br>
+
+    
+WA
+(cycle_time)
+<br>
+
+  
+NEXT
+ i
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 5:</h3>
+<p>
+Check how long until the timer is completed
+</p>
+<p class="codeexample">
+TIMER(1, 10, 1, 5000)
+<br>
+
+WHILE TIMER(1) &gt; 0
+<br>
+
+   PRINT &quot;Output 10 will toggle in &quot;; TIMER(1); &quot; mS&quot;
+<br>
+
+   WA(500)
+<br>
+
+WEND
+<br>
+
+
+<br>
+
+
+</p>
+</body>
+</html>

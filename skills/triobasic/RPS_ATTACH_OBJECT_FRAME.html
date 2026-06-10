@@ -1,0 +1,524 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ATTACH_OBJECT_FRAME</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>ATTACH_OBJECT_FRAME</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command 
+</p>
+<h2>Syntax</h2>
+<p class="codeexample">
+value = ATTACH_OBJECT_FRAME(object frame)
+</p>
+<p>
+Attach to a conveyor&nbsp;:
+</p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME(control, object frame, syncVector,
+syncPos, syncAxis)
+</p>
+<p class="MsoNoSpacing">
+Attach to a multipurpose machine:
+</p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME(control, object frame, axisX, axisY,
+axisZ, axisU, axisV, axisW, xOffset, yOffset, zOffset, uOffset, vOffset,
+wOffset)
+</p>
+<h2>Description:</h2>
+<p class="MsoNoSpacing">
+Attach Object Frame is a method to link the vectors of an
+Object Frame with up to six axes and place it in a specific position. The
+object frame will then along with these axes. 
+</p>
+<p class="MsoNoSpacing">
+There are two different modes to attach an object frame;
+one specifically designed to work with a conveyor and another one to work with
+a multipurpose machine.
+</p>
+<p class="note">
+An object frame must be created first before being attached or
+detached to axes.
+</p>
+<p class="note">
+OBJECT_FRAME requires the 
+<a href="Glossary.html#RPS">RPS</a>
+
+runtime 
+<a href="Glossary.html#FEC">FEC</a>
+<span class="MsoHyperlink"><span style='font-family:"Calibri",sans-serif'>.</span></span></p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Parameter
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Data type
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Boolean
+</p>
+
+  
+</td>
+<td width="548" class="tablegrid">
+
+  
+<p>
+false / 0 = the specified object frame is not attached.
+</p>
+
+  
+<p>
+true / non-zero value = the specified object frame is
+  already attached.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+control
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" class="tablegrid">
+
+  
+<p>
+ATTACH_OBJECT_FRAME mode. 
+</p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>1 = </span></em><em><span style='font-family:"Calibri",sans-serif'>Attach object frame</span></em><em><span style='font-family:   "Calibri",sans-serif'> with a conveyor mode</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>2 = Attach object frame with multipurpose machine mode</span></em></p>
+
+  
+<p class="tablecontent">
+<em><span style='font-family:"Calibri",sans-serif'>4 = Detach object frame</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+object frame
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer / 
+</p>
+
+  
+<p class="tablecontent">
+String
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Object Frame to attach. 
+</p>
+
+  
+<p>
+Value = index or name or the object frame.
+</p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>When used on its own, the command will return:</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>TRUE = object frame specified is attached to a minimum of
+  1 axis</span></em></p>
+
+  
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>FALSE = object frame specified is not attached to any axes</span></em></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+syncVector
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Object Frame
+  vector that will be attached to syncAxis. 
+</p>
+
+  
+<p>
+Values: 
+</p>
+
+  
+<p>
+1 = x
+</p>
+
+  
+<p>
+2 = y
+</p>
+
+  
+<p>
+3 = z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+syncPos
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Target
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Captured position on syncAxis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+syncAxis
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Axis to synchronise with.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+axisX, axisY, axisZ,
+</p>
+
+  
+<p class="tablecontent">
+axisU, axisV, axisW
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Machine axis number that corresponds to the Object Frame
+  vector that will be attached. 
+</p>
+
+  
+<p>
+Set -1 for non-attached vectors.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="197" valign="top" class="tablegrid">
+
+  
+<p>
+xOffset, yOffset, zOffset,
+</p>
+
+  
+<p class="tablecontent">
+uOffset, vOffset, wOffset
+</p>
+
+  
+</td>
+<td width="105" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Integer
+</p>
+
+  
+</td>
+<td width="548" valign="top" class="tablegrid">
+
+  
+<p>
+Object Frame position and orientation relative to the
+  origin of the Robot
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Check if object frame “of2” is attached to any axes.</span></em></p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME(
+&quot;of2&quot;
+)
+</p>
+<h3>Example 2:</h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Attach object frame “pallet’ to axis 11.</span></em></p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME
+(
+1
+,
+&quot;pallet&quot;
+,
+1
+,registed_position,
+11
+)
+</p>
+<h3>Example 3:</h3>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>Attach object frame 3 with along Y vector of axis 11 of a
+multipurpose machine. The x and z position is offset by 400mm and Y orientation
+is offset by 90 degrees. </span></em></p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME
+(2,3,-1,11,-1,-1,-1,-1,400,0,400,0,90,0)
+</p>
+<h3>Example 4:</h3>
+<p>
+As the conveyor can be in different orientations, the object
+frame can be set in multiple orientations to match the conveyor’s orientation.
+The selected object frame vector will follow the direction of the conveyor
+vector.
+</p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>For example, pick and place operation. A common industry
+example is pick objects from a pallet and place them onto another station or in
+a package. The synchronisation could be simplified by using Attach Object Frame
+technique. An Object Frame will be placed on the pallet in a specific position.
+All the objects will be taught relative to the Object Frame “pallet”. The
+Object Frame “pallet” will be attached to the conveyor using one of the three
+possible options: vector X, vector Y or vector Z. Bear in mind that the
+conveyor could not be perfectly aligned with the robot, so orientation data of
+the Object Frame could be used to adjust it.</span></em></p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME
+(
+1
+,
+&quot;pallet&quot;
+,
+1
+,registed_position,
+11
+)
+</p>
+<p>
+<em><span style='font-family:"Calibri",sans-serif'>After the command is executed, the Object Frame “pallet”
+will follow the conveyor precisely. At this state, the robot should be
+synchronised with the Object Frame “pallet”. Please, go to the next section to
+continue with the example.</span></em></p>
+<p>
+<img width="658" height="369" src="RPS_ATTACH_OBJECT_FRAME_files/image001.png" align="left" hspace="12">
+Example
+5:
+</p>
+<p class="MsoNoSpacing">
+ATTACH_OBJECT_FRAME can also be used with a multi-purpose
+machine. 
+</p>
+<p class="MsoNoSpacing">
+For example, machines with more than one axis. it is
+possible to attach the position and orientation vectors with up to 6 axes
+changing the control parameter. If, for instance, an object frame is attached
+to a 6 DOF robot arm, the position and orientation of the object frame will
+follow the robot TCP.
+</p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME
+(2,3,-1,11,-1,-1,-1,-1,400,0,400,0,90,0)
+</p>
+<h3>Example 6:</h3>
+<p>
+Use control mode 4 to detach an object frame from axes.
+</p>
+<p class="codeexample">
+ATTACH_OBJECT_FRAME
+(
+4
+,
+&quot;of2&quot;
+)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="RPS_SYNC_TO_GTA.html">SYNC_TO_GTA</a>
+, 
+<a href="RPS_SYNC_TO_OBJECT_FRAME.html">SYNC_TO_OBJECT_FRAME</a>
+</p>
+</body>
+</html>

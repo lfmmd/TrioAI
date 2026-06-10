@@ -1,0 +1,1790 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Open Frames Overview</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Open Frames Overview</h1>
+<p>
+Trio Controllers support user defined frames, and this
+section explains how to setup, use and debug a custom frame.
+</p>
+<p class="note">
+The Kinematics FEC is required to use this feature. 
+</p>
+<h2>Setting up an open frame</h2>
+<p>
+Create a BASIC function library.
+</p>
+<p>
+Define two functions for each frame, one to perform forward
+kinematics and the other to perform inverse kinematics.
+</p>
+<p>
+The user functions need to be named in the following way:
+</p>
+<p style="margin-left:0cm">
+         {prefix}_{frame_number}
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="186" colspan="2" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>Item</b></p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="57" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+prefix
+</p>
+
+  
+</td>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+forward_transform
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Forward
+  kinematic function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="130" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+inverse_transform
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Inverse
+  kinematic function
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="186" colspan="2" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+frame_number
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+1 to 999, excepting any existing
+  frames
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+For example, a user written frame 999, will have the
+following functions defined:
+</p>
+<p class="codeexample">
+FUNCTION forward_transform_999(inpos AS TARGETJ) AS TARGET
+</p>
+<p class="codeexample">
+   RETURN retval
+<br>
+
+ENDFUNC
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+FUNCTION inverse_transform_999(inpos AS TARGET) AS TARGETJ
+</p>
+<p class="codeexample">
+   RETURN retval
+<br>
+
+ENDFUNC
+</p>
+<h2>Function definition</h2>
+<p>
+The forward transform function will accept a parameter of
+data type TARGET and return TARGETJ.
+</p>
+<p>
+The inverse transform function will accept a parameter of
+data type TARGETJ and return TARGET.
+</p>
+<p>
+TARGET is a datatype that stores Cartesian position and
+orientation. TARGET variables are for local use only and can be defined just as
+other variables in a program. 
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>Name</b></p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+x, y, z, u, v, w
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p align="left" style="margin-left:0cm">
+Cartesian
+  positions x, y and z (mm), and orientations u, v and w (degrees)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Example:
+</p>
+<p class="codeexample">
+x = inpos.x
+<br>
+
+y = inpos.y
+<br>
+
+z = inpos.z
+<br>
+
+w = inpos.w
+</p>
+<p>
+TARGETJ is a datatype that stores joint positions. TARGETJ
+variables are for local use only and can be defined just as other variables in
+a program.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>Name</b></p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+x,
+  y, z, u, v, w
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p style="margin-left:0cm">
+Joint positions x, y, z, u, v
+  and w (mm or degrees as required by the robot type)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Example:
+</p>
+<p class="codeexample">
+j1 = inpos.x
+<br>
+
+j2 = inpos.y
+<br>
+
+j3 = inpos.z
+<br>
+
+j4 = inpos.u
+</p>
+<h2>Error Handling</h2>
+<p>
+Any RUN_ERROR when running the frame will cause the FRAME to
+be turned off, and the controller will generate an error to indicate this. 
+</p>
+<p>
+Note that the most common errors are likely to be ‘Division
+by Zero’ or passing invalid values to inverse trigonometric functions (ACOS,
+ATAN or ASIN).
+</p>
+<p>
+It is recommended to use the function FRAME_TRANS to debug
+the frame first before activating it. 
+</p>
+<h2>Limitations</h2>
+<ul style="list_style_type:disc">
+<li class="indent-list-first">
+Note that breakpoints will not work when the frame is active as
+it is running in real-time, so its execution cannot be paused.
+</li>
+<li class="indent-list-middle">
+It is up to the frame’s developer to ensure the output does not
+calculate a discontinuous output, as whatever position is calculated will be
+passed to the drive. Although drive errors may protect against any jumps (e.g.
+following error, drive overcurrent, etc.), a large enough value might cause
+your machine to move at a dangerously high speed.
+</li>
+<li class="indent-list-last">
+Do not include lengthy loops in your functions, as these may
+cause the controller to hang-up and reboot. It is recommended to monitor the
+SYSTEM_LOAD and SYSTEM_LOAD_MAX to keep track of their frame’s consumption
+during its development.
+</li>
+</ul>
+<h2>Examples</h2>
+<h3>Function Library</h3>
+<p class="codeexample">
+FUNCTION
+
+forward_transform_999(inpos 
+AS
+ TARGETJ
+) 
+AS
+ TARGET
+<br>
+
+&nbsp;&nbsp;&nbsp;
+DIM
+ retval 
+AS
+ TARGET
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;table_data = 
+100
+</p>
+<p class="codeexample">
+&nbsp;&nbsp;&nbsp;link1 = 
+TABLE
+(table_data
++ 
+0
+)
+<br>
+
+&nbsp;&nbsp;&nbsp;link2 = 
+TABLE
+(table_data + 
+1
+)
+<br>
+
+   link3 = 
+TABLE
+(table_data + 
+2
+)
+<br>
+
+   rad_enc1 = 
+TABLE
+(table_data + 
+3
+)
+<br>
+
+   rad_enc2 = 
+TABLE
+(table_data + 
+4
+)
+<br>
+
+   mm_enc3 = 
+TABLE
+(table_data + 
+5
+)
+<br>
+
+   rad_enc4 = 
+TABLE
+(table_data + 
+6
+)
+<br>
+
+
+   VR
+(
+20
+)
+= input_pos.x
+<br>
+
+
+<br>
+
+   j1 = inpos.x
+<br>
+
+   j2 = inpos.y
+<br>
+
+   j3 = inpos.z
+<br>
+
+   j4 = inpos.u
+<br>
+
+
+<br>
+
+   y1 = link2 * 
+SIN
+(j1)
+<br>
+
+   x1 = link2 * 
+COS
+(j1)
+<br>
+
+   y2 = y1 + link3 * 
+SIN
+(j2)
+<br>
+
+   x2 = x1 + link3 * 
+COS
+(j2)
+<br>
+
+   z = 
+0 
+'-j3 -
+((j4 - j2) / (2 * PI)) + link1
+<br>
+
+   w = 
+0 
+'j4 - j2
+- j1
+<br>
+
+
+   VR
+(
+0
+) =
+x2
+<br>
+
+
+   VR
+(
+1
+) =
+y2
+<br>
+
+
+   VR
+(
+2
+) =
+z
+<br>
+
+
+   VR
+(
+3
+) =
+w
+<br>
+
+
+   VR
+(
+4
+) =
+
+RND
+(
+100
+)
+<br>
+
+   retval.x = 
+325
+ * 
+FRAME_SCALE
+<br>
+
+   retval.y = 
+275
+ * 
+FRAME_SCALE
+<br>
+
+   retval.z = z * 
+FRAME_SCALE
+<br>
+
+   retval.w = w * 
+FRAME_SCALE
+<br>
+
+
+<br>
+
+
+   RETURN
+ retval
+<br>
+
+
+ENDFUNC
+<br>
+
+
+<br>
+
+
+FUNCTION
+ inverse_transform_999(inpos 
+AS
+ TARGET
+) 
+AS
+ TARGETJ
+<br>
+
+
+   DIM
+ retval 
+AS
+
+
+TARGETJ
+</p>
+<p class="codeexample">
+<br>
+
+   table_data = 
+100
+</p>
+<p class="codeexample">
+   link1 = 
+TABLE
+(table_data
++ 
+0
+)
+<br>
+
+   link2 = 
+TABLE
+(table_data + 
+1
+)
+<br>
+
+   link3 = 
+TABLE
+(table_data + 
+2
+)
+<br>
+
+   rad_enc1 = 
+TABLE
+(table_data + 
+3
+)
+<br>
+
+   rad_enc2 = 
+TABLE
+(table_data + 
+4
+)
+<br>
+
+   mm_enc3 = 
+TABLE
+(table_data + 
+5
+)
+<br>
+
+   rad_enc4 = 
+TABLE
+(table_data + 
+6
+)
+<br>
+
+   ab = (link2 * link2) - (link3 * link3)
+<br>
+
+   lk1b = 
+2
+ * link2
+<br>
+
+
+<br>
+
+   x = inpos.x
+<br>
+
+   y = inpos.y
+<br>
+
+   z = inpos.z
+<br>
+
+   w = inpos.w
+<br>
+
+
+<br>
+
+   r2 = x*x + y*y
+<br>
+
+   r = 
+SQR
+(r2)
+<br>
+
+   fi = 
+ATAN2
+(y, x)
+<br>
+
+   beta = 
+ACOS
+((ab + r2) / (lk1b * r))
+<br>
+
+   t1 = fi - beta 
+'LEFT handed
+<br>
+
+   t2 = 
+ACOS
+((link2 * link2 + link3 * link3 -
+r2) _
+</p>
+<p class="codeexample">
+      / (
+2 
+* link2 * link3))
+<br>
+
+   t4 = 
+0 
+'w
+<br>
+
+   t3 = 
+0 
+'(-z -
+(t4 / (2 * PI)) + link1)
+<br>
+
+
+<br>
+
+
+   VR
+(
+10
+)
+= t1
+<br>
+
+
+   VR
+(
+11
+)
+= t2
+<br>
+
+
+   VR
+(
+12
+)
+= t3
+<br>
+
+
+   VR
+(
+13
+)
+= t4
+<br>
+
+
+   VR
+(
+14
+)
+= 
+RND
+(
+100
+)
+<br>
+
+
+<br>
+
+   retval.x = t1 * rad_enc1
+<br>
+
+   retval.y = t2 * rad_enc2
+<br>
+
+   retval.z = t3 * mm_enc3
+<br>
+
+   retval.u = t4 * rad_enc4
+<br>
+
+
+<br>
+
+
+   RETURN
+ retval
+<br>
+
+
+ENDFUNC
+</p>
+<h3>Debugging Frame</h3>
+<p class="codeexample">
+TABLE
+(
+100
+, 
+0
+, 
+325
+, 
+275
+, 
+8388608 
+* (
+80 
+/
+
+1
+) / (
+2 
+*
+
+PI
+), _
+</p>
+<p class="codeexample">
+   
+8388608 
+* (
+50 
+/
+
+1
+) / (
+2 
+*
+
+PI
+))
+<br>
+
+
+TABLE
+(
+105
+,
+
+8388608 
+* (
+15 
+/
+
+10
+) / 
+20
+,
+_
+</p>
+<p class="codeexample">
+   8388608 
+* (
+15625 
+/ 
+1000
+) /
+(
+2 
+* 
+PI
+),
+
+1
+, 
+0
+, 
+0
+, 
+0
+)
+<br>
+
+
+<br>
+
+
+'Axis positions
+<br>
+
+
+VR
+(
+10
+) = 
+0
+<br>
+
+
+VR
+(
+11
+) = 
+90 
+* 
+PI 
+/ 
+180
+<br>
+
+
+VR
+(
+12
+) = 
+0
+<br>
+
+
+VR
+(
+13
+) = 
+0
+<br>
+
+
+<br>
+
+
+FOR
+ i = 
+0
+ TO
+ 5
+<br>
+
+
+   BASE
+(i)
+<br>
+
+
+   UNITS
+ = 
+10000000
+<br>
+
+
+   AXIS_UNITS
+ = 
+UNITS
+<br>
+
+
+   SPEED
+ = 
+100
+<br>
+
+
+   ACC
+(
+1000
+)
+<br>
+
+
+   JERK
+ = 
+1000
+<br>
+
+
+NEXT
+ i
+<br>
+
+
+<br>
+
+
+BASE
+(
+0
+)
+<br>
+
+
+DEFPOS
+(
+0
+, 
+90
+, 
+0
+, 
+0
+, 
+0
+, 
+0
+)
+<br>
+
+
+WAIT
+ IDLE
+<br>
+
+
+<br>
+
+
+'Forward Kinematics
+<br>
+
+
+FRAME_TRANS
+(
+999
+,
+
+100
+, 
+500
+,
+
+1
+)
+<br>
+
+
+'Inverse Kinematics
+<br>
+
+
+FRAME_TRANS
+(
+999
+,
+
+100
+, 
+500
+,
+
+0
+)
+</p>
+<h3>Running Frame</h3>
+<p class="codeexample">
+TABLE
+(
+100
+, 
+0
+, 
+325
+, 
+275
+, 
+8388608 
+* (
+80 
+/
+
+1
+) / (
+2 
+*
+
+PI
+), _
+</p>
+<p class="codeexample">
+   
+8388608 
+* (
+50 
+/
+
+1
+) / (
+2 
+*
+
+PI
+))
+<br>
+
+
+TABLE
+(
+105
+,
+
+8388608 
+* (
+15 
+/
+
+10
+) / 
+20
+,
+_
+</p>
+<p class="codeexample">
+   8388608 
+* (
+15625 
+/ 
+1000
+) /
+(
+2 
+* 
+PI
+),
+
+1
+, 
+0
+, 
+0
+, 
+0
+)
+<br>
+
+
+<br>
+
+
+DIM
+ jpos, jpos_inv 
+AS
+
+
+TARGETJ
+<br>
+
+
+DIM
+ cpos 
+AS
+
+
+TARGET
+<br>
+
+
+<br>
+
+
+'Axis positions
+<br>
+
+
+VR
+(
+10
+) = 
+0
+<br>
+
+
+VR
+(
+11
+) = 
+90 
+* 
+PI 
+/ 
+180
+<br>
+
+
+VR
+(
+12
+) = 
+0
+<br>
+
+
+VR
+(
+13
+) = 
+0
+<br>
+
+jpos.x = 
+VR
+(
+10
+)
+<br>
+
+jpos.y = 
+VR
+(
+11
+)
+<br>
+
+jpos.z = 
+VR
+(
+12
+)
+<br>
+
+jpos.u = 
+VR
+(
+13
+)
+<br>
+
+
+<br>
+
+
+<br>
+
+
+BASE
+(
+0
+)
+<br>
+
+
+AXIS_UNITS
+ = (
+2
+
+^ 
+23
+) * (
+800000
+
+/ 
+10000
+) / 
+360
+<br>
+
+
+UNITS
+ = 
+FRAME_SCALE
+<br>
+
+
+SPEED
+ = 
+100
+<br>
+
+
+ACC
+(
+1000
+)
+<br>
+
+
+JERK
+ = 
+1000
+<br>
+
+
+RS_LIMIT
+ = -
+100000000
+<br>
+
+
+FS_LIMIT
+ = 
+100000000
+<br>
+
+
+FWD_IN
+ = -
+1
+<br>
+
+
+REV_IN
+ = -
+1
+<br>
+
+
+REP_DIST
+ = 
+200000000
+<br>
+
+
+VP_MODE 
+= 
+5
+<br>
+
+
+<br>
+
+
+BASE
+(
+1
+)
+<br>
+
+
+AXIS_UNITS
+ = (
+2
+
+^ 
+23
+) * (
+500000
+
+/ 
+10000
+) / 
+360
+<br>
+
+
+UNITS
+ = 
+FRAME_SCALE
+<br>
+
+
+SPEED
+ = 
+100
+<br>
+
+
+ACC
+(
+1000
+)
+<br>
+
+
+JERK
+ = 
+1000
+<br>
+
+
+RS_LIMIT
+ = -
+100000000
+<br>
+
+
+FS_LIMIT
+ = 
+100000000
+<br>
+
+
+FWD_IN
+ = -
+1
+<br>
+
+
+REV_IN
+ = -
+1
+<br>
+
+
+REP_DIST
+ = 
+200000000
+<br>
+
+
+VP_MODE 
+= 
+5
+<br>
+
+
+<br>
+
+
+BASE
+(
+2
+)
+<br>
+
+
+AXIS_UNITS
+ = (
+2
+
+^ 
+23
+) * (
+15000
+
+/ 
+10000
+) / 
+20
+<br>
+
+
+UNITS
+ = 
+FRAME_SCALE
+<br>
+
+
+SPEED
+ = 
+100
+<br>
+
+
+ACC
+(
+1000
+)
+<br>
+
+
+JERK
+ = 
+1000
+<br>
+
+
+RS_LIMIT
+ = -
+100000000
+<br>
+
+
+FS_LIMIT
+ = 
+100000000
+<br>
+
+
+FWD_IN
+ = -
+1
+<br>
+
+
+REV_IN
+ = -
+1
+<br>
+
+
+REP_DIST
+ = 
+200000000
+<br>
+
+
+VP_MODE 
+= 
+5
+<br>
+
+
+<br>
+
+
+BASE
+(
+3
+)
+<br>
+
+
+AXIS_UNITS
+ = (
+2
+
+^ 
+23
+) * (
+156250
+
+/ 
+10000
+) / 
+360
+<br>
+
+
+UNITS
+ = 
+FRAME_SCALE
+<br>
+
+
+SPEED
+ = 
+100
+<br>
+
+
+ACC
+(
+1000
+)
+<br>
+
+
+JERK
+ = 
+1000
+<br>
+
+
+RS_LIMIT
+ = -
+100000000
+<br>
+
+
+FS_LIMIT
+ = 
+100000000
+<br>
+
+
+FWD_IN
+ = -
+1
+<br>
+
+
+REV_IN
+ = -
+1
+<br>
+
+
+REP_DIST
+ = 
+200000000
+<br>
+
+
+VP_MODE 
+= 
+5
+<br>
+
+
+<br>
+
+
+BASE
+(
+4
+)
+<br>
+
+
+AXIS_UNITS
+ = 
+360000
+
+* (
+1 
+/ 
+1
+)
+/ 
+360
+<br>
+
+
+UNITS
+ = 
+FRAME_SCALE
+<br>
+
+
+SPEED
+ = 
+100
+<br>
+
+
+ACC
+(
+1000
+)
+<br>
+
+
+JERK
+ = 
+1000
+<br>
+
+
+RS_LIMIT
+ = -
+100000000
+<br>
+
+
+FS_LIMIT
+ = 
+100000000
+<br>
+
+
+FWD_IN
+ = -
+1
+<br>
+
+
+REV_IN
+ = -
+1
+<br>
+
+
+REP_DIST
+ = 
+200000000
+<br>
+
+
+VP_MODE 
+=
+5 
+<br>
+
+
+<br>
+
+
+BASE
+(
+5
+)
+<br>
+
+
+AXIS_UNITS
+ = 
+360000
+
+* (
+1 
+/ 
+1
+)
+/ 
+360
+<br>
+
+
+UNITS
+ = 
+FRAME_SCALE
+<br>
+
+
+SPEED
+ = 
+100
+<br>
+
+
+ACC
+(
+1000
+)
+<br>
+
+
+JERK
+ = 
+1000
+<br>
+
+
+RS_LIMIT
+ = -
+100000000
+<br>
+
+
+FS_LIMIT
+ = 
+100000000
+<br>
+
+
+FWD_IN
+ = -
+1
+<br>
+
+
+REV_IN
+ = -
+1
+<br>
+
+
+REP_DIST
+ = 
+200000000
+<br>
+
+
+VP_MODE 
+= 
+5
+<br>
+
+
+<br>
+
+
+BASE
+(
+0
+)
+<br>
+
+
+DEFPOS
+(
+0
+, 
+90
+, 
+0
+, 
+0
+, 
+0
+, 
+0
+)
+<br>
+
+
+FRAME_GROUP
+(
+0
+,
+
+100
+, 
+0
+, 
+1
+, 
+2
+, 
+3
+, 
+4
+, 
+5
+)
+<br>
+
+
+<br>
+
+
+'Run our functions just to check if they run without
+errors
+<br>
+
+
+'cpos = forward_transform_999(jpos)
+<br>
+
+
+'jpos_inv = inverse_transform_999(cpos)
+<br>
+
+
+<br>
+
+
+FRAME
+ = 
+999
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

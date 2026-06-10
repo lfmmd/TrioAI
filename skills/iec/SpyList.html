@@ -1,0 +1,264 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Inspecting Variables</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>Inspecting Variables</h1>
+<h2>Task Variables</h2>
+<p>
+Inside the “IEC 61131-3 Tasks” element in
+the controller’s project window, there is a list of all the tasks, and each
+task has an item called “Task variables” that can be opened by double-clicking
+on it. This window shows all the variables in this task, so it may present too
+much information and one of the options below may be preferable.
+</p>
+<h2>Watch Variables Tool</h2>
+<p>
+Motion Perfect supports monitoring IEC
+61131-3 variables in the standard Watch Variables Tool. 
+</p>
+<h3>Adding a variable using the context menu</h3>
+<p>
+To add a variable from an IEC 61131-3
+program, move the caret to the desired variable in an editor, right click and
+select “Watch Variable” from the context menu. This will automatically open the
+Watch Variables Tool and add the selected variable to the list.
+</p>
+<p>
+<img width="466" height="568" src="SpyList_files/image001.png">
+</p>
+<h3>Adding a variable using the Watch Variables Tool</h3>
+<p>
+Open the Watch Variables Tool while an IEC
+61131-3 program editor is open. Start typing in the last row of the tool. This
+will bring a drop-down list where variables matching the typed text are
+displayed.
+</p>
+<p>
+<img width="451" height="198" src="SpyList_files/image002.png">
+</p>
+<p class="note">
+<span class="MsoIntenseEmphasis">Note that when the task is not running, the “Value” column
+will display “Task not found or not running” message.</span></p>
+<h2>Spy List Window</h2>
+<p>
+An IEC program may have as many spy lists as required, each
+being added by right-clicking on the program and selecting “Advanced | Add New
+Spy List…”. 
+</p>
+<p>
+<img width="324" height="168" id="Picture 2" src="SpyList_files/image003.png">
+</p>
+<p>
+The Spy List is a list of variables and their values:
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Column
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The name of the variable to be spied
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The current value of the variable being spied
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+To add a new variable directly to the list of variables,
+drag and drop from an open editor, or the variables editor, or the structures
+editor. Alternatively press the “Insert” key on the keyboard or click on the
+Add Variable button in the toolbar, which will pop-up a dialog allowing the
+user to select the variable from a list.
+</p>
+<p>
+To remove a variable from the list, select the variable, and
+press the “Delete” key on the keyboard.
+</p>
+<p class="note">
+As spy lists are part of the IEC task, when variables are added
+to, or removed from a spy list, the IEC task has to be recompiled.
+</p>
+<h3><span class="MsoIntenseEmphasis">Converting
+a Spy List to Watch Variables</span></h3>
+<p>
+When Motion Perfect loads a project with
+IEC 61131-3 programs and finds a Spy List, it will suggest copying spy list
+data to Watch Variables Tool.
+</p>
+<p>
+<img width="501" height="377" src="SpyList_files/image004.png">
+</p>
+<p>
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Option
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Move To Watch Tool
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Variables from spy list will be moved to watch tool and
+  spy list will be deleted
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Copy To Watch Tool
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Variables from spy list will be moved to watch tool.
+  Spy list will not be deleted.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="146" valign="top" class="tablegrid">
+
+  
+<p>
+No, Thanks!
+</p>
+
+  
+</td>
+<td width="520" valign="top" class="tablegrid">
+
+  
+<p>
+No data will be copied, spy list will not
+  be deleted
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Since there are now more than one Watch
+Variables Tools, if one of the first two options is chosen 
+<i>Motion</i>
+Perfect will prompt to which watch variables tool the data should be copied.
+</p>
+<p>
+&nbsp;
+</p>
+<p>
+<img width="501" height="377" src="SpyList_files/image005.png">
+</p>
+</body>
+</html>

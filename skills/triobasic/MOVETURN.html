@@ -1,0 +1,1139 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVETURN</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVETURN">
+</head>
+<body>
+<h1>MOVETURN</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVETURN(mode, axes, x_start, y_start, x_end, y_end, sp_start, sp_end[,
+acc[, x_po[, y_po[, sp_lim]]]])
+</p>
+<p class="fixed">
+MOVETURN(mode, axes, x_start, y_start, z_start, x_end, y_end, z_end[,
+sp_start[, x_po[, y_po[, sp_lim]]]])
+</p>
+<h2>Description:</h2>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="103" rowspan="4" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td width="425" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p>
+1, 2
+</p>
+
+  
+</td>
+<td width="425" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+<td width="425" valign="top" class="tablegrid">
+
+  
+<p>
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="47" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+<td width="425" valign="top" class="tablegrid">
+
+  
+<p>
+Equivalent of mode 1, but for 3 axes
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="103" valign="top" class="tablegrid">
+
+  
+<p>
+parameters:
+</p>
+
+  
+</td>
+<td width="472" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Varies based on mode (see below)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>mode = 0</h2>
+<p>
+MOVETURN performs an exterior change of direction.
+</p>
+<p class="codeexample">
+MOVETURN(mode, axes, x_start, y_start, x_end, y_end, sp_start,
+sp_end[, acc])
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+axes:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Number of axes (must be 2 for this mode)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+x_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry vector x component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+y_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry vector y component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+x_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Exit vector x component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+y_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Exit vector y component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+sp_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry speed of the MOVETURN
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+sp_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Exit speed of the MOVETURN
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+acc:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Acceleration/deceleration rate to use (Optional)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4>Example 1:</h4>
+<h4>Example 2:</h4>
+<h2>mode = 1, 2</h2>
+<p>
+MOVETURN performs an interior change of direction.
+</p>
+<p class="codeexample">
+MOVETURN(mode, axes, x_start, y_start, x_end, y_end, sp_start,
+sp_end[, acc])
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+axes:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Number of axes (must be 2 for this mode)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+x_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry vector x component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+y_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry vector y component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+x_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Exit vector x component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+y_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Exit vector y component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+sp_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Not used (supply 0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+sp_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Not used (supply 0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+acc:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Not used (supply 0)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4>Example 1:</h4>
+<h4>Example 2:</h4>
+<h2>mode = 3</h2>
+<p>
+MOVETURN performs an ? change of direction.
+</p>
+<p class="codeexample">
+MOVETURN(mode, axes, x_start, y_start, x_end, y_end, sp_start,
+sp_end[, acc[, x_po[, y_po[, sp_lim]]]])
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+axes:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Number of axes (must be 2 for this mode)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+x_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry vector x component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+y_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry vector y component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+x_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Exit vector x component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+y_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Exit vector y component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+sp_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Not used (supply 0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+sp_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Not used (supply 0)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+acc:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Acceleration/deceleration rate to use (Optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+x_po:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Position offset from start to end, x component (Optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+y_po:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Position offset from start to end, y component (Optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+sp_lim:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Speed limit (Optional)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4>Example 1:</h4>
+<h4>Example 2:</h4>
+<h2>mode = 4</h2>
+<p>
+Performs 3 axis equivalent of mode 1.
+</p>
+<p class="codeexample">
+MOVETURN(mode, axes, x_start, y_start, z_start, x_end, y_end,
+z_end[, sp_start[, x_po[, y_po[, sp_lim]]]])
+</p>
+<h3>Parameters:</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+mode:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+4
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+axes:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Number of axes (must be 3 for this mode)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+x_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry vector x component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+y_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry vector y component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+z_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry vector z component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+x_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Exit vector x component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+y_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Exit vector y component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+z_end:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Exit vector z component
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+sp_start:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Entry speed of the MOVETURN
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+x_po:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Position offset from start to end, x component (Optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+y_po:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Position offset from start to end, y component (Optional)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="132" valign="top" class="tablegrid">
+
+  
+<p>
+sp_lim:
+</p>
+
+  
+</td>
+<td width="444" valign="top" class="tablegrid">
+
+  
+<p>
+Speed limit (Optional)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Examples</h3>
+<h4>Example 1:</h4>
+<h4>Example 2:</h4>
+<h2>See Also:</h2>
+</body>
+</html>

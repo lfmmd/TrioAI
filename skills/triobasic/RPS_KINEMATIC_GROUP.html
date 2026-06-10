@@ -1,0 +1,254 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>KINEMATIC_GROUP</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="KINEMATIC_GROUP">
+</head>
+<body>
+<h1>KINEMATIC_GROUP</h1>
+<h2>Type:</h2>
+<p class="Category">
+Robotics Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+KINEMATIC_GROUP(group, table_offset[, kinematics, axis0, axis1,
+..., axisn])
+</p>
+<p class="fixed">
+KINEMATIC_GROUP(group)
+</p>
+<h2>Description:</h2>
+<p class="MsoNoSpacing">
+Allows the activation of 
+<a href="Glossary.html#RPS">RPS</a>
+
+on the controller and defines all robot configuration data like its mechanical
+links, operating modes and anything else required. 
+</p>
+<p class="MsoNoSpacing">
+The first form is used to activate and deactivate RPS, a
+positive table index is used to specify where the robot configuration data is
+located, and an index of -1 is used to deactivate the kinematic group.
+</p>
+<p class="MsoNoSpacing">
+The second form is used to display the kinematic group to
+the terminal.
+</p>
+<p class="note">
+KINEMATIC_GROUP requires the RPS runtime 
+<a href="Glossary.html#FEC">FEC</a>
+</p>
+<p class="warning">
+Although 8 kinematics can be initialised on a controller it
+may not be possible to process all 8 at a given 
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+. The number that can be run
+depends on many factors including, which kinematic is selected, drive
+connection method, if OBJECT_FRAME and TOOL_OFFSET are enabled and additional
+factory communications. 
+</p>
+<p>
+The number of axes in the group must match the number of
+axes used by the KINEMATICS. The axes must also be ascending order though they
+do not have to be contiguous. If a group is deleted 
+<a href="Glossary.html#RPS">RPS</a>
+
+is disabled for all those axes involved. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+group:  
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The group number, 0-7. 
+</p>
+
+  
+<p class="tablecontent">
+When used as the only KINEMATIC_GROUP parameter, it
+  prints the KINEMATIC_GROUP, the active OBJECT_FRAME, ROBOT_FRAME and
+  TOOL_OFFSET information to the currently selected output channel (default
+  channel 0).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_offset:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+-1 = Delete group data.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0+ = The start position in the table to store the FRAME
+  configuration.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+kinematics:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Type of robot.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis0:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The first axis in the group.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axis1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The second axis in the group.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+axisn:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The last axis in the group.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The second form of the KINEMATIC_GROUP command prints the
+configuration of the kinematic group.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Check if RPS is set by displaying kinematic group index 0 on
+the command line.
+</p>
+<p class="codeexample">
+Terminal
+</p>
+<p class="codeexample">
+&gt;&gt;kinematic_group(0)
+</p>
+<p class="codeexample">
+0 [0] [19] : 10, 11, 12, 13, 14, 15
+TO={0[TO_default]:0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000}
+RF={0[RF_default]:0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000}
+OF={0[OF_default]:0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000} CO{3}
+</p>
+<h3>Example 2:</h3>
+<p>
+Disable kinematic group index 0 on the command line.
+</p>
+<p class="codeexample">
+&gt;&gt; kinematic_group(0, -1)
+</p>
+<h2>See Also:</h2>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

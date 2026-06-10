@@ -1,0 +1,212 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PLR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PLR">
+</head>
+<body>
+<h1>PLR</h1>
+<p class="Category">
+Function Block
+</p>
+<p>
+Outputs a pulse at the rising edge of the input ‘xExecute’.
+</p>
+<h2>Inputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+xExecute
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Its rising edge will output a cycle pulse on ‘xOut’.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Outputs</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Name
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Type
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+xOut
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Output a pulse if ‘xExecute’ falling edge detected.  
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Remarks</h2>
+<p>
+The output pulse will stay until the next call.
+</p>
+<h2>ST Language</h2>
+<p>
+Output a pulse with the instance of PLR ‘Inst_PLR’ to output
+a pulse:
+</p>
+<p class="codeexample">
+bExe := FALSE;
+<br>
+
+Inst_PLR(bExe);
+<br>
+
+bRes := Inst_PLR.xOut;
+<br>
+
+bExe := TRUE;
+<br>
+
+Inst_PLR(bExe);&nbsp;
+<br>
+
+bRes := Inst_PLR.xOut; //Output TRUE
+<br>
+
+Inst_PLR(bExe);&nbsp;
+<br>
+
+bRes := Inst_PLR.xOut; // Output changes to FALSE
+</p>
+<h2>FBD Language</h2>
+<p>
+<img width="435" height="72" id="&#22270;&#29255; 4" src="Bool-PLR_files/image001.jpg" alt="&#22270;&#24418;&#29992;&#25143;&#30028;&#38754;, &#24212;&#29992;&#31243;&#24207;&#10;&#10;&#25551;&#36848;&#24050;&#33258;&#21160;&#29983;&#25104;">
+</p>
+<h2>LD Language</h2>
+<p>
+The rising edge of ‘bExe’ will output a pulse on ‘bRes’:
+<br>
+<img width="624" height="55" id="&#22270;&#29255; 5" src="Bool-PLR_files/image002.png">
+</p>
+<h2>See also</h2>
+<p>
+<a href="Bool-F_TRIG.html">F_TRIG</a>
+<a name="H_1200"></a>
+<a name="H_1032"></a>
+<span class="HotSpot"> </span></p>
+<p>
+<a href="Bool-R_TRIG.html">R_TRIG</a>
+<span class="HotSpot"> </span></p>
+<p>
+<a href="Bool-PLF.html">PLF</a>
+</p>
+<p>
+<span class="HotSpot">&nbsp;</span></p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

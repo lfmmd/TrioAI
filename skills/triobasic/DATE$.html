@@ -1,0 +1,73 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DATE$</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DATE$">
+</head>
+<body>
+<h1>DATE$</h1>
+<h2>Type:</h2>
+<p class="Category">
+String Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = DATE$
+</p>
+<h2>Description:</h2>
+<p>
+DATE$ is used as part of a 
+<a href="PRINT.html">PRINT</a>
+
+statement or a 
+<a href="DIM.html">STRING</a>
+ variable to write the current date
+from the real time clock. The date is printed in the format DD/MMM/YYYY. The
+month is displayed in short text form.
+</p>
+<p class="note">
+The DATE$ is set through the 
+<a href="DATE.html">DATE</a>
+ command
+</p>
+<h2>Parameters:</h2>
+<p>
+None.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+This will print the date, for example 20
+<sup>th</sup>
+October 2010 will print the value: 20/Oct/2010
+</p>
+<p class="codeexample">
+PRINT #5, DATE$
+</p>
+<h3>Example 2:</h3>
+<p>
+Create an error message to print later in the program.
+</p>
+<p class="codeexample">
+DIM string1 AS STRING(30)
+</p>
+<p class="codeexample">
+string1 = &quot;Error occurred on the &quot; + DATE$
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DATE.html">DATE</a>
+, 
+<a href="DATE$.html">DATE$</a>
+,
+
+<a href="DAY.html">DAY</a>
+, 
+<a href="PRINT.html">PRINT</a>
+, 
+<a href="DIM.html">STRING</a>
+</p>
+</body>
+</html>

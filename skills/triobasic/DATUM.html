@@ -1,0 +1,633 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DATUM</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DATUM">
+</head>
+<body>
+<h1>DATUM</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+DATUM(sequence)
+</p>
+<h2>Description:</h2>
+<p>
+Performs one of 6 homing sequences to locate an axis to an
+absolute position. The creep speed used in the sequences is set using 
+<a href="CREEP.html">CREEP</a>
+ and the programmed speed is set with the 
+<a href="SPEED.html">SPEED</a>
+ command.  When the datum sequence has been
+completed, the axis will be at the home position in the case of functions 3 and
+4, or will stop a small distance after the home position when using functions
+1, 2, 5 or 6.
+</p>
+<p>
+DATUM(0) and DATUM(7) are special cases that will reset the motion
+system after an axis critical error.  It leaves the positions in 
+<a href="DPOS.html">DPOS</a>
+ and 
+<a href="MPOS.html">MPOS</a>
+ unchanged.
+</p>
+<h2>Parameter:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Sequence
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+DATUM(0) clears the following error exceeded 
+<a href="FE_LIMIT.html">FE_LIMIT</a>
+ condition for ALL axes by setting these
+  bits in 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+ to zero:
+</p>
+
+  
+<table class="tablegrid" border="1" cellspacing="0" cellpadding="0">
+
+   
+<tr>
+<td valign="top">
+
+    
+<p class="tablecontent">
+BIT 1    
+</p>
+
+    
+</td>
+<td valign="top">
+
+    
+<p class="tablecontent">
+Following Error Warning
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td valign="top">
+
+    
+<p class="tablecontent">
+BIT 2    
+</p>
+
+    
+</td>
+<td valign="top">
+
+    
+<p class="tablecontent">
+Remote Drive Comms Error
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td valign="top">
+
+    
+<p class="tablecontent">
+BIT 3    
+</p>
+
+    
+</td>
+<td valign="top">
+
+    
+<p class="tablecontent">
+Remote Drive Error
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td valign="top">
+
+    
+<p class="tablecontent">
+BIT 8    
+</p>
+
+    
+</td>
+<td valign="top">
+
+    
+<p class="tablecontent">
+Following Error Limit Exceeded
+</p>
+
+    
+</td>
+</tr>
+
+   
+<tr>
+<td valign="top">
+
+    
+<p class="tablecontent">
+BIT 11  
+</p>
+
+    
+</td>
+<td valign="top">
+
+    
+<p class="tablecontent">
+Cancelling Move
+</p>
+
+    
+</td>
+</tr>
+
+  
+</table>
+
+  
+<p class="tablecontent">
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis moves at creep speed forward till the Z marker
+  is encountered. The Measured position is then reset to zero and the Demand
+  position corrected so as to maintain the following error.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis moves at creep speed in reverse till the Z
+  marker is encountered. The Measured position is then reset to zero and the Demand
+  position corrected so as to maintain the following error.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis moves at the programmed speed forward until
+  the datum switch is reached. The axis then moves backwards at creep speed
+  until the datum switch is reset. The Measured position is then reset to zero
+  and the Demand position corrected so as to maintain the following error.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis moves at the programmed speed reverse until
+  the datum switch is reached. The axis then moves at creep speed forward until
+  the datum switch is reset. The Measured position is then reset to zero and
+  the Demand position corrected so as to maintain the following error.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis moves at programmed speed forward until the
+  datum switch is reached. The axis then reverses at creep speed until the
+  datum switch is reset.   It then continues in reverse at creep speed looking
+  for the Z marker on the motor. The Measured position where the Z input was
+  seen is then set to zero and the Demand position corrected so as to maintain
+  the following error.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis moves at programmed speed reverse until the
+  datum switch is reached. The axis then moves forward at creep speed until the
+  datum switch is reset.   It then continues forward at creep speed looking for
+  the Z marker on the motor. The Measured position where the Z input was seen
+  is then set to zero and the Demand position corrected so as to maintain the
+  following error.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Clear 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+ error
+  bits for the 
+<a href="BASE.html">BASE</a>
+ axis only.  Otherwise the action is
+  the same as DATUM(0).
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+The datuming input set with the 
+<a href="DATUM_IN.html">DATUM_IN</a>
+
+which is active low so is set when the input is 
+<a href="OFF.html">OFF</a>
+.
+This is similar to the 
+<a href="FWD_IN.html">FWD</a>
+, 
+<a href="REV_IN.html">REV</a>
+
+and 
+<a href="FHOLD_IN.html">FHOLD</a>
+ inputs which are designed to be
+“fail-safe”.
+</p>
+<p class="note">
+DATUM(0) and DATUM(7) will not reset the “Remote drive comms
+error” or the “Remote drive error” bits if the underlying error is still
+present.
+</p>
+<p class="note">
+DATUM(1) and DATUM(2) use the registration trigger to capture the
+Z position accurately.  The axis decelerates to a stop AFTER the Z position with
+the 0 at the Z.
+</p>
+<p class="note">
+When using remote axes such as EtherCAT, the drive PDO profile
+must include the touch probe to enable DATUM functions 1, 2, 5 and 6 to work.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A production line is forced to stop if something jams the
+product belt, this causes a motion error. The obstacle has to be removed, then
+a reset switch is pressed to restart the line.
+</p>
+<p>
+<img border="0" width="495" height="306" id="Picture 1" src="DATUM_files/image001.png">
+</p>
+<p class="codeexample">
+  FORWARD              'start production line
+</p>
+<p class="codeexample">
+  WHILE IN(2)=ON
+</p>
+<p class="codeexample">
+    IF MOTION_ERROR=0 THEN
+</p>
+<p class="codeexample">
+       OP(8,ON)        'green light on; line is in motion
+</p>
+<p class="codeexample">
+          ELSE
+</p>
+<p class="codeexample">
+       OP(8, OFF)
+</p>
+<p class="codeexample">
+      GOSUB error_correct
+</p>
+<p class="codeexample">
+    ENDIF
+</p>
+<p class="codeexample">
+  WEND
+</p>
+<p class="codeexample">
+  CANCEL
+</p>
+<p class="codeexample">
+  STOP
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+error_correct:
+</p>
+<p class="codeexample">
+   REPEAT
+</p>
+<p class="codeexample">
+    OP(10,ON)
+</p>
+<p class="codeexample">
+    WA(250)
+</p>
+<p class="codeexample">
+    OP(10,OFF)         'flash red light to show crash
+</p>
+<p class="codeexample">
+    WA(250)
+</p>
+<p class="codeexample">
+   UNTIL IN(1)=OFF
+</p>
+<p class="codeexample">
+  DATUM(0)             'reset axis status errors
+</p>
+<p class="codeexample">
+  SERVO=ON             'turn the servo back on
+</p>
+<p class="codeexample">
+  WDOG=ON              'turn on the watchdog
+</p>
+<p class="codeexample">
+  OP(9,ON)             'sound siren that line will restart
+</p>
+<p class="codeexample">
+  WA(1000)
+</p>
+<p class="codeexample">
+  OP(9,OFF)
+</p>
+<p class="codeexample">
+  FORWARD              'restart motion
+</p>
+<p class="codeexample">
+RETURN
+</p>
+<h3>Example 2:</h3>
+<p>
+An axis requires its position to be defined by the Z marker.
+This position should be set to zero and then the axis should move to this
+position. Using the datum 1 the zero point is set on the Z mark, but the axis
+starts to decelerate at this point so stops after the mark.  A move is then
+used to bring it back to the Z position. 
+</p>
+<p>
+<img border="0" width="302" height="189" id="Picture 2" src="DATUM_files/image002.png">
+</p>
+<p class="codeexample">
+SERVO=ON
+</p>
+<p class="codeexample">
+WDOG=ON
+</p>
+<p class="codeexample">
+CREEP=1000    'set the search speed
+</p>
+<p class="codeexample">
+SPEED=5000    'set the return speed
+</p>
+<p class="codeexample">
+DATUM(1)      'register on Z mark and sets this to datum
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+MOVEABS (0)    'moves to datum position
+</p>
+<h3>Example 3:</h3>
+<p>
+A machine must home to its limit switch which is found at
+the rear of the travel before operation. This can be achieved through using
+DATUM(4) which moves in reverse to find the switch. 
+</p>
+<p>
+<img border="0" width="302" height="189" id="Picture 3" src="DATUM_files/image003.png">
+</p>
+<p class="codeexample">
+SERVO=ON
+</p>
+<p class="codeexample">
+WDOG=ON
+</p>
+<p class="codeexample">
+REV_IN=-1   'temporarily turn off the limit switch
+function
+</p>
+<p class="codeexample">
+DATUM_IN=5  'sets input 5 for registration
+</p>
+<p class="codeexample">
+SPEED=5000  'set speed, for quick location of limit switch
+</p>
+<p class="codeexample">
+CREEP=500   'set creep speed for slow move to find edge of
+switch
+</p>
+<p class="codeexample">
+DATUM(4)    'find “edge” at creep speed and stop
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+DATUM_IN=-1
+</p>
+<p class="codeexample">
+REV_IN=5    'restore input 5 as a limit switch again
+</p>
+<h3>Example 4:</h3>
+<p>
+A similar machine to Example 3 must locate a home switch,
+which is at the forward end of travel, and then move backwards to the next Z
+marker and set this as the datum. This is done using DATUM(5) which moves
+forwards at speed to locate the switch, then reverses at creep to the Z marker.
+A final move is then needed, if required, as in Example 2 to move to the datum
+Z marker.  
+</p>
+<p>
+<img border="0" width="302" height="189" id="Picture 4" src="DATUM_files/image004.png">
+</p>
+<p class="codeexample">
+SERVO=ON
+</p>
+<p class="codeexample">
+WDOG=ON
+</p>
+<p class="codeexample">
+DATUM_IN=7  'sets input 7 as home switch
+</p>
+<p class="codeexample">
+SPEED=5000  'set speed, for quick location of switch
+</p>
+<p class="codeexample">
+CREEP=500   'set creep speed for slow move to find edge of
+switch
+</p>
+<p class="codeexample">
+DATUM(5)    'start the homing sequence
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CREEP.html">CREEP</a>
+, 
+<a href="DATUM_IN.html">DATUM_IN</a>
+<span class="MsoHyperlink">, </span><a href="REGIST.html">REGIST</a>
+<span class="MsoHyperlink">, </span><a href="UNIT_CLEAR.html">UNIT_CLEAR</a>
+<span class="MsoHyperlink">, </span><a href="EX.html">EX</a>
+<span class="MsoHyperlink">, </span><a href="ETHERCAT.html">ETHERCAT($64, axis_number)</a>
+</p>
+</body>
+</html>

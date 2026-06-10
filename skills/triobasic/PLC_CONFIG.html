@@ -1,0 +1,197 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PLC_CONFIG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PLC_CONFIG">
+</head>
+<body>
+<h1>PLC_CONFIG</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (MC_CONFIG) 
+</p>
+<h2>Description:</h2>
+<p>
+The PLC_CONFIG parameter controls optional features and
+modes in the IEC61131-3 runtime environment.  When a bit is set in the
+PLC_CONFIG, the corresponding mode of operation will be applied to all PLC
+tasks running in the 
+<i>Motion Coordinator</i>.  
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+PLC outputs stay in the last state when the program is
+  stopped
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+PLC outputs go OFF when the PLC program is stopped.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Boolean values in VR and TABLE bindings pass -1 for True.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Boolean values in VR and TABLE bindings pass 1 for True.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="warning">
+Outputs may be set ON by a BASIC program or by the firmware
+(e.g. with PSWITCH) even when the PLC requests to set it OFF . 
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+In the MC_CONFIG script, set up the PLC system so that all outputs
+under PLC control will go to the OFF state whenever the program is stopped. 
+</p>
+<p class="codeexample">
+PLC_CONFIG = 1
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="note">
+Setting this bit affects the action on STOP or HALT.   In the
+IEC61131-3 environment, not all run-time errors will stop the program. 
+Run-time errors should be explicitly handled in a suitable exception handler. 
+</p>
+<h3>Example 2:</h3>
+<p>
+In the MC_CONFIG script, set up the PLC system so that all
+VRs bound to Boolean in the PLC programs will pass the value 1 to Trio BASIC. 
+This sets up the system to match the operation in firmware prior to V2.0263. 
+</p>
+<p class="codeexample">
+PLC_CONFIG.1 = 1
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="note">
+PCL_CONFIG bit 1 is active from V2.0274 and above. 
+</p>
+<p class="note">
+&nbsp;
+</p>
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>WDOG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="WDOG">
+</head>
+<body>
+<h1>WDOG</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Controls the WDOG relay contact used for enabling external
+drives. The WDOG=
+<a href="ON.html">ON</a>
+ command MUST be issued in a program
+prior to executing moves. It may then be switched ON and OFF under program
+control. If however a following error condition exists on any axis the system
+software will override the WDOG setting and turn watchdog contact OFF. When
+WDOG=
+<a href="OFF.html">OFF</a>
+, the relay is opened, the analogue outputs are
+set to 0V, the step/direction outputs and any digital axis enable functions are
+disabled.
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+WDOG=ON
+</p>
+<p class="note">
+WDOG=
+<a href="ON.html">ON</a>
+ / WDOG=
+<a href="OFF.html">OFF</a>
+
+is issued automatically by Motion Perfect when the “Master Enable” button is
+clicked on the control panel
+</p>
+<p class="note">
+When the 
+<a href="DISABLE_GROUP.html">DISABLE_GROUP</a>
+ function
+is in use, the watchdog relay and WDOG remain on if there is an axis error.  In
+this case, the digital enable signal is removed from the drives in that group
+only. 
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

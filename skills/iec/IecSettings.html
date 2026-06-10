@@ -1,0 +1,234 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IEC Settings</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1>IEC Settings</h1>
+<p>
+The IEC Settings dialog can be accessed from the context
+menu of task in the Controller or Project Tree. It allows the user to adjust
+what type of code is generated and how it is run.
+</p>
+<p>
+<img width="403" height="295" src="IecSettings_files/image001.png">
+</p>
+<h3>Code Generation</h3>
+<p>
+The Code Generation setting controls which type of code is
+produced:
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+<span style="font-family: Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><b>Debug Code</b>: Allows the user to use Spy Lists to view
+variables and to step through the code in order to debug it. The generated code
+is larger and will run more slowly than the release code.
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+<span style="font-family: Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><b>Release Code</b>: Contains no debugging information.
+</p>
+<p>
+There are also additional options for:
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+<span style="font-family: Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><b>Check Safety of SFC Charts</b>: performs checks of SFC
+programs and generates. This enables the detection of possible unsafe or
+blocking situations due to the form of the SFC chart.
+</p>
+<p>
+Below are two examples of unsafe SFC charts that will
+generate warnings:
+</p>
+<p>
+<img width="193" height="234" src="IecSettings_files/image002.png">
+</p>
+<p>
+In this case as there is no &quot;AND&quot; convergence,
+several steps (such as 1 and 2) may be active at the same time.
+</p>
+<p class="MsoListParagraph" style="margin-left:18.0pt">
+&nbsp;
+</p>
+<p>
+<img width="193" height="234" src="IecSettings_files/image002.png">
+</p>
+<p class="tablebodytext">
+In this case there is a possible blocking
+situatio
+n, a
+s either transition 1
+or 101 is crossed, the transition 2 can never be crossed.
+</p>
+<p>
+The compiler just provides warning messages when checking
+SFC charts. You always keep the possibility to run your application even if
+unsafe situations are reported.
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+<span style="font-family: Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><b>Check variable bindings</b>: When enabled, variable bindings
+are checked during compilation and a compiler warning is generated when an
+unsupported or invalid variable binding is detected.
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+<span style="font-family: Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><b>Enable arrays of structures/User defined function blocks</b>:
+When enabled, array variables containing structures or user-defined function
+blocks can be created.
+</p>
+<h3>Execution Mode</h3>
+<p>
+<img width="402" height="295" src="IecSettings_files/image003.png">
+</p>
+<p>
+This determines how the code is executed:
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><b>Run as fast as possible</b>: C
+ycles are
+executed with the fastest possible speed of the hardware platform.
+</p>
+<p class="MsoListParagraph" style="text-indent:-18.0pt">
+<span style="font-family:Symbol">&bull;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><b>Triggered</b>: 
+Cycles are executed with respect to the specified cycle time. The cycle time is
+the time between 2 consecutive cycles, in milliseconds. For example, if the
+user wants to execute code twice each second, the cycle timing should be
+specified as 500&nbsp;ms (here the time needed for executing the instructions
+is ignored, and in real-world scenarios, more precise timing might be needed).
+</p>
+<p>
+The order of execution of programs within
+the task cycle can be specified by pressing the “Programs execution order…” button,
+which launches a dialog within which changes can be made. This could assist in
+situations where there is more than one program in the task and there is
+explicit need for this. 
+<a href="IecExecutionOrder.html">More information about programs execution order.</a>
+</p>
+<p class="note">
+<span class="MsoIntenseEmphasis">If not specified, the order of execution of programs in the
+cycle is usually the order that the programs have been created.</span></p>
+<h3>Libraries</h3>
+<p>
+<img border="0" width="404" height="293" src="IecSettings_files/image004.png">
+</p>
+<p>
+On this page the libraries that are used be
+the task can be edited. If there is an IEC 6113-3 library in 
+<i>Motion</i>
+Perfect project, its functions and user defined function blocks can be used in
+multiple tasks in the same 
+<i>Motion</i> Perfect project by 
+referencing this library from 
+this settings
+page. 
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Button
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Add
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Opens a dialog where all available libraries are listed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Remove
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Removes the selected library from the list of
+  referenced libraries
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+<span class="MsoIntenseEmphasis">&nbsp;</span></p>
+<p>
+Libraries are referenced only at source
+code level. During compilation of a task that references library functions and
+function blocks, the library code is compiled into the task.
+</p>
+<h3>Protection</h3>
+<p>
+<img border="0" width="401" height="293" src="IecSettings_files/image005.png">
+</p>
+<p>
+On this page a password to protect the code
+from editing and debugging can be set up. When a password is specified, all
+editors for this task/library are automatically closed and the programs cannot
+be open for viewing or editing until the password is re-entered to unprotect
+the task/library.
+</p>
+<p class="note">
+<span class="MsoIntenseEmphasis">Protection happens immediately as you click on the “Protect”
+button. Even if you press the “Cancel” button later, the programs will be
+protected. You can unprotect the programs by entering the same password and
+pressing “Unprotect”. </span></p>
+<p class="note">
+<span class="MsoIntenseEmphasis">Please note that without specifying the same password,
+programs cannot be restored!</span></p>
+<p>
+<img border="0" width="403" height="294" src="IecSettings_files/image006.png">
+</p>
+<p>
+<span class="MsoIntenseEmphasis">&nbsp;</span></p>
+</body>
+</html>

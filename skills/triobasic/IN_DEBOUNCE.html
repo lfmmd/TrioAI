@@ -1,0 +1,133 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>IN_DEBOUNCE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="IN_DEBOUNCE">
+</head>
+
+
+
+<body>
+<h1>IN_DEBOUNCE</h1>
+<h2>Type:</h2>
+<p class="Category">
+I/O command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+IN_DEBOUNCE = time_in_servocycles
+</p>
+<h2>Description:</h2>
+<p>
+The inputs go to the set state after the voltage has been
+either 24 or 0 for the IN_DEBOUNCE time in servo cycles. The selected debounce
+time is applied to all inputs when read in a program using the Motion iX IN
+function or the equivalent IN binding in the IEC 61131-3 language.
+</p>
+<p class="note">
+Registration input functionality is not affected by the
+IN_DEBOUNCE value.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of servo cycles for which the input must
+  remain in a steady state for before the ON/OFF value is passed to a program.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+SERVO_PERIOD is 500 and the required debounce time is 5&nbsp;ms:
+</p>
+<p class="codeexample">
+IN_DEBOUNCE = 10
+</p>
+<h3>Example 2:</h3>
+<p>
+A simple test program to see the effect of IN_DEBOUNCE.
+Connect the output number 8 to input number 0 externally with a wire. Result is
+displayed in Terminal #0.
+</p>
+<p class="codeexample">
+IN_DEBOUNCE = 12 'SERVO_PERIOD is 1000 so we expect 12&nbsp;ms
+</p>
+<p class="codeexample">
+WA(200)
+<br>
+
+
+<br>
+
+
+</p>
+<p class="codeexample">
+TICKS = 0
+</p>
+<p class="codeexample">
+OP(8, ON)
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(0) = ON
+</p>
+<p class="codeexample">
+t = -TICKS
+</p>
+<p class="codeexample">
+PRINT &quot;HI: &quot;; t[0]
+</p>
+<p class="codeexample">
+WA(200)
+<br>
+
+
+<br>
+
+TICKS = 0
+</p>
+<p class="codeexample">
+OP(8, OFF)
+</p>
+<p class="codeexample">
+WAIT UNTIL IN(0) = OFF
+</p>
+<p class="codeexample">
+t = -TICKS
+</p>
+<p class="codeexample">
+PRINT &quot;LO: &quot;; t[0]
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

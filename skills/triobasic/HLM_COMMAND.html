@@ -1,0 +1,612 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HLM_COMMAND</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HLM_COMMAND">
+</head>
+<body>
+<h1>HLM_COMMAND</h1>
+<h2>Type:</h2>
+<p class="Category">
+Hostlink Parameter
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+HLM_COMMAND(command, port[, node[, mc_area/mode[, mc_offset]]])
+</p>
+<h2>Description:</h2>
+<p>
+The HLM_COMMAND command performs a specific Host Link
+command operation to one or to all Host Link Slaves on the selected port.
+Program execution will be paused until the response string has been received or
+the timeout time has elapsed. The timeout time is specified by using the 
+<a href="HLM_TIMEOUT.html"><span style='font-family:"Arial",sans-serif'>HLM_TIMEOUT</span></a>
+
+parameter. The status of the transfer can be monitored with the 
+<a href="HLM_STATUS.html"><span style='font-family:"Arial",sans-serif'>HLM_STATUS</span></a>
+
+parameter.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="84" rowspan="6" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+command:
+</p>
+
+  
+</td>
+<td width="506" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The the Host Link operation to perform:
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HLM_MREAD
+</p>
+
+  
+</td>
+<td width="35" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This performs the Host Link PC MODEL READ (MM) command
+  to read the CPU Unit model code. The result is written to the MC Unit
+  variable specified by mc_area and mc_offset.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HLM_TEST
+</p>
+
+  
+</td>
+<td width="35" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This performs the Host Link TEST (TS) command to check
+  correct communication by sending string &quot;MCxxx TEST STRING&quot; and
+  checking the echoed string. Check the HLM_STATUS parameter for the result.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HLM_ABORT
+</p>
+
+  
+</td>
+<td width="35" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This performs the Host Link ABORT (XZ) command to abort
+  the Host Link command that is currently being processed. The ABORT command
+  does not receive a response.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HLM_INIT
+</p>
+
+  
+</td>
+<td width="35" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This performs the Host Link INITIALIZE (**) command to
+  initialise the transmission control procedure of all Slave Units.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+HLM_STWR
+</p>
+
+  
+</td>
+<td width="35" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This performs the Host Link STATUS WRITE (SC) command
+  to change the operating mode of the CPU Unit.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="84" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+port:
+</p>
+
+  
+</td>
+<td width="506" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The specified serial port (see specific controller
+  specification for numbers).
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="84" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+node:
+</p>
+
+  
+</td>
+<td width="506" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(for HLM_MREAD, HLM_TEST, HLM_ABORT and HLM_STWR):
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="506" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The Slave node number to send the Host Link command to.
+  Range: [0, 31].
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="84" rowspan="5" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td width="506" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(for HLM_STWR)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="506" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The specified CPU Unit operating mode.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="470" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PROGRAM mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="470" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MONITOR mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="37" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="470" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RUN mode
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="84" rowspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mc_area:
+</p>
+
+  
+</td>
+<td width="506" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(for HLM_MREAD)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="506" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The MC Unit's memory selection to write the received
+  data to.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_TABLE
+</p>
+
+  
+</td>
+<td width="35" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Table variable array
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="102" colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_VR
+</p>
+
+  
+</td>
+<td width="35" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9
+</p>
+
+  
+</td>
+<td width="369" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Global (
+<a href="VR.html"><span style='font-family:   "Arial",sans-serif'>VR</span></a>
+) variable array
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="84" rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mc_offset:
+</p>
+
+  
+</td>
+<td width="506" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+(for HLM_MREAD)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="506" colspan="4" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The address of the specified MC Unit memory area to
+  read from.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr height="0">
+
+  
+<td width="84">
+</td>
+
+  
+<td width="37">
+</td>
+
+  
+<td width="65">
+</td>
+
+  
+<td width="35">
+</td>
+
+  
+<td width="369">
+</td>
+
+ 
+</tr>
+
+
+</table>
+<p class="note">
+When using HLM_COMMAND, be sure to set-up the Host Link Master
+protocol by using the 
+<a href="SETCOM.html">SETCOM</a>
+ command.
+</p>
+<p class="note">
+The Host Link Master commands are required to be executed from
+one program task only to avoid any multi-task timing problems.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+The following command will read the CPU Unit model code of
+the Host Link Slave with node address 12 connected to the RS-232C port. The
+result is written to 
+<a href="VR.html">VR</a>
+(233).
+</p>
+<p class="codeexample">
+HLM_COMMAND(HLM_MREAD, 1, 12, MC_VR, 233)
+</p>
+<p>
+If the connected Slave is a C200HX PC, then 
+<a href="VR.html">VR</a>
+(233)
+will contain value 12 (hex) after successful execution.
+</p>
+<h3>Example 2:</h3>
+<p>
+The following command will check the Host Link communication
+with the Host Link Slave (node 23) connected to the RS-422A port.
+</p>
+<p class="codeexample">
+HLM_COMMAND(HLM_TEST, 2, 23)
+</p>
+<p class="codeexample">
+PRINT HLM_STATUS PORT(2)
+</p>
+<p>
+If the 
+<a href="HLM_STATUS.html"><span style='font-family: "Arial",sans-serif'>HLM_STATUS</span></a>
+ parameter contains value zero, the
+communication is functional.
+</p>
+<h3>Example 3:</h3>
+<p>
+The following two commands will perform the Host Link
+INITIALIZE and ABORT operations on the RS-422A port 2. The Slave has node
+number 4. 
+</p>
+<p class="codeexample">
+HLM_COMMAND(HLM_INIT, 2)
+</p>
+<p class="codeexample">
+HLM_COMMAND(HLM_ABORT, 2, 4)
+</p>
+<h3>Example 4:</h3>
+<p>
+When data must be written to a PC using Host Link, the CPU
+Unit cannot be in RUN mode. The HLM_COMMAND command can be used to set it to
+MONITOR mode. The slave has node address 0 and is connected to the RS-232C
+port.
+</p>
+<p class="codeexample">
+HLM_COMMAND(HLM_STWR, 2, 0, 2)
+</p>
+</body>
+</html>

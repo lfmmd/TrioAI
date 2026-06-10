@@ -1,0 +1,110 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TCW_INDEBOUNCE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TCW_INDEBOUNCE">
+</head>
+<body>
+<h1>TCW_INDEBOUNCE</h1>
+<h2><a name="_Hlk200375276">Type:</a>
+</h2>
+<p>
+I/O Function.
+</p>
+<h2>Function:</h2>
+<p>
+Set the IN_DEBOUNCE time.
+</p>
+<h2><a name="_Hlk200375283">Inputs:</a>
+</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value : UINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The number of servo cycles for which the input must
+  remain in a steady state for before the ON/OFF value is passed to a program. 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Hlk200375288">Outputs:</a>
+</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a name="OLE_LINK1">Q : SINT;</a>
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Hlk200375305">Description:</a>
+</h2>
+<p>
+The inputs go to the set state after the voltage has been
+either 24 or 0 for the IN_DEBOUNCE time in servo cycles.  The selected debounce
+time is applied to all inputs when read in a program using the Motion iX IN
+function or the equivalent IN binding in the IEC 61131-3 language.
+</p>
+<p class="note">
+Registration input functionality is not affected by the
+IN_DEBOUNCE value.
+</p>
+<h2>ST <a name="_Hlk200375315">Language:</a>
+</h2>
+<p class="codeexample">
+TCW_INDEBOUNCE (Value);
+</p>
+<h2>FBD Language:</h2>
+<p>
+<img width="297" height="70" src="TCW_INDEBOUNCE_files/image001.png">
+</p>
+<h2>LD Language:</h2>
+<p>
+<img width="361" height="75" src="TCW_INDEBOUNCE_files/image002.png">
+</p>
+<h2>IL Language: </h2>
+<p>
+Not available.
+</p>
+<p>
+&nbsp;
+</p>
+</body>
+</html>

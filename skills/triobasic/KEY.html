@@ -1,0 +1,159 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>KEY</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="KEY">
+</head>
+<body>
+<h1>KEY</h1>
+<h2>Type:</h2>
+<p class="Category">
+File Function
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+value = KEY [#channel]
+</p>
+<h2>Description:</h2>
+<p>
+Key is used to check if there are characters in a channel
+buffer. This command does not read the character but allows the program to test
+if any character has arrived.
+</p>
+<p class="note">
+A 
+<a href="TRUE.html">TRUE</a>
+ result will be reset when the
+character is read with 
+<a href="GET.html">GET</a>
+. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+#channel:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+See # for the full channel list (default 0 if omitted)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p>
+value:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+If channel is a FIFO opened in character mode, then value
+  is a negative value representing the number of characters in the channel
+  buffer.
+</p>
+
+  
+<p>
+If channel is a FIFO opened in line mode, then value is a
+  negative value representing the number of lines in the channel buffer.
+</p>
+
+  
+<p>
+Only for channels #40 to #48 (file channels) when working
+  as a FIFO. See 
+<a href="OPEN.html">OPEN</a>
+ for a description of the FIFO
+  modes.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+-1 (
+<a href="TRUE.html">TRUE</a>
+) if there are characters
+  in the buffer except for the above specific case.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0 (
+<a href="FALSE.html">FALSE</a>
+) if there are no
+  characters.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Call a subroutine if a character has been received on
+channel 1
+</p>
+<p class="codeexample">
+main: 
+</p>
+<p class="codeexample">
+  IF KEY #1 THEN GOSUB read
+</p>
+<p class="codeexample">
+...
+</p>
+<p class="codeexample">
+read: 
+</p>
+<p class="codeexample">
+  GET #1, k
+</p>
+<p class="codeexample">
+RETURN
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="GET.html">GET</a>
+</p>
+</body>
+</html>

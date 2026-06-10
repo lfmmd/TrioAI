@@ -1,0 +1,124 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>FRAME_REP_DIST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="FRAME_REP_DIST">
+</head>
+<body>
+<h1>FRAME_REP_DIST</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Orientation axes on a 
+<a href="FRAME.html">FRAME</a>
+ or 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ must be programmed between ± half a
+revolution (
+<a href="UNITS.html">UNITS</a>
+ can be used to set radians, degrees
+etc). This cannot be done using 
+<a href="REP_DIST.html">REP_DIST</a>
+ and has to
+be done using FRAME_REP_DIST and 
+<a href="REP_OPTION.html">REP_OPTION</a>
+ bit
+3. 
+</p>
+<p>
+When this is configured the 
+<a href="DPOS.html">DPOS</a>
+
+will wrap to ± half a revolution and 
+<a href="AXIS_DPOS.html">AXIS_DPOS</a>
+
+will not be wrapped so that the absolute axis position is maintained. 
+</p>
+<p>
+Wrapping will only occur when 
+<a href="FRAME.html">FRAME</a>
+
+&lt;&gt; 0 or 
+<a href="USER_FRAME.html">USER_FRAME</a>
+ &lt;&gt; 0. While both
+are set to zero the wrapping will be inhibited so that the absolute axis
+position is maintained. 
+</p>
+<p>
+With 
+<a href="REP_OPTION.html">REP_OPTION</a>
+ bit 3 set and 
+<a href="DPOS.html">DPOS</a>
+ exceeding FRAME_REP_DIST it will wrap to –FRAME_REP_DIST.
+The same applies in reverse so when 
+<a href="DPOS.html">DPOS</a>
+ exceeds –FRAME_REP_DIST
+it will wrap to FRAME_REP_DIST.
+</p>
+<h2>Value:</h2>
+<p>
+The position in user 
+<a href="UNITS.html">UNITS</a>
+ where
+the axis position wraps. 
+</p>
+<p class="note">
+FRAME_REP_DIST uses 
+<a href="UNITS.html">UNITS</a>
+. You must
+remember to set FRAME_REP_DIST while the correct 
+<a href="UNITS.html">UNITS</a>
+
+are active.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+A 4 axis delta robot has one orientation axis which is the
+angle of rotation about the Z axis. The user is programming in degrees so the
+DPOS must be limited to ±180 degrees.
+</p>
+<p class="codeexample">
+  BASE(axis_w)
+<br>
+
+  UNITS = (FRAME_SCALE*2*PI) / 360 'degrees
+<br>
+
+  FRAME_REP_DIST = 180
+<br>
+
+  REP_OPTION = 8
+</p>
+<h3>Example 2:</h3>
+<p>
+A 4 axis delta robot has one orientation axis which is the
+angle of rotation about the Z axis. The user is programming in degrees so the
+DPOS must be limited between 0 and +180 degrees.
+</p>
+<p class="codeexample">
+  BASE(axis_w)
+<br>
+
+  UNITS = (FRAME_SCALE*2*PI) / 360 'degrees
+<br>
+
+  FRAME_REP_DIST = 180
+<br>
+
+  REP_OPTION = 9
+</p>
+<p>
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="REP_OPTION.html">REP_OPTION</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,315 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CONNECT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CONNECT">
+</head>
+<body>
+<h1>CONNECT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+CONNECT(ratio, driving_axis[, mode])
+</p>
+<h2>Alternate Format:</h2>
+<p class="fixed">
+CO(...)
+</p>
+<h2>Description:</h2>
+<p>
+Links the demand position of the base axis to the measured
+movements of the driving axes to produce an electronic gearbox.
+</p>
+<p>
+The ratio can be changed at any time by issuing another
+CONNECT command which will automatically update the ratio at 
+<a href="CLUTCH_RATE.html">CLUTCH_RATE</a>
+ without the previous CONNECT being
+cancelled. The command can be cancelled with a 
+<a href="CANCEL.html">CANCEL</a>
+
+or 
+<a href="RAPIDSTOP.html">RAPIDSTOP</a>
+ command
+</p>
+<p>
+You can prevent CONNECT from being cancelled when a hardware
+or software limit is reached by setting the bit in 
+<a href="AXIS_MODE.html">AXIS_MODE</a>
+.
+When this bit is set the ratio is temporarily set to zero while the limit is
+active so the axis will slow to a stop at the programmed 
+<a href="CLUTCH_RATE.html">CLUTCH_RATE</a>
+. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ratio:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This parameter holds the number of edges the base axis
+  is required to move per increment of the driving axis. The ratio value can be
+  either positive or negative. The ratio is always specified as an encoder edge
+  ratio. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+driving_axis:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+This parameter specifies the axis to link to. 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td width="35" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="460" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis follows the measured position (MPOS) of the
+  driving axis. (default)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="35" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="460" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The axis follows the demand position (DPOS) of the
+  driving axis.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+As CONNECT uses encoder data it is not affected by 
+<a href="UNITS.html">UNITS</a>
+, if you need to change the scale of your encoder
+feedback you should use 
+<a href="ENCODER_RATIO.html">ENCODER_RATIO</a>
+</p>
+<p>
+<img border="0" width="576" height="209" id="Picture 1" src="CONNECT_files/image001.png" alt="Text&#10;&#10;Description automatically generated">
+</p>
+<p class="tip">
+To achieve an exact connection of fractional ratios of values such
+as 1024/3072. The 
+<a href="MOVELINK.html">MOVELINK</a>
+ command can be used with
+the continuous repeat link option set to 
+<a href="ON.html">ON</a>
+.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+In a press feed a roller is required to rotate at a speed
+one quarter of the measured rate from an encoder mounted on the incoming
+conveyor. The roller is wired to the master axis 0. The reference encoder is
+connected to axis 1.
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+CONNECT(0.25, 1)
+</p>
+<h3>Example 2:</h3>
+<p>
+A machine has an automatic feed on axis 1 which must move at
+a set ratio to axis 0. This ratio is selected using inputs 0-2 to select a
+particular “gear”, this ratio can be updated every 100&nbsp;ms. Combinations of
+inputs will select intermediate gear ratios. For example 1 
+<a href="ON.html">ON</a>
+
+and 2 
+<a href="ON.html">ON</a>
+ gives a ratio of 6:1.
+</p>
+<p>
+<img border="0" width="576" height="295" id="Picture 2" src="CONNECT_files/image002.png">
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+FORWARD AXIS(0)
+</p>
+<p class="codeexample">
+WHILE IN(3) = ON
+</p>
+<p class="codeexample">
+  WA(100)
+</p>
+<p class="codeexample">
+  gear = IN(0, 2)
+</p>
+<p class="codeexample">
+  CONNECT(gear, 0)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<p class="codeexample">
+RAPIDSTOP       'Cancel the FORWARD and the CONNECT
+</p>
+<h3>Example 3:</h3>
+<p>
+Axis 0 is required to run a continuous forward, axis 1 must
+connect to this but without the step change in speed that would be caused by
+simply calling the CONNECT. 
+<a href="CLUTCH_RATE.html">CLUTCH_RATE</a>
+ is used
+along with an initial and final connect ratio of zero to get the required
+motion.
+</p>
+<p>
+<img border="0" width="302" height="189" id="Picture 3" src="CONNECT_files/image003.png">
+</p>
+<p class="codeexample">
+FORWARD AXIS(0)
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+CONNECT(0, 0)     'Set initial ratio to zero
+</p>
+<p class="codeexample">
+CLUTCH_RATE = 0.5 'Set clutch rate
+</p>
+<p class="codeexample">
+CONNECT(2, 0)     'Apply the required connect ratio
+</p>
+<p class="codeexample">
+WA(8000)
+</p>
+<p class="codeexample">
+CONNECT(0, 0)     'Apply zero ratio to disconnect
+</p>
+<p class="codeexample">
+WA(4000)          'Wait for deceleration to complete
+</p>
+<p class="codeexample">
+CANCEL            'Cancel connect
+</p>
+<h3>Example 4:</h3>
+<p>
+Axis 3 must run synchronised to axis 2 without any lag or
+delay coming from the servo loop in axis 2.  MPOS of axis 2 is the “true”
+encoder position and is usually the master position for CONNECT.  However, it
+has a following error compared to DPOS on the axis so the connected axis will
+lag behind the demand position of the driving axis.
+</p>
+<p>
+To minimise the lag, the mode is set to make the CONNECT
+follow the DPOS.
+</p>
+<p class="codeexample">
+CONNECT(1, 2, 1) AXIS(3) ' follow the demand position
+(DPOS)
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+SPEED = 120
+</p>
+<p class="codeexample">
+ACCEL = 1000
+<br>
+
+DECEL = 1000
+</p>
+<p class="codeexample">
+MOVE(460) ' both axes 2 and 3 move together
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXIS_MODE.html">AXIS_MODE</a>
+, 
+<a href="CLUTCH_RATE.html">CLUTCH_RATE</a>
+, 
+<a href="ENCODER_RATIO.html">ENCODER_RATIO</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,199 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXESDIFF</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXESDIFF">
+</head>
+<body>
+<h1>AXESDIFF</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+AXESDIFF(axis1, axis2)
+</p>
+<h2>Description:</h2>
+<p>
+The AXESDIFF command is used to configure the monitoring of
+2 axes performed on an axis with ATYPE=85.  An axis of ATYPE=85 will produce an
+FE output based on the difference between MPOS of ‘axis2’ subtracted from MPOS
+of ‘axis1’, a DAC output will also be produced.
+</p>
+<p>
+If operation of the FE_LIMIT and FE_RANGE is required, set
+AXIS_MODE bit 13 to 1.  With that set, bits 1 and 8 in AXISSTATUS will respond
+when FE falls outside the limits set.
+</p>
+<p class="tip">
+The specified axis can be any axis and does not have to physically
+exist in the system
+</p>
+<h2>Parameter:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+First Axis to monitor.
+<br>
+
+  -1 breaks the link with the other axis.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Second Axis to monitor.
+<br>
+
+  -1 breaks the link with the other axis.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+To monitor axes 3 &amp; 7.
+</p>
+<p class="codeexample">
+BASE(10)
+<br>
+
+ATYPE = 85
+</p>
+<p class="codeexample">
+AXESDIFF(3,7)
+<br>
+
+FE_RANGE = 25 ' set the warning range
+<br>
+
+FE_LIMIT = 50 ' set the limit value that will trip WDOG OFF
+<br>
+
+PRINT &quot;Axes' position difference is &quot;;FE;&quot; mm&quot;
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Use AXESDIFF to check the following error
+between a stepper motor controlled from the Trio Flexslice P375 and a separate
+encoder, also feeding into the P375.  The stepper motor and the encoder both
+have the same steps and counts per turn.
+</p>
+<p>
+The 256 multiplier is required for the P375
+which has an internal divider to smooth the pulses. 
+</p>
+<p class="codeexample">
+BASE(axis_f1)
+</p>
+<p class="codeexample">
+ENCODER_RATIO(-256, 1)
+</p>
+<p class="codeexample">
+STEP_RATIO(-1, 1)
+</p>
+<p class="codeexample">
+UNITS = 20000 * 256 / 45
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+DEFPOS(0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(axis_f1_enc)
+</p>
+<p class="codeexample">
+ENCODER_RATIO(256, 1)
+</p>
+<p class="codeexample">
+UNITS = 20000 * 256 / 45
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+DEFPOS(0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(axis_f1_diff)
+</p>
+<p class="codeexample">
+ATYPE = 85
+</p>
+<p class="codeexample">
+AXIS_MODE.13 = 1 ' enable the FE_LIMIT
+</p>
+<p class="codeexample">
+UNITS = 20000 * 256 / 45
+</p>
+<p class="codeexample">
+AXESDIFF(axis_f1, axis_f1_enc)
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+DEFPOS(0)
+</p>
+<h2>See also:</h2>
+<p>
+<a href="ATYPE.html">ATYPE</a>
+, 
+<a href="ENCODER_RATIO.html">ENCODER_RATIO</a>
+, 
+<a href="STEP_RATIO.html">STEP_RATIO</a>
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

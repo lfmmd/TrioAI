@@ -1,0 +1,412 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>CHANNEL_WRITE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="CHANNEL_WRITE">
+</head>
+<body>
+<h1>CHANNEL_WRITE</h1>
+<h2>Type: </h2>
+<p class="Category">
+File Function
+</p>
+<h3>Syntax:</h3>
+<p class="fixed">
+x = CHANNEL_WRITE(channel, storage_buffer[, number of bytes])
+</p>
+<h2>Description:</h2>
+<p>
+CHANNEL_WRITE will write bytes onto the channel previously
+stored into the storage buffer.
+</p>
+<p>
+The storage buffer can be a named string variable, named
+array of integers, or the base address for the VR storage. The number of bytes
+parameter is used with the VR variable and array of integers storage to
+indicate the number of bytes to be transmitted. 
+</p>
+<p>
+If the returned value is positive, then it indicates the
+number of bytes of data transmitted.
+</p>
+<p>
+The channel must be opened using the 
+<a href="OPEN.html">OPEN</a>
+
+command before using the CHANNEL_WRITE. The options for OPEN include opening
+files on SD card or local memory and opening a TCP connection either as client
+or server.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Channel
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Communication or file channel number.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+storage_buffer
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A named string variable, a numeric expression that
+  specifies the 
+<a href="VR.html">VR</a>
+ base, or a named integer array.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+number of bytes
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Number of bytes to be transmitted.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example 1:</h2>
+<p>
+Write numbers to a temporary file using 1 named string
+storage and then print the content of the file.
+</p>
+<p class="codeexample">
+DIM output_string AS STRING(10)
+<br>
+
+DIM input_string AS STRING(10)
+<br>
+
+
+<br>
+
+output_string = &quot;0123456789&quot;
+<br>
+
+
+<br>
+
+'Create a temp file in RAM that contains the numbers 1 to 10
+<br>
+
+OPEN #40 AS &quot;test.txt&quot; FOR OUTPUT(1)
+<br>
+
+
+<br>
+
+CHANNEL_WRITE(40, output_string)
+<br>
+
+CLOSE #40
+<br>
+
+
+<br>
+
+'Read the temp file previously created and print the content
+<br>
+
+OPEN #41 AS &quot;test.txt&quot; FOR INPUT
+<br>
+
+
+<br>
+
+CHANNEL_READ(41, input_string)
+<br>
+
+PRINT #5, input_string
+<br>
+
+
+<br>
+
+CLOSE #41
+</p>
+<h2>Example 2:</h2>
+<p>
+Write bytes to a file on the SD card plugged into the Motion
+Coordinator. Use a VR buffer and print the content of the file in ASCII.
+</p>
+<p class="codeexample">
+'Create a file on the SD card using the bytes stored in
+VRs
+<br>
+
+OPEN #40 AS &quot;sd:test.txt&quot; FOR OUTPUT(1)
+<br>
+
+
+<br>
+
+VR(100) = &quot;Brevity is the soul of wit. (Shakespeare)&quot;
+<br>
+
+CHANNEL_WRITE(40, 100, 41)
+<br>
+
+
+<br>
+
+CLOSE #40
+<br>
+
+
+<br>
+
+'Read the file previously created into VRs 
+<br>
+
+'and print the ASCII encoded result
+<br>
+
+OPEN #41 AS &quot;sd:test.txt&quot; FOR INPUT
+<br>
+
+
+<br>
+
+CHANNEL_READ(41, 500, 42)
+<br>
+
+
+<br>
+
+PRINT #5, VRSTRING(501)
+<br>
+
+CLOSE #41
+</p>
+<h2>Example 3:</h2>
+<p>
+Write bytes to a temporary using an integer array as buffer
+and print the content of the file in ASCII.
+</p>
+<p class="codeexample">
+DIM output_buffer AS INTEGER(11)
+<br>
+
+
+<br>
+
+'Create a temp file in RAM that using the bytes stored in an integer array
+<br>
+
+OPEN #40 AS &quot;ram:test.txt&quot; FOR OUTPUT(1)
+<br>
+
+
+<br>
+
+GOSUB set_buffer:
+<br>
+
+
+<br>
+
+CHANNEL_WRITE(40, output_buffer, 11)
+<br>
+
+
+<br>
+
+CLOSE #40
+<br>
+
+
+<br>
+
+'Read the temp file previously created into VRs and print the result ASCII
+encoded
+<br>
+
+OPEN #41 AS &quot;ram:test.txt&quot; FOR INPUT
+<br>
+
+
+<br>
+
+CHANNEL_READ(41, 500, 12)
+<br>
+
+
+<br>
+
+PRINT #5, VRSTRING(501)
+<br>
+
+
+<br>
+
+CLOSE #41
+<br>
+
+
+<br>
+
+STOP
+<br>
+
+
+<br>
+
+set_buffer:
+<br>
+
+output_buffer(0) = 84 'T
+<br>
+
+output_buffer(1) = 82 'R
+<br>
+
+output_buffer(2) = 73 'I
+<br>
+
+output_buffer(3) = 79 'O
+<br>
+
+output_buffer(4) = 32 'Blank Space
+<br>
+
+output_buffer(5) = 77 'M
+<br>
+
+output_buffer(6) = 79 'O
+<br>
+
+output_buffer(7) = 84 'T
+<br>
+
+output_buffer(8) = 73 'I
+<br>
+
+output_buffer(9) = 79 'O
+<br>
+
+output_buffer(10) = 78 'N
+<br>
+
+RETURN
+</p>
+<h2>Example 4:</h2>
+<p>
+Open a TCP connection to a remote server using the TELNET
+port number 23. Send a string and get the response. Print the response to
+Motion Perfect terminal #5.
+</p>
+<p>
+<span style='font-family:"Courier New"'>DIM
+input_string AS STRING(100)</span></p>
+<p>
+<span style='font-family:"Courier New"'>&nbsp;</span></p>
+<p>
+<span style='font-family:"Courier New"'>CLOSE#21</span></p>
+<p>
+<span style='font-family:"Courier New"'>WA(100)</span></p>
+<p>
+<span style='font-family:"Courier New"'>&nbsp;</span></p>
+<p>
+<span style='font-family:"Courier New"'>OPEN
+#21 AS &quot;tcp:192.168.1.249(23)&quot; FOR READ_WRITE</span></p>
+<p>
+<span style='font-family:"Courier New"'>GOSUB
+set_string</span></p>
+<p>
+<span style='font-family:"Courier New"'>CHANNEL_WRITE(21,
+1011, 12)</span></p>
+<p>
+<span style='font-family:"Courier New"'>WA(100)</span></p>
+<p>
+<span style='font-family:"Courier New"'>CHANNEL_READ(21,
+input_string)</span></p>
+<p>
+<span style='font-family:"Courier New"'>CLOSE
+#21</span></p>
+<p>
+<span style='font-family:"Courier New"'>PRINT
+#5, input_string</span></p>
+<p>
+<span style='font-family:"Courier New"'>STOP</span></p>
+<p>
+<span style='font-family:"Courier New"'>&nbsp;</span></p>
+<p>
+<span style='font-family:"Courier New"'>set_string:</span></p>
+<p>
+<span style='font-family:"Courier New"'>   
+VR(1011) = &quot;PRINT VR(0)&quot; + CHR($0d)</span></p>
+<p>
+<span style='font-family:"Courier New"'>RETURN</span></p>
+<h2>Example 5:</h2>
+<p>
+Write values to a TCP connection that has been opened on
+channel #25. Note that all values must be converted to strings.
+</p>
+<p class="codeexample">
+'Write the time of day and value of VR(0) as a string
+<br>
+
+CHANNEL_WRITE(#25, &quot; &quot; + TIME$ + &quot; &quot; + STR(VR(0), 0) +
+&quot; &quot; + STR(ENCODER AXIS(0), 2))
+<br>
+
+
+<br>
+
+
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CHANNEL_READ.html">CHANNEL_READ</a>
+<span class="MsoHyperlink">, </span><a href="OPEN.html">OPEN</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,84 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>RAISE_ANGLE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="RAISE_ANGLE">
+</head>
+<body>
+<h1>RAISE_ANGLE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter is used with 
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+,
+it defines the maximum change in direction of a 2-axis interpolated move before
+
+<a href="CORNER_STATE.html">CORNER_STATE</a>
+ is triggered. When the change in
+direction is greater than the RAINSE_ANGLE, 
+<a href="CORNER_STATE.html">CORNER_STATE</a>
+
+will change so the system can interact with a program.
+</p>
+<p class="tip">
+This can be used to change the angle of a cutting knife
+</p>
+<p class="note">
+RAISE_ANGLE does not control the speed so it should be set equal
+or greater than 
+<a href="STOP_ANGLE.html">STOP_ANGLE</a>
+. 
+</p>
+<h2>Value:</h2>
+<p>
+The angle (in radians) to start to interact with a program
+through 
+<a href="CORNER_STATE.html">CORNER_STATE</a>
+</p>
+<p>
+Must be greater than or equal to zero (default value is
+zero), and when zero, no corner state interaction will occur.
+</p>
+<h2>Example: </h2>
+<p>
+Turn on corner control and the corner state machine, and
+configure it to decelerate beyond 15 degrees and stop at 45 degrees. Set the
+knife raise angle to the stop angle so that the 
+<a href="CORNER_STATE.html">CORNER_STATE</a>
+
+routine can run. 
+</p>
+<p class="codeexample">
+CORNER_MODE.1 = 1
+</p>
+<p class="codeexample">
+CORNER_MODE.2 = 1
+</p>
+<p class="codeexample">
+DECEL_ANGLE = 15 * PI / 180
+</p>
+<p class="codeexample">
+STOP_ANGLE = 45 * PI / 180
+</p>
+<p class="codeexample">
+RAISE_ANGLE = STOP_ANGLE
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+, 
+<a href="CORNER_STATE.html">CORNER_STATE</a>
+, 
+<a href="DECEL_ANGLE.html">DECEL_ANGLE</a>
+,
+
+<a href="STOP_ANGLE.html">STOP_ANGLE</a>
+</p>
+</body>
+</html>

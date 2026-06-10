@@ -1,0 +1,286 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>() Array Indexing</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+
+
+
+<body>
+<h1>()  Array Indexing</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Variable
+</p>
+<h2><a name="_Assignment_Operator:"></a>
+Syntax:</h2>
+<p class="fixed">
+variable(index-0[, index-1[, index-2]]])
+</p>
+<h2>Description:</h2>
+<p>
+Allows the elements of an array to be accessed by specifying
+the index or indices of the element required.
+</p>
+<p>
+Arrays are declared in a DIM or STATIC statement by
+specifying the size of each dimension after the data-type. The dimensions are
+indexed from 0 to the dimension’s size minus 1.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+variable:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the variable being indexed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index-0:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the index of the first dimension
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index-1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the index of the second dimension
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+index-2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+the index of the third dimension
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1</h3>
+<p>
+Set element 0 of array ‘a’ to 0.0 and then display its value.
+</p>
+<p class="codeexample">
+DIM
+ a 
+AS
+ FLOAT
+(
+6
+)
+<br>
+
+
+<br>
+
+a(
+0
+) = 
+0.0
+<br>
+
+
+PRINT
+ &quot;a(0) =
+&quot;
+; a(
+0
+)
+</p>
+<h3>Example 2</h3>
+<p>
+Display all the elements of a 2-dimensional array.
+</p>
+<p class="codeexample">
+DIM
+ a 
+AS
+ FLOAT
+(
+2
+, 
+3
+)
+<br>
+
+
+DIM
+ i, j 
+AS
+
+
+INTEGER
+<br>
+
+
+<br>
+
+
+FOR
+ i = 
+0
+ TO
+ 1
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+FOR
+ j = 
+0
+ TO
+ 2
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+
+a(i, j);
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+IF
+
+j &lt; 
+2
+ THEN
+
+
+PRINT
+ &quot;, &quot;
+;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+NEXT
+ j
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+PRINT
+<br>
+
+
+NEXT
+ i
+</p>
+<h3>Example 3</h3>
+<p>
+Set each row of a 2-dimensional array individually.
+</p>
+<p class="codeexample">
+DIM
+ a 
+AS
+ FLOAT
+(
+2
+, 
+3
+)
+<br>
+
+
+<br>
+
+a(
+0
+) = 
+1
+,
+
+2
+, 
+3
+<br>
+
+a(
+1
+) = 
+4
+,
+
+5
+, 
+6
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DIM.html">DIM</a>
+, 
+<a href="STATIC.html">STATIC</a>
+</p>
+</body>
+
+
+
+</html>

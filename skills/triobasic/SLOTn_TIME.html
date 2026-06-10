@@ -1,0 +1,126 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SLOTn_TIME</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SLOTn_TIME">
+</head>
+<body>
+<h1>SLOT(n)_TIME</h1>
+<h2>Type:</h2>
+<p class="Category">
+Startup Parameter (MC_CONFIG only)
+</p>
+<h2>Description:</h2>
+<p>
+The processor splits the time available for running system
+and user processes into 4 chunks. By default, the system splits the available
+time equally into the 4 chunks, the SLOT0_TIME, SLOT1_TIME, SLOT2_TIME and
+SLOT3_TIME parameters allow the user to specify different percentages of the
+time for each slot. 
+</p>
+<p class="note">
+Note that this is the time slots which the multitasking system
+uses to run the processes and nothing to do with hardware module 
+<a href="SLOT.html">SLOT</a>
+ numbers. 
+</p>
+<p>
+Out of the four slots, one is a system task only slot and so
+not used for user programs. The remaining are for fast and standard processes. 
+</p>
+<p>
+Slot #1:   Standard task
+</p>
+<p>
+Slot #2:   Fast task
+</p>
+<p>
+Slot #3:   System process
+</p>
+<p>
+Slot #4:   Fast task
+</p>
+<p>
+When the SERVO_PERIOD is 1&nbsp;ms or 2&nbsp;ms these
+parameters represent how the available time between consecutive servo cycles is
+divided into 4 slots, the total must be 100% otherwise default settings of 25%
+will be used.
+</p>
+<p>
+When the SERVO_PERIOD is 500&nbsp;µs SLOT0 and SLOT1
+represent how the available time between consecutive servo cycles is divided
+into 2 slots; SLOT2 and SLOT3 represent how the available time between the next
+pair of consecutive servo cycles is divided into 2 slots. Both SLOT0_TIME+SLOT1_TIME
+and SLOT2_TIME+SLOT3_TIME must total 100% otherwise default settings of 50%
+will be used.
+</p>
+<p>
+When the SERVO_PERIOD is less than 500&nbsp;µs these
+parameters are not applicable, 100% of the available time between consecutive
+servo cycles is given to a single process.
+</p>
+<p class="note">
+Note that the minimum percentage allowed for any slot is 10%,
+otherwise all slots will revert to default settings.
+</p>
+<p class="note">
+From V2.0298 onwards, when an IEC program is running, the
+multi-tasking is flat with no fast processes. Use SCHEDULE_TYPE.8 = 1 in
+MC_CONFIG to enable fast processes with IEC 61131-3.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1 (SERVO_PERIOD = 2000):</h3>
+<p class="codeexample">
+SLOT0_TIME = 40
+</p>
+<p class="codeexample">
+SLOT1_TIME = 25
+</p>
+<p class="codeexample">
+SLOT2_TIME = 20
+</p>
+<p class="codeexample">
+SLOT3_TIME = 15
+</p>
+<h3>Example 2 (SERVO_PERIOD = 500):</h3>
+<p class="codeexample">
+SLOT0_TIME = 60 'SLOT0_TIME + SLOT1_TIME = 100
+</p>
+<p class="codeexample">
+SLOT1_TIME = 40
+</p>
+<p class="codeexample">
+SLOT2_TIME = 35 'SLOT2_TIME + SLOT3_TIME = 100
+</p>
+<p class="codeexample">
+SLOT3_TIME = 65
+</p>
+<h3>Example 3 (SERVO_PERIOD = 1000):</h3>
+<p>
+Invalid settings, as the total is greater than 100%, so
+default settings of 25% will be used.
+</p>
+<p class="codeexample">
+SLOT0_TIME = 20
+</p>
+<p class="codeexample">
+SLOT1_TIME = 30
+</p>
+<p class="codeexample">
+SLOT2_TIME = 30
+</p>
+<p class="codeexample">
+SLOT3_TIME = 30
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="SERVO_PERIOD.html">SERVO_PERIOD</a>
+, 
+<a href="SCHEDULE_TYPE.html">SCHEDULE_TYPE</a>
+ (for other things which might
+affect the processing priority)
+</p>
+</body>
+</html>

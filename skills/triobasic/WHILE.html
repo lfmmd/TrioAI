@@ -1,0 +1,119 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>WHILE .. WEND</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="WHILE WEND">
+</head>
+<body>
+<h1>WHILE .. WEND</h1>
+<h2>Type:</h2>
+<p class="Category">
+Program Structure
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+WHILE condition
+</p>
+<p class="fixed">
+  Commands
+</p>
+<p class="fixed">
+WEND
+</p>
+<h2>Description:</h2>
+<p>
+The commands contained in the WHILE..WEND loop are
+continuously executed while the condition is 
+<a href="TRUE.html">TRUE</a>
+.
+Execution then continues after the WEND. If the condition is 
+<a href="FALSE.html">FALSE</a>
+ when the WHILE is first executed then the loop will
+be skipped.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+condition:
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Any valid logical TrioBASIC expression
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="92" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+commands: 
+</p>
+
+  
+</td>
+<td width="498" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TrioBASIC statements that you wish to execute
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+While input 12 is off, move the base axis and flash an LED
+on output 10
+</p>
+<p class="codeexample">
+WHILE IN(12) = OFF
+</p>
+<p class="codeexample">
+  MOVE(200)
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+  OP(10, OFF)
+</p>
+<p class="codeexample">
+  MOVE(-200)
+</p>
+<p class="codeexample">
+  WAIT IDLE
+</p>
+<p class="codeexample">
+  OP(10, ON)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CONTINUE.html">CONTINUE</a>
+</p>
+</body>
+</html>

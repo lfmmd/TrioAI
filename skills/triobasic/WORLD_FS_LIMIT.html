@@ -1,0 +1,96 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>WORLD_FS_LIMIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="WORLD_FS_LIMIT">
+</head>
+<body>
+<h1>WORLD_FS_LIMIT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+An end of travel limit may be set up in software thus
+allowing the program control of the working range of a robot axis. This
+parameter holds the absolute position of the world forward travel limit in user
+WORLD_UNITS
+<a href="AXIS_UNITS.html"></a>
+.
+</p>
+<p>
+Bit 0 of the ROBOTSTATUS register is set when the axis
+position is greater than the WORLD_FS_LIMIT.
+</p>
+<p>
+World software limits are only enabled when FRAME &lt;&gt; 0
+so that the user can limit the range of motion of the robot. 
+</p>
+<p class="note">
+When WORLD_DPOS reaches WORLD_FS_LIMIT the controller will 
+<a href="CANCEL.html">CANCEL</a>
+ all moves on the 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+,
+the axis will decelerate at 
+<a href="FASTDEC.html">FASTDEC</a>
+ if specified,
+otherwise at 
+<a href="DECEL.html">DECEL</a>
+ or. Any 
+<a href="SYNC.html">SYNC</a>
+
+is also stopped. As this software limit uses WORLD_DPOS it will require a
+negative change in WORLD_DPOS to move off the limit. This might not be a
+negative movement on 
+<a href="DPOS.html">DPOS</a>
+ due to the selected 
+<a href="FRAME.html">FRAME</a>
+ transformation.. 
+</p>
+<p class="tip">
+WORLD_FS_LIMIT is disabled when it has a value greater than REP_DIST
+or when 
+<a href="FRAME.html">FRAME</a>
+ = 0.
+</p>
+<h2>Value:</h2>
+<p>
+The absolute position of the software forward travel limit
+in user 
+<a href="UNITS.html">UNITS</a>
+. (default = 400000000000)
+</p>
+<h2>Examples:</h2>
+<p>
+Set up an axis software limit so that the axis operates
+between -200 and +500&nbsp;mm. 
+</p>
+<p class="codeexample">
+WORLD_UNITS = FRAME_SCALE
+</p>
+<p class="codeexample">
+WORLD_FS_LIMIT = 500
+</p>
+<p class="codeexample">
+WORLD_RS_LIMIT = -200
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="WORLD_DPOS.html">WORLD_DPOS</a>
+, 
+<a href="WORLD_RS_LIMIT.html">WORLD_RS_LIMIT</a>
+, 
+<a href="WORLD_UNITS.html">WORLD_UNITS</a>
+,
+
+<a href="FS_LIMIT.html">FS_LIMIT</a>
+, 
+<a href="RS_LIMIT.html">RS_LIMIT</a>
+</p>
+<h2>&nbsp;</h2>
+</body>
+</html>

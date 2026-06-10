@@ -1,0 +1,97 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>HW_TIMER_DONE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="HW_TIMER_DONE">
+</head>
+<body>
+<h1>HW_TIMER_DONE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Slot Command (Read Only)
+</p>
+<h2>Syntax: </h2>
+<p class="fixed">
+HW_TIMER_DONE
+</p>
+<h2>Description: </h2>
+<p>
+Indicates whether a requested 
+<a href="HW_TIMER.html">HW_TIMER</a>
+ is in progress.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The hardware timer is not in progress (the previous 
+<a href="HW_TIMER.html">HW_TIMER</a>
+ request has completed)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The hardware timer is in progress (running the previous
+  
+<a href="HW_TIMER.html">HW_TIMER</a>
+ request)
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Request enable output of axis 4
+to be 
+<a href="ON.html">ON</a>
+ for 500&nbsp;ms.
+</p>
+<p class="codeexample">
+HW_TIMER(1, 500000, ON, 1, 4): WAIT UNTIL HW_TIMER_DONE = 0
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="HW_TIMER.html">HW_TIMER</a>
+</p>
+</body>
+</html>

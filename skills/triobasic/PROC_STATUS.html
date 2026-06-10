@@ -1,0 +1,334 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PROC_STATUS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PROC_STATUS">
+</head>
+<body>
+<h1>PROC_STATUS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Process Parameter (Read Only) 
+</p>
+<h2>Description:</h2>
+<p>
+Returns the status of another process, referenced with the 
+<a href="PROC.html">PROC</a>
+ modifier.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td width="93" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+STOPPED
+</p>
+
+  
+</td>
+<td width="394" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+No program or task is running on the process
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td width="93" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+RUNNING
+</p>
+
+  
+</td>
+<td width="394" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+A task or program is running
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td width="93" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+STEPPING
+</p>
+
+  
+</td>
+<td width="394" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Process is stepping line by line
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td width="93" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PAUSED
+</p>
+
+  
+</td>
+<td width="394" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execution paused (pause button or breakpoint)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td width="93" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PAUSING
+</p>
+
+  
+</td>
+<td width="394" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Preparing to go into paused state 
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td width="93" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+STOPPING
+</p>
+
+  
+</td>
+<td width="394" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Preparing to stop
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td width="93" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SUSPEND
+</p>
+
+  
+</td>
+<td width="394" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Operating system requested process to suspend
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7
+</p>
+
+  
+</td>
+<td width="93" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SUSPENDED
+</p>
+
+  
+</td>
+<td width="394" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Process has temporarily been suspended
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td width="93" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SLEEP
+</p>
+
+  
+</td>
+<td width="394" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Process sleeping, for example during WA, WAIT IDLE,
+  etc.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+SUSPEND and SUSPENDED are used internally by the operating system
+to force programs to stop temporarily while the OS runs some background tasks
+that would otherwise affect the programs. For example, the OS forces a SUSPEND
+when a program line is edited while other programs are running.
+</p>
+<h2>Example:</h2>
+<p>
+Run a program in process 12, check for it to start and then
+for it to complete. 
+</p>
+<p class="codeexample">
+RUN &quot;progname&quot;, 12
+</p>
+<p class="codeexample">
+WAIT UNTIL PROC_STATUS PROC(12) &lt;&gt; 0 'Wait for
+program to start
+</p>
+<p class="codeexample">
+WAIT UNTIL PROC_STATUS PROC(12) = 0 'Wait for program to finish
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Program &quot;progname&quot; has now finished
+</p>
+</body>
+</html>

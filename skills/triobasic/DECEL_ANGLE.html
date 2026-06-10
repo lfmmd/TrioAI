@@ -1,0 +1,70 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DECEL_ANGLE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DECEL_ANGLE">
+</head>
+<body>
+<h1>DECEL_ANGLE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This parameter is used with 
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+,
+it defines the maximum change in direction of a 2-axis interpolated move that
+will be merged at full speed. When the change in direction (see
+CHANGE_DIR_LAST) between two moves is greater than DECEL_ANGLE, the speed will
+be proportionally reduced using the following relationship:
+</p>
+<p style="margin-left:36.0pt">
+speed = 
+<a href="FORCE_SPEED.html">FORCE_SPEED</a>
+
+* (angle - DECEL_ANGLE) / (
+<a href="STOP_ANGLE.html">STOP_ANGLE</a>
+ - DECEL_ANGLE)
+</p>
+<p>
+When a move needs to slow down, its 
+<a href="STARTMOVE_SPEED.html">STARTMOVE_SPEED</a>
+ is set to the above value.
+</p>
+<h2>Value:</h2>
+<p>
+The angle (in radians) beyond which the speed is reduced.
+</p>
+<p>
+Must be greater than or equal to zero (default value is
+zero) and should be less than STOP_ANGLE otherwise it will be ignored (motion
+will stop first).
+</p>
+<h2>Example:</h2>
+<p>
+Decelerate to a slower speed when the transition is between
+15 and 45 degrees.
+</p>
+<p class="codeexample">
+CORNER_MODE.1 = 1
+</p>
+<p class="codeexample">
+DECEL_ANGLE = 15 * PI / 180
+</p>
+<p class="codeexample">
+STOP_ANGLE = 45 * PI / 180
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="CHANGE_DIR_LAST.html">CHANGE_DIR_LAST</a>
+, 
+<a href="CORNER_MODE.html">CORNER_MODE</a>
+, 
+<a href="STOP_ANGLE.html">STOP_ANGLE</a>
+</p>
+</body>
+</html>

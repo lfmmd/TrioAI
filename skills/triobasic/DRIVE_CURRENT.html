@@ -1,0 +1,50 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DRIVE_CURRENT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DRIVE_CURRENT">
+</head>
+<body>
+<h1>DRIVE_CURRENT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Returns the actual current value from a remote drive. For
+this value to be active, the cyclic data transfer from the drive must be first
+configured to return the drive actual current value. For a drive connected by CANopen
+over EtherCAT (CoE) the value will be configured as part of the Process Data
+Object (PDO).
+</p>
+<h2>Value:</h2>
+<p>
+The drive current returned in drive units.
+</p>
+<h2>Example:</h2>
+<h3>Example1</h3>
+<p>
+Display the motor current to Motion Perfect terminal 5.
+</p>
+<p class="codeexample">
+PRINT #5,&quot;Drive current value = &quot;; DRIVE_CURRENT
+AXIS(2)
+</p>
+<h3>Example2</h3>
+<p>
+Wait for the motor current value to go below a pre-defined level.
+</p>
+<p class="codeexample">
+BASE(16)
+</p>
+<p class="codeexample">
+WAIT UNTIL DRIVE_CURRENT &lt; 500
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

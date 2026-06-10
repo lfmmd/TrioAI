@@ -1,0 +1,426 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>VOLUME_LIMIT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="VOLUME_LIMIT">
+</head>
+<body>
+<h1><a name="_Ref272489422">VOLUME_LIMIT</a>
+</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Function
+</p>
+<h2>Syntax: </h2>
+<p class="fixed">
+VOLUME_LIMIT(mode[, table_offset])
+</p>
+<h2>Description:</h2>
+<p>
+VOLUME_LIMIT enables a software limit that restricts the
+motion into a defined three-dimensional shape. The calculations are performed
+on 
+<a href="DPOS.html">DPOS</a>
+ and so it can be used in addition to a 
+<a href="FRAME.html">FRAME</a>
+. The limit applies to axes defined in a 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+.
+</p>
+<p class="note">
+VOLUME_LIMIT requires the kinematic runtime FEC
+</p>
+<p class="warning">
+If no FRAME_GROUP is defined then a ‘parameter out of range’
+run time error will be returned when VOLUME_LIMIT is called.
+</p>
+<p>
+All axes in the 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+
+must have the same 
+<a href="UNITS.html">UNITS</a>
+</p>
+<p>
+When the limit is active moves on all axes in the 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+ are cancelled and so will stop at 
+<a href="FASTDEC.html">FAST_DEC</a>
+ if specified, otherwise at 
+<a href="DECEL.html">DECEL</a>
+.
+Any active 
+<a href="SYNC.html">SYNC</a>
+ is also stopped. 
+<a href="AXISSTATUS.html">AXISSTATUS</a>
+ bit 15 is also set. This means you should
+set your VOLUME_LIMIT smaller than the absolute operating limits of the robot. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VOLUME_LIMIT is disabled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cylinder with cone base volume
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Mode = 1 Cylinder with cone base volume</h2>
+<h3>Syntax: </h3>
+<p class="fixed">
+VOLUME_LIMIT(1[, table_offset])
+</p>
+<h3>Description:</h3>
+<p>
+Mode 1 enables a cylinder with a cone base, this is a
+typical working volume for a delta robot. 
+</p>
+<p>
+The origin for the shape is the centre top. It is possible
+to align this with your coordinate system using the X, Y and Z offsets.
+</p>
+<p>
+<img border="0" width="607" height="284" id="Picture 2" src="VOLUME_LIMIT_files/image001.png">
+</p>
+<p class="tip">
+If you wish to check which 
+<a href="USER_FRAME.html">USER_FRAME</a>
+,
+TOOL_OFFSET and VOLUME_LIMIT are active you can print the details using 
+<a href="FRAME_GROUP.html">FRAME_GROUP</a>
+(group). 
+</p>
+<h3><a name="_Ref273976347">Parameters:</a>
+</h3>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+mode:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+VOLUME_LIMIT is disabled
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cylinder with cone base volume
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+table_offset:
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The start position in the table to store the
+  VOLUME_LIMIT configuration 
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Mode 0 table values, all length values use UNITS from the
+first axis in the FRAME_GROUP.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cylinder Diameter
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cone angle in radians
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Total height
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Cone height
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+X offset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Y offset
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Z offset
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3>Example:</h3>
+<p>
+The cylinder with a flat base is typically used with delta
+robots (FRAME = 14), the following example configures the VOLUME_LIMIT with
+this configuration.
+</p>
+<p>
+<img border="0" width="444" height="386" id="Picture 14" src="VOLUME_LIMIT_files/image002.png">
+</p>
+<p class="codeexample">
+  TABLE(100, 1100) 'Cylinder diameter
+</p>
+<p class="codeexample">
+  TABLE(101, (60 / 360) * 2 * PI) 'Cone angle
+</p>
+<p class="codeexample">
+  TABLE(102, 400) 'Total height
+</p>
+<p class="codeexample">
+  TABLE(103, 150) 'Cone height
+</p>
+<p class="codeexample">
+  TABLE(104, 0) 'X offset
+</p>
+<p class="codeexample">
+  TABLE(105, 0) 'Y offset
+</p>
+<p class="codeexample">
+  TABLE(106, 750) 'Z offset
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+  VOLUME_LIMIT(1, 100)
+<a name="_Ref270687215"></a>
+</p>
+</body>
+</html>

@@ -1,0 +1,601 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PWM_CONTROL</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PWM_CONTROL">
+</head>
+<body>
+<h1>PWM_CONTROL</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+PWM_CONTROL(value)
+</p>
+<h2>Description:</h2>
+<p>
+The PWM control requires special hardware in the FPGA of the
+Motion Coordinator. Check that this function is supported before using it. The
+PWM output of any axis can be linked to the speed of moves running on other
+axes. For example: Axis 4’s PWM output can be linked to the velocity profile of
+interpolated moves running on axes 0, 1 and 2.
+</p>
+<p>
+- The PWM output mark/space can be written to via
+application software program in a simple way.
+</p>
+<p>
+- The PWM mark size can be automatically set via an
+interpolated path speed.
+</p>
+<p>
+- The PWM mark size can be automatically set via an
+interpolated path speed AND a defined profile along an XY path.
+</p>
+<p>
+- Some implementations also feature a hardware gating
+function.
+</p>
+<p class="note">
+A 20&nbsp;MHz clock is used as the base clock for the PWM
+generation.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Description
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The PWM output is switched OFF
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+PWM output is switched on.  The PWM_MARK value comes
+  from the PWM_MARK axis parameter.  
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+PWM_CONTROL(2, multiplier, offset, limit value, link
+  axis)
+</p>
+
+  
+<p class="tablecontent">
+PWM output is calculated via VP_SPEED (path velocity)
+  of an axis and multiplier. It is adjusted on each servo cycle.  
+<br>
+
+  The value loaded into the PWM_MARK is given by VP_SPEED * multiplier +
+  offset.  
+<br>
+
+  If the calculated value exceeds the “limit value” the limit value is applied.
+  The VP_SPEED value is the velocity profile speed for the link axis in user
+  units.  
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+PWM_CONTROL(3, GT/LT, ON/OFF, table start, table end)
+</p>
+
+  
+<p class="tablecontent">
+This axis function loads a sequence of positions into
+  the gating FIFO. The GT/LT value should be set to 1 for a GT comparison, 0
+  for a LT comparison.  
+<br>
+
+  The ON/OFF bit is toggled as the positions are loaded automatically by the
+  function. The FIFO position buffer can be loaded with one or more
+  PWM_CONTROL(3,…  functions.  Longer sequences of positions can be loaded as
+  the position buffer becomes available.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Empty the FIFO buffer.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+5:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Turn on PWM gating function if the hardware allows it.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+6:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Clear the PWM_ENCODER register to zero.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+7:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reserved.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+PWM_CONTROL(8, multiplier, offset, limit_value,
+  velocity_link_axis, amplitude_link_axis)     
+</p>
+
+  
+<p class="tablecontent">
+PWM output is calculated via VP_SPEED (path velocity)
+  of an axis and multiplier and will be adjusted on each servo cycle. The value
+  loaded into the PWM_MARK is given by:
+</p>
+
+  
+<p class="tablecontent">
+VP_SPEED velocity_link_axis * DPOS amplitude_link_axis
+  * multiplier + offset.  
+</p>
+
+  
+<p class="tablecontent">
+If this calculated value exceeds the limit_value, the
+  limit_value is applied. The VP_SPEED value is the velocity profile speed for
+  the velocity link axis.
+</p>
+
+  
+<p class="tablecontent">
+The DPOS of the amplitude_link_axis can be set using a
+  CAMBOX profile so that the amplitude varies.
+</p>
+
+  
+<p class="tablecontent">
+This is achieved using 3 stages:
+</p>
+
+  
+<p class="tablecontent">
+1. The CONNPATH(base XY) move type can be used to
+  “connect” a virtual axis to an XY path.
+</p>
+
+  
+<p class="tablecontent">
+2. A CAMBOX profile is then linked to the virtual
+  axis.    
+</p>
+
+  
+<p class="tablecontent">
+3. The PWM_CONTROL(8, …) function then links to the
+  CAMBOX profile
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+9:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="codeexample">
+PWM_CONTROL(9, multiplier, duty_cycle, link_axis)   
+</p>
+
+  
+<p class="tablecontent">
+The frequency of the PWM output is calculated via
+  VP_SPEED (path velocity of an axis) of the link axis and multiplier and will
+  be adjusted on each servo cycle.  
+</p>
+
+  
+<p class="tablecontent">
+The value loaded into the PWM_CYCLE is given by
+  20000000 / (VP_SPEED * multiplier). The VP_SPEED value is the velocity
+  profile speed for the link axis in user units.  
+</p>
+
+  
+<p class="tablecontent">
+The value loaded into the PWM_MARK is the percentage of
+  the PWM_CYCLE specified in duty_cycle.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+NOTE that the WDOG must be ON for PWM generation.
+</p>
+<p class="tip">
+The PWM_CONTROL function is an axis function and can be directed
+to an axis using the AXIS modifier or the BASE function.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Using the PWM_CONTROL(2, …) automatic link to velocity mode:
+</p>
+<p>
+<img width="217" height="150" src="PWM_CONTROL_files/image001.png">
+</p>
+<p class="codeexample">
+BASE(0, 1)
+</p>
+<p class="codeexample">
+SPEED = 5000
+</p>
+<p class="codeexample">
+ACC(50000)
+</p>
+<p class="codeexample">
+MERGE = ON
+</p>
+<p class="codeexample">
+MOVE(10000, 0)
+</p>
+<p class="codeexample">
+MOVE(0, -10000)
+</p>
+<p class="codeexample">
+MOVE(-10000, 0)
+</p>
+<p class="codeexample">
+MOVE(0, 10000)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'This program sets the PWM output to a minimum of 50 and
+maximum of 500. At a speed of 2000 the PWM output will be 250:
+</p>
+<p class="codeexample">
+BASE(4)
+</p>
+<p class="codeexample">
+WDOG = OFF
+</p>
+<p class="codeexample">
+WA(10)
+</p>
+<p class="codeexample">
+ATYPE = 35
+</p>
+<p class="codeexample">
+WDOG = ON
+</p>
+<p class="codeexample">
+PWM_CYCLE = 1000 'Sets 20khz PWM
+</p>
+<p class="codeexample">
+Link = 0         'Link to axes 0 and 1
+</p>
+<p class="codeexample">
+Mult = 0.1       'If speed = 2000: pwm = 2000 * 0.1 = 200
+</p>
+<p class="codeexample">
+PWM_CONTROL(2, mult, 50, 500, link)
+</p>
+<p class="note">
+Note that above speed = 4500 the PWM will be limited to 500, by
+the limit setting
+</p>
+<h3>Example 2:</h3>
+<p>
+Using the PWM_CONTROL(8, …) automatic link to velocity mode
+with profile:
+</p>
+<p>
+<img width="343" height="179" src="PWM_CONTROL_files/image002.png">
+</p>
+<p>
+Suppose we want to control the laser power during the
+movement cycle:
+</p>
+<p>
+<img width="419" height="89" src="PWM_CONTROL_files/image003.png">
+</p>
+<p>
+Such a profile could be entered as a CAM profile using:
+</p>
+<p class="codeexample">
+start = 1000
+</p>
+<p class="codeexample">
+TABLE(start, 0, 0, 0, 0, 1000, 1000, 1000, 0, 0)
+</p>
+<p class="note">
+Note that the cam profile can be any complex shape and have any
+number of points.
+</p>
+<p class="codeexample">
+'Stage 1: Link a virtual axis to the XY path:
+</p>
+<p class="codeexample">
+CONNPATH(0) AXIS(8)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(4)
+</p>
+<p class="codeexample">
+WDOG = OFF
+</p>
+<p class="codeexample">
+WA(10)
+</p>
+<p class="codeexample">
+ATYPE = 35
+</p>
+<p class="codeexample">
+WDOG = ON
+</p>
+<p class="codeexample">
+PWM_CYCLE = 1000 'Sets 20khz PWM
+</p>
+<p class="codeexample">
+Link = 0         'Link to axes 0 and 1
+</p>
+<p class="codeexample">
+Mult = 1 / 10000 'If speed = 5000: pwm = 5000 * (1 / 10000)
+* DPOS = 500
+</p>
+<p class="codeexample">
+PWM_CONTROL(8, mult, 50, 500, link, 9)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Note how the CAMBOX links to a length of the box outline
+path of 40000:
+</p>
+<p class="codeexample">
+ 
+</p>
+<p class="codeexample">
+TABLE(1000, 0, 0, 0, 0, 1000, 1000, 1000, 0, 0)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(0, 1)
+</p>
+<p class="codeexample">
+SPEED = 10000
+</p>
+<p class="codeexample">
+ACC(50000)
+</p>
+<p class="codeexample">
+MERGE = ON
+</p>
+<p class="codeexample">
+WHILE TRUE
+</p>
+<p class="codeexample">
+    CAMBOX(1000, 1008, 1, 40000, 8) AXIS(9)
+</p>
+<p class="codeexample">
+    MOVE(10000, 0)
+</p>
+<p class="codeexample">
+    MOVE(0, -10000)
+</p>
+<p class="codeexample">
+    MOVE(-10000, 0) 
+</p>
+<p class="codeexample">
+    MOVE(0, 10000)
+</p>
+<p class="codeexample">
+    WAIT IDLE
+</p>
+<p class="codeexample">
+    WA(10)
+</p>
+<p class="codeexample">
+    DEFPOS(0) AXIS(8)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h2>See also: </h2>
+<p>
+<a href="PWM_CYCLE.html">PWM_CYCLE</a>
+, 
+<a href="PWM_MARK.html">PWM_MARK</a>
+</p>
+</body>
+</html>

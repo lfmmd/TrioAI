@@ -1,0 +1,54 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>AXISLIST</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="AXISLIST">
+</head>
+<body>
+<h1>AXISLIST</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+AXISLIST
+</p>
+<h2>Description:</h2>
+<p>
+AXISLIST outputs the list of active axes to the command line
+(terminal #0).
+</p>
+<p class="tip">
+Firmware version 2.0301 and later have a flexible axis numbering
+scheme.  Provided the maximum quantity of axes is not exceeded, the axes may be
+numbered at any index from 0 to 1023.  As each axis is added to the list, by
+writing to an axis parameter, it will be activated and appear in the AXISLIST
+output string.
+</p>
+<h2>Example:</h2>
+<p class="codeexample">
+&gt;&gt;AXISLIST
+</p>
+<p class="codeexample">
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 18, 19, 20, 21, 22, 23,
+24, 25, 26, 27, 28, 29, 30, 31, 32, 40, 41, 42, 43, 44, 45, 46, 127
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="AXISSIZE.html">AXISSIZE</a>
+, 
+<a href="BASE.html">BASE</a>
+,
+
+<a href="AXIS.html">AXIS</a>
+, 
+<a href="INITIALISE.html">INITIALISE</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,108 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>EPROM_STATUS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="EPROM_STATUS">
+</head>
+<body>
+<h1>EPROM_STATUS</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter
+</p>
+<h2>Description:</h2>
+<p>
+Returns the status of background FLASH memory programming.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Not active
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Flash memory is being Erased
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+Erasing is suspended
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Flash memory programming takes place when programs are
+loaded or edited.  Also when a VR value is changed and when TABLE values are
+changed in Motion Coordinators that support automatic TABLE store to Flash.  As
+each Flash page becomes full, a new page is erased ready to continue
+programming.
+</p>
+<p>
+This parameter can be checked before powering down the
+Motion Coordinator, however when the power is removed, a power-off detection
+will finalise any auto-store that is in progress in the time available before
+the processor shuts down.  In normal use it is not necessary to wait for the
+FLASH_STATUS to show 0 before powering down.
+</p>
+<p class="note">
+Motion Perfect shows the FLASH_STATUS as an indicator marked
+“Flash”.
+</p>
+</body>
+</html>

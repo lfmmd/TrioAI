@@ -1,0 +1,172 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>NEW</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="NEW">
+</head>
+<body>
+<h1>NEW</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+NEW [item]
+</p>
+<h2>Description:</h2>
+<p>
+Deletes a program or table from the controller memory. If
+you are deleting a program from within a TrioBASIC program it is recommended to
+use the 
+<a href="DEL.html">DEL</a>
+ command as makes easier to read code. 
+</p>
+<p class="note">
+When deleting the table all the values are set to 0
+</p>
+<p class="warning">
+Do not delete programs when connected to Motion Perfect as it
+will cause a controller mismatch and you will be disconnected.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+none
+</p>
+
+  
+</td>
+<td colspan="2" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+deletes the currently selected program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+item
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&quot;TABLE&quot; 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+sets all table values to 0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&quot;name&quot; 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+deletes a named program
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ALL 
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+deletes all programs
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p class="note">
+Quotes (“) are required when deleting the table or a named
+program.
+</p>
+<h2>Example:</h2>
+<h3>Example1:</h3>
+<p>
+Delete a named program on the command line:
+</p>
+<p class="codeexample">
+&gt;&gt;NEW &quot;NAMEDPROGRAM&quot;
+</p>
+<p class="codeexample">
+OK
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Clear all table values to 0
+</p>
+<p class="codeexample">
+&gt;&gt;NEW &quot;TABLE&quot;
+</p>
+<p class="codeexample">
+OK
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h1>See Also:</h1>
+<p>
+<a href="DEL.html">DEL</a>
+</p>
+</body>
+</html>

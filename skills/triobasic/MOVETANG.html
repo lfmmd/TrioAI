@@ -1,0 +1,380 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MOVETANG</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MOVETANG">
+</head>
+<body>
+<h1>MOVETANG</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+MOVETANG(absolute_position[, link_axis])
+</p>
+<h2>Description:</h2>
+<p>
+Moves the axis to the required position using the programmed
+
+<a href="SPEED.html">SPEED</a>
+, 
+<a href="ACCEL.html">ACCEL</a>
+ and 
+<a href="DECEL.html">DECEL</a>
+ for the axis. The direction of movement is
+determined by a calculation of the shortest path to the position assuming that
+the axis is rotating and that 
+<a href="REP_DIST.html">REP_DIST</a>
+ has been set
+to 
+<a href="PI.html">PI</a>
+ radians (180 degrees) and that 
+<a href="REP_OPTION.html">REP_OPTION</a>
+ = 0. 
+</p>
+<p class="note">
+The 
+<a href="REP_DIST.html">REP_DIST</a>
+ value will depend on the
+
+<a href="UNITS.html">UNITS</a>
+ value and the number of steps representing PI
+radians. For example if the rotary axis has 4000 pulses/turn and 
+<a href="UNITS.html">UNITS</a>
+ = 1 the 
+<a href="REP_DIST.html">REP_DIST</a>
+ value
+would be 2000.
+</p>
+<p>
+MOVETANG does not get cleared from the 
+<a href="MTYPE.html">MTYPE</a>
+
+when it has completed its movement. This is so that you can use it in a tight
+loop which updates the end position by calling the MOVETANG again. When using
+the link_axis the end position is automatically updated from 
+<a href="TANG_DIRECTION.html">TANG_DIRECTION</a>
+ of the link axis. 
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+absolute_position:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The absolute position to be set as the endpoint of the
+  move. Value must be within the range –
+<a href="PI.html">PI</a>
+ to +
+<a href="PI.html">PI</a>
+ in the units of the rotary axis. For example, if the
+  rotary axis has 4000 pulses/turn, the 
+<a href="UNITS.html">UNITS</a>
+ value=1
+  and the angle required is 
+<a href="PI.html">PI</a>
+/2 (90 degrees) the
+  position value would be 1000.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+link_axis
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+An optional link axis may be specified. When a
+  link_axis is specified the system software calculates the absolute position
+  required each servo cycle based on the link axis 
+<a href="TANG_DIRECTION.html">TANG_DIRECTION</a>
+.
+  The 
+<a href="TANG_DIRECTION.html">TANG_DIRECTION</a>
+ is multiplied by the 
+<a href="REP_DIST.html">REP_DIST</a>
+/
+<a href="PI.html">PI</a>
+ to calculate the
+  required  position. Note that when using a link_axis the absolute_position
+  parameter becomes unused. The position is copied every servo cycle until the
+  MOVETANG is 
+<a href="CANCEL.html">CANCEL</a>
+led.
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+An X-Y positioning system has a stylus which must be turned
+so that it is always facing in the same direction as it is travelling. A
+tangential control routine is run in a separate process.
+</p>
+<p class="codeexample">
+BASE(0, 1)
+</p>
+<p class="codeexample">
+WHILE TRUE
+</p>
+<p class="codeexample">
+  angle = TANG_DIRECTION
+</p>
+<p class="codeexample">
+  MOVETANG(angle) AXIS(2)
+</p>
+<p class="codeexample">
+WEND
+</p>
+<h3>Example 2:</h3>
+<p>
+An X-Y positioning system has a stylus which must be turned
+so that it is always facing in the same direction as it is travelling.
+</p>
+<p>
+The XY axis pair are axes 4 and 5. The tangential stylus
+axis is 2:
+</p>
+<p class="codeexample">
+MOVETANG(0, 4) AXIS(2)
+</p>
+<h3>Example 3:</h3>
+<p>
+An X-Y cutting table has a “pizza wheel” cutter which must
+be steered so that it is always aligned with the direction of travel. The main
+X and Y axes are controlled by 
+<i>Motion Coordinator </i>axes 0 and 1, and the
+pizza wheel is turned by axis 2.
+</p>
+<p>
+Control of the Pizza Wheel is done in a separate program
+from the main X-Y motion program. In this example the steering program also
+does the axis initialisation.
+</p>
+<h4>Program TC_SETUP.BAS:</h4>
+<p class="codeexample">
+'Set up 3 axes for Tangential Control
+</p>
+<p class="codeexample">
+WDOG = OFF
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(0)
+</p>
+<p class="codeexample">
+P_GAIN = 0.9
+</p>
+<p class="codeexample">
+VFF_GAIN = 12.85
+</p>
+<p class="codeexample">
+UNITS = 50  'Set units for mm
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(1)
+</p>
+<p class="codeexample">
+P_GAIN = 0.9
+</p>
+<p class="codeexample">
+VFF_GAIN = 12.30
+</p>
+<p class="codeexample">
+UNITS = 50 'Units must be the same for both axes
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+UNITS = 1  'Make units 1 for the setting of rep_dist
+</p>
+<p class="codeexample">
+REP_DIST = 2000 'Encoder has 4000 edges per rev.
+</p>
+<p class="codeexample">
+REP_OPTION = 0
+</p>
+<p class="codeexample">
+UNITS = 4000 / (2 * PI) 'Set units for Radians
+</p>
+<p class="codeexample">
+SERVO = ON
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+WDOG = ON
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Home the 3rd axis to its Z mark
+</p>
+<p class="codeexample">
+DATUM(1) AXIS(2)
+</p>
+<p class="codeexample">
+WAIT IDLE
+</p>
+<p class="codeexample">
+WA(10)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Start the tangential control routine
+</p>
+<p class="codeexample">
+BASE(0, 1) 'Define the pair of axes which are for X and Y
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+'Start the tangential control
+</p>
+<p class="codeexample">
+BASE(2)
+</p>
+<p class="codeexample">
+MOVETANG(0, 0) 'Use axes 0 and 1 as the linked pair
+</p>
+<h4>Program MOTION.BAS:</h4>
+<p class="codeexample">
+'Program to cut a square shape with rounded corners
+</p>
+<p class="codeexample">
+MERGE = ON
+</p>
+<p class="codeexample">
+SPEED = 300
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+nobuf = FALSE 'When true, the moves are not buffered
+</p>
+<p class="codeexample">
+size = 120    'Size of each side of the square
+</p>
+<p class="codeexample">
+c = 30        'Radius of quarter circles at each corner
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+DEFPOS(0, 0)
+</p>
+<p class="codeexample">
+WAIT UNTIL OFFPOS = 0
+</p>
+<p class="codeexample">
+WA(10)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+<p class="codeexample">
+MOVEABS(10, 10 + c)
+</p>
+<p class="codeexample">
+REPEAT
+</p>
+<p class="codeexample">
+  MOVE(0, size)
+</p>
+<p class="codeexample">
+  MOVECIRC(c, c, c, 0, 1)
+</p>
+<p class="codeexample">
+  IF nobuf THEN WAIT IDLE: WA(2)
+</p>
+<p class="codeexample">
+  MOVE(size, 0)
+</p>
+<p class="codeexample">
+  MOVECIRC(c, -c, 0, -c, 1)
+</p>
+<p class="codeexample">
+  IF nobuf THEN WAIT IDLE: WA(2)
+</p>
+<p class="codeexample">
+  MOVE(0, -size)
+</p>
+<p class="codeexample">
+  MOVECIRC(-c, -c, -c, 0, 1)
+</p>
+<p class="codeexample">
+  IF nobuf THEN WAIT IDLE: WA(2)
+</p>
+<p class="codeexample">
+  MOVE(-size, 0)
+</p>
+<p class="codeexample">
+  MOVECIRC(-c, c, 0, c, 1)
+</p>
+<p class="codeexample">
+  IF nobuf THEN WAIT IDLE: WA(2)
+</p>
+<p class="codeexample">
+UNTIL FALSE
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="TANG_DIRECTION.html">TANG_DIRECTION</a>
+</p>
+</body>
+</html>

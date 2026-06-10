@@ -1,0 +1,1346 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>MC_MoveAdditive</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="MC_MoveAdditive">
+</head>
+
+
+
+<body>
+<h1>MC_MoveAdditive</h1>
+<p>
+Commands a controlled motion of a specified relative
+distance additional to the most recent commanded position in the axis state
+'DiscreteMotion'.
+</p>
+<p>
+<img width="552" height="297" src="MC_MoveAdditive_files/image001.png">
+</p>
+<h2>Description:</h2>
+<p>
+MC_MoveAdditive commands a controlled motion of a specified
+relative distance additional to the most recent commanded position in the axis
+state 'DiscreteMotion'. The most recent commanded position may be the result of
+a previous MC_MoveAdditive motion which was aborted. 
+</p>
+<p>
+When the axis state is 'DiscreteMotion', the new command
+position will be current command position additional to ‘Distance’
+<i>.</i></p>
+<p>
+In the example below, MC_MoveAdditive will be executed while
+MC_MoveAbsolute is ongoing to the target position 2000. The ‘Axis’ will change
+its speed to 50 and stop at 3000. 
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="19" height="23" id="&#22270;&#29255; 672" src="MC_MoveAdditive_files/image002.png">
+ Example
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p>
+<img width="553" height="166" id="&#22270;&#29255; 430" src="MC_MoveAdditive_files/image003.jpg">
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p>
+<img width="476" height="307" src="MC_MoveAdditive_files/image004.png">
+</p>
+<p>
+When the axis state is in 'ContinuousMotion', the new
+command position will be current set position at the time of execution
+additional to ‘
+<i>Distance’. </i>MC_MoveVelocity will be aborted by
+MC_MoveAdditive. The PLCopen state will change from ‘ContinousMotion’ to
+‘DiscreteMotion’.
+</p>
+<p>
+In the following example, MC_MoveVelocity will be executed
+while MC_MoveAbsolute is ongoing to when the axis moving to position ‘P’. The ‘Axis’
+will change its speed to 50 and stop at ‘P+1000’. 
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img width="19" height="23" id="&#22270;&#29255; 678" src="MC_MoveAdditive_files/image002.png">
+ Example
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p>
+<img width="554" height="170" id="&#22270;&#29255; 434" src="MC_MoveAdditive_files/image005.jpg">
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+&nbsp;
+</p>
+<p align="center">
+&nbsp;
+</p>
+<p>
+<img width="471" height="289" src="MC_MoveAdditive_files/image006.png">
+</p>
+<p>
+If the set position has shorter distance for stopping with
+inputs parameters the 
+<i>‘Acceleration’</i>, 
+<i>‘Deceleration’</i> and 
+<i>‘Jerk’</i><i>,
+</i>the motion parameters, ‘Acceleration’, ‘Deceleration’ or ‘Jerk’ will be
+recalculated. The dash line shows in the following picture means the path
+without MC_MoveAdditve interruption.
+</p>
+<p>
+If the distance is too short for stopping using the maximum
+acceleration, deceleration and jerk, rapid acceleration, deceleration will be
+used, and 
+<i>‘Jerk’ </i>will be ignored. 
+</p>
+<p>
+The blue dotted line means there is not enough distance to
+reach the target velocity input parameter. The axis will decelerate the
+velocity before reaching the target velocity.
+</p>
+<p>
+The bold line means that the axis will have no acceleration
+stage because the short distance left for the target position.
+</p>
+<p>
+The green dotted line means that there is not enough
+distance left for stopping. The deceleration will use the maximum velocity for
+stopping.
+</p>
+<p>
+<img width="369" height="364" src="MC_MoveAdditive_files/image007.png">
+</p>
+<p>
+If the input ‘Distance’ is a negative value (assumed
+previous velocity is positive value), and target position is in the reverse
+side of current motion direction, the motion will stop and move with the
+reverse direction to the target position.
+</p>
+<p>
+‘Velocity’ is not necessary to reached.
+</p>
+<p>
+‘CommandAborted’
+<i></i>changes to TRUE when the block is
+aborted by another block or the axis state changes to other state because of
+some errors, and changes to FALSE when one of 
+<i>‘Error’</i> changes to TRUE or
+
+<i>‘Execute’</i> changes to FALSE. If ‘CommandAborted’ changes to TRUE when
+‘Execute’ has been FALSE, ‘CommandAborted’ will stay TRUE for at least one
+cycle.
+</p>
+<p class="tip">
+Make sure the input and output parameters are of data type
+indicated in the table below.
+</p>
+<p class="note">
+If the FB is activated in the axis state 'ContinuousMotion', the
+specified relative distance is added to the set position at the time of the
+execution. The axis state will change to ‘DiscreteMotion’.
+</p>
+<h2>Inputs/Outputs:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="139" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Name</b></p>
+
+  
+</td>
+<td width="145" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Data Type</b></p>
+
+  
+</td>
+<td width="285" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent" align="center">
+<b>Description</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<b>INPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Execute
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="tablecontent">
+Start the motion at rising edge
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+AXIS_REF
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="tablecontent">
+Reference to the axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+ContinuousUpdate
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="tablecontent">
+TRUE: when the function block is
+  triggered (rising ‘Execute’), it  will - as long as it stays TRUE – make the
+  function block use the current values of the input variables and apply it to
+  the ongoing movement.
+</p>
+
+  
+<p class="tablecontent">
+FALSE: with the rising edge of the
+  ‘Execute’ input, a change in the input parameters is ignored during the whole
+  movement.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Distance
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="tablecontent">
+Relative distance for the motion
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Velocity
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the maximum velocity (not
+  necessarily reached)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Acceleration
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the acceleration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Deceleration
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the deceleration
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Jerk
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+LREAL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value of the jerk
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+BufferMode
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+MC_BUFFER_MODE
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="tablecontent">
+Defines the chronological sequence
+  of the FB.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="569" colspan="3" valign="top" class="tablegrid">
+
+  
+<p class="TableText">
+<b>OUTPUTS</b></p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Done
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="TableText">
+Commanded
+  distance reached
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Busy
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="TableText">
+The
+  FB is not finished and new output values are to be expected
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Active
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="TableText">
+Indicates
+  that the FB has control on the axis
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+CommandAborted
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="TableText">
+'Command'
+  is aborted by another command
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+Error
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+BOOL
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="TableText">
+Signals
+  that an error has occurred within the FB
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="139" class="tablegrid">
+
+  
+<p class="tablecontent">
+ErrorID
+</p>
+
+  
+</td>
+<td width="145" class="tablegrid">
+
+  
+<p class="tablecontent">
+UINT
+</p>
+
+  
+</td>
+<td width="285" class="tablegrid">
+
+  
+<p class="TableText">
+Error
+  identification
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+In this example, the motion is controlled by MC_MoveAdditive.
+It works with ‘mcAborting’ buffer mode and the second execution trigger is
+trigged after the first motion finished. The timing diagram is same as 
+<a href="MC_MoveRelative.html">MC_MoveRelative</a>
+.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img border="0" width="19" height="23" id="&#22270;&#29255; 24" src="MC_MoveAdditive_files/image002.png">
+ Example 1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+VAR
+<br>
+
+  &nbsp;Inst_MC_Power : 
+MC_Power
+ ;
+<br>
+
+  &nbsp;Inst_MC_MoveAdditive : 
+MC_MoveAdditive
+ ;
+<br>
+
+  &nbsp;refAxis0 : 
+lib:AXIS_REF
+ ;
+<br>
+
+  &nbsp;bPowerOn : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Enable axis 0
+  variable*)
+<br>
+
+  &nbsp;bExeAdditive : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Start to move
+  additive motion*)
+<br>
+
+  &nbsp;mBufferMode : 
+MC_BUFFER_MODE
+ := mcAborting ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Buffer mode
+  mcAborting*)
+<br>
+
+  &nbsp;PowerState : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Axis 0 power
+  status*)
+<br>
+
+  &nbsp;bDone : 
+BOOL
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Additive
+  motion is finished*)
+<br>
+
+  &nbsp;bBusy : 
+BOOL
+ ;
+<br>
+
+  &nbsp;bActive : 
+BOOL
+ ;
+<br>
+
+  &nbsp;bAborted : 
+BOOL
+ ;
+<br>
+
+  &nbsp;bError : 
+BOOL
+ ;
+<br>
+
+  &nbsp;ErrorId : 
+UINT
+ ;
+<br>
+
+  
+END_VAR
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+<img border="0" width="554" height="334" id="&#22270;&#29255; 389" src="MC_MoveAdditive_files/image008.jpg">
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The timing diagram for the above example is shown below:
+</p>
+<p>
+<img border="0" width="547" height="378" src="MC_MoveAdditive_files/image009.png">
+</p>
+<h3>Example 2:</h3>
+<p>
+In the following example, the motion is controlled by two
+MC_MoveAdditive FBs. They work with ‘mcAborting’ buffer mode. The 2
+<sup>nd</sup>
+MC_MoveAdditive is triggered while the first motion is ongoing and has not finished.
+This is evident in the timing diagram below. ‘CommandAborted’ is set in the
+first FB.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img border="0" width="19" height="23" id="&#22270;&#29255; 27" src="MC_MoveAdditive_files/image002.png">
+ Example 2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+VAR
+<br>
+
+  &nbsp;Inst_MC_Power : 
+MC_Power
+ ;
+<br>
+
+  &nbsp;refAxis : 
+lib:AXIS_REF
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Axis
+  reference*)
+<br>
+
+  &nbsp;bPowerEn : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To enable
+  axis power*)
+<br>
+
+  &nbsp;bPowerSta : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=The axis
+  power status*)
+<br>
+
+  &nbsp;Inst_MC_MoveAdditive : 
+MC_MoveAdditive
+ ;
+<br>
+
+  &nbsp;exmove1 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To start the
+  first FB motion*)
+<br>
+
+  &nbsp;mBufferMode : 
+MC_BUFFER_MODE
+ := mcAborting ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=FB buffer
+  mode setting with default value mcAborting*)
+<br>
+
+  &nbsp;done1 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Does first FB
+  finish the motion*)
+<br>
+
+  &nbsp;busy1 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Is the FB
+  working*)
+<br>
+
+  &nbsp;active1 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Is the FB
+  actived*)
+<br>
+
+  &nbsp;abort1 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Is the FB
+  motion aborted*)
+<br>
+
+  &nbsp;error1 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Is there an
+  error in FB*)
+<br>
+
+  &nbsp;Inst_MC_MoveAdditive1 : 
+MC_MoveAdditive
+ ;
+<br>
+
+  &nbsp;exmove2 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To start the
+  second FB motion*)
+<br>
+
+  &nbsp;done2 : 
+BOOL
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Does the
+  second FB finish the motion*)
+<br>
+
+  &nbsp;busy2 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Is the second
+  FB working*)
+<br>
+
+  &nbsp;active2 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=is it
+  actived*)
+<br>
+
+  &nbsp;abort2 : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Is it
+  aborted*)
+<br>
+
+  
+END_VAR
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:0cm">
+<img border="0" width="554" height="251" id="&#22270;&#29255; 392" src="MC_MoveAdditive_files/image010.jpg">
+</p>
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The timing diagram for this example is shown as below:
+</p>
+<p>
+<img border="0" width="484" height="526" src="MC_MoveAdditive_files/image011.png">
+</p>
+<h3>Example 3:</h3>
+<p>
+A sheet of glass is fed on a conveyor and is required to be
+stopped 250mm after the leading edge is sensed by a proximity switch.&nbsp; The
+proximity switch is connected to the input 1.
+</p>
+<p>
+<img border="0" width="496" height="183" src="MC_MoveAdditive_files/image012.png">
+</p>
+<p align="center">
+&nbsp;
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="561" class="tablegrid">
+
+  
+<p class="TableHeading" style="margin-left:6.0pt">
+<img border="0" width="20" height="23" id="&#22270;&#29255; 80" src="MC_MoveAdditive_files/image002.png">
+ Example3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:1.05pt">
+VAR
+<br>
+
+  &nbsp;Inst_MC_MoveAdditive : 
+MC_MoveAdditive
+ ;
+<br>
+
+  &nbsp;Inst_MC_ReadDigitalInput : 
+MC_ReadDigitalInput
+ ;
+<br>
+
+  &nbsp;Inst_MC_MoveVelocity : 
+MC_MoveVelocity
+ ;
+<br>
+
+  &nbsp;Inst_MC_Power : 
+MC_Power
+ ;
+<br>
+
+  &nbsp;refAxis : 
+lib:AXIS_REF
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Axis
+  reference*)
+<br>
+
+  &nbsp;bPowerEn : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Enable the
+  power supply for the axis*)
+<br>
+
+  &nbsp;bPowerSta : 
+BOOL
+ := 
+FALSE
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Power status
+  of the axis*)
+<br>
+
+  &nbsp;exmove1 : 
+BOOL
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=To start axis
+  motion*)
+<br>
+
+  &nbsp;mDir : 
+MC_DIRECTION
+ := mcPositiveDirection ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Motion
+  direction*)
+<br>
+
+  &nbsp;mBufferMode : 
+MC_BUFFER_MODE
+ := mcAborting ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=Buffer mode
+  for the FB*)
+<br>
+
+  &nbsp;bInVelo : 
+BOOL
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=The status of
+  the axis motion*)
+<br>
+
+  &nbsp;Sensor_Input1 : 
+INT
+ := 
+INT#3
+ ;
+<br>
+
+  &nbsp;&nbsp;
+(*$desc=The input
+  check for the additive motion trigger*)
+<br>
+
+  
+END_VAR
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="561" valign="top" class="tablegrid">
+
+  
+<p class="TableText" style="margin-left:0cm">
+<img border="0" width="553" height="421" id="&#22270;&#29255; 395" src="MC_MoveAdditive_files/image013.jpg">
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+The timing diagram for this example is shown as below:
+</p>
+<p>
+<img border="0" width="565" height="329" src="MC_MoveAdditive_files/image014.png">
+</p>
+<h2>See also: </h2>
+<p>
+<span class="MsoHyperlink">&nbsp;</span></p>
+<p>
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

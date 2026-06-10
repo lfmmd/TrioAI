@@ -1,0 +1,205 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>SPHERE_CENTRE</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="SPHERE_CENTRE">
+</head>
+<body>
+<h1>SPHERE_CENTRE</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Command
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+SPHERE_CENTRE(table_mid, table_end, table_out)
+</p>
+<h2>Description:</h2>
+<p>
+Returns the co-ordinates of the centre point (x, y, z) of an
+arc from any mid point (x, y, z) and the end point (x, y, z).  X, Y and Z are
+returned in the 
+<a href="TABLE.html">TABLE</a>
+ memory area and can be printed
+to the terminal as required.  Note that the mid and end positions are relative
+to the start position.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TABLE mid:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in table of mid point x,y,z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TABLE end:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in table of end point x,y,z
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+TABLE out:
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Position in table to store the output data:
+</p>
+
+  
+<p class="tablecontent">
+Offset 0 – X
+<br>
+
+  Offset 1 – Y
+<br>
+
+  Offset 2 – Z
+<br>
+
+  Offset 3 – Angle
+<br>
+
+  Offset 4 – Radius
+<br>
+
+  Offset 5 – Set to 1 if error, 0 otherwise
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p class="codeexample">
+TABLE
+(
+10
+,-
+200
+,
+400
+,
+0
+)
+<br>
+
+
+TABLE
+(
+20
+,-
+500
+,
+500
+,
+0
+)
+<br>
+
+
+SPHERE_CENTRE
+(
+10
+,
+20
+,
+30
+)
+<br>
+
+x = 
+TABLE
+(
+30
+)
+<br>
+
+y = 
+TABLE
+(
+31
+)
+<br>
+
+z = 
+TABLE
+(
+32
+)
+<br>
+
+ang = 
+TABLE
+(
+33
+)
+<br>
+
+rad = 
+TABLE
+(
+34
+)
+<br>
+
+err = 
+TABLE
+(
+35
+)
+<br>
+
+
+PRINT
+ x,y,z,ang,rad,err
+</p>
+</body>
+</html>

@@ -1,0 +1,475 @@
+﻿<html xmlns:ns0="urn:schemas-microsoft-com:office:smarttags">
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>PROFINET</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="PROFINET">
+</head>
+
+
+
+<body>
+<h1>PROFINET</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Command 
+</p>
+<h2>Syntax:</h2>
+<p class="fixed">
+PROFINET(function, slot[, parameters...])
+</p>
+<h2>Description:</h2>
+<p>
+The command PROFINET is used to configure the PROFINET
+communication with Trio controller as the slave.
+</p>
+<p class="note">
+PROFINET stack in TRIO controller’s firmware is not started
+automatically on power up. To open the communication channel, use function 1 in
+STARTUP program or any program that is configured to run after power up.
+</p>
+<h2>Parameters:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td rowspan="5" valign="top" class="tablegrid">
+
+  
+<p>
+function:
+</p>
+
+  
+</td>
+<td width="473" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Function to be performed
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#Function_0">0</a>
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+Display or define module mapping
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_1:">1</a>
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+Start Profinet protocol
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_2:">2</a>
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+Stop Profinet protocol
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+<a href="#_Function_=_8:">8</a>
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+Set Profinet device name
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p>
+slot:
+</p>
+
+  
+</td>
+<td width="473" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+-1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td rowspan="8" valign="top" class="tablegrid">
+
+  
+<p>
+Parameters:
+</p>
+
+  
+</td>
+<td width="473" colspan="2" valign="top" class="tablegrid">
+
+  
+<p>
+Additional parameters setup
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+slot
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+Module slot number (-1)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+pn_api
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+Application Process Identifier, currently only 0
+  supported.
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+pn_slot
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+User slots (1..63) (slot 0 is the interface)
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+pn_subslot
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+1..7
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+datasource
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+-1: delete
+</p>
+
+  
+<p>
+0: VR
+</p>
+
+  
+<p>
+1: TABLE
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+index
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+Start position (i.e., the base address) in data source
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="87" valign="top" class="tablegrid">
+
+  
+<p>
+type
+</p>
+
+  
+</td>
+<td width="386" valign="top" class="tablegrid">
+
+  
+<p>
+the size and type of data that is sent across the bus
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h3><a name="Function_0">Function = 0</a>
+: Display or define module mapping</h3>
+<p>
+This command has a few functions concerned with the display
+and configuration of the module mapping.
+</p>
+<p>
+When only 2 parameters are used, it will display the module
+mapping for the given slot. For example: PROFINET(0,&nbsp;-1)
+</p>
+<p>
+When 3 parameters are used, with a valid slot number and
+data-source is -1, it will reset the entire module map. For example:
+PROFINET(0,&nbsp;-1,&nbsp;-1)
+</p>
+<p>
+When 11 parameters are used, they will configure all the
+parameters for the given slot in the module map.
+</p>
+<h3><a name="_Function_=_1:"></a>
+Function = 1: start the Profinet protocol
+running</h3>
+<p>
+This command starts the profinet protocol. 
+</p>
+<h3><a name="_Function_=_2:"></a>
+Function = 2: stop the Profinet protocol
+running</h3>
+<p>
+This command stops the profinet protocol.
+</p>
+<h3><a name="_Function_=_8:"></a>
+Function = 8: set the Profinet device name</h3>
+<p>
+This command sets Trio controller’s profinet name.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+Set up 2 input modules and 2 output modules to read and
+write from VRs.
+</p>
+<p class="codeexample">
+&gt;&gt;profinet(0, -1, 0, 1, 1, 0, 10, 2, 1, 0, 1) 'Input
+module slot 1
+<br>
+
+&gt;&gt;profinet(0, -1, 0, 2, 1, 0, 11, 2, 1, 0, 1) 'Input module slot 2
+<br>
+
+&gt;&gt;profinet(0, -1, 0, 3, 1, 0, 100, 2, 1, 1, 1) 'Output module slot 3
+<br>
+
+&gt;&gt;profinet(0, -1, 0, 4, 1, 0, 101, 2, 1, 1, 1) 'Output module slot 4
+<br>
+
+&gt;&gt;profinet(0, -1) 'Show module mapping
+<br>
+
+0 1 (1) : 0 0 10 2 1 0 1
+<br>
+
+0 2 (1) : 0 0 11 2 1 0 1
+<br>
+
+0 3 (1) : 0 0 100 2 1 1 1
+<br>
+
+0 4 (1) : 0 0 101 2 1 1 1
+</p>
+<h3>Example 2:</h3>
+<p>
+Stop profinet protocol.
+</p>
+<p class="codeexample">
+&gt;&gt;profinet(2, -1) 'Stop profinet
+<br>
+
+&gt;&gt;
+<br>
+
+&gt;&gt;
+</p>
+<h3>Example 3:</h3>
+<p>
+Start profinet protocol.
+</p>
+<p class="codeexample">
+&gt;&gt;profinet(1, -1) 'Start profinet
+<br>
+
+GOAL Start
+<br>
+
+
+<br>
+
+ProfiNET Stack profiling is ON (this uses the vr's).
+</p>
+<h3>Example 4:</h3>
+<p>
+Rename Trio controller’s device name to ‘trio-192-168-0-240’.
+</p>
+<p class="codeexample">
+PROFINET
+(
+8
+,&quot;trio-192-168-0-240&quot;)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+
+
+
+</html>

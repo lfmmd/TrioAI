@@ -1,0 +1,247 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>UNIT_ERROR</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="UNIT_ERROR">
+</head>
+<body>
+<h1>UNIT_ERROR</h1>
+<h2>Type:</h2>
+<p class="Category">
+System Parameter (read only)
+</p>
+<h2>Description:</h2>
+<p>
+The UNIT_ERROR provides a simple single indicator that at
+least one module is in error and can indicate multiple modules that have an
+error. The value returns details which 
+<a href="SLOT.html">SLOT</a>
+s are in
+error. 
+</p>
+<h2>Value:</h2>
+<p>
+A binary sum of the module 
+<a href="SLOT.html">SLOT</a>
+
+numbers for the modules which are in error.
+</p>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Bit
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+Value
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tableheader">
+<a href="SLOT.html">SLOT</a>
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+0
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+1
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+4
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+2
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+8
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+3
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+…
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+&nbsp;
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2>Example:</h2>
+<p>
+Test for the module in slot 1 having an error which is a
+‘Unit station error’. This could indicate a problem with a drive on the network
+in slot 1.
+</p>
+<p class="codeexample">
+<span class="fixedChar">IF UNIT_ERROR=2</span> AND 
+<span class="fixedChar">SYSTEM_ERROR=1048576 THEN</span></p>
+<p class="codeexample">
+<span class="fixedChar">  ‘Handle Unit station error for
+slot 1</span></p>
+<p class="codeexample">
+<span class="fixedChar">  ...</span></p>
+<p class="codeexample">
+<span class="fixedChar">ENDIF</span></p>
+<h2>See Also:</h2>
+<p>
+<a href="SLOT.html">SLOT</a>
+, 
+<a href="SYSTEM_ERROR.html">SYSTEM_ERROR</a>
+,
+
+<a href="UNIT_CLEAR.html">UNIT_CLEAR</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>DAC_OUT</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="DAC_OUT">
+</head>
+<body>
+<h1>DAC_OUT</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter (Read Only)
+</p>
+<h2>Description:</h2>
+<p>
+This parameter returns the demand value for the axis.
+</p>
+<p>
+In an analogue system this will be the value sent to the
+voltage output (the D to A converter). If 
+<a href="SERVO.html">SERVO</a>
+ = 
+<a href="ON.html">ON</a>
+ this is the output of the closed loop algorithm. If 
+<a href="SERVO.html">SERVO</a>
+ = 
+<a href="OFF.html">OFF</a>
+ it is the value set by
+the user in 
+<a href="DAC.html">DAC</a>
+<span class="MsoHyperlink">. DAC_OUT value, and hence the
+actual output is limited by the setting in </span><a href="OUTLIMIT.html">OUTLIMIT</a>
+<span class="MsoHyperlink">.</span></p>
+<p>
+In a digital system DAC_OUT returns the demand value for the
+axis which could be the Target Position, Target Speed or Target Torque
+depending on the axis 
+<a href="ATYPE.html">ATYPE</a>
+. 
+</p>
+<h2>Value:</h2>
+<p>
+Demand value for the axis.
+</p>
+<h2>Examples:</h2>
+<h3>Example 1:</h3>
+<p>
+To check that the controller has set the correct voltage for
+axis 8 on an analogue system read DAC_OUT in the command line. 
+</p>
+<p class="codeexample">
+&gt;&gt;PRINT DAC_OUT AXIS(8)
+</p>
+<p class="codeexample">
+288.0000
+</p>
+<p class="codeexample">
+&gt;&gt;&nbsp;
+</p>
+<h3>Example 2:</h3>
+<p>
+Check that Target Position of an EtherCAT CSP axis is being
+received by the drive. Read DAC_OUT to see the value in the PDO and object
+0x607A to see the target position value in the drive. 
+</p>
+<p class="codeexample">
+ax = 2
+<br>
+
+PRINT &quot;Target position in PDO = &quot;; DAC_OUT AXIS(ax)
+<br>
+
+CO_READ_AXIS(ax, $607A, 0, 4, 20)
+</p>
+<p class="codeexample">
+PRINT &quot;Target position in drive = &quot;; VR(20)
+</p>
+<h3>Example 2:</h3>
+<p>
+Check that Target Velocity of an EtherCAT CSV axis is being
+received by the drive. Read DAC_OUT to see the value in the PDO and object
+0x60FF to see the target velocity value in the drive. 
+</p>
+<p class="codeexample">
+ax = 2
+<br>
+
+PRINT &quot;Target velocity in PDO = &quot;; DAC_OUT AXIS(ax)
+<br>
+
+CO_READ_AXIS(ax, $60FF, 0, 4, 20)
+</p>
+<p class="codeexample">
+PRINT &quot;Target velocity in drive = &quot;; VR(20)
+</p>
+<h2>See Also:</h2>
+<p>
+<a href="DAC.html">DAC</a>
+, 
+<a href="DAC_SCALE.html">DAC_SCALE</a>
+,
+
+<a href="OUTLIMIT.html">OUTLIMIT</a>
+</p>
+</body>
+</html>

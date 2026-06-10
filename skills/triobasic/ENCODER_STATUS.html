@@ -1,0 +1,88 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>ENCODER_STATUS</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="ENCODER_STATUS">
+</head>
+<body>
+<h1>ENCODER_STATUS</h1>
+<h2>Type:</h2>
+<p class="Category">
+Axis Parameter
+</p>
+<h2>Description:</h2>
+<p>
+This axis parameter returns both the status field SF and the
+ALMC encoder error field from a Tamagawa absolute encoder.
+</p>
+<h2>Value:</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 0..7
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+SF field
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Bits 8..15
+</p>
+
+  
+</td>
+<td valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+ALMC field
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<p>
+Value is 0 if the encoder has not been initialised
+</p>
+<h2>Example:</h2>
+<p>
+Print the SF field and ALMC field in hex:
+</p>
+<p class="codeexample">
+PRINT &quot;SF field = &quot;; HEX(ENCODER_STATUS AND
+$FF)
+</p>
+<p class="codeexample">
+PRINT &quot;ALMC field = &quot;; HEX((ENCODER_STATUS AND
+$FF00) / $FF)
+</p>
+<p class="codeexample">
+&nbsp;
+</p>
+</body>
+</html>

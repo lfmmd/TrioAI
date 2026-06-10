@@ -1,0 +1,69 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>Conditional compiling</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+</head>
+<body>
+<h1><a name="_Toc317749325"></a>
+<a name="O_1412"></a>
+Conditional compiling</h1>
+<p>
+The compiler supports conditional compiling directives in
+ST, IL, LD, and FBD languages. Conditional compiling directives control the
+inclusion/exclusion of a part of the program in the generated code. Conditional
+compiling is an easy way to manage several various configurations and options
+in a unique application programming.
+</p>
+<p>
+Below is an example:
+</p>
+<p class="fixed">
+#ifdef CONDITION
+</p>
+<p class="fixed">
+&nbsp;&nbsp;&nbsp; statementsYES...
+</p>
+<p class="fixed">
+#else
+</p>
+<p class="fixed">
+&nbsp;&nbsp;&nbsp; statementsNO...
+</p>
+<p class="fixed">
+#endif
+</p>
+<p>
+The #ifdef means ‘if defined’, so if CONDITION has been
+defined (using 
+<span class="HotSpot">#define)</span>, then the #ifdef section
+(i.e. statementsYES) is included in the code and the #else section (i.e.
+statementsNO) is ignored. Conversely, if CONDITION has not been defined, then
+the #ifdef section (i.e. statementsYES) is ignored and the #else section (i.e. statementsNO)
+is included in the code.
+</p>
+<p>
+The #else section is optional.
+</p>
+<p>
+In ST and IL text languages, directives must be entered
+alone on one line of text. In FBD language, directives must be entered as the
+text of 
+<span class="HotSpot">network breaks</span><a name="H_1125"></a>
+. In LD
+language, directives must be entered on 
+<span class="HotSpot">comment lines</span><a name="H_970"></a>
+.
+</p>
+<p>
+The condition __DEBUG  is automatically defined when the
+application is compiled in DEBUG mode. This allows you to incorporate some
+additional statements (such as trace outputs) in your code that are not
+included when in RELEASE mode.
+</p>
+<p class="AllowPageBreak">
+&nbsp;
+</p>
+</body>
+</html>

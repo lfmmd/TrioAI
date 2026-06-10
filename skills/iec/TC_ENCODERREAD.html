@@ -1,0 +1,125 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="Microsoft Word 15 (filtered)">
+<title>TC_ENCODERREAD</title>
+<link rel="styleSheet" type="text/css" href="TrioHelpStyle.css">
+<meta name="keywords" content="TC_ENCODERREAD">
+</head>
+<body>
+<h1>TC_ENCODERREAD</h1>
+<h2><a name="_Hlk200373141">Type:</a>
+</h2>
+<p>
+Motion Function.
+</p>
+<h2><a name="_Hlk200373321">Function:</a>
+</h2>
+<p>
+<a name="_Hlk200373165">Read an internal register from an
+EnDat absolute encoder.</a>
+</p>
+<h2><a name="_Hlk200373324">Inputs:</a>
+</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis : USINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Axis number
+</p>
+
+  
+</td>
+</tr>
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Address : DINT;
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+The address of the EnDat encoder register to be read
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Hlk200373327">Outputs:</a>
+</h2>
+<table class="tablegrid">
+
+ 
+<tr>
+<td width="187" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+<a name="OLE_LINK1">Q : SINT;</a>
+</p>
+
+  
+</td>
+<td width="408" valign="top" class="tablegrid">
+
+  
+<p class="tablecontent">
+Value returned from the specified register
+</p>
+
+  
+</td>
+</tr>
+
+
+</table>
+<h2><a name="_Hlk200373332">Description:</a>
+</h2>
+<p>
+Read an internal register from an EnDat absolute encoder.
+</p>
+<h2><a name="_Hlk200373335">ST Language:</a>
+</h2>
+<p class="codeexample">
+TC_ENCODERREAD(Axis:= (USINT), Address:= (DINT));
+</p>
+<h2><a name="_Hlk200373338">FBD Language:</a>
+</h2>
+<p>
+<img width="486" height="68" id="&#22270;&#29255; 5" src="TC_ENCODERREAD_files/image001.png">
+</p>
+<h2><a name="_Hlk200373345">LD Language:</a>
+</h2>
+<p>
+<img width="316" height="168" id="&#22270;&#29255; 1" src="TC_ENCODERREAD_files/image002.png">
+</p>
+<h2>IL Language: </h2>
+<p>
+Not available.
+</p>
+</body>
+</html>
