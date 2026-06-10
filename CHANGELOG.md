@@ -13,6 +13,19 @@
 - 多控制器切换支持
 - IEC 断点的 line→CodeElement 反推（目前 SetBreakpoint 需在 MP UI 中手动设置）
 
+## [0.1.8] — 2026-06-10
+
+TrioBASIC 方言混淆防御强化版。
+
+### 改进（AI_INSTRUCTIONS.md / DefaultPrompt）
+
+- **方言约束提到 system prompt 顶部** — 之前 `STRICT TRIOBASIC SYNTAX COMPLIANCE` 在中段，长对话时被淡化。现在紧跟 `## Capabilities` 之后，确保 AI 进入工作状态前先读到。
+- **加 22 行 few-shot 正反对照表** — 之前只列反例（`Dim`、`Function...End Function`），LLM 训练数据里 VB/QBasic 写法远多于 TrioBASIC，光说"不要这样"不够。现在每行明确 `WRONG (other BASIC) → CORRECT (TrioBASIC)` 对照，覆盖变量声明/函数定义/控制流/异常/IO/数学/类型注解/比较运算符/注释等全部常见混淆点。
+- **加 AFTER-WRITE SELF-CHECK 强制自检流程** — 提示词之前只说"MANDATORY before writing"，但 AI 写完后没反向校验环节。现在加 5 步自检：(1) 列出所有命令 (2) 每个判断是否查过 (3) 没查的立即查 (4) 查不到不提交 (5) 对照表格复查模式。
+- **移除中段重复的 `STRICT TRIOBASIC` 和 `confusions` 章节** — 现在约束集中到顶部，避免分散注意力。
+
+注：DeployAIInstructions 每次启动会 overwrite `%APPDATA%\TrioAI\AI_INSTRUCTIONS.md`，用户下次启动 MP 自动获得新约束，无需手动同步。
+
 ## [0.1.7] — 2026-06-10
 
 代码质量回归修复版本（v0.1.5 的 token 优化过于激进）。
