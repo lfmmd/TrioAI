@@ -14,6 +14,24 @@
 - IEC 断点的 line→CodeElement 反推（目前 SetBreakpoint 需在 MP UI 中手动设置）
 - regex 硬拦 VB 模式（`Dim`/`Function...End Function`/`Class`/`Math.`/`Console.`）—— 目前规则准确率不足，暂未启用
 
+## [0.1.11] — 2026-06-10
+
+v0.1.10 验证器白名单污染修复版（32 项端到端测试 100% 通过）。
+
+### 修复
+
+- **IEC/PLCopen 库污染 TrioBASIC 白名单** — `EnsureValidationIndex` 和 `LoadIndex` 都遍历 `skills/*/` 全部子目录，结果 `skills/iec/AO-printf.html` 被加入 `_triobasicIds` → AI 写 `Printf()` 被判合法 TrioBASIC。改为只扫 `skills/triobasic/`，IEC 函数（printf / AO-printf 等）不再混入白名单。
+- **`WAITS` / `DEFAULT` 关键字未列入白名单** — `WAITS`（等待同步，区别于 `WAIT UNTIL`）和 `DEFAULT`（`SELECT CASE DEFAULT` 分支）没有单独的 HTML 文件，也不在 `_builtinKeywords` 中，导致合法代码 `WAITS` 和 `SELECT CASE VR(0) CASE DEFAULT ... END SELECT` 被误拦。补到 `_builtinKeywords`。
+
+### 验证
+
+32 项端到端测试 100% 通过：
+- **12 项合法 TrioBASIC**：FOR/NEXT、WHILE/WEND、BASE+MOVE、VR/TABLE 读写、IF/ELSEIF/ELSE、SELECT CASE DEFAULT、GOSUB/RETURN、WAITS、SIN/COS/ABS、RND、嵌套函数调用 — 全部不误拦
+- **10 项 LLM 幻觉命令**：Sleep/Delay/Random/Foobar/Printf（含 lowercase/uppercase 变体）/WriteLine/Console.WriteLine/Math.Sqrt — 全部拦截
+- **4 项参数错误**：ABS 多参数、SIN 多参数、MOVE/BASE 无参数 — 全部拦截
+- **3 项赋值错误**：赋值给 SIN/ABS/RND — 全部拦截
+- **3 项边界**：空字符串、纯注释、REM 注释 — 全部通过
+
 ## [0.1.10] — 2026-06-10
 
 v0.1.9 验证器三处 bug 修复版。

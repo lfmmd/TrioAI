@@ -1210,6 +1210,9 @@ namespace TrioAI.MPPlugIn
             "dim","const","global","local","integer","float","string","as",
             "print","input","and","or","not","mod","xor","shl","shr",
             "true","false","rem","on","select","case","end","using","with",
+            "default",     // SELECT CASE DEFAULT
+            "waits",       // 等待同步（区别于 WAIT UNTIL，无 HTML 单独条目）
+            "until_io",    // WAIT UNTIL_IO 等
             // 常见用户变量前缀（避免假阳性）
             "i","j","k","x","y","z","t","n","cnt","idx","temp","tmp",
         };
@@ -1253,18 +1256,18 @@ namespace TrioAI.MPPlugIn
                     if (sig != null) sigs[entry.Name] = sig;
                 }
 
-                // 2. 扫描 skills/*/ 下所有 .html 文件名（兜底 index.json 不全的情况，如关键字 IF/FOR/DIM）
-                if (Directory.Exists(SkillsDir))
+                // 2. 扫描 skills/triobasic/ 下所有 .html 文件名（兜底 index.json 不全的情况，如关键字 IF/FOR/DIM）
+                //    注意：仅扫 triobasic 目录。IEC/PLCopen 的库（AO-printf 之类）不能混进 TrioBASIC 白名单，
+                //    否则 AI 写 printf() 这种 IEC 函数会被误判为合法 TrioBASIC。
+                var triobasicDir = Path.Combine(SkillsDir, "triobasic");
+                if (Directory.Exists(triobasicDir))
                 {
-                    foreach (var libDir in Directory.GetDirectories(SkillsDir))
+                    foreach (var html in Directory.GetFiles(triobasicDir, "*.html"))
                     {
-                        foreach (var html in Directory.GetFiles(libDir, "*.html"))
-                        {
-                            var name = Path.GetFileNameWithoutExtension(html);
-                            // 仅纳入合法 identifier 名（字母数字下划线，>=2 字符）
-                            if (name.Length >= 2 && IsIdentifierLike(name))
-                                ids.Add(name);
-                        }
+                        var name = Path.GetFileNameWithoutExtension(html);
+                        // 仅纳入合法 identifier 名（字母数字下划线，>=2 字符）
+                        if (name.Length >= 2 && IsIdentifierLike(name))
+                            ids.Add(name);
                     }
                 }
 
@@ -1483,22 +1486,26 @@ namespace TrioAI.MPPlugIn
             try
             {
                 if (!Directory.Exists(SkillsDir)) return _index;
-                foreach (var dir in Directory.GetDirectories(SkillsDir))
+                // 仅加载 triobasic 子目录。iec/plcopen 是不同的语言，混进白名单会让
+                // AI 写 printf() / AO-printf() 这种 IEC 函数被误判为合法 TrioBASIC。
+                var triobasicDir = Path.Combine(SkillsDir, "triobasic");
+                var idxFile = Path.Combine(triobasicDir, "index.json");
+                if (File.Exists(idxFile))
                 {
-                    var idxFile = Path.Combine(dir, "index.json");
-                    if (!File.Exists(idxFile)) continue;
                     var text = File.ReadAllText(idxFile);
                     var items = _json.Deserialize<List<Dictionary<string, object>>>(text);
-                    if (items == null) continue;
-                    foreach (var item in items)
-                        _index.Add(new SkillIndexEntry
-                        {
-                            Name = GetStr(item, "name") ?? "",
-                            Type = GetStr(item, "type") ?? "",
-                            Desc = GetStr(item, "desc") ?? "",
-                            File = GetStr(item, "file"),
-                            Dir = dir
-                        });
+                    if (items != null)
+                    {
+                        foreach (var item in items)
+                            _index.Add(new SkillIndexEntry
+                            {
+                                Name = GetStr(item, "name") ?? "",
+                                Type = GetStr(item, "type") ?? "",
+                                Desc = GetStr(item, "desc") ?? "",
+                                File = GetStr(item, "file"),
+                                Dir = triobasicDir
+                            });
+                    }
                 }
                 _indexLoadTime = DateTime.Now;
             }
