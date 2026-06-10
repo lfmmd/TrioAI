@@ -14,6 +14,38 @@
 - IEC 断点的 line→CodeElement 反推（目前 SetBreakpoint 需在 MP UI 中手动设置）
 - regex 硬拦 VB 模式（`Dim`/`Function...End Function`/`Class`/`Math.`/`Console.`）—— 目前规则准确率不足，暂未启用
 
+## [0.1.12] — 2026-06-10
+
+`lookup_command` 重复查询去重版本（token 优化）。
+
+### 优化
+
+- **重复查询自动去重** — 长对话里 AI 经常多次 `lookup_command` 同一个命令（例如先查 `MOVE` 写代码，5 轮后又查 `MOVE` 检查语法）。每次返回的 HTML 文档约 16KB，重复 N 次 = N × 16KB 重复 token。本次在 `BuildTrimmedMessages`（请求组装阶段）加一层去重：
+  - 遍历历史所有 `lookup_command` 的 `tool_use` 块，按 `query` 参数（大小写不敏感）分组
+  - 每个 query 的**第一次**调用保留完整内容（HTML 命令文档）
+  - 后续相同 query 的 `tool_result` 内容替换为 ~200 字节的引用占位符：
+    ```
+    [Duplicate of lookup_command("MOVE") — full content preserved at the first
+     call earlier in this conversation. Reference that occurrence instead of
+     asking again.]
+    ```
+  - `tool_use_id` 保持不变，配对不破坏，API 仍正常
+
+### 收益
+
+假设 30 轮对话里有 8 个不同命令各被查 2-3 次：
+- 优化前：~20 次 × 16KB = 320KB
+- 优化后：8 个唯一查询 × 16KB + 12 个重复 × 0.2KB ≈ 130KB
+- **节省约 60%** lookup 相关 token
+
+### 设计取舍
+
+- **只对 `lookup_command` 去重** —— `read_source` 也会重复读，但用户改过源码后内容会变；`lookup_command` 是只读静态参考库，幂等，安全。
+- **第一次必须保留完整内容** —— 不能把所有重复的都清空，至少要留 1 份完整的，AI 才能往回找到语法。
+- **替换为引用而非清空** —— 引用文本明确告诉 AI「前面查过了，往回找」，避免 AI 困惑地重新查询。
+- **大小写不敏感** —— `MOVE` / `move` / `Move` 视为同一查询。
+- **只在请求组装阶段去重** —— UI/日志/chat_history 仍记录完整 tool_result，方便审计与回看。
+
 ## [0.1.11] — 2026-06-10
 
 v0.1.10 验证器白名单污染修复版（32 项端到端测试 100% 通过）。

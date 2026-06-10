@@ -655,7 +655,9 @@ namespace TrioAI.MPPlugIn
             var messages = new List<Dictionary<string, object>>(_conversationHistory.Count);
 
             // 先建立 tool_use_id → tool_name 映射（来自 assistant 消息的 tool_use block）
+            // 同时为 lookup_command 建立 tool_use_id → query 映射，用于去重。
             var toolNameById = new Dictionary<string, string>(StringComparer.Ordinal);
+            var lookupQueryById = new Dictionary<string, string>(StringComparer.Ordinal);
             foreach (var m in _conversationHistory)
             {
                 if (GetStringValue(m, "role") != "assistant") continue;
@@ -667,7 +669,37 @@ namespace TrioAI.MPPlugIn
                         var id = GetStringValue(b, "id");
                         var name = GetStringValue(b, "name");
                         if (id != null && name != null) toolNameById[id] = name;
+
+                        if (string.Equals(name, "lookup_command", StringComparison.OrdinalIgnoreCase)
+                            && id != null
+                            && b.TryGetValue("input", out var inObj)
+                            && inObj is Dictionary<string, object> inDict)
+                        {
+                            object q;
+                            if (inDict.TryGetValue("query", out q) && q != null)
+                                lookupQueryById[id] = q.ToString();
+                        }
                     }
+                }
+            }
+
+            // lookup_command 去重：同一 query 第一次出现保留完整内容，后续替换为引用占位符。
+            // tool_result 是按 conversation 顺序遍历，遇到第二次同 query 就标记。
+            var seenLookupQueries = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var duplicateLookupIds = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var m in _conversationHistory)
+            {
+                if (GetStringValue(m, "role") != "user") continue;
+                if (!(m["content"] is List<Dictionary<string, object>> bl)) continue;
+                foreach (var b in bl)
+                {
+                    if (GetStringValue(b, "type") != "tool_result") continue;
+                    var id = GetStringValue(b, "tool_use_id");
+                    if (id == null) continue;
+                    if (!lookupQueryById.TryGetValue(id, out var query)) continue;
+                    // 第一次见到这个 query：保留。后续：标记为重复。
+                    if (!seenLookupQueries.Add(query))
+                        duplicateLookupIds.Add(id);
                 }
             }
 
@@ -729,8 +761,16 @@ namespace TrioAI.MPPlugIn
                         {
                             var tb = new Dictionary<string, object>(block);
                             var id = GetStringValue(tb, "tool_use_id");
+                            // lookup_command 去重：同 query 已答过 → 内容替换为引用占位符（~80 字节 vs 16KB）
+                            if (id != null && duplicateLookupIds.Contains(id))
+                            {
+                                var q = lookupQueryById[id];
+                                tb["content"] = "[Duplicate of lookup_command(\"" + q
+                                    + "\") — full content preserved at the first call earlier in this conversation. "
+                                    + "Reference that occurrence instead of asking again.]";
+                            }
                             // microCompact：不在最近 N 个里 → content 替换为占位符（id 保留）
-                            if (id != null && !keepRecent.Contains(id))
+                            else if (id != null && !keepRecent.Contains(id))
                             {
                                 tb["content"] = ClearedToolResult;
                             }
