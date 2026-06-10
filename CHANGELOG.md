@@ -6,6 +6,15 @@
 
 ## [Unreleased]
 
+## [0.1.14] — 2026-06-10
+
+lookup_command 三层机制 + 192KB 预算。
+
+**变更**：
+- `lookup_command(query)` 默认返回 Layer 2：name + signature + description（~500 字节/条）
+- `lookup_command(query, full=true)` 返回 Layer 3：完整 HTML 文档（192KB 总上限，按比例截断）
+- 签名动态从 index.json 的 desc 字段提取（triobasic ~25% 有签名，其余仅 name+desc）
+
 后续计划：
 - 国际化扩展（更多语言）
 - 程序执行历史/审计日志

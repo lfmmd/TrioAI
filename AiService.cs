@@ -1195,7 +1195,7 @@ namespace TrioAI.MPPlugIn
                 case "open_program": return Handlers.OpenProgram(GetStr(input, "name"));
                 case "get_program_process": return Handlers.GetProgramProcess(GetStr(input, "name"));
                 case "set_program_process": return Handlers.SetProgramProcess(GetStr(input, "name"), input);
-                case "lookup_command": return LookupCommand(GetStr(input, "query"));
+                case "lookup_command": return LookupCommand(GetStr(input, "query"), GetStr(input, "full"));
                 case "read_skill": return ReadSkill(GetStr(input, "name"));
                 case "search_code": return Handlers.SearchCode(GetStr(input, "query"), GetBool(input, "caseSensitive"));
                 default: return new { error = $"Unknown tool: {name}" };
@@ -1748,7 +1748,7 @@ namespace TrioAI.MPPlugIn
             return null;
         }
 
-        private static object LookupCommand(string query)
+        private static object LookupCommand(string query, string fullFlag)
         {
             if (string.IsNullOrEmpty(query))
                 return new { error = "query is required" };
@@ -1759,16 +1759,13 @@ namespace TrioAI.MPPlugIn
 
             var q = query.ToUpperInvariant().Trim();
 
-            // Phase 1: search lightweight index
+            // 搜索：精确 → 名称包含 → 描述包含
             var matched = new List<SkillIndexEntry>();
 
-            // Exact match
             foreach (var e in index)
             {
                 if (e.Name.ToUpperInvariant() == q) { matched.Add(e); break; }
             }
-
-            // Partial name match
             if (matched.Count == 0)
             {
                 foreach (var e in index)
@@ -1777,8 +1774,6 @@ namespace TrioAI.MPPlugIn
                     if (matched.Count >= 5) break;
                 }
             }
-
-            // Description match
             if (matched.Count == 0)
             {
                 foreach (var e in index)
@@ -1791,7 +1786,31 @@ namespace TrioAI.MPPlugIn
             if (matched.Count == 0)
                 return new { error = $"No matching command found for '{query}'" };
 
-            // Phase 2: load full details for matched entries
+            // Layer 2（默认）：名称 + 签名 + 描述，不加载 HTML
+            if (!string.Equals(fullFlag, "true", StringComparison.OrdinalIgnoreCase))
+            {
+                var summaries = new List<object>();
+                foreach (var m in matched)
+                {
+                    var sigText = "";
+                    if (_signatures != null && _signatures.TryGetValue(m.Name, out var sig))
+                        sigText = sig.RawSignature;
+                    summaries.Add(new
+                    {
+                        name = m.Name,
+                        signature = sigText,
+                        description = m.Desc ?? "",
+                        library = Path.GetFileName(m.Dir ?? "")
+                    });
+                }
+                return new
+                {
+                    results = summaries,
+                    hint = "Pass full=true for complete HTML documentation with examples."
+                };
+            }
+
+            // Layer 3：完整 HTML（含 192KB 预算）
             var results = new List<object>();
             foreach (var m in matched)
             {
@@ -1801,6 +1820,30 @@ namespace TrioAI.MPPlugIn
 
             if (results.Count == 0)
                 return new { error = $"Index matched but full data not found for '{query}'" };
+
+            const int MaxTotalHtml = 192 * 1024;
+            long totalHtmlLen = 0;
+            foreach (Dictionary<string, object> d in results)
+                if (d["html"] is string h) totalHtmlLen += h.Length;
+
+            if (totalHtmlLen > MaxTotalHtml)
+            {
+                var scale = (double)MaxTotalHtml / totalHtmlLen;
+                for (int i = 0; i < results.Count; i++)
+                {
+                    var d = (Dictionary<string, object>)results[i];
+                    var html = (string)d["html"];
+                    var maxLen = Math.Max(1024, (int)(html.Length * scale));
+                    if (html.Length > maxLen)
+                    {
+                        results[i] = new Dictionary<string, object>(d)
+                        {
+                            ["html"] = html.Substring(0, maxLen)
+                                + "\n\n[... truncated — total lookup results capped at 192KB ...]"
+                        };
+                    }
+                }
+            }
 
             return new { results };
         }
@@ -1883,8 +1926,9 @@ namespace TrioAI.MPPlugIn
                     ("autorunProcess", "Process number for auto-run", true),
                     ("processAffinity", "Process affinity (process slot to run on)", true)
                 )),
-                Tool("lookup_command", "Look up TrioBASIC command/keyword reference from the official manual.", Props(
-                    ("query", "Command name or keyword to search (e.g. MOVE, CONNECT, ACCEL, FOR)", false)
+                Tool("lookup_command", "Look up command/keyword reference. Default returns name + signature + description (lightweight). Use full=true for complete HTML documentation with examples.", Props(
+                    ("query", "Command name or keyword to search (e.g. MOVE, CONNECT, ACCEL, FOR)", false),
+                    ("full", "Set to \"true\" to load complete HTML documentation (heavier, use only when examples or detailed parameters are needed)", true)
                 )),
                 Tool("read_skill", "Load full markdown content of a skill listed in the 'Available Skills' section of the system prompt.", Props(
                     ("name", "Skill name from Available Skills", false)
