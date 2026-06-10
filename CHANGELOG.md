@@ -13,6 +13,14 @@
 - 多控制器切换支持
 - IEC 断点的 line→CodeElement 反推（目前 SetBreakpoint 需在 MP UI 中手动设置）
 
+## [0.1.6] — 2026-06-10
+
+safe-coding 强制嵌入版本。
+
+### 修复
+
+- **AI 写 TrioBASIC 代码不遵守 safe-coding 规范** — markdown skill 之前只在 system prompt 列名字+描述，没有 MANDATORY 触发语；AI 不会主动 `read_skill('safe-coding')`，靠训练记忆硬写。即使某轮读了，microCompact 5 轮后也会清空。现在 `BuildSkillsCatalog` 直接把 safe-coding 全文嵌入 system prompt（~200 token），每轮可见，永不被清空。
+
 ## [0.1.5] — 2026-06-10
 
 Token 优化 + IEC 稳定性版本。

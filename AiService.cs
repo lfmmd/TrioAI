@@ -1297,6 +1297,21 @@ namespace TrioAI.MPPlugIn
                 sb.AppendLine();
                 foreach (var s in skills)
                     sb.AppendFormat("- **{0}**: {1}\n", s.Name, s.Description ?? "");
+
+                // safe-coding 是规范性 skill（安全约束、禁用命令清单），每轮嵌入 system prompt。
+                // 不能依赖 AI 主动 read_skill — 之前没 MANDATORY 触发语，AI 写代码时靠训练
+                // 记忆硬写；而且 microCompact 5 轮后会清空 read_skill 返回的 tool_result。
+                // 全文 ~200 token，成本可忽略。
+                var safeCoding = skills.Find(s =>
+                    string.Equals(s.Name, "safe-coding", StringComparison.OrdinalIgnoreCase));
+                if (safeCoding != null && !string.IsNullOrEmpty(safeCoding.Body))
+                {
+                    sb.AppendLine();
+                    sb.AppendLine("## Safe Coding Rules (MANDATORY)");
+                    sb.AppendLine("Follow these rules whenever writing motion control code. Violations are unacceptable:");
+                    sb.AppendLine();
+                    sb.AppendLine(safeCoding.Body.Trim());
+                }
             }
             return sb.ToString();
         }
