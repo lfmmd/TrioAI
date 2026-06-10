@@ -1118,28 +1118,36 @@ namespace TrioAI.MPPlugIn
                 case "write_iec_variables": return Handlers.WriteIecVariables(GetStr(input, "name"), GetStr(input, "scope"), GetStr(input, "text"));
                 case "write_source":
                 {
-                    var code = GetStr(input, "sourceCode") ?? "";
-                    var errs = ValidateTrioBasicCode(code);
-                    if (errs.Count > 0)
-                        return new { error = "BLOCKED by TrioBASIC validation:\n  " + string.Join("\n  ", errs) };
-                    return Handlers.WriteSource(GetStr(input, "name"), input);
+                    var progName = GetStr(input, "name");
+                    if (Handlers.GetProgramDialect(progName) == "triobasic")
+                    {
+                        var code = GetStr(input, "sourceCode") ?? "";
+                        var errs = ValidateTrioBasicCode(code);
+                        if (errs.Count > 0)
+                            return new { error = "BLOCKED by TrioBASIC validation:\n  " + string.Join("\n  ", errs) };
+                    }
+                    return Handlers.WriteSource(progName, input);
                 }
                 case "patch_source":
                 {
-                    var errs = new List<string>();
-                    if (input.TryGetValue("operations", out var opsObj) && opsObj is List<object> ops)
+                    var progName = GetStr(input, "name");
+                    if (Handlers.GetProgramDialect(progName) == "triobasic")
                     {
-                        foreach (var op in ops)
+                        var errs = new List<string>();
+                        if (input.TryGetValue("operations", out var opsObj) && opsObj is List<object> ops)
                         {
-                            var dict = op as Dictionary<string, object>;
-                            if (dict == null) continue;
-                            if (dict.TryGetValue("content", out var v) && v is string s && !string.IsNullOrEmpty(s))
-                                errs.AddRange(ValidateTrioBasicCode(s));
+                            foreach (var op in ops)
+                            {
+                                var dict = op as Dictionary<string, object>;
+                                if (dict == null) continue;
+                                if (dict.TryGetValue("content", out var v) && v is string s && !string.IsNullOrEmpty(s))
+                                    errs.AddRange(ValidateTrioBasicCode(s));
+                            }
                         }
+                        if (errs.Count > 0)
+                            return new { error = "BLOCKED by TrioBASIC validation:\n  " + string.Join("\n  ", errs) };
                     }
-                    if (errs.Count > 0)
-                        return new { error = "BLOCKED by TrioBASIC validation:\n  " + string.Join("\n  ", errs) };
-                    return Handlers.PatchSource(GetStr(input, "name"), input);
+                    return Handlers.PatchSource(progName, input);
                 }
                 case "read_vr": return Handlers.ReadVR(GetInt(input, "address"), GetInt(input, "count"));
                 case "write_vr": return Handlers.WriteVR(GetInt(input, "address"), input);
@@ -1195,7 +1203,7 @@ namespace TrioAI.MPPlugIn
                 case "open_program": return Handlers.OpenProgram(GetStr(input, "name"));
                 case "get_program_process": return Handlers.GetProgramProcess(GetStr(input, "name"));
                 case "set_program_process": return Handlers.SetProgramProcess(GetStr(input, "name"), input);
-                case "lookup_command": return LookupCommand(GetStr(input, "query"), GetStr(input, "full"));
+                case "lookup_command": return LookupCommand(GetStr(input, "query"), GetStr(input, "full"), GetStr(input, "library"));
                 case "read_skill": return ReadSkill(GetStr(input, "name"));
                 case "search_code": return Handlers.SearchCode(GetStr(input, "query"), GetBool(input, "caseSensitive"));
                 default: return new { error = $"Unknown tool: {name}" };
@@ -1286,10 +1294,11 @@ namespace TrioAI.MPPlugIn
                 var ids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
                 var sigs = new Dictionary<string, CommandSignature>(StringComparer.OrdinalIgnoreCase);
 
-                // 1. 从 index.json 加载所有条目
+                // 1. 从 index.json 加载 TrioBASIC 条目（仅 triobasic 目录）
                 foreach (var entry in LoadIndex())
                 {
                     if (string.IsNullOrEmpty(entry?.Name)) continue;
+                    if (!entry.Dir.EndsWith("triobasic", StringComparison.OrdinalIgnoreCase)) continue;
                     ids.Add(entry.Name);
                     var sig = ParseSignature(entry.Name, entry.Desc ?? "");
                     if (sig != null) sigs[entry.Name] = sig;
@@ -1504,26 +1513,24 @@ namespace TrioAI.MPPlugIn
             try
             {
                 if (!Directory.Exists(SkillsDir)) return _index;
-                // 仅加载 triobasic 子目录。iec/plcopen 是不同的语言，混进白名单会让
-                // AI 写 printf() / AO-printf() 这种 IEC 函数被误判为合法 TrioBASIC。
-                var triobasicDir = Path.Combine(SkillsDir, "triobasic");
-                var idxFile = Path.Combine(triobasicDir, "index.json");
-                if (File.Exists(idxFile))
+                // 加载所有库子目录（triobasic / iec / plcopen），每条 entry 的 Dir 标识来源。
+                foreach (var lib in new[] { "triobasic", "iec", "plcopen" })
                 {
+                    var libDir = Path.Combine(SkillsDir, lib);
+                    var idxFile = Path.Combine(libDir, "index.json");
+                    if (!File.Exists(idxFile)) continue;
                     var text = File.ReadAllText(idxFile);
                     var items = _json.Deserialize<List<Dictionary<string, object>>>(text);
-                    if (items != null)
-                    {
-                        foreach (var item in items)
-                            _index.Add(new SkillIndexEntry
-                            {
-                                Name = GetStr(item, "name") ?? "",
-                                Type = GetStr(item, "type") ?? "",
-                                Desc = GetStr(item, "desc") ?? "",
-                                File = GetStr(item, "file"),
-                                Dir = triobasicDir
-                            });
-                    }
+                    if (items == null) continue;
+                    foreach (var item in items)
+                        _index.Add(new SkillIndexEntry
+                        {
+                            Name = GetStr(item, "name") ?? "",
+                            Type = GetStr(item, "type") ?? "",
+                            Desc = GetStr(item, "desc") ?? "",
+                            File = GetStr(item, "file"),
+                            Dir = libDir
+                        });
                 }
                 _indexLoadTime = DateTime.Now;
             }
@@ -1748,27 +1755,38 @@ namespace TrioAI.MPPlugIn
             return null;
         }
 
-        private static object LookupCommand(string query, string fullFlag)
+        private static object LookupCommand(string query, string fullFlag, string library = null)
         {
             if (string.IsNullOrEmpty(query))
                 return new { error = "query is required" };
 
             var index = LoadIndex();
-            if (index.Count == 0)
-                return new { error = "No skill data found. Place index.json + HTML pages in subfolders of " + SkillsDir };
+
+            // 按库过滤
+            IEnumerable<SkillIndexEntry> searchSet = index;
+            if (!string.IsNullOrEmpty(library))
+            {
+                var libLower = library.ToLowerInvariant().Trim();
+                searchSet = index.Where(e =>
+                    Path.GetFileName(e.Dir ?? "").Equals(libLower, StringComparison.OrdinalIgnoreCase));
+            }
+            if (!searchSet.Any())
+                return new { error = string.IsNullOrEmpty(library)
+                    ? "No skill data found."
+                    : $"No skill data found for library '{library}'." };
 
             var q = query.ToUpperInvariant().Trim();
 
             // 搜索：精确 → 名称包含 → 描述包含
             var matched = new List<SkillIndexEntry>();
 
-            foreach (var e in index)
+            foreach (var e in searchSet)
             {
                 if (e.Name.ToUpperInvariant() == q) { matched.Add(e); break; }
             }
             if (matched.Count == 0)
             {
-                foreach (var e in index)
+                foreach (var e in searchSet)
                 {
                     if (e.Name.ToUpperInvariant().Contains(q)) matched.Add(e);
                     if (matched.Count >= 5) break;
@@ -1776,7 +1794,7 @@ namespace TrioAI.MPPlugIn
             }
             if (matched.Count == 0)
             {
-                foreach (var e in index)
+                foreach (var e in searchSet)
                 {
                     if (e.Desc != null && e.Desc.ToUpperInvariant().Contains(q)) matched.Add(e);
                     if (matched.Count >= 3) break;
@@ -1926,9 +1944,10 @@ namespace TrioAI.MPPlugIn
                     ("autorunProcess", "Process number for auto-run", true),
                     ("processAffinity", "Process affinity (process slot to run on)", true)
                 )),
-                Tool("lookup_command", "Look up command/keyword reference. Default returns name + signature + description (lightweight). Use full=true for complete HTML documentation with examples.", Props(
-                    ("query", "Command name or keyword to search (e.g. MOVE, CONNECT, ACCEL, FOR)", false),
-                    ("full", "Set to \"true\" to load complete HTML documentation (heavier, use only when examples or detailed parameters are needed)", true)
+                Tool("lookup_command", "Look up command/keyword reference. Default returns name + signature + description (lightweight). Use full=true for complete HTML. Use library to scope to triobasic/iec/plcopen.", Props(
+                    ("query", "Command name or keyword to search (e.g. MOVE, MC_MoveAbsolute, FOR)", false),
+                    ("full", "Set to \"true\" to load complete HTML documentation (heavier, use only when examples or detailed parameters are needed)", true),
+                    ("library", "Scope search to: triobasic | iec | plcopen (default: search all libraries)", true)
                 )),
                 Tool("read_skill", "Load full markdown content of a skill listed in the 'Available Skills' section of the system prompt.", Props(
                     ("name", "Skill name from Available Skills", false)
@@ -2048,6 +2067,29 @@ TrioBASIC is a niche BASIC dialect. Your training data massively over-represents
 - FORBIDDEN: Do not invent, guess, or hallucinate TrioBASIC commands. Every command/keyword you write must exist in the official reference.
 - MANDATORY: Before writing ANY code that uses a command or syntax you are not 100% certain about, call lookup_command to verify it exists and matches the official syntax. This includes motion commands, axis parameters, system parameters, mathematical functions, and string functions.
 - MANDATORY: If the user's request cannot be fulfilled with valid TrioBASIC, do NOT approximate or substitute with made-up commands. Explain what TrioBASIC supports and propose an alternative using only verified commands.
+
+### PROGRAM TYPE AWARENESS (MANDATORY)
+
+This project contains multiple program types. The `dialect` field in read_source/list_programs responses tells you the language.
+
+**Before writing ANY code, you MUST check the program's dialect:**
+1. Call `read_source` or `list_programs` to get the `dialect` field.
+2. Use ONLY the correct syntax and commands for that dialect.
+
+**TrioBASIC programs (dialect: ""triobasic""):**
+- Use TrioBASIC syntax only. Use `lookup_command(query, library=""triobasic"")` to verify commands.
+- Program names are labels (e.g. `MAIN:`).
+
+**IEC ST programs (dialect: ""iec""):**
+- Use IEC 61131-3 Structured Text syntax (IF...END_IF, VAR...END_VAR, etc.).
+- NEVER write TrioBASIC-style labels like `PROGRAM MAIN` into IEC code.
+- Use `lookup_command(query, library=""iec"")` to verify function blocks.
+- Use `get_iec_task_detail` first to understand the IEC task structure.
+
+**Cross-dialect rules:**
+- NEVER mix TrioBASIC commands (MOVE, CONNECT, WAITS) into IEC ST programs.
+- NEVER mix IEC function blocks (MC_MoveAbsolute, ALARM_A) into TrioBASIC programs.
+- Always scope `lookup_command` with the correct `library` parameter for the program you are editing.
 
 ### AFTER-WRITE SELF-CHECK (MANDATORY — DO THIS BEFORE EVERY write_source / patch_source)
 
@@ -2178,23 +2220,20 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
                     {
                         sb.AppendFormat("- Project: {0}\n", proj.FileName ?? "?");
 
-                        // Program list summary — 数量+类型分布，不列每个名字（占 token 且每次重发）
+                        // Program list — 列出每个程序名和类型，AI 需要知道编辑的是哪种方言
                         var items = proj.Items;
                         if (items != null)
                         {
                             var itemList = items.ToList();
                             if (itemList.Count > 0)
                             {
-                                var byType = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+                                sb.AppendFormat("- Programs ({0}):\n", itemList.Count);
                                 foreach (var item in itemList)
                                 {
-                                    var t = item.Type.ToString();
-                                    if (!byType.ContainsKey(t)) byType[t] = 0;
-                                    byType[t]++;
+                                    var dialect = Handlers.GetProgramDialect(item.ItemName);
+                                    sb.AppendFormat("  - {0} [{1}] → {2}\n",
+                                        item.ItemName, item.Type, dialect);
                                 }
-                                sb.AppendFormat("- Programs: {0} items ({1})\n",
-                                    itemList.Count,
-                                    string.Join(", ", byType.Select(kv => kv.Value + " " + kv.Key)));
                             }
                         }
                     }

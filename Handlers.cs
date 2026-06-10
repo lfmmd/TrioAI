@@ -372,6 +372,9 @@ namespace TrioAI.MPPlugIn
             var item = FindItem(name);
             if (item == null) return Error($"Program not found: {name}");
 
+            var itemType = item.Type.ToString();
+            var dialect = GetProgramDialect(name);
+
             // 先尝试标准 TextProjectItemBase 路径（TrioBASIC / Text）
             var textItem = item as TextProjectItemBase;
             string source;
@@ -410,7 +413,9 @@ namespace TrioAI.MPPlugIn
                     startLine = start,
                     endLine = end,
                     totalLines,
-                    truncated = false
+                    truncated = false,
+                    type = itemType,
+                    dialect
                 };
             }
 
@@ -434,11 +439,13 @@ namespace TrioAI.MPPlugIn
                     endLine = end,
                     totalLines,
                     truncated = true,
-                    hint = $"Large file ({totalLines} lines, {source.Length} chars). To read the next chunk, call read_source with startLine={end + 1}."
+                    hint = $"Large file ({totalLines} lines, {source.Length} chars). To read the next chunk, call read_source with startLine={end + 1}.",
+                    type = itemType,
+                    dialect
                 };
             }
 
-            return new { sourceCode = source, totalLines };
+            return new { sourceCode = source, totalLines, type = itemType, dialect };
         }
 
         public static object OpenProgram(string name)
@@ -2066,6 +2073,18 @@ namespace TrioAI.MPPlugIn
             if (item == null) return false;
             var fullName = item.GetType().FullName ?? "";
             return fullName.StartsWith("Trio.PlugIns.IEC61131_3");
+        }
+
+        public static string GetProgramDialect(string name)
+        {
+            var item = FindItem(name);
+            if (item == null) return "unknown";
+            if (IsIecItem(item)) return "iec";
+            var t = item.Type.ToString().ToLowerInvariant();
+            if (t == "basic" || t == "encryptedbasic" || t == "basiclibrary"
+                || t == "textfile" || t == "robotbasic" || t == "realtimebasiclibrary")
+                return "triobasic";
+            return "unknown";
         }
 
         // 通过反射调用 ContainerTask 上的公开方法（Compile/Upload/Run/Stop 等），并在 UI 线程执行

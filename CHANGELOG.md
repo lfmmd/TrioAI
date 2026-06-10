@@ -6,6 +6,24 @@
 
 ## [Unreleased]
 
+## [0.1.15] — 2026-06-10
+
+程序类型感知（TrioBASIC / IEC ST / PLCopen 方言区分）。
+
+**变更**：
+- `GetProgramDialect(name)` 返回 `"triobasic"` / `"iec"` / `"unknown"`
+- `read_source` 响应新增 `type` 和 `dialect` 字段
+- `write_source` / `patch_source` 仅对 triobasic 程序执行 TrioBASIC 校验，IEC 程序跳过
+- `LoadIndex` 加载全部三个库（triobasic + iec + plcopen）
+- `lookup_command` 新增 `library` 参数，限定搜索范围
+- `BuildProjectContext` 列出每个程序名和类型（取代聚合统计）
+- System prompt 新增 `PROGRAM TYPE AWARENESS` 规则段
+
+**修复**：
+- IEC ST 程序不再被 TrioBASIC 验证器误拦截
+- `PROGRAM MAIN` 不再被错误写入 IEC POU（AI 现在能看到程序类型）
+- `lookup_command` 可按库限定，避免跨语言匹配
+
 ## [0.1.14] — 2026-06-10
 
 lookup_command 三层机制 + 192KB 预算。
