@@ -14,6 +14,23 @@
 - IEC 断点的 line→CodeElement 反推（目前 SetBreakpoint 需在 MP UI 中手动设置）
 - regex 硬拦 VB 模式（`Dim`/`Function...End Function`/`Class`/`Math.`/`Console.`）—— 目前规则准确率不足，暂未启用
 
+## [0.1.13] — 2026-06-10
+
+移除 Phase 1（全大写标识符白名单校验），仅保留 Phase 2（函数调用签名校验）。
+
+**背景**：Phase 1 导致大量误杀（用户程序名如 `MOVE_DEMO:` 被当成幻觉命令拦截），AI 陷入死循环触发 `(Reached maximum iterations)`。误杀代价远大于漏杀（编译器兜底）。
+
+**变更**：
+- 移除 `_reAllCapsIdentifier`、`_reLineComment` 注释剥离 + 全大写扫描逻辑
+- 移除 `IsAllUpperIdent()`、`GetProjectIdentifiers()` 等辅助方法
+- 修正 `_reLineComment` 正则（`[^*\r\n]` → `[^\r\n]`），但随 Phase 1 一起移除
+- Phase 2（`Name(args)` 函数调用签名校验 + 未知命令检测 + 参数数量检查 + 只读函数赋值检查）保持不变
+
+**防御层级**：
+- Layer 1: System prompt 规则
+- Layer 2: Phase 2 函数调用校验（本次保留）
+- Layer 3: TrioBASIC 编译器（兜底）
+
 ## [0.1.12] — 2026-06-10
 
 `lookup_command` 重复查询去重版本（token 优化）。

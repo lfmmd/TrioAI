@@ -1126,7 +1126,6 @@ namespace TrioAI.MPPlugIn
                 }
                 case "patch_source":
                 {
-                    // patch_source 的 operations 列表里每个 op 的 content 字段都要校验
                     var errs = new List<string>();
                     if (input.TryGetValue("operations", out var opsObj) && opsObj is List<object> ops)
                     {
@@ -1408,10 +1407,10 @@ namespace TrioAI.MPPlugIn
             };
 
         // 校验代码 — 返回错误列表（空 = 通过）
+        // Phase 1（全大写标识符白名单）已移除：误杀代价（AI 死循环）远大于漏杀（编译器兜底）。
+        // 仅保留 Phase 2：函数调用签名校验，拦截 Sleep()/printf() 等幻觉命令。
         private static readonly Regex _reLineComment =
-            new Regex(@"'[^*\r\n]*$", RegexOptions.Multiline | RegexOptions.Compiled);
-        private static readonly Regex _reAllCapsIdentifier =
-            new Regex(@"\b[A-Z][A-Z_0-9]{1,}\b", RegexOptions.Compiled);
+            new Regex(@"'[^\r\n]*$", RegexOptions.Multiline | RegexOptions.Compiled);
         private static readonly Regex _reFuncCallSite =
             new Regex(@"\b([A-Za-z_][A-Za-z_0-9]*)\s*\(([^)]*)\)", RegexOptions.Compiled);
 
@@ -1426,33 +1425,13 @@ namespace TrioAI.MPPlugIn
             var errors = new List<string>();
             if (string.IsNullOrEmpty(code)) return errors;
             try { EnsureValidationIndex(); }
-            catch { return errors; }  // 索引构建失败 → 跳过校验，让工具正常执行
+            catch { return errors; }
 
-            // 去注释
             var clean = _reLineComment.Replace(code, "");
-
-            // ---- Phase 1: 标识符白名单校验 ----
-            // 提取所有全大写连续 token（系统标识符风格），凡是不在白名单的 → 可疑
-            var unknown = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            foreach (Match m in _reAllCapsIdentifier.Matches(clean))
-            {
-                var name = m.Value;
-                if (_builtinKeywords.Contains(name)) continue;
-                if (_triobasicIds != null && _triobasicIds.Contains(name)) continue;
-                unknown.Add(name);
-            }
-            if (unknown.Count > 0)
-            {
-                errors.Add("Identifiers not in TrioBASIC reference: " +
-                    string.Join(", ", unknown.OrderBy(x => x)));
-                errors.Add("  → Call lookup_command for each, or replace with verified commands.");
-            }
-
-            // ---- Phase 2: 调用签名校验 ----
-            // TrioBASIC 不支持用户自定义函数：任何 Name(args) 形式都是系统命令/函数/数组。
-            // 若 Name 不在 _triobasicIds（含 VR/TABLE/ABS/MOVE... 全部命令）→ 必为幻觉。
             var lines = clean.Split('\n');
+            var unknown = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var seen = new HashSet<string>();
+
             for (int i = 0; i < lines.Length; i++)
             {
                 var line = lines[i];
@@ -1497,7 +1476,6 @@ namespace TrioAI.MPPlugIn
                     // 未知调用：Name(...) 不在 _triobasicIds → 幻觉命令
                     if (_triobasicIds == null || !_triobasicIds.Contains(funcName))
                     {
-                        // 跳过明显是其他语言的关键字（已被 system prompt 拦，这里不重复报）
                         if (string.Equals(funcName, "if", StringComparison.OrdinalIgnoreCase) ||
                             string.Equals(funcName, "while", StringComparison.OrdinalIgnoreCase) ||
                             string.Equals(funcName, "for", StringComparison.OrdinalIgnoreCase))
