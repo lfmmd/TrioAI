@@ -14,9 +14,30 @@
 - IEC 断点的 line→CodeElement 反推（目前 SetBreakpoint 需在 MP UI 中手动设置）
 - regex 硬拦 VB 模式（`Dim`/`Function...End Function`/`Class`/`Math.`/`Console.`）—— 目前规则准确率不足，暂未启用
 
+## [0.1.10] — 2026-06-10
+
+v0.1.9 验证器三处 bug 修复版。
+
+### 修复
+
+- **校验器读错字段名 → 整段校验失效** — v0.1.9 的 `write_source` 拦截读 `code` 字段，但 tool schema 实际是 `sourceCode`；`patch_source` 读 `new_line` / `new_content` / `line`，实际是 `content`。结果校验器一直拿到空字符串，永远不会拦截。本次改为读正确字段名。
+- **SetArgCount 把可选参数算成必填** — TrioBASIC 文档的可选参数形式是 `axis0[, axis1[, axis2[, ...]]]`，旧实现按 `,` split 后逐个判断 `StartsWith("[")`，但 `[` 出现在参数名 *之后*，所以 `axis0[` `axis1[` `axis2[` 全被算成必填 → `BASE(0)` / `MOVE(100)` 被误拦（说成需要 ≥4 / ≥5 个参数）。改为：取第一个 `[` 之前的部分算必填，之后的全算可选。
+- **VR / TABLE 等系统变量被误判为不可赋值** — Pattern 1 `value = NAME(...)` 命中后默认 `IsAssignable=false`，但 VR / TABLE 是双向的（可读可写），`VR(0) = 100` 是合法 TrioBASIC。改为：默认允许赋值，仅对显式列入 `_knownReadOnly` 的纯函数（`ABS` / `SIN` / `COS` / `SQRT` / `RND` / 字符串函数等 ~30 个）拦截赋值。
+- **未知调用 `Name(args)` 不在索引时不拦截** — 旧 Phase 2 只对 `_signatures` 命中的函数做签名校验，对 `Foobar(1,2)` 这种幻觉命令直接 `continue` 跳过（误以为 Phase 1 已处理）。但 Phase 1 的全大写正则不匹配 `Foobar`，导致漏判。改为：`Name(args)` 形式若不在 `_triobasicIds`（含 VR/TABLE/ABS/MOVE... 全部命令），直接判为幻觉。
+
+### 新增
+
+- **HTTP 端点 `POST /api/validate_basic`** — 直接校验一段 TrioBASIC 代码，返回 `{ok, errors}`。用于：调试校验规则、CI 回归测试、不走 AI 的批量验证。body: `{"code": "..."}`，response: `{"ok": true/false, "errors": [...]}`。
+
+### 验证
+
+15 项端到端测试通过 14 项（最后一项 `Dim x As Integer` 是纯 VB 语法、无括号，需要 regex 黑名单才能拦，已记到优化方向）。
+
 ## [0.1.9] — 2026-06-10
 
 TrioBASIC 写入前白名单 + 签名校验版本。
+
+> ⚠️ **此版本有严重 bug，校验器读错字段名导致整段校验永不触发。** 请升级到 [0.1.10]。
 
 ### 新增
 

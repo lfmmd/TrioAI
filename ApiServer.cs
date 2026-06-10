@@ -455,6 +455,16 @@ namespace TrioAI.MPPlugIn
                         HandleMethod(ctx, method, "POST", () => Handlers.OpenChat());
                         break;
 
+                    case "validate_basic":
+                        if (method != "POST") { SendJson(ctx, 405, new { error = "Method not allowed" }); return; }
+                        HandleBody(ctx, method, body =>
+                        {
+                            object v;
+                            string code = body.TryGetValue("code", out v) && v != null ? v.ToString() : "";
+                            return AiService.ValidateTrioBasicCodePublic(code);
+                        });
+                        break;
+
                     case "search_code":
                         if (method != "GET") { SendJson(ctx, 405, new { error = "Method not allowed" }); return; }
                         {

@@ -1078,7 +1078,7 @@ namespace TrioAI.MPPlugIn
                 case "write_iec_variables": return Handlers.WriteIecVariables(GetStr(input, "name"), GetStr(input, "scope"), GetStr(input, "text"));
                 case "write_source":
                 {
-                    var code = GetStr(input, "code") ?? "";
+                    var code = GetStr(input, "sourceCode") ?? "";
                     var errs = ValidateTrioBasicCode(code);
                     if (errs.Count > 0)
                         return new { error = "BLOCKED by TrioBASIC validation:\n  " + string.Join("\n  ", errs) };
@@ -1086,7 +1086,7 @@ namespace TrioAI.MPPlugIn
                 }
                 case "patch_source":
                 {
-                    // patch_source 的 operations 列表里每个 op 的 new_line / new_content 都要校验
+                    // patch_source 的 operations 列表里每个 op 的 content 字段都要校验
                     var errs = new List<string>();
                     if (input.TryGetValue("operations", out var opsObj) && opsObj is List<object> ops)
                     {
@@ -1094,11 +1094,8 @@ namespace TrioAI.MPPlugIn
                         {
                             var dict = op as Dictionary<string, object>;
                             if (dict == null) continue;
-                            foreach (var key in new[] { "new_line", "new_content", "line" })
-                            {
-                                if (dict.TryGetValue(key, out var v) && v is string s && !string.IsNullOrEmpty(s))
-                                    errs.AddRange(ValidateTrioBasicCode(s));
-                            }
+                            if (dict.TryGetValue("content", out var v) && v is string s && !string.IsNullOrEmpty(s))
+                                errs.AddRange(ValidateTrioBasicCode(s));
                         }
                     }
                     if (errs.Count > 0)
@@ -1335,19 +1332,37 @@ namespace TrioAI.MPPlugIn
                 sig.MaxArgs = 0;
                 return;
             }
-            bool hasOptional = argsStr.Contains("[") || argsStr.Contains("...");
-            var parts = argsStr.Split(',');
+            // TrioBASIC 文档的可选参数形式："axis0[, axis1[, axis2[, ...]]]"
+            // 第一个 '[' 之前的是必填，之后的全部可选。
+            int bracketIdx = argsStr.IndexOf('[');
+            string requiredPart = bracketIdx >= 0 ? argsStr.Substring(0, bracketIdx) : argsStr;
+            bool hasOptional = bracketIdx >= 0 || argsStr.Contains("...");
+
+            var parts = requiredPart.Split(',');
             int required = 0;
             foreach (var p in parts)
             {
-                var t = p.Trim();
+                var t = p.Trim().TrimEnd('[');
                 if (string.IsNullOrEmpty(t)) continue;
-                if (t.StartsWith("[")) continue;  // 可选参数不计入最少
+                if (t == "..." || t == "…") continue;
                 required++;
             }
             sig.MinArgs = required;
-            sig.MaxArgs = hasOptional ? (int?)null : parts.Length;
+            sig.MaxArgs = hasOptional ? (int?)null : required;
         }
+
+        // 已知「只读」函数 — 不能作为赋值左侧。系统变量（VR/TABLE/MPOS/DPOS 等）默认双向，不在本表。
+        private static readonly HashSet<string> _knownReadOnly =
+            new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "ABS","SIN","COS","TAN","ASIN","ACOS","ATAN","ATAN2",
+                "SQRT","SQR","EXP","LOG","LN","POW","POWER",
+                "INT","FLOAT","FRAC","ROUND","FIX","SIGN",
+                "MAX","MIN","MOD",
+                "RND","RANDOM",
+                "INSTR","LEFT","RIGHT","MID","LEN","UPPER","LOWER","CHR","ASC","VAL","STR",
+                "GET_PARM","AXIS_STATE","GET_VR_SCALE","GET_TABLE_SCALE",
+            };
 
         // 校验代码 — 返回错误列表（空 = 通过）
         private static readonly Regex _reLineComment =
@@ -1356,6 +1371,12 @@ namespace TrioAI.MPPlugIn
             new Regex(@"\b[A-Z][A-Z_0-9]{1,}\b", RegexOptions.Compiled);
         private static readonly Regex _reFuncCallSite =
             new Regex(@"\b([A-Za-z_][A-Za-z_0-9]*)\s*\(([^)]*)\)", RegexOptions.Compiled);
+
+        public static object ValidateTrioBasicCodePublic(string code)
+        {
+            var errs = ValidateTrioBasicCode(code);
+            return new { ok = errs.Count == 0, errors = errs };
+        }
 
         private static List<string> ValidateTrioBasicCode(string code)
         {
@@ -1385,6 +1406,8 @@ namespace TrioAI.MPPlugIn
             }
 
             // ---- Phase 2: 调用签名校验 ----
+            // TrioBASIC 不支持用户自定义函数：任何 Name(args) 形式都是系统命令/函数/数组。
+            // 若 Name 不在 _triobasicIds（含 VR/TABLE/ABS/MOVE... 全部命令）→ 必为幻觉。
             var lines = clean.Split('\n');
             var seen = new HashSet<string>();
             for (int i = 0; i < lines.Length; i++)
@@ -1394,38 +1417,56 @@ namespace TrioAI.MPPlugIn
                 {
                     var funcName = m.Groups[1].Value;
                     var argsStr = m.Groups[2].Value;
-                    if (_signatures == null || !_signatures.TryGetValue(funcName, out var sig))
-                        continue;  // 不是已知系统命令 → 跳过（标识符校验已处理）
 
-                    int argCount = string.IsNullOrWhiteSpace(argsStr) ? 0
-                        : argsStr.Split(',').Length;
-
-                    // 参数数太少
-                    if (argCount < sig.MinArgs)
+                    // 已知函数 → 走签名校验
+                    if (_signatures != null && _signatures.TryGetValue(funcName, out var sig))
                     {
-                        var k = funcName.ToUpper() + "@L" + (i + 1) + "few";
-                        if (seen.Add(k))
-                            errors.Add(string.Format("Line {0}: {1} called with {2} arg(s), but signature requires ≥{3}: \"{4}\"",
-                                i + 1, funcName, argCount, sig.MinArgs, sig.RawSignature));
+                        int argCount = string.IsNullOrWhiteSpace(argsStr) ? 0
+                            : argsStr.Split(',').Length;
+
+                        if (argCount < sig.MinArgs)
+                        {
+                            var k = funcName.ToUpper() + "@L" + (i + 1) + "few";
+                            if (seen.Add(k))
+                                errors.Add(string.Format("Line {0}: {1} called with {2} arg(s), but signature requires ≥{3}: \"{4}\"",
+                                    i + 1, funcName, argCount, sig.MinArgs, sig.RawSignature));
+                        }
+                        else if (sig.MaxArgs.HasValue && argCount > sig.MaxArgs.Value)
+                        {
+                            var k = funcName.ToUpper() + "@L" + (i + 1) + "many";
+                            if (seen.Add(k))
+                                errors.Add(string.Format("Line {0}: {1} called with {2} arg(s), but signature accepts ≤{3}: \"{4}\"",
+                                    i + 1, funcName, argCount, sig.MaxArgs, sig.RawSignature));
+                        }
+
+                        var afterIdx = m.Index + m.Length;
+                        var after = afterIdx < line.Length ? line.Substring(afterIdx).TrimStart() : "";
+                        if (after.StartsWith("=") && _knownReadOnly.Contains(funcName))
+                        {
+                            var k = funcName.ToUpper() + "@L" + (i + 1) + "assign";
+                            if (seen.Add(k))
+                                errors.Add(string.Format("Line {0}: cannot assign to {1}(...) — it's a read-only function, use as expression",
+                                    i + 1, funcName));
+                        }
+                        continue;
                     }
-                    // 参数数太多
-                    else if (sig.MaxArgs.HasValue && argCount > sig.MaxArgs.Value)
-                    {
-                        var k = funcName.ToUpper() + "@L" + (i + 1) + "many";
-                        if (seen.Add(k))
-                            errors.Add(string.Format("Line {0}: {1} called with {2} arg(s), but signature accepts ≤{3}: \"{4}\"",
-                                i + 1, funcName, argCount, sig.MaxArgs, sig.RawSignature));
-                    }
 
-                    // 赋值目标校验：NAME(...) = ... 但 NAME 是 read-only 返回值函数
-                    var afterIdx = m.Index + m.Length;
-                    var after = afterIdx < line.Length ? line.Substring(afterIdx).TrimStart() : "";
-                    if (after.StartsWith("=") && sig.ReturnsValue && !sig.IsAssignable)
+                    // 未知调用：Name(...) 不在 _triobasicIds → 幻觉命令
+                    if (_triobasicIds == null || !_triobasicIds.Contains(funcName))
                     {
-                        var k = funcName.ToUpper() + "@L" + (i + 1) + "assign";
+                        // 跳过明显是其他语言的关键字（已被 system prompt 拦，这里不重复报）
+                        if (string.Equals(funcName, "if", StringComparison.OrdinalIgnoreCase) ||
+                            string.Equals(funcName, "while", StringComparison.OrdinalIgnoreCase) ||
+                            string.Equals(funcName, "for", StringComparison.OrdinalIgnoreCase))
+                            continue;
+                        var k = funcName.ToUpper() + "@unknown";
                         if (seen.Add(k))
-                            errors.Add(string.Format("Line {0}: cannot assign to {1}(...) — it returns a value, use as expression",
-                                i + 1, funcName));
+                        {
+                            unknown.Add(funcName.ToUpper());
+                            if (!errors.Exists(e => e.StartsWith("Identifiers not in TrioBASIC reference")))
+                                errors.Add("Identifiers not in TrioBASIC reference: " +
+                                    string.Join(", ", unknown.OrderBy(x => x)));
+                        }
                     }
                 }
             }
