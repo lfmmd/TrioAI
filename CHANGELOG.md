@@ -12,6 +12,24 @@
 - HTTP API 鉴权（防止其他进程误调用）
 - 多控制器切换支持
 - IEC 断点的 line→CodeElement 反推（目前 SetBreakpoint 需在 MP UI 中手动设置）
+- regex 硬拦 VB 模式（`Dim`/`Function...End Function`/`Class`/`Math.`/`Console.`）—— 目前规则准确率不足，暂未启用
+
+## [0.1.9] — 2026-06-10
+
+TrioBASIC 写入前白名单 + 签名校验版本。
+
+### 新增
+
+- **Phase 1：标识符白名单校验** — `write_source` / `patch_source` 在写入前调用 `ValidateTrioBasicCode`，扫描代码中所有 `Name(...)` 调用形式与 `[A-Z_]+` 全大写标识符，凡是不在以下三类中的就拦截：(1) TrioBASIC 内置关键字（IF/FOR/WHILE/DIM 等）；(2) `lookup_command` 索引（806 条 + 180 个 HTML 补充条目）；(3) 用户在当前项目里已经声明的变量。AI 写出 `Foobar(...)` 这种幻觉命令会立即得到 `BLOCKED by TrioBASIC validation: Unknown: ['FOOBAR']`，强制回查 `lookup_command`。
+- **Phase 2：签名解析 + 参数校验** — 从 `index.json` 的 desc 字段解析出每个命令的最小/最大参数个数与是否可赋值（`x = ABS(...)` 合法，`SIN(...) = 0` 不合法），匹配 3 种签名模式：`value = NAME(...)`、`NAME(...)`、`NAME arg1, arg2`。参数超界/不足立即拦截（如 `ABS(1, 2)` 拦截：`got 2, max 1`）。
+- **README「优化方向」章节** — 列出已识别但未实施的 6 项待优化（含 regex 硬拦 VB 模式为何暂缓）。
+
+### 设计取舍
+
+- **白名单优先，黑名单暂缓** — `lookup_command` 白名单 + 签名校验比 regex 黑名单更稳：白名单基于真实命令库（CHM 解析而来），覆盖准确；regex 黑名单要枚举 VB/QBasic 写法，规则越多越容易误伤（比如 `Dim` 在 TrioBASIC 中也合法）。先做白名单拦截，regex 待规则打磨稳定后再叠加。
+- **只拦截写操作，不拦截读** — 校验只在 `write_source` / `patch_source` 入口执行；`read_source` / `search_code` 不校验。AI 在思考阶段可以自由探索代码（包括读用户写的有问题的代码），只在「要落到磁盘」这一步强制约束。
+- **用户变量白名单动态构建** — 校验时遍历当前项目所有程序的赋值左侧，提取用户变量名加入白名单。这样 AI 写代码引用其他程序里的全局变量不会被误拦。
+- **错误信息可操作** — 拦截时返回 `BLOCKED by TrioBASIC validation:` + 每行一个具体原因（`Unknown: ['FOOBAR']` / `L1: ABS got 2, max 1`），AI 能直接据此修正后重试。
 
 ## [0.1.8] — 2026-06-10
 

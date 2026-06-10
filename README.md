@@ -290,6 +290,17 @@ python pack.py
 - .NET Framework 4.8
 - Windows 10 / 11
 
+## 优化方向
+
+以下是已知待优化项，按优先级排列：
+
+- **regex 硬拦 VB 模式**：当前通过 `lookup_command` 白名单 + 签名解析（参数个数、可赋值性）阻止 AI 写不存在的 TrioBASIC 命令。下一步可以叠加 regex 黑名单，直接拦死典型 VB/QBasic 写法（`Dim`、`Function ... End Function`、`Class`、`Math.`、`Console.` 等），无需依赖白名单覆盖。目前 regex 规则准确率不足，暂未启用。
+- **IEC 断点的 line→CodeElement 反推**：目前 IEC 程序的断点需要用户在 MP UI 中手动设置，AI 调用 `set_breakpoint` 会返回明确错误。
+- **HTTP API 鉴权**：当前 HTTP API 监听 `localhost:9090` 但无鉴权，理论上同机其他进程可调用。生产环境建议加 token 鉴权或仅绑定 loopback。
+- **多控制器切换**：目前插件绑定单一控制器，多控制器项目场景需要手动切换。
+- **国际化扩展**：UI 已支持中/英/德/法，可继续扩展。
+- **程序执行历史/审计日志**：所有 AI 写操作目前只有自动备份，没有结构化审计日志。
+
 ## 许可证
 
 [MIT License](LICENSE)

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web.Script.Serialization;
 
@@ -1075,8 +1076,35 @@ namespace TrioAI.MPPlugIn
                 case "get_iec_task_detail": return Handlers.GetIecTaskDetail(GetStr(input, "name"));
                 case "read_iec_variables": return Handlers.ReadIecVariables(GetStr(input, "name"), GetStr(input, "scope"));
                 case "write_iec_variables": return Handlers.WriteIecVariables(GetStr(input, "name"), GetStr(input, "scope"), GetStr(input, "text"));
-                case "write_source": return Handlers.WriteSource(GetStr(input, "name"), input);
-                case "patch_source": return Handlers.PatchSource(GetStr(input, "name"), input);
+                case "write_source":
+                {
+                    var code = GetStr(input, "code") ?? "";
+                    var errs = ValidateTrioBasicCode(code);
+                    if (errs.Count > 0)
+                        return new { error = "BLOCKED by TrioBASIC validation:\n  " + string.Join("\n  ", errs) };
+                    return Handlers.WriteSource(GetStr(input, "name"), input);
+                }
+                case "patch_source":
+                {
+                    // patch_source 的 operations 列表里每个 op 的 new_line / new_content 都要校验
+                    var errs = new List<string>();
+                    if (input.TryGetValue("operations", out var opsObj) && opsObj is List<object> ops)
+                    {
+                        foreach (var op in ops)
+                        {
+                            var dict = op as Dictionary<string, object>;
+                            if (dict == null) continue;
+                            foreach (var key in new[] { "new_line", "new_content", "line" })
+                            {
+                                if (dict.TryGetValue(key, out var v) && v is string s && !string.IsNullOrEmpty(s))
+                                    errs.AddRange(ValidateTrioBasicCode(s));
+                            }
+                        }
+                    }
+                    if (errs.Count > 0)
+                        return new { error = "BLOCKED by TrioBASIC validation:\n  " + string.Join("\n  ", errs) };
+                    return Handlers.PatchSource(GetStr(input, "name"), input);
+                }
                 case "read_vr": return Handlers.ReadVR(GetInt(input, "address"), GetInt(input, "count"));
                 case "write_vr": return Handlers.WriteVR(GetInt(input, "address"), input);
                 case "read_table": return Handlers.ReadTable(GetInt(input, "address"), GetInt(input, "count"));
@@ -1165,6 +1193,245 @@ namespace TrioAI.MPPlugIn
         private static List<MdSkillEntry> _mdSkills;
         private static DateTime _mdSkillsLoadTime;
         private static readonly object _mdSkillLock = new object();
+
+        // ============ TrioBASIC 代码校验（标识符白名单 + 签名语法）============
+        // 双层防线：(1) 提取代码里所有"系统标识符候选"，凡是不在 TrioBASIC 索引/HTML
+        // 文件名/关键字白名单里的，一律拒绝写入；(2) 解析 lookup_command 索引的 desc
+        // 字段提取签名，校验调用点的参数数量 / 赋值目标合法性。
+        // 设计取舍：不依赖小模型，纯 C# 静态扫描，零 API 开销，确定性 100%。
+
+        private static HashSet<string> _triobasicIds;                       // 所有合法标识符（命令/函数/参数/关键字）
+        private static Dictionary<string, CommandSignature> _signatures;    // 签名表（key 大写）
+        private static volatile bool _validationIndexBuilt;
+        private static readonly object _validationLock = new object();
+
+        // 兜底关键字 — 控制流 / 类型 / 运算符，部分没有 HTML 文件
+        private static readonly HashSet<string> _builtinKeywords = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "if","then","else","elseif","endif","for","next","to","step","while","wend",
+            "do","loop","until","repeat","gosub","return","goto","exit",
+            "dim","const","global","local","integer","float","string","as",
+            "print","input","and","or","not","mod","xor","shl","shr",
+            "true","false","rem","on","select","case","end","using","with",
+            // 常见用户变量前缀（避免假阳性）
+            "i","j","k","x","y","z","t","n","cnt","idx","temp","tmp",
+        };
+
+        private class CommandSignature
+        {
+            public string Name;
+            public int MinArgs = 0;
+            public int? MaxArgs = null;     // null = 不限
+            public bool ReturnsValue = false;
+            public bool IsAssignable = false;
+            public string RawSignature = "";
+        }
+
+        // desc 提取签名 — 三种模式：
+        //   "value = NAME(args) ..."   函数返回值
+        //   "NAME(args) = value ..."   可赋值函数（如 AIN_CONFIG）
+        //   "NAME(args) ..."           命令/函数
+        private static readonly Regex _reDescSigWithValue =
+            new Regex(@"^\s*\w+\s*=\s*(\w+)\s*\(([^)]*)\)", RegexOptions.Compiled);
+        private static readonly Regex _reDescSigCall =
+            new Regex(@"^\s*(\w+)\s*\(([^)]*)\)", RegexOptions.Compiled);
+        private static readonly Regex _reDescSigAssign =
+            new Regex(@"^\s*(\w+)\s*\([^)]*\)\s*=", RegexOptions.Compiled);
+
+        private static void EnsureValidationIndex()
+        {
+            if (_validationIndexBuilt) return;
+            lock (_validationLock)
+            {
+                if (_validationIndexBuilt) return;
+                var ids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                var sigs = new Dictionary<string, CommandSignature>(StringComparer.OrdinalIgnoreCase);
+
+                // 1. 从 index.json 加载所有条目
+                foreach (var entry in LoadIndex())
+                {
+                    if (string.IsNullOrEmpty(entry?.Name)) continue;
+                    ids.Add(entry.Name);
+                    var sig = ParseSignature(entry.Name, entry.Desc ?? "");
+                    if (sig != null) sigs[entry.Name] = sig;
+                }
+
+                // 2. 扫描 skills/*/ 下所有 .html 文件名（兜底 index.json 不全的情况，如关键字 IF/FOR/DIM）
+                if (Directory.Exists(SkillsDir))
+                {
+                    foreach (var libDir in Directory.GetDirectories(SkillsDir))
+                    {
+                        foreach (var html in Directory.GetFiles(libDir, "*.html"))
+                        {
+                            var name = Path.GetFileNameWithoutExtension(html);
+                            // 仅纳入合法 identifier 名（字母数字下划线，>=2 字符）
+                            if (name.Length >= 2 && IsIdentifierLike(name))
+                                ids.Add(name);
+                        }
+                    }
+                }
+
+                _triobasicIds = ids;
+                _signatures = sigs;
+                _validationIndexBuilt = true;
+            }
+        }
+
+        private static bool IsIdentifierLike(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return false;
+            if (!char.IsLetter(s[0]) && s[0] != '_') return false;
+            foreach (var c in s)
+                if (!char.IsLetterOrDigit(c) && c != '_') return false;
+            return true;
+        }
+
+        private static CommandSignature ParseSignature(string name, string desc)
+        {
+            var sig = new CommandSignature { Name = name };
+            if (string.IsNullOrWhiteSpace(desc)) return sig;
+
+            // regex 都用 ^ 锚定开头，直接对原 desc 调用即可。
+            // 之前用 split('.') 取第一句反而把 `ANYBUS(..., parameters...)` 里的 `...` 误切断。
+
+            // Pattern 1: value = NAME(args)
+            var m = _reDescSigWithValue.Match(desc);
+            if (m.Success && m.Groups[1].Value.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                sig.ReturnsValue = true;
+                SetArgCount(sig, m.Groups[2].Value);
+                sig.RawSignature = ("value = " + name + "(" + m.Groups[2].Value + ")").Trim();
+                return sig;
+            }
+
+            // Pattern 2: NAME(args) = value
+            m = _reDescSigAssign.Match(desc);
+            if (m.Success && m.Groups[1].Value.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                sig.IsAssignable = true;
+                var m2 = _reDescSigCall.Match(desc);
+                if (m2.Success) SetArgCount(sig, m2.Groups[2].Value);
+                sig.RawSignature = (name + "(" + (m2?.Groups[2].Value ?? "") + ") = value").Trim();
+                return sig;
+            }
+
+            // Pattern 3: NAME(args)
+            m = _reDescSigCall.Match(desc);
+            if (m.Success && m.Groups[1].Value.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                SetArgCount(sig, m.Groups[2].Value);
+                sig.RawSignature = (name + "(" + m.Groups[2].Value + ")").Trim();
+                return sig;
+            }
+
+            return sig;
+        }
+
+        private static void SetArgCount(CommandSignature sig, string argsStr)
+        {
+            if (string.IsNullOrWhiteSpace(argsStr))
+            {
+                sig.MinArgs = 0;
+                sig.MaxArgs = 0;
+                return;
+            }
+            bool hasOptional = argsStr.Contains("[") || argsStr.Contains("...");
+            var parts = argsStr.Split(',');
+            int required = 0;
+            foreach (var p in parts)
+            {
+                var t = p.Trim();
+                if (string.IsNullOrEmpty(t)) continue;
+                if (t.StartsWith("[")) continue;  // 可选参数不计入最少
+                required++;
+            }
+            sig.MinArgs = required;
+            sig.MaxArgs = hasOptional ? (int?)null : parts.Length;
+        }
+
+        // 校验代码 — 返回错误列表（空 = 通过）
+        private static readonly Regex _reLineComment =
+            new Regex(@"'[^*\r\n]*$", RegexOptions.Multiline | RegexOptions.Compiled);
+        private static readonly Regex _reAllCapsIdentifier =
+            new Regex(@"\b[A-Z][A-Z_0-9]{1,}\b", RegexOptions.Compiled);
+        private static readonly Regex _reFuncCallSite =
+            new Regex(@"\b([A-Za-z_][A-Za-z_0-9]*)\s*\(([^)]*)\)", RegexOptions.Compiled);
+
+        private static List<string> ValidateTrioBasicCode(string code)
+        {
+            var errors = new List<string>();
+            if (string.IsNullOrEmpty(code)) return errors;
+            try { EnsureValidationIndex(); }
+            catch { return errors; }  // 索引构建失败 → 跳过校验，让工具正常执行
+
+            // 去注释
+            var clean = _reLineComment.Replace(code, "");
+
+            // ---- Phase 1: 标识符白名单校验 ----
+            // 提取所有全大写连续 token（系统标识符风格），凡是不在白名单的 → 可疑
+            var unknown = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (Match m in _reAllCapsIdentifier.Matches(clean))
+            {
+                var name = m.Value;
+                if (_builtinKeywords.Contains(name)) continue;
+                if (_triobasicIds != null && _triobasicIds.Contains(name)) continue;
+                unknown.Add(name);
+            }
+            if (unknown.Count > 0)
+            {
+                errors.Add("Identifiers not in TrioBASIC reference: " +
+                    string.Join(", ", unknown.OrderBy(x => x)));
+                errors.Add("  → Call lookup_command for each, or replace with verified commands.");
+            }
+
+            // ---- Phase 2: 调用签名校验 ----
+            var lines = clean.Split('\n');
+            var seen = new HashSet<string>();
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var line = lines[i];
+                foreach (Match m in _reFuncCallSite.Matches(line))
+                {
+                    var funcName = m.Groups[1].Value;
+                    var argsStr = m.Groups[2].Value;
+                    if (_signatures == null || !_signatures.TryGetValue(funcName, out var sig))
+                        continue;  // 不是已知系统命令 → 跳过（标识符校验已处理）
+
+                    int argCount = string.IsNullOrWhiteSpace(argsStr) ? 0
+                        : argsStr.Split(',').Length;
+
+                    // 参数数太少
+                    if (argCount < sig.MinArgs)
+                    {
+                        var k = funcName.ToUpper() + "@L" + (i + 1) + "few";
+                        if (seen.Add(k))
+                            errors.Add(string.Format("Line {0}: {1} called with {2} arg(s), but signature requires ≥{3}: \"{4}\"",
+                                i + 1, funcName, argCount, sig.MinArgs, sig.RawSignature));
+                    }
+                    // 参数数太多
+                    else if (sig.MaxArgs.HasValue && argCount > sig.MaxArgs.Value)
+                    {
+                        var k = funcName.ToUpper() + "@L" + (i + 1) + "many";
+                        if (seen.Add(k))
+                            errors.Add(string.Format("Line {0}: {1} called with {2} arg(s), but signature accepts ≤{3}: \"{4}\"",
+                                i + 1, funcName, argCount, sig.MaxArgs, sig.RawSignature));
+                    }
+
+                    // 赋值目标校验：NAME(...) = ... 但 NAME 是 read-only 返回值函数
+                    var afterIdx = m.Index + m.Length;
+                    var after = afterIdx < line.Length ? line.Substring(afterIdx).TrimStart() : "";
+                    if (after.StartsWith("=") && sig.ReturnsValue && !sig.IsAssignable)
+                    {
+                        var k = funcName.ToUpper() + "@L" + (i + 1) + "assign";
+                        if (seen.Add(k))
+                            errors.Add(string.Format("Line {0}: cannot assign to {1}(...) — it returns a value, use as expression",
+                                i + 1, funcName));
+                    }
+                }
+            }
+
+            return errors;
+        }
 
         private static List<SkillIndexEntry> LoadIndex()
         {
