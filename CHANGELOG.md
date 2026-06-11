@@ -6,6 +6,38 @@
 
 ## [Unreleased]
 
+## [0.1.19] — 2026-06-11
+
+界面 toolbar 新增消息数和 token 估算实时显示（Msgs: N ~XK tokens）。
+
+## [0.1.18] — 2026-06-11
+
+History 管理从硬预算截断改为 auto-compaction（参考 Claude Code）。
+
+**变更**：
+- History token 预算从 30K chars (~7.5K tokens) 提升至 500K chars (~125K tokens)，充分利用模型上下文窗口
+- 最大消息保留数从 30 提升至 100
+- 新增 auto-compaction：超出预算时调用 AI 摘要旧消息（而非直接丢弃），保留最近 30 条消息不变
+- auto-compaction 摘要保留用户意图、代码变更、错误修复、工作状态等关键上下文
+- 摘要失败时仍走原有截断逻辑作为兜底
+
+## [0.1.17] — 2026-06-11
+
+patch_source 操作格式从 `{action,line,content}` 重写为 `{old_string,new_string}` 文本替换模式。
+
+## [0.1.16] — 2026-06-11
+
+patch_source 重写为 old_string/new_string 文本替换模式（参考 Claude Code FileEditTool）。
+
+**变更**：
+- `patch_source` 操作格式从 `{action, line, content}` 改为 `{old_string, new_string}`——通过精确文本匹配定位替换位置，完全不依赖行号
+- `old_string` 必须在源码中唯一匹配，不唯一时返回错误提示补充上下文
+- 支持 Trim 后的模糊匹配，容忍行尾空白差异
+- `old_string` 为空时在文件末尾追加 `new_string`
+- `patch_source` 响应新增 `operations` 数组，返回每个操作的执行状态（replaced / skipped / appended）
+
+**背景**：旧版基于行号的 patch 机制常因 AI 行号计算偏差导致修改错位。old_string/new_string 模式从根本上消除了行号偏移问题。
+
 ## [0.1.15] — 2026-06-10
 
 程序类型感知（TrioBASIC / IEC ST / PLCopen 方言区分）。

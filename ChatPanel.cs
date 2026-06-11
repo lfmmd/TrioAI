@@ -26,9 +26,11 @@ namespace TrioAI.MPPlugIn
         private DockPanel _inputPanel;
         private Border _confirmPanel;
         private TaskCompletionSource<bool> _confirmTcs;
+        private static bool _aboutShown;
         private static readonly JavaScriptSerializer _json = new JavaScriptSerializer();
         private ChatMessage _streamingMsg;
         private System.Threading.CancellationTokenSource _cts;
+        private TextBlock _statusInfo;
 
         // --- Oscilloscope pattern: static factory ---
         private static readonly ToolPositionSettings _defaultPosition = new ToolPositionSettings(SizeToContent.Manual)
@@ -61,11 +63,16 @@ namespace TrioAI.MPPlugIn
                 AiService.PerfLog("ChatPanel ctor: BuildUI done");
                 _ai.StartNewSession();
                 AiService.PerfLog("ChatPanel ctor: StartNewSession done");
-                LoadLastSession();
-                AiService.PerfLog("ChatPanel ctor: LoadLastSession done (ctor complete)");
                 this.Loaded += (s, e) =>
                 {
                     AiService.PerfLog("ChatPanel: Loaded event fired (rendered)");
+                    LoadLastSession();
+                    AiService.PerfLog("ChatPanel: LoadLastSession done (post-Loaded)");
+                    if (!_aboutShown)
+                    {
+                        _aboutShown = true;
+                        OnAbout(null, null);
+                    }
                     AiService.PerfLogFlush();
                 };
             }
@@ -232,6 +239,7 @@ namespace TrioAI.MPPlugIn
             {
                 _messages.Clear();
                 _ai.StartNewSession();
+                UpdateStatusInfo();
             };
             DockPanel.SetDock(clearBtn, Dock.Right);
             toolbar.Children.Add(clearBtn);
@@ -251,19 +259,19 @@ namespace TrioAI.MPPlugIn
                 if (_messages.Count > 0) AutoSaveSession();
                 _messages.Clear();
                 _ai.StartNewSession();
+                UpdateStatusInfo();
             };
             DockPanel.SetDock(newBtn, Dock.Right);
             toolbar.Children.Add(newBtn);
 
-            var titleBlock = new TextBlock
+            _statusInfo = new TextBlock
             {
-                Text = Lang.S("Title"),
-                Foreground = new SolidColorBrush(Color.FromRgb(200, 200, 200)),
-                FontSize = 13,
+                Foreground = new SolidColorBrush(Color.FromRgb(120, 120, 120)),
+                FontSize = 11,
                 VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(4, 0, 0, 0)
+                Margin = new Thickness(8, 0, 0, 0)
             };
-            toolbar.Children.Add(titleBlock);
+            toolbar.Children.Add(_statusInfo);
 
             var aboutBtn = new Button
             {
@@ -390,6 +398,8 @@ namespace TrioAI.MPPlugIn
             };
 
             var itemsControl = new ItemsControl { ItemsSource = _messages };
+            VirtualizingStackPanel.SetIsVirtualizing(itemsControl, true);
+            ScrollViewer.SetCanContentScroll(itemsControl, true);
             itemsControl.ItemTemplate = CreateMessageTemplate();
             _scrollViewer.Content = itemsControl;
             root.Children.Add(_scrollViewer);
@@ -449,6 +459,7 @@ namespace TrioAI.MPPlugIn
 
             _messages.Add(new ChatMessage("User", text));
             _inputBox.Clear();
+            UpdateStatusInfo();
 
             _isProcessing = true;
             _sendBtn.Content = Lang.S("Stop");
@@ -476,6 +487,7 @@ namespace TrioAI.MPPlugIn
                         _sendBtn.IsEnabled = true;
                         _inputBox.IsEnabled = true;
                         _inputBox.Focus();
+                        UpdateStatusInfo();
                         if (_streamingMsg != null)
                         {
                             // Stream was interrupted or ended without OnAiTextEnd — flush
@@ -754,6 +766,14 @@ namespace TrioAI.MPPlugIn
             panel.Children.Add(btnRow);
             win.Content = panel;
             win.ShowDialog();
+        }
+
+        private void UpdateStatusInfo()
+        {
+            if (_statusInfo == null || _ai == null) return;
+            var msgCount = _ai.HistoryMessageCount;
+            var tokens = _ai.HistoryTokenEstimate;
+            _statusInfo.Text = $"Msgs: {msgCount}  ~{tokens}K tokens";
         }
 
         private static TextBlock MakeLabel(string text)

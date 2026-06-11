@@ -72,7 +72,7 @@ namespace TrioAI.MPPlugIn
 
             if (segments.Length == 0)
             {
-                SendJson(ctx, 200, new { status = "ok", version = "1.1" });
+                SendJson(ctx, 200, new { status = "ok", version = "1.6" });
                 return;
             }
 

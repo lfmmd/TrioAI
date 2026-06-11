@@ -569,8 +569,6 @@ namespace TrioAI.MPPlugIn
                 return Error($"Program is not a text/IEC item: {name}");
 
             var ops = GetArray(body, "operations");
-            // AI 偶尔会把 array 序列化成 JSON 字符串发过来（schema 没声明 array 时尤其常见）。
-            // 兼容这种情况：尝试反序列化字符串。
             if ((ops == null || ops.Length == 0) &&
                 body.TryGetValue("operations", out var rawOps) && rawOps is string opsStr && !string.IsNullOrEmpty(opsStr))
             {
@@ -583,7 +581,6 @@ namespace TrioAI.MPPlugIn
             }
             if (ops == null || ops.Length == 0) return Error("operations is required");
 
-            // 读源码（IEC 或 Text）
             string source;
             string pouName = isIec ? GetString(body, "pouName") : null;
             try
@@ -592,40 +589,51 @@ namespace TrioAI.MPPlugIn
             }
             catch (Exception ex) { return Error($"Read source failed: {ex.Message}"); }
 
-            var lines = source.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            // 规范化行尾为 \n
+            source = source.Replace("\r\n", "\n").Replace("\r", "\n");
 
-            var sortedOps = ops.Select(op => op as Dictionary<string, object>)
+            // 解析操作列表：每个操作含 old_string（要查找的原文本）和 new_string（替换为）
+            var editOps = ops.Select(op => op as Dictionary<string, object>)
                 .Where(d => d != null)
                 .Select(d => new
                 {
-                    action = GetString(d, "action") ?? "replace",
-                    line = GetInt(d, "line") ?? 0,
-                    content = GetString(d, "content") ?? ""
+                    oldString = GetString(d, "old_string") ?? GetString(d, "oldContent") ?? "",
+                    newString = GetString(d, "new_string") ?? GetString(d, "content") ?? ""
                 })
-                .OrderByDescending(o => o.line)
                 .ToList();
 
-            foreach (var op in sortedOps)
-            {
-                int idx = op.line - 1;
-                if (op.action == "delete")
-                {
-                    if (idx >= 0 && idx < lines.Length)
-                        lines = lines.Take(idx).Concat(lines.Skip(idx + 1)).ToArray();
-                }
-                else if (op.action == "insert")
-                {
-                    if (idx >= 0 && idx <= lines.Length)
-                        lines = lines.Take(idx).Concat(new[] { op.content }).Concat(lines.Skip(idx)).ToArray();
-                }
-                else
-                {
-                    if (idx >= 0 && idx < lines.Length)
-                        lines[idx] = op.content;
-                }
-            }
+            var appliedOps = new List<object>();
+            var currentSource = source;
 
-            var newSource = string.Join("\n", lines);
+            foreach (var op in editOps)
+            {
+                if (string.IsNullOrEmpty(op.oldString))
+                {
+                    // old_string 为空 → 在文件末尾追加 new_string
+                    currentSource = currentSource.TrimEnd('\n') + "\n" + op.newString + "\n";
+                    appliedOps.Add(new { status = "appended" });
+                    continue;
+                }
+
+                // 在源码中查找 old_string（trim 后模糊匹配）
+                int pos = FindText(currentSource, op.oldString);
+                if (pos < 0)
+                {
+                    appliedOps.Add(new { status = "skipped", reason = "old_string not found" });
+                    continue;
+                }
+
+                // 检查唯一性：old_string 不应在源码中出现多次
+                var matchCount = CountOccurrences(currentSource, op.oldString);
+                if (matchCount > 1)
+                {
+                    appliedOps.Add(new { status = "skipped", reason = $"old_string matched {matchCount} times, need more context to be unique" });
+                    continue;
+                }
+
+                currentSource = currentSource.Substring(0, pos) + op.newString + currentSource.Substring(pos + op.oldString.Length);
+                appliedOps.Add(new { status = "replaced" });
+            }
 
             object result = null;
             DispatcherHelper.Invoke(() =>
@@ -634,15 +642,15 @@ namespace TrioAI.MPPlugIn
                 {
                     if (textItem != null)
                     {
-                        textItem.SaveSourceCode(newSource);
+                        textItem.SaveSourceCode(currentSource);
                         EnsureDocumentOpen(item);
-                        SetEditorTextSync(item, newSource);
+                        SetEditorTextSync(item, currentSource);
                     }
                     else
                     {
-                        WriteIecSource(item, newSource, pouName);
+                        WriteIecSource(item, currentSource, pouName);
                     }
-                    result = new { success = true, sourceCode = newSource };
+                    result = new { success = true, sourceCode = currentSource, operations = appliedOps };
                 }
                 catch (Exception ex)
                 {
@@ -650,6 +658,58 @@ namespace TrioAI.MPPlugIn
                 }
             });
             return result ?? Error("Patch failed");
+        }
+
+        private static int FindText(string source, string search)
+        {
+            // 1) 精确匹配
+            int idx = source.IndexOf(search, StringComparison.Ordinal);
+            if (idx >= 0) return idx;
+
+            // 2) Trim 后逐行模糊匹配（处理行尾空白差异）
+            var srcLines = source.Split('\n');
+            var searchLines = search.Split('\n');
+            for (int i = 0; i <= srcLines.Length - searchLines.Length; i++)
+            {
+                bool match = true;
+                for (int j = 0; j < searchLines.Length; j++)
+                {
+                    if (srcLines[i + j].TrimEnd() != searchLines[j].TrimEnd())
+                    { match = false; break; }
+                }
+                if (match) return source.IndexOf(srcLines[i], source.Length - source.Length); // recalc from line start
+            }
+
+            // 重新用 Trim 逐行匹配
+            for (int i = 0; i <= srcLines.Length - searchLines.Length; i++)
+            {
+                bool match = true;
+                for (int j = 0; j < searchLines.Length; j++)
+                {
+                    if (srcLines[i + j].Trim() != searchLines[j].Trim())
+                    { match = false; break; }
+                }
+                if (match)
+                {
+                    // 计算原始 source 中的字符偏移
+                    int pos = 0;
+                    for (int k = 0; k < i; k++) pos += srcLines[k].Length + 1;
+                    return pos;
+                }
+            }
+
+            return -1;
+        }
+
+        private static int CountOccurrences(string source, string search)
+        {
+            int count = 0, pos = 0;
+            while ((pos = source.IndexOf(search, pos, StringComparison.Ordinal)) >= 0)
+            {
+                count++;
+                pos += search.Length;
+            }
+            return count;
         }
 
         private static void SetEditorTextSync(IProjectItem item, string text)
