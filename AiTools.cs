@@ -73,6 +73,9 @@ namespace TrioAI.MPPlugIn
                     {
                         var code = GetStr(input, "sourceCode") ?? "";
                         var errs = ValidateTrioBasicCode(code);
+                        errs.AddRange(ValidateWithTokenTable(code));
+                        if (ShouldUseControllerValidation())
+                            errs.AddRange(ValidateByController(code));
                         if (errs.Count > 0)
                             return new { error = "BLOCKED by TrioBASIC validation:\n  " + string.Join("\n  ", errs) };
                     }
@@ -92,7 +95,12 @@ namespace TrioAI.MPPlugIn
                                 if (dict == null) continue;
                                 var newStr = GetStr(dict, "new_string") ?? GetStr(dict, "content") ?? "";
                                 if (!string.IsNullOrEmpty(newStr))
+                                {
                                     errs.AddRange(ValidateTrioBasicCode(newStr));
+                                    errs.AddRange(ValidateWithTokenTable(newStr));
+                                    if (ShouldUseControllerValidation())
+                                        errs.AddRange(ValidateByController(newStr));
+                                }
                             }
                         }
                         if (errs.Count > 0)

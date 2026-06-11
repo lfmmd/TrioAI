@@ -1,0 +1,155 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Trio.CommunicationsLibrary;
+using Trio.SharedLibrary;
+using Trio.SharedLibrary.ControllerServices;
+
+namespace TrioAI.MPPlugIn
+{
+    internal partial class AiService
+    {
+        // ---- 控制器级代码校验（TokenTable + ValidationService）----
+
+        private static HashSet<string> _controllerTokenNames;
+        private static bool _controllerTokenNamesLoaded;
+        private static readonly object _tokenTableLock = new object();
+
+        /// <summary>
+        /// 从 IController.TokenTable 缓存所有 token 名称（离线可用，连接后缓存）。
+        /// </summary>
+        private static HashSet<string> GetControllerTokenNames()
+        {
+            if (_controllerTokenNamesLoaded) return _controllerTokenNames;
+            lock (_tokenTableLock)
+            {
+                if (_controllerTokenNamesLoaded) return _controllerTokenNames;
+                try
+                {
+                    var ctrl = DispatcherHelper.Invoke(() => MPSingletons.Controller);
+                    if (ctrl == null || !ctrl.IsConnected) return null;
+                    var table = ctrl.TokenTable;
+                    if (table?.Tokens == null) return null;
+                    var names = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                    foreach (var t in table.Tokens)
+                    {
+                        if (!string.IsNullOrEmpty(t._name))
+                            names.Add(t._name);
+                    }
+                    _controllerTokenNames = names;
+                    _controllerTokenNamesLoaded = true;
+                    return names;
+                }
+                catch { return null; }
+            }
+        }
+
+        /// <summary>
+        /// 用 TokenTable 校验代码：分词后检查 isSystem=true 的 token 是否在控制器 token 表中。
+        /// </summary>
+        private static List<string> ValidateWithTokenTable(string code)
+        {
+            var errors = new List<string>();
+            if (string.IsNullOrEmpty(code)) return errors;
+
+            var tokenNames = GetControllerTokenNames();
+            if (tokenNames == null || tokenNames.Count == 0) return errors;
+
+            var unknown = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            // 跳过单字符标识符（i, j, k 等）和已知控制流
+            var skip = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "if", "then", "else", "elseif", "endif", "for", "next", "to", "step",
+                "while", "wend", "do", "loop", "until", "gosub", "return", "goto",
+                "exit", "dim", "const", "global", "local", "as", "print", "input",
+                "rem", "on", "select", "case", "end", "using", "with", "default",
+                "and", "or", "not", "mod", "xor", "shl", "shr", "true", "false",
+                "integer", "float", "string", "waits"
+            };
+
+            var clean = _reLineComment.Replace(code, "");
+            Parser_BAS.EnumTokens(clean, 0, clean.Length - 1,
+                (string word, bool isSystem, int pos, int pStart, int pEnd, int tokenEnd) =>
+                {
+                    if (word == null) return false;
+                    if (!isSystem) return true;
+                    if (word.Length <= 1) return true;
+                    if (skip.Contains(word)) return true;
+                    if (tokenNames.Contains(word)) return true;
+                    unknown.Add(word);
+                    return true;
+                });
+
+            if (unknown.Count > 0)
+                errors.Add("TokenTable 校验 — 以下标识符不在控制器 token 表中: " +
+                    string.Join(", ", unknown.OrderBy(x => x)));
+
+            return errors;
+        }
+
+        /// <summary>
+        /// 用控制器 ValidationService 逐行校验代码（EXECUTE "line",0 模式）。
+        /// 仅在 enableControllerValidation=true 且连接模拟器时启用。
+        /// </summary>
+        private static List<string> ValidateByController(string code)
+        {
+            var errors = new List<string>();
+            if (string.IsNullOrEmpty(code)) return errors;
+
+            try
+            {
+                var ctrl = DispatcherHelper.Invoke(() => MPSingletons.Controller);
+                if (ctrl == null || !ctrl.IsConnected) return errors;
+
+                var lines = code.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                var svc = new ValidationService(ctrl, Guid.NewGuid());
+                var seenErrors = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    var line = lines[i].Trim();
+                    if (string.IsNullOrEmpty(line)) continue;
+                    if (line.StartsWith("'")) continue;
+
+                    try
+                    {
+                        if (!svc.ValidateCommand(line, out string error, out int errorCode))
+                        {
+                            if (!string.IsNullOrEmpty(error) && seenErrors.Add(error))
+                                errors.Add(string.Format("Line {0}: {1} (error #{2})", i + 1, error, errorCode));
+                        }
+                    }
+                    catch { /* 超时或断开，跳过此行 */ }
+                }
+            }
+            catch { /* controller 不可用 */ }
+
+            return errors;
+        }
+
+        /// <summary>
+        /// 判断当前连接是否为模拟器。
+        /// </summary>
+        private static bool IsSimulatorConnected()
+        {
+            try
+            {
+                return DispatcherHelper.Invoke(() =>
+                {
+                    var ctrl = MPSingletons.Controller;
+                    if (ctrl == null || !ctrl.IsConnected) return false;
+                    var desc = ctrl.ConnectionSettings?.Description;
+                    return desc != null && desc.StartsWith("Simulator", StringComparison.OrdinalIgnoreCase);
+                });
+            }
+            catch { return false; }
+        }
+
+        // 线程安全获取方法
+        internal static bool ShouldUseControllerValidation()
+        {
+            return _enableControllerValidation && IsSimulatorConnected();
+        }
+    }
+}

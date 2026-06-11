@@ -674,6 +674,17 @@ namespace TrioAI.MPPlugIn
             };
             panel.Children.Add(includeImagesCheck);
 
+            // Controller validation checkbox
+            var controllerValidationCheck = new CheckBox
+            {
+                Content = Lang.S("ControllerValidation"),
+                IsChecked = AiService.EnableControllerValidation,
+                Foreground = Brushes.White,
+                Margin = new Thickness(0, 0, 0, 14),
+                ToolTip = Lang.S("ControllerValidationDesc")
+            };
+            panel.Children.Add(controllerValidationCheck);
+
             // Buttons
             var btnRow = new DockPanel { LastChildFill = false };
 
@@ -756,7 +767,7 @@ namespace TrioAI.MPPlugIn
                     MessageBox.Show(win, Lang.S("EmptyKey"), Lang.S("Error"), MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked);
+                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked);
                 _messages.Add(new ChatMessage("System", Lang.S("SettingsSaved")));
                 _scrollViewer.ScrollToEnd();
                 win.DialogResult = true;
@@ -1243,6 +1254,8 @@ namespace TrioAI.MPPlugIn
                 { "ShowToolStatusDesc", "在聊天中显示黄色工具调用状态信息" },
                 { "IncludeSkillImages", "Skill 查询包含图片" },
                 { "IncludeSkillImagesDesc", "查询 TrioBASIC/IEC/PLCOpen 指令时在返回内容中保留 <img> 标签（默认关闭以节省 Token）" },
+                { "ControllerValidation", "控制器语法校验（仅模拟器）" },
+                { "ControllerValidationDesc", "连接模拟器时，将代码逐行发送到控制器进行语法校验（ValidationService）。需要模拟器连接。" },
             },
             ["en"] = new Dictionary<string, string>
             {
@@ -1282,6 +1295,8 @@ namespace TrioAI.MPPlugIn
                 { "ShowToolStatusDesc", "Display yellow tool execution status messages in chat" },
                 { "IncludeSkillImages", "Include images in skill lookups" },
                 { "IncludeSkillImagesDesc", "Keep <img> tags when returning TrioBASIC/IEC/PLCOpen command help (off by default to save tokens)" },
+                { "ControllerValidation", "Controller syntax validation (simulator only)" },
+                { "ControllerValidationDesc", "When connected to a simulator, validate code line-by-line via EXECUTE parse. Requires simulator connection." },
             },
             ["de"] = new Dictionary<string, string>
             {
@@ -1321,6 +1336,8 @@ namespace TrioAI.MPPlugIn
                 { "ShowToolStatusDesc", "Gelbe Tool-Ausfuehrungsstatusmeldungen im Chat anzeigen" },
                 { "IncludeSkillImages", "Bilder in Skill-Abfragen einschließen" },
                 { "IncludeSkillImagesDesc", "<img>-Tags bei TrioBASIC/IEC/PLCOpen-Hilfeausgaben behalten (standardmäßig aus, um Tokens zu sparen)" },
+                { "ControllerValidation", "Controller-Syntaxprüfung (nur Simulator)" },
+                { "ControllerValidationDesc", "Bei Verbindung mit einem Simulator Code zeilenweise über EXECUTE parsen validieren." },
             },
             ["fr"] = new Dictionary<string, string>
             {
@@ -1360,6 +1377,8 @@ namespace TrioAI.MPPlugIn
                 { "ShowToolStatusDesc", "Afficher les messages d'etat d'execution des outils en jaune" },
                 { "IncludeSkillImages", "Inclure les images dans les recherches de skill" },
                 { "IncludeSkillImagesDesc", "Conserver les balises <img> lors du retour de l'aide TrioBASIC/IEC/PLCOpen (désactivé par défaut pour économiser des tokens)" },
+                { "ControllerValidation", "Validation syntaxique du contrôleur (simulateur uniquement)" },
+                { "ControllerValidationDesc", "Lorsque connecté au simulateur, valider le code ligne par ligne via EXECUTE parse." },
             },
         };
 

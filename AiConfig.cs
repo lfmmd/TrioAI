@@ -15,6 +15,7 @@ namespace TrioAI.MPPlugIn
         private bool _showToolStatus = true;
         private bool _skillsInitialized;
         private static bool _includeSkillImages = false;
+        private static bool _enableControllerValidation = false;
 
         // ---- Config ----
 
@@ -45,12 +46,17 @@ namespace TrioAI.MPPlugIn
                         bool b;
                         if (val != null && bool.TryParse(val.ToString(), out b)) _includeSkillImages = b;
                     }
+                    if (cfg.TryGetValue("enableControllerValidation", out val))
+                    {
+                        bool b;
+                        if (val != null && bool.TryParse(val.ToString(), out b)) _enableControllerValidation = b;
+                    }
                 }
             }
             catch { }
         }
 
-        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null)
+        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null, bool? enableControllerValidation = null)
         {
             _apiKey = apiKey;
             if (!string.IsNullOrEmpty(model)) _model = model;
@@ -61,7 +67,8 @@ namespace TrioAI.MPPlugIn
                 _includeSkillImages = includeSkillImages.Value;
                 _skillDetailCache.Clear(); // img stripping is cached per page; force re-read
             }
-            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages });
+            if (enableControllerValidation.HasValue) _enableControllerValidation = enableControllerValidation.Value;
+            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation });
             File.WriteAllText(ConfigPath, json);
         }
 
@@ -85,6 +92,7 @@ namespace TrioAI.MPPlugIn
         public bool ShowToolStatus => _showToolStatus;
         public bool SkillsInitialized => _skillsInitialized;
         public bool IncludeSkillImages => _includeSkillImages;
+        public static bool EnableControllerValidation => _enableControllerValidation;
 
         public string InitializeSkills()
         {
@@ -111,7 +119,7 @@ namespace TrioAI.MPPlugIn
 
             _skillsInitialized = true;
             _index = null; // force reload
-            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages });
+            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation });
             File.WriteAllText(ConfigPath, json);
             return null;
         }
