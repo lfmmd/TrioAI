@@ -172,7 +172,7 @@ namespace TrioAI.MPPlugIn
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    _messages.Add(new ChatMessage("System", status));
+                    _messages.Add(new ChatMessage("System", UnescapeJsonDisplay(status)));
                     _scrollViewer.ScrollToEnd();
                 }));
             };
@@ -398,8 +398,7 @@ namespace TrioAI.MPPlugIn
             };
 
             var itemsControl = new ItemsControl { ItemsSource = _messages };
-            VirtualizingStackPanel.SetIsVirtualizing(itemsControl, true);
-            ScrollViewer.SetCanContentScroll(itemsControl, true);
+            ScrollViewer.SetCanContentScroll(itemsControl, false);
             itemsControl.ItemTemplate = CreateMessageTemplate();
             _scrollViewer.Content = itemsControl;
             root.Children.Add(_scrollViewer);
@@ -420,16 +419,23 @@ namespace TrioAI.MPPlugIn
             factory.SetValue(Border.MarginProperty, new Thickness(8, 3, 8, 3));
             factory.SetValue(Border.MaxWidthProperty, 600.0);
 
-            var textFactory = new FrameworkElementFactory(typeof(SelectableTextBlock));
-            textFactory.SetValue(TextBlock.TextWrappingProperty, TextWrapping.Wrap);
-            textFactory.SetValue(TextBlock.FontSizeProperty, 12.0);
-            textFactory.SetBinding(TextBlock.TextProperty, new System.Windows.Data.Binding("Text"));
+            var textFactory = new FrameworkElementFactory(typeof(TextBox));
+            textFactory.SetValue(TextBox.TextWrappingProperty, TextWrapping.Wrap);
+            textFactory.SetValue(TextBox.IsReadOnlyProperty, true);
+            textFactory.SetValue(TextBox.BorderThicknessProperty, new Thickness(0));
+            textFactory.SetValue(TextBox.BackgroundProperty, Brushes.Transparent);
+            textFactory.SetValue(TextBox.FontSizeProperty, 12.0);
+            textFactory.SetValue(TextBox.AcceptsReturnProperty, true);
+            textFactory.SetValue(TextBox.CursorProperty, Cursors.IBeam);
+            textFactory.SetValue(TextBox.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled);
+            textFactory.SetValue(TextBox.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
+            textFactory.SetBinding(TextBox.TextProperty, new System.Windows.Data.Binding("Text"));
 
             factory.AppendChild(textFactory);
 
             factory.SetBinding(Border.BackgroundProperty, new System.Windows.Data.Binding("Role") { Converter = new RoleToBrushConverter() });
             factory.SetBinding(Border.HorizontalAlignmentProperty, new System.Windows.Data.Binding("Role") { Converter = new RoleToAlignmentConverter() });
-            textFactory.SetBinding(TextBlock.ForegroundProperty, new System.Windows.Data.Binding("Role") { Converter = new RoleToForegroundConverter() });
+            textFactory.SetBinding(TextBox.ForegroundProperty, new System.Windows.Data.Binding("Role") { Converter = new RoleToForegroundConverter() });
 
             template.VisualTree = factory;
             return template;
@@ -787,6 +793,36 @@ namespace TrioAI.MPPlugIn
             _statusInfo.Text = $"Msgs: {msgCount}  ~{tokens}K tokens";
         }
 
+        private static string UnescapeJsonDisplay(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return s;
+            // 先处理 JSON 转义序列
+            s = s.Replace("\\r\\n", "\n")
+                  .Replace("\\n", "\n")
+                  .Replace("\\r", "")
+                  .Replace("\\t", "  ")
+                  .Replace("\\\"", "\"")
+                  .Replace("\\\\", "\\");
+            // 处理所有 \uXXXX 转义
+            var sb = new System.Text.StringBuilder(s.Length);
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (i + 5 < s.Length && s[i] == '\\' && s[i + 1] == 'u')
+                {
+                    var hex = s.Substring(i + 2, 4);
+                    ushort code;
+                    if (ushort.TryParse(hex, System.Globalization.NumberStyles.HexNumber, null, out code))
+                    {
+                        sb.Append((char)code);
+                        i += 5;
+                        continue;
+                    }
+                }
+                sb.Append(s[i]);
+            }
+            return sb.ToString();
+        }
+
         private static TextBlock MakeLabel(string text)
         {
             return new TextBlock
@@ -1003,7 +1039,7 @@ namespace TrioAI.MPPlugIn
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _messages.Add(new ChatMessage("System", $"{Lang.S("AIRequests")}: {toolName}\n{Truncate(argsJson, 400)}"));
+                _messages.Add(new ChatMessage("System", $"{Lang.S("AIRequests")}: {toolName}\n{Truncate(UnescapeJsonDisplay(argsJson), 400)}"));
                 _scrollViewer.ScrollToEnd();
 
                 _inputPanel.Visibility = Visibility.Collapsed;

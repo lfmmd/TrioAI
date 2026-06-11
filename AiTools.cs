@@ -25,6 +25,14 @@ namespace TrioAI.MPPlugIn
         {
             try
             {
+                // P0: lookup_command 同会话去重 — 避免重复查询同一命令的完整 HTML（每次 ~16KB）
+                if (string.Equals(name, "lookup_command", StringComparison.OrdinalIgnoreCase))
+                {
+                    var dedupResult = TryDedupLookupCommand(input);
+                    if (dedupResult != null)
+                        return _json.Serialize(dedupResult);
+                }
+
                 // Backup source code before write operations
                 if (SourceWriteTools.Contains(name))
                 {
@@ -171,7 +179,23 @@ namespace TrioAI.MPPlugIn
 
         // ---- Tool Definitions ----
 
+        private static List<Dictionary<string, object>> _cachedToolDefs;
+        private static readonly object _toolDefLock = new object();
+
         private static List<Dictionary<string, object>> GetToolDefinitions()
+        {
+            lock (_toolDefLock)
+            {
+                if (_cachedToolDefs == null)
+                    _cachedToolDefs = BuildToolDefinitions();
+                // 浅拷贝：CallApiStream 会在最后一个 tool 上加 cache_control，
+                // 浅拷贝只复制 List 引用，不动内部 Dictionary，加 cache_control 时
+                // new Dictionary(...) 创建新对象，不影响缓存。
+                return new List<Dictionary<string, object>>(_cachedToolDefs);
+            }
+        }
+
+        private static List<Dictionary<string, object>> BuildToolDefinitions()
         {
             return new List<Dictionary<string, object>>
             {

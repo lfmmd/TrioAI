@@ -373,6 +373,82 @@ namespace TrioAI.MPPlugIn
             return messages;
         }
 
+        /// <summary>
+        /// P0: lookup_command 同会话去重。扫描 _conversationHistory，如果同一 query+library+full
+        /// 组合已经成功执行过，返回紧凑引用而非重新加载完整 HTML。
+        /// CompactHistory 之后旧 tool_use/tool_result 对被替换为摘要文本，扫描不会命中 → 自然回退到正常执行。
+        /// </summary>
+        private object TryDedupLookupCommand(Dictionary<string, object> input)
+        {
+            var query = GetStr(input, "query") ?? "";
+            var library = GetStr(input, "library") ?? "";
+            var full = GetStr(input, "full") ?? "";
+            if (string.IsNullOrEmpty(query)) return null;
+
+            for (int i = 0; i < _conversationHistory.Count; i++)
+            {
+                var msg = _conversationHistory[i];
+                if (GetStringValue(msg, "role") != "assistant") continue;
+                if (!(msg["content"] is List<Dictionary<string, object>> blocks)) continue;
+
+                foreach (var b in blocks)
+                {
+                    if (GetStringValue(b, "type") != "tool_use") continue;
+                    if (!string.Equals(GetStringValue(b, "name"), "lookup_command",
+                        StringComparison.OrdinalIgnoreCase)) continue;
+
+                    var bInput = GetDictValue(b, "input");
+                    if (bInput == null) continue;
+
+                    if (!string.Equals(query, GetStr(bInput, "query") ?? "",
+                        StringComparison.OrdinalIgnoreCase)) continue;
+                    if (!string.Equals(library, GetStr(bInput, "library") ?? "",
+                        StringComparison.OrdinalIgnoreCase)) continue;
+                    if (!string.Equals(full, GetStr(bInput, "full") ?? "",
+                        StringComparison.OrdinalIgnoreCase)) continue;
+
+                    // 找到相同参数的历史调用，检查其结果是否成功
+                    var toolId = GetStringValue(b, "id");
+                    if (toolId == null) continue;
+
+                    // tool_result 紧跟在 tool_use 后面的 user 消息中（最多向下找 2 条）
+                    for (int j = i + 1; j < _conversationHistory.Count && j <= i + 2; j++)
+                    {
+                        var rMsg = _conversationHistory[j];
+                        if (GetStringValue(rMsg, "role") != "user") continue;
+                        if (!(rMsg["content"] is List<Dictionary<string, object>> rBlocks)) continue;
+
+                        foreach (var rb in rBlocks)
+                        {
+                            if (GetStringValue(rb, "type") != "tool_result") continue;
+                            if (GetStringValue(rb, "tool_use_id") != toolId) continue;
+
+                            var content = GetStringValue(rb, "content");
+                            if (content != null && !content.Contains("\"error\":"))
+                            {
+                                return new
+                                {
+                                    results = new[]
+                                    {
+                                        new
+                                        {
+                                            name = query,
+                                            note = $"Already looked up '{query}' (full={full}, library={library}) " +
+                                                   "earlier in this conversation. The full result is preserved in the " +
+                                                   "conversation history — reference that earlier tool_result instead " +
+                                                   "of calling again."
+                                        }
+                                    }
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         // 智能截断：优先在 HTML heading / paragraph / table 边界处切，避免把语法表或参数说明截成半句。
         // 比纯字符 cut 慢一点但只对超长 tool_result 触发（lookup_command 帮助页为主）。
         private static readonly string[] _truncateBoundaries =

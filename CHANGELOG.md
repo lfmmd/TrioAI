@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+## [0.1.27] — 2026-06-12
+
+API 请求 token 优化（减少重复数据传输 ~34%）。
+
+### 优化
+
+- **P0: lookup_command 运行时去重** — AI 在同一会话中反复调用 `lookup_command` 查询同一命令（如 MOVELINK 被查 9+ 次，每次返回 ~16KB HTML）。新增 `TryDedupLookupCommand` 在 `ExecuteTool` 入口拦截：扫描 `_conversationHistory` 已有相同 query+library+full 的成功调用时，返回 ~200 字节引用提示而非重新加载完整 HTML。预计节省 ~3.7MB 重复数据。
+- **P1: Tool 定义静态缓存** — `GetToolDefinitions()` 每次调用重建 59 个 tool schema（~17KB）。改为首次构建后缓存为 `_cachedToolDefs`，后续返回浅拷贝。消除每次 API 请求的重复对象分配。
+- **上下文压缩兼容** — `TryDedupLookupCommand` 扫描原始 `_conversationHistory`；`CompactHistory` 替换旧消息为摘要文本后扫描不命中，自然回退到正常执行，无副作用。
+
 ## [0.1.19] — 2026-06-11
 
 界面 toolbar 新增消息数和 token 估算实时显示（Msgs: N ~XK tokens）。
