@@ -6,6 +6,15 @@
 
 ## [Unreleased]
 
+## [0.1.28] — 2026-06-12
+
+修复 lookup_command 去重参数比较 bug。
+
+### 修复
+
+- **`NormParam` 归一化参数比较** — JavaScriptSerializer 对 `full=true`（bool）返回 `"True"`，对缺省 key 返回 `null`，导致 `full=""` 和 `full="True"` 比较时误匹配。新增 `NormParam` 辅助方法：`bool` → `"true"/"false"`，`string` → 小写，缺失 → `""`，统一后精确比较。
+- **跳过 `GetDictValue` 间接层** — 直接 `b.TryGetValue("input") as Dictionary` 获取历史 tool_use 的 input，避免 serialize/deserialize 路径丢失类型信息。
+
 ## [0.1.27] — 2026-06-12
 
 API 请求 token 优化（减少重复数据传输 ~34%）。

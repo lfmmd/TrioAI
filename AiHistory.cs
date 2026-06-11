@@ -374,16 +374,28 @@ namespace TrioAI.MPPlugIn
         }
 
         /// <summary>
+        /// 将参数值归一化为小写字符串，解决 JavaScriptSerializer 对 bool/string/缺失的类型不一致问题。
+        /// bool true → "true", string "True" → "true", 缺失 key → ""
+        /// </summary>
+        private static string NormParam(Dictionary<string, object> d, string key)
+        {
+            object val;
+            if (!d.TryGetValue(key, out val) || val == null) return "";
+            if (val is bool b) return b ? "true" : "false";
+            return val.ToString().Trim().ToLowerInvariant();
+        }
+
+        /// <summary>
         /// P0: lookup_command 同会话去重。扫描 _conversationHistory，如果同一 query+library+full
         /// 组合已经成功执行过，返回紧凑引用而非重新加载完整 HTML。
         /// CompactHistory 之后旧 tool_use/tool_result 对被替换为摘要文本，扫描不会命中 → 自然回退到正常执行。
         /// </summary>
         private object TryDedupLookupCommand(Dictionary<string, object> input)
         {
-            var query = GetStr(input, "query") ?? "";
-            var library = GetStr(input, "library") ?? "";
-            var full = GetStr(input, "full") ?? "";
-            if (string.IsNullOrEmpty(query)) return null;
+            var nQuery = NormParam(input, "query");
+            var nLibrary = NormParam(input, "library");
+            var nFull = NormParam(input, "full");
+            if (string.IsNullOrEmpty(nQuery)) return null;
 
             for (int i = 0; i < _conversationHistory.Count; i++)
             {
@@ -397,15 +409,15 @@ namespace TrioAI.MPPlugIn
                     if (!string.Equals(GetStringValue(b, "name"), "lookup_command",
                         StringComparison.OrdinalIgnoreCase)) continue;
 
-                    var bInput = GetDictValue(b, "input");
+                    object rawInput;
+                    if (!b.TryGetValue("input", out rawInput)) continue;
+                    var bInput = rawInput as Dictionary<string, object>;
                     if (bInput == null) continue;
 
-                    if (!string.Equals(query, GetStr(bInput, "query") ?? "",
-                        StringComparison.OrdinalIgnoreCase)) continue;
-                    if (!string.Equals(library, GetStr(bInput, "library") ?? "",
-                        StringComparison.OrdinalIgnoreCase)) continue;
-                    if (!string.Equals(full, GetStr(bInput, "full") ?? "",
-                        StringComparison.OrdinalIgnoreCase)) continue;
+                    // 用归一化后的值比较，绕过 bool/string/缺失 的 ToString 差异
+                    if (nQuery != NormParam(bInput, "query")) continue;
+                    if (nLibrary != NormParam(bInput, "library")) continue;
+                    if (nFull != NormParam(bInput, "full")) continue;
 
                     // 找到相同参数的历史调用，检查其结果是否成功
                     var toolId = GetStringValue(b, "id");
@@ -432,8 +444,8 @@ namespace TrioAI.MPPlugIn
                                     {
                                         new
                                         {
-                                            name = query,
-                                            note = $"Already looked up '{query}' (full={full}, library={library}) " +
+                                            name = nQuery,
+                                            note = $"Already looked up '{nQuery}' (full={nFull}, library={nLibrary}) " +
                                                    "earlier in this conversation. The full result is preserved in the " +
                                                    "conversation history — reference that earlier tool_result instead " +
                                                    "of calling again."

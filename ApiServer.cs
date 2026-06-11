@@ -87,6 +87,14 @@ namespace TrioAI.MPPlugIn
                         HandleMethod(ctx, method, "GET", () => Handlers.GetStatus());
                         break;
 
+                    case "test":
+                        HandleMethod(ctx, method, "GET", () =>
+                        {
+                            var (pass, fail, report) = AiService.RunOptimizationTests();
+                            return new { pass, fail, report };
+                        });
+                        break;
+
                     case "project":
                         if (method == "POST" && segments.Length == 2)
                             HandleMethod(ctx, method, "POST", () => Handlers.CreateProject());
