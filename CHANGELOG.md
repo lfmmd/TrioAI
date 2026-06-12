@@ -6,6 +6,14 @@
 
 ## [Unreleased]
 
+## [0.1.37] — 2026-06-12
+
+修复 1214 API 错误：孤立 tool_result 作为 messages 首条导致参数非法。
+
+### 修复
+
+- **`BuildTrimmedMessages` 防御增强** — 原防御只处理首条是 `assistant` 的情况。当 `TrimHistory` 截断把 `assistant` 和前面的 `user` 都删掉后，会留下孤立的 `tool_result` 作为首条消息，API 要求 `tool_result` 必须紧跟 `assistant` 的 `tool_use`，因此返回 1214 错误。现在检测并跳过孤立的 `tool_result`，直到找到合法的首条消息。
+
 ## [0.1.36] — 2026-06-12
 
 修复 `write_source` 控制器验证器对 DIM 变量名的误报。

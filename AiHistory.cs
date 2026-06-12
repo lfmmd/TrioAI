@@ -404,23 +404,65 @@ namespace TrioAI.MPPlugIn
                 messages.Add(copy);
             }
 
-            // 防御：API 要求 messages 首条必须是 user 角色。
-            // 如果历史被异常截断导致首条是 assistant，跳过直到找到 user 消息。
-            if (messages.Count > 0 && GetStringValue(messages[0], "role") != "user")
+            // 防御：API 要求 messages 首条必须是 user 角色，且不能是孤立的 tool_result。
+            // tool_result 必须紧跟在 assistant 的 tool_use 后面，如果前面没有对应的 assistant，
+            // API 会返回 1214 错误。TrimHistory 截断可能把 assistant+前面的 user 都删掉，
+            // 只留下 tool_result 作为首条。
+            if (messages.Count > 0)
             {
-                int firstUser = -1;
+                int firstValid = -1;
                 for (int i = 0; i < messages.Count; i++)
                 {
-                    if (GetStringValue(messages[i], "role") == "user")
+                    var m = messages[i];
+                    if (GetStringValue(m, "role") == "user")
                     {
-                        firstUser = i;
-                        break;
+                        // 普通字符串 user 消息 → 合法首条
+                        if (m["content"] is string)
+                        {
+                            firstValid = i;
+                            break;
+                        }
+                        // user 消息但全是 tool_result → 可能是孤立的，需要检查前面有没有对应的 assistant
+                        if (m["content"] is List<Dictionary<string, object>> blocks)
+                        {
+                            bool hasText = false;
+                            foreach (var b in blocks)
+                            {
+                                if (GetStringValue(b, "type") == "text" || GetStringValue(b, "type") != "tool_result")
+                                    hasText = true;
+                            }
+                            // 有 text 块或非 tool_result 内容 → 合法
+                            if (hasText) { firstValid = i; break; }
+                            // 全是 tool_result → 检查前一条是否是对应的 assistant
+                            if (i > 0 && GetStringValue(messages[i - 1], "role") == "assistant")
+                            {
+                                firstValid = i - 1; // 从前一条 assistant 开始
+                                break;
+                            }
+                            // 孤立的 tool_result，跳过继续找
+                            continue;
+                        }
+                    }
+                    else if (GetStringValue(m, "role") == "assistant")
+                    {
+                        // 如果 assistant 后面跟着它的 tool_result，那 assistant 本身也不是合法首条
+                        // 但如果 assistant 后面的 user 是孤立的 tool_result，需要一起跳过
+                        continue;
                     }
                 }
-                if (firstUser > 0)
+
+                if (firstValid > 0)
                 {
-                    OnSystemMessage?.Invoke($"⚠ History repair: skipped {firstUser} leading assistant messages");
-                    messages.RemoveRange(0, firstUser);
+                    var skipped = messages.GetRange(0, firstValid)
+                        .Count(m => GetStringValue(m, "role") == "assistant");
+                    OnSystemMessage?.Invoke($"⚠ History repair: skipped {firstValid} leading messages ({skipped} assistant, {firstValid - skipped} user)");
+                    messages.RemoveRange(0, firstValid);
+                }
+                else if (firstValid < 0)
+                {
+                    // 整个 messages 都是孤立的 tool_result，无法修复 → 清空让 API 用空 messages
+                    OnSystemMessage?.Invoke($"⚠ History repair: all {messages.Count} messages are orphaned tool_results, clearing");
+                    messages.Clear();
                 }
             }
 
