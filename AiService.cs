@@ -392,15 +392,12 @@ namespace TrioAI.MPPlugIn
             if (_memoryEnabled)
             {
                 var memText = LoadMemory();
-                if (!string.IsNullOrEmpty(memText))
+                systemBlocks.Add(new Dictionary<string, object>
                 {
-                    systemBlocks.Add(new Dictionary<string, object>
-                    {
-                        { "type", "text" },
-                        { "text", "## Persistent Memory\n\n" + memText },
-                        { "cache_control", new { type = "ephemeral" } }
-                    });
-                }
+                    { "type", "text" },
+                    { "text", string.IsNullOrEmpty(memText) ? "## Persistent Memory\n\n(No memory stored yet)" : "## Persistent Memory\n\n" + memText },
+                    { "cache_control", new { type = "ephemeral" } }
+                });
             }
 
             // 动态上下文放最后 — 变化不影响前面稳定块的缓存

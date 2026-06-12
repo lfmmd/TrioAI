@@ -171,10 +171,31 @@ namespace TrioAI.MPPlugIn
 
         private string CallCompactApi(string prompt)
         {
+            // 复用 system blocks 以命中缓存，compact 调用也省 system prompt tokens
+            var systemBlocks = new List<Dictionary<string, object>>
+            {
+                new Dictionary<string, object>
+                {
+                    { "type", "text" },
+                    { "text", BuildStablePrompt() },
+                    { "cache_control", new { type = "ephemeral" } }
+                }
+            };
+            if (_memoryEnabled)
+            {
+                var memText = LoadMemory();
+                systemBlocks.Add(new Dictionary<string, object>
+                {
+                    { "type", "text" },
+                    { "text", string.IsNullOrEmpty(memText) ? "## Persistent Memory\n\n(No memory stored yet)" : "## Persistent Memory\n\n" + memText },
+                    { "cache_control", new { type = "ephemeral" } }
+                });
+            }
             var body = new Dictionary<string, object>
             {
                 { "model", _model },
                 { "max_tokens", 2048 },
+                { "system", systemBlocks },
                 { "messages", new List<Dictionary<string, object>>
                     {
                         new Dictionary<string, object>
@@ -343,13 +364,53 @@ namespace TrioAI.MPPlugIn
                 }
             }
 
+            // read_source 历史去重：同一文件 + 同一参数范围只保留最新读取结果
+            var readSourceById = new Dictionary<string, string>(StringComparer.Ordinal);
+            var readSourceKeyById = new Dictionary<string, string>(StringComparer.Ordinal);
+            var latestReadSourceId = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var m in _conversationHistory)
+            {
+                if (GetStringValue(m, "role") != "assistant") continue;
+                if (!(m["content"] is List<Dictionary<string, object>> bl)) continue;
+                foreach (var b in bl)
+                {
+                    if (GetStringValue(b, "type") != "tool_use") continue;
+                    if (!string.Equals(GetStringValue(b, "name"), "read_source", StringComparison.OrdinalIgnoreCase)) continue;
+                    var id = GetStringValue(b, "id");
+                    if (id == null) continue;
+                    if (!(b.TryGetValue("input", out var inObj) && inObj is Dictionary<string, object> inDict)) continue;
+                    var progName = GetStr(inDict, "name");
+                    if (progName == null) continue;
+                    var startLine = GetStr(inDict, "startLine") ?? "";
+                    var endLine = GetStr(inDict, "endLine") ?? "";
+                    var key = progName.ToLowerInvariant() + "|" + startLine + "|" + endLine;
+                    readSourceById[id] = progName;
+                    readSourceKeyById[id] = key;
+                    latestReadSourceId[key] = id; // last wins → latest
+                }
+            }
+            var dupReadSourceIds = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var kv in readSourceKeyById)
+            {
+                string latestId;
+                if (latestReadSourceId.TryGetValue(kv.Value, out latestId) && latestId != kv.Key)
+                    dupReadSourceIds.Add(kv.Key);
+            }
+
+            // 预计算 assistant 消息数量，用于判断哪些是"旧的"（清理 thinking、压缩 tool_use input）
+            int totalAssistantMsgs = 0;
+            foreach (var m in _conversationHistory)
+                if (GetStringValue(m, "role") == "assistant") totalAssistantMsgs++;
+            int assistantSeen = 0;
+            const int KeepRecentThinking = 3;
+
             for (int idx = 0; idx < _conversationHistory.Count; idx++)
             {
                 var msg = _conversationHistory[idx];
                 var copy = new Dictionary<string, object>(msg);
                 var content = copy["content"];
 
-                // Truncate tool_result strings in user messages
+                // user 消息：tool_result 去重 / microCompact / 截断
                 if (copy["role"] as string == "user" && content is List<Dictionary<string, object>> blocks)
                 {
                     var trimmedBlocks = new List<Dictionary<string, object>>();
@@ -359,7 +420,6 @@ namespace TrioAI.MPPlugIn
                         {
                             var tb = new Dictionary<string, object>(block);
                             var id = GetStringValue(tb, "tool_use_id");
-                            // lookup_command 去重：同 query 已答过 → 内容替换为引用占位符（~80 字节 vs 16KB）
                             if (id != null && duplicateLookupIds.Contains(id))
                             {
                                 var q = lookupQueryById[id];
@@ -367,7 +427,12 @@ namespace TrioAI.MPPlugIn
                                     + "\") — full content preserved at the first call earlier in this conversation. "
                                     + "Reference that occurrence instead of asking again.]";
                             }
-                            // microCompact：不在最近 N 个里 → content 替换为占位符（id 保留）
+                            else if (id != null && dupReadSourceIds.Contains(id))
+                            {
+                                var pn = readSourceById.ContainsKey(id) ? readSourceById[id] : "?";
+                                tb["content"] = "[Earlier read_source(\"" + pn
+                                    + "\") — latest read preserved later in this conversation]";
+                            }
                             else if (id != null && !keepRecent.Contains(id))
                             {
                                 tb["content"] = ClearedToolResult;
@@ -388,24 +453,49 @@ namespace TrioAI.MPPlugIn
                     copy["content"] = trimmedBlocks;
                 }
 
-                // 给所有 assistant 消息的最后一个 content block 打 cache_control
+                // assistant: 清理旧 thinking、压缩已清空 tool_use input、打 cache_control
                 if (GetStringValue(copy, "role") == "assistant" && content is List<Dictionary<string, object>> asstBlocks && asstBlocks.Count > 0)
                 {
-                    var newBlocks = new List<Dictionary<string, object>>(asstBlocks.Count);
-                    for (int j = 0; j < asstBlocks.Count; j++)
+                    assistantSeen++;
+                    bool isOld = totalAssistantMsgs > KeepRecentThinking
+                        && assistantSeen <= totalAssistantMsgs - KeepRecentThinking;
+                    var newBlocks = new List<Dictionary<string, object>>();
+                    foreach (var b in asstBlocks)
                     {
-                        if (j == asstBlocks.Count - 1)
+                        var bType = GetStringValue(b, "type") ?? "";
+                        // 旧 thinking block 完全移除
+                        if (bType == "thinking" && isOld)
+                            continue;
+                        // 已清空结果的 tool_use → 压缩 input
+                        if (bType == "tool_use" && isOld)
                         {
-                            var lastBlock = new Dictionary<string, object>(asstBlocks[j])
+                            var toolId = GetStringValue(b, "id");
+                            if (toolId != null && !keepRecent.Contains(toolId))
                             {
-                                { "cache_control", new { type = "ephemeral" } }
-                            };
-                            newBlocks.Add(lastBlock);
+                                newBlocks.Add(new Dictionary<string, object>(b)
+                                {
+                                    { "input", new Dictionary<string, object> { { "_summarized", true } } }
+                                });
+                                continue;
+                            }
                         }
-                        else
+                        newBlocks.Add(b);
+                    }
+                    if (newBlocks.Count > 0)
+                    {
+                        newBlocks[newBlocks.Count - 1] = new Dictionary<string, object>(newBlocks[newBlocks.Count - 1])
                         {
-                            newBlocks.Add(asstBlocks[j]);
-                        }
+                            { "cache_control", new { type = "ephemeral" } }
+                        };
+                    }
+                    else
+                    {
+                        newBlocks.Add(new Dictionary<string, object>
+                        {
+                            { "type", "text" },
+                            { "text", "[assistant message compacted]" },
+                            { "cache_control", new { type = "ephemeral" } }
+                        });
                     }
                     copy["content"] = newBlocks;
                 }
