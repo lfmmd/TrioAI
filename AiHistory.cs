@@ -250,10 +250,10 @@ namespace TrioAI.MPPlugIn
                 }
             }
 
-            // lookup_command 去重：同一 query+full 组合第一次出现保留完整内容，后续替换为引用占位符。
-            // 只按 query 去重会导致：先查 brief（full=null）→ 后查 full=true 被误判为重复 → 完整 HTML 丢失。
-            // 修正：full=true 的结果不应被 brief 的去重覆盖（full 包含 brief 的全部信息）。
-            var lookupFullById = new Dictionary<string, bool>(StringComparer.Ordinal);
+            // lookup_command 去重：同一 query+full+library 组合第一次出现保留完整内容，后续替换为引用占位符。
+            // 只按 query 去重会导致：先查 brief → 后查 full 被误判为重复 → 完整 HTML 丢失。
+            // 不区分 library 会导致：查 triobasic 的 MOVE → 再查 iec 的 MOVE 被误判为重复。
+            var lookupMetaById = new Dictionary<string, Tuple<bool, string>>(StringComparer.Ordinal);
             foreach (var m in _conversationHistory)
             {
                 if (GetStringValue(m, "role") != "assistant") continue;
@@ -266,7 +266,9 @@ namespace TrioAI.MPPlugIn
                     if (id == null) continue;
                     if (!(b.TryGetValue("input", out var inObj) && inObj is Dictionary<string, object> inDict)) continue;
                     var fullVal = GetStr(inDict, "full");
-                    lookupFullById[id] = string.Equals(fullVal, "true", StringComparison.OrdinalIgnoreCase);
+                    var isFull = string.Equals(fullVal, "true", StringComparison.OrdinalIgnoreCase);
+                    var lib = GetStr(inDict, "library") ?? "";
+                    lookupMetaById[id] = Tuple.Create(isFull, lib);
                 }
             }
 
@@ -282,8 +284,9 @@ namespace TrioAI.MPPlugIn
                     var id = GetStringValue(b, "tool_use_id");
                     if (id == null) continue;
                     if (!lookupQueryById.TryGetValue(id, out var query)) continue;
-                    var isFull = lookupFullById.TryGetValue(id, out var f) && f;
-                    var key = isFull ? query + "\tfull" : query;
+                    Tuple<bool, string> meta;
+                    if (!lookupMetaById.TryGetValue(id, out meta)) continue;
+                    var key = query + "\t" + (meta.Item1 ? "full" : "brief") + "\t" + meta.Item2;
                     if (!seenLookupKeys.Add(key))
                         duplicateLookupIds.Add(id);
                 }

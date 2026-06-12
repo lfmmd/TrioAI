@@ -6,6 +6,14 @@
 
 ## [Unreleased]
 
+## [0.1.34] — 2026-06-12
+
+lookup_command 去重增加 library 维度区分。
+
+### 修复
+
+- **`BuildTrimmedMessages` 去重 key 加入 library** — 原去重 key 为 `query+full`，不同 library 的同名命令被误判为重复。现在 key 为 `query+full+library`，按库独立去重。
+
 ## [0.1.33] — 2026-06-12
 
 修复 lookup_command 去重逻辑：brief 查询不应阻止后续 full 查询。
