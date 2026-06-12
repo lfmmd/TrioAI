@@ -16,6 +16,10 @@ namespace TrioAI.MPPlugIn
         private bool _skillsInitialized;
         private static bool _includeSkillImages = false;
         private static bool _enableControllerValidation = false;
+        private static bool _enableThinking = false;
+        private static int _budgetTokens = 10000;
+        private static bool _showThinking = true;
+        private static bool _memoryEnabled = true;
 
         // ---- Config ----
 
@@ -51,12 +55,32 @@ namespace TrioAI.MPPlugIn
                         bool b;
                         if (val != null && bool.TryParse(val.ToString(), out b)) _enableControllerValidation = b;
                     }
+                    if (cfg.TryGetValue("enableThinking", out val))
+                    {
+                        bool b;
+                        if (val != null && bool.TryParse(val.ToString(), out b)) _enableThinking = b;
+                    }
+                    if (cfg.TryGetValue("budgetTokens", out val))
+                    {
+                        int i;
+                        if (val != null && int.TryParse(val.ToString(), out i)) _budgetTokens = i;
+                    }
+                    if (cfg.TryGetValue("showThinking", out val))
+                    {
+                        bool b;
+                        if (val != null && bool.TryParse(val.ToString(), out b)) _showThinking = b;
+                    }
+                    if (cfg.TryGetValue("memoryEnabled", out val))
+                    {
+                        bool b;
+                        if (val != null && bool.TryParse(val.ToString(), out b)) _memoryEnabled = b;
+                    }
                 }
             }
             catch { }
         }
 
-        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null, bool? enableControllerValidation = null)
+        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null, bool? enableControllerValidation = null, bool? enableThinking = null, int? budgetTokens = null, bool? showThinking = null, bool? memoryEnabled = null)
         {
             _apiKey = apiKey;
             if (!string.IsNullOrEmpty(model)) _model = model;
@@ -68,7 +92,11 @@ namespace TrioAI.MPPlugIn
                 _skillDetailCache.Clear(); // img stripping is cached per page; force re-read
             }
             if (enableControllerValidation.HasValue) _enableControllerValidation = enableControllerValidation.Value;
-            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation });
+            if (enableThinking.HasValue) _enableThinking = enableThinking.Value;
+            if (budgetTokens.HasValue) _budgetTokens = budgetTokens.Value;
+            if (showThinking.HasValue) _showThinking = showThinking.Value;
+            if (memoryEnabled.HasValue) _memoryEnabled = memoryEnabled.Value;
+            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled });
             File.WriteAllText(ConfigPath, json);
         }
 
@@ -119,7 +147,7 @@ namespace TrioAI.MPPlugIn
 
             _skillsInitialized = true;
             _index = null; // force reload
-            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation });
+            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled });
             File.WriteAllText(ConfigPath, json);
             return null;
         }
@@ -136,5 +164,9 @@ namespace TrioAI.MPPlugIn
         public bool HasApiKey => !string.IsNullOrEmpty(_apiKey);
         public string Model => _model;
         public string ApiUrl => _apiUrl;
+        public static bool EnableThinking => _enableThinking;
+        public static int BudgetTokens => _budgetTokens;
+        public static bool ShowThinking => _showThinking;
+        public static bool MemoryEnabled => _memoryEnabled;
     }
 }

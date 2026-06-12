@@ -173,6 +173,15 @@ namespace TrioAI.MPPlugIn
                 case "lookup_command": return LookupCommand(GetStr(input, "query"), GetStr(input, "full"), GetStr(input, "library"));
                 case "read_skill": return ReadSkill(GetStr(input, "name"));
                 case "search_code": return Handlers.SearchCode(GetStr(input, "query"), GetBool(input, "caseSensitive"));
+                case "update_memory":
+                    {
+                        var memContent = GetStr(input, "content");
+                        if (string.IsNullOrEmpty(memContent))
+                            return new { error = "content is required" };
+                        SaveMemory(memContent);
+                        return new { success = true, message = "Memory updated successfully." };
+                    }
+
                 default: return new { error = $"Unknown tool: {name}" };
             }
         }
@@ -365,7 +374,8 @@ namespace TrioAI.MPPlugIn
                 Tool("open_project", "Open an existing project from a path (requires confirmation)", Props(
                     ("path", "Project file path", false)
                 )),
-                Tool("list_project_items", "List all project items with name/type/group", NoParams())
+                Tool("list_project_items", "List all project items with name/type/group", NoParams()),
+                Tool("update_memory", "Update your persistent memory (survives across sessions). Content replaces the entire memory file. Include all previous memories you want to keep plus new information. Use markdown formatting. Keep under 2000 tokens.", Props("content", "Full memory content to save"))
             };
         }
 

@@ -114,7 +114,10 @@ namespace TrioAI.MPPlugIn
                         {
                             var role = md.ContainsKey("role") ? md["role"]?.ToString() : "System";
                             var msg = md.ContainsKey("text") ? md["text"]?.ToString() : "";
-                            _messages.Add(new ChatMessage(role, msg));
+                            var thinking = md.ContainsKey("thinkingText") ? md["thinkingText"]?.ToString() : "";
+                            var chatMsg = new ChatMessage(role, msg);
+                            if (!string.IsNullOrEmpty(thinking)) chatMsg.ThinkingText = thinking;
+                            _messages.Add(chatMsg);
                         }
                     }
                 }
@@ -127,12 +130,45 @@ namespace TrioAI.MPPlugIn
         private void InitAiService()
         {
             _ai = new AiService();
+            _ai.OnAiThinkingStart = () =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (_streamingMsg != null && !string.IsNullOrEmpty(_streamingMsg.ThinkingText))
+                        return; // already streaming thinking
+                    _streamingMsg = new ChatMessage("AI", "");
+                    _messages.Add(_streamingMsg);
+                    _scrollViewer.ScrollToEnd();
+                }));
+            };
+            _ai.OnAiThinkingDelta = (delta) =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (_streamingMsg != null)
+                    {
+                        _streamingMsg.ThinkingText = (_streamingMsg.ThinkingText ?? "") + delta;
+                        _scrollViewer.ScrollToEnd();
+                    }
+                }));
+            };
+            _ai.OnAiThinkingEnd = () =>
+            {
+                // thinking done; text will follow via OnAiTextStart
+            };
             _ai.OnAiTextStart = () =>
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    _streamingMsg = new ChatMessage("AI", "");
-                    _messages.Add(_streamingMsg);
+                    if (_streamingMsg != null && !string.IsNullOrEmpty(_streamingMsg.ThinkingText))
+                    {
+                        // Reuse existing message (thinking already appended)
+                    }
+                    else
+                    {
+                        _streamingMsg = new ChatMessage("AI", "");
+                        _messages.Add(_streamingMsg);
+                    }
                     _scrollViewer.ScrollToEnd();
                 }));
             };
@@ -151,7 +187,8 @@ namespace TrioAI.MPPlugIn
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    if (_streamingMsg != null && string.IsNullOrEmpty(_streamingMsg.Text))
+                    if (_streamingMsg != null && string.IsNullOrEmpty(_streamingMsg.Text)
+                        && string.IsNullOrEmpty(_streamingMsg.ThinkingText))
                     {
                         // Empty bubble — remove it
                         _messages.Remove(_streamingMsg);
@@ -224,6 +261,20 @@ namespace TrioAI.MPPlugIn
             historyBtn.Click += OnHistory;
             DockPanel.SetDock(historyBtn, Dock.Right);
             toolbar.Children.Add(historyBtn);
+
+            var memoryBtn = new Button
+            {
+                Content = Lang.S("Memory"),
+                Height = 24,
+                Padding = new Thickness(8, 0, 8, 0),
+                Margin = new Thickness(0, 0, 4, 0),
+                Background = new SolidColorBrush(Color.FromRgb(50, 50, 50)),
+                Foreground = new SolidColorBrush(Color.FromRgb(180, 180, 180)),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(70, 70, 70))
+            };
+            memoryBtn.Click += OnMemory;
+            DockPanel.SetDock(memoryBtn, Dock.Right);
+            toolbar.Children.Add(memoryBtn);
 
             var clearBtn = new Button
             {
@@ -419,6 +470,48 @@ namespace TrioAI.MPPlugIn
             factory.SetValue(Border.MarginProperty, new Thickness(8, 3, 8, 3));
             factory.SetValue(Border.MaxWidthProperty, 600.0);
 
+            factory.SetBinding(Border.BackgroundProperty, new System.Windows.Data.Binding("Role") { Converter = new RoleToBrushConverter() });
+            factory.SetBinding(Border.HorizontalAlignmentProperty, new System.Windows.Data.Binding("Role") { Converter = new RoleToAlignmentConverter() });
+
+            // StackPanel to hold Expander (thinking) + TextBox (text)
+            var stackFactory = new FrameworkElementFactory(typeof(StackPanel));
+
+            // Expander for thinking content (collapsed by default, visible only when ThinkingText is not empty)
+            var expanderFactory = new FrameworkElementFactory(typeof(Expander));
+            expanderFactory.SetValue(Expander.IsExpandedProperty, AiService.ShowThinking);
+            expanderFactory.SetValue(Expander.BackgroundProperty, new SolidColorBrush(Color.FromRgb(45, 45, 45)));
+            expanderFactory.SetValue(Expander.ForegroundProperty, new SolidColorBrush(Color.FromRgb(160, 160, 160)));
+            expanderFactory.SetValue(Expander.BorderBrushProperty, new SolidColorBrush(Color.FromRgb(70, 70, 70)));
+            expanderFactory.SetValue(Expander.MarginProperty, new Thickness(0, 0, 0, 4));
+            expanderFactory.SetBinding(Expander.VisibilityProperty,
+                new System.Windows.Data.Binding("ThinkingText") { Converter = new ThinkingVisibilityConverter() });
+
+            // Expander header
+            var headerFactory = new FrameworkElementFactory(typeof(TextBlock));
+            headerFactory.SetValue(TextBlock.TextProperty, Lang.S("ThinkingLabel"));
+            headerFactory.SetValue(TextBlock.FontSizeProperty, 10.5);
+            headerFactory.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Color.FromRgb(140, 140, 140)));
+            expanderFactory.SetValue(Expander.HeaderProperty, headerFactory);
+
+            // Expander content — thinking text
+            var thinkingTextFactory = new FrameworkElementFactory(typeof(TextBox));
+            thinkingTextFactory.SetValue(TextBox.TextWrappingProperty, TextWrapping.Wrap);
+            thinkingTextFactory.SetValue(TextBox.IsReadOnlyProperty, true);
+            thinkingTextFactory.SetValue(TextBox.BorderThicknessProperty, new Thickness(0));
+            thinkingTextFactory.SetValue(TextBox.BackgroundProperty, Brushes.Transparent);
+            thinkingTextFactory.SetValue(TextBox.FontSizeProperty, 11.0);
+            thinkingTextFactory.SetValue(TextBox.FontStyleProperty, FontStyles.Italic);
+            thinkingTextFactory.SetValue(TextBox.ForegroundProperty, new SolidColorBrush(Color.FromRgb(140, 140, 140)));
+            thinkingTextFactory.SetValue(TextBox.AcceptsReturnProperty, true);
+            thinkingTextFactory.SetValue(TextBox.MaxHeightProperty, 200.0);
+            thinkingTextFactory.SetValue(TextBox.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Auto);
+            thinkingTextFactory.SetValue(TextBox.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled);
+            thinkingTextFactory.SetBinding(TextBox.TextProperty, new System.Windows.Data.Binding("ThinkingText"));
+
+            expanderFactory.AppendChild(thinkingTextFactory);
+            stackFactory.AppendChild(expanderFactory);
+
+            // Main text
             var textFactory = new FrameworkElementFactory(typeof(TextBox));
             textFactory.SetValue(TextBox.TextWrappingProperty, TextWrapping.Wrap);
             textFactory.SetValue(TextBox.IsReadOnlyProperty, true);
@@ -430,12 +523,11 @@ namespace TrioAI.MPPlugIn
             textFactory.SetValue(TextBox.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled);
             textFactory.SetValue(TextBox.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
             textFactory.SetBinding(TextBox.TextProperty, new System.Windows.Data.Binding("Text"));
-
-            factory.AppendChild(textFactory);
-
-            factory.SetBinding(Border.BackgroundProperty, new System.Windows.Data.Binding("Role") { Converter = new RoleToBrushConverter() });
-            factory.SetBinding(Border.HorizontalAlignmentProperty, new System.Windows.Data.Binding("Role") { Converter = new RoleToAlignmentConverter() });
             textFactory.SetBinding(TextBox.ForegroundProperty, new System.Windows.Data.Binding("Role") { Converter = new RoleToForegroundConverter() });
+
+            stackFactory.AppendChild(textFactory);
+
+            factory.AppendChild(stackFactory);
 
             template.VisualTree = factory;
             return template;
@@ -471,7 +563,7 @@ namespace TrioAI.MPPlugIn
             _sendBtn.Content = Lang.S("Stop");
             _sendBtn.Background = new SolidColorBrush(Color.FromRgb(160, 40, 40));
             _sendBtn.BorderBrush = Brushes.Transparent;
-            _inputBox.IsEnabled = false;
+            _inputBox.Focus();
 
             _cts = new System.Threading.CancellationTokenSource();
             var token = _cts.Token;
@@ -490,8 +582,6 @@ namespace TrioAI.MPPlugIn
                         _sendBtn.Content = Lang.S("Send");
                         _sendBtn.Background = new SolidColorBrush(Color.FromRgb(0, 120, 215));
                         _sendBtn.BorderBrush = Brushes.Transparent;
-                        _sendBtn.IsEnabled = true;
-                        _inputBox.IsEnabled = true;
                         _inputBox.Focus();
                         UpdateStatusInfo();
                         if (_streamingMsg != null)
@@ -524,10 +614,16 @@ namespace TrioAI.MPPlugIn
             {
                 _ai.SaveSession(null);
                 // Re-save with actual messages
-                var saveData = _messages.Select(m => new Dictionary<string, string>
+                var saveData = _messages.Select(m =>
                 {
-                    { "role", m.Role },
-                    { "text", m.Text }
+                    var d = new Dictionary<string, string>
+                    {
+                        { "role", m.Role },
+                        { "text", m.Text }
+                    };
+                    if (!string.IsNullOrEmpty(m.ThinkingText))
+                        d["thinkingText"] = m.ThinkingText;
+                    return d;
                 }).ToList();
                 var dataDir = System.IO.Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TrioAI");
@@ -547,11 +643,14 @@ namespace TrioAI.MPPlugIn
 
         private void OnAbout(object sender, RoutedEventArgs e)
         {
+            var ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            var verStr = ver != null ? $"{ver.Major}.{ver.Minor}.{ver.Build}" : "?";
+
             var win = new Window
             {
                 Title = "关于 - TRIO AI助手",
-                Width = 400,
-                Height = 250,
+                Width = 420,
+                Height = 300,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 Owner = Window.GetWindow(this),
                 ResizeMode = ResizeMode.NoResize,
@@ -562,11 +661,34 @@ namespace TrioAI.MPPlugIn
 
             panel.Children.Add(new TextBlock
             {
+                Text = $"TRIO AI助手  v{verStr}",
+                Foreground = Brushes.White,
+                FontSize = 16,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(0, 0, 0, 8)
+            });
+
+            var linkBlock = new TextBlock
+            {
+                Text = "github.com/lfmmd/TrioAI",
+                Foreground = new SolidColorBrush(Color.FromRgb(100, 180, 255)),
+                FontSize = 12,
+                Cursor = Cursors.Hand,
+                Margin = new Thickness(0, 0, 0, 16)
+            };
+            linkBlock.MouseLeftButtonUp += (s, ev) =>
+            {
+                try { System.Diagnostics.Process.Start("https://github.com/lfmmd/TrioAI"); } catch { }
+            };
+            panel.Children.Add(linkBlock);
+
+            panel.Children.Add(new TextBlock
+            {
                 Text = "免责声明",
                 Foreground = Brushes.White,
-                FontSize = 14,
+                FontSize = 13,
                 FontWeight = FontWeights.Bold,
-                Margin = new Thickness(0, 0, 0, 12)
+                Margin = new Thickness(0, 0, 0, 8)
             });
 
             panel.Children.Add(new TextBlock
@@ -595,6 +717,109 @@ namespace TrioAI.MPPlugIn
             win.ShowDialog();
         }
 
+        // ---- Memory Dialog ----
+
+        private void OnMemory(object sender, RoutedEventArgs e)
+        {
+            var win = new Window
+            {
+                Title = Lang.S("MemoryTitle"),
+                Width = 500,
+                Height = 450,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = Window.GetWindow(this),
+                ResizeMode = ResizeMode.NoResize,
+                Background = new SolidColorBrush(Color.FromRgb(40, 40, 40))
+            };
+
+            var panel = new StackPanel { Margin = new Thickness(16) };
+
+            panel.Children.Add(new TextBlock
+            {
+                Text = Lang.S("MemoryDesc"),
+                Foreground = new SolidColorBrush(Color.FromRgb(180, 180, 180)),
+                TextWrapping = TextWrapping.Wrap,
+                FontSize = 11,
+                Margin = new Thickness(0, 0, 0, 12)
+            });
+
+            var memoryBox = new TextBox
+            {
+                Text = AiService.GetMemoryText(),
+                AcceptsReturn = true,
+                TextWrapping = TextWrapping.Wrap,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                Height = 280,
+                Background = new SolidColorBrush(Color.FromRgb(55, 55, 55)),
+                Foreground = Brushes.White,
+                BorderBrush = new SolidColorBrush(Color.FromRgb(80, 80, 80)),
+                Padding = new Thickness(6, 4, 6, 4),
+                FontFamily = new FontFamily("Consolas")
+            };
+            panel.Children.Add(memoryBox);
+
+            var btnPanel = new DockPanel { Margin = new Thickness(0, 12, 0, 0), LastChildFill = false };
+
+            var clearBtn = new Button
+            {
+                Content = Lang.S("ClearMemory"),
+                Height = 28,
+                Padding = new Thickness(10, 0, 10, 0),
+                Background = new SolidColorBrush(Color.FromRgb(160, 40, 40)),
+                Foreground = Brushes.White,
+                BorderBrush = Brushes.Transparent
+            };
+            clearBtn.Click += (s, ev) =>
+            {
+                AiService.ClearMemory();
+                memoryBox.Text = "";
+            };
+            DockPanel.SetDock(clearBtn, Dock.Left);
+            btnPanel.Children.Add(clearBtn);
+
+            var btnRight = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+            DockPanel.SetDock(btnRight, Dock.Right);
+
+            var cancelBtn = new Button
+            {
+                Content = Lang.S("Cancel"),
+                Width = 70, Height = 28,
+                Margin = new Thickness(0, 0, 8, 0),
+                Background = new SolidColorBrush(Color.FromRgb(60, 60, 60)),
+                Foreground = Brushes.White,
+                BorderBrush = new SolidColorBrush(Color.FromRgb(80, 80, 80))
+            };
+            cancelBtn.Click += (s, ev) => win.Close();
+            btnRight.Children.Add(cancelBtn);
+
+            var saveBtn = new Button
+            {
+                Content = Lang.S("Save"),
+                Width = 70, Height = 28,
+                Background = new SolidColorBrush(Color.FromRgb(0, 120, 215)),
+                Foreground = Brushes.White,
+                BorderBrush = Brushes.Transparent
+            };
+            saveBtn.Click += (s, ev) =>
+            {
+                AiService.SaveMemory(memoryBox.Text);
+                win.Close();
+                _messages.Add(new ChatMessage("System", Lang.S("MemorySaved")));
+                _scrollViewer.ScrollToEnd();
+            };
+            btnRight.Children.Add(saveBtn);
+
+            btnPanel.Children.Add(btnRight);
+            panel.Children.Add(btnPanel);
+
+            win.Content = panel;
+            win.ShowDialog();
+        }
+
         // ---- Settings Dialog ----
 
         private void OnSettings(object sender, RoutedEventArgs e)
@@ -603,7 +828,7 @@ namespace TrioAI.MPPlugIn
             {
                 Title = Lang.S("SettingsTitle"),
                 Width = 450,
-                Height = 400,
+                Height = 520,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 Owner = Window.GetWindow(this),
                 ResizeMode = ResizeMode.NoResize,
@@ -691,6 +916,54 @@ namespace TrioAI.MPPlugIn
             };
             panel.Children.Add(controllerValidationCheck);
 
+            // Enable thinking checkbox
+            var enableThinkingCheck = new CheckBox
+            {
+                Content = Lang.S("EnableThinking"),
+                IsChecked = AiService.EnableThinking,
+                Foreground = Brushes.White,
+                Margin = new Thickness(0, 0, 0, 4),
+                ToolTip = Lang.S("EnableThinkingDesc")
+            };
+            panel.Children.Add(enableThinkingCheck);
+
+            // Budget tokens input
+            panel.Children.Add(MakeLabel(Lang.S("BudgetTokens")));
+            var budgetBox = new TextBox
+            {
+                Text = AiService.BudgetTokens.ToString(),
+                Height = 28,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 14),
+                Background = new SolidColorBrush(Color.FromRgb(55, 55, 55)),
+                Foreground = Brushes.White,
+                BorderBrush = new SolidColorBrush(Color.FromRgb(80, 80, 80)),
+                Padding = new Thickness(6, 0, 6, 0)
+            };
+            panel.Children.Add(budgetBox);
+
+            // Show thinking checkbox
+            var showThinkingCheck = new CheckBox
+            {
+                Content = Lang.S("ShowThinking"),
+                IsChecked = AiService.ShowThinking,
+                Foreground = Brushes.White,
+                Margin = new Thickness(0, 0, 0, 14),
+                ToolTip = Lang.S("ShowThinkingDesc")
+            };
+            panel.Children.Add(showThinkingCheck);
+
+            // Memory enabled checkbox
+            var memoryEnabledCheck = new CheckBox
+            {
+                Content = Lang.S("MemoryEnabled"),
+                IsChecked = AiService.MemoryEnabled,
+                Foreground = Brushes.White,
+                Margin = new Thickness(0, 0, 0, 14),
+                ToolTip = Lang.S("MemoryEnabledDesc")
+            };
+            panel.Children.Add(memoryEnabledCheck);
+
             // Buttons
             var btnRow = new DockPanel { LastChildFill = false };
 
@@ -773,7 +1046,9 @@ namespace TrioAI.MPPlugIn
                     MessageBox.Show(win, Lang.S("EmptyKey"), Lang.S("Error"), MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked);
+                int budget = AiService.BudgetTokens;
+                int.TryParse(budgetBox.Text, out budget);
+                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked, enableThinkingCheck.IsChecked, budget, showThinkingCheck.IsChecked, memoryEnabledCheck.IsChecked);
                 _messages.Add(new ChatMessage("System", Lang.S("SettingsSaved")));
                 _scrollViewer.ScrollToEnd();
                 win.DialogResult = true;
@@ -1019,7 +1294,10 @@ namespace TrioAI.MPPlugIn
                         {
                             var role = md.ContainsKey("role") ? md["role"]?.ToString() : "System";
                             var msg = md.ContainsKey("text") ? md["text"]?.ToString() : "";
-                            _messages.Add(new ChatMessage(role, msg));
+                            var thinking = md.ContainsKey("thinkingText") ? md["thinkingText"]?.ToString() : "";
+                            var chatMsg = new ChatMessage(role, msg);
+                            if (!string.IsNullOrEmpty(thinking)) chatMsg.ThinkingText = thinking;
+                            _messages.Add(chatMsg);
                         }
                     }
                 }
@@ -1170,6 +1448,7 @@ namespace TrioAI.MPPlugIn
     internal class ChatMessage : System.ComponentModel.INotifyPropertyChanged
     {
         private string _text;
+        private string _thinkingText;
         public string Role { get; }
         public string Text
         {
@@ -1181,6 +1460,19 @@ namespace TrioAI.MPPlugIn
                     _text = value;
                     var h = PropertyChanged;
                     if (h != null) h(this, new System.ComponentModel.PropertyChangedEventArgs("Text"));
+                }
+            }
+        }
+        public string ThinkingText
+        {
+            get { return _thinkingText; }
+            set
+            {
+                if (_thinkingText != value)
+                {
+                    _thinkingText = value;
+                    var h = PropertyChanged;
+                    if (h != null) h(this, new System.ComponentModel.PropertyChangedEventArgs("ThinkingText"));
                 }
             }
         }
@@ -1220,6 +1512,15 @@ namespace TrioAI.MPPlugIn
             if (role == "User") return Brushes.White;
             if (role == "System") return new SolidColorBrush(Color.FromRgb(255, 200, 50));
             return (Brush)new SolidColorBrush(Color.FromRgb(220, 220, 220));
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => null;
+    }
+    internal class ThinkingVisibilityConverter : System.Windows.Data.IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            var text = value as string;
+            return string.IsNullOrEmpty(text) ? Visibility.Collapsed : Visibility.Visible;
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => null;
     }
@@ -1292,6 +1593,19 @@ namespace TrioAI.MPPlugIn
                 { "IncludeSkillImagesDesc", "查询 TrioBASIC/IEC/PLCOpen 指令时在返回内容中保留 <img> 标签（默认关闭以节省 Token）" },
                 { "ControllerValidation", "控制器语法校验（仅模拟器）" },
                 { "ControllerValidationDesc", "连接模拟器时，将代码逐行发送到控制器进行语法校验（ValidationService）。需要模拟器连接。" },
+                { "EnableThinking", "启用扩展思考" },
+                { "EnableThinkingDesc", "启用后 AI 会显示推理过程（Extended Thinking），消耗更多 Token" },
+                { "BudgetTokens", "思考 Token 预算:" },
+                { "ThinkingLabel", "思考过程" },
+                { "ShowThinking", "显示思考过程" },
+                { "ShowThinkingDesc", "在聊天中自动展开显示 AI 的推理过程（关闭后仍可手动点击展开）" },
+                { "Memory", "记忆" },
+                { "MemoryTitle", "AI 持久化记忆" },
+                { "MemoryDesc", "此内容在所有对话和重启后保留。AI 会自动更新记忆以记住您的偏好和项目知识。您也可以手动编辑。" },
+                { "ClearMemory", "清空记忆" },
+                { "MemorySaved", "记忆已保存。" },
+                { "MemoryEnabled", "启用持久化记忆" },
+                { "MemoryEnabledDesc", "启用后 AI 可以跨会话记住用户偏好和项目知识" },
             },
             ["en"] = new Dictionary<string, string>
             {
@@ -1333,6 +1647,19 @@ namespace TrioAI.MPPlugIn
                 { "IncludeSkillImagesDesc", "Keep <img> tags when returning TrioBASIC/IEC/PLCOpen command help (off by default to save tokens)" },
                 { "ControllerValidation", "Controller syntax validation (simulator only)" },
                 { "ControllerValidationDesc", "When connected to a simulator, validate code line-by-line via EXECUTE parse. Requires simulator connection." },
+                { "EnableThinking", "Enable Extended Thinking" },
+                { "EnableThinkingDesc", "When enabled, AI shows its reasoning process (Extended Thinking), consuming more tokens" },
+                { "BudgetTokens", "Thinking Token Budget:" },
+                { "ThinkingLabel", "Thinking Process" },
+                { "ShowThinking", "Show Thinking Process" },
+                { "ShowThinkingDesc", "Auto-expand AI reasoning process in chat (can still click to expand when off)" },
+                { "Memory", "Memory" },
+                { "MemoryTitle", "AI Persistent Memory" },
+                { "MemoryDesc", "This content persists across all conversations and restarts. AI automatically updates memory to remember your preferences. You can also edit manually." },
+                { "ClearMemory", "Clear Memory" },
+                { "MemorySaved", "Memory saved." },
+                { "MemoryEnabled", "Enable Persistent Memory" },
+                { "MemoryEnabledDesc", "When enabled, AI can remember user preferences and project knowledge across sessions" },
             },
             ["de"] = new Dictionary<string, string>
             {
@@ -1374,6 +1701,19 @@ namespace TrioAI.MPPlugIn
                 { "IncludeSkillImagesDesc", "<img>-Tags bei TrioBASIC/IEC/PLCOpen-Hilfeausgaben behalten (standardmäßig aus, um Tokens zu sparen)" },
                 { "ControllerValidation", "Controller-Syntaxprüfung (nur Simulator)" },
                 { "ControllerValidationDesc", "Bei Verbindung mit einem Simulator Code zeilenweise über EXECUTE parsen validieren." },
+                { "EnableThinking", "Erweitertes Denken aktivieren" },
+                { "EnableThinkingDesc", "Wenn aktiviert, zeigt die KI ihren Denkprozess, was mehr Token verbraucht" },
+                { "BudgetTokens", "Denk-Token-Budget:" },
+                { "ThinkingLabel", "Denkprozess" },
+                { "ShowThinking", "Denkprozess anzeigen" },
+                { "ShowThinkingDesc", "Denkprozess der KI automatisch anzeigen" },
+                { "Memory", "Gedaechtnis" },
+                { "MemoryTitle", "KI persistentes Gedaechtnis" },
+                { "MemoryDesc", "Dieser Inhalt bleibt ueber alle Gespraeche und Neustarts hinweg erhalten." },
+                { "ClearMemory", "Gedaechtnis loeschen" },
+                { "MemorySaved", "Gedaechtnis gespeichert." },
+                { "MemoryEnabled", "Persistentes Gedaechtnis aktivieren" },
+                { "MemoryEnabledDesc", "KI kann Benutzereinstellungen ueber Sitzungen hinweg merken" },
             },
             ["fr"] = new Dictionary<string, string>
             {
@@ -1415,6 +1755,19 @@ namespace TrioAI.MPPlugIn
                 { "IncludeSkillImagesDesc", "Conserver les balises <img> lors du retour de l'aide TrioBASIC/IEC/PLCOpen (désactivé par défaut pour économiser des tokens)" },
                 { "ControllerValidation", "Validation syntaxique du contrôleur (simulateur uniquement)" },
                 { "ControllerValidationDesc", "Lorsque connecté au simulateur, valider le code ligne par ligne via EXECUTE parse." },
+                { "EnableThinking", "Activer la réflexion étendue" },
+                { "EnableThinkingDesc", "Si activée, l'IA affiche son raisonnement, consommant plus de tokens" },
+                { "BudgetTokens", "Budget tokens de réflexion :" },
+                { "ThinkingLabel", "Processus de réflexion" },
+                { "ShowThinking", "Afficher le processus de réflexion" },
+                { "ShowThinkingDesc", "Afficher automatiquement le raisonnement de l'IA" },
+                { "Memory", "Mémoire" },
+                { "MemoryTitle", "Mémoire persistante de l'IA" },
+                { "MemoryDesc", "Ce contenu persiste à travers toutes les conversations et redémarrages." },
+                { "ClearMemory", "Effacer la mémoire" },
+                { "MemorySaved", "Mémoire enregistrée." },
+                { "MemoryEnabled", "Activer la mémoire persistante" },
+                { "MemoryEnabledDesc", "L'IA peut mémoriser les préférences utilisateur entre les sessions" },
             },
         };
 

@@ -106,6 +106,9 @@ namespace TrioAI.MPPlugIn
         public Action OnAiTextStart { get; set; }
         public Action<string> OnAiTextDelta { get; set; }
         public Action OnAiTextEnd { get; set; }
+        public Action OnAiThinkingStart { get; set; }
+        public Action<string> OnAiThinkingDelta { get; set; }
+        public Action OnAiThinkingEnd { get; set; }
         public Action<string> OnSystemMessage { get; set; }
         public Action<string> OnToolStatus { get; set; }
         public Func<string, string, bool> OnConfirmWrite { get; set; }
@@ -120,6 +123,7 @@ namespace TrioAI.MPPlugIn
             Directory.CreateDirectory(HistoryDir);
             Directory.CreateDirectory(BackupDir);
             Directory.CreateDirectory(DataDir);
+            try { Directory.CreateDirectory(MemoryDir); } catch { }
             PerfLog("AiService ctor: dirs ensured");
             // 首次创建提示词文件 — 用户手动修改后不会被覆盖。
             // 想恢复默认：删除文件，或在 UI 点击「初始化 Skills」。
@@ -389,6 +393,13 @@ namespace TrioAI.MPPlugIn
                 { "stream", true }
             };
 
+            if (_enableThinking)
+            {
+                body["budget_tokens"] = _budgetTokens;
+                if (_currentMaxTokens <= _budgetTokens)
+                    body["max_tokens"] = _budgetTokens + 8192;
+            }
+
             var json = SerializeRequest(body);
             LogApiRequest("stream", json);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -439,11 +450,12 @@ namespace TrioAI.MPPlugIn
             };
 
             // Pending block state — hoisted out of `using` so we can flush on exit.
-            string pendingType = null;       // "text" | "tool_use"
+            string pendingType = null;       // "text" | "tool_use" | "thinking"
             string pendingText = null;       // text buffer
             string pendingToolId = null;
             string pendingToolName = null;
             StringBuilder pendingToolInput = null;
+            string pendingThinkingText = null;
 
             using (var stream = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult())
             using (var reader = new StreamReader(stream))
@@ -465,7 +477,8 @@ namespace TrioAI.MPPlugIn
                         {
                             DispatchSseEvent(currentEvent, dataBuf.ToString(), result,
                                 ref pendingType, ref pendingText,
-                                ref pendingToolId, ref pendingToolName, ref pendingToolInput);
+                                ref pendingToolId, ref pendingToolName, ref pendingToolInput,
+                                ref pendingThinkingText);
                         }
                         currentEvent = null;
                         dataBuf.Clear();
@@ -503,6 +516,19 @@ namespace TrioAI.MPPlugIn
                 }
                 OnAiTextEnd?.Invoke();
             }
+            else if (pendingType == "thinking")
+            {
+                var finalThinking = pendingThinkingText ?? "";
+                if (!string.IsNullOrEmpty(finalThinking))
+                {
+                    result.Content.Add(new Dictionary<string, object>
+                    {
+                        { "type", "thinking" },
+                        { "thinking", finalThinking }
+                    });
+                }
+                OnAiThinkingEnd?.Invoke();
+            }
 
             if (ct.IsCancellationRequested && result.Content.Count == 0)
                 throw new OperationCanceledException(ct);
@@ -514,7 +540,8 @@ namespace TrioAI.MPPlugIn
             string eventType, string dataJson, StreamResult result,
             ref string pendingType, ref string pendingText,
             ref string pendingToolId, ref string pendingToolName,
-            ref StringBuilder pendingToolInput)
+            ref StringBuilder pendingToolInput,
+            ref string pendingThinkingText)
         {
             Dictionary<string, object> evt;
             try { evt = _json.Deserialize<Dictionary<string, object>>(dataJson); }
@@ -541,9 +568,14 @@ namespace TrioAI.MPPlugIn
                     pendingToolId = null;
                     pendingToolName = null;
                     pendingToolInput = null;
+                    pendingThinkingText = null;
                     if (pendingType == "text")
                     {
                         OnAiTextStart?.Invoke();
+                    }
+                    else if (pendingType == "thinking")
+                    {
+                        OnAiThinkingStart?.Invoke();
                     }
                     else if (pendingType == "tool_use")
                     {
@@ -573,6 +605,15 @@ namespace TrioAI.MPPlugIn
                         var pj = GetStringValue(delta, "partial_json");
                         if (!string.IsNullOrEmpty(pj) && pendingToolInput != null)
                             pendingToolInput.Append(pj);
+                    }
+                    else if (deltaType == "thinking_delta")
+                    {
+                        var thinkingText = GetStringValue(delta, "thinking");
+                        if (!string.IsNullOrEmpty(thinkingText))
+                        {
+                            pendingThinkingText = (pendingThinkingText ?? "") + thinkingText;
+                            OnAiThinkingDelta?.Invoke(thinkingText);
+                        }
                     }
                     break;
                 }
@@ -610,11 +651,21 @@ namespace TrioAI.MPPlugIn
                             { "input", inputParsed }
                         });
                     }
+                    else if (pendingType == "thinking")
+                    {
+                        result.Content.Add(new Dictionary<string, object>
+                        {
+                            { "type", "thinking" },
+                            { "thinking", pendingThinkingText ?? "" }
+                        });
+                        OnAiThinkingEnd?.Invoke();
+                    }
                     pendingType = null;
                     pendingText = null;
                     pendingToolId = null;
                     pendingToolName = null;
                     pendingToolInput = null;
+                    pendingThinkingText = null;
                     break;
                 }
 

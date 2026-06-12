@@ -211,6 +211,8 @@ namespace TrioAI.MPPlugIn
                         if (c != null) chars += c.Length;
                         var t = GetStringValue(b, "text");
                         if (t != null) chars += t.Length;
+                        var th = GetStringValue(b, "thinking");
+                        if (th != null) chars += th.Length;
                     }
                 }
             }

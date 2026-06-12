@@ -166,12 +166,38 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
                 var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
                 var langInstruction = GetLanguageInstruction(lang);
                 var parts = new List<string> { prompt, context };
+
+                if (_memoryEnabled)
+                {
+                    var memory = LoadMemory();
+                    if (!string.IsNullOrEmpty(memory))
+                        parts.Add("## Persistent Memory\n\n" + memory);
+                    parts.Add(BuildMemoryInstructions());
+                }
+
                 if (!string.IsNullOrEmpty(skills)) parts.Add(skills);
                 parts.Add(langInstruction);
                 return string.Join("\n\n", parts);
             }
             catch { }
             return DefaultPrompt;
+        }
+
+        private static string BuildMemoryInstructions()
+        {
+            return @"## Memory System
+
+You have a persistent memory that survives across conversations and application restarts. Your current memory content is shown above in the '## Persistent Memory' section.
+
+Use the `update_memory` tool to update your memory. The content you provide replaces the entire memory file, so always include previous memories you want to keep along with new information.
+
+Remember:
+- User preferences (programming style, naming conventions, axis configurations)
+- Project-specific knowledge (VR mappings, axis assignments, custom protocols)
+- Recurring issues and their solutions
+- Keep memory concise and organized (under 2000 tokens)
+- Proactively update memory when the user shares important preferences or project details
+- Do NOT store sensitive information (passwords, API keys) in memory";
         }
 
         private static string BuildProjectContext()
