@@ -219,12 +219,10 @@ namespace TrioAI.MPPlugIn
                 { "content", userMessage }
             });
 
-            var systemPrompt = BuildSystemPrompt();
-
             for (int turn = 0; turn < 20; turn++)
             {
                 StreamResult result;
-                try { result = CallApiStream(systemPrompt, ct); }
+                try { result = CallApiStream(ct); }
                 catch (OperationCanceledException)
                 {
                     // User cancelled before any content_block_stop arrived — no
@@ -358,21 +356,22 @@ namespace TrioAI.MPPlugIn
 
         // ---- API Call (Streaming SSE) ----
 
-        private StreamResult CallApiStream(string systemPrompt, CancellationToken ct)
+        private StreamResult CallApiStream(CancellationToken ct)
         {
-            // Prompt caching: 把 system 拆成多个 content-block，各自打 cache_control。
-            // 记忆独立成块 — 记忆不变时命中缓存，不受项目上下文变化影响。
+            // Prompt caching（前缀匹配）：稳定内容放前面，动态内容放后面。
+            // Block 1: AI 指令 + skills + 记忆指令 + 语言 — 几乎不变，缓存命中率高
+            // Block 2: 记忆内容 — 仅在用户要求记住时才变
+            // Block 3: 项目上下文（控制器状态/程序列表/编译错误）— 每次都变
             var systemBlocks = new List<Dictionary<string, object>>
             {
                 new Dictionary<string, object>
                 {
                     { "type", "text" },
-                    { "text", systemPrompt },
+                    { "text", BuildStablePrompt() },
                     { "cache_control", new { type = "ephemeral" } }
                 }
             };
 
-            // 记忆单独一个 block，有自己的 cache_control
             if (_memoryEnabled)
             {
                 var memText = LoadMemory();
@@ -386,6 +385,13 @@ namespace TrioAI.MPPlugIn
                     });
                 }
             }
+
+            // 动态上下文放最后 — 变化不影响前面稳定块的缓存
+            systemBlocks.Add(new Dictionary<string, object>
+            {
+                { "type", "text" },
+                { "text", BuildDynamicContext() }
+            });
             var tools = GetToolDefinitions();
             // tools 也打一个 breakpoint：tool schema 几乎不变，缓存命中率非常高。
             if (tools.Count > 0)

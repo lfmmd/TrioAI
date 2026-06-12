@@ -156,21 +156,20 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
 - Reserved names also include any motion-command name (`MOVE`, `MOVECIRC`, `MOVEMODIFY`, `MFAST`, `MSYNC`, `CONNECT`, `CANCEL`, `RAPID`, `HOME`, `DATUM`, `CAM`, `CAMBOX`, `GEAR`, `STOP`, `FORWARD`, `REVERSE`), I/O keywords (`IN`, `OUT`, `OP`, `PSWITCH`, `COMPARE`), and all built-in functions (`SIN`, `COS`, `ABS`, `INT`, `MAX`, `MIN`, `SQRT`, `RAND`, `BIT`, `LEN`, `INSTR`, `MID`, `LEFT`, `RIGHT`, `VAL`, `STR`, etc.).
 ";
 
-        private static string BuildSystemPrompt()
+        // Stable prompt: AI instructions + skills catalog + memory instructions + language.
+        // Changes very rarely — high cache hit rate.
+        internal static string BuildStablePrompt()
         {
             try
             {
                 var prompt = File.Exists(PromptPath) ? File.ReadAllText(PromptPath) : DefaultPrompt;
-                var context = BuildProjectContext();
                 var skills = BuildSkillsCatalog();
                 var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
                 var langInstruction = GetLanguageInstruction(lang);
-                var parts = new List<string> { prompt, context };
+                var parts = new List<string> { prompt };
 
                 if (_memoryEnabled)
-                {
                     parts.Add(BuildMemoryInstructions());
-                }
 
                 if (!string.IsNullOrEmpty(skills)) parts.Add(skills);
                 parts.Add(langInstruction);
@@ -178,6 +177,13 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
             }
             catch { }
             return DefaultPrompt;
+        }
+
+        // Dynamic context: controller status, project info, compile errors.
+        // Changes every call — placed last to avoid breaking cache for stable blocks.
+        internal static string BuildDynamicContext()
+        {
+            return BuildProjectContext();
         }
 
         private static string BuildMemoryInstructions()
