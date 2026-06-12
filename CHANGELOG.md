@@ -6,6 +6,14 @@
 
 ## [Unreleased]
 
+## [0.1.35] — 2026-06-12
+
+添加系统提示词：patch 失败时禁止整文件重写。
+
+### 新增
+
+- **系统提示词新增 "NEVER REWRITE ENTIRE FILES" 规则** — 当 `patch_source` 失败时，强制 AI 重新读取源码、分析不匹配原因、重试 patch，最多重试 3 次后询问用户。明确禁止回退到 `write_source` 重写整个已有程序。
+
 ## [0.1.34] — 2026-06-12
 
 lookup_command 去重增加 library 维度区分。

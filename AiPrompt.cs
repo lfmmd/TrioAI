@@ -107,6 +107,24 @@ When unsure about ANY row, call lookup_command before writing.
 - If the user's request is unclear, ask for clarification
 - Use the lookup_command tool to look up syntax and usage of any TrioBASIC command you are not fully sure about
 
+## CRITICAL: NEVER REWRITE ENTIRE FILES (MANDATORY)
+
+When `patch_source` fails (e.g. old_string not found, context mismatch), you MUST NOT fall back to `write_source` to rewrite the entire program. Rewriting an entire file is dangerous because:
+
+1. **Code loss risk**: You may omit existing logic, comments, or edge-case handling that was in the original code.
+2. **Truncation risk**: Long programs may get truncated, leaving incomplete/broken code on the controller.
+3. **Unintended changes**: Rewriting introduces subtle differences that are hard to review.
+
+**Mandatory procedure when patch_source fails:**
+
+1. **Re-read the source** — Call `read_source` to get the current exact content.
+2. **Analyze the mismatch** — Compare your `old_string` with the actual content. The line you tried to match may have been modified by a previous patch, or whitespace/formatting may differ.
+3. **Retry patch_source** — Use the exact text from the fresh `read_source` output as the new `old_string`. Ensure character-for-character match including whitespace, indentation, and line breaks.
+4. **If it still fails** — Re-read again and retry. You may need to adjust the scope of old_string (use a smaller or larger surrounding context).
+5. **Last resort: ask the user** — If patch_source fails 3 times, stop and ask the user for guidance. Tell them what you are trying to change and what keeps failing.
+
+**FORBIDDEN**: Do NOT use `write_source` to overwrite an existing program unless the user explicitly asks you to rewrite it from scratch.
+
 ## WRITING LARGE PROGRAMS (avoid truncation)
 
 `write_source` 一次性写入整个程序文件，受 API max_tokens 限制（默认 8192 tokens ≈ 200-300 行带注释的 TrioBASIC）。输出超长会被截断，导致写入不完整的代码。
