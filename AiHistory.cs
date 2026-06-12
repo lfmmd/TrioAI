@@ -134,6 +134,25 @@ namespace TrioAI.MPPlugIn
                     { "role", "assistant" },
                     { "content", "Understood. I have the context from the summary above and will continue from where we left off." }
                 });
+
+                // 压缩后恢复最近读过的文件上下文
+                if (_recentReadFiles.Count > 0)
+                {
+                    var fileSb = new StringBuilder("[Recently read source files — restored after compaction]\n");
+                    foreach (var f in _recentReadFiles)
+                        fileSb.AppendFormat("\n### {0}\n```\n{1}\n```\n", f.Item1, f.Item2);
+                    newHistory.Add(new Dictionary<string, object>
+                    {
+                        { "role", "user" },
+                        { "content", fileSb.ToString() }
+                    });
+                    newHistory.Add(new Dictionary<string, object>
+                    {
+                        { "role", "assistant" },
+                        { "content", "Understood. I have the restored file contexts above." }
+                    });
+                }
+
                 for (int i = compactEnd; i < _conversationHistory.Count; i++)
                     newHistory.Add(_conversationHistory[i]);
 
@@ -324,18 +343,6 @@ namespace TrioAI.MPPlugIn
                 }
             }
 
-            // 找到历史里最后一条 assistant 消息的下标，给它打 cache_control。
-            // 这样下一轮请求时，前缀 [system + tools + history up to last assistant] 命中缓存。
-            int lastAssistantIdx = -1;
-            for (int i = _conversationHistory.Count - 1; i >= 0; i--)
-            {
-                if (GetStringValue(_conversationHistory[i], "role") == "assistant")
-                {
-                    lastAssistantIdx = i;
-                    break;
-                }
-            }
-
             for (int idx = 0; idx < _conversationHistory.Count; idx++)
             {
                 var msg = _conversationHistory[idx];
@@ -381,8 +388,8 @@ namespace TrioAI.MPPlugIn
                     copy["content"] = trimmedBlocks;
                 }
 
-                // 给最后一条 assistant 消息的最后一个 content block 打 cache_control
-                if (idx == lastAssistantIdx && content is List<Dictionary<string, object>> asstBlocks && asstBlocks.Count > 0)
+                // 给所有 assistant 消息的最后一个 content block 打 cache_control
+                if (GetStringValue(copy, "role") == "assistant" && content is List<Dictionary<string, object>> asstBlocks && asstBlocks.Count > 0)
                 {
                     var newBlocks = new List<Dictionary<string, object>>(asstBlocks.Count);
                     for (int j = 0; j < asstBlocks.Count; j++)

@@ -70,7 +70,13 @@ namespace TrioAI.MPPlugIn
             {
                 case "get_status": return Handlers.GetStatus();
                 case "list_programs": return Handlers.ListPrograms();
-                case "read_source": return Handlers.ReadSource(GetStr(input, "name"), input);
+                case "read_source":
+                {
+                    var readResult = Handlers.ReadSource(GetStr(input, "name"), input);
+                    var srcText = readResult is string s ? s : _json.Serialize(readResult);
+                    RecordFileRead(GetStr(input, "name"), Truncate(srcText, MaxRestoredFileChars));
+                    return readResult;
+                }
                 case "get_iec_task_detail": return Handlers.GetIecTaskDetail(GetStr(input, "name"));
                 case "read_iec_variables": return Handlers.ReadIecVariables(GetStr(input, "name"), GetStr(input, "scope"));
                 case "write_iec_variables": return Handlers.WriteIecVariables(GetStr(input, "name"), GetStr(input, "scope"), GetStr(input, "text"));

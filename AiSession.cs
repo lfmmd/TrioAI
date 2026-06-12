@@ -12,6 +12,9 @@ namespace TrioAI.MPPlugIn
 
         private readonly List<Dictionary<string, object>> _conversationHistory = new List<Dictionary<string, object>>();
         private string _currentSessionId;
+        private const int MaxRestoredFiles = 5;
+        private const int MaxRestoredFileChars = 4000;
+        private readonly List<Tuple<string, string>> _recentReadFiles = new List<Tuple<string, string>>();
 
         public int HistoryMessageCount => _conversationHistory.Count;
         public int HistoryTokenEstimate => EstimateHistoryTokens();
@@ -23,8 +26,21 @@ namespace TrioAI.MPPlugIn
         public string StartNewSession()
         {
             _conversationHistory.Clear();
+            _recentReadFiles.Clear();
+            _totalInputTokens = _totalOutputTokens = _totalCacheReadTokens = _totalCacheCreateTokens = 0;
             _currentSessionId = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             return _currentSessionId;
+        }
+
+        internal void RecordFileRead(string name, string content)
+        {
+            var summary = content.Length > MaxRestoredFileChars
+                ? content.Substring(0, MaxRestoredFileChars) + "\n...[truncated]"
+                : content;
+            _recentReadFiles.RemoveAll(f => f.Item1 == name);
+            _recentReadFiles.Add(Tuple.Create(name, summary));
+            while (_recentReadFiles.Count > MaxRestoredFiles)
+                _recentReadFiles.RemoveAt(0);
         }
 
         public void ClearHistory()

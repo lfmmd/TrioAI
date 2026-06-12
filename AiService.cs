@@ -32,6 +32,13 @@ namespace TrioAI.MPPlugIn
         private const int EscalatedMaxTokens = 64000;
         private int _currentMaxTokens = DefaultMaxTokens;
 
+        // ---- Token usage tracking ----
+        private int _totalInputTokens, _totalOutputTokens, _totalCacheReadTokens, _totalCacheCreateTokens;
+        public int TotalInputTokens => _totalInputTokens;
+        public int TotalOutputTokens => _totalOutputTokens;
+        public int TotalCacheReadTokens => _totalCacheReadTokens;
+        public int TotalCacheCreateTokens => _totalCacheCreateTokens;
+
         // ---- Perf diagnostics (remove after diagnosis) ----
         private static readonly Stopwatch _perfSw = Stopwatch.StartNew();
         private static readonly List<string> _perfLines = new List<string>();
@@ -268,6 +275,12 @@ namespace TrioAI.MPPlugIn
                     continue;
                 }
 
+                // 累加 token 用量
+                _totalInputTokens += result.InputTokens;
+                _totalOutputTokens += result.OutputTokens;
+                _totalCacheReadTokens += result.CacheReadTokens;
+                _totalCacheCreateTokens += result.CacheCreateTokens;
+
                 _conversationHistory.Add(new Dictionary<string, object>
                 {
                     { "role", "assistant" },
@@ -352,6 +365,10 @@ namespace TrioAI.MPPlugIn
         {
             public List<Dictionary<string, object>> Content;
             public string StopReason;
+            public int InputTokens;
+            public int OutputTokens;
+            public int CacheReadTokens;
+            public int CacheCreateTokens;
         }
 
         // ---- API Call (Streaming SSE) ----
@@ -578,8 +595,21 @@ namespace TrioAI.MPPlugIn
             switch (type)
             {
                 case "message_start":
-                    // nothing to do
+                {
+                    var msgObj = GetDictValue(evt, "message");
+                    if (msgObj != null)
+                    {
+                        var usage = GetDictValue(msgObj, "usage");
+                        if (usage != null)
+                        {
+                            result.InputTokens = GetIntValue(usage, "input_tokens");
+                            result.OutputTokens = GetIntValue(usage, "output_tokens");
+                            result.CacheReadTokens = GetIntValue(usage, "cache_read_input_tokens");
+                            result.CacheCreateTokens = GetIntValue(usage, "cache_creation_input_tokens");
+                        }
+                    }
                     break;
+                }
 
                 case "content_block_start":
                 {

@@ -1063,9 +1063,20 @@ namespace TrioAI.MPPlugIn
         private void UpdateStatusInfo()
         {
             if (_statusInfo == null || _ai == null) return;
+            var inTk = _ai.TotalInputTokens;
+            var outTk = _ai.TotalOutputTokens;
+            var cacheTk = _ai.TotalCacheReadTokens;
             var msgCount = _ai.HistoryMessageCount;
-            var tokens = _ai.HistoryTokenEstimate;
-            _statusInfo.Text = $"Msgs: {msgCount}  ~{tokens}K tokens";
+            if (inTk > 0)
+            {
+                var cacheInfo = cacheTk > 0 ? $" cache:{cacheTk / 1000}K" : "";
+                _statusInfo.Text = $"In:{inTk / 1000}K Out:{outTk / 1000}K{cacheInfo} Msgs:{msgCount}";
+            }
+            else
+            {
+                var tokens = _ai.HistoryTokenEstimate;
+                _statusInfo.Text = $"Msgs: {msgCount}  ~{tokens}K tokens";
+            }
         }
 
         private static string UnescapeJsonDisplay(string s)

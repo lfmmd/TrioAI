@@ -76,6 +76,19 @@ namespace TrioAI.MPPlugIn
             return dict.TryGetValue(key, out val) ? val?.ToString() : null;
         }
 
+        private static int GetIntValue(Dictionary<string, object> dict, string key)
+        {
+            object val;
+            if (!dict.TryGetValue(key, out val) || val == null) return 0;
+            int i;
+            if (int.TryParse(val.ToString(), out i)) return i;
+            // JavaScriptSerializer may deserialize numbers as double
+            double d;
+            if (double.TryParse(val.ToString(), System.Globalization.NumberStyles.Float,
+                System.Globalization.CultureInfo.InvariantCulture, out d)) return (int)d;
+            return 0;
+        }
+
         private static Dictionary<string, object> GetDictValue(Dictionary<string, object> dict, string key)
         {
             object val;
