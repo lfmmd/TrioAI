@@ -429,7 +429,11 @@ namespace TrioAI.MPPlugIn
 
             if (_enableThinking)
             {
-                body["budget_tokens"] = _budgetTokens;
+                body["thinking"] = new Dictionary<string, object>
+                {
+                    { "type", "enabled" },
+                    { "budget_tokens", _budgetTokens }
+                };
                 if (_currentMaxTokens <= _budgetTokens)
                     body["max_tokens"] = _budgetTokens + 8192;
             }
