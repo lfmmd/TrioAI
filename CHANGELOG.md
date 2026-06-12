@@ -6,6 +6,19 @@
 
 ## [Unreleased]
 
+## [0.1.38] — 2026-06-12
+
+重写消息序列防御逻辑，参考 claudecodefx 的 ensureToolResultPairing。
+
+### 修复
+
+- **新增 `EnsureValidMessageSequence`** — 四遍扫描修复 messages 数组：
+  1. 移除孤立 tool_result（没有对应 assistant tool_use 的）
+  2. 为缺失 tool_result 的 tool_use 插入合成错误结果
+  3. 确保首条是 user 消息（跳过前导 assistant）
+  4. 空数组兜底：插入占位 user 消息而非清空
+- **修复 `messages:[]` 导致 1214 错误** — 旧逻辑在所有消息都是孤立 tool_result 时会 `messages.Clear()`，空数组也是非法的。现在改为插入占位文本。
+
 ## [0.1.37] — 2026-06-12
 
 修复 1214 API 错误：孤立 tool_result 作为 messages 首条导致参数非法。
