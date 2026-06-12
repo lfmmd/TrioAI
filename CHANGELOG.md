@@ -6,6 +6,15 @@
 
 ## [Unreleased]
 
+## [0.1.39] — 2026-06-12
+
+`EnsureValidMessageSequence` 增加跨消息 tool_use ID 去重。
+
+### 修复
+
+- **跨消息 tool_use ID 去重** — 两条 assistant 消息中出现相同 id 的 tool_use 时，丢弃重复的。API 要求 tool_use id 全局唯一，重复会导致请求被拒绝。
+- **孤立 tool_result 检查优化** — 改用预收集的 `validToolUseIds` 集合判断，不再逐条遍历前面的消息，性能更好。
+
 ## [0.1.38] — 2026-06-12
 
 重写消息序列防御逻辑，参考 claudecodefx 的 ensureToolResultPairing。

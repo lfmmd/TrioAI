@@ -423,24 +423,55 @@ namespace TrioAI.MPPlugIn
         {
             if (messages.Count == 0) return;
 
-            // 第一遍：收集所有 assistant 消息中 tool_use 的 id
-            var allToolUseIds = new HashSet<string>(StringComparer.Ordinal);
-            foreach (var m in messages)
+            // 跨消息 tool_use ID 累积去重（防止两条 assistant 消息有相同 id 的 tool_use）
+            var globalToolUseIds = new HashSet<string>(StringComparer.Ordinal);
+            var repaired = false;
+
+            // 第一遍：处理 assistant 消息 — 去重 tool_use ID，并记录有效的 tool_use ID
+            var validToolUseIds = new HashSet<string>(StringComparer.Ordinal);
+            for (int i = 0; i < messages.Count; i++)
             {
+                var m = messages[i];
                 if (GetStringValue(m, "role") != "assistant") continue;
                 if (!(m["content"] is List<Dictionary<string, object>> blocks)) continue;
+
+                var filtered = new List<Dictionary<string, object>>();
                 foreach (var b in blocks)
                 {
                     if (GetStringValue(b, "type") == "tool_use")
                     {
                         var id = GetStringValue(b, "id");
-                        if (id != null) allToolUseIds.Add(id);
+                        if (id != null && globalToolUseIds.Contains(id))
+                        {
+                            // 跨消息重复的 tool_use ID → 丢弃
+                            repaired = true;
+                            continue;
+                        }
+                        if (id != null)
+                        {
+                            globalToolUseIds.Add(id);
+                            validToolUseIds.Add(id);
+                        }
                     }
+                    filtered.Add(b);
+                }
+
+                if (filtered.Count != blocks.Count)
+                {
+                    // assistant 内容被清空了 → 插入占位文本
+                    if (filtered.Count == 0)
+                    {
+                        filtered.Add(new Dictionary<string, object>
+                        {
+                            { "type", "text" },
+                            { "text", "[Duplicate tool use removed]" }
+                        });
+                    }
+                    m["content"] = filtered;
                 }
             }
 
-            // 第二遍：修复每条消息
-            var repaired = false;
+            // 第二遍：修复 user 消息 — 移除孤立和重复的 tool_result
             for (int i = 0; i < messages.Count; i++)
             {
                 var m = messages[i];
@@ -465,26 +496,8 @@ namespace TrioAI.MPPlugIn
                             }
                             if (trId != null) seenResultIds.Add(trId);
 
-                            // 检查这个 tool_result 前面有没有对应的 assistant tool_use
-                            bool hasMatchingToolUse = false;
-                            for (int j = 0; j < i; j++)
-                            {
-                                var prev = messages[j];
-                                if (GetStringValue(prev, "role") != "assistant") continue;
-                                if (!(prev["content"] is List<Dictionary<string, object>> prevBlocks)) continue;
-                                foreach (var pb in prevBlocks)
-                                {
-                                    if (GetStringValue(pb, "type") == "tool_use" &&
-                                        GetStringValue(pb, "id") == trId)
-                                    {
-                                        hasMatchingToolUse = true;
-                                        break;
-                                    }
-                                }
-                                if (hasMatchingToolUse) break;
-                            }
-
-                            if (hasMatchingToolUse)
+                            // 检查有没有对应的有效 tool_use
+                            if (trId != null && validToolUseIds.Contains(trId))
                             {
                                 validBlocks.Add(b);
                             }
