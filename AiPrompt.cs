@@ -169,9 +169,6 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
 
                 if (_memoryEnabled)
                 {
-                    var memory = LoadMemory();
-                    if (!string.IsNullOrEmpty(memory))
-                        parts.Add("## Persistent Memory\n\n" + memory);
                     parts.Add(BuildMemoryInstructions());
                 }
 
@@ -187,17 +184,42 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
         {
             return @"## Memory System
 
-You have a persistent memory that survives across conversations and application restarts. Your current memory content is shown above in the '## Persistent Memory' section.
+You have a persistent memory file (shown above as '## Persistent Memory') that survives across conversations and application restarts.
 
-Use the `update_memory` tool to update your memory. The content you provide replaces the entire memory file, so always include previous memories you want to keep along with new information.
+### When to update memory (MANDATORY — call `update_memory` tool immediately):
+- User mentions a preference (""I like..."", ""always use..."", ""never do..."", ""用中文注释"", ""我习惯..."")
+- User shares project-specific details (VR mappings, axis assignments, variable meanings, IO wiring)
+- You discover a recurring issue and its solution
+- User explicitly asks you to remember something (""记住..."", ""remember this"")
+- User corrects your approach (""下次不要..."", ""don't do that again"")
 
-Remember:
-- User preferences (programming style, naming conventions, axis configurations)
-- Project-specific knowledge (VR mappings, axis assignments, custom protocols)
-- Recurring issues and their solutions
-- Keep memory concise and organized (under 2000 tokens)
-- Proactively update memory when the user shares important preferences or project details
-- Do NOT store sensitive information (passwords, API keys) in memory";
+### Memory format (STRICT):
+Use markdown sections. Keep each section under 5 lines. Whole file under 1500 tokens.
+
+```
+## User Preferences
+- Language preference: [zh/en]
+- Code comment style: [preference]
+- Other preferences
+
+## Project: [project name]
+- Controller: [model, firmware]
+- Key programs: [name] — [brief description]
+- VR/IO mapping: concise table
+
+## Known Issues & Solutions
+- [Issue] → [Solution]
+
+## Session Notes
+- [Important context from recent conversations]
+```
+
+### Rules:
+- `update_memory` content REPLACES the entire file — always include existing sections you want to keep
+- Remove outdated information proactively
+- Do NOT duplicate what's already in the system prompt (connection status, program list)
+- Do NOT store API keys or secrets
+- Keep it factual and concise — no prose, no explanations";
         }
 
         private static string BuildProjectContext()

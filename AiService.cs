@@ -360,9 +360,8 @@ namespace TrioAI.MPPlugIn
 
         private StreamResult CallApiStream(string systemPrompt, CancellationToken ct)
         {
-            // Prompt caching: 把 system 转成 content-block 数组并打 cache_control 标记。
-            // 这样 system 前缀（含环境信息、可用 skills、参考库列表）只算一次完整 token，
-            // 5 分钟 TTL 内命中走缓存（输入 token 计费 1/10）。
+            // Prompt caching: 把 system 拆成多个 content-block，各自打 cache_control。
+            // 记忆独立成块 — 记忆不变时命中缓存，不受项目上下文变化影响。
             var systemBlocks = new List<Dictionary<string, object>>
             {
                 new Dictionary<string, object>
@@ -372,6 +371,21 @@ namespace TrioAI.MPPlugIn
                     { "cache_control", new { type = "ephemeral" } }
                 }
             };
+
+            // 记忆单独一个 block，有自己的 cache_control
+            if (_memoryEnabled)
+            {
+                var memText = LoadMemory();
+                if (!string.IsNullOrEmpty(memText))
+                {
+                    systemBlocks.Add(new Dictionary<string, object>
+                    {
+                        { "type", "text" },
+                        { "text", "## Persistent Memory\n\n" + memText },
+                        { "cache_control", new { type = "ephemeral" } }
+                    });
+                }
+            }
             var tools = GetToolDefinitions();
             // tools 也打一个 breakpoint：tool schema 几乎不变，缓存命中率非常高。
             if (tools.Count > 0)
@@ -550,6 +564,10 @@ namespace TrioAI.MPPlugIn
 
             var type = GetStringValue(evt, "type") ?? eventType;
             if (string.IsNullOrEmpty(type)) return;
+
+            // DEBUG: log SSE event types to see actual response format
+            if (type != "message_start" && type != "message_stop" && type != "ping")
+                LogApiRequest("sse-event", $"type={type} data={Truncate(dataJson, 500)}");
 
             switch (type)
             {
