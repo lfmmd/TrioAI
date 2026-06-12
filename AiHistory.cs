@@ -27,24 +27,35 @@ namespace TrioAI.MPPlugIn
                 && _conversationHistory.Count <= MaxHistoryKeep)
                 return;
 
+            OnSystemMessage?.Invoke($"⚠ TrimHistory triggered: {_conversationHistory.Count} msgs, ~{EstimateHistoryTokens()} tokens");
+
             // auto-compaction：将旧消息摘要压缩为一条，保留最近消息不变。
             if (CompactHistory())
                 return;
 
             // 摘要失败时兜底：截断旧消息
+            // 优先找 user+string 消息（普通用户输入），兜底找任意 user 消息（tool_result），
+            // 确保 messages 首条始终是 user 角色。
             int start = _conversationHistory.Count - MaxRecentKeep;
             if (start < 1) start = 1;
 
             int found = -1;
+            int foundAnyUser = -1;
             for (int i = start; i < _conversationHistory.Count; i++)
             {
                 var msg = _conversationHistory[i];
-                if (GetStringValue(msg, "role") == "user" && msg["content"] is string)
+                if (GetStringValue(msg, "role") == "user")
                 {
-                    found = i;
-                    break;
+                    if (foundAnyUser < 0) foundAnyUser = i;
+                    if (msg["content"] is string)
+                    {
+                        found = i;
+                        break;
+                    }
                 }
             }
+            // 兜底：如果没找到 user+string，用任意 user 消息（确保不以 assistant 开头）
+            if (found < 0) found = foundAnyUser;
 
             if (found <= 0) return;
 
@@ -239,9 +250,27 @@ namespace TrioAI.MPPlugIn
                 }
             }
 
-            // lookup_command 去重：同一 query 第一次出现保留完整内容，后续替换为引用占位符。
-            // tool_result 是按 conversation 顺序遍历，遇到第二次同 query 就标记。
-            var seenLookupQueries = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            // lookup_command 去重：同一 query+full 组合第一次出现保留完整内容，后续替换为引用占位符。
+            // 只按 query 去重会导致：先查 brief（full=null）→ 后查 full=true 被误判为重复 → 完整 HTML 丢失。
+            // 修正：full=true 的结果不应被 brief 的去重覆盖（full 包含 brief 的全部信息）。
+            var lookupFullById = new Dictionary<string, bool>(StringComparer.Ordinal);
+            foreach (var m in _conversationHistory)
+            {
+                if (GetStringValue(m, "role") != "assistant") continue;
+                if (!(m["content"] is List<Dictionary<string, object>> bl)) continue;
+                foreach (var b in bl)
+                {
+                    if (GetStringValue(b, "type") != "tool_use") continue;
+                    if (!string.Equals(GetStringValue(b, "name"), "lookup_command", StringComparison.OrdinalIgnoreCase)) continue;
+                    var id = GetStringValue(b, "id");
+                    if (id == null) continue;
+                    if (!(b.TryGetValue("input", out var inObj) && inObj is Dictionary<string, object> inDict)) continue;
+                    var fullVal = GetStr(inDict, "full");
+                    lookupFullById[id] = string.Equals(fullVal, "true", StringComparison.OrdinalIgnoreCase);
+                }
+            }
+
+            var seenLookupKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var duplicateLookupIds = new HashSet<string>(StringComparer.Ordinal);
             foreach (var m in _conversationHistory)
             {
@@ -253,8 +282,9 @@ namespace TrioAI.MPPlugIn
                     var id = GetStringValue(b, "tool_use_id");
                     if (id == null) continue;
                     if (!lookupQueryById.TryGetValue(id, out var query)) continue;
-                    // 第一次见到这个 query：保留。后续：标记为重复。
-                    if (!seenLookupQueries.Add(query))
+                    var isFull = lookupFullById.TryGetValue(id, out var f) && f;
+                    var key = isFull ? query + "\tfull" : query;
+                    if (!seenLookupKeys.Add(key))
                         duplicateLookupIds.Add(id);
                 }
             }
@@ -370,6 +400,27 @@ namespace TrioAI.MPPlugIn
 
                 messages.Add(copy);
             }
+
+            // 防御：API 要求 messages 首条必须是 user 角色。
+            // 如果历史被异常截断导致首条是 assistant，跳过直到找到 user 消息。
+            if (messages.Count > 0 && GetStringValue(messages[0], "role") != "user")
+            {
+                int firstUser = -1;
+                for (int i = 0; i < messages.Count; i++)
+                {
+                    if (GetStringValue(messages[i], "role") == "user")
+                    {
+                        firstUser = i;
+                        break;
+                    }
+                }
+                if (firstUser > 0)
+                {
+                    OnSystemMessage?.Invoke($"⚠ History repair: skipped {firstUser} leading assistant messages");
+                    messages.RemoveRange(0, firstUser);
+                }
+            }
+
             return messages;
         }
 
@@ -392,9 +443,12 @@ namespace TrioAI.MPPlugIn
         /// </summary>
         private object TryDedupLookupCommand(Dictionary<string, object> input)
         {
-            var nQuery = NormParam(input, "query");
-            var nLibrary = NormParam(input, "library");
-            var nFull = NormParam(input, "full");
+            // 使用与工具执行完全相同的值提取（GetStr），
+            // 确保去重判断与工具实际行为一致。
+            // 例如：full=true(bool) → GetStr="True" → 工具视为非 full → 去重也应视为非 full。
+            var nQuery = GetStr(input, "query");
+            var nFull = GetStr(input, "full");       // null / "true" / "True" / "false" ...
+            var nLibrary = GetStr(input, "library");  // null / "iec" / "triobasic" ...
             if (string.IsNullOrEmpty(nQuery)) return null;
 
             for (int i = 0; i < _conversationHistory.Count; i++)
@@ -414,10 +468,20 @@ namespace TrioAI.MPPlugIn
                     var bInput = rawInput as Dictionary<string, object>;
                     if (bInput == null) continue;
 
-                    // 用归一化后的值比较，绕过 bool/string/缺失 的 ToString 差异
-                    if (nQuery != NormParam(bInput, "query")) continue;
-                    if (nLibrary != NormParam(bInput, "library")) continue;
-                    if (nFull != NormParam(bInput, "full")) continue;
+                    var hQuery = GetStr(bInput, "query");
+                    var hFull = GetStr(bInput, "full");
+                    var hLibrary = GetStr(bInput, "library");
+
+                    // query: 大小写不敏感匹配
+                    if (!string.Equals(nQuery, hQuery, StringComparison.OrdinalIgnoreCase)) continue;
+                    // full: full=true 可以替代不带 full 的查询（full 包含 brief 的全部信息）
+                    // 允许命中：① 精确匹配 ② 当前非 full 但历史是 full（full→brief 方向去重）
+                    // 不允许：当前是 full 但历史不是 full（brief 不能替代 full）
+                    var hIsFull = string.Equals(hFull, "true", StringComparison.OrdinalIgnoreCase);
+                    var nIsFull = string.Equals(nFull, "true", StringComparison.OrdinalIgnoreCase);
+                    if (nIsFull && !hIsFull) continue;
+                    // library: 大小写不敏感匹配
+                    if (!string.Equals(nLibrary, hLibrary, StringComparison.OrdinalIgnoreCase)) continue;
 
                     // 找到相同参数的历史调用，检查其结果是否成功
                     var toolId = GetStringValue(b, "id");
@@ -438,6 +502,9 @@ namespace TrioAI.MPPlugIn
                             var content = GetStringValue(rb, "content");
                             if (content != null && !content.Contains("\"error\":"))
                             {
+                                LogApiRequest("dedup-hit",
+                                    $"current(q={nQuery},f={nFull ?? "(null)"},l={nLibrary ?? "(null)"}) " +
+                                    $"history(q={hQuery},f={hFull ?? "(null)"},l={hLibrary ?? "(null)"})");
                                 return new
                                 {
                                     results = new[]

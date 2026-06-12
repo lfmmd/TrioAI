@@ -6,7 +6,46 @@
 
 ## [Unreleased]
 
-## [0.1.28] — 2026-06-12
+## [0.1.33] — 2026-06-12
+
+修复 lookup_command 去重逻辑：brief 查询不应阻止后续 full 查询。
+
+### 修复
+
+- **`BuildTrimmedMessages` 去重改为 query+full 组合** — 原来只按 query 去重，导致先查 brief 再查 full 时完整 HTML 被替换为占位符。现在 full=true 和 brief 作为不同 key 分别去重。
+- **`TryDedupLookupCommand` full→brief 方向去重** — full=true 的结果可替代 brief 查询（反向去重），但 brief 不能阻止后续 full=true 查询。
+
+## [0.1.32] — 2026-06-12
+
+修复 `GetStr` 对 bool 值的大小写归一化，根治去重与工具执行行为不一致。
+
+### 修复
+
+- **`GetStr` bool 归一化** — `JavaScriptSerializer` 将 JSON `true` 反序列化为 C# `bool true`，`.ToString()` 产生 `"True"`（大写T）。工具执行检查 `== "true"` 失败，返回轻量结果；去重用相同 `GetStr` 也得到 `"True"`，两个 `"True"` 恰好匹配，导致不同 `full` 参数的调用被错误去重。现在 `GetStr` 对 bool 值统一返回小写 `"true"` / `"false"`，工具和去重行为完全一致。
+
+## [0.1.31] — 2026-06-12
+
+修复去重参数比较与工具执行行为不一致。
+
+### 修复
+
+- **去重改用 `GetStr` 代替 `NormParam`** — `NormParam` 将 bool `true` 归一化为 `"true"`（小写），但工具执行用 `GetStr` → `.ToString()` 得到 `"True"`（大写T），导致 `full=true`(bool) 被工具视为非 full 但被去重视为 full，产生错误去重。现在去重和工具使用完全相同的值提取方式。
+- **`full` 精确匹配** — `"True" != "true"` 不匹配（反映工具的实际判断），`"true" == "true"` 匹配。
+- **`library` null vs 值不匹配** — `null != "iec"` 不匹配，避免跨 library 错误去重。
+
+## [0.1.30] — 2026-06-12
+
+添加去重诊断日志。
+
+## [0.1.29] — 2026-06-12
+
+修复 messages 参数非法导致 API 1214 错误。
+
+### 修复
+
+- **`BuildTrimmedMessages` 防御检查** — 历史被异常截断后 messages 数组可能以 `assistant` 角色开头，违反 Anthropic Messages API 要求。新增跳过前导 assistant 消息的逻辑，确保首条始终是 `user`。
+- **`TrimHistory` 截断兜底增强** — 原逻辑只匹配 `user + string content` 消息，在 agentic 循环中全部 user 消息都是 `tool_result`（list content），导致找不到截断点。改为兜底匹配任意 user 消息，避免意外保留 assistant 开头的历史。
+- **`TrimHistory` 诊断日志** — 触发裁剪时输出消息数和 token 估算，帮助追踪异常触发条件。
 
 修复 lookup_command 去重参数比较 bug。
 

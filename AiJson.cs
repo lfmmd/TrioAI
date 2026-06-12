@@ -112,7 +112,9 @@ namespace TrioAI.MPPlugIn
         private static string GetStr(Dictionary<string, object> d, string key)
         {
             object val;
-            return d.TryGetValue(key, out val) && val != null ? val.ToString() : null;
+            if (!d.TryGetValue(key, out val) || val == null) return null;
+            if (val is bool b) return b ? "true" : "false";
+            return val.ToString();
         }
 
         private static int GetInt(Dictionary<string, object> d, string key)
