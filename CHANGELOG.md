@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+## [0.1.36] — 2026-06-12
+
+修复 `write_source` 控制器验证器对 DIM 变量名的误报。
+
+### 修复
+
+- **`ValidateByController` 跳过 DIM 变量误报** — 控制器 `ValidationService` 逐行验证时不理解 DIM 上下文，将用户声明的变量名（如 `conv_speed`、`cycle_no`）误报为非法命令，导致 `write_source` 被拦截。现在验证前预扫描 DIM/LOCAL/GLOBAL 声明的变量名，遇到包含这些变量名的错误时跳过。
+- **新增 `ScanDimVariables()`** — 解析 DIM 语句提取变量名（支持数组下标和 AS 子句）。
+- **新增 `IsDimVarError()`** — 匹配错误信息中的 DIM 变量名。
+
 ## [0.1.35] — 2026-06-12
 
 添加系统提示词：patch 失败时禁止整文件重写。

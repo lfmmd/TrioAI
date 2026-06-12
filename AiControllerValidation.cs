@@ -102,6 +102,11 @@ namespace TrioAI.MPPlugIn
                 var ctrl = DispatcherHelper.Invoke(() => MPSingletons.Controller);
                 if (ctrl == null || !ctrl.IsConnected) return errors;
 
+                // 预扫描 DIM 语句，收集用户声明的变量名。
+                // 控制器 ValidationService 逐行验证时不理解上下文，
+                // 会把 DIM 声明的变量名（如 conv_speed、cycle_no）误报为非法命令。
+                var dimVars = ScanDimVariables(code);
+
                 var lines = code.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                 var svc = new ValidationService(ctrl, Guid.NewGuid());
                 var seenErrors = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -116,7 +121,10 @@ namespace TrioAI.MPPlugIn
                     {
                         if (!svc.ValidateCommand(line, out string error, out int errorCode))
                         {
-                            if (!string.IsNullOrEmpty(error) && seenErrors.Add(error))
+                            if (string.IsNullOrEmpty(error)) continue;
+                            // 跳过由 DIM 变量名引起的误报
+                            if (IsDimVarError(error, dimVars)) continue;
+                            if (seenErrors.Add(error))
                                 errors.Add(string.Format("Line {0}: {1} (error #{2})", i + 1, error, errorCode));
                         }
                     }
@@ -126,6 +134,55 @@ namespace TrioAI.MPPlugIn
             catch { /* controller 不可用 */ }
 
             return errors;
+        }
+
+        /// <summary>
+        /// 扫描代码中的 DIM/LOCAL/GLOBAL 语句，提取用户声明的变量名。
+        /// </summary>
+        private static HashSet<string> ScanDimVariables(string code)
+        {
+            var vars = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var clean = _reLineComment.Replace(code, "");
+            foreach (var line in clean.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
+            {
+                var trimmed = line.Trim();
+                // 匹配 DIM/LOCAL/GLOBAL 声明：DIM var1, var2(10), var3
+                if (!trimmed.StartsWith("DIM ", StringComparison.OrdinalIgnoreCase) &&
+                    !trimmed.StartsWith("LOCAL ", StringComparison.OrdinalIgnoreCase) &&
+                    !trimmed.StartsWith("GLOBAL ", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                // 提取 DIM 之后的内容
+                var declPart = trimmed.IndexOf(' ') >= 0 ? trimmed.Substring(trimmed.IndexOf(' ') + 1) : "";
+                foreach (var token in declPart.Split(','))
+                {
+                    var name = token.Trim();
+                    // 去掉数组下标：arr(10) → arr
+                    var parenIdx = name.IndexOf('(');
+                    if (parenIdx > 0) name = name.Substring(0, parenIdx);
+                    // 去掉 AS 子句：var AS INTEGER → var
+                    var asIdx = name.IndexOf(" AS ", StringComparison.OrdinalIgnoreCase);
+                    if (asIdx > 0) name = name.Substring(0, asIdx);
+                    name = name.Trim();
+                    if (name.Length >= 2 && IsIdentifierLike(name))
+                        vars.Add(name);
+                }
+            }
+            return vars;
+        }
+
+        /// <summary>
+        /// 判断验证错误是否由 DIM 变量名引起（如 "Variable 'conv_speed' is not permitted on Command Line"）。
+        /// </summary>
+        private static bool IsDimVarError(string error, HashSet<string> dimVars)
+        {
+            if (dimVars == null || dimVars.Count == 0) return false;
+            foreach (var v in dimVars)
+            {
+                if (error.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0)
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>
