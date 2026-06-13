@@ -1,7 +1,9 @@
 # TrioAI — MotionPerfect AI 助手插件
 
+> 镜像：[GitHub](https://github.com/lfmmd/TrioAI) | [Gitee](https://gitee.com/lfmmd/TrioAI)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.1-blue.svg)](https://github.com/lfmmd/TrioAI/releases)
+[![Version](https://img.shields.io/badge/version-0.2.7-blue.svg)](https://github.com/lfmmd/TrioAI/releases)
 [![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-blue.svg)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
 [![MotionPerfect](https://img.shields.io/badge/MotionPerfect-V5.6+-orange.svg)](https://www.triomotion.com/)
@@ -14,25 +16,28 @@
 ## 特性
 
 - **嵌入式 AI 助手面板**：在 MotionPerfect 内嵌对话式 AI 助手，原生 UI，无外部依赖
-- **24 个 AI 工具**：覆盖程序读写、控制器交互、VR/TABLE 数据、TrioBASIC 命令查询等
-- **HTTP API 服务器（MCP 风格集成端点）**：内置 `localhost:9090` HTTP API，提供类似 [MCP（Model Context Protocol）](https://modelcontextprotocol.io)的工具接入能力 —— 让外部 AI 应用、自动化脚本、其他 LLM agent（如 Claude Desktop、Cursor、自研 client）能通过标准 HTTP 接口调用 MotionPerfect 的全部功能（程序读写、控制器交互、VR/TABLE 数据等）
+- **24+ 个 AI 工具**：覆盖程序读写、控制器交互、VR/TABLE 数据、TrioBASIC / IEC / PLCopen 命令查询等
+- **HTTP API 服务器（MCP 风格集成端点）**：内置 `localhost:9090` HTTP API，提供类似 [MCP（Model Context Protocol）](https://modelcontextprotocol.io)的工具接入能力 —— 让外部 AI 应用、自动化脚本、其他 LLM agent（如 Claude Desktop、Cursor、自研 client）能通过标准 HTTP 接口调用 MotionPerfect 的全部功能
 - **API 兼容格式**：[Anthropic Messages API](https://docs.anthropic.com/en/api/messages)（端点 `/v1/messages`，请求体/响应/SSE 流式事件均遵循 Anthropic 规范）。**不兼容 OpenAI Chat Completions 格式**。支持智谱 GLM（`GLM-5.1`、`GLM-5`）、DeepSeek、Anthropic 官方、以及任何兼容 Anthropic Messages API 的代理或第三方服务
 - **流式响应**：实时显示 AI 思考与工具调用过程
 - **二次确认机制**：所有破坏性操作（写、删除、运行、停止）需用户在 UI 中点确认
 - **TrioBASIC 严格语法约束**：内置命令参考库，AI 写代码前自动查证，避免幻觉
+- **会话持久化**：自动保存对话历史，重启 MP 或打开历史会话可继续之前的对话（含 AI 上下文摘要注入）
+- **上下文优化**：精确 token 计数、消息级缓存、自动压缩、read_source 去重，长对话不丢上下文
+- **持久记忆**：可手动写入的关键信息，跨会话保留
 - **多语言 UI**：中文、英文、德文、法文
 
 ## 安装
 
-### 方法 1：通过 .MPPlugin 包安装
+### 方法 1：通过 .MPPlugIn 包安装
 
-1. 下载 `TrioAI.MPPlugin`
-2. 在 MotionPerfect 中：工具 → 插件管理 → 安装插件 → 选择 `TrioAI.MPPlugin`
+1. 从 [GitHub Releases](https://github.com/lfmmd/TrioAI/releases) 或 [Gitee](https://gitee.com/lfmmd/TrioAI) 下载 `TrioAI.MPPlugIn`
+2. 在 MotionPerfect 中：工具 → 插件管理 → 安装插件 → 选择 `TrioAI.MPPlugIn`
 3. 重启 MotionPerfect
 
 ### 方法 2：手动部署
 
-1. 解压 `TrioAI.MPPlugin`（实质是 ZIP）到 MotionPerfect 的插件目录：
+1. 解压 `TrioAI.MPPlugIn`（实质是 ZIP，内部路径带 `TrioAI/` 前缀）到 MotionPerfect 的插件目录：
    ```
    %LOCALAPPDATA%\TrioMotion\MotionPerfectV5.6\Plugins\TrioAI\
    ```
@@ -40,9 +45,11 @@
    ```
    TrioAI\
      ├─ TrioAI.MPPlugIn.dll
-     └─ skills\triobasic\
-          ├─ index.json
-          └─ skills.json
+     └─ skills\
+          ├─ general\
+          ├─ iec\
+          ├─ plcopen\
+          └─ triobasic\
    ```
 2. 重启 MotionPerfect
 
@@ -235,14 +242,19 @@ AI 系统提示词中强制要求：
 ```
 TrioAI\
   ├─ TrioAIPlugIn.cs        # MP 插件入口（OnInitialize / OnDispose）
-  ├─ AiService.cs           # AI 调用循环、工具定义、系统提示词
-  ├─ Handlers.cs            # 24 个工具的具体实现
-  ├─ ApiServer.cs           # HTTP API 服务器
+  ├─ AiService.cs           # AI 调用循环、SSE 流式解析、系统提示词
+  ├─ AiSession.cs           # 会话持久化（保存/加载/列表）
+  ├─ AiHistory.cs           # 历史管理（裁剪、压缩、缓存优化）
+  ├─ AiTools.cs             # 工具定义、分派、工具调用处理
+  ├─ AiConfig.cs            # 配置管理、Skill 数据初始化
+  ├─ AiJson.cs              # JSON 序列化辅助
+  ├─ AiMemory.cs            # 持久记忆（跨会话上下文）
+  ├─ Handlers.cs            # 24+ 个工具的具体实现
+  ├─ ApiServer.cs           # HTTP API 服务器（localhost:9090）
   ├─ ChatPanel.cs           # WPF UI（对话面板、设置面板、多语言）
   ├─ DispatcherHelper.cs    # UI 线程辅助
-  ├─ skills\triobasic\      # TrioBASIC 命令参考数据
-  │    ├─ index.json        # 按需加载的索引（128KB）
-  │    └─ skills.json       # 完整命令库（918KB）
+  ├─ Lang.cs                # 多语言（中/英/德/法）
+  ├─ skills\                # 命令参考库（TrioBASIC + IEC + PLCopen + general）
   └─ TrioAI.MPPlugIn.csproj # .NET Framework 4.8 类库
 ```
 
@@ -277,11 +289,18 @@ dotnet build -c Release
 # 输出：bin\Release\TrioAI.MPPlugIn.dll
 ```
 
-打包为 `.MPPlugin`：
+打包为 `.MPPlugIn`（ZIP 格式，内部路径带 `TrioAI/` 前缀）：
 
 ```bash
-python pack.py
-# 输出：TrioAI.MPPlugin（ZIP 格式）
+python -c "
+import zipfile, os
+with zipfile.ZipFile('TrioAI.MPPlugIn', 'w', zipfile.ZIP_DEFLATED) as z:
+    z.write('bin/Release/TrioAI.MPPlugIn.dll', 'TrioAI/TrioAI.MPPlugIn.dll')
+    for root, _, files in os.walk('skills'):
+        for f in files:
+            full = os.path.join(root, f)
+            z.write(full, 'TrioAI/skills/' + os.path.relpath(full, 'skills').replace(os.sep, '/'))
+"
 ```
 
 ## 兼容性
