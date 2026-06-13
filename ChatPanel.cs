@@ -1057,12 +1057,12 @@ namespace TrioAI.MPPlugIn
             if (inTk > 0)
             {
                 var cacheInfo = cacheTk > 0 ? $" cache:{cacheTk / 1000}K" : "";
-                _statusInfo.Text = $"In:{inTk / 1000}K Out:{outTk / 1000}K{cacheInfo} Msgs:{msgCount}";
+                _statusInfo.Text = $"In:{inTk / 1000}K Out:{outTk / 1000}K{cacheInfo} M:{msgCount}";
             }
             else
             {
                 var tokens = _ai.HistoryTokenEstimate;
-                _statusInfo.Text = $"Msgs: {msgCount}  ~{tokens}K tokens";
+                _statusInfo.Text = $"~{tokens}K M:{msgCount}";
             }
         }
 
