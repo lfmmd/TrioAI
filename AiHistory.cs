@@ -472,10 +472,9 @@ namespace TrioAI.MPPlugIn
                             var toolId = GetStringValue(b, "id");
                             if (toolId != null && !keepRecent.Contains(toolId))
                             {
-                                newBlocks.Add(new Dictionary<string, object>(b)
-                                {
-                                    { "input", new Dictionary<string, object> { { "_summarized", true } } }
-                                });
+                                var compressed = new Dictionary<string, object>(b);
+                                compressed["input"] = new Dictionary<string, object> { { "_summarized", true } };
+                                newBlocks.Add(compressed);
                                 continue;
                             }
                         }
@@ -483,10 +482,9 @@ namespace TrioAI.MPPlugIn
                     }
                     if (newBlocks.Count > 0)
                     {
-                        newBlocks[newBlocks.Count - 1] = new Dictionary<string, object>(newBlocks[newBlocks.Count - 1])
-                        {
-                            { "cache_control", new { type = "ephemeral" } }
-                        };
+                        var lastBlock = new Dictionary<string, object>(newBlocks[newBlocks.Count - 1]);
+                        lastBlock["cache_control"] = new { type = "ephemeral" };
+                        newBlocks[newBlocks.Count - 1] = lastBlock;
                     }
                     else
                     {
