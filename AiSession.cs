@@ -53,14 +53,20 @@ namespace TrioAI.MPPlugIn
         {
             if (string.IsNullOrEmpty(_currentSessionId)) return;
             var path = Path.Combine(HistoryDir, _currentSessionId + ".json");
+            // 快照历史，防止 Chat 线程并发修改导致枚举异常
+            List<Dictionary<string, object>> historySnapshot;
+            lock (_conversationHistory)
+            {
+                historySnapshot = new List<Dictionary<string, object>>(_conversationHistory);
+            }
             var data = new Dictionary<string, object>
             {
                 { "id", _currentSessionId },
                 { "updated", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
                 { "messages", displayMessages ?? new string[0] },
-                { "history", _conversationHistory }
+                { "history", historySnapshot }
             };
-            File.WriteAllText(path, SerializeRequest(data));
+            try { File.WriteAllText(path, SerializeRequest(data)); } catch { }
         }
 
         public string LoadSession(string sessionId)
