@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+## [0.2.16] — 2026-06-13
+
+### 修复
+
+- **根治"消息序列已被修复"反复刷屏（持久化 in-place 修复）** —— 0.2.15 只在 `CompactHistory`/`TrimHistory` 切点净化防止产生新孤立 tool_result，但 `EnsureValidMessageSequence` 之前只在请求副本 `messages` 上修，**不写回 `_conversationHistory`**。一旦历史里已有坏数据（旧版本遗留 / LoadSession 加载的老 session 文件 / 取消时塞的 sentinel 等），每次 API 请求都重复"复制坏历史 → 修副本 → 提示 → 副本发送 → 下次又是坏原数据"循环。现在 `BuildTrimmedMessages` 入口对 `_conversationHistory` 本身做 in-place 修复：第一次触发时修好历史并提示一次，后续请求 `repaired=false` 不再提示。末尾对 messages 副本的修复保留作兜底。
+
+## [0.2.15] — 2026-06-13
+
+### 修复
+
+- **`CompactHistory`/`TrimHistory` 切点净化，根治"消息序列已被修复"频繁刷屏** —— `AiHistory.cs` 之前 `compactEnd = Count - MaxRecentKeep` 按数量硬切，若切点恰好落在 `assistant(tool_use_X) → user(tool_result_X)` 之间，`assistant(tool_use_X)` 被压进摘要、`user(tool_result_X)` 保留下来成为孤立 tool_result。`EnsureValidMessageSequence` 不写回 `_conversationHistory`，导致后续每次 API 请求都重复修复并刷屏"⚠ 历史修复: 消息序列已被修复"。新增 helper `IsUserToolResultMessage`：CompactHistory 切点处若是孤立 `user(tool_result)` 就 `compactEnd++` 把它一起压进摘要；TrimHistory 扫描时跳过 `user(tool_result)`，让切点不落在孤立配对上。从源头不再产生孤立 tool_result。
+
 ## [0.2.14] — 2026-06-13
 
 ### 技能加载机制（参考 claudecodefx cc-haha 设计）

@@ -47,6 +47,9 @@ namespace TrioAI.MPPlugIn
                 var msg = _conversationHistory[i];
                 if (GetStringValue(msg, "role") == "user")
                 {
+                    // 跳过 user(tool_result)：对应的 assistant(tool_use) 会被一起截掉，
+                    // 留下孤立 tool_result 触发 EnsureValidMessageSequence 反复修复。
+                    if (IsUserToolResultMessage(msg)) continue;
                     if (foundAnyUser < 0) foundAnyUser = i;
                     if (msg["content"] is string)
                     {
@@ -139,6 +142,16 @@ namespace TrioAI.MPPlugIn
                 // API 调用期间历史可能已变，重新计算 compactEnd
                 compactEnd = _conversationHistory.Count - MaxRecentKeep;
                 if (compactEnd < 2) return false;
+
+                // 切点净化：若保留段以 user(tool_result) 开头，它引用的 assistant(tool_use)
+                // 已被压进摘要，留下孤立 tool_result 会让 EnsureValidMessageSequence 每次
+                // 请求都触发修复并刷屏。把这条 user(tool_result) 一起压进摘要，直到切点
+                // 不再是孤立 tool_result。保留至少 1 条原始消息防止退化为纯摘要。
+                while (compactEnd < _conversationHistory.Count - 1
+                       && IsUserToolResultMessage(_conversationHistory[compactEnd]))
+                {
+                    compactEnd++;
+                }
 
                 var newHistory = new List<Dictionary<string, object>>();
                 newHistory.Add(new Dictionary<string, object>
@@ -286,6 +299,13 @@ namespace TrioAI.MPPlugIn
         {
             lock (_historyLock)
             {
+            // 持久化修复：对 _conversationHistory 本身做一次 in-place 修复。
+            // 之前只在请求副本 messages 上修，但没写回历史 → 历史中的坏数据（孤立 tool_result、
+            // 跨消息重复 tool_use、首条非 user 等）会让每次请求都重复触发提示。
+            // in-place 修复后历史变干净，下次 repaired=false，提示只出现一次。
+            // 触发来源：旧版本遗留、LoadSession 加载的老 session 文件、取消时塞的 sentinel 等。
+            EnsureValidMessageSequence(_conversationHistory);
+
             var messages = new List<Dictionary<string, object>>(_conversationHistory.Count);
 
             // 先建立 tool_use_id → tool_name 映射（来自 assistant 消息的 tool_use block）
@@ -538,6 +558,22 @@ namespace TrioAI.MPPlugIn
                 return messages;
             }
         }
+        /// <summary>
+        /// 判断消息是否为含 tool_result block 的 user 消息。
+        /// 用于 CompactHistory/TrimHistory 切点净化：这类消息若被切到保留段开头，
+        /// 它引用的 assistant(tool_use) 已丢失，会成为孤立 tool_result。
+        /// </summary>
+        private static bool IsUserToolResultMessage(Dictionary<string, object> msg)
+        {
+            if (GetStringValue(msg, "role") != "user") return false;
+            if (!(msg.TryGetValue("content", out var content) && content is List<Dictionary<string, object>> blocks)) return false;
+            foreach (var b in blocks)
+            {
+                if (GetStringValue(b, "type") == "tool_result") return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// 确保 messages 数组满足 API 约束：首条必须是 user，tool_result 必须紧跟 assistant 的 tool_use，
         /// 不能为空数组。参考 claudecodefx 的 ensureToolResultPairing 逻辑。
