@@ -108,6 +108,38 @@ namespace TrioAI.MPPlugIn
                             }
                         }
                     }
+
+                    // 从 display messages 生成可读摘要，注入 history 开头
+                    // AI 模型往往无法从 tool_use/tool_result 交换中理解对话上下文，
+                    // 摘要帮助 AI 理解之前的对话内容。
+                    if (data != null && data.TryGetValue("messages", out var msgsObj)
+                        && msgsObj is System.Collections.ArrayList displayMsgs
+                        && displayMsgs.Count > 0
+                        && _conversationHistory.Count > 0)
+                    {
+                        var sb = new System.Text.StringBuilder();
+                        sb.AppendLine("[Previous session context — restored on load]");
+                        foreach (var m in displayMsgs)
+                        {
+                            if (!(m is Dictionary<string, object> md)) continue;
+                            var role = md.ContainsKey("role") ? md["role"]?.ToString() : "?";
+                            var msg = md.ContainsKey("text") ? md["text"]?.ToString() : "";
+                            if (string.IsNullOrEmpty(msg)) continue;
+                            var label = role == "User" ? "User" : role == "AI" ? "AI" : "System";
+                            var trimmed = msg.Length > 300 ? msg.Substring(0, 300) + "..." : msg;
+                            sb.AppendLine($"{label}: {trimmed}");
+                        }
+                        _conversationHistory.Insert(0, new Dictionary<string, object>
+                        {
+                            { "role", "user" },
+                            { "content", sb.ToString() }
+                        });
+                        _conversationHistory.Insert(1, new Dictionary<string, object>
+                        {
+                            { "role", "assistant" },
+                            { "content", "Understood. I have the previous session context above and will continue from there." }
+                        });
+                    }
                 }
                 catch { }
             }
