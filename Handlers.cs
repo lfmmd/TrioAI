@@ -378,9 +378,21 @@ namespace TrioAI.MPPlugIn
             // 先尝试标准 TextProjectItemBase 路径（TrioBASIC / Text）
             var textItem = item as TextProjectItemBase;
             string source;
+            int lineOffset = 0;
             if (textItem != null)
             {
-                source = textItem.LoadSourceCode();
+                // 优先从已打开的编辑器读取 — 编辑器文本与 IDE 行号一致
+                var editorText = TryGetEditorText(item);
+                if (!string.IsNullOrEmpty(editorText))
+                {
+                    source = editorText;
+                }
+                else
+                {
+                    source = textItem.LoadSourceCode();
+                    // LoadSourceCode() 可能包含 IDE 编辑器不计入行号的头部行
+                    lineOffset = DetectSourceHeaderOffset(source, name);
+                }
             }
             else if (IsIecItem(item))
             {
@@ -394,6 +406,14 @@ namespace TrioAI.MPPlugIn
             }
 
             var lines = source.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+            // 剥离 LoadSourceCode() 中 IDE 不计入行号的头部行
+            if (lineOffset > 0 && lineOffset < lines.Length)
+            {
+                lines = lines.Skip(lineOffset).ToArray();
+                source = string.Join("\n", lines);
+            }
+
             int totalLines = lines.Length;
 
             int? startOpt = body != null ? GetInt(body, "startLine") : null;
@@ -743,6 +763,46 @@ namespace TrioAI.MPPlugIn
                 return true;
             }
             catch { return false; }
+        }
+
+        private static string TryGetEditorText(IProjectItem item)
+        {
+            try
+            {
+                var mw = MW;
+                if (mw == null) return null;
+                var doc = mw.HasOpenedDocumentFor(item);
+                if (doc == null) return null;
+                var content = doc.Content as System.Windows.FrameworkElement;
+                if (content == null) return null;
+                var found = FindControlWithTextProperty(content);
+                if (found == null) return null;
+                return found.GetType().GetProperty("Text")?.GetValue(found) as string;
+            }
+            catch { return null; }
+        }
+
+        // 检测 LoadSourceCode() 返回的源码中 IDE 不计入行号的头部行数
+        // TrioBASIC 程序的 LoadSourceCode() 可能包含 1~2 行头部（如程序名注释 + 空行），
+        // 这些行在 IDE 编辑器中不计入行号，导致 ReadSource 报告的行号与 IDE 偏移。
+        private static int DetectSourceHeaderOffset(string source, string programName)
+        {
+            if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(programName)) return 0;
+            var firstNewline = source.IndexOfAny(new[] { '\r', '\n' });
+            var firstLine = firstNewline >= 0 ? source.Substring(0, firstNewline) : source;
+            var trimmed = firstLine.TrimStart('\'', ' ', '\t');
+
+            // 第一行是程序名（纯名或注释形式如 'ProgramName）→ 头部偏移
+            if (!string.Equals(trimmed, programName, StringComparison.OrdinalIgnoreCase))
+                return 0;
+
+            // 找到第二行，检查是否为空行
+            if (firstNewline < 0) return 1;
+            var rest = source.Substring(firstNewline).TrimStart('\r', '\n');
+            if (rest.Length == 0 || rest[0] == '\r' || rest[0] == '\n')
+                return 2;
+
+            return 1;
         }
 
         private static System.Windows.DependencyObject FindControlWithTextProperty(System.Windows.DependencyObject parent)
@@ -2003,9 +2063,17 @@ namespace TrioAI.MPPlugIn
 
                 var textItem = item as TextProjectItemBase;
                 string source = null;
+                int lineOffset = 0;
                 if (textItem != null)
                 {
-                    try { source = textItem.LoadSourceCode(); } catch { }
+                    // 优先从编辑器读取（行号与 IDE 一致）
+                    source = TryGetEditorText(item);
+                    if (string.IsNullOrEmpty(source))
+                    {
+                        try { source = textItem.LoadSourceCode(); } catch { }
+                        if (source != null)
+                            lineOffset = DetectSourceHeaderOffset(source, item.ItemName);
+                    }
                 }
                 else if (IsIecItem(item))
                 {
@@ -2020,6 +2088,8 @@ namespace TrioAI.MPPlugIn
                 if (source == null) continue;
 
                 var lines = source.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                if (lineOffset > 0 && lineOffset < lines.Length)
+                    lines = lines.Skip(lineOffset).ToArray();
                 for (int i = 0; i < lines.Length; i++)
                 {
                     if (results.Count >= maxResults) break;
