@@ -53,13 +53,14 @@ namespace TrioAI.MPPlugIn
         {
             if (string.IsNullOrEmpty(_currentSessionId)) return;
             var path = Path.Combine(HistoryDir, _currentSessionId + ".json");
-            var data = new
+            var data = new Dictionary<string, object>
             {
-                id = _currentSessionId,
-                updated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                messages = displayMessages ?? new string[0]
+                { "id", _currentSessionId },
+                { "updated", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
+                { "messages", displayMessages ?? new string[0] },
+                { "history", _conversationHistory }
             };
-            File.WriteAllText(path, _json.Serialize(data));
+            File.WriteAllText(path, SerializeRequest(data));
         }
 
         public string LoadSession(string sessionId)
@@ -68,7 +69,27 @@ namespace TrioAI.MPPlugIn
             if (!File.Exists(path)) return null;
             _currentSessionId = sessionId;
             _conversationHistory.Clear();
-            return File.ReadAllText(path);
+
+            var text = File.ReadAllText(path);
+            try
+            {
+                var data = _json.Deserialize<Dictionary<string, object>>(text);
+                if (data != null && data.TryGetValue("history", out var histObj))
+                {
+                    // JavaScriptSerializer 反序列化数组为 ArrayList，里面是 Dictionary<string,object>
+                    if (histObj is System.Collections.ArrayList al)
+                    {
+                        foreach (var item in al)
+                        {
+                            if (item is Dictionary<string, object> d)
+                                _conversationHistory.Add(d);
+                        }
+                    }
+                }
+            }
+            catch { }
+
+            return text;
         }
 
         public void DeleteSession(string sessionId)

@@ -1285,15 +1285,10 @@ namespace TrioAI.MPPlugIn
         {
             try
             {
-                var path = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TrioAI",
-                    "chat_history", sessionId + ".json");
-                if (!File.Exists(path)) return;
-
-                var text = File.ReadAllText(path);
+                var text = _ai.LoadSession(sessionId);
+                if (text == null) return;
                 var data = _json.Deserialize<Dictionary<string, object>>(text);
                 _messages.Clear();
-                _ai.StartNewSession();
 
                 object msgsObj;
                 if (data.TryGetValue("messages", out msgsObj) && msgsObj is System.Collections.ArrayList al)
