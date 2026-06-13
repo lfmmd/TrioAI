@@ -101,7 +101,10 @@ namespace TrioAI.MPPlugIn
                             foreach (var item in al)
                             {
                                 if (item is Dictionary<string, object> d)
+                                {
+                                    NormalizeHistoryContent(d);
                                     _conversationHistory.Add(d);
+                                }
                             }
                         }
                     }
@@ -151,6 +154,25 @@ namespace TrioAI.MPPlugIn
                 catch { }
             }
             return result;
+        }
+
+        /// JavaScriptSerializer 反序列化后 content 数组变成 ArrayList，
+        /// 但代码中大量使用 `content is List&lt;Dictionary&lt;string,object&gt;&gt;` 类型检查。
+        /// 加载时必须把 ArrayList 转回 List，否则所有 assistant 消息的 tool_use/text block 都会被跳过。
+        private static void NormalizeHistoryContent(Dictionary<string, object> msg)
+        {
+            object content;
+            if (!msg.TryGetValue("content", out content)) return;
+            if (content is System.Collections.ArrayList al)
+            {
+                var list = new List<Dictionary<string, object>>();
+                foreach (var item in al)
+                {
+                    if (item is Dictionary<string, object> d)
+                        list.Add(d);
+                }
+                msg["content"] = list;
+            }
         }
 
         internal class SessionInfo
