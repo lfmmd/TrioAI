@@ -34,6 +34,11 @@ namespace TrioAI.MPPlugIn
             if (CompactHistory())
                 return;
 
+            // 摘要失败 → 兜底硬截断，告知用户（避免静默丢上下文）
+            OnSystemMessage?.Invoke(Lang.L(
+                "⚠ 自动摘要失败，已回退到硬截断（最近 30 条消息已保留）",
+                "⚠ Auto-summary failed, fell back to hard truncation (last 30 messages kept)"));
+
             // 摘要失败时兜底：截断旧消息
             // 优先找 user+string 消息（普通用户输入），兜底找任意 user 消息（tool_result），
             // 确保 messages 首条始终是 user 角色。
@@ -67,6 +72,10 @@ namespace TrioAI.MPPlugIn
                 _conversationHistory.GetRange(found, _conversationHistory.Count - found));
             _conversationHistory.Clear();
             _conversationHistory.AddRange(trimmed);
+
+            // 硬截断可能产生孤立 tool_result（user 含 tool_result 但对应的 assistant tool_use
+            // 已被截掉）— 调 EnsureValidMessageSequence 兜底清理，避免每次 API 请求触发修复刷屏
+            EnsureValidMessageSequence(_conversationHistory);
         }
 
         /// Auto-compaction：调用 AI 将旧消息摘要为一条 user 消息，保留最近 MaxRecentKeep 条。
@@ -404,7 +413,8 @@ namespace TrioAI.MPPlugIn
             {
                 if (toolNameById.TryGetValue(id, out var name)
                     && (string.Equals(name, "lookup_command", StringComparison.OrdinalIgnoreCase)
-                        || string.Equals(name, "read_skill", StringComparison.OrdinalIgnoreCase)))
+                        || string.Equals(name, "read_skill", StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(name, "read_source", StringComparison.OrdinalIgnoreCase)))
                 {
                     keepRecent.Add(id);
                 }

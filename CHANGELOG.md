@@ -6,6 +6,41 @@
 
 ## [Unreleased]
 
+## [0.3.1] — 2026-06-14
+
+Phase 1 测试发现的 4 个 bug 修复。重点解决"读 10 个代码做统计"时的严重失忆循环。
+
+### 修复
+
+- **multi-write 并行卡死（multi-write deadlock）** —— `ChatPanel.cs` `ShowInlineConfirmation` 用单实例字段 `_confirmTcs`，并行场景下多个 `Task.Run` 同时 `BeginInvoke` 进 dispatcher 队列，后者覆盖前者，用户点 Allow 只解锁最后一个 tcs，前几个 tcs 永远完不成 → `Task.WaitAll` 死锁。新增 `_confirmLock` 字段，`ShowInlineConfirmation` 整体 `lock` 包裹强制串行。
+- **Plan Mode 审批弹窗 → 气泡化** —— `ChatPanel.cs` `ShowPlanApproval` 删除 `MessageBox.Show`，复用现有 `_confirmPanel` + `_confirmTcs` + `OnConfirmAllow`/`OnConfirmReject` 机制。审批按钮嵌入聊天界面底部，与 write 确认同一面板风格。同时 `lock (_confirmLock)` 防止与 write 确认冲突。
+- **`_recentReadFiles` 容量过小导致 CompactHistory 后失忆** —— `AiSession.cs` `MaxRestoredFiles` 5 → 20，`MaxRestoredFileChars` 4000 → 6000。原来读 10 个代码做统计时，LRU 只保留最后 5 个，前 5 个被淘汰，触发 CompactHistory 后无法恢复。
+- **microCompact 清空 read_source 内容导致 90 次重读循环** —— `AiHistory.cs` microCompact 逻辑保留最后 N=5 个 tool_result 完整内容，例外清单只有 `lookup_command` / `read_skill`，**`read_source` 不在例外**。读 10 个不同文件时前 5 个 tool_result 被清空成 `"[Old tool result content cleared]"`，AI 看到清空提示后重新读，形成恶性循环。把 `read_source` 加入 `keepRecent` 例外（read_source 已有同文件去重，不会无限累积）。
+
+## [0.3.0] — 2026-06-14
+
+Phase 1 优化：补齐 agent 自主编程的脚手架（对照 cc-haha 缺失项），不动现有架构，不引入新依赖。共 9 项后端改动 + Plan Mode UI + 7 个新增单元测试。
+
+### 新增
+
+- **工具并行执行** —— `AiTools.cs` 新增 `PureIoTools` HashSet（lookup_command / read_skill / discover_skills / task_* / enter_plan_mode / exit_plan_mode 共 9 个），这些工具绕过 `DispatcherHelper.Invoke` 直接执行；`AiService.cs` agentic loop 把 `foreach` 串行执行改为 `Task.Run` + `Task.WaitAll` + 按原始 tool_use 顺序收集 tool_result。真并行仅对纯 IO 工具生效（其他工具仍走 UI 线程序列化，MP API 是 STA）。
+- **API 错误分类与重试** —— 新增 `RetryableApiException`（携带 StatusCode + RetryAfterSeconds），`CallApiStream` 对 5xx / 429 / IOException / HttpRequestException 抛此异常；新增 `CallApiWithRetry` 做指数退避重试（1s/2s/4s，共 3 次）。Retry-After header 解析。4xx 其他错误不重试。Chat loop 调用点改为 `CallApiWithRetry`。
+- **Task/Todo 系统** —— 新增 4 个工具 `task_create` / `task_update` / `task_list` / `task_get`。`AiSession.cs` 新增 `_tasks` List + `_tasksLock`。AI 可自跟踪多步任务进度，任务状态不进入 conversation history（不污染上下文）。
+- **Plan Mode** —— 新增 `enter_plan_mode` / `exit_plan_mode` 工具 + `_planMode` 状态字段。Plan Mode 下所有 `WriteTools` 工具调用直接拒绝（返回 BLOCKED 提示）。`exit_plan_mode` 通过 `OnConfirmPlan` 回调请求用户审批；UI 未挂回调时默认批准避免 AI 死锁。
+- **discover_skills 工具** —— 列出所有 markdown skill 的 name/description/when_to_use/category，AI 在工具选择阶段就能感知可用技能，比 read_skill 试错更高效。
+- **Plan Mode UI** —— `ChatPanel.cs` 新增橙色状态条（Plan Mode 激活时显示在 toolbar 下方）+ Plan 审批 MessageBox 对话框（显示 AI 提交的 plan 文本，Yes/No）。挂 `OnPlanModeChanged` + `OnConfirmPlan` 回调。
+- **单元测试** —— `AiOptimizationTests.cs` 新增 7 个 Phase1-* 测试：PureIoTools 分流、新增 7 工具注册、MaxTurns/TokenBudget 常量、RetryableApiException + 指数退避、Task CRUD、Plan Mode 拦截 + 自动批准、EnsureValidMessageSequence 清理孤立 tool_result。`P1-1` 工具数断言从 59 更新到 66。
+
+### 变更
+
+- **循环退出条件** —— `AiService.cs` `MaxTurns` 从硬编码 20 改为常量 50；新增 `TokenBudgetLimit = 400_000` chars（≈100K tokens），循环内每轮检查，超阈值先尝试 `TrimHistory`，仍超则提示用户开新会话。
+- **read_source 工具描述** —— 强化分页引导语气，明确告诉 AI "first chunk 不是完整文件，必须用 startLine/endLine 继续读"。
+- **CompactHistory 失败提示** —— 摘要失败回退到硬截断时，UI 显示 `⚠ 自动摘要失败，已回退到硬截断（最近 30 条消息已保留）`，不再静默丢上下文。
+
+### 修复
+
+- **TrimHistory 硬截断兜底** —— 之前硬截断路径只重置 `_conversationHistory`，没调 `EnsureValidMessageSequence`，可能留下孤立 tool_result 导致后续每次 API 请求触发修复刷屏。现在硬截断后立刻调用一次清理。
+
 ## [0.2.16] — 2026-06-13
 
 ### 修复

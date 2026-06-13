@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Script.Serialization;
 
 namespace TrioAI.MPPlugIn
@@ -19,6 +20,22 @@ namespace TrioAI.MPPlugIn
             "create_program", "delete_program", "rename_program",
             "upload", "download", "compile_program", "run_program", "stop_program",
             "set_program_process", "write_iec_variables"
+        };
+
+        // 纯 IO 工具：不需要 UI 线程（不访问 MP 项目模型），可绕过 DispatcherHelper.Invoke 直接调用。
+        // 这些工具的 DispatchTool 路径是纯内存字典查询或纯文件读，线程安全。
+        // 加它们到这个集合 → 可在 Task.Run 内真正并行执行。
+        private static readonly HashSet<string> PureIoTools = new HashSet<string>
+        {
+            "lookup_command",    // 纯内存字典 + HTML 文件读
+            "read_skill",        // 纯文件读
+            "discover_skills",   // 纯文件读（LoadMdSkills）
+            "task_create",       // 纯内存操作（_tasks list）
+            "task_update",       // 纯内存操作
+            "task_list",         // 纯内存操作
+            "task_get",          // 纯内存操作
+            "enter_plan_mode",   // 纯内存操作（_planMode 字段）
+            "exit_plan_mode"     // 纯内存操作 + OnConfirmPlan 回调（UI 线程安全）
         };
 
         private string ExecuteTool(string name, Dictionary<string, object> input)
@@ -44,13 +61,24 @@ namespace TrioAI.MPPlugIn
                 // Write operations need confirmation
                 if (WriteTools.Contains(name))
                 {
+                    // Plan Mode 拒绝：AI 必须先 exit_plan_mode 让用户审批计划
+                    if (_planMode)
+                    {
+                        return "BLOCKED: Plan Mode is active. You cannot modify controller state, programs, or VR/TABLE in Plan Mode. " +
+                               "Use read-only tools (read_source / list_programs / get_status / lookup_command / etc.) to complete your investigation, " +
+                               "then call exit_plan_mode to present your plan for user approval. After approval, Plan Mode is disabled and write tools become available.";
+                    }
                     var argsPreview = _json.Serialize(input);
                     var accepted = OnConfirmWrite?.Invoke(name, argsPreview) ?? false;
                     if (!accepted)
                         return "User rejected this operation.";
                 }
 
-                var result = DispatcherHelper.Invoke(() => DispatchTool(name, input));
+                // 纯 IO 工具绕过 DispatcherHelper 直接执行（可在 Task.Run 内并行）；
+                // 其他工具仍封送到 UI 线程（MP 项目模型访问需要 STA）。
+                var result = PureIoTools.Contains(name)
+                    ? DispatchTool(name, input)
+                    : DispatcherHelper.Invoke(() => DispatchTool(name, input));
                 var resultStr = _json.Serialize(result);
                 if (_showToolStatus)
                     OnToolStatus?.Invoke($"{name}: {Truncate(resultStr, 300)}");
@@ -178,6 +206,7 @@ namespace TrioAI.MPPlugIn
                 case "set_program_process": return Handlers.SetProgramProcess(GetStr(input, "name"), input);
                 case "lookup_command": return LookupCommand(GetStr(input, "query"), GetStr(input, "full"), GetStr(input, "library"));
                 case "read_skill": return ReadSkill(GetStr(input, "name"));
+                case "discover_skills": return DiscoverSkills(GetStr(input, "category"));
                 case "search_code": return Handlers.SearchCode(GetStr(input, "query"), GetBool(input, "caseSensitive"));
                 case "update_memory":
                     {
@@ -188,7 +217,164 @@ namespace TrioAI.MPPlugIn
                         return new { success = true, message = "Memory updated successfully." };
                     }
 
+                case "task_create": return TaskCreate(GetStr(input, "subject"), GetStr(input, "description"));
+                case "task_update": return TaskUpdate(GetInt(input, "id", 0), GetStr(input, "status"), GetStr(input, "subject"), GetStr(input, "description"));
+                case "task_list": return TaskList();
+                case "task_get": return TaskGet(GetInt(input, "id", 0));
+                case "enter_plan_mode": return EnterPlanMode();
+                case "exit_plan_mode": return ExitPlanMode(GetStr(input, "plan"));
+
                 default: return new { error = $"Unknown tool: {name}" };
+            }
+        }
+
+        // ---- Plan Mode 实现 ----
+
+        private object EnterPlanMode()
+        {
+            _planMode = true;
+            OnPlanModeChanged?.Invoke(true);
+            return new
+            {
+                plan_mode = true,
+                hint = "Plan Mode is now active. All write/modify tools (write_source, compile_program, run_program, write_vr, etc.) are blocked. " +
+                       "Use read-only tools to investigate, then call exit_plan_mode with your plan to request user approval."
+            };
+        }
+
+        private object ExitPlanMode(string plan)
+        {
+            if (string.IsNullOrEmpty(plan))
+                return new { error = "plan is required — present what you intend to do and why" };
+
+            // 请求用户审批。若 UI 未挂 OnConfirmPlan（Phase 1 范围：不动 UI），
+            // 默认批准以避免 AI 在 plan mode 内死锁。
+            // 用户可在 ChatPanel 接 OnConfirmPlan 回调启用审批 UI（Phase 2）。
+            bool approved = OnConfirmPlan != null ? OnConfirmPlan(plan) : true;
+            if (!approved)
+            {
+                // 用户拒绝：保持 plan mode，让 AI 继续调研或修订计划
+                return new
+                {
+                    plan_mode = true,
+                    approved = false,
+                    hint = "User did not approve the plan. Plan Mode is still active. Revise the plan and call exit_plan_mode again, or do more investigation first."
+                };
+            }
+
+            _planMode = false;
+            OnPlanModeChanged?.Invoke(false);
+            return new
+            {
+                plan_mode = false,
+                approved = true,
+                hint = "Plan approved. Write/modify tools are now available. Proceed with the approved plan."
+            };
+        }
+
+        // ---- Task / Todo 系统实现 ----
+        // 状态存储在 AiSession 的 _tasks 字段；不进入 conversation history。
+
+        private object TaskCreate(string subject, string description)
+        {
+            if (string.IsNullOrEmpty(subject))
+                return new { error = "subject is required" };
+            lock (_tasksLock)
+            {
+                var t = new TaskItem
+                {
+                    Id = _nextTaskId++,
+                    Subject = subject,
+                    Description = description ?? "",
+                    Status = "pending",
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                _tasks.Add(t);
+                return new
+                {
+                    id = t.Id,
+                    subject = t.Subject,
+                    description = t.Description,
+                    status = t.Status,
+                    hint = "Task created. Use task_update(id, status) to mark progress (pending | in_progress | completed)."
+                };
+            }
+        }
+
+        private object TaskUpdate(int id, string status, string subject, string description)
+        {
+            if (id <= 0)
+                return new { error = "id is required" };
+            lock (_tasksLock)
+            {
+                var t = _tasks.Find(x => x.Id == id);
+                if (t == null)
+                    return new { error = $"Task {id} not found" };
+                if (!string.IsNullOrEmpty(status))
+                {
+                    var s = status.ToLowerInvariant();
+                    if (s != "pending" && s != "in_progress" && s != "completed")
+                        return new { error = "status must be: pending | in_progress | completed" };
+                    t.Status = s;
+                }
+                if (!string.IsNullOrEmpty(subject))
+                    t.Subject = subject;
+                if (description != null)
+                    t.Description = description;
+                t.UpdatedAt = DateTime.Now;
+                return new
+                {
+                    id = t.Id,
+                    subject = t.Subject,
+                    description = t.Description,
+                    status = t.Status,
+                    updated_at = t.UpdatedAt.Value.ToString("HH:mm:ss")
+                };
+            }
+        }
+
+        private object TaskList()
+        {
+            lock (_tasksLock)
+            {
+                if (_tasks.Count == 0)
+                    return new { count = 0, tasks = new object[0], hint = "No tasks. Use task_create to start tracking multi-step work." };
+                var summary = _tasks.Select(t => new
+                {
+                    id = t.Id,
+                    subject = t.Subject,
+                    status = t.Status
+                }).ToList();
+                return new
+                {
+                    count = summary.Count,
+                    pending = summary.Count(x => x.status == "pending"),
+                    in_progress = summary.Count(x => x.status == "in_progress"),
+                    completed = summary.Count(x => x.status == "completed"),
+                    tasks = summary
+                };
+            }
+        }
+
+        private object TaskGet(int id)
+        {
+            if (id <= 0)
+                return new { error = "id is required" };
+            lock (_tasksLock)
+            {
+                var t = _tasks.Find(x => x.Id == id);
+                if (t == null)
+                    return new { error = $"Task {id} not found" };
+                return new
+                {
+                    id = t.Id,
+                    subject = t.Subject,
+                    description = t.Description,
+                    status = t.Status,
+                    created_at = t.CreatedAt.ToString("HH:mm:ss"),
+                    updated_at = t.UpdatedAt.HasValue ? t.UpdatedAt.Value.ToString("HH:mm:ss") : null
+                };
             }
         }
 
@@ -216,7 +402,7 @@ namespace TrioAI.MPPlugIn
             {
                 Tool("get_status", "Get controller connection status, product name, firmware version, project name", NoParams()),
                 Tool("list_programs", "List all programs in the current MotionPerfect project", NoParams()),
-                Tool("read_source", "Read source code of a program. For files >200 lines or >8000 chars, auto-returns first chunk + totalLines + hint; use startLine/endLine to paginate subsequent chunks. For IEC tasks, use pouName to read a specific POU (default: first POU). IEC ST POU returns local VAR...END_VAR block (from POU's variable group) PREPENDED to the code body — write_source expects this same shape.", Props(
+                Tool("read_source", "Read source code of a program. The system auto-returns the FIRST CHUNK for files >200 lines or >8000 chars — the response includes totalLines and a hint when more chunks exist. You MUST check totalLines vs endLine and continue with startLine=endLine+1 to read subsequent chunks; NEVER assume the first response contains the whole file. For IEC tasks, use pouName to read a specific POU (default: first POU). IEC ST POU returns local VAR...END_VAR block (from POU's variable group) PREPENDED to the code body — write_source expects this same shape.", Props(
                     ("name", "Program name", false),
                     ("pouName", "For IEC tasks only: specific POU name to read. If omitted, reads the first POU. Use get_iec_task_detail to list available POUs.", true),
                     ("startLine", "Starting 1-based line number (optional, for pagination)", true),
@@ -293,6 +479,9 @@ namespace TrioAI.MPPlugIn
                 )),
                 Tool("read_skill", "Load full markdown content of a skill listed in the 'Available Skills' section of the system prompt. BLOCKING REQUIREMENT: when the user's request matches a skill's 'Use when:' description, invoke read_skill BEFORE writing any code or generating other response about the task. NEVER mention or claim to follow a skill without calling this tool first. Note: skills whose full body is already shown in the system prompt (e.g. 'Safe Coding Rules (MANDATORY)') are pre-loaded — do NOT re-read those.", Props(
                     ("name", "Skill name from Available Skills", false)
+                )),
+                Tool("discover_skills", "List available markdown skills with their name, description, and when_to_use trigger. Use this FIRST when you are unsure which skills exist or which one matches the user's task — cheaper than calling read_skill by trial and error. After finding a relevant skill, call read_skill(name) to load its full body.", Props(
+                    ("category", "Filter by category (general | triobasic | iec | plcopen). null/empty returns all skills.", true)
                 )),
                 Tool("search_code", "Search for a text pattern across all programs in the project. Returns matching lines with line numbers.", Props(
                     ("query", "Search text or pattern", false),
@@ -381,7 +570,23 @@ namespace TrioAI.MPPlugIn
                     ("path", "Project file path", false)
                 )),
                 Tool("list_project_items", "List all project items with name/type/group", NoParams()),
-                Tool("update_memory", "Update your persistent memory (survives across sessions). Content replaces the entire memory file. Include all previous memories you want to keep plus new information. Use markdown formatting. Keep under 2000 tokens.", Props("content", "Full memory content to save"))
+                Tool("update_memory", "Update your persistent memory (survives across sessions). Content replaces the entire memory file. Include all previous memories you want to keep plus new information. Use markdown formatting. Keep under 2000 tokens.", Props("content", "Full memory content to save")),
+                Tool("task_create", "Create a new task to track a step in a multi-step workflow. Use this proactively when the user's request requires 3+ distinct steps. Each task gets a stable id you can update later.", Props(
+                    ("subject", "Short imperative title (e.g. 'Fix axis 2 homing sequence')", false),
+                    ("description", "What needs to be done, including acceptance criteria if relevant", true)
+                )),
+                Tool("task_update", "Update an existing task's status or content. Mark in_progress when starting work, completed when done. Keep exactly one task in_progress at a time when possible.", Props(
+                    ("id", "Task id from task_create / task_list", false),
+                    ("status", "New status: pending | in_progress | completed", true),
+                    ("subject", "New subject (optional)", true),
+                    ("description", "New description (optional)", true)
+                )),
+                Tool("task_list", "List all tasks with their current status. Use this to verify progress and pick the next task to work on.", NoParams()),
+                Tool("task_get", "Get full details of a single task by id.", Props("id", "Task id")),
+                Tool("enter_plan_mode", "Enter Plan Mode: all write/modify tools (write_source, patch_source, compile_program, run_program, write_vr, write_table, etc.) are blocked. Use this at the start of a non-trivial task to investigate first with read-only tools, then present a plan via exit_plan_mode for user approval before making any changes. Avoid for trivial single-step requests.", NoParams()),
+                Tool("exit_plan_mode", "Present your plan to the user for approval and exit Plan Mode. The user will approve or reject. If rejected, Plan Mode stays active — revise the plan or do more investigation. If approved, write/modify tools become available.", Props(
+                    ("plan", "The complete plan: what files/VR/programs you will change, why, and the verification steps. Be specific.", false)
+                ))
             };
         }
 

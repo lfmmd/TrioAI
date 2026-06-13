@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 namespace TrioAI.MPPlugIn
@@ -119,6 +120,8 @@ namespace TrioAI.MPPlugIn
         public Action<string> OnSystemMessage { get; set; }
         public Action<string> OnToolStatus { get; set; }
         public Func<string, string, bool> OnConfirmWrite { get; set; }
+        // Plan Mode 审批回调：参数是 AI 的 plan 文本，返回 true=批准（退出 plan mode），false=拒绝
+        public Func<string, bool> OnConfirmPlan { get; set; }
 
         public AiService()
         {
@@ -210,6 +213,10 @@ namespace TrioAI.MPPlugIn
 
         // ---- Agentic Loop ----
 
+        private const int MaxTurns = 50;
+        // chars (≈100K tokens). 历史超此阈值时强制 TrimHistory；仍超则提示开新会话。
+        private const int TokenBudgetLimit = 400_000;
+
         public void Chat(string userMessage, CancellationToken ct = default)
         {
             if (!HasApiKey)
@@ -231,10 +238,23 @@ namespace TrioAI.MPPlugIn
                 });
             }
 
-            for (int turn = 0; turn < 20; turn++)
+            for (int turn = 0; turn < MaxTurns; turn++)
             {
+                // 上下文预算检查：超阈值先尝试 TrimHistory；仍超则提示开新会话
+                if (EstimateHistoryTokens() > TokenBudgetLimit)
+                {
+                    TrimHistory();
+                    if (EstimateHistoryTokens() > TokenBudgetLimit)
+                    {
+                        OnSystemMessage?.Invoke(Lang.L(
+                            "⚠ 已达上下文上限，建议开启新会话继续（当前会话历史已保留）",
+                            "⚠ Context limit reached. Consider starting a new session (history preserved)."));
+                        return;
+                    }
+                }
+
                 StreamResult result;
-                try { result = CallApiStream(ct); }
+                try { result = CallApiWithRetry(ct); }
                 catch (OperationCanceledException)
                 {
                     // User cancelled before any content_block_stop arrived — no
@@ -259,12 +279,6 @@ namespace TrioAI.MPPlugIn
                             }
                         });
                     }
-                    return;
-                }
-                catch (System.IO.IOException ex)
-                {
-                    OnSystemMessage?.Invoke(Lang.L($"网络错误: {ex.Message}",
-                                                        $"Network error: {ex.Message}"));
                     return;
                 }
 
@@ -351,14 +365,50 @@ namespace TrioAI.MPPlugIn
                     return;
                 }
 
-                var toolResults = new List<Dictionary<string, object>>();
+                // 并行执行所有 tool_use 块：
+                // - 纯 IO 工具（lookup_command / read_skill / discover_skills）真并行（已绕过 DispatcherHelper）
+                // - 其他工具仍走 DispatcherHelper，被 UI 线程序列化（MP API 是 STA）
+                // - 写类工具的 OnConfirmWrite 弹窗由 dispatcher 自动排队，不会冲突
+                // 无论实际并行度如何，按原始 tool_use 顺序追加 tool_result（Anthropic 要求 id 对齐）
+                var toolResultMap = new Dictionary<string, string>(StringComparer.Ordinal);
+                var toolTasks = new List<Task>();
                 foreach (var toolBlock in toolUseBlocks)
                 {
                     var toolId = GetStringValue(toolBlock, "id");
                     var toolName = GetStringValue(toolBlock, "name");
                     var toolInput = GetDictValue(toolBlock, "input") ?? new Dictionary<string, object>();
+                    var capturedId = toolId; // 闭包捕获
 
-                    var execResult = ExecuteTool(toolName, toolInput);
+                    var task = Task.Run(() =>
+                    {
+                        string execResult;
+                        try
+                        {
+                            execResult = ExecuteTool(toolName, toolInput);
+                        }
+                        catch (Exception ex)
+                        {
+                            // ExecuteTool 内部本应吞所有异常返回 error string，这里兜底
+                            execResult = "Error: " + ex.Message;
+                        }
+                        lock (toolResultMap)
+                        {
+                            toolResultMap[capturedId] = execResult;
+                        }
+                    }, ct);
+                    toolTasks.Add(task);
+                }
+
+                try { Task.WaitAll(toolTasks.ToArray()); }
+                catch (OperationCanceledException) { throw; }
+                catch (AggregateException) { /* 单 Task 内异常已在 Task 内 catch，这里忽略包裹 */ }
+
+                // 按原始 tool_use 顺序构造 tool_result
+                var toolResults = new List<Dictionary<string, object>>();
+                foreach (var toolBlock in toolUseBlocks)
+                {
+                    var toolId = GetStringValue(toolBlock, "id");
+                    var execResult = toolResultMap.ContainsKey(toolId) ? toolResultMap[toolId] : "Error: tool execution lost";
                     toolResults.Add(new Dictionary<string, object>
                     {
                         { "type", "tool_result" },
@@ -378,7 +428,9 @@ namespace TrioAI.MPPlugIn
                 }
             }
 
-            OnSystemMessage?.Invoke(Lang.L("(已达到最大迭代次数)", "(Reached maximum iterations)"));
+            OnSystemMessage?.Invoke(Lang.L(
+                $"(已达到最大迭代次数 {MaxTurns})",
+                $"(Reached maximum iterations {MaxTurns})"));
         }
 
         private class StreamResult
@@ -389,6 +441,21 @@ namespace TrioAI.MPPlugIn
             public int OutputTokens;
             public int CacheReadTokens;
             public int CacheCreateTokens;
+        }
+
+        /// <summary>
+        /// 可重试的 API 异常：5xx / 429 / 网络抖动。CallApiStream 抛出，CallApiWithRetry 捕获后做指数退避。
+        /// </summary>
+        private class RetryableApiException : Exception
+        {
+            public int? StatusCode { get; }
+            public int? RetryAfterSeconds { get; }
+            public RetryableApiException(string message, int? statusCode = null, int? retryAfterSeconds = null)
+                : base(message)
+            {
+                StatusCode = statusCode;
+                RetryAfterSeconds = retryAfterSeconds;
+            }
         }
 
         // ---- API Call (Streaming SSE) ----
@@ -474,6 +541,16 @@ namespace TrioAI.MPPlugIn
                 response = _http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct).GetAwaiter().GetResult();
             }
             catch (OperationCanceledException) { throw; }
+            catch (System.IO.IOException ex)
+            {
+                // 网络抖动 / 连接重置 → 让外层 CallApiWithRetry 重试
+                throw new RetryableApiException("Network IO error: " + ex.Message);
+            }
+            catch (HttpRequestException ex)
+            {
+                // HTTP 层错误（DNS、连接拒绝、TLS 等）→ 可重试
+                throw new RetryableApiException("HTTP request error: " + ex.Message);
+            }
             catch (Exception ex)
             {
                 OnSystemMessage?.Invoke(Lang.L($"API 错误: {ex.Message}",
@@ -485,9 +562,31 @@ namespace TrioAI.MPPlugIn
             {
                 var errText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 LogApiRequest("error-" + response.StatusCode, errText);
-                OnSystemMessage?.Invoke(Lang.L($"API 错误 ({response.StatusCode}): {Truncate(errText, 500)}",
-                                                    $"API Error ({response.StatusCode}): {Truncate(errText, 500)}"));
+
+                var code = (int)response.StatusCode;
+                int? retryAfter = null;
+                if (response.Headers != null)
+                {
+                    var ra = response.Headers.RetryAfter;
+                    if (ra != null && ra.Delta.HasValue)
+                        retryAfter = (int)ra.Delta.Value.TotalSeconds;
+                    else if (ra != null && ra.Date.HasValue)
+                        retryAfter = (int)(ra.Date.Value - DateTimeOffset.UtcNow).TotalSeconds;
+                }
                 response.Dispose();
+
+                // 5xx 服务端错误 / 429 限流 → 抛 RetryableApiException 让外层重试
+                if (code == 429 || (code >= 500 && code < 600))
+                {
+                    throw new RetryableApiException(
+                        $"API {code}: {Truncate(errText, 300)}",
+                        statusCode: code,
+                        retryAfterSeconds: retryAfter);
+                }
+
+                // 4xx 其他（认证错、参数错等）→ 不可重试，直接报错
+                OnSystemMessage?.Invoke(Lang.L($"API 错误 ({code}): {Truncate(errText, 500)}",
+                                                    $"API Error ({code}): {Truncate(errText, 500)}"));
                 return null;
             }
 
@@ -500,6 +599,77 @@ namespace TrioAI.MPPlugIn
                 response.Dispose();
             }
         }
+
+        /// <summary>
+        /// 调用 CallApiStream，对可重试错误（5xx / 429 / 网络 IO）做指数退避重试，最多 MaxAttempts 次。
+        /// OperationCanceledException 直接抛出（用户取消，不重试）。
+        /// 重试耗尽后返回 null（Chat loop 会显示通用失败消息）。
+        /// </summary>
+        private StreamResult CallApiWithRetry(CancellationToken ct)
+        {
+            const int MaxAttempts = 3;
+            for (int attempt = 0; attempt < MaxAttempts; attempt++)
+            {
+                try
+                {
+                    return CallApiStream(ct);
+                }
+                catch (OperationCanceledException) { throw; }
+                catch (RetryableApiException ex)
+                {
+                    if (attempt >= MaxAttempts - 1)
+                    {
+                        OnSystemMessage?.Invoke(Lang.L(
+                            $"⚠ API 重试 {MaxAttempts} 次仍失败 ({ex.StatusCode?.ToString() ?? "network"}): {ex.Message}",
+                            $"⚠ API failed after {MaxAttempts} retries ({ex.StatusCode?.ToString() ?? "network"}): {ex.Message}"));
+                        return null;
+                    }
+                    int delay = ex.RetryAfterSeconds.HasValue && ex.RetryAfterSeconds.Value > 0
+                        ? Math.Min(ex.RetryAfterSeconds.Value * 1000, 30000)
+                        : GetBackoffDelay(attempt);
+                    OnSystemMessage?.Invoke(Lang.L(
+                        $"⚠ API {ex.StatusCode?.ToString() ?? "网络错误"}，{delay / 1000.0:F1}s 后重试（第 {attempt + 2}/{MaxAttempts} 次）...",
+                        $"⚠ API {ex.StatusCode?.ToString() ?? "network error"}, retrying in {delay / 1000.0:F1}s (attempt {attempt + 2}/{MaxAttempts})..."));
+                    SleepWithCancel(delay, ct);
+                }
+                catch (System.IO.IOException ex)
+                {
+                    if (attempt >= MaxAttempts - 1)
+                    {
+                        OnSystemMessage?.Invoke(Lang.L(
+                            $"⚠ 网络错误重试 {MaxAttempts} 次仍失败: {ex.Message}",
+                            $"⚠ Network error failed after {MaxAttempts} retries: {ex.Message}"));
+                        return null;
+                    }
+                    int delay = GetBackoffDelay(attempt);
+                    OnSystemMessage?.Invoke(Lang.L(
+                        $"⚠ 网络错误: {ex.Message}，{delay / 1000.0:F1}s 后重试（第 {attempt + 2}/{MaxAttempts} 次）...",
+                        $"⚠ Network error: {ex.Message}, retrying in {delay / 1000.0:F1}s (attempt {attempt + 2}/{MaxAttempts})..."));
+                    SleepWithCancel(delay, ct);
+                }
+            }
+            return null;
+        }
+
+        private static int GetBackoffDelay(int attempt)
+        {
+            // 1s, 2s, 4s 指数退避
+            return (int)Math.Pow(2, attempt) * 1000;
+        }
+
+        private static void SleepWithCancel(int ms, CancellationToken ct)
+        {
+            try { Task.Delay(ms, ct).Wait(ct); }
+            catch (OperationCanceledException) { throw; }
+            catch (AggregateException ae)
+            {
+                // Task.Delay 偶发 AggregateException 包裹 OperationCanceledException
+                if (ae.InnerExceptions.Count == 1 && ae.InnerExceptions[0] is OperationCanceledException)
+                    throw;
+                throw;
+            }
+        }
+
 
         private StreamResult ReadSseStream(HttpResponseMessage response, CancellationToken ct)
         {

@@ -13,9 +13,56 @@ namespace TrioAI.MPPlugIn
         private readonly List<Dictionary<string, object>> _conversationHistory = new List<Dictionary<string, object>>();
         private readonly object _historyLock = new object();
         private string _currentSessionId;
-        private const int MaxRestoredFiles = 5;
-        private const int MaxRestoredFileChars = 4000;
+        private const int MaxRestoredFiles = 20;
+        private const int MaxRestoredFileChars = 6000;
         private readonly List<Tuple<string, string>> _recentReadFiles = new List<Tuple<string, string>>();
+
+        // ---- Task / Todo 系统（AI 自跟踪多步任务）----
+        private readonly List<TaskItem> _tasks = new List<TaskItem>();
+        private readonly object _tasksLock = new object();
+        private int _nextTaskId = 1;
+
+        // ---- Plan Mode（先调研后动手）----
+        // true 时所有 WriteTools 工具调用被拒绝；AI 必须用 read-only 工具完成调研，
+        // 然后调 exit_plan_mode 让用户审批计划，审批后才能动手修改。
+        private bool _planMode = false;
+        public bool IsPlanMode => _planMode;
+        public Action<bool> OnPlanModeChanged;
+
+        internal class TaskItem
+        {
+            public int Id;
+            public string Subject;
+            public string Description;
+            public string Status; // pending | in_progress | completed
+            public DateTime CreatedAt;
+            public DateTime? UpdatedAt;
+        }
+
+        /// <summary>
+        /// 让 AI 跟踪多步任务的进度。每个任务有 id / subject / status。
+        /// 任务不进入 conversation history（不污染上下文），只通过 task_* 工具读写。
+        /// </summary>
+        internal List<object> SnapshotTasks()
+        {
+            lock (_tasksLock)
+            {
+                var result = new List<object>();
+                foreach (var t in _tasks)
+                {
+                    result.Add(new
+                    {
+                        id = t.Id,
+                        subject = t.Subject,
+                        description = t.Description,
+                        status = t.Status,
+                        created_at = t.CreatedAt.ToString("HH:mm:ss"),
+                        updated_at = t.UpdatedAt.HasValue ? t.UpdatedAt.Value.ToString("HH:mm:ss") : null
+                    });
+                }
+                return result;
+            }
+        }
 
         public int HistoryMessageCount { get { lock (_historyLock) { return _conversationHistory.Count; } } }
         public int HistoryTokenEstimate { get { lock (_historyLock) { return EstimateHistoryTokens(); } } }

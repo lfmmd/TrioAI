@@ -170,6 +170,48 @@ namespace TrioAI.MPPlugIn
             };
         }
 
+        /// <summary>
+        /// 列出所有可用的 markdown skill（按 category 过滤），让 AI 在工具选择阶段就能感知可用技能。
+        /// 比 read_skill(name) 试错更高效 — AI 看完列表后直接选对 skill 加载。
+        /// </summary>
+        private static object DiscoverSkills(string category)
+        {
+            var skills = LoadMdSkills();
+            if (skills.Count == 0)
+                return new
+                {
+                    count = 0,
+                    skills = new object[0],
+                    hint = "No markdown skills installed. Place <name>/SKILL.md under skills/general/."
+                };
+
+            IEnumerable<MdSkillEntry> filtered = skills;
+            if (!string.IsNullOrEmpty(category))
+            {
+                var catUpper = category.ToUpperInvariant();
+                filtered = skills.Where(s =>
+                {
+                    var dirName = Path.GetFileName(s.Dir ?? "");
+                    return string.Equals(dirName, category, StringComparison.OrdinalIgnoreCase);
+                });
+            }
+
+            var result = filtered.Select(s => new
+            {
+                name = s.Name,
+                description = s.Description,
+                when_to_use = s.WhenToUse,
+                category = Path.GetFileName(s.Dir ?? "")
+            }).ToList();
+
+            return new
+            {
+                count = result.Count,
+                skills = result,
+                hint = "Call read_skill(name) to load the full content of any skill."
+            };
+        }
+
         private static string BuildSkillsCatalog()
         {
             var sb = new StringBuilder();

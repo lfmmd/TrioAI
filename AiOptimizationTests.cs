@@ -169,11 +169,13 @@ namespace TrioAI.MPPlugIn
 
             // ========== P1: GetToolDefinitions 缓存测试 ==========
             // --- P1-1: 返回正确数量的 tools ---
+            // Phase 1 加了 7 个工具：discover_skills, task_create, task_update, task_list, task_get,
+            // enter_plan_mode, exit_plan_mode → 总数从 59 增加到 66
             {
                 var tools1 = GetToolDefinitions();
-                bool ok = tools1.Count == 59;
-                results.Add(("P1-1 tool数量=59", ok,
-                    ok ? "OK: 59 个 tool" : $"FAIL: 实际 {tools1.Count} 个"));
+                bool ok = tools1.Count == 66;
+                results.Add(("P1-1 tool数量=66", ok,
+                    ok ? "OK: 66 个 tool (含 Phase 1 新增 7 个)" : $"FAIL: 实际 {tools1.Count} 个"));
             }
 
             // --- P1-2: 多次调用返回新 list 实例 ---
@@ -232,6 +234,150 @@ namespace TrioAI.MPPlugIn
                 results.Add(("P1-5 schema完整性", allValid,
                     allValid ? "OK: 全部 tool 含 name+description+input_schema" :
                     $"FAIL: 以下 tool 缺字段: {string.Join(", ", badTools)}"));
+            }
+
+            // ========== Phase 1: 工具并行 / 重试 / 循环 / Skills / Task / Plan Mode ==========
+
+            // --- Phase1-1: PureIoTools 分流集合 ---
+            {
+                var pureExpected = new[] { "lookup_command", "read_skill", "discover_skills",
+                    "task_create", "task_update", "task_list", "task_get",
+                    "enter_plan_mode", "exit_plan_mode" };
+                var nonPureExpected = new[] { "read_source", "write_source", "list_programs",
+                    "compile_program", "run_program", "write_vr", "get_status" };
+                bool allPure = pureExpected.All(n => PureIoTools.Contains(n));
+                bool allNonPure = nonPureExpected.All(n => !PureIoTools.Contains(n));
+                bool ok = allPure && allNonPure;
+                results.Add(("Phase1-1 PureIoTools分流", ok,
+                    ok ? $"OK: {pureExpected.Length} 个纯IO工具 + write/read_source 仍在 UI 线程" :
+                    $"FAIL: pure={string.Join(",", pureExpected.Where(n => !PureIoTools.Contains(n)))} nonPure={string.Join(",", nonPureExpected.Where(n => PureIoTools.Contains(n)))}"));
+            }
+
+            // --- Phase1-2: Phase 1 新增 7 个工具已注册 ---
+            {
+                var tools = GetToolDefinitions();
+                var names = new HashSet<string>(tools.Select(t => GetStr(t, "name")), StringComparer.OrdinalIgnoreCase);
+                var expected = new[] { "discover_skills", "task_create", "task_update", "task_list", "task_get", "enter_plan_mode", "exit_plan_mode" };
+                var missing = expected.Where(n => !names.Contains(n)).ToList();
+                bool ok = missing.Count == 0;
+                results.Add(("Phase1-2 新增7工具已注册", ok,
+                    ok ? "OK: 全部注册" : $"FAIL: 缺少 {string.Join(", ", missing)}"));
+            }
+
+            // --- Phase1-3: MaxTurns=50 + TokenBudgetLimit=400K ---
+            {
+                bool ok = MaxTurns == 50 && TokenBudgetLimit == 400_000;
+                results.Add(("Phase1-3 循环退出常量", ok,
+                    ok ? $"OK: MaxTurns={MaxTurns}, TokenBudget={TokenBudgetLimit}" :
+                    $"FAIL: MaxTurns={MaxTurns}, TokenBudget={TokenBudgetLimit}"));
+            }
+
+            // --- Phase1-4: RetryableApiException 类型 + GetBackoffDelay 指数退避 ---
+            {
+                var ex1 = new RetryableApiException("test", 503, null);
+                var ex2 = new RetryableApiException("net", null, null);
+                bool typeOk = ex1.StatusCode == 503 && ex2.StatusCode == null;
+                bool backoffOk = GetBackoffDelay(0) == 1000 && GetBackoffDelay(1) == 2000 && GetBackoffDelay(2) == 4000;
+                bool ok = typeOk && backoffOk;
+                results.Add(("Phase1-4 Retryable+Backoff", ok,
+                    ok ? "OK: StatusCode 携带 + 1s/2s/4s 指数退避" : $"FAIL: type={typeOk}, backoff={backoffOk}"));
+            }
+
+            // --- Phase1-5: Task/Todo CRUD ---
+            {
+                var svc2 = new AiService();
+                // task_create
+                var created = svc2.TaskCreate("Test subject", "Test description");
+                var createdJson = _json.Serialize(created);
+                bool createOk = createdJson.Contains("\"id\":1") && createdJson.Contains("\"status\":\"pending\"");
+                // task_update status 不合法
+                var badUpdate = svc2.TaskUpdate(1, "invalid_status", null, null);
+                bool badUpdateOk = _json.Serialize(badUpdate).Contains("error");
+                // task_update 合法
+                var updated = svc2.TaskUpdate(1, "in_progress", null, null);
+                bool updateOk = _json.Serialize(updated).Contains("\"status\":\"in_progress\"");
+                // task_list
+                var list = svc2.TaskList();
+                var listJson = _json.Serialize(list);
+                bool listOk = listJson.Contains("\"count\":1") && listJson.Contains("\"in_progress\":1");
+                // task_get
+                var got = svc2.TaskGet(1);
+                bool getOk = _json.Serialize(got).Contains("\"subject\":\"Test subject\"");
+                // task_get 不存在的 id
+                var notFound = svc2.TaskGet(999);
+                bool notFoundOk = _json.Serialize(notFound).Contains("not found");
+                bool ok = createOk && badUpdateOk && updateOk && listOk && getOk && notFoundOk;
+                results.Add(("Phase1-5 Task CRUD", ok,
+                    ok ? "OK: create/update/list/get/error 全覆盖" :
+                    $"FAIL: create={createOk} badUpdate={badUpdateOk} update={updateOk} list={listOk} get={getOk} notFound={notFoundOk}"));
+            }
+
+            // --- Phase1-6: Plan Mode 拦截写工具 + 未挂 OnConfirmPlan 自动批准 ---
+            {
+                var svc3 = new AiService();
+                // 初始非 plan mode
+                bool initOk = !svc3.IsPlanMode;
+                // enter plan mode
+                var entered = svc3.EnterPlanMode();
+                bool enterOk = _json.Serialize(entered).Contains("plan_mode\":true") && svc3.IsPlanMode;
+                // write_source 在 plan mode 应被拦截
+                var writeBlocked = svc3.ExecuteTool("write_source", new Dictionary<string, object>
+                {
+                    { "name", "TEST" }, { "sourceCode", "X" }
+                });
+                bool blockedOk = writeBlocked.Contains("BLOCKED: Plan Mode");
+                // read_source 在 plan mode 应允许（不在 WriteTools，仍会调 DispatchTool 报"未连接"或类似）
+                // 但我们不验证 read_source 实际结果，只验证不被 BLOCKED 拦截
+                var readAttempt = svc3.ExecuteTool("read_source", new Dictionary<string, object>
+                {
+                    { "name", "NONEXISTENT_PROGRAM" }
+                });
+                bool readNotBlocked = !readAttempt.Contains("BLOCKED: Plan Mode");
+                // exit plan mode 未挂 OnConfirmPlan → 自动批准
+                var exited = svc3.ExitPlanMode("My plan to fix axis 2");
+                bool exitOk = _json.Serialize(exited).Contains("\"approved\":true") && !svc3.IsPlanMode;
+                bool ok = initOk && enterOk && blockedOk && readNotBlocked && exitOk;
+                results.Add(("Phase1-6 Plan Mode", ok,
+                    ok ? "OK: 拦截写工具 + 不拦截读 + 自动批准退出" :
+                    $"FAIL: init={initOk} enter={enterOk} blocked={blockedOk} readNotBlocked={readNotBlocked} exit={exitOk}"));
+            }
+
+            // --- Phase1-7: TrimHistory 修复孤立 tool_result ---
+            {
+                var svc4 = new AiService();
+                svc4._conversationHistory.Clear();
+                // 构造一个"中间被截掉 assistant tool_use 留下孤立 tool_result"的场景：
+                // 历史 = [user 文本, assistant tool_use A, user tool_result A, user tool_result B (孤立)]
+                // 直接调 EnsureValidMessageSequence 验证它清理孤立 tool_result
+                svc4._conversationHistory.Add(new Dictionary<string, object>
+                {
+                    { "role", "user" }, { "content", "hello" }
+                });
+                svc4._conversationHistory.Add(MakeAssistantToolUse("lookup_command", "toolu_A", new Dictionary<string, object>
+                {
+                    { "query", "MOVE" }, { "full", "false" }
+                }));
+                svc4._conversationHistory.Add(MakeUserToolResult("toolu_A", "{}"));
+                // 孤立的 tool_result：tool_use_id 不存在于任何 assistant
+                svc4._conversationHistory.Add(MakeUserToolResult("toolu_ORPHAN", "orphan content"));
+                int before = svc4._conversationHistory.Count;
+                svc4.EnsureValidMessageSequence(svc4._conversationHistory);
+                // 验证：孤立 tool_result 的 content 被清空（EnsureValidMessageSequence 不会移除整条消息，
+                // 但会清掉孤立 tool_result 块；孤立块被丢弃后，user 消息的 content 可能变空）
+                bool foundOrphanContent = false;
+                foreach (var m in svc4._conversationHistory)
+                {
+                    if (!(m["content"] is List<Dictionary<string, object>> blocks)) continue;
+                    foreach (var b in blocks)
+                    {
+                        var c = GetStr(b, "content");
+                        if (c == "orphan content") foundOrphanContent = true;
+                    }
+                }
+                bool ok = !foundOrphanContent;
+                results.Add(("Phase1-7 TrimHistory清理孤立", ok,
+                    ok ? "OK: EnsureValidMessageSequence 清理了孤立 tool_result" :
+                    $"FAIL: 孤立 tool_result 仍存在 (history before={before} after={svc4._conversationHistory.Count})"));
             }
 
             // ========== 报告 ==========

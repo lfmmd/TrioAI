@@ -26,11 +26,13 @@ namespace TrioAI.MPPlugIn
         private DockPanel _inputPanel;
         private Border _confirmPanel;
         private TaskCompletionSource<bool> _confirmTcs;
+        private readonly object _confirmLock = new object();
 
         private static readonly JavaScriptSerializer _json = new JavaScriptSerializer();
         private ChatMessage _streamingMsg;
         private System.Threading.CancellationTokenSource _cts;
         private TextBlock _statusInfo;
+        private Border _planModeBanner;
 
         // --- Oscilloscope pattern: static factory ---
         private static readonly ToolPositionSettings _defaultPosition = new ToolPositionSettings(SizeToContent.Manual)
@@ -212,6 +214,42 @@ namespace TrioAI.MPPlugIn
             {
                 return ShowInlineConfirmation(toolName, argsJson);
             };
+            _ai.OnPlanModeChanged = (active) =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _planModeBanner.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
+                }));
+            };
+            _ai.OnConfirmPlan = (plan) =>
+            {
+                return ShowPlanApproval(plan);
+            };
+        }
+
+        /// <summary>
+        /// 内嵌 Plan Mode 审批面板：显示 AI 提交的计划文本，用户点「允许」批准 / 「拒绝」保持 Plan Mode。
+        /// 复用 _confirmPanel + _confirmTcs + OnConfirmAllow/OnConfirmReject 机制（与 ShowInlineConfirmation 一致）。
+        /// 同步等待用户决策（在 worker 线程调用，UI 通过 Dispatcher 切回）。
+        /// </summary>
+        private bool ShowPlanApproval(string plan)
+        {
+            lock (_confirmLock)
+            {
+                var tcs = new TaskCompletionSource<bool>();
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    var header = Lang.L("📋 AI 在 Plan Mode 下完成调研，提交以下计划（点击「允许」批准 → 退出 Plan Mode；「拒绝」保持 Plan Mode）:\n\n",
+                                        "📋 AI completed investigation in Plan Mode, submitted plan below (Allow → exit Plan Mode; Reject → stay in Plan Mode):\n\n");
+                    _messages.Add(new ChatMessage("System", header + Truncate(plan, 1500)));
+                    _scrollViewer.ScrollToEnd();
+
+                    _inputPanel.Visibility = Visibility.Collapsed;
+                    _confirmPanel.Visibility = Visibility.Visible;
+                    _confirmTcs = tcs;
+                }));
+                return tcs.Task.Result;
+            }
         }
 
         private static string Truncate(string s, int max)
@@ -333,6 +371,25 @@ namespace TrioAI.MPPlugIn
             toolbar.Children.Add(aboutBtn);
 
             root.Children.Add(toolbar);
+
+            // ---- Plan Mode 状态条（橙色高亮，仅 plan mode 激活时可见）----
+            _planModeBanner = new Border
+            {
+                Background = new SolidColorBrush(Color.FromRgb(180, 90, 0)),
+                Padding = new Thickness(8, 4, 8, 4),
+                Visibility = Visibility.Collapsed
+            };
+            _planModeBanner.SetValue(DockPanel.DockProperty, Dock.Top);
+            var bannerText = new TextBlock
+            {
+                Text = Lang.L("🔒 Plan Mode 活动中 — AI 正在调研，所有写操作（写程序 / 编译 / 运行 / VR / TABLE）已拦截，等待 AI 提交计划给你审批",
+                              "🔒 Plan Mode active — AI is investigating. All write operations (programs / compile / run / VR / TABLE) are blocked, waiting for AI to submit a plan for your approval"),
+                Foreground = Brushes.White,
+                FontSize = 12,
+                TextWrapping = TextWrapping.Wrap
+            };
+            _planModeBanner.Child = bannerText;
+            root.Children.Add(_planModeBanner);
 
             // Top separator
             var topSep = new Border { Height = 1, Background = new SolidColorBrush(Color.FromRgb(60, 60, 60)) };
@@ -1306,19 +1363,22 @@ namespace TrioAI.MPPlugIn
 
         private bool ShowInlineConfirmation(string toolName, string argsJson)
         {
-            var tcs = new TaskCompletionSource<bool>();
-
-            Dispatcher.BeginInvoke(new Action(() =>
+            lock (_confirmLock)
             {
-                _messages.Add(new ChatMessage("System", $"{Lang.S("AIRequests")}: {toolName}\n{Truncate(UnescapeJsonDisplay(argsJson), 400)}"));
-                _scrollViewer.ScrollToEnd();
+                var tcs = new TaskCompletionSource<bool>();
 
-                _inputPanel.Visibility = Visibility.Collapsed;
-                _confirmPanel.Visibility = Visibility.Visible;
-                _confirmTcs = tcs;
-            }));
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _messages.Add(new ChatMessage("System", $"{Lang.S("AIRequests")}: {toolName}\n{Truncate(UnescapeJsonDisplay(argsJson), 400)}"));
+                    _scrollViewer.ScrollToEnd();
 
-            return tcs.Task.Result;
+                    _inputPanel.Visibility = Visibility.Collapsed;
+                    _confirmPanel.Visibility = Visibility.Visible;
+                    _confirmTcs = tcs;
+                }));
+
+                return tcs.Task.Result;
+            }
         }
 
         private void OnConfirmAllow(object sender, RoutedEventArgs e)
