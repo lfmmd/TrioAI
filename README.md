@@ -24,6 +24,8 @@
 - **TrioBASIC 严格语法约束**：内置命令参考库，AI 写代码前自动查证，避免幻觉
 - **会话持久化**：自动保存对话历史，重启 MP 或打开历史会话可继续之前的对话（含 AI 上下文摘要注入）
 - **上下文优化**：精确 token 计数、消息级缓存、自动压缩、read_source 去重，长对话不丢上下文
+- **Skill 库**：TrioBASIC / IEC / PLCopen 三大库命令参考 + Markdown 技能包（safe-coding 等），AI 通过 `when_to_use` 字段感知何时调用，无需先 read_skill 才知道用途
+- **增量编辑工具**：`patch_source` 支持 old_string/new_string 文本替换，大程序可逐行修改而不必整体重写；前置条件硬约束防止误用
 - **持久记忆**：可手动写入的关键信息，跨会话保留
 - **多语言 UI**：中文、英文、德文、法文
 
@@ -317,7 +319,7 @@ with zipfile.ZipFile('TrioAI.MPPlugIn', 'w', zipfile.ZIP_DEFLATED) as z:
 - **IEC 断点的 line→CodeElement 反推**：目前 IEC 程序的断点需要用户在 MP UI 中手动设置，AI 调用 `set_breakpoint` 会返回明确错误。
 - **HTTP API 鉴权**：当前 HTTP API 监听 `localhost:9090` 但无鉴权，理论上同机其他进程可调用。生产环境建议加 token 鉴权或仅绑定 loopback。
 - **多控制器切换**：目前插件绑定单一控制器，多控制器项目场景需要手动切换。
-- **国际化扩展**：UI 已支持中/英/德/法，可继续扩展。
+- **国际化扩展**：UI 当前识别 zh/de/fr/en 四种语言，其他语言环境 fallback 到英文（系统提示词、工具状态、错误消息均做了 i18n）。可继续扩展其他语种。
 - **程序执行历史/审计日志**：所有 AI 写操作目前只有自动备份，没有结构化审计日志。
 
 ## 许可证
