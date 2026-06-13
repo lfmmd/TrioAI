@@ -27,7 +27,8 @@ namespace TrioAI.MPPlugIn
                 && _conversationHistory.Count <= MaxHistoryKeep)
                 return;
 
-            OnSystemMessage?.Invoke($"⚠ TrimHistory triggered: {_conversationHistory.Count} msgs, ~{EstimateHistoryTokens()} tokens");
+            OnSystemMessage?.Invoke(Lang.L($"⚠ 已触发历史裁剪: {_conversationHistory.Count} 条消息, 约 {EstimateHistoryTokens()} tokens",
+                                           $"⚠ TrimHistory triggered: {_conversationHistory.Count} msgs, ~{EstimateHistoryTokens()} tokens"));
 
             // auto-compaction：将旧消息摘要压缩为一条，保留最近消息不变。
             if (CompactHistory())
@@ -120,7 +121,8 @@ namespace TrioAI.MPPlugIn
 
             // 释放锁 → API 调用（可能耗时数秒）
             System.Threading.Monitor.Exit(_historyLock);
-            OnSystemMessage?.Invoke("Auto-compacting conversation history...");
+            OnSystemMessage?.Invoke(Lang.L("正在自动压缩对话历史...",
+                                           "Auto-compacting conversation history..."));
             string summary;
             try
             {
@@ -174,7 +176,8 @@ namespace TrioAI.MPPlugIn
                 _conversationHistory.Clear();
                 _conversationHistory.AddRange(newHistory);
 
-                OnSystemMessage?.Invoke($"Compacted into summary. New history: {_conversationHistory.Count} msgs.");
+                OnSystemMessage?.Invoke(Lang.L($"已压缩为摘要。新历史: {_conversationHistory.Count} 条消息。",
+                                               $"Compacted into summary. New history: {_conversationHistory.Count} msgs."));
                 return true;
             }
             catch (Exception ex)
@@ -373,14 +376,15 @@ namespace TrioAI.MPPlugIn
                     }
                 }
             }
-            // 最近 N 个 ∪ lookup_command 的所有结果（参考类命令文档，AI 写代码时会反复引用，
-            // 清空会导致它再查一次浪费 API + 中断代码连贯性）
+            // 最近 N 个 ∪ lookup_command / read_skill 的所有结果（参考类内容，AI 写代码时会反复引用，
+            // 清空会导致它再查/再读一次浪费 API + 中断代码连贯性）
             var keepRecent = new HashSet<string>(
                 allToolResultIds.Skip(Math.Max(0, allToolResultIds.Count - MaxRecentToolResults)));
             foreach (var id in allToolResultIds)
             {
                 if (toolNameById.TryGetValue(id, out var name)
-                    && string.Equals(name, "lookup_command", StringComparison.OrdinalIgnoreCase))
+                    && (string.Equals(name, "lookup_command", StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(name, "read_skill", StringComparison.OrdinalIgnoreCase)))
                 {
                     keepRecent.Add(id);
                 }
@@ -744,14 +748,16 @@ namespace TrioAI.MPPlugIn
 
                 if (firstValidUser > 0)
                 {
-                    OnSystemMessage?.Invoke($"⚠ History repair: skipped {firstValidUser} leading non-user messages");
+                    OnSystemMessage?.Invoke(Lang.L($"⚠ 历史修复: 跳过开头 {firstValidUser} 条非 user 消息",
+                                                   $"⚠ History repair: skipped {firstValidUser} leading non-user messages"));
                     messages.RemoveRange(0, firstValidUser);
                     repaired = true;
                 }
                 else if (firstValidUser < 0)
                 {
                     // 全部是 assistant 消息 → 替换为一条占位 user 消息
-                    OnSystemMessage?.Invoke($"⚠ History repair: no user messages found, inserting placeholder");
+                    OnSystemMessage?.Invoke(Lang.L("⚠ 历史修复: 未找到 user 消息，已插入占位消息",
+                                                   "⚠ History repair: no user messages found, inserting placeholder"));
                     messages.Clear();
                     messages.Add(new Dictionary<string, object>
                     {
@@ -774,7 +780,8 @@ namespace TrioAI.MPPlugIn
             }
 
             if (repaired)
-                OnSystemMessage?.Invoke("⚠ History repair: message sequence was repaired");
+                OnSystemMessage?.Invoke(Lang.L("⚠ 历史修复: 消息序列已被修复",
+                                               "⚠ History repair: message sequence was repaired"));
         }
 
         /// <summary>

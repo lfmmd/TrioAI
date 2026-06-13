@@ -291,7 +291,7 @@ namespace TrioAI.MPPlugIn
                     ("full", "Set to \"true\" to load complete HTML documentation (heavier, use only when examples or detailed parameters are needed)", true),
                     ("library", "Scope search to: triobasic | iec | plcopen (default: search all libraries)", true)
                 )),
-                Tool("read_skill", "Load full markdown content of a skill listed in the 'Available Skills' section of the system prompt.", Props(
+                Tool("read_skill", "Load full markdown content of a skill listed in the 'Available Skills' section of the system prompt. BLOCKING REQUIREMENT: when the user's request matches a skill's 'Use when:' description, invoke read_skill BEFORE writing any code or generating other response about the task. NEVER mention or claim to follow a skill without calling this tool first. Note: skills whose full body is already shown in the system prompt (e.g. 'Safe Coding Rules (MANDATORY)') are pre-loaded — do NOT re-read those.", Props(
                     ("name", "Skill name from Available Skills", false)
                 )),
                 Tool("search_code", "Search for a text pattern across all programs in the project. Returns matching lines with line numbers.", Props(

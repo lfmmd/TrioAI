@@ -6,6 +6,25 @@
 
 ## [Unreleased]
 
+## [0.2.14] — 2026-06-13
+
+### 技能加载机制（参考 claudecodefx cc-haha 设计）
+
+- **Markdown skill frontmatter 新增 `when_to_use` 字段** —— `AiSkills.cs` 的 `ParseSkillMd` 解析 `when_to_use`/`whentouse`/`when-to-use` 三种写法，`MdSkillEntry` 增加 `WhenToUse` 字段。让 AI 在 Available Skills 列表里就能看到"何时使用该 skill"的指引，不必先 read_skill 才知道用途。
+- **Available Skills 列表 token 预算 + 截断** —— 新增 `FormatSkillListing`/`FormatSkillEntry`：整个列表上限 8000 字符（约 1% 上下文），单条上限 250 字符，超预算时按均分截断到名字-only。为未来 skill 数量增长做防护。safe-coding 全文嵌入行为不变（安全保护，永不降级）。
+- **`read_skill` 工具描述加 BLOCKING REQUIREMENT** —— `AiTools.cs` 的 read_skill 描述新增"当用户请求匹配 skill 的 'Use when:' 描述时，必须先调 read_skill 再写代码"的硬约束，并说明已嵌入 system prompt 的 skill（如 Safe Coding Rules）不需要重读。修复之前 AI"看到 skill 但不主动调用"的问题。
+- **`read_skill` 结果跨 microCompact 保留** —— `AiHistory.cs` 的 `BuildTrimmedMessages` 把 `read_skill` 纳入 `keepRecent` 白名单（与 `lookup_command` 同等处理），microCompact 不再清空已读 skill 的正文。
+
+### 提示词
+
+- **Reference Libraries 节新增类别清单** —— `BuildSkillsCatalog` 把每个库（triobasic/iec/plcopen）的 `type` 字段归一化后取 top 8 类别（如"Axis Parameter (221), System Command (86), ..."），让 AI 知道每个库里有哪些类别存在，从"任务→类别名"反推更精准的 `lookup_command` 查询词。运行时从 index.json 汇总，自动随库内容更新。新增 `NormalizeType`（去末尾句号/去括号注释/压空白）和 `SummarizeTypes`（按条目数降序 top 8）两个辅助方法。+~95 token 成本。
+
+## [0.2.13] — 2026-06-13
+
+### 国际化
+
+- **`AiHistory.cs` 6 处系统提示多语言化** — 补齐 0.2.12 多语言化遗漏的部分：`⚠ TrimHistory triggered`（裁剪触发统计）、`Auto-compacting conversation history...`（压缩开始）、`Compacted into summary`（压缩完成），以及 3 处 `⚠ History repair: ...` 历史修复提示（跳过非 user 消息 / 无 user 消息插入占位 / 消息序列已被修复）。复用 0.2.12 引入的 `Lang.L(zh, en)` 帮助函数。
+
 ## [0.2.12] — 2026-06-13
 
 ### 国际化

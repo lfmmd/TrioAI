@@ -21,11 +21,12 @@ namespace TrioAI.MPPlugIn
             public string Dir;
         }
 
-        // Markdown skill: skills/general/<name>/SKILL.md (cc-haha style, name + description frontmatter)
+        // Markdown skill: skills/general/<name>/SKILL.md (cc-haha style, name + description + when_to_use frontmatter)
         private class MdSkillEntry
         {
             public string Name;
             public string Description;
+            public string WhenToUse;
             public string Dir;
             public string Body;
         }
@@ -121,7 +122,7 @@ namespace TrioAI.MPPlugIn
                 if (bodyStart < text.Length && (text[bodyStart] == '\n')) bodyStart++;
                 var body = text.Substring(bodyStart).TrimEnd();
 
-                string name = null, desc = null;
+                string name = null, desc = null, whenToUse = null;
                 foreach (var rawLine in frontmatter.Split('\n'))
                 {
                     var line = rawLine.TrimEnd('\r');
@@ -134,12 +135,14 @@ namespace TrioAI.MPPlugIn
                         val = val.Substring(1, val.Length - 2);
                     if (key == "name") name = val;
                     else if (key == "description") desc = val;
+                    else if (key == "when_to_use" || key == "whentouse" || key == "when-to-use") whenToUse = val;
                 }
                 if (string.IsNullOrEmpty(name)) return null;
                 return new MdSkillEntry
                 {
                     Name = name,
                     Description = desc ?? "",
+                    WhenToUse = whenToUse ?? "",
                     Dir = dir,
                     Body = body,
                 };
@@ -184,7 +187,8 @@ namespace TrioAI.MPPlugIn
                 sb.AppendLine("## Reference Libraries (lookup_command)");
                 sb.AppendLine("Use the **lookup_command** tool to verify ANY command/function/function-block before writing code. Coverage:");
                 foreach (var kv in byLib)
-                    sb.AppendFormat("- **{0}**: {1} entries\n", kv.Key, kv.Value.Count);
+                    sb.AppendFormat("- **{0}**: {1} entries — categories: {2}\n",
+                        kv.Key, kv.Value.Count, SummarizeTypes(kv.Value));
                 sb.AppendLine();
                 sb.AppendLine("MANDATORY: Before writing TrioBASIC, IEC ST/SFC/LD/FBD, or PLCopen code, call lookup_command for any identifier you are not 100% sure exists in the official reference. Do NOT trust your training-data memory of these dialects.");
                 sb.AppendLine();
@@ -196,12 +200,11 @@ namespace TrioAI.MPPlugIn
                 sb.AppendLine("## Available Skills");
                 sb.AppendLine("These markdown skills are installed. Use the read_skill tool to load full content.");
                 sb.AppendLine();
-                foreach (var s in skills)
-                    sb.AppendFormat("- **{0}**: {1}\n", s.Name, s.Description ?? "");
+                sb.Append(FormatSkillListing(skills));
 
                 // safe-coding 是规范性 skill（安全约束、禁用命令清单），每轮嵌入 system prompt。
-                // 不能依赖 AI 主动 read_skill — 之前没 MANDATORY 触发语，AI 写代码时靠训练
-                // 记忆硬写；而且 microCompact 5 轮后会清空 read_skill 返回的 tool_result。
+                // 不能依赖 AI 主动 read_skill — read_skill 工具描述里的 BLOCKING REQUIREMENT 触发语
+                // + BuildTrimmedMessages 把 read_skill 纳入 keepRecent 白名单后，跨压缩稳定可用。
                 // 全文 ~200 token，成本可忽略。
                 var safeCoding = skills.Find(s =>
                     string.Equals(s.Name, "safe-coding", StringComparison.OrdinalIgnoreCase));
@@ -215,6 +218,89 @@ namespace TrioAI.MPPlugIn
                 }
             }
             return sb.ToString();
+        }
+
+        // 把 index.json 里的 type 字段（"Axis Parameter (Read Only)" / "Axis Parameter." / "axis parameter" 等）
+        // 归一化为干净的类别名：去末尾句号、去括号注释（Read Only / MC_CONFIG / FLASH）、压空白、保留主词。
+        // 这样 AI 看到的类别清单是有限可枚举的，不会被大小写/修饰词淹没。
+        private static string NormalizeType(string t)
+        {
+            if (string.IsNullOrEmpty(t)) return "";
+            t = t.Trim();
+            t = t.TrimEnd('.', ' ', '\t');
+            int paren = t.IndexOf('(');
+            if (paren >= 0) t = t.Substring(0, paren);
+            t = t.Trim();
+            while (t.Contains("  ")) t = t.Replace("  ", " ");
+            return t;
+        }
+
+        // 每个库取 top 8 类别（按条目数降序），格式 "Axis Parameter (221), System Command (86), ..."。
+        // top 8 通常覆盖 80%+ 条目，足够给 AI 当"猜命令"的方向线索；再多的边际效益递减且占 token。
+        private const int MaxTypeCategoriesPerLib = 8;
+
+        private static string SummarizeTypes(List<SkillIndexEntry> entries)
+        {
+            var counts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            foreach (var e in entries)
+            {
+                var n = NormalizeType(e.Type);
+                if (string.IsNullOrEmpty(n)) continue;
+                int cur;
+                counts[n] = counts.TryGetValue(n, out cur) ? cur + 1 : 1;
+            }
+            if (counts.Count == 0) return "(uncategorized)";
+            var sorted = new List<KeyValuePair<string, int>>(counts);
+            sorted.Sort((a, b) => b.Value.CompareTo(a.Value));
+            var parts = new List<string>();
+            for (int i = 0; i < sorted.Count && i < MaxTypeCategoriesPerLib; i++)
+                parts.Add(string.Format("{0} ({1})", sorted[i].Key, sorted[i].Value));
+            return string.Join(", ", parts);
+        }
+
+        // Skill 目录的 token 预算：列表只放 name + description + when_to_use（正文调用了才注入）。
+        // 整个列表上限 SkillListingBudget 字符（约 1% 上下文），单条上限 MaxSkillEntryChars。
+        // 超预算时按均分截断；预算极小时退化到 names-only，保证目录至少能让 AI 知道有哪些 skill。
+        // 参考 claudecodefx src/tools/SkillTool/prompt.ts 的 formatCommandsWithinBudget。
+        private const int SkillListingBudget = 8000;
+        private const int MaxSkillEntryChars = 250;
+        private const int MinSkillEntryChars = 20;
+
+        private static string FormatSkillEntry(MdSkillEntry s, int maxChars)
+        {
+            string full;
+            if (!string.IsNullOrEmpty(s.WhenToUse))
+                full = string.Format("- **{0}**: {1} — Use when: {2}", s.Name, s.Description ?? "", s.WhenToUse);
+            else
+                full = string.Format("- **{0}**: {1}", s.Name, s.Description ?? "");
+            if (full.Length <= maxChars) return full;
+            if (maxChars <= "- **".Length + s.Name.Length + "**".Length + 2)
+                return string.Format("- **{0}**", s.Name);
+            return full.Substring(0, maxChars - 1) + "…";
+        }
+
+        private static string FormatSkillListing(List<MdSkillEntry> skills)
+        {
+            if (skills.Count == 0) return "";
+
+            var entries = skills.ConvertAll(s => FormatSkillEntry(s, MaxSkillEntryChars));
+            int total = 0;
+            foreach (var e in entries) total += e.Length + 1;  // +1 for newline
+            if (total <= SkillListingBudget)
+                return string.Join("\n", entries) + "\n";
+
+            // 超预算：均分剩余给每条，但每条不超 MaxSkillEntryChars
+            int perEntry = SkillListingBudget / skills.Count;
+            if (perEntry < MinSkillEntryChars)
+            {
+                // 极端情况：只放名字
+                var names = new List<string>();
+                foreach (var s in skills) names.Add(string.Format("- **{0}**", s.Name));
+                return string.Join("\n", names) + "\n";
+            }
+            int capped = Math.Min(perEntry, MaxSkillEntryChars);
+            var truncated = skills.ConvertAll(s => FormatSkillEntry(s, capped));
+            return string.Join("\n", truncated) + "\n";
         }
 
         // Strip noise tags (script/style/head/comments/img) from a help HTML page so
