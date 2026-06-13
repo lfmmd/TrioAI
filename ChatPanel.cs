@@ -486,12 +486,14 @@ namespace TrioAI.MPPlugIn
             expanderFactory.SetBinding(Expander.VisibilityProperty,
                 new System.Windows.Data.Binding("ThinkingText") { Converter = new ThinkingVisibilityConverter() });
 
-            // Expander header
-            var headerFactory = new FrameworkElementFactory(typeof(TextBlock));
-            headerFactory.SetValue(TextBlock.TextProperty, Lang.S("ThinkingLabel"));
-            headerFactory.SetValue(TextBlock.FontSizeProperty, 10.5);
-            headerFactory.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Color.FromRgb(140, 140, 140)));
-            expanderFactory.SetValue(Expander.HeaderProperty, headerFactory);
+            // Expander header — 用 TextBlock 实例直接赋值
+            var headerText = new TextBlock
+            {
+                Text = Lang.S("ThinkingLabel"),
+                FontSize = 10.5,
+                Foreground = new SolidColorBrush(Color.FromRgb(140, 140, 140))
+            };
+            expanderFactory.SetValue(Expander.HeaderProperty, headerText);
 
             // Expander content — thinking text
             var thinkingTextFactory = new FrameworkElementFactory(typeof(TextBox));
@@ -603,17 +605,8 @@ namespace TrioAI.MPPlugIn
         private void AutoSaveSession()
         {
             if (_messages.Count == 0) return;
-            var msgs = _messages.Select(m => new Dictionary<string, string>
-            {
-                { "role", m.Role },
-                { "text", m.Text }
-            }).ToList();
-            _ai.SaveSession(_json.Serialize(msgs).Split('?').Select(x => x).ToArray()); // simplified
-            // Actually save display messages
             try
             {
-                _ai.SaveSession(null);
-                // Re-save with actual messages
                 var saveData = _messages.Select(m =>
                 {
                     var d = new Dictionary<string, string>
@@ -625,16 +618,7 @@ namespace TrioAI.MPPlugIn
                         d["thinkingText"] = m.ThinkingText;
                     return d;
                 }).ToList();
-                var dataDir = System.IO.Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TrioAI");
-                var path = System.IO.Path.Combine(dataDir, "chat_history", _ai.CurrentSessionId + ".json");
-                var data = new
-                {
-                    id = _ai.CurrentSessionId,
-                    updated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                    messages = saveData
-                };
-                File.WriteAllText(path, _json.Serialize(data));
+                _ai.SaveSession(_json.Serialize(saveData));
             }
             catch { }
         }

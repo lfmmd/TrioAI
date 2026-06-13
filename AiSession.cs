@@ -11,13 +11,14 @@ namespace TrioAI.MPPlugIn
         // ---- Session-related instance fields ----
 
         private readonly List<Dictionary<string, object>> _conversationHistory = new List<Dictionary<string, object>>();
+        private readonly object _historyLock = new object();
         private string _currentSessionId;
         private const int MaxRestoredFiles = 5;
         private const int MaxRestoredFileChars = 4000;
         private readonly List<Tuple<string, string>> _recentReadFiles = new List<Tuple<string, string>>();
 
-        public int HistoryMessageCount => _conversationHistory.Count;
-        public int HistoryTokenEstimate => EstimateHistoryTokens();
+        public int HistoryMessageCount { get { lock (_historyLock) { return _conversationHistory.Count; } } }
+        public int HistoryTokenEstimate { get { lock (_historyLock) { return EstimateHistoryTokens(); } } }
 
         // ---- Session / History ----
 
@@ -25,11 +26,15 @@ namespace TrioAI.MPPlugIn
 
         public string StartNewSession()
         {
-            _conversationHistory.Clear();
-            _recentReadFiles.Clear();
-            _totalInputTokens = _totalOutputTokens = _totalCacheReadTokens = _totalCacheCreateTokens = 0;
-            _currentSessionId = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            return _currentSessionId;
+            lock (_historyLock)
+            {
+                _conversationHistory.Clear();
+                _recentReadFiles.Clear();
+                _totalInputTokens = _totalOutputTokens = _totalCacheReadTokens = _totalCacheCreateTokens = 0;
+                _currentMaxTokens = DefaultMaxTokens;
+                _currentSessionId = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                return _currentSessionId;
+            }
         }
 
         internal void RecordFileRead(string name, string content)
@@ -37,33 +42,41 @@ namespace TrioAI.MPPlugIn
             var summary = content.Length > MaxRestoredFileChars
                 ? content.Substring(0, MaxRestoredFileChars) + "\n...[truncated]"
                 : content;
-            _recentReadFiles.RemoveAll(f => f.Item1 == name);
-            _recentReadFiles.Add(Tuple.Create(name, summary));
-            while (_recentReadFiles.Count > MaxRestoredFiles)
-                _recentReadFiles.RemoveAt(0);
+            lock (_historyLock)
+            {
+                _recentReadFiles.RemoveAll(f => f.Item1 == name);
+                _recentReadFiles.Add(Tuple.Create(name, summary));
+                while (_recentReadFiles.Count > MaxRestoredFiles)
+                    _recentReadFiles.RemoveAt(0);
+            }
         }
 
         public void ClearHistory()
         {
-            _conversationHistory.Clear();
-            _currentSessionId = null;
+            lock (_historyLock)
+            {
+                _conversationHistory.Clear();
+                _currentSessionId = null;
+            }
         }
 
-        public void SaveSession(string[] displayMessages)
+        public void SaveSession(string displayMessagesJson)
         {
             if (string.IsNullOrEmpty(_currentSessionId)) return;
             var path = Path.Combine(HistoryDir, _currentSessionId + ".json");
-            // 快照历史，防止 Chat 线程并发修改导致枚举异常
             List<Dictionary<string, object>> historySnapshot;
-            lock (_conversationHistory)
+            lock (_historyLock)
             {
                 historySnapshot = new List<Dictionary<string, object>>(_conversationHistory);
             }
+            // 解析 display messages JSON → object
+            object displayMsgs = new object[0];
+            try { if (!string.IsNullOrEmpty(displayMessagesJson)) displayMsgs = _json.Deserialize<object>(displayMessagesJson) ?? displayMsgs; } catch { }
             var data = new Dictionary<string, object>
             {
                 { "id", _currentSessionId },
                 { "updated", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
-                { "messages", displayMessages ?? new string[0] },
+                { "messages", displayMsgs },
                 { "history", historySnapshot }
             };
             try { File.WriteAllText(path, SerializeRequest(data)); } catch { }
@@ -73,28 +86,28 @@ namespace TrioAI.MPPlugIn
         {
             var path = Path.Combine(HistoryDir, sessionId + ".json");
             if (!File.Exists(path)) return null;
-            _currentSessionId = sessionId;
-            _conversationHistory.Clear();
-
             var text = File.ReadAllText(path);
-            try
+            lock (_historyLock)
             {
-                var data = _json.Deserialize<Dictionary<string, object>>(text);
-                if (data != null && data.TryGetValue("history", out var histObj))
+                _currentSessionId = sessionId;
+                _conversationHistory.Clear();
+                try
                 {
-                    // JavaScriptSerializer 反序列化数组为 ArrayList，里面是 Dictionary<string,object>
-                    if (histObj is System.Collections.ArrayList al)
+                    var data = _json.Deserialize<Dictionary<string, object>>(text);
+                    if (data != null && data.TryGetValue("history", out var histObj))
                     {
-                        foreach (var item in al)
+                        if (histObj is System.Collections.ArrayList al)
                         {
-                            if (item is Dictionary<string, object> d)
-                                _conversationHistory.Add(d);
+                            foreach (var item in al)
+                            {
+                                if (item is Dictionary<string, object> d)
+                                    _conversationHistory.Add(d);
+                            }
                         }
                     }
                 }
+                catch { }
             }
-            catch { }
-
             return text;
         }
 
@@ -114,15 +127,14 @@ namespace TrioAI.MPPlugIn
                 {
                     var text = File.ReadAllText(file);
                     var data = _json.Deserialize<Dictionary<string, object>>(text);
+                    if (data == null) continue;
                     var id = Path.GetFileNameWithoutExtension(file);
                     object updated;
                     var timeStr = data.TryGetValue("updated", out updated) ? updated?.ToString() : id;
-                    // Extract first user message as preview
                     string preview = "";
                     object msgs;
                     if (data.TryGetValue("messages", out msgs) && msgs is System.Collections.ArrayList al && al.Count > 0)
                     {
-                        // messages are serialized ChatMessage objects
                         foreach (var m in al)
                         {
                             var md = m as Dictionary<string, object>;

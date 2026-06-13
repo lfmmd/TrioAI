@@ -65,10 +65,9 @@ namespace TrioAI.MPPlugIn
             _conversationHistory.AddRange(trimmed);
         }
 
-        /// <summary>
         /// Auto-compaction：调用 AI 将旧消息摘要为一条 user 消息，保留最近 MaxRecentKeep 条。
         /// 成功返回 true（历史已替换为摘要 + 最近消息）。
-        /// </summary>
+        /// 调用者必须持 _historyLock。内部在 API 调用前释放锁，调用后重新获取。
         private bool CompactHistory()
         {
             if (_conversationHistory.Count <= MaxRecentKeep + 2) return false;
@@ -76,16 +75,17 @@ namespace TrioAI.MPPlugIn
             int compactEnd = _conversationHistory.Count - MaxRecentKeep;
             if (compactEnd < 2) return false;
 
-            // 收集要摘要的旧消息文本
+            // 快照旧消息用于摘要（在锁内读取）
             var sb = new StringBuilder();
             for (int i = 0; i < compactEnd; i++)
             {
                 var msg = _conversationHistory[i];
                 var role = GetStringValue(msg, "role") ?? "?";
-                var content = msg["content"];
-                if (content is string s)
+                object contentVal;
+                if (!msg.TryGetValue("content", out contentVal)) continue;
+                if (contentVal is string s)
                     sb.AppendFormat("[{0}]: {1}\n", role, s);
-                else if (content is List<Dictionary<string, object>> blocks)
+                else if (contentVal is List<Dictionary<string, object>> blocks)
                 {
                     foreach (var b in blocks)
                     {
@@ -106,6 +106,9 @@ namespace TrioAI.MPPlugIn
                 }
             }
 
+            // 快照 _recentReadFiles（在锁内）
+            var recentFiles = new List<Tuple<string, string>>(_recentReadFiles);
+
             if (sb.Length < 100) return false;
 
             var compactPrompt = string.Format(
@@ -115,14 +118,26 @@ namespace TrioAI.MPPlugIn
                 "Be concise but complete — this summary replaces the original messages.\n\n{0}",
                 sb.ToString());
 
+            // 释放锁 → API 调用（可能耗时数秒）
+            System.Threading.Monitor.Exit(_historyLock);
             OnSystemMessage?.Invoke("Auto-compacting conversation history...");
+            string summary;
+            try
+            {
+                summary = CallCompactApi(compactPrompt);
+            }
+            finally
+            {
+                System.Threading.Monitor.Enter(_historyLock);
+            }
+            if (string.IsNullOrEmpty(summary)) return false;
 
             try
             {
-                var summary = CallCompactApi(compactPrompt);
-                if (string.IsNullOrEmpty(summary)) return false;
+                // API 调用期间历史可能已变，重新计算 compactEnd
+                compactEnd = _conversationHistory.Count - MaxRecentKeep;
+                if (compactEnd < 2) return false;
 
-                // 用摘要消息替换旧消息，保留最近消息
                 var newHistory = new List<Dictionary<string, object>>();
                 newHistory.Add(new Dictionary<string, object>
                 {
@@ -136,10 +151,10 @@ namespace TrioAI.MPPlugIn
                 });
 
                 // 压缩后恢复最近读过的文件上下文
-                if (_recentReadFiles.Count > 0)
+                if (recentFiles.Count > 0)
                 {
                     var fileSb = new StringBuilder("[Recently read source files — restored after compaction]\n");
-                    foreach (var f in _recentReadFiles)
+                    foreach (var f in recentFiles)
                         fileSb.AppendFormat("\n### {0}\n```\n{1}\n```\n", f.Item1, f.Item2);
                     newHistory.Add(new Dictionary<string, object>
                     {
@@ -159,7 +174,7 @@ namespace TrioAI.MPPlugIn
                 _conversationHistory.Clear();
                 _conversationHistory.AddRange(newHistory);
 
-                OnSystemMessage?.Invoke($"Compacted {_conversationHistory.Count} old messages into summary.");
+                OnSystemMessage?.Invoke($"Compacted into summary. New history: {_conversationHistory.Count} msgs.");
                 return true;
             }
             catch (Exception ex)
@@ -216,7 +231,11 @@ namespace TrioAI.MPPlugIn
             request.Content = content;
 
             var response = _http.SendAsync(request).GetAwaiter().GetResult();
-            if (!response.IsSuccessStatusCode) return null;
+            if (!response.IsSuccessStatusCode)
+            {
+                response.Dispose();
+                return null;
+            }
 
             var respText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             response.Dispose();
@@ -232,6 +251,7 @@ namespace TrioAI.MPPlugIn
         }
 
         // 粗略估算历史 token：chars/4。仅用于裁剪触发判断，不要求精确。
+        // 调用者必须持 _historyLock。
         private int EstimateHistoryTokens()
         {
             int chars = 0;
@@ -261,6 +281,8 @@ namespace TrioAI.MPPlugIn
 
         private List<Dictionary<string, object>> BuildTrimmedMessages()
         {
+            lock (_historyLock)
+            {
             var messages = new List<Dictionary<string, object>>(_conversationHistory.Count);
 
             // 先建立 tool_use_id → tool_name 映射（来自 assistant 消息的 tool_use block）
@@ -498,20 +520,20 @@ namespace TrioAI.MPPlugIn
                     copy["content"] = newBlocks;
                 }
 
-                messages.Add(copy);
+                    messages.Add(copy);
+                }
+
+                // 防御：确保 messages 满足 API 约束：
+                //   1. 首条必须是 user 角色
+                //   2. tool_result 必须紧跟在 assistant 的 tool_use 后面
+                //   3. messages 不能为空数组
+                // TrimHistory/CompactHistory 截断可能破坏这些约束。
+                // 参考 claudecodefx 的 ensureToolResultPairing 做法进行修复。
+                EnsureValidMessageSequence(messages);
+
+                return messages;
             }
-
-            // 防御：确保 messages 满足 API 约束：
-            //   1. 首条必须是 user 角色
-            //   2. tool_result 必须紧跟在 assistant 的 tool_use 后面
-            //   3. messages 不能为空数组
-            // TrimHistory/CompactHistory 截断可能破坏这些约束。
-            // 参考 claudecodefx 的 ensureToolResultPairing 做法进行修复。
-            EnsureValidMessageSequence(messages);
-
-            return messages;
         }
-
         /// <summary>
         /// 确保 messages 数组满足 API 约束：首条必须是 user，tool_result 必须紧跟 assistant 的 tool_use，
         /// 不能为空数组。参考 claudecodefx 的 ensureToolResultPairing 逻辑。
@@ -774,7 +796,8 @@ namespace TrioAI.MPPlugIn
         /// </summary>
         private object TryDedupLookupCommand(Dictionary<string, object> input)
         {
-            // 使用与工具执行完全相同的值提取（GetStr），
+            lock (_historyLock)
+            {
             // 确保去重判断与工具实际行为一致。
             // 例如：full=true(bool) → GetStr="True" → 工具视为非 full → 去重也应视为非 full。
             var nQuery = GetStr(input, "query");
@@ -857,6 +880,7 @@ namespace TrioAI.MPPlugIn
             }
 
             return null;
+            }
         }
 
         // 智能截断：优先在 HTML heading / paragraph / table 边界处切，避免把语法表或参数说明截成半句。

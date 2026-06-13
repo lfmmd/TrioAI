@@ -220,11 +220,14 @@ namespace TrioAI.MPPlugIn
             if (string.IsNullOrEmpty(_currentSessionId))
                 _currentSessionId = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
-            _conversationHistory.Add(new Dictionary<string, object>
+            lock (_historyLock)
             {
-                { "role", "user" },
-                { "content", userMessage }
-            });
+                _conversationHistory.Add(new Dictionary<string, object>
+                {
+                    { "role", "user" },
+                    { "content", userMessage }
+                });
+            }
 
             for (int turn = 0; turn < 20; turn++)
             {
@@ -238,19 +241,22 @@ namespace TrioAI.MPPlugIn
                     // one (Anthropic API requires strict user/assistant
                     // alternation). Mirrors cc-haha's NO_RESPONSE_REQUESTED
                     // sentinel strategy.
-                    _conversationHistory.Add(new Dictionary<string, object>
+                    lock (_historyLock)
                     {
-                        { "role", "assistant" },
-                        { "content", new List<Dictionary<string, object>>
-                            {
-                                new Dictionary<string, object>
+                        _conversationHistory.Add(new Dictionary<string, object>
+                        {
+                            { "role", "assistant" },
+                            { "content", new List<Dictionary<string, object>>
                                 {
-                                    { "type", "text" },
-                                    { "text", "[已中断]" }
+                                    new Dictionary<string, object>
+                                    {
+                                        { "type", "text" },
+                                        { "text", "[已中断]" }
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
                     return;
                 }
                 catch (System.IO.IOException ex)
@@ -281,11 +287,14 @@ namespace TrioAI.MPPlugIn
                 _totalCacheReadTokens += result.CacheReadTokens;
                 _totalCacheCreateTokens += result.CacheCreateTokens;
 
-                _conversationHistory.Add(new Dictionary<string, object>
+                lock (_historyLock)
                 {
-                    { "role", "assistant" },
-                    { "content", result.Content }
-                });
+                    _conversationHistory.Add(new Dictionary<string, object>
+                    {
+                        { "role", "assistant" },
+                        { "content", result.Content }
+                    });
+                }
 
                 var toolUseBlocks = result.Content
                     .Where(b => GetStringValue(b, "type") == "tool_use")
@@ -305,24 +314,27 @@ namespace TrioAI.MPPlugIn
                             { "content", "[Operation cancelled by user]" }
                         });
                     }
-                    _conversationHistory.Add(new Dictionary<string, object>
+                    lock (_historyLock)
                     {
-                        { "role", "user" },
-                        { "content", stubResults }
-                    });
-                    _conversationHistory.Add(new Dictionary<string, object>
-                    {
-                        { "role", "assistant" },
-                        { "content", new List<Dictionary<string, object>>
-                            {
-                                new Dictionary<string, object>
+                        _conversationHistory.Add(new Dictionary<string, object>
+                        {
+                            { "role", "user" },
+                            { "content", stubResults }
+                        });
+                        _conversationHistory.Add(new Dictionary<string, object>
+                        {
+                            { "role", "assistant" },
+                            { "content", new List<Dictionary<string, object>>
                                 {
-                                    { "type", "text" },
-                                    { "text", "[已中断]" }
+                                    new Dictionary<string, object>
+                                    {
+                                        { "type", "text" },
+                                        { "text", "[已中断]" }
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
                     return;
                 }
 
@@ -349,13 +361,15 @@ namespace TrioAI.MPPlugIn
                     });
                 }
 
-                _conversationHistory.Add(new Dictionary<string, object>
+                lock (_historyLock)
                 {
-                    { "role", "user" },
-                    { "content", toolResults }
-                });
-
-                TrimHistory();
+                    _conversationHistory.Add(new Dictionary<string, object>
+                    {
+                        { "role", "user" },
+                        { "content", toolResults }
+                    });
+                    TrimHistory();
+                }
             }
 
             OnSystemMessage?.Invoke("(Reached maximum iterations)");

@@ -389,13 +389,24 @@ namespace TrioAI.MPPlugIn
 
         private static Dictionary<string, object> Tool(string name, string description, Dictionary<string, object> properties, string[] required = null)
         {
-            var schema = new Dictionary<string, object>
+            // 从 properties 中提取 __required（由 Props/PropsMixed 注入）
+            var schema = new Dictionary<string, object>();
+            var props = new Dictionary<string, object>();
+            var reqList = new List<string>();
+            if (required != null) reqList.AddRange(required);
+            foreach (var kv in properties)
             {
-                { "type", "object" },
-                { "properties", properties }
-            };
-            if (required != null && required.Length > 0)
-                schema["required"] = required;
+                if (kv.Key == "__required")
+                {
+                    if (kv.Value is string[] arr) reqList.AddRange(arr);
+                    continue;
+                }
+                props[kv.Key] = kv.Value;
+            }
+            schema["type"] = "object";
+            schema["properties"] = props;
+            if (reqList.Count > 0)
+                schema["required"] = reqList.ToArray();
 
             return new Dictionary<string, object>
             {
@@ -424,6 +435,8 @@ namespace TrioAI.MPPlugIn
                 dict[n] = new { type = "string", description = d };
                 if (!opt) required.Add(n);
             }
+            if (required.Count > 0)
+                dict["__required"] = required.ToArray();
             return dict;
         }
 
@@ -431,8 +444,14 @@ namespace TrioAI.MPPlugIn
         private static Dictionary<string, object> PropsMixed(params (string name, string desc, bool optional, string type)[] props)
         {
             var dict = new Dictionary<string, object>();
+            var required = new List<string>();
             foreach (var (n, d, opt, t) in props)
+            {
                 dict[n] = new { type = string.IsNullOrEmpty(t) ? "string" : t, description = d };
+                if (!opt) required.Add(n);
+            }
+            if (required.Count > 0)
+                dict["__required"] = required.ToArray();
             return dict;
         }
     }
