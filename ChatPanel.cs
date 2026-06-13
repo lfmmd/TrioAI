@@ -26,7 +26,7 @@ namespace TrioAI.MPPlugIn
         private DockPanel _inputPanel;
         private Border _confirmPanel;
         private TaskCompletionSource<bool> _confirmTcs;
-        private static bool _aboutShown;
+
         private static readonly JavaScriptSerializer _json = new JavaScriptSerializer();
         private ChatMessage _streamingMsg;
         private System.Threading.CancellationTokenSource _cts;
@@ -68,11 +68,6 @@ namespace TrioAI.MPPlugIn
                     AiService.PerfLog("ChatPanel: Loaded event fired (rendered)");
                     LoadLastSession();
                     AiService.PerfLog("ChatPanel: LoadLastSession done (post-Loaded)");
-                    if (!_aboutShown)
-                    {
-                        _aboutShown = true;
-                        OnAbout(null, null);
-                    }
                     AiService.PerfLogFlush();
                 };
             }
@@ -659,6 +654,20 @@ namespace TrioAI.MPPlugIn
                 try { System.Diagnostics.Process.Start("https://github.com/lfmmd/TrioAI"); } catch { }
             };
             panel.Children.Add(linkBlock);
+
+            var giteeLink = new TextBlock
+            {
+                Text = "gitee.com/lfmmd/TrioAI",
+                Foreground = new SolidColorBrush(Color.FromRgb(100, 180, 255)),
+                FontSize = 12,
+                Cursor = Cursors.Hand,
+                Margin = new Thickness(0, 0, 0, 16)
+            };
+            giteeLink.MouseLeftButtonUp += (s, ev) =>
+            {
+                try { System.Diagnostics.Process.Start("https://gitee.com/lfmmd/TrioAI"); } catch { }
+            };
+            panel.Children.Add(giteeLink);
 
             panel.Children.Add(new TextBlock
             {
