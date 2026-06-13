@@ -486,14 +486,8 @@ namespace TrioAI.MPPlugIn
             expanderFactory.SetBinding(Expander.VisibilityProperty,
                 new System.Windows.Data.Binding("ThinkingText") { Converter = new ThinkingVisibilityConverter() });
 
-            // Expander header — 用 TextBlock 实例直接赋值
-            var headerText = new TextBlock
-            {
-                Text = Lang.S("ThinkingLabel"),
-                FontSize = 10.5,
-                Foreground = new SolidColorBrush(Color.FromRgb(140, 140, 140))
-            };
-            expanderFactory.SetValue(Expander.HeaderProperty, headerText);
+            // Expander header
+            expanderFactory.SetValue(Expander.HeaderProperty, Lang.S("ThinkingLabel"));
 
             // Expander content — thinking text
             var thinkingTextFactory = new FrameworkElementFactory(typeof(TextBox));

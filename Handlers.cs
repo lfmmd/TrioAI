@@ -769,15 +769,18 @@ namespace TrioAI.MPPlugIn
         {
             try
             {
-                var mw = MW;
-                if (mw == null) return null;
-                var doc = mw.HasOpenedDocumentFor(item);
-                if (doc == null) return null;
-                var content = doc.Content as System.Windows.FrameworkElement;
-                if (content == null) return null;
-                var found = FindControlWithTextProperty(content);
-                if (found == null) return null;
-                return found.GetType().GetProperty("Text")?.GetValue(found) as string;
+                return DispatcherHelper.Invoke(() =>
+                {
+                    var mw = MW;
+                    if (mw == null) return null;
+                    var doc = mw.HasOpenedDocumentFor(item);
+                    if (doc == null) return null;
+                    var content = doc.Content as System.Windows.FrameworkElement;
+                    if (content == null) return null;
+                    var found = FindControlWithTextProperty(content);
+                    if (found == null) return null;
+                    return found.GetType().GetProperty("Text")?.GetValue(found) as string;
+                }) as string;
             }
             catch { return null; }
         }
