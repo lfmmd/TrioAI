@@ -129,6 +129,9 @@ When `patch_source` fails (e.g. old_string not found, context mismatch), you MUS
 
 `write_source` 一次性写入整个程序文件，受 API max_tokens 限制（默认 8192 tokens ≈ 200-300 行带注释的 TrioBASIC）。输出超长会被截断，导致写入不完整的代码。
 
+**前置条件（硬规则）：**
+- **`patch_source` 仅适用于已存在的程序** —— `old_string` 必须能在当前源码中匹配到，文件不存在时 patch_source 必然失败。新建程序必须用 `write_source`（程序不存在时可先 `create_program`）。
+
 **优先策略：**
 - **修改现有程序**：永远用 `patch_source`（每个 operation 只是一行 replace/insert/delete，几乎不受 token 限制）
 - **新建小程序**（< 100 行）：可以直接用 `write_source` 一次写完

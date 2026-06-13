@@ -6,6 +6,36 @@
 
 ## [Unreleased]
 
+## [0.2.12] — 2026-06-13
+
+### 国际化
+
+- **新增 `Lang.L(zh, en)` 帮助函数** — `ChatPanel.cs` 复用现有 `LangCode` 检测，返回当前 UI 语言对应的字符串。一次性系统消息只需 zh/en 两种翻译；de/fr/es/it/pt-BR/hu/ro/ru/sv 等其他语言 fallback 到 en。
+- **`AiService.cs` 11 处用户可见字符串多语言化** — 包括 `(Reached maximum iterations)`、`[Compile Error]`、`Backup saved`、`API key not configured`、`Network error`、`Failed to call AI API`、`max_tokens` 升级提示（双向修复：之前 0.2.8 之后部分消息只写了中文，英文模式下也显示中文）、`API Error`（3 处）、`已备份`、`ERROR`。
+- **修复 `(Reached maximum iterations)` 在中文 MP 中显示英文的问题**。
+
+## [0.2.11] — 2026-06-13
+
+### 文档
+
+- **修正 `API.md` 的 `patch_source` 文档** —— 之前还是老的 `{action,line,content}` 格式(CHANGELOG 0.1.40 改格式时漏更新),实际代码早已是 `{old_string,new_string}` 文本替换模式。同步补上 `pouName` 参数说明、"程序必须已存在"前置条件、`old_string` 唯一性与空字符串追加语义。
+
+## [0.2.10] — 2026-06-13
+
+### 提示词
+
+- **显式化 `patch_source` 前置条件** —— `AiPrompt.cs` 的 "WRITING LARGE PROGRAMS" 段落增加硬规则:`patch_source` 仅适用于已存在的程序,新建程序必须用 `write_source`(必要时先 `create_program`)。`AiTools.cs` 的工具描述也明确"REQUIRES the program to already exist — cannot create new programs"。修复 AI 在文件不存在时仍优先尝试 patch_source 导致失败的问题。
+
+### 诊断
+
+- **移除 0.2.8 加的 `LoadSession` 诊断日志** — 失忆 bug 已定位为老 session 文件缺 `history` 字段（0.2.x 之前保存），用户选择直接删除老 session，无需为此修改 LoadSession 兜底逻辑。
+
+## [0.2.8] — 2026-06-13
+
+### 诊断
+
+- **`LoadSession` 加详细诊断日志** — 定位 `_ai.LoadSession` 加载 history 失败导致 AI 失忆的根因。日志直接写入 `%APPDATA%/TrioAI/perf_error.txt`,记录文件读取、反序列化、history 加载、摘要注入每一步状态,以及异常类型 + message + stack。验证完成后将清理。
+
 ## [0.1.39] — 2026-06-12
 
 `EnsureValidMessageSequence` 增加跨消息 tool_use ID 去重。

@@ -1794,5 +1794,14 @@ namespace TrioAI.MPPlugIn
             if (_strings["en"].TryGetValue(key, out var fallback)) return fallback;
             return key;
         }
+
+        /// <summary>
+        /// Pick a localized string for one-off system messages.
+        /// Only zh/en are translated; other UI languages fall back to en.
+        /// </summary>
+        public static string L(string zh, string en)
+        {
+            return LangCode == "zh" ? zh : en;
+        }
     }
 }

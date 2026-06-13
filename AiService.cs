@@ -173,7 +173,8 @@ namespace TrioAI.MPPlugIn
             {
                 if (e.ErrorCode != 0)
                 {
-                    var errMsg = string.Format("[Compile Error] {0}: line {1}, error #{2} - {3}",
+                    var errMsg = string.Format(Lang.L("[编译错误] {0}: 第 {1} 行, 错误 #{2} - {3}",
+                                                          "[Compile Error] {0}: line {1}, error #{2} - {3}"),
                         e.ProgramName ?? "?", e.ErrorLine, e.ErrorCode, e.ErrorDescription ?? "");
                     _lastCompileError = errMsg;
                     OnSystemMessage?.Invoke(errMsg);
@@ -202,7 +203,7 @@ namespace TrioAI.MPPlugIn
                 var backupName = $"{programName}_{timestamp}.bak";
                 var backupPath = Path.Combine(BackupDir, backupName);
                 File.WriteAllText(backupPath, sourceCode.ToString());
-                OnToolStatus?.Invoke($"Backup saved: {backupName}");
+                OnToolStatus?.Invoke(Lang.L($"已备份: {backupName}", $"Backup saved: {backupName}"));
             }
             catch { }
         }
@@ -213,7 +214,8 @@ namespace TrioAI.MPPlugIn
         {
             if (!HasApiKey)
             {
-                OnSystemMessage?.Invoke("API key not configured. Click 'Settings' to set your API key.");
+                OnSystemMessage?.Invoke(Lang.L("未配置 API Key。点击[设置]配置。",
+                                                    "API key not configured. Click 'Settings' to set your API key."));
                 return;
             }
 
@@ -261,13 +263,15 @@ namespace TrioAI.MPPlugIn
                 }
                 catch (System.IO.IOException ex)
                 {
-                    OnSystemMessage?.Invoke($"Network error: {ex.Message}");
+                    OnSystemMessage?.Invoke(Lang.L($"网络错误: {ex.Message}",
+                                                        $"Network error: {ex.Message}"));
                     return;
                 }
 
                 if (result == null)
                 {
-                    OnSystemMessage?.Invoke("Failed to call AI API. Check your API key, URL, and network.");
+                    OnSystemMessage?.Invoke(Lang.L("调用 AI API 失败。请检查 API Key、URL 和网络连接。",
+                                                        "Failed to call AI API. Check your API key, URL, and network."));
                     return;
                 }
 
@@ -275,7 +279,8 @@ namespace TrioAI.MPPlugIn
                 // 适用场景：AI 在 write_source 写大程序被切；agentic loop 输出超长
                 if (result.StopReason == "max_tokens" && _currentMaxTokens < EscalatedMaxTokens)
                 {
-                    OnSystemMessage?.Invoke($"⚠ 输出被 max_tokens={_currentMaxTokens} 截断，升级到 {EscalatedMaxTokens} 重试...");
+                    OnSystemMessage?.Invoke(Lang.L($"⚠ 输出被 max_tokens={_currentMaxTokens} 截断，升级到 {EscalatedMaxTokens} 重试...",
+                                                        $"⚠ Output truncated by max_tokens={_currentMaxTokens}, escalating to {EscalatedMaxTokens} for retry..."));
                     _currentMaxTokens = EscalatedMaxTokens;
                     turn--;  // 不算这一轮
                     continue;
@@ -341,7 +346,8 @@ namespace TrioAI.MPPlugIn
                 if (toolUseBlocks.Count == 0 || result.StopReason != "tool_use")
                 {
                     if (result.StopReason == "max_tokens")
-                        OnSystemMessage?.Invoke($"⚠ 即使 max_tokens={_currentMaxTokens} 仍被截断。建议改用 patch_source 分批写入（每个 operation 仅一行变更，几乎不受 token 限制）。");
+                        OnSystemMessage?.Invoke(Lang.L($"⚠ 即使 max_tokens={_currentMaxTokens} 仍被截断。建议改用 patch_source 分批写入（每个 operation 仅一行变更，几乎不受 token 限制）。",
+                                                            $"⚠ Still truncated even with max_tokens={_currentMaxTokens}. Consider using patch_source for batched writes (each operation is one line change, almost unaffected by token limits)."));
                     return;
                 }
 
@@ -372,7 +378,7 @@ namespace TrioAI.MPPlugIn
                 }
             }
 
-            OnSystemMessage?.Invoke("(Reached maximum iterations)");
+            OnSystemMessage?.Invoke(Lang.L("(已达到最大迭代次数)", "(Reached maximum iterations)"));
         }
 
         private class StreamResult
@@ -470,7 +476,8 @@ namespace TrioAI.MPPlugIn
             catch (OperationCanceledException) { throw; }
             catch (Exception ex)
             {
-                OnSystemMessage?.Invoke($"API Error: {ex.Message}");
+                OnSystemMessage?.Invoke(Lang.L($"API 错误: {ex.Message}",
+                                                    $"API Error: {ex.Message}"));
                 return null;
             }
 
@@ -478,7 +485,8 @@ namespace TrioAI.MPPlugIn
             {
                 var errText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 LogApiRequest("error-" + response.StatusCode, errText);
-                OnSystemMessage?.Invoke($"API Error ({response.StatusCode}): {Truncate(errText, 500)}");
+                OnSystemMessage?.Invoke(Lang.L($"API 错误 ({response.StatusCode}): {Truncate(errText, 500)}",
+                                                    $"API Error ({response.StatusCode}): {Truncate(errText, 500)}"));
                 response.Dispose();
                 return null;
             }
@@ -758,7 +766,7 @@ namespace TrioAI.MPPlugIn
                     var err = GetDictValue(evt, "error");
                     var msg = err != null ? GetStringValue(err, "message") : dataJson;
                     LogApiRequest("sse-error", msg ?? dataJson);
-                    OnSystemMessage?.Invoke("API Error: " + Truncate(msg ?? "unknown", 500));
+                    OnSystemMessage?.Invoke(Lang.L("API 错误: ", "API Error: ") + Truncate(msg ?? Lang.L("未知", "unknown"), 500));
                     break;
                 }
             }

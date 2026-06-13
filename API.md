@@ -228,19 +228,19 @@ These are the tools exposed to the AI model via Anthropic-style `tool_use`. The 
 - `sourceCode` (string, required) — Full source to overwrite
 
 #### `patch_source` [confirm]
+**Description:** Apply text-level edits to an **existing** program by finding and replacing exact text snippets. The program must already exist — for new programs, use `write_source` or `create_program` first.
 **Parameters:**
 - `name` (string, required) — Program name
+- `pouName` (string, optional) — For IEC tasks only: target POU name (must exist; defaults to first POU)
 - `operations` (array, required) — Each item:
   ```json
   {
-    "action": "replace | insert | delete",
-    "line": <1-based line number>,
-    "content": "<new line text>"
+    "old_string": "<exact text to find in source>",
+    "new_string": "<replacement text>"
   }
   ```
-  - `replace`: overwrite the line at `line`
-  - `insert`: insert a new line **before** `line` (or at end if `line > total`)
-  - `delete`: remove the line at `line`
+  - `old_string` must be **unique** in the source. If it matches 0 or 2+ times, the operation is skipped.
+  - If `old_string` is empty, `new_string` is appended to the end of the file.
 
 #### `open_program`
 **Parameters:**

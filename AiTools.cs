@@ -59,7 +59,7 @@ namespace TrioAI.MPPlugIn
             catch (Exception ex)
             {
                 if (_showToolStatus)
-                    OnToolStatus?.Invoke($"{name}: ERROR - {ex.Message}");
+                    OnToolStatus?.Invoke($"{name}: {Lang.L("错误", "ERROR")} - {ex.Message}");
                 return $"Error: {ex.Message}";
             }
         }
@@ -228,7 +228,7 @@ namespace TrioAI.MPPlugIn
                     ("sourceCode", "Full source code to write", false),
                     ("pouName", "For IEC tasks only: target POU name. Auto-created if missing. If omitted, writes to first POU (or creates MAIN).", true)
                 )),
-                Tool("patch_source", "Apply text-level edits to a program by finding and replacing exact text snippets (auto-backup, requires confirmation). More reliable than line-number based editing. For IEC tasks, pouName must point to an EXISTING POU.", PropsMixed(
+                Tool("patch_source", "Apply text-level edits to an EXISTING program by finding and replacing exact text snippets (auto-backup, requires confirmation). REQUIRES the program to already exist — cannot create new programs (use write_source or create_program first). More reliable than line-number based editing. For IEC tasks, pouName must point to an EXISTING POU.", PropsMixed(
                     ("name", "Program name", false, "string"),
                     ("pouName", "For IEC tasks only: target POU name (must exist; defaults to first POU)", true, "string"),
                     ("operations", "Array of {old_string:exact text to find in source, new_string:replacement text}. old_string must be unique in the source. If old_string is empty, new_string is appended to the end.", false, "array")

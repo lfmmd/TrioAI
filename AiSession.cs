@@ -87,6 +87,7 @@ namespace TrioAI.MPPlugIn
             var path = Path.Combine(HistoryDir, sessionId + ".json");
             if (!File.Exists(path)) return null;
             var text = File.ReadAllText(path);
+
             lock (_historyLock)
             {
                 _currentSessionId = sessionId;
@@ -94,17 +95,17 @@ namespace TrioAI.MPPlugIn
                 try
                 {
                     var data = _json.Deserialize<Dictionary<string, object>>(text);
-                    if (data != null && data.TryGetValue("history", out var histObj))
+
+                    // 加载原生 history（tool_use/tool_result 序列）。
+                    if (data != null && data.TryGetValue("history", out var histObj)
+                        && histObj is System.Collections.ArrayList al)
                     {
-                        if (histObj is System.Collections.ArrayList al)
+                        foreach (var item in al)
                         {
-                            foreach (var item in al)
+                            if (item is Dictionary<string, object> d)
                             {
-                                if (item is Dictionary<string, object> d)
-                                {
-                                    NormalizeHistoryContent(d);
-                                    _conversationHistory.Add(d);
-                                }
+                                NormalizeHistoryContent(d);
+                                _conversationHistory.Add(d);
                             }
                         }
                     }
@@ -141,7 +142,10 @@ namespace TrioAI.MPPlugIn
                         });
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    try { AiService.LogException("LoadSession", ex); } catch { }
+                }
             }
             return text;
         }
