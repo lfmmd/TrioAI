@@ -150,10 +150,10 @@ namespace TrioAI.MPPlugIn
                     }
                     return Handlers.PatchSource(progName, input);
                 }
-                case "read_vr": return Handlers.ReadVR(GetInt(input, "address"), GetInt(input, "count"));
-                case "write_vr": return Handlers.WriteVR(GetInt(input, "address"), input);
-                case "read_table": return Handlers.ReadTable(GetInt(input, "address"), GetInt(input, "count"));
-                case "write_table": return Handlers.WriteTable(GetInt(input, "address"), input);
+                case "read_vr": return Handlers.ReadVR(GetHexInt(input, "address"), GetInt(input, "count"));
+                case "write_vr": return Handlers.WriteVR(GetHexInt(input, "address"), input);
+                case "read_table": return Handlers.ReadTable(GetHexInt(input, "address"), GetInt(input, "count"));
+                case "write_table": return Handlers.WriteTable(GetHexInt(input, "address"), input);
                 case "list_axes": return Handlers.ListAxes();
                 case "get_axis_detail": return Handlers.GetAxisDetail(GetInt(input, "index"));
                 case "copy_program": return Handlers.CopyProgram(GetStr(input, "name"), input);
@@ -172,14 +172,14 @@ namespace TrioAI.MPPlugIn
                 case "list_processes": return Handlers.ListProcesses();
                 case "get_process_variable": return Handlers.GetProcessVariable(GetInt(input, "pid"), GetStr(input, "program"), GetStr(input, "variable"));
                 case "get_events": return Handlers.GetEvents(GetLong(input, "since"));
-                case "read_drive_param": return Handlers.ReadDriveParam(GetInt(input, "axis"), GetInt(input, "address"), GetInt(input, "nd", 4));
-                case "write_drive_param": return Handlers.WriteDriveParam(GetInt(input, "axis"), GetInt(input, "address"), input);
+                case "read_drive_param": return Handlers.ReadDriveParam(GetInt(input, "axis"), GetHexInt(input, "address"), GetInt(input, "nd", 4));
+                case "write_drive_param": return Handlers.WriteDriveParam(GetInt(input, "axis"), GetHexInt(input, "address"), input);
                 case "scan_ethercat": return Handlers.ScanEtherCAT(GetInt(input, "slot", 0));
                 case "read_ethercat_sdo":
                     return Handlers.EtherCATReadSDO(GetInt(input, "slot", 0),
                                                     (uint)GetLong(input, "position"),
-                                                    (uint)GetLong(input, "index"),
-                                                    (uint)GetLong(input, "subindex"),
+                                                    (uint)GetHexLong(input, "index"),
+                                                    (uint)GetHexLong(input, "subindex"),
                                                     GetStr(input, "type") ?? "uint16");
                 case "write_ethercat_sdo": return Handlers.EtherCATWriteSDOFromDict(input);
                 case "scan_msbus": return Handlers.ScanMsBus(GetInt(input, "slot", 0));

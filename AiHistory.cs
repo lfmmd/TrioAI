@@ -132,6 +132,8 @@ namespace TrioAI.MPPlugIn
                 sb.ToString());
 
             // 释放锁 → API 调用（可能耗时数秒）
+            // 安全性依赖:Chat 已串行化(_chatRunning),释锁期间不会有并发 Chat 修改 _conversationHistory,
+            // 故此处的 Exit/Enter 配对不会产生竞态。若未来移除串行队列,需重审此处(改用 snapshot 副本 + 锁外调用)。
             System.Threading.Monitor.Exit(_historyLock);
             OnSystemMessage?.Invoke(Lang.L("正在自动压缩对话历史...",
                                            "Auto-compacting conversation history..."));
@@ -248,7 +250,6 @@ namespace TrioAI.MPPlugIn
             };
 
             var json = SerializeRequest(body);
-            LogApiRequest("compact", json);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var request = new HttpRequestMessage(HttpMethod.Post, NormalizeApiUrl(_apiUrl));
             request.Headers.Add("x-api-key", _apiKey);
@@ -697,6 +698,28 @@ namespace TrioAI.MPPlugIn
                 }
             }
 
+            // 第二遍半：去重连续相同的 user 纯文本消息（自循环 / 旧脏数据 / restore 累积的产物）。
+            // 仅处理 content is string 的 user 消息（不误伤 tool_result 的 user，其 content 是 List）。
+            // "相邻"指物理位置相邻 —— 重复 user 之间若有 assistant 则不触发，故不误伤用户合理的真重发。
+            {
+                int j = 0;
+                while (j < messages.Count - 1)
+                {
+                    var cur = messages[j];
+                    var nxt = messages[j + 1];
+                    if (GetStringValue(cur, "role") != "user" || GetStringValue(nxt, "role") != "user") { j++; continue; }
+                    if (!(cur.TryGetValue("content", out var c1) && c1 is string s1) ||
+                        !(nxt.TryGetValue("content", out var c2) && c2 is string s2)) { j++; continue; }
+                    if (string.Equals(s1, s2, StringComparison.Ordinal))
+                    {
+                        messages.RemoveAt(j + 1);
+                        repaired = true;
+                        continue; // 不 j++：新的 messages[j+1] 可能仍与 cur 相同，一次性收敛三连/多连
+                    }
+                    j++;
+                }
+            }
+
             // 第三遍：处理 assistant 消息中有 tool_use 但后面没有对应 tool_result 的情况
             for (int i = 0; i < messages.Count; i++)
             {
@@ -909,9 +932,6 @@ namespace TrioAI.MPPlugIn
                             var content = GetStringValue(rb, "content");
                             if (content != null && !content.Contains("\"error\":"))
                             {
-                                LogApiRequest("dedup-hit",
-                                    $"current(q={nQuery},f={nFull ?? "(null)"},l={nLibrary ?? "(null)"}) " +
-                                    $"history(q={hQuery},f={hFull ?? "(null)"},l={hLibrary ?? "(null)"})");
                                 return new
                                 {
                                     results = new[]

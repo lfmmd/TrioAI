@@ -17,54 +17,24 @@ namespace TrioAI.MPPlugIn
         private TrioAIPlugIn()
             : base(new ResourceDictionary[0], new IFactoryBase[] { (IFactoryBase)ChatPanel.Factory })
         {
-            AiService.PerfLog("TrioAIPlugIn static ctor: enter");
-            AiService.PerfLog("TrioAIPlugIn static ctor: exit");
         }
 
         protected override void OnInitialize()
         {
-            AiService.PerfLog("OnInitialize: enter");
-
-            // Hook assembly loads so we can see what gets loaded during the slow 21s gap.
-            AppDomain.CurrentDomain.AssemblyLoad += (s, e) =>
-            {
-                try { AiService.PerfLog("AssemblyLoad: " + e.LoadedAssembly.GetName().Name); } catch { }
-            };
-
             base.OnInitialize();
-            AiService.PerfLog("OnInitialize: base.OnInitialize done");
             DispatcherHelper.Capture();
-            AiService.PerfLog("OnInitialize: DispatcherHelper.Capture done");
             _server = new ApiServer();
-            AiService.PerfLog("OnInitialize: ApiServer constructed");
             _server.Start();
-            AiService.PerfLog("OnInitialize: ApiServer.Start done");
-
-            // Probe: tick every 1s at idle priority. If ticks stop, the UI thread is blocked.
-            var probe = new DispatcherTimer(DispatcherPriority.ApplicationIdle) { Interval = TimeSpan.FromSeconds(1) };
-            var tickCount = 0;
-            probe.Tick += (s, e) =>
-            {
-                tickCount++;
-                if (tickCount % 5 == 0) AiService.PerfLog("DispatcherTimer idle tick #" + tickCount);
-                if (tickCount >= 60) { probe.Stop(); AiService.PerfLog("DispatcherTimer: stopping after 60s"); AiService.PerfLogFlush(); }
-            };
-            probe.Start();
-            AiService.PerfLog("OnInitialize: DispatcherTimer probe started");
 
             // Pre-warm WPF control templates + JIT at startup so first tool click is fast.
             // Templates normally load lazily on first use → that's the 21s freeze we measured.
             Dispatcher.CurrentDispatcher.BeginInvoke(new Action(Prewarm), DispatcherPriority.ApplicationIdle);
-            AiService.PerfLog("OnInitialize: scheduled Prewarm");
-            AiService.PerfLogFlush();
         }
 
         // Force-load WPF control templates + pre-JIT our methods.
         // Runs on UI thread at ApplicationIdle priority so MP startup isn't blocked.
         private void Prewarm()
         {
-            AiService.PerfLog("Prewarm: enter");
-
             // 1) Touch each WPF control type used by ChatPanel.BuildUI to load its ControlTemplate.
             //    ApplyTemplate() forces the template to instantiate (loads BAML, JITs template code).
             try
@@ -78,9 +48,8 @@ namespace TrioAI.MPPlugIn
                 PrewarmControl(new DockPanel());
                 PrewarmControl(new StackPanel());
                 PrewarmControl(new CheckBox());
-                AiService.PerfLog("Prewarm: WPF controls done");
             }
-            catch (Exception ex) { AiService.PerfLog("Prewarm WPF threw: " + ex.Message); }
+            catch (Exception ex) { AiService.LogException("Prewarm WPF", ex); }
 
             // 2) Pre-JIT our startup-critical methods so first click doesn't pay JIT cost.
             try
@@ -98,12 +67,8 @@ namespace TrioAI.MPPlugIn
                         try { System.Runtime.CompilerServices.RuntimeHelpers.PrepareMethod(c.MethodHandle); } catch { }
                     }
                 }
-                AiService.PerfLog("Prewarm: JIT prepare done");
             }
-            catch (Exception ex) { AiService.PerfLog("Prewarm JIT threw: " + ex.Message); }
-
-            AiService.PerfLog("Prewarm: exit");
-            AiService.PerfLogFlush();
+            catch (Exception ex) { AiService.LogException("Prewarm JIT", ex); }
         }
 
         private static void PrewarmControl(Control c)

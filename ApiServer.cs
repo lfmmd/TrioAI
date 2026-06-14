@@ -72,7 +72,7 @@ namespace TrioAI.MPPlugIn
 
             if (segments.Length == 0)
             {
-                SendJson(ctx, 200, new { status = "ok", version = "1.7" });
+                SendJson(ctx, 200, new { status = "ok", version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() });
                 return;
             }
 
@@ -188,8 +188,13 @@ namespace TrioAI.MPPlugIn
                                         if (method == "POST" || method == "PUT")
                                             HandleBody(ctx, method, body => Handlers.SetBreakpoint(name, body));
                                         else if (method == "DELETE")
-                                            HandleBody(ctx, method, body => Handlers.SetBreakpoint(name,
-                                                new Dictionary<string, object> { { "line", body.ContainsKey("line") ? body["line"] : 0 }, { "enable", false } }));
+                                            HandleBody(ctx, method, body =>
+                                            {
+                                                if (!body.ContainsKey("line"))
+                                                    return new { error = "line is required for DELETE (1-based)" };
+                                                return Handlers.SetBreakpoint(name,
+                                                    new Dictionary<string, object> { { "line", body["line"] }, { "enable", false } });
+                                            });
                                         else
                                             SendJson(ctx, 405, new { error = "Method not allowed" });
                                         break;
@@ -202,7 +207,7 @@ namespace TrioAI.MPPlugIn
                         break;
 
                     case "vr":
-                        if (segments.Length >= 2)
+                        if (segments.Length >= 3)
                         {
                             int addr;
                             if (!int.TryParse(segments[2], out addr))
@@ -224,7 +229,7 @@ namespace TrioAI.MPPlugIn
                         break;
 
                     case "table":
-                        if (segments.Length >= 2)
+                        if (segments.Length >= 3)
                         {
                             int addr;
                             if (!int.TryParse(segments[2], out addr))

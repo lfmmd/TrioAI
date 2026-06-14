@@ -380,6 +380,70 @@ namespace TrioAI.MPPlugIn
                     $"FAIL: 孤立 tool_result 仍存在 (history before={before} after={svc4._conversationHistory.Count})"));
             }
 
+            // --- Phase2-1: 去重连续相同 user 纯文本（自循环 bug 现场：4 条 → 1 条）---
+            {
+                var svc5 = new AiService();
+                svc5._conversationHistory.Clear();
+                for (int k = 0; k < 4; k++)
+                    svc5._conversationHistory.Add(new Dictionary<string, object>
+                    {
+                        { "role", "user" }, { "content", "同时创建3个demo" }
+                    });
+                svc5.EnsureValidMessageSequence(svc5._conversationHistory);
+                int same = 0;
+                foreach (var m in svc5._conversationHistory)
+                    if (m.TryGetValue("content", out var c) && c is string s && s == "同时创建3个demo") same++;
+                bool ok = same == 1;
+                results.Add(("Phase2-1 连续相同user去重", ok,
+                    ok ? "OK: 4 条连续相同 user 收敛为 1 条" :
+                    $"FAIL: 收敛后仍有 {same} 条相同 user (count={svc5._conversationHistory.Count})"));
+            }
+
+            // --- Phase2-2: 不误伤"中间隔了 AI 回复"的真重发（两条都应保留）---
+            {
+                var svc6 = new AiService();
+                svc6._conversationHistory.Clear();
+                svc6._conversationHistory.Add(new Dictionary<string, object> { { "role", "user" }, { "content", "你好" } });
+                svc6._conversationHistory.Add(MakeAssistantText("你好！有什么可以帮你？"));
+                svc6._conversationHistory.Add(new Dictionary<string, object> { { "role", "user" }, { "content", "你好" } });
+                svc6.EnsureValidMessageSequence(svc6._conversationHistory);
+                int n = 0;
+                foreach (var m in svc6._conversationHistory)
+                    if (m.TryGetValue("content", out var c) && c is string s && s == "你好") n++;
+                bool ok = n == 2;
+                results.Add(("Phase2-2 不误伤真重发", ok,
+                    ok ? "OK: 中间隔 AI 的相同 user 都保留" :
+                    $"FAIL: 误删了真重发 user (剩余 {n} 条)"));
+            }
+
+            // --- Phase2-3: 不误伤 user(tool_result)（content 是 List，is string 守卫）---
+            {
+                var svc7 = new AiService();
+                svc7._conversationHistory.Clear();
+                svc7._conversationHistory.Add(MakeAssistantToolUse("lookup_command", "toolu_X",
+                    MakeLookupInput("MOVE", "false", null)));
+                svc7._conversationHistory.Add(MakeUserToolResult("toolu_X", "{\"results\":[{}]}"));
+                svc7._conversationHistory.Add(new Dictionary<string, object> { { "role", "user" }, { "content", "dup" } });
+                svc7._conversationHistory.Add(new Dictionary<string, object> { { "role", "user" }, { "content", "dup" } });
+                int before = svc7._conversationHistory.Count;
+                svc7.EnsureValidMessageSequence(svc7._conversationHistory);
+                // tool_result 必须保留（is string 守卫挡住）；两条相邻 "dup" 收敛为 1 条
+                bool toolResultKept = false;
+                int dupCount = 0;
+                foreach (var m in svc7._conversationHistory)
+                {
+                    if (m.TryGetValue("content", out var c))
+                    {
+                        if (c is List<Dictionary<string, object>>) toolResultKept = true;
+                        else if (c is string s && s == "dup") dupCount++;
+                    }
+                }
+                bool ok = toolResultKept && dupCount == 1;
+                results.Add(("Phase2-3 不误伤tool_result", ok,
+                    ok ? "OK: tool_result 保留 + 相邻纯文本收敛" :
+                    $"FAIL: toolResultKept={toolResultKept} dupCount={dupCount} (before={before} after={svc7._conversationHistory.Count})"));
+            }
+
             // ========== 报告 ==========
             var sb = new StringBuilder();
             sb.AppendLine("=== TrioAI Optimization Tests ===");
@@ -465,6 +529,18 @@ namespace TrioAI.MPPlugIn
                 { "type", "tool_result" },
                 { "tool_use_id", toolId },
                 { "content", content }
+            };
+        }
+
+        private static Dictionary<string, object> MakeAssistantText(string text)
+        {
+            return new Dictionary<string, object>
+            {
+                { "role", "assistant" },
+                { "content", new List<Dictionary<string, object>>
+                {
+                    new Dictionary<string, object> { { "type", "text" }, { "text", text } }
+                }}
             };
         }
     }

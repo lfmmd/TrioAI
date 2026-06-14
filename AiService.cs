@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -33,6 +32,9 @@ namespace TrioAI.MPPlugIn
         private const int EscalatedMaxTokens = 64000;
         private int _currentMaxTokens = DefaultMaxTokens;
 
+        // Chat 串行保护:正常路径由 ChatPanel._isProcessing 拦截,此为防御层(防未来其他入口并发调用 Chat)
+        private volatile bool _chatRunning;
+
         // ---- Token usage tracking ----
         private int _totalInputTokens, _totalOutputTokens, _totalCacheReadTokens, _totalCacheCreateTokens;
         public int TotalInputTokens => _totalInputTokens;
@@ -40,43 +42,6 @@ namespace TrioAI.MPPlugIn
         public int TotalCacheReadTokens => _totalCacheReadTokens;
         public int TotalCacheCreateTokens => _totalCacheCreateTokens;
 
-        // ---- Perf diagnostics (remove after diagnosis) ----
-        private static readonly Stopwatch _perfSw = Stopwatch.StartNew();
-        private static readonly List<string> _perfLines = new List<string>();
-        private static readonly object _perfLock = new object();
-        public static void PerfLog(string label)
-        {
-            try
-            {
-                var line = string.Format("{0,8:F1} ms  {1}", _perfSw.Elapsed.TotalMilliseconds, label);
-                lock (_perfLock) { _perfLines.Add(line); }
-            }
-            catch { }
-        }
-        public static void PerfLogFlush()
-        {
-            List<string> snapshot;
-            lock (_perfLock) { snapshot = new List<string>(_perfLines); }
-            if (snapshot.Count == 0) snapshot.Add("(no entries)");
-            string dir = null;
-            try
-            {
-                dir = Path.GetDirectoryName(PromptPath); // same dir as AI_INSTRUCTIONS.md
-                Directory.CreateDirectory(dir);
-                File.AppendAllText(
-                    Path.Combine(dir, "perf_log.txt"),
-                    string.Join(Environment.NewLine, snapshot) + Environment.NewLine);
-            }
-            catch (Exception ex)
-            {
-                try
-                {
-                    var errPath = Path.Combine(dir ?? Path.GetTempPath(), "perf_error.txt");
-                    File.AppendAllText(errPath, ex.ToString() + Environment.NewLine);
-                }
-                catch { }
-            }
-        }
         public static void LogException(string context, Exception ex)
         {
             try
@@ -88,24 +53,6 @@ namespace TrioAI.MPPlugIn
                     string.Format("[{0}] {1}: {2}{3}{4}{3}",
                         DateTime.Now.ToString("HH:mm:ss.fff"), context,
                         ex.GetType().Name, ex.Message, Environment.NewLine));
-            }
-            catch { }
-        }
-
-        // DEBUG: 将完整 API 请求体写入日志文件，用于排查 messages 参数非法等问题。
-        // 日志路径：%APPDATA%/TrioAI/api_debug_log.txt，关闭调试时删除此调用即可。
-        private static void LogApiRequest(string label, string json)
-        {
-            try
-            {
-                var dir = Path.GetDirectoryName(PromptPath);
-                Directory.CreateDirectory(dir);
-                var path = Path.Combine(dir, "api_debug_log.txt");
-                var header = string.Format("{0}[{1}] len={2}{3}",
-                    Environment.NewLine + "---" + Environment.NewLine,
-                    DateTime.Now.ToString("HH:mm:ss.fff"), label,
-                    json.Length);
-                File.AppendAllText(path, header + Environment.NewLine + json + Environment.NewLine);
             }
             catch { }
         }
@@ -125,49 +72,34 @@ namespace TrioAI.MPPlugIn
 
         public AiService()
         {
-            PerfLog("AiService ctor: enter");
             _http = new HttpClient { Timeout = TimeSpan.FromSeconds(120) };
-            PerfLog("AiService ctor: HttpClient created");
             LoadConfig();
-            PerfLog("AiService ctor: LoadConfig done");
             Directory.CreateDirectory(HistoryDir);
             Directory.CreateDirectory(BackupDir);
             Directory.CreateDirectory(DataDir);
             try { Directory.CreateDirectory(MemoryDir); } catch { }
-            PerfLog("AiService ctor: dirs ensured");
             // 首次创建提示词文件 — 用户手动修改后不会被覆盖。
             // 想恢复默认：删除文件，或在 UI 点击「初始化 Skills」。
             try { if (!File.Exists(PromptPath)) File.WriteAllText(PromptPath, DefaultPrompt); } catch { }
-            PerfLog("AiService ctor: prompt written");
             SubscribeCompileEvents();
-            PerfLog("AiService ctor: SubscribeCompileEvents done");
         }
 
         // ---- Compile State Monitoring ----
 
         private void SubscribeCompileEvents()
         {
-            PerfLog("SubscribeCompileEvents: enter");
             try
             {
                 DispatcherHelper.Invoke(() =>
                 {
-                    PerfLog("SubscribeCompileEvents: inside dispatcher invoke");
                     var ctrl = Trio.SharedLibrary.MPSingletons.Controller;
-                    PerfLog("SubscribeCompileEvents: got Controller");
                     if (ctrl != null)
                     {
                         ctrl.CompileStateChanged += OnCompileStateChanged;
-                        PerfLog("SubscribeCompileEvents: subscribed");
-                    }
-                    else
-                    {
-                        PerfLog("SubscribeCompileEvents: Controller is null");
                     }
                 });
             }
-            catch (Exception ex) { PerfLog("SubscribeCompileEvents EXCEPTION: " + ex.Message); }
-            PerfLog("SubscribeCompileEvents: exit");
+            catch (Exception ex) { LogException("SubscribeCompileEvents", ex); }
         }
 
         private void OnCompileStateChanged(object sender, Trio.SharedLibrary.COMPILEStateEventArgs e)
@@ -225,6 +157,23 @@ namespace TrioAI.MPPlugIn
                                                     "API key not configured. Click 'Settings' to set your API key."));
                 return;
             }
+
+            if (_chatRunning)
+            {
+                OnSystemMessage?.Invoke(Lang.L("上一条消息仍在处理,请稍候。",
+                                                    "Previous message is still being processed. Please wait."));
+                return;
+            }
+
+            _chatRunning = true;
+            try { ChatCore(userMessage, ct); }
+            finally { _chatRunning = false; }
+        }
+
+        private void ChatCore(string userMessage, CancellationToken ct = default)
+        {
+            // 每条用户消息从默认 max_tokens 开始,仅在当轮被截断时临时升级(避免升级后整个会话不回落)
+            _currentMaxTokens = DefaultMaxTokens;
 
             if (string.IsNullOrEmpty(_currentSessionId))
                 _currentSessionId = DateTime.Now.ToString("yyyyMMdd_HHmmss");
@@ -400,7 +349,44 @@ namespace TrioAI.MPPlugIn
                 }
 
                 try { Task.WaitAll(toolTasks.ToArray()); }
-                catch (OperationCanceledException) { throw; }
+                catch (OperationCanceledException)
+                {
+                    // 取消发生在工具执行阶段(非 API 流阶段):为已发起的 tool_use 补 stub tool_result +
+                    // sentinel,避免下一条用户消息与上一个 user/tool_result 块相邻(Anthropic 要求严格交替)。
+                    // 与 API 流取消(:324 附近)的清理保持一致。
+                    var stubResults = new List<Dictionary<string, object>>();
+                    foreach (var tb in toolUseBlocks)
+                    {
+                        stubResults.Add(new Dictionary<string, object>
+                        {
+                            { "type", "tool_result" },
+                            { "tool_use_id", GetStringValue(tb, "id") ?? "" },
+                            { "content", "[Operation cancelled by user]" }
+                        });
+                    }
+                    lock (_historyLock)
+                    {
+                        _conversationHistory.Add(new Dictionary<string, object>
+                        {
+                            { "role", "user" },
+                            { "content", stubResults }
+                        });
+                        _conversationHistory.Add(new Dictionary<string, object>
+                        {
+                            { "role", "assistant" },
+                            { "content", new List<Dictionary<string, object>>
+                                {
+                                    new Dictionary<string, object>
+                                    {
+                                        { "type", "text" },
+                                        { "text", "[已中断]" }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    return;
+                }
                 catch (AggregateException) { /* 单 Task 内异常已在 Task 内 catch，这里忽略包裹 */ }
 
                 // 按原始 tool_use 顺序构造 tool_result
@@ -526,7 +512,6 @@ namespace TrioAI.MPPlugIn
             }
 
             var json = SerializeRequest(body);
-            LogApiRequest("stream", json);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var request = new HttpRequestMessage(HttpMethod.Post, NormalizeApiUrl(_apiUrl));
@@ -561,7 +546,6 @@ namespace TrioAI.MPPlugIn
             if (!response.IsSuccessStatusCode)
             {
                 var errText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                LogApiRequest("error-" + response.StatusCode, errText);
 
                 var code = (int)response.StatusCode;
                 int? retryAfter = null;
@@ -781,10 +765,6 @@ namespace TrioAI.MPPlugIn
             var type = GetStringValue(evt, "type") ?? eventType;
             if (string.IsNullOrEmpty(type)) return;
 
-            // DEBUG: log SSE event types to see actual response format
-            if (type != "message_start" && type != "message_stop" && type != "ping")
-                LogApiRequest("sse-event", $"type={type} data={Truncate(dataJson, 500)}");
-
             switch (type)
             {
                 case "message_start":
@@ -935,7 +915,6 @@ namespace TrioAI.MPPlugIn
                 {
                     var err = GetDictValue(evt, "error");
                     var msg = err != null ? GetStringValue(err, "message") : dataJson;
-                    LogApiRequest("sse-error", msg ?? dataJson);
                     OnSystemMessage?.Invoke(Lang.L("API 错误: ", "API Error: ") + Truncate(msg ?? Lang.L("未知", "unknown"), 500));
                     break;
                 }

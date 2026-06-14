@@ -31,6 +31,10 @@ namespace TrioAI.MPPlugIn
         private static readonly JavaScriptSerializer _json = new JavaScriptSerializer();
         private ChatMessage _streamingMsg;
         private System.Threading.CancellationTokenSource _cts;
+        // 流式 UI 缓冲:累积 delta,按字符数/时间批量 flush,避免每个 delta 一次 BeginInvoke 撑爆 UI 队列
+        private string _pendingDelta;
+        private System.Windows.Threading.DispatcherTimer _flushTimer;
+        private const int StreamFlushChars = 160;
         private TextBlock _statusInfo;
         private Border _planModeBanner;
 
@@ -54,34 +58,21 @@ namespace TrioAI.MPPlugIn
 
         public ChatPanel()
         {
-            AiService.PerfLog("ChatPanel ctor: enter");
             try
             {
                 _tool = new ChatTool(this);
-                AiService.PerfLog("ChatPanel ctor: ChatTool created");
                 InitAiService();
-                AiService.PerfLog("ChatPanel ctor: InitAiService done");
                 BuildUI();
-                AiService.PerfLog("ChatPanel ctor: BuildUI done");
                 _ai.StartNewSession();
-                AiService.PerfLog("ChatPanel ctor: StartNewSession done");
                 this.Loaded += (s, e) =>
                 {
-                    AiService.PerfLog("ChatPanel: Loaded event fired (rendered)");
                     LoadLastSession();
-                    AiService.PerfLog("ChatPanel: LoadLastSession done (post-Loaded)");
-                    AiService.PerfLogFlush();
                 };
             }
             catch (Exception ex)
             {
-                AiService.PerfLog("ChatPanel ctor THREW: " + ex.GetType().Name + ": " + ex.Message);
                 try { AiService.LogException("ChatPanel ctor", ex); } catch { }
                 throw;
-            }
-            finally
-            {
-                AiService.PerfLogFlush();
             }
         }
 
@@ -89,9 +80,7 @@ namespace TrioAI.MPPlugIn
         {
             try
             {
-                AiService.PerfLog("LoadLastSession: enter");
                 var sessions = _ai.ListSessions();
-                AiService.PerfLog("LoadLastSession: ListSessions done, count=" + sessions.Count);
                 if (sessions.Count == 0) return;
                 var last = sessions[0]; // already sorted by time descending
                 var dataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TrioAI");
@@ -99,8 +88,8 @@ namespace TrioAI.MPPlugIn
                 if (!File.Exists(path)) return;
                 var text = File.ReadAllText(path);
                 var data = _json.Deserialize<Dictionary<string, object>>(text);
-                AiService.PerfLog("LoadLastSession: file parsed");
                 _ai.LoadSession(last.Id);
+                _messages.Clear();   // 与 LoadSessionMessages 一致，避免重复加载时 UI 消息累积
                 object msgsObj;
                 if (data.TryGetValue("messages", out msgsObj) && msgsObj is System.Collections.ArrayList al)
                 {
@@ -118,7 +107,6 @@ namespace TrioAI.MPPlugIn
                         }
                     }
                 }
-                AiService.PerfLog("LoadLastSession: messages added");
                 Dispatcher.BeginInvoke(new Action(() => _scrollViewer.ScrollToEnd()));
             }
             catch { }
@@ -171,12 +159,24 @@ namespace TrioAI.MPPlugIn
             };
             _ai.OnAiTextDelta = (delta) =>
             {
+                // delta 来自后台线程,用 BeginInvoke 切到 UI 线程后累积到 _pendingDelta,再按字符数/时间批量 flush
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    if (_streamingMsg != null)
+                    if (_streamingMsg == null) return;
+                    _pendingDelta = (_pendingDelta ?? "") + delta;
+                    if (_pendingDelta.Length >= StreamFlushChars)
                     {
-                        _streamingMsg.Text = (_streamingMsg.Text ?? "") + delta;
-                        _scrollViewer.ScrollToEnd();
+                        FlushPendingDelta();
+                    }
+                    else
+                    {
+                        if (_flushTimer == null)
+                        {
+                            _flushTimer = new System.Windows.Threading.DispatcherTimer { Interval = TimeSpan.FromMilliseconds(50) };
+                            _flushTimer.Tick += (s, e2) => FlushPendingDelta();
+                        }
+                        _flushTimer.Stop();
+                        _flushTimer.Start();
                     }
                 }));
             };
@@ -184,6 +184,7 @@ namespace TrioAI.MPPlugIn
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
+                    FlushPendingDelta();
                     if (_streamingMsg != null && string.IsNullOrEmpty(_streamingMsg.Text)
                         && string.IsNullOrEmpty(_streamingMsg.ThinkingText))
                     {
@@ -632,6 +633,7 @@ namespace TrioAI.MPPlugIn
                         _sendBtn.BorderBrush = Brushes.Transparent;
                         _inputBox.Focus();
                         UpdateStatusInfo();
+                        FlushPendingDelta();
                         if (_streamingMsg != null)
                         {
                             // Stream was interrupted or ended without OnAiTextEnd — flush
@@ -644,6 +646,21 @@ namespace TrioAI.MPPlugIn
                     }));
                 }
             });
+        }
+
+        // 把累积的 _pendingDelta 一次性追加到 _streamingMsg.Text 并清空/停定时器。必须在 UI 线程调用。
+        private void FlushPendingDelta()
+        {
+            if (_flushTimer != null) _flushTimer.Stop();
+            if (!string.IsNullOrEmpty(_pendingDelta))
+            {
+                if (_streamingMsg != null)
+                {
+                    _streamingMsg.Text = (_streamingMsg.Text ?? "") + _pendingDelta;
+                    _scrollViewer.ScrollToEnd();
+                }
+                _pendingDelta = null;
+            }
         }
 
         // ---- Auto-save Session ----
@@ -1471,17 +1488,13 @@ namespace TrioAI.MPPlugIn
 
             private static void OnMenuItemClick(object sender, RoutedEventArgs e)
             {
-                AiService.PerfLog("OnMenuItemClick: enter");
                 var mi = sender as MenuItem;
                 if (mi?.Tag == null) return;
                 var factory = mi.Tag as ToolFactory;
                 if (factory == null) return;
                 var mw = MPSingletons.MainWindow;
                 if (mw == null) return;
-                AiService.PerfLog("OnMenuItemClick: calling OpenToolWindow");
                 mw.OpenToolWindow(factory.CreateToolName(), true);
-                AiService.PerfLog("OnMenuItemClick: OpenToolWindow returned");
-                AiService.PerfLogFlush();
                 e.Handled = true;
             }
 

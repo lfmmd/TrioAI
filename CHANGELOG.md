@@ -6,6 +6,31 @@
 
 ## [Unreleased]
 
+## [0.3.2] — 2026-06-14
+
+修复"加载旧会话后 AI 失忆自循环"——用户只发一次指令（如"同时创建3个demo"），AI 却把"开场白+创建动作"自动循环重复了 4 遍，4 组回答的 `thinkingText` 逐字完全相同（证明模型每次从同一上下文从头开始）。`chat_history/20260614_092608.json` 数据层验证：UI `messages` 里同一 user 指令重复 4 次，而发给 API 的 `history` 最终干净。根因双重：restore blob 把已完成动作当成待办、历史去重不覆盖连续相同 user 文本。
+
+### 修复
+
+- **AI 加载旧会话后自循环重做（连续重复 user 文本去重）** —— `AiHistory.cs` `EnsureValidMessageSequence` 新增"第二遍半"扫描（在 user tool_result 处理之后、assistant 补 tool_result 之前）：删除物理相邻且 `content is string`、内容逐字相同的 user 消息，保留第一条。自循环/旧脏数据/restore 累积产生的连续重复 user 文本，会被每轮 API 请求清理并永久写回 `_conversationHistory`（in-place 修复，与 0.2.16 同机制）。"相邻"判定 + `is string` 守卫确保不误伤用户真重发（中间隔 assistant 不触发）和 tool_result 消息（content 是 List）。新增 3 个 Phase2-* 单元测试。
+- **restore blob 误导模型重做已完成动作** —— `AiSession.cs` `LoadSession` 拼装的会话恢复 blob 文案从模糊的"restored context"改为明确双语文案"[上一会话已完成的工作记录（仅作上下文，请勿重复执行）]"；工具调用记录 label 从 `System` 改为 `Tool`，让模型看清哪些动作已执行；配套注入的 assistant 回复也改为双语，明确"已记录、不会重做、按当前状态继续"。
+- **重复加载会话时 UI 消息累积** —— `ChatPanel.cs` `LoadLastSession` 在 `_ai.LoadSession` 之后补 `_messages.Clear()`，与 `LoadSessionMessages` 行为一致，避免重复加载同一会话时 UI 消息重复堆积。
+- **新对话未退出 Plan Mode** —— `AiSession.cs` `StartNewSession` 只清 history 不重置 `_planMode`，导致点"新对话"后上一会话的 Plan Mode 残留：write 工具仍被拒、UI 横幅不消失。现重置 `_planMode` 并触发 `OnPlanModeChanged(false)`（lock 外 invoke 避免 UI 回调重入）。
+
+### 新增
+
+- **批量/多程序任务逐个处理（prompt 硬规则）** —— `AiPrompt.cs` 新增 `BATCH / MULTI-PROGRAM TASKS` 段：对"修复/检查全部程序"这类多程序同类操作，AI 必须**逐个**处理（read → patch → compile 验证 → 下一个），禁止先把所有程序读进 context 再批量改——后者正是失忆/循环 bug 的 context 溢出触发点。配合 `task_*` 系统跟踪进度。
+- **AI 工具支持十六进制地址** —— `AiJson.cs` 新增 `GetHexInt`/`GetHexLong`（解析 `0x4000`，无前缀先尝试十进制失败再按十六进制）；`AiTools.cs` 的 `read_vr`/`write_vr`/`read_table`/`write_table`/`read_drive_params`/`write_drive_params`/EtherCAT SDO 的 `index`/`subindex` 改用十六进制解析，与 `ApiServer.TryParseAddr` 一致，AI 可直接用 `0x` 地址操作 VR/TABLE/drive/SDO。
+- **插件启动预热** —— `TrioAIPlugIn.cs` 加 WPF/JIT Prewarm 预热首次加载慢的程序集，缩短冷启动；清理上轮性能排查遗留的 `PerfLog`/`AssemblyLoad` 调试代码。
+
+### 变更
+
+- **Chat 串行保护** —— `AiService.cs` 新增 `_chatRunning` 防御层，兜底防止其他入口并发调用 `Chat`（正常由 `ChatPanel._isProcessing` 拦截）。
+- **max_tokens 截断回落** —— `AiService.cs` 每条消息从默认 max_tokens 开始，仅当轮被截断时临时升级，避免升级后整个会话不回落。
+- **工具取消时补 tool_result stub** —— `AiService.cs` 工具执行阶段被取消时，为已发起的 tool_use 补 stub tool_result + sentinel，避免下一条 user 与上一个 user/tool_result 块相邻（Anthropic 要求严格交替），与 API 流取消清理一致。
+- **/api/status 版本号动态化** —— `ApiServer.cs` 从硬编码 `1.7` 改为读程序集版本。
+- **breakpoint DELETE 参数校验** —— `ApiServer.cs` DELETE 断点要求 `line` 参数（1-based），缺失返回 error。
+
 ## [0.3.1] — 2026-06-14
 
 Phase 1 测试发现的 4 个 bug 修复。重点解决"读 10 个代码做统计"时的严重失忆循环。

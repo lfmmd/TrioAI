@@ -168,6 +168,40 @@ namespace TrioAI.MPPlugIn
             return 0;
         }
 
+        // 十六进制地址解析:支持 "0x4000"/"0X4000",无前缀先尝试十进制失败再按十六进制。
+        // 与 ApiServer.TryParseAddr 规则一致,确保 AI 工具链与 REST 路由解析结果相同。
+        private static int GetHexInt(Dictionary<string, object> d, string key)
+        {
+            object val;
+            if (!d.TryGetValue(key, out val) || val == null) return 0;
+            if (val is double dd) return (int)dd;
+            if (val is long dl) return (int)dl;
+            if (val is int di) return di;
+            var s = val.ToString().Trim();
+            if (s.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                return int.TryParse(s.Substring(2), System.Globalization.NumberStyles.HexNumber,
+                                    System.Globalization.CultureInfo.InvariantCulture, out int h1) ? h1 : 0;
+            if (int.TryParse(s, out int dec)) return dec;
+            return int.TryParse(s, System.Globalization.NumberStyles.HexNumber,
+                                System.Globalization.CultureInfo.InvariantCulture, out int h2) ? h2 : 0;
+        }
+
+        private static long GetHexLong(Dictionary<string, object> d, string key)
+        {
+            object val;
+            if (!d.TryGetValue(key, out val) || val == null) return 0;
+            if (val is double dd) return (long)dd;
+            if (val is long dl) return dl;
+            if (val is int di) return di;
+            var s = val.ToString().Trim();
+            if (s.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                return long.TryParse(s.Substring(2), System.Globalization.NumberStyles.HexNumber,
+                                     System.Globalization.CultureInfo.InvariantCulture, out long h1) ? h1 : 0;
+            if (long.TryParse(s, out long dec)) return dec;
+            return long.TryParse(s, System.Globalization.NumberStyles.HexNumber,
+                                 System.Globalization.CultureInfo.InvariantCulture, out long h2) ? h2 : 0;
+        }
+
         private static bool GetBool(Dictionary<string, object> d, string key)
         {
             object val;

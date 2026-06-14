@@ -80,8 +80,15 @@ namespace TrioAI.MPPlugIn
                 _totalInputTokens = _totalOutputTokens = _totalCacheReadTokens = _totalCacheCreateTokens = 0;
                 _currentMaxTokens = DefaultMaxTokens;
                 _currentSessionId = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                return _currentSessionId;
             }
+            // 新会话必须退出 Plan Mode：上一会话的 _planMode 残留会导致 write 工具仍被拒、
+            // UI 横幅（OnPlanModeChanged 回调）不消失。OnPlanModeChanged 是 UI 回调，在 lock 外 invoke。
+            if (_planMode)
+            {
+                _planMode = false;
+                OnPlanModeChanged?.Invoke(false);
+            }
+            return _currentSessionId;
         }
 
         internal void RecordFileRead(string name, string content)
@@ -166,14 +173,21 @@ namespace TrioAI.MPPlugIn
                         && _conversationHistory.Count > 0)
                     {
                         var sb = new System.Text.StringBuilder();
-                        sb.AppendLine("[Previous session context — restored on load]");
+                        // 明确告知模型：这是上一会话**已完成**的工作记录，仅作上下文，请勿重复执行。
+                        // 否则模型会把"已完成的动作"当成待办从头重做 —— 这是自循环失忆 bug 的根因。
+                        sb.AppendLine(Lang.L(
+                            "[上一会话已完成的工作记录（仅作上下文，请勿重复执行其中已完成的动作，根据当前实际状态继续）]",
+                            "[Previous session — COMPLETED work log, for context only. DO NOT re-execute the actions listed below. Continue based on the actual current state.]"));
+                        sb.AppendLine();
                         foreach (var m in displayMsgs)
                         {
                             if (!(m is Dictionary<string, object> md)) continue;
                             var role = md.ContainsKey("role") ? md["role"]?.ToString() : "?";
                             var msg = md.ContainsKey("text") ? md["text"]?.ToString() : "";
                             if (string.IsNullOrEmpty(msg)) continue;
-                            var label = role == "User" ? "User" : role == "AI" ? "AI" : "System";
+                            // System 类是工具调用记录（如"AI 请求执行: create_program..."）——保留并标为 Tool，
+                            // 让模型看清哪些动作已做过，是防止重复执行的关键证据。
+                            var label = role == "User" ? "User" : role == "AI" ? "AI" : "Tool";
                             var trimmed = msg.Length > 300 ? msg.Substring(0, 300) + "..." : msg;
                             sb.AppendLine($"{label}: {trimmed}");
                         }
@@ -185,7 +199,9 @@ namespace TrioAI.MPPlugIn
                         _conversationHistory.Insert(1, new Dictionary<string, object>
                         {
                             { "role", "assistant" },
-                            { "content", "Understood. I have the previous session context above and will continue from there." }
+                            { "content", Lang.L(
+                                "明白。以上是上一会话已完成的工作记录，我不会重复执行其中已完成的动作，将根据当前实际状态继续。",
+                                "Understood. The above is a log of COMPLETED work from the previous session. I will NOT re-execute actions that are already done, and will continue based on the actual current state.") }
                         });
                     }
                 }
