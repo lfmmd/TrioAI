@@ -1025,6 +1025,17 @@ namespace TrioAI.MPPlugIn
             };
             panel.Children.Add(memoryEnabledCheck);
 
+            // Localize thinking checkbox
+            var localizeThinkingCheck = new CheckBox
+            {
+                Content = Lang.S("LocalizeThinking"),
+                IsChecked = AiService.LocalizeThinking,
+                Foreground = Brushes.White,
+                Margin = new Thickness(0, 0, 0, 14),
+                ToolTip = Lang.S("LocalizeThinkingDesc")
+            };
+            panel.Children.Add(localizeThinkingCheck);
+
             // Buttons
             var btnRow = new DockPanel { LastChildFill = false };
 
@@ -1109,7 +1120,7 @@ namespace TrioAI.MPPlugIn
                 }
                 int budget = AiService.BudgetTokens;
                 int.TryParse(budgetBox.Text, out budget);
-                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked, enableThinkingCheck.IsChecked, budget, showThinkingCheck.IsChecked, memoryEnabledCheck.IsChecked);
+                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked, enableThinkingCheck.IsChecked, budget, showThinkingCheck.IsChecked, memoryEnabledCheck.IsChecked, localizeThinkingCheck.IsChecked);
                 _messages.Add(new ChatMessage("System", Lang.S("SettingsSaved")));
                 _scrollViewer.ScrollToEnd();
                 win.DialogResult = true;
@@ -1672,6 +1683,8 @@ namespace TrioAI.MPPlugIn
                 { "MemorySaved", "记忆已保存。" },
                 { "MemoryEnabled", "启用持久化记忆" },
                 { "MemoryEnabledDesc", "启用后 AI 可以跨会话记住用户偏好和项目知识" },
+                { "LocalizeThinking", "思考过程本地化" },
+                { "LocalizeThinkingDesc", "启用后 AI 的扩展思考（推理过程）会跟随 MotionPerfect 系统语言，而非默认英文" },
             },
             ["en"] = new Dictionary<string, string>
             {
@@ -1726,6 +1739,8 @@ namespace TrioAI.MPPlugIn
                 { "MemorySaved", "Memory saved." },
                 { "MemoryEnabled", "Enable Persistent Memory" },
                 { "MemoryEnabledDesc", "When enabled, AI can remember user preferences and project knowledge across sessions" },
+                { "LocalizeThinking", "Localize Thinking" },
+                { "LocalizeThinkingDesc", "When enabled, AI's extended thinking (reasoning) follows MotionPerfect's system language instead of defaulting to English" },
             },
             ["de"] = new Dictionary<string, string>
             {
@@ -1780,6 +1795,8 @@ namespace TrioAI.MPPlugIn
                 { "MemorySaved", "Gedaechtnis gespeichert." },
                 { "MemoryEnabled", "Persistentes Gedaechtnis aktivieren" },
                 { "MemoryEnabledDesc", "KI kann Benutzereinstellungen ueber Sitzungen hinweg merken" },
+                { "LocalizeThinking", "Denken lokalisieren" },
+                { "LocalizeThinkingDesc", "Wenn aktiviert, folgt das erweiterte Denken der Sprache von MotionPerfect statt standardmaessig Englisch" },
             },
             ["fr"] = new Dictionary<string, string>
             {
@@ -1834,6 +1851,8 @@ namespace TrioAI.MPPlugIn
                 { "MemorySaved", "Mémoire enregistrée." },
                 { "MemoryEnabled", "Activer la mémoire persistante" },
                 { "MemoryEnabledDesc", "L'IA peut mémoriser les préférences utilisateur entre les sessions" },
+                { "LocalizeThinking", "Localiser la réflexion" },
+                { "LocalizeThinkingDesc", "Si activé, la réflexion étendue de l'IA suit la langue système de MotionPerfect au lieu de l'anglais par défaut" },
             },
         };
 

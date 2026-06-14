@@ -20,6 +20,7 @@ namespace TrioAI.MPPlugIn
         private static int _budgetTokens = 10000;
         private static bool _showThinking = true;
         private static bool _memoryEnabled = true;
+        private static bool _localizeThinking = true;
 
         // ---- Config ----
 
@@ -75,12 +76,17 @@ namespace TrioAI.MPPlugIn
                         bool b;
                         if (val != null && bool.TryParse(val.ToString(), out b)) _memoryEnabled = b;
                     }
+                    if (cfg.TryGetValue("localizeThinking", out val))
+                    {
+                        bool b;
+                        if (val != null && bool.TryParse(val.ToString(), out b)) _localizeThinking = b;
+                    }
                 }
             }
             catch { }
         }
 
-        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null, bool? enableControllerValidation = null, bool? enableThinking = null, int? budgetTokens = null, bool? showThinking = null, bool? memoryEnabled = null)
+        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null, bool? enableControllerValidation = null, bool? enableThinking = null, int? budgetTokens = null, bool? showThinking = null, bool? memoryEnabled = null, bool? localizeThinking = null)
         {
             _apiKey = apiKey;
             if (!string.IsNullOrEmpty(model)) _model = model;
@@ -96,7 +102,8 @@ namespace TrioAI.MPPlugIn
             if (budgetTokens.HasValue) _budgetTokens = budgetTokens.Value;
             if (showThinking.HasValue) _showThinking = showThinking.Value;
             if (memoryEnabled.HasValue) _memoryEnabled = memoryEnabled.Value;
-            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled });
+            if (localizeThinking.HasValue) _localizeThinking = localizeThinking.Value;
+            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled, localizeThinking = _localizeThinking });
             File.WriteAllText(ConfigPath, json);
         }
 
@@ -147,7 +154,7 @@ namespace TrioAI.MPPlugIn
 
             _skillsInitialized = true;
             _index = null; // force reload
-            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled });
+            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled, localizeThinking = _localizeThinking });
             File.WriteAllText(ConfigPath, json);
             return null;
         }
@@ -168,5 +175,6 @@ namespace TrioAI.MPPlugIn
         public static int BudgetTokens => _budgetTokens;
         public static bool ShowThinking => _showThinking;
         public static bool MemoryEnabled => _memoryEnabled;
+        public static bool LocalizeThinking => _localizeThinking;
     }
 }

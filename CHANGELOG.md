@@ -6,6 +6,14 @@
 
 ## [Unreleased]
 
+## [0.3.8] — 2026-06-14
+
+思考过程本地化：新增「思考过程本地化」开关，启用后 AI 的扩展思考（推理过程）跟随 MotionPerfect 系统语言，而非默认英文。
+
+### 新增
+
+- **思考过程本地化开关** —— 此前 `GetLanguageInstruction` 只约束**回复语言**，思考语言零约束 → 模型按固有默认用英文思考（回复中文、思考英文的割裂）。`AiPrompt.cs` `BuildStablePrompt` 现在开关开启时追加思考语言指令（如 `conduct your internal reasoning (your thinking blocks) in Chinese`），语言源同回复语言（`CurrentUICulture`）。开关默认**开启**（老用户升级 config 无此字段时走默认值自动启用）。设置面板新增 checkbox，4 语言文案（中/英/德/法）。这是 prompt 层引导，主流模型服从度较好但不保证 100%，故保留开关可关。
+
 ## [0.3.7] — 2026-06-14
 
 对照 Anthropic 官方 extended thinking 文档，将 thinking 块处理统一为「照原样回传」，彻底移除 0.3.6 引入的 URL 硬编码区分。三家（Anthropic / GLM / DeepSeek）实为同一套约定。

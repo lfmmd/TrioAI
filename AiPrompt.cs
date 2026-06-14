@@ -185,6 +185,8 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
 
                 if (!string.IsNullOrEmpty(skills)) parts.Add(skills);
                 parts.Add(langInstruction);
+                if (_localizeThinking)
+                    parts.Add(GetThinkingInstruction(lang));
                 return string.Join("\n\n", parts);
             }
             catch { }
@@ -326,6 +328,28 @@ Use markdown sections. Keep each section under 5 lines. Whole file under 1500 to
             if (cultureName.StartsWith("sv", StringComparison.OrdinalIgnoreCase))
                 return "IMPORTANT: You MUST respond in Swedish. Alla forklaringar och interaktioner pa svenska.";
             return "IMPORTANT: You MUST respond in English.";
+        }
+
+        // 思考语言名（英文形式，用于思考指令）—— 与 GetLanguageInstruction 同语言列表。
+        private static string GetThinkingLanguageName(string cultureName)
+        {
+            if (cultureName.StartsWith("zh", StringComparison.OrdinalIgnoreCase)) return "Chinese";
+            if (cultureName.StartsWith("de", StringComparison.OrdinalIgnoreCase)) return "German";
+            if (cultureName.StartsWith("fr", StringComparison.OrdinalIgnoreCase)) return "French";
+            if (cultureName.StartsWith("ru", StringComparison.OrdinalIgnoreCase)) return "Russian";
+            if (cultureName.StartsWith("es", StringComparison.OrdinalIgnoreCase)) return "Spanish";
+            if (cultureName.StartsWith("it", StringComparison.OrdinalIgnoreCase)) return "Italian";
+            if (cultureName.StartsWith("pt", StringComparison.OrdinalIgnoreCase)) return "Portuguese";
+            if (cultureName.StartsWith("hu", StringComparison.OrdinalIgnoreCase)) return "Hungarian";
+            if (cultureName.StartsWith("ro", StringComparison.OrdinalIgnoreCase)) return "Romanian";
+            if (cultureName.StartsWith("sv", StringComparison.OrdinalIgnoreCase)) return "Swedish";
+            return "English";
+        }
+
+        private static string GetThinkingInstruction(string cultureName)
+        {
+            return "IMPORTANT: When using extended thinking, conduct your internal reasoning (your thinking blocks) in "
+                + GetThinkingLanguageName(cultureName) + ".";
         }
     }
 }
