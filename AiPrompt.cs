@@ -178,6 +178,16 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
                 var skills = BuildSkillsCatalog();
                 var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
                 var langInstruction = GetLanguageInstruction(lang);
+                // 思考本地化：把思考语言指令并入回复指令（一条 IMPORTANT 同时管 think+respond，
+                // 避免分裂成两条被模型只重视第一条）。措辞直接「Think in X」+ 明确「NOT in English」，
+                // 覆盖 reasoning/thinking 两种术语（GLM 用 reasoning_content、Anthropic 用 thinking 块）。
+                if (_localizeThinking)
+                {
+                    var tl = GetThinkingLanguageName(lang);
+                    langInstruction += "\nCRITICAL — THINKING LANGUAGE: Think in " + tl
+                        + ". Your internal reasoning / thinking process must be written entirely in " + tl
+                        + ", NOT in English. Reason through every step in " + tl + " before answering.";
+                }
                 var parts = new List<string> { prompt };
 
                 if (_memoryEnabled)
@@ -185,8 +195,6 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
 
                 if (!string.IsNullOrEmpty(skills)) parts.Add(skills);
                 parts.Add(langInstruction);
-                if (_localizeThinking)
-                    parts.Add(GetThinkingInstruction(lang));
                 return string.Join("\n\n", parts);
             }
             catch { }
@@ -346,10 +354,5 @@ Use markdown sections. Keep each section under 5 lines. Whole file under 1500 to
             return "English";
         }
 
-        private static string GetThinkingInstruction(string cultureName)
-        {
-            return "IMPORTANT: When using extended thinking, conduct your internal reasoning (your thinking blocks) in "
-                + GetThinkingLanguageName(cultureName) + ".";
-        }
     }
 }

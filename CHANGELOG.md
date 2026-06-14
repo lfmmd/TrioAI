@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+## [0.3.9] — 2026-06-14
+
+两处 prompt / 缓存层面的优化，无新功能、无破坏性变更。
+
+### 变更
+
+- **思考语言指令强化** —— 0.3.8 的思考本地化指令是单独一句追加在长 prompt 末尾，偏弱、模型服从度低（实测装 0.3.8 后思考仍英文）。现合并进回复指令（一条 IMPORTANT 同时管 think+respond），措辞改为直接的 `Think in X` + 明确 `NOT in English`，并覆盖 `reasoning / thinking` 双术语（GLM 用 `reasoning_content`、Anthropic 用 thinking 块）。`AiPrompt.cs` 的 `GetThinkingInstruction` helper 随之移除，逻辑并入 `BuildStablePrompt`。
+
+- **缓存命中优化：messages 的 cache_control 收敛到 1 个 breakpoint** —— 此前 `AiHistory.cs` `BuildTrimmedMessages` 给**每条 assistant 消息**都打 `cache_control`，长会话飙升到几十个 breakpoint（实测最多 49 个）。Anthropic 规范每请求上限 4 个，超限的多余 breakpoint 被服务端忽略 → 对应历史 prefix 未缓存 → 下次全量重传（实测 48% 请求 `cache_read=0`，未命中累计重传 435 万 token，比命中省的还多）。现改为只给【最后一条 assistant 消息】的末尾 block 打 1 个 breakpoint（system + tools 已占 2-3 个，总计落在 4 上限内），缓存整个历史 prefix，下次新增消息后该 prefix 仍稳定 → 命中。
+
 ## [0.3.8] — 2026-06-14
 
 思考过程本地化：新增「思考过程本地化」开关，启用后 AI 的扩展思考（推理过程）跟随 MotionPerfect 系统语言，而非默认英文。

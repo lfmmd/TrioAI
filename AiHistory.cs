@@ -574,7 +574,7 @@ namespace TrioAI.MPPlugIn
                     copy["content"] = trimmedBlocks;
                 }
 
-                // assistant: 清理旧 thinking、压缩已清空 tool_use input、打 cache_control
+                // assistant: 清理旧 thinking、压缩已清空 tool_use input（cache_control 不在此处逐条打）
                 if (GetStringValue(copy, "role") == "assistant" && content is List<Dictionary<string, object>> asstBlocks && asstBlocks.Count > 0)
                 {
                     assistantSeen++;
@@ -601,19 +601,12 @@ namespace TrioAI.MPPlugIn
                         }
                         newBlocks.Add(b);
                     }
-                    if (newBlocks.Count > 0)
-                    {
-                        var lastBlock = new Dictionary<string, object>(newBlocks[newBlocks.Count - 1]);
-                        lastBlock["cache_control"] = new { type = "ephemeral" };
-                        newBlocks[newBlocks.Count - 1] = lastBlock;
-                    }
-                    else
+                    if (newBlocks.Count == 0)
                     {
                         newBlocks.Add(new Dictionary<string, object>
                         {
                             { "type", "text" },
-                            { "text", "[assistant message compacted]" },
-                            { "cache_control", new { type = "ephemeral" } }
+                            { "text", "[assistant message compacted]" }
                         });
                     }
                     copy["content"] = newBlocks;
@@ -629,6 +622,23 @@ namespace TrioAI.MPPlugIn
                 // TrimHistory/CompactHistory 截断可能破坏这些约束。
                 // 参考 claudecodefx 的 ensureToolResultPairing 做法进行修复。
                 EnsureValidMessageSequence(messages);
+
+                // cache breakpoint 策略：Anthropic 每请求最多 4 个 breakpoint（system + tools 已占 2-3）。
+                // messages 只给【最后一条 assistant】的末尾 block 打 1 个 breakpoint —— 缓存整个历史 prefix，
+                // 下次新增消息后该 prefix 仍稳定 → 命中。旧版给每条 assistant 都打，长会话飙到几十个，
+                // 超 Anthropic 4 上限的多余 breakpoint 被服务端忽略，反而命中率低。
+                for (int i = messages.Count - 1; i >= 0; i--)
+                {
+                    if (GetStringValue(messages[i], "role") != "assistant") continue;
+                    if (!(messages[i].TryGetValue("content", out var cObj)
+                          && cObj is List<Dictionary<string, object>> aBlocks && aBlocks.Count > 0)) continue;
+                    var ccBlock = new Dictionary<string, object>(aBlocks[aBlocks.Count - 1])
+                    {
+                        { "cache_control", new { type = "ephemeral" } }
+                    };
+                    aBlocks[aBlocks.Count - 1] = ccBlock;
+                    break;
+                }
 
                 return messages;
             }
