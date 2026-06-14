@@ -3,7 +3,7 @@
 > 镜像：[GitHub](https://github.com/lfmmd/TrioAI) | [Gitee](https://gitee.com/lfmmd/TrioAI)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.3.9-blue.svg)](https://github.com/lfmmd/TrioAI/releases)
+[![Version](https://img.shields.io/badge/version-0.3.10-blue.svg)](https://github.com/lfmmd/TrioAI/releases)
 [![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-blue.svg)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
 [![MotionPerfect](https://img.shields.io/badge/MotionPerfect-V5.6+-orange.svg)](https://www.triomotion.com/)

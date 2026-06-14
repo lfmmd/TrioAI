@@ -697,7 +697,7 @@ namespace TrioAI.MPPlugIn
             {
                 Title = "关于 - TRIO AI助手",
                 Width = 420,
-                Height = 300,
+                Height = 380,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 Owner = Window.GetWindow(this),
                 ResizeMode = ResizeMode.NoResize,
@@ -889,7 +889,7 @@ namespace TrioAI.MPPlugIn
             {
                 Title = Lang.S("SettingsTitle"),
                 Width = 450,
-                Height = 520,
+                Height = 600,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 Owner = Window.GetWindow(this),
                 ResizeMode = ResizeMode.NoResize,
@@ -1128,7 +1128,14 @@ namespace TrioAI.MPPlugIn
             btnPanel.Children.Add(saveBtn);
 
             panel.Children.Add(btnRow);
-            win.Content = panel;
+            // 内容可能超出固定窗口高度（checkbox 多 + 高 DPI 缩放），用 ScrollViewer 兜底，
+            // 保证底部按钮行（初始化/取消/保存）始终可达，未来再加设置项也无需改尺寸。
+            win.Content = new ScrollViewer
+            {
+                Content = panel,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled
+            };
             win.ShowDialog();
         }
 
