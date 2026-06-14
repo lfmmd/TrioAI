@@ -6,6 +6,15 @@
 
 ## [Unreleased]
 
+## [0.3.3] — 2026-06-14
+
+完善批量多程序任务策略：明确 Plan Mode 不适用于批量同类任务，避免 AI 进 Plan Mode 后为"制定覆盖全部程序的计划"而一次性读取全部程序（context 洪泛）。
+
+### 变更
+
+- **批量任务不进 Plan Mode（prompt 硬规则）** —— `AiPrompt.cs` BATCH 段新增一条：批量同类任务（修复/检查全部程序）是 N 个**独立**子任务，不需要全局设计，**禁止 `enter_plan_mode`**（它强制 investigate everything first，会把全部程序读进 context，正是 0.3.2 BATCH 规则禁止的 context 洪泛）。批量任务直接 `task_create` 建清单 + 逐个执行；Plan Mode 留给真正需要全局设计的任务（重构新架构、多程序联动改造）。
+- **`enter_plan_mode` 工具描述补充** —— `AiTools.cs` 明确标注避免用于"对多个独立项做同类操作"（fix/check all programs），这类是独立子任务，应走 task 系统 + 逐个处理。
+
 ## [0.3.2] — 2026-06-14
 
 修复"加载旧会话后 AI 失忆自循环"——用户只发一次指令（如"同时创建3个demo"），AI 却把"开场白+创建动作"自动循环重复了 4 遍，4 组回答的 `thinkingText` 逐字完全相同（证明模型每次从同一上下文从头开始）。`chat_history/20260614_092608.json` 数据层验证：UI `messages` 里同一 user 指令重复 4 次，而发给 API 的 `history` 最终干净。根因双重：restore blob 把已完成动作当成待办、历史去重不覆盖连续相同 user 文本。
