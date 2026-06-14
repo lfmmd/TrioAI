@@ -6,6 +6,63 @@
 
 ## [Unreleased]
 
+## [0.3.7] — 2026-06-14
+
+对照 Anthropic 官方 extended thinking 文档，将 thinking 块处理统一为「照原样回传」，彻底移除 0.3.6 引入的 URL 硬编码区分。三家（Anthropic / GLM / DeepSeek）实为同一套约定。
+
+### 变更
+
+- **移除 `isRealAnthropic` URL 硬编码** —— 0.3.6 用 `_apiUrl` 含 `anthropic.com` 区分真 Anthropic / GLM 兼容端点。核对 Anthropic 文档后确认无需区分。
+- **`EnsureValidMessageSequence` 移除「无 signature thinking 清理」逻辑** —— Anthropic 文档明确「If sending back thinking blocks, pass everything back **as you received it**」；400「thinking blocks cannot be modified」的根因是「重建消息」而非「无 signature」。此前按 signature 有无清理恰恰是文档点名的「重建消息」行为。真 Anthropic 完成块自带 signature、GLM/DeepSeek 完成块结构性无 signature，照原样回传三家都正确，也消除了 0.3.4/0.3.6 的「消息序列已被修复」刷屏。
+- **`CallApiStream` 移除 `clear_thinking: false`** —— GLM 独有参数，真 Anthropic `thinking` 配置不认（会触发严格参数校验）。无法无条件加、又不能 URL 硬编码区分，故移除。多轮 thinking 上下文改由「照原样回传 thinking 块」提供（tool-use 多轮的规范要求，比 clear_thinking 更根本）。
+- **流中断 partial thinking 不进历史** —— `AiService.cs` flush 路径（stream 中断收尾）不再把无 signature 的 partial thinking 块写入 `result.Content`。partial 块未收到 `content_block_stop`（signature_delta 只在 stop 前发），是唯一真正的毒块，从源头拦下即可，不靠事后按 signature 清理。
+
+### 验证
+
+- `AiOptimizationTests.cs` Phase-Thinking-2 翻转：无 signature thinking 块现在**应保留**（照原样回传），不再移除。
+
+## [0.3.6] — 2026-06-14
+
+对照 GLM 官方 thinking-mode 文档修正 thinking 处理（0.3.4 基于 Anthropic signature 假设，套到 GLM 上错误）。
+
+### 修复
+
+- **"消息序列已被修复"刷屏 + thinking 被删光** —— `AiHistory.cs` `EnsureValidMessageSequence` 的「移除无 signature thinking」逻辑改为条件化：仅真 Anthropic 端点（`_apiUrl` 含 `anthropic.com`）清理，GLM/兼容端点不清理。GLM 用 `reasoning_content` 字段、**无 signature 概念**（GLM 文档证实，67 会话 sig=0 印证），thinking 块本就无 signature；0.3.4 的无条件清理每次 API 请求都触发，删光所有 thinking 块 + 刷屏，且使 0.3.4 的多轮 thinking 升级在 GLM 上从未生效。
+
+### 新增
+
+- **GLM Preserved Thinking** —— `AiService.cs` `CallApiStream` 的 thinking 配置对 GLM/兼容端点加 `clear_thinking: false`（真 Anthropic 不加，它用 signature 机制且不认此参数）。对照 GLM 文档：「模型可在上下文中保留先前 assistant 回合的 reasoning content…`clear_thinking: false`」。启用后 GLM 保留前轮推理，多轮 thinking 真正连贯（此前即使回传 thinking 块，GLM 默认 clear_thinking 清除，每轮从头思考）。
+
+## [0.3.5] — 2026-06-14
+
+精简 AI tool 清单（66→64），修复命名不一致 bug，复活死代码 tool。
+
+### 修复
+
+- **`read_drive_params` 命名 bug** —— 定义给 AI 的名字是 `read_drive_params`（复数 s），但执行分发（DispatchTool）只认 `read_drive_param`（单数），AI 调用必返回 `Unknown tool`。统一为 `read_drive_param`（与 `write_drive_param`、case 一致）。
+- **`rename_program` 死代码复活** —— 之前只在 WriteTools / DispatchTool case / Handler / HTTP API 出现，`BuildToolDefinitions` 缺定义，AI 永远看不到、永不调用。补上定义（参数 name + newName），Handler 已实现，现在 AI 可用。
+
+### 变更
+
+- **`get_sysvars` 从 AI 清单移除** —— 与 `read_sysvar` 功能重复（后者能读任意命名系统变量）。Handler 与 ApiServer HTTP 端点保留，外部调用方不受影响。
+- **`open_oscilloscope` 从 AI 清单移除** —— AI 打开示波器窗口后无任何读波形/操作 tool 配套，价值有限。Handler 与 HTTP 端点保留。
+- **`task_get` 移除** —— `task_list` 已返回全部字段（id/subject/description/status），`task_get` 无增量信息。一并删除 case、PureIoTools 条目、TaskGet 方法、相关测试。
+
+## [0.3.4] — 2026-06-14
+
+修复 extended thinking 多轮上下文断裂，以及自动压缩(compact)在 GLM-5.2+thinking 下从未成功、长期回退硬截断丢上下文的问题。
+
+### 修复
+
+- **thinking signature 全链路保留（多轮 thinking 不再断裂）** —— `AiService.cs` stream 解析新增 `signature_delta` 处理（覆盖式赋值，对照 Anthropic extended thinking 规范），构造 thinking 块时写入 `signature` 字段。之前完全丢弃 signature，导致传回 API 的无签名 thinking 被忽略，模型每轮从头思考（与历次"失忆/不连贯"问题同源）。`JavaScriptSerializer` 序列化 dict 保留所有 key，存盘/加载/trim 天然带 signature，无需额外改动。
+- **自动压缩(compact)从未成功 → 已修复** —— `AiHistory.cs` `CallCompactApi` 重写为流式：① `stream:true`（主对话验证可用的路径，非流式从未验证）；② `_enableThinking` 时带 thinking 配置（防 GLM-5.2 兼容端点因配置不一致返回 400 或裸 thinking 块）；③ 流式只累积 `text_delta` 跳过 `thinking_delta`（防 thinking 当首块导致 text 取空）；④ HTTP 非 2xx 记录状态码+错误体到 `perf_error.txt`（之前静默 return null 无法排查）。修复前所有 compact 调用都失败回退硬截断，绕过工具去重/文件上下文恢复等全部优化。
+- **小历史误触发压缩** —— `AiHistory.cs` `TrimHistory` 触发条件从「count>100 或 tokens>500K」改为「tokens≥500K 或 (count>100 且 tokens≥100K)」。新增常量 `CountTriggerTokenFloor=100000`。之前 14K tokens/101 条的小历史也触发压缩（继而因 compact 失败硬截断丢上下文）。
+- **防御：移除无 signature 的 thinking 块** —— `AiHistory.cs` `EnsureValidMessageSequence` 末尾新增扫描，移除无 signature 的 thinking 块（来源：stream 中断 flush 的 partial thinking、升级前旧历史），防传回 API 触发 "thinking blocks cannot be modified" 400。每次 API 请求前都会清毒并永久写回历史。
+
+### 新增
+
+- **redacted_thinking 块支持** —— `AiService.cs` stream 解析新增 `redacted_thinking` 分支（`data` 在 `content_block_start` 一次性给出，无 delta 事件），Anthropic 安全过滤返回的该块不再被静默丢弃。
+
 ## [0.3.3] — 2026-06-14
 
 完善批量多程序任务策略：明确 Plan Mode 不适用于批量同类任务，避免 AI 进 Plan Mode 后为"制定覆盖全部程序的计划"而一次性读取全部程序（context 洪泛）。

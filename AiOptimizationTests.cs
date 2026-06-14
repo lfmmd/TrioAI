@@ -169,12 +169,12 @@ namespace TrioAI.MPPlugIn
 
             // ========== P1: GetToolDefinitions 缓存测试 ==========
             // --- P1-1: 返回正确数量的 tools ---
-            // Phase 1 加了 7 个工具：discover_skills, task_create, task_update, task_list, task_get,
-            // enter_plan_mode, exit_plan_mode → 总数从 59 增加到 66
+            // 当前注册的 tool 总数：删 task_get/open_oscilloscope/get_sysvars（3 个），
+            // 补 rename_program（1 个）后 = 66 - 3 + 1 = 64
             {
                 var tools1 = GetToolDefinitions();
-                bool ok = tools1.Count == 66;
-                results.Add(("P1-1 tool数量=66", ok,
+                bool ok = tools1.Count == 64;
+                results.Add(("P1-1 tool数量=64", ok,
                     ok ? "OK: 66 个 tool (含 Phase 1 新增 7 个)" : $"FAIL: 实际 {tools1.Count} 个"));
             }
 
@@ -241,7 +241,7 @@ namespace TrioAI.MPPlugIn
             // --- Phase1-1: PureIoTools 分流集合 ---
             {
                 var pureExpected = new[] { "lookup_command", "read_skill", "discover_skills",
-                    "task_create", "task_update", "task_list", "task_get",
+                    "task_create", "task_update", "task_list",
                     "enter_plan_mode", "exit_plan_mode" };
                 var nonPureExpected = new[] { "read_source", "write_source", "list_programs",
                     "compile_program", "run_program", "write_vr", "get_status" };
@@ -257,10 +257,10 @@ namespace TrioAI.MPPlugIn
             {
                 var tools = GetToolDefinitions();
                 var names = new HashSet<string>(tools.Select(t => GetStr(t, "name")), StringComparer.OrdinalIgnoreCase);
-                var expected = new[] { "discover_skills", "task_create", "task_update", "task_list", "task_get", "enter_plan_mode", "exit_plan_mode" };
+                var expected = new[] { "discover_skills", "task_create", "task_update", "task_list", "enter_plan_mode", "exit_plan_mode" };
                 var missing = expected.Where(n => !names.Contains(n)).ToList();
                 bool ok = missing.Count == 0;
-                results.Add(("Phase1-2 新增7工具已注册", ok,
+                results.Add(("Phase1-2 工具已注册", ok,
                     ok ? "OK: 全部注册" : $"FAIL: 缺少 {string.Join(", ", missing)}"));
             }
 
@@ -300,16 +300,10 @@ namespace TrioAI.MPPlugIn
                 var list = svc2.TaskList();
                 var listJson = _json.Serialize(list);
                 bool listOk = listJson.Contains("\"count\":1") && listJson.Contains("\"in_progress\":1");
-                // task_get
-                var got = svc2.TaskGet(1);
-                bool getOk = _json.Serialize(got).Contains("\"subject\":\"Test subject\"");
-                // task_get 不存在的 id
-                var notFound = svc2.TaskGet(999);
-                bool notFoundOk = _json.Serialize(notFound).Contains("not found");
-                bool ok = createOk && badUpdateOk && updateOk && listOk && getOk && notFoundOk;
+                bool ok = createOk && badUpdateOk && updateOk && listOk;
                 results.Add(("Phase1-5 Task CRUD", ok,
-                    ok ? "OK: create/update/list/get/error 全覆盖" :
-                    $"FAIL: create={createOk} badUpdate={badUpdateOk} update={updateOk} list={listOk} get={getOk} notFound={notFoundOk}"));
+                    ok ? "OK: create/update/list/error 全覆盖" :
+                    $"FAIL: create={createOk} badUpdate={badUpdateOk} update={updateOk} list={listOk}"));
             }
 
             // --- Phase1-6: Plan Mode 拦截写工具 + 未挂 OnConfirmPlan 自动批准 ---
@@ -444,6 +438,69 @@ namespace TrioAI.MPPlugIn
                     $"FAIL: toolResultKept={toolResultKept} dupCount={dupCount} (before={before} after={svc7._conversationHistory.Count})"));
             }
 
+            // ========== Phase-Thinking: 照原样回传（signature 有无都不清理） ==========
+
+            // --- Phase-Thinking-1: 带 signature 的 thinking 块保留（不被防御规则误删）---
+            {
+                var svc8 = new AiService();
+                svc8._conversationHistory.Clear();
+                svc8._conversationHistory.Add(new Dictionary<string, object> { { "role", "user" }, { "content", "hi" } });
+                svc8._conversationHistory.Add(MakeAssistantBlocks(
+                    ThinkingBlock("planning...", "sig_abc123"),
+                    TextBlock("done")));
+                svc8.EnsureValidMessageSequence(svc8._conversationHistory);
+                int thinkingN = CountBlocks(svc8._conversationHistory, "thinking");
+                bool ok = thinkingN == 1;
+                results.Add(("Phase-Thinking-1 带signature保留", ok,
+                    ok ? "OK: 带 signature 的 thinking 块保留" : $"FAIL: thinking 块数={thinkingN}（应=1）"));
+            }
+
+            // --- Phase-Thinking-2: 无 signature 的 thinking 块保留（照原样回传，不清理）---
+            {
+                var svc9 = new AiService();
+                svc9._conversationHistory.Clear();
+                svc9._conversationHistory.Add(new Dictionary<string, object> { { "role", "user" }, { "content", "hi" } });
+                svc9._conversationHistory.Add(MakeAssistantBlocks(
+                    ThinkingBlock("reasoning without sig", null),   // 无 signature（GLM/DeepSeek 完成块结构性无 sig）
+                    TextBlock("done")));
+                svc9.EnsureValidMessageSequence(svc9._conversationHistory);
+                int thinkingN = CountBlocks(svc9._conversationHistory, "thinking");
+                bool ok = thinkingN == 1;
+                results.Add(("Phase-Thinking-2 无signature保留", ok,
+                    ok ? "OK: 无 signature 的 thinking 块照原样保留" : $"FAIL: thinking 块数={thinkingN}（应=1）"));
+            }
+
+            // --- Phase-Thinking-3: redacted_thinking 块保留（无 signature 但用 data，不被误删）---
+            {
+                var svc10 = new AiService();
+                svc10._conversationHistory.Clear();
+                svc10._conversationHistory.Add(new Dictionary<string, object> { { "role", "user" }, { "content", "hi" } });
+                svc10._conversationHistory.Add(MakeAssistantBlocks(
+                    RedactedBlock("base64data==")));
+                svc10.EnsureValidMessageSequence(svc10._conversationHistory);
+                int redactedN = CountBlocks(svc10._conversationHistory, "redacted_thinking");
+                bool ok = redactedN == 1;
+                results.Add(("Phase-Thinking-3 redacted保留", ok,
+                    ok ? "OK: redacted_thinking 保留（不被无 signature 规则误删）" : $"FAIL: redacted 块数={redactedN}（应=1）"));
+            }
+
+            // --- Phase-Thinking-4: thinking(sig)+tool_use 配对完整（移除毒 thinking 不破坏 tool 配对）---
+            {
+                var svc11 = new AiService();
+                svc11._conversationHistory.Clear();
+                svc11._conversationHistory.Add(new Dictionary<string, object> { { "role", "user" }, { "content", "hi" } });
+                svc11._conversationHistory.Add(MakeAssistantBlocks(
+                    ThinkingBlock("think", "sig_xyz"),
+                    new Dictionary<string, object> { { "type", "tool_use" }, { "id", "toolu_T4" }, { "name", "lookup_command" }, { "input", new Dictionary<string, object> { { "query", "MOVE" } } } }));
+                svc11._conversationHistory.Add(MakeUserToolResult("toolu_T4", "{}"));
+                svc11.EnsureValidMessageSequence(svc11._conversationHistory);
+                int thinkingN = CountBlocks(svc11._conversationHistory, "thinking");
+                int toolUseN = CountBlocks(svc11._conversationHistory, "tool_use");
+                bool ok = thinkingN == 1 && toolUseN == 1;
+                results.Add(("Phase-Thinking-4 thinking+tool配对", ok,
+                    ok ? "OK: thinking(sig) 保留 + tool_use 配对完整" : $"FAIL: thinking={thinkingN} tool_use={toolUseN}"));
+            }
+
             // ========== 报告 ==========
             var sb = new StringBuilder();
             sb.AppendLine("=== TrioAI Optimization Tests ===");
@@ -542,6 +599,43 @@ namespace TrioAI.MPPlugIn
                     new Dictionary<string, object> { { "type", "text" }, { "text", text } }
                 }}
             };
+        }
+
+        // ---- Thinking 测试辅助 ----
+
+        private static Dictionary<string, object> MakeAssistantBlocks(params Dictionary<string, object>[] blocks)
+        {
+            return new Dictionary<string, object>
+            {
+                { "role", "assistant" },
+                { "content", new List<Dictionary<string, object>>(blocks) }
+            };
+        }
+
+        // signature == null → 不加 signature 字段（模拟 GLM/DeepSeek 完成块结构性无 sig）；非空 → 加字段（真 Anthropic 完成块）。
+        private static Dictionary<string, object> ThinkingBlock(string text, string signature)
+        {
+            var b = new Dictionary<string, object> { { "type", "thinking" }, { "thinking", text } };
+            if (signature != null) b["signature"] = signature;
+            return b;
+        }
+
+        private static Dictionary<string, object> TextBlock(string text) =>
+            new Dictionary<string, object> { { "type", "text" }, { "text", text } };
+
+        private static Dictionary<string, object> RedactedBlock(string data) =>
+            new Dictionary<string, object> { { "type", "redacted_thinking" }, { "data", data } };
+
+        private static int CountBlocks(List<Dictionary<string, object>> messages, string type)
+        {
+            int n = 0;
+            foreach (var m in messages)
+            {
+                if (!(m.TryGetValue("content", out var c) && c is List<Dictionary<string, object>> bl)) continue;
+                foreach (var b in bl)
+                    if (GetStringValue(b, "type") == type) n++;
+            }
+            return n;
         }
     }
 }

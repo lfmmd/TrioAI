@@ -33,7 +33,6 @@ namespace TrioAI.MPPlugIn
             "task_create",       // 纯内存操作（_tasks list）
             "task_update",       // 纯内存操作
             "task_list",         // 纯内存操作
-            "task_get",          // 纯内存操作
             "enter_plan_mode",   // 纯内存操作（_planMode 字段）
             "exit_plan_mode"     // 纯内存操作 + OnConfirmPlan 回调（UI 线程安全）
         };
@@ -157,7 +156,6 @@ namespace TrioAI.MPPlugIn
                 case "list_axes": return Handlers.ListAxes();
                 case "get_axis_detail": return Handlers.GetAxisDetail(GetInt(input, "index"));
                 case "copy_program": return Handlers.CopyProgram(GetStr(input, "name"), input);
-                case "get_sysvars": return Handlers.GetSystemVariables();
                 case "read_sysvar": return Handlers.ReadSysVar(GetStr(input, "name"));
                 case "write_sysvar": return Handlers.WriteSysVar(GetStr(input, "name"), input);
                 case "list_digital_io": return Handlers.ListDigitalIO();
@@ -188,7 +186,6 @@ namespace TrioAI.MPPlugIn
                 case "list_recipes": return Handlers.ListRecipes();
                 case "list_alarms": return Handlers.ListAlarms();
                 case "list_plugins": return Handlers.ListAttachedPlugins();
-                case "open_oscilloscope": return Handlers.OpenOscilloscope();
                 case "open_project": return Handlers.OpenProject(input);
                 case "list_project_items": return Handlers.ListProjectItems();
                 case "list_descriptors": return Handlers.ListDescriptors();
@@ -220,7 +217,6 @@ namespace TrioAI.MPPlugIn
                 case "task_create": return TaskCreate(GetStr(input, "subject"), GetStr(input, "description"));
                 case "task_update": return TaskUpdate(GetInt(input, "id", 0), GetStr(input, "status"), GetStr(input, "subject"), GetStr(input, "description"));
                 case "task_list": return TaskList();
-                case "task_get": return TaskGet(GetInt(input, "id", 0));
                 case "enter_plan_mode": return EnterPlanMode();
                 case "exit_plan_mode": return ExitPlanMode(GetStr(input, "plan"));
 
@@ -357,27 +353,6 @@ namespace TrioAI.MPPlugIn
             }
         }
 
-        private object TaskGet(int id)
-        {
-            if (id <= 0)
-                return new { error = "id is required" };
-            lock (_tasksLock)
-            {
-                var t = _tasks.Find(x => x.Id == id);
-                if (t == null)
-                    return new { error = $"Task {id} not found" };
-                return new
-                {
-                    id = t.Id,
-                    subject = t.Subject,
-                    description = t.Description,
-                    status = t.Status,
-                    created_at = t.CreatedAt.ToString("HH:mm:ss"),
-                    updated_at = t.UpdatedAt.HasValue ? t.UpdatedAt.Value.ToString("HH:mm:ss") : null
-                };
-            }
-        }
-
         // ---- Tool Definitions ----
 
         private static List<Dictionary<string, object>> _cachedToolDefs;
@@ -495,7 +470,10 @@ namespace TrioAI.MPPlugIn
                     ("newName", "New program name", false),
                     ("storage", "Storage: internalStorage (default) or sdcardStorage", true)
                 )),
-                Tool("get_sysvars", "Read structured system variables (WDog, MotionError, ServoPeriod, UnitError, SystemError, FlashStatus)", NoParams()),
+                Tool("rename_program", "Rename an existing program (requires confirmation)", Props(
+                    ("name", "Current program name", false),
+                    ("newName", "New program name", false)
+                )),
                 Tool("read_sysvar", "Read any named controller system variable (e.g. PROCESS_RUNNING)", Props("name", "Variable name")),
                 Tool("write_sysvar", "Write a named system variable (requires confirmation)", Props(
                     ("name", "Variable name", false),
@@ -529,7 +507,7 @@ namespace TrioAI.MPPlugIn
                     ("enable", "true to set, false to clear (default true)", true)
                 )),
                 Tool("clear_all_breakpoints", "Remove all breakpoints in a TrioBASIC program (requires confirmation)", Props("name", "Program name")),
-                Tool("read_drive_params", "Read a drive parameter via DRIVE_READ", Props(
+                Tool("read_drive_param", "Read a drive parameter via DRIVE_READ", Props(
                     ("axis", "Axis number", false),
                     ("address", "Hex drive parameter address", false),
                     ("nd", "Number of fraction digits (default 4)", true)
@@ -565,7 +543,6 @@ namespace TrioAI.MPPlugIn
                 Tool("list_recipes", "List Recipe project items", NoParams()),
                 Tool("list_alarms", "List alarms from AlarmSupport project items", NoParams()),
                 Tool("list_plugins", "Probe which controller-attached plugin services are available (IRobotService, RemoteDeviceManager)", NoParams()),
-                Tool("open_oscilloscope", "Open the Oscilloscope tool window", NoParams()),
                 Tool("open_project", "Open an existing project from a path (requires confirmation)", Props(
                     ("path", "Project file path", false)
                 )),
@@ -582,7 +559,6 @@ namespace TrioAI.MPPlugIn
                     ("description", "New description (optional)", true)
                 )),
                 Tool("task_list", "List all tasks with their current status. Use this to verify progress and pick the next task to work on.", NoParams()),
-                Tool("task_get", "Get full details of a single task by id.", Props("id", "Task id")),
                 Tool("enter_plan_mode", "Enter Plan Mode: all write/modify tools (write_source, patch_source, compile_program, run_program, write_vr, write_table, etc.) are blocked. Use this at the start of a non-trivial task to investigate first with read-only tools, then present a plan via exit_plan_mode for user approval before making any changes. Avoid for trivial single-step requests, AND for batch same-operation-on-many-items tasks (fix/check all programs) — those are independent sub-tasks; use `task_create` + process one at a time instead.", NoParams()),
                 Tool("exit_plan_mode", "Present your plan to the user for approval and exit Plan Mode. The user will approve or reject. If rejected, Plan Mode stays active — revise the plan or do more investigation. If approved, write/modify tools become available.", Props(
                     ("plan", "The complete plan: what files/VR/programs you will change, why, and the verification steps. Be specific.", false)

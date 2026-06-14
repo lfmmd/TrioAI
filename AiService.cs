@@ -502,11 +502,12 @@ namespace TrioAI.MPPlugIn
 
             if (_enableThinking)
             {
-                body["thinking"] = new Dictionary<string, object>
+                var thinking = new Dictionary<string, object>
                 {
                     { "type", "enabled" },
                     { "budget_tokens", _budgetTokens }
                 };
+                body["thinking"] = thinking;
                 if (_currentMaxTokens <= _budgetTokens)
                     body["max_tokens"] = _budgetTokens + 8192;
             }
@@ -670,6 +671,8 @@ namespace TrioAI.MPPlugIn
             string pendingToolName = null;
             StringBuilder pendingToolInput = null;
             string pendingThinkingText = null;
+            string pendingSignature = null;        // thinking 块的 signature（signature_delta 覆盖式赋值）
+            string pendingRedactedData = null;     // redacted_thinking 块的 data（content_block_start 一次性给出）
 
             using (var stream = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult())
             using (var reader = new StreamReader(stream))
@@ -692,7 +695,7 @@ namespace TrioAI.MPPlugIn
                             DispatchSseEvent(currentEvent, dataBuf.ToString(), result,
                                 ref pendingType, ref pendingText,
                                 ref pendingToolId, ref pendingToolName, ref pendingToolInput,
-                                ref pendingThinkingText);
+                                ref pendingThinkingText, ref pendingSignature, ref pendingRedactedData);
                         }
                         currentEvent = null;
                         dataBuf.Clear();
@@ -732,15 +735,9 @@ namespace TrioAI.MPPlugIn
             }
             else if (pendingType == "thinking")
             {
-                var finalThinking = pendingThinkingText ?? "";
-                if (!string.IsNullOrEmpty(finalThinking))
-                {
-                    result.Content.Add(new Dictionary<string, object>
-                    {
-                        { "type", "thinking" },
-                        { "thinking", finalThinking }
-                    });
-                }
+                // stream 中断在 thinking 块中途：未收到 content_block_stop，signature_delta 也未到（它只在 stop 前发）。
+                // 此 partial 块无 signature，照 Anthropic 规范「thinking 块须匹配模型输出」不能回传 → 不进历史。
+                // UI 已通过 OnAiThinkingDelta 看到内容，这里仅发收尾事件。
                 OnAiThinkingEnd?.Invoke();
             }
 
@@ -755,7 +752,7 @@ namespace TrioAI.MPPlugIn
             ref string pendingType, ref string pendingText,
             ref string pendingToolId, ref string pendingToolName,
             ref StringBuilder pendingToolInput,
-            ref string pendingThinkingText)
+            ref string pendingThinkingText, ref string pendingSignature, ref string pendingRedactedData)
         {
             Dictionary<string, object> evt;
             try { evt = _json.Deserialize<Dictionary<string, object>>(dataJson); }
@@ -796,6 +793,8 @@ namespace TrioAI.MPPlugIn
                     pendingToolName = null;
                     pendingToolInput = null;
                     pendingThinkingText = null;
+                    pendingSignature = null;
+                    pendingRedactedData = null;
                     if (pendingType == "text")
                     {
                         OnAiTextStart?.Invoke();
@@ -803,6 +802,11 @@ namespace TrioAI.MPPlugIn
                     else if (pendingType == "thinking")
                     {
                         OnAiThinkingStart?.Invoke();
+                    }
+                    else if (pendingType == "redacted_thinking")
+                    {
+                        // data 在 content_block_start 一次性给出，无 delta 事件。
+                        pendingRedactedData = GetStringValue(block, "data");
                     }
                     else if (pendingType == "tool_use")
                     {
@@ -842,6 +846,13 @@ namespace TrioAI.MPPlugIn
                             OnAiThinkingDelta?.Invoke(thinkingText);
                         }
                     }
+                    else if (deltaType == "signature_delta")
+                    {
+                        // signature_delta 携带完整 signature，覆盖式赋值（非累加）—— 对照 cc-haha claude.ts:2212。
+                        var sig = GetStringValue(delta, "signature");
+                        if (!string.IsNullOrEmpty(sig))
+                            pendingSignature = sig;
+                    }
                     break;
                 }
 
@@ -880,12 +891,24 @@ namespace TrioAI.MPPlugIn
                     }
                     else if (pendingType == "thinking")
                     {
-                        result.Content.Add(new Dictionary<string, object>
+                        var tb = new Dictionary<string, object>
                         {
                             { "type", "thinking" },
                             { "thinking", pendingThinkingText ?? "" }
-                        });
+                        };
+                        // 保留 signature：Anthropic extended thinking 规范要求多轮传回必须带有效 signature。
+                        if (!string.IsNullOrEmpty(pendingSignature))
+                            tb["signature"] = pendingSignature;
+                        result.Content.Add(tb);
                         OnAiThinkingEnd?.Invoke();
+                    }
+                    else if (pendingType == "redacted_thinking")
+                    {
+                        result.Content.Add(new Dictionary<string, object>
+                        {
+                            { "type", "redacted_thinking" },
+                            { "data", pendingRedactedData ?? "" }
+                        });
                     }
                     pendingType = null;
                     pendingText = null;
@@ -893,6 +916,8 @@ namespace TrioAI.MPPlugIn
                     pendingToolName = null;
                     pendingToolInput = null;
                     pendingThinkingText = null;
+                    pendingSignature = null;
+                    pendingRedactedData = null;
                     break;
                 }
 

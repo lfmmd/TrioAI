@@ -20,15 +20,24 @@ namespace TrioAI.MPPlugIn
         // auto-compaction：利用模型上下文窗口的大部分空间，而非硬截断。
         // 500K chars ≈ 125K tokens — 对于 200K context 的模型留出足够空间给 system + tools + output。
         private const int HistoryTokenBudget = 500000;
+        // 条数触发的 token 下限：count > MaxHistoryKeep 但 tokens 低于此值时不压缩。
+        // 小历史（如十几K tokens / 百余条短消息）不该触发昂贵的压缩流程；
+        // 真正要控的是「条数多 + token 也已显著增长」的历史，避免压缩失败时硬截断丢上下文。
+        private const int CountTriggerTokenFloor = 100000;
 
         private void TrimHistory()
         {
-            if (EstimateHistoryTokens() < HistoryTokenBudget
-                && _conversationHistory.Count <= MaxHistoryKeep)
+            int estTokens = EstimateHistoryTokens();
+            int count = _conversationHistory.Count;
+            // 触发条件：① token 已达 budget（500K）；或 ② 条数 > 100 且 token 也已达 floor（100K）。
+            // 仅条数超限但 token 很小（如 14K tokens / 101 条）不触发 —— 不为小巧的历史跑昂贵压缩。
+            bool tokenTrigger = estTokens >= HistoryTokenBudget;
+            bool countTrigger = count > MaxHistoryKeep && estTokens >= CountTriggerTokenFloor;
+            if (!tokenTrigger && !countTrigger)
                 return;
 
-            OnSystemMessage?.Invoke(Lang.L($"⚠ 已触发历史裁剪: {_conversationHistory.Count} 条消息, 约 {EstimateHistoryTokens()} tokens",
-                                           $"⚠ TrimHistory triggered: {_conversationHistory.Count} msgs, ~{EstimateHistoryTokens()} tokens"));
+            OnSystemMessage?.Invoke(Lang.L($"⚠ 已触发历史裁剪: {count} 条消息, 约 {estTokens} tokens",
+                                           $"⚠ TrimHistory triggered: {count} msgs, ~{estTokens} tokens"));
 
             // auto-compaction：将旧消息摘要压缩为一条，保留最近消息不变。
             if (CompactHistory())
@@ -233,10 +242,14 @@ namespace TrioAI.MPPlugIn
                     { "cache_control", new { type = "ephemeral" } }
                 });
             }
+            // compact 只是摘要，给 thinking 小 budget；max_tokens 须 > budget_tokens。
+            const int compactThinkingBudget = 2048;
+            const int compactMaxTokens = 6144;
+
             var body = new Dictionary<string, object>
             {
                 { "model", _model },
-                { "max_tokens", 2048 },
+                { "max_tokens", compactMaxTokens },
                 { "system", systemBlocks },
                 { "messages", new List<Dictionary<string, object>>
                     {
@@ -246,34 +259,85 @@ namespace TrioAI.MPPlugIn
                             { "content", prompt }
                         }
                     }
-                }
+                },
+                { "stream", true }
             };
+
+            // 与主对话一致：开 thinking 的模型须带 thinking 配置，否则 GLM 兼容端点会拒绝(400)或
+            // 把 thinking 当首个 block 返回导致 text 取空。走流式 + 只累积 text_delta 跳过 thinking。
+            if (_enableThinking)
+            {
+                body["thinking"] = new Dictionary<string, object>
+                {
+                    { "type", "enabled" },
+                    { "budget_tokens", compactThinkingBudget }
+                };
+            }
 
             var json = SerializeRequest(body);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var request = new HttpRequestMessage(HttpMethod.Post, NormalizeApiUrl(_apiUrl));
             request.Headers.Add("x-api-key", _apiKey);
             request.Headers.Add("anthropic-version", "2023-06-01");
+            request.Headers.Accept.ParseAdd("text/event-stream");
             request.Content = content;
 
-            var response = _http.SendAsync(request).GetAwaiter().GetResult();
-            if (!response.IsSuccessStatusCode)
+            System.Net.Http.HttpResponseMessage response = null;
+            try
             {
-                response.Dispose();
+                response = _http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                LogException("CompactHistory HTTP send", ex);
                 return null;
             }
 
-            var respText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            response.Dispose();
+            if (!response.IsSuccessStatusCode)
+            {
+                // 记录状态码 + 错误体，便于诊断 compact 失败（之前静默 return null 无法排查）。
+                var errText = "<read failed>";
+                try { errText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult(); } catch { }
+                var code = (int)response.StatusCode;
+                response.Dispose();
+                LogException("CompactHistory HTTP", new Exception($"HTTP {code}: {errText}"));
+                return null;
+            }
 
-            // 解析非流式响应
-            var resp = _json.Deserialize<Dictionary<string, object>>(respText);
-            if (resp == null) return null;
-            var contentArr = resp["content"] as List<object>;
-            if (contentArr == null || contentArr.Count == 0) return null;
-            var firstBlock = contentArr[0] as Dictionary<string, object>;
-            var text = firstBlock != null ? GetStringValue(firstBlock, "text") : null;
-            return text;
+            // 流式读取 SSE，累积 text_delta（跳过 thinking_delta / signature_delta）。
+            var sb = new StringBuilder();
+            try
+            {
+                using (response)
+                using (var stream = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult())
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (!line.StartsWith("data:")) continue;
+                        var data = line.Substring(5).TrimStart();
+                        if (string.IsNullOrEmpty(data) || data == "[DONE]") continue;
+                        Dictionary<string, object> evt;
+                        try { evt = _json.Deserialize<Dictionary<string, object>>(data); }
+                        catch { continue; }
+                        if (evt == null) continue;
+                        if (GetStringValue(evt, "type") != "content_block_delta") continue;
+                        var delta = GetDictValue(evt, "delta");
+                        if (delta == null) continue;
+                        if (GetStringValue(delta, "type") != "text_delta") continue;
+                        var t = GetStringValue(delta, "text");
+                        if (!string.IsNullOrEmpty(t)) sb.Append(t);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException("CompactHistory stream read", ex);
+                return sb.Length > 0 ? sb.ToString() : null;
+            }
+
+            return sb.ToString();
         }
 
         // 粗略估算历史 token：chars/4。仅用于裁剪触发判断，不要求精确。
@@ -847,6 +911,11 @@ namespace TrioAI.MPPlugIn
                 });
                 repaired = true;
             }
+
+            // thinking 块照原样回传（Anthropic 规范：pass back as you received it），不按 signature 有无清理。
+            // 真 Anthropic 完成块自带 signature，GLM/DeepSeek 完成块结构性无 signature，照原样回传三家都正确。
+            // 唯一的毒块（流中断的 partial thinking，无 content_block_stop、无 signature）已在 AiService.cs
+            // flush 路径源头拦下，不进历史，故此处无需任何 signature 清理。
 
             if (repaired)
                 OnSystemMessage?.Invoke(Lang.L("⚠ 历史修复: 消息序列已被修复",
