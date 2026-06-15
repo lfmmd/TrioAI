@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+## [0.3.14] — 2026-06-16
+
+对照 cc-haha（claudecodefx）参考实现审查推理上下文处理，进一步修复 0.3.13 的 `KeepRecentThinking=1` 之后仍出现的「连续两次长 / 基本重复推理后陷入循环推理」问题。
+
+### 修复
+
+- **循环检测覆盖 thinking 指纹（治本）** —— 0.3.13 的失控循环检测只看 assistant **text** 指纹（前 60 字），对 **thinking 逐字重复**的循环完全失明：模型在思考里打转、但每轮 text 不同或纯 tool_use 时，检测永不触发，一路跑到 `MaxTurns=50`（GLM 不守 budget 时每轮 thinking 可达数万字）。根因在于 cc-haha 防循环的主力——`budget_tokens` 硬限制 + `thinkingClear` 服务端请求头——都依赖真 Anthropic 服务端，GLM 兼容端点拿不到。`AiService.cs` 抽出 `EvaluateLoopTurn` 纯逻辑方法，同时计算 text 指纹（前 60 字）与 thinking 指纹（前 120 字），各自独立累计连续相同次数，任一达到 `LoopDetectThreshold=3` 即提前终止（新增 `ThinkingFingerprintLen=120` 常量）。只抓「逐字重复」型；「持续接续打转、每轮开头不同但绕圈」型需相似度检测，留待后续。
+
+- **尾部 thinking 过滤（对齐 cc-haha）** —— Anthropic 规范要求 assistant 消息不能以 thinking / redacted_thinking 块结尾（API 返回 400）。移植 cc-haha `filterTrailingThinkingFromLastAssistant`（`messages.ts:4897`）到 `AiHistory.cs` `BuildTrimmedMessages`：在 `EnsureValidMessageSequence` 之后，砍掉最后一条 assistant 末尾连续的 thinking 块，砍光则插占位 text。适配点：cc-haha 处理 messages 数组末尾恰好是 assistant 的情况，TrioAI 请求末尾恒为 user，故改为定位「最后一条 role==assistant」。正常 `[thinking,text]` / `[thinking,tool_use]` 的 thinking 在头部不受影响；仅清理「光想不说」的纯 `[thinking]` 或异常尾部 thinking，顺带减少无主 thinking 被回传。`AiOptimizationTests.cs` 新增 `Phase-Loop-1~4`（thinking 检测 / text 不回归 / 正常多步不误触发 / 纯 tool 轮不误判）+ `Phase-Filter-1~3`（纯 thinking 砍尾 / 头部 thinking 不动 / 末尾连续 thinking 砍除）。
+
 ## [0.3.13] — 2026-06-15
 
 修复 write_source 对多行 TrioBASIC 程序的误报拦截，并解决 GLM 思考在长对话中越积越多、越来越长的循环思考问题。

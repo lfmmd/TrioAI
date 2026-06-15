@@ -520,6 +520,112 @@ namespace TrioAI.MPPlugIn
                     $"FAIL: t1-5={t1}/{t2}/{t3}/{t4}/{t5} f1-4={f1}/{f2}/{f3}/{f4}"));
             }
 
+            // --- Phase-Loop-1: thinking 逐字重复循环检测（旧版只看 text 会漏，修复后应触发）---
+            {
+                var st = default(LoopState);
+                bool triggered = false;
+                const string dup = "让我分析这个运动控制问题。首先考虑加速度限制，再考虑";
+                for (int turn = 0; turn < 4; turn++)
+                {
+                    var c = new List<Dictionary<string, object>>
+                    {
+                        ThinkingBlock(dup, null),                // 每轮 thinking 逐字相同
+                        TextBlock($"第{turn}步：检查参数")        // text 每轮不同（旧版据此漏判）
+                    };
+                    st = EvaluateLoopTurn(c, st, 3, out triggered, out _);
+                }
+                results.Add(("Phase-Loop-1 thinking循环检测", triggered,
+                    triggered ? "OK: thinking 连续逐字重复第4轮触发终止" : "FAIL: thinking 循环未被检测（旧 text-only 回归）"));
+            }
+
+            // --- Phase-Loop-2: text 循环仍触发（防回归）---
+            {
+                var st = default(LoopState);
+                bool triggered = false;
+                for (int turn = 0; turn < 4; turn++)
+                {
+                    var c = new List<Dictionary<string, object>> { TextBlock("好的，我来处理") }; // 无 thinking，text 每轮相同
+                    st = EvaluateLoopTurn(c, st, 3, out triggered, out _);
+                }
+                results.Add(("Phase-Loop-2 text循环不回归", triggered,
+                    triggered ? "OK: text 循环仍能检测" : "FAIL: text 检测被破坏"));
+            }
+
+            // --- Phase-Loop-3: text 与 thinking 都逐轮变化 → 不误触发 ---
+            {
+                var st = default(LoopState);
+                bool triggered = false;
+                for (int turn = 0; turn < 4; turn++)
+                {
+                    var c = new List<Dictionary<string, object>>
+                    {
+                        ThinkingBlock($"思考方向{turn}...", null),
+                        TextBlock($"执行第{turn}步")
+                    };
+                    st = EvaluateLoopTurn(c, st, 3, out triggered, out _);
+                }
+                results.Add(("Phase-Loop-3 正常多步不误触发", !triggered,
+                    !triggered ? "OK: 内容逐轮变化不触发" : "FAIL: 正常多步推进被误判为循环"));
+            }
+
+            // --- Phase-Loop-4: 纯 tool_use 轮（无 text 无 thinking）不参与计数 ---
+            {
+                var st = default(LoopState);
+                bool triggered = false;
+                var toolOnly = new List<Dictionary<string, object>>
+                {
+                    new Dictionary<string, object> { { "type", "tool_use" }, { "id", "t1" }, { "name", "list_programs" }, { "input", new Dictionary<string, object>() } }
+                };
+                for (int turn = 0; turn < 4; turn++)
+                    st = EvaluateLoopTurn(toolOnly, st, 3, out triggered, out _);
+                results.Add(("Phase-Loop-4 纯tool轮不误判", !triggered,
+                    !triggered ? "OK: 纯 tool_use 轮不触发" : "FAIL: 纯工具调用轮被误判"));
+            }
+
+            // --- Phase-Filter-1: 纯 thinking assistant 砍尾插占位（对齐 cc-haha）---
+            {
+                var messages = new List<Dictionary<string, object>>
+                {
+                    new Dictionary<string, object> { { "role", "user" }, { "content", "hi" } },
+                    MakeAssistantBlocks(ThinkingBlock("光想不说，没产出", null))
+                };
+                FilterTrailingThinkingFromLastAssistant(messages);
+                var blocks = (List<Dictionary<string, object>>)messages[1]["content"];
+                bool ok = blocks.Count == 1 && GetStringValue(blocks[0], "type") == "text";
+                results.Add(("Phase-Filter-1 纯thinking砍尾插占位", ok,
+                    ok ? "OK: 纯 thinking → 占位 text" : $"FAIL: blocks.Count={blocks.Count}（应=1，占位 text）"));
+            }
+
+            // --- Phase-Filter-2: [thinking,text] 头部 thinking 不受影响 ---
+            {
+                var messages = new List<Dictionary<string, object>>
+                {
+                    MakeAssistantBlocks(ThinkingBlock("plan", null), TextBlock("done"))
+                };
+                FilterTrailingThinkingFromLastAssistant(messages);
+                var blocks = (List<Dictionary<string, object>>)messages[0]["content"];
+                bool ok = blocks.Count == 2
+                          && GetStringValue(blocks[0], "type") == "thinking"
+                          && GetStringValue(blocks[1], "type") == "text";
+                results.Add(("Phase-Filter-2 头部thinking不动", ok,
+                    ok ? "OK: [thinking,text] 保留" : $"FAIL: blocks.Count={blocks.Count}（应=2，头部 thinking 不应被砍）"));
+            }
+
+            // --- Phase-Filter-3: [text, thinking, thinking] 末尾连续 thinking 被砍，留 [text] ---
+            {
+                var messages = new List<Dictionary<string, object>>
+                {
+                    MakeAssistantBlocks(TextBlock("hi"), ThinkingBlock("t1", null), ThinkingBlock("t2", null))
+                };
+                FilterTrailingThinkingFromLastAssistant(messages);
+                var blocks = (List<Dictionary<string, object>>)messages[0]["content"];
+                bool ok = blocks.Count == 1
+                          && GetStringValue(blocks[0], "type") == "text"
+                          && GetStringValue(blocks[0], "text") == "hi";
+                results.Add(("Phase-Filter-3 末尾连续thinking砍除", ok,
+                    ok ? "OK: 砍尾后留 [text(hi)]" : $"FAIL: blocks.Count={blocks.Count}（应=1）"));
+            }
+
             // ========== 报告 ==========
             var sb = new StringBuilder();
             sb.AppendLine("=== TrioAI Optimization Tests ===");

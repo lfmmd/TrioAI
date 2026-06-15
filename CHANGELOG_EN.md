@@ -7,6 +7,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.14] — 2026-06-16
+
+Reviewed reasoning-context handling against the cc-haha (claudecodefx) reference, further fixing the "after two long / near-duplicate reasoning passes, falls into a reasoning loop" issue that persisted after 0.3.13's `KeepRecentThinking=1`.
+
+### Fixed
+
+- **Loop detection now covers the thinking fingerprint (root fix)** — 0.3.13's runaway-loop detection only fingerprinted assistant **text** (first 60 chars), so it was blind to **verbatim-repeated thinking** loops: when the model spins inside thinking but each turn's text differs or is pure tool_use, detection never fires and it runs to `MaxTurns=50` (each thinking turn can reach tens of thousands of chars on GLM, which ignores budget). Root cause: cc-haha's main loop defenses — `budget_tokens` hard cap + `thinkingClear` server-side request header — both depend on the real Anthropic backend, unavailable on GLM-compatible endpoints. `AiService.cs` extracts a pure `EvaluateLoopTurn` method computing both a text fingerprint (first 60 chars) and a thinking fingerprint (first 120 chars), each with its own consecutive-repeat counter; either hitting `LoopDetectThreshold=3` aborts early (new `ThinkingFingerprintLen=120` constant). Only catches "verbatim-repeat" loops; "keep-rolling, different opening each turn but still circling" needs similarity detection, deferred.
+
+- **Trailing-thinking filter (aligned with cc-haha)** — Anthropic requires that an assistant message not end with a thinking / redacted_thinking block (API returns 400). Ported cc-haha's `filterTrailingThinkingFromLastAssistant` (`messages.ts:4897`) into `BuildTrimmedMessages` in `AiHistory.cs`: after `EnsureValidMessageSequence`, strips trailing consecutive thinking blocks from the last assistant message, inserting a placeholder text if fully stripped. Adaptation: cc-haha handles the case where the messages array itself ends in an assistant message, but TrioAI's requests always end in a user message, so it locates the "last role==assistant" message instead. Normal `[thinking,text]` / `[thinking,tool_use]` thinking sits at the head and is untouched; only "thought-but-said-nothing" pure `[thinking]` or anomalous trailing thinking is cleared, incidentally reducing stray thinking being round-tripped. `AiOptimizationTests.cs` adds `Phase-Loop-1~4` (thinking detection / text non-regression / legitimate multi-step not false-triggered / pure-tool turns not misjudged) + `Phase-Filter-1~3` (pure-thinking strip / head thinking untouched / trailing-consecutive thinking stripped).
+
 ## [0.3.13] — 2026-06-15
 
 Fixed write_source false-positive blocking on multi-line TrioBASIC programs, and resolved GLM thinking accumulating across long conversations into a runaway loop ("thinking gets longer and longer, won't stop").

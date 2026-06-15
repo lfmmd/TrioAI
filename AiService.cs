@@ -152,11 +152,74 @@ namespace TrioAI.MPPlugIn
         // ---- Agentic Loop ----
 
         private const int MaxTurns = 50;
-        // 失控循环检测阈值：连续 N 轮 assistant text 指纹相同 → 判定失忆/空转循环，提前终止。
-        // 会话2 实测同一句重复 256 次跑满 MaxTurns=50；这里在内容层精准拦截，不误伤合法多步推进（每轮 text 不同）。
+        // 失控循环检测阈值：连续 N 轮 assistant【text 或 thinking】指纹相同 → 判定循环，提前终止。
+        // 旧版只看 text，对 thinking 逐字重复循环完全失明（每轮 text 不同或纯 tool_use → 永不触发 →
+        // 跑满 MaxTurns=50；GLM 不守 budget 时每轮 thinking 可达数万字）。现 text/thinking 各自独立计数，
+        // 任一达阈值即终止。只抓「逐字重复」型；「持续接续打转、每轮开头不同但绕圈」型需相似度检测，留待后续。
         private const int LoopDetectThreshold = 3;
+        // thinking 指纹长度（前 N 字）。中文 thinking 前 120 字相同即可判定逐字重复。
+        private const int ThinkingFingerprintLen = 120;
         // chars (≈100K tokens). 历史超此阈值时强制 TrimHistory；仍超则提示开新会话。
         private const int TokenBudgetLimit = 400_000;
+
+        // 循环检测状态：text 与 thinking 各自的上一轮指纹 + 连续相同计数。
+        private struct LoopState
+        {
+            public string LastTextFp;
+            public int TextRepeat;
+            public string LastThinkingFp;
+            public int ThinkingRepeat;
+        }
+
+        /// <summary>
+        /// 评估本轮 assistant 内容是否构成失控循环。同时算 text 指纹（前 60 字）与 thinking 指纹
+        /// （前 ThinkingFingerprintLen 字），各自独立累计连续相同次数；任一达到 threshold 即判定触发。
+        /// 替代旧版「只看 text」的内联逻辑——旧版对 thinking 逐字重复循环完全失明（text 每轮不同或纯
+        /// tool_use → 永不触发 → 跑满 MaxTurns）。纯逻辑、不依赖 API，供 ChatCore 与单元测试共用。
+        /// </summary>
+        private static LoopState EvaluateLoopTurn(
+            List<Dictionary<string, object>> content,
+            LoopState prev,
+            int threshold,
+            out bool triggered,
+            out bool thinkingLoop)
+        {
+            var sbText = new StringBuilder();
+            var sbThink = new StringBuilder();
+            foreach (var b in content)
+            {
+                var bt = GetStringValue(b, "type");
+                if (bt == "text")
+                {
+                    var t = GetStringValue(b, "text");
+                    if (!string.IsNullOrEmpty(t)) sbText.Append(t);
+                }
+                else if (bt == "thinking")
+                {
+                    var t = GetStringValue(b, "thinking");
+                    if (!string.IsNullOrEmpty(t)) sbThink.Append(t);
+                }
+            }
+            var textFp = sbText.ToString().Trim();
+            if (textFp.Length > 60) textFp = textFp.Substring(0, 60);
+            var thinkFp = sbThink.ToString().Trim();
+            if (thinkFp.Length > ThinkingFingerprintLen) thinkFp = thinkFp.Substring(0, ThinkingFingerprintLen);
+
+            var s = prev;
+            if (textFp.Length > 0)
+            {
+                if (textFp == prev.LastTextFp) s.TextRepeat++;
+                else { s.TextRepeat = 0; s.LastTextFp = textFp; }
+            }
+            if (thinkFp.Length > 0)
+            {
+                if (thinkFp == prev.LastThinkingFp) s.ThinkingRepeat++;
+                else { s.ThinkingRepeat = 0; s.LastThinkingFp = thinkFp; }
+            }
+            thinkingLoop = s.ThinkingRepeat >= threshold;
+            triggered = thinkingLoop || s.TextRepeat >= threshold;
+            return s;
+        }
 
         public void Chat(string userMessage, CancellationToken ct = default)
         {
@@ -196,8 +259,7 @@ namespace TrioAI.MPPlugIn
                 });
             }
 
-            string lastTextFp = null;   // 上一轮 assistant text 指纹（前 60 字），失控循环检测用
-            int loopRepeatCount = 0;    // 连续相同指纹计数
+            var loop = default(LoopState);  // text/thinking 双指纹循环检测状态
             for (int turn = 0; turn < MaxTurns; turn++)
             {
                 // 上下文预算检查：超阈值先尝试 TrimHistory；仍超则提示开新会话
@@ -266,25 +328,17 @@ namespace TrioAI.MPPlugIn
                 _totalCacheReadTokens += result.CacheReadTokens;
                 _totalCacheCreateTokens += result.CacheCreateTokens;
 
-                // 失控循环检测：本轮 text 指纹（所有 text block 拼接、去空白、前 60 字）连续
-                // LoopDetectThreshold 轮相同 → 判定卡住，提前终止。纯 tool_use 轮（无 text）不参与检测。
-                var sbFp = new StringBuilder();
-                foreach (var b in result.Content)
-                    if (GetStringValue(b, "type") == "text")
-                    { var t = GetStringValue(b, "text"); if (!string.IsNullOrEmpty(t)) sbFp.Append(t); }
-                var fp = sbFp.ToString().Trim();
-                if (fp.Length > 60) fp = fp.Substring(0, 60);
-                if (fp.Length > 0)
+                // 失控循环检测：text 指纹（前 60 字）与 thinking 指纹（前 ThinkingFingerprintLen 字）各自独立计数，
+                // 任一连续 LoopDetectThreshold 轮相同 → 判定循环，提前终止。详见 EvaluateLoopTurn。
+                loop = EvaluateLoopTurn(result.Content, loop, LoopDetectThreshold, out bool loopTriggered, out bool thinkingLoop);
+                if (loopTriggered)
                 {
-                    if (fp == lastTextFp) loopRepeatCount++;
-                    else { loopRepeatCount = 0; lastTextFp = fp; }
-                    if (loopRepeatCount >= LoopDetectThreshold)
-                    {
-                        OnSystemMessage?.Invoke(Lang.L(
-                            $"⚠ 检测到 AI 连续 {LoopDetectThreshold + 1} 轮输出相同内容，疑似失控循环，已提前终止。建议检查任务或开启新会话。",
-                            $"⚠ AI produced identical output for {LoopDetectThreshold + 1} consecutive turns — possible runaway loop, aborted early. Check the task or start a new session."));
-                        return;
-                    }
+                    var kindZh = thinkingLoop ? "推理" : "输出";
+                    var kindEn = thinkingLoop ? "reasoning" : "output";
+                    OnSystemMessage?.Invoke(Lang.L(
+                        $"⚠ 检测到 AI 连续 {LoopDetectThreshold + 1} 轮重复相同{kindZh}，疑似循环{kindZh}，已提前终止。建议检查任务或开启新会话。",
+                        $"⚠ AI repeated the same {kindEn} for {LoopDetectThreshold + 1} consecutive turns — possible reasoning loop, aborted early. Check the task or start a new session."));
+                    return;
                 }
 
                 lock (_historyLock)

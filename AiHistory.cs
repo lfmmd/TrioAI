@@ -628,6 +628,11 @@ namespace TrioAI.MPPlugIn
                 // 参考 claudecodefx 的 ensureToolResultPairing 做法进行修复。
                 EnsureValidMessageSequence(messages);
 
+                // 砍掉最后一条 assistant 末尾的 thinking 块（对齐 cc-haha filterTrailingThinkingFromLastAssistant）。
+                // Anthropic 规范：assistant 消息不能以 thinking 结尾（API 400）。正常 [thinking,text]/[thinking,tool_use]
+                // 的 thinking 在头部不受影响；仅清理「光想不说」的 [thinking] 或异常尾部 thinking，顺带减少无主 thinking 被回传。
+                FilterTrailingThinkingFromLastAssistant(messages);
+
                 // cache breakpoint 策略：Anthropic 每请求最多 4 个 breakpoint（system + tools 已占 2-3）。
                 // messages 只给【最后一条 assistant】的末尾 block 打 1 个 breakpoint —— 缓存整个历史 prefix，
                 // 下次新增消息后该 prefix 仍稳定 → 命中。旧版给每条 assistant 都打，长会话飙到几十个，
@@ -648,6 +653,52 @@ namespace TrioAI.MPPlugIn
                 return messages;
             }
         }
+        /// <summary>
+        /// 砍掉 messages 中【最后一条 assistant 消息】末尾连续的 thinking/redacted_thinking 块。
+        /// Anthropic 规范：assistant 消息不能以 thinking 块结尾（API 返回 400）。
+        /// 适配自 claudecodefx filterTrailingThinkingFromLastAssistant（messages.ts:4897）：cc-haha 处理
+        /// messages 数组末尾恰好是 assistant 的情况；trioai 请求末尾恒为 user，故改为定位「最后一条
+        /// role==assistant」。正常 [thinking,text]/[thinking,tool_use] 的 thinking 在头部，不受影响；
+        /// 仅清理「光想不说」的纯 [thinking] 或异常尾部 thinking。砍光则插占位符（API 要求 assistant 非空）。
+        /// </summary>
+        private static void FilterTrailingThinkingFromLastAssistant(List<Dictionary<string, object>> messages)
+        {
+            // 从末尾往前找最后一条 assistant
+            int lastAsstIdx = -1;
+            for (int i = messages.Count - 1; i >= 0; i--)
+            {
+                if (GetStringValue(messages[i], "role") == "assistant") { lastAsstIdx = i; break; }
+            }
+            if (lastAsstIdx < 0) return;
+            if (!(messages[lastAsstIdx].TryGetValue("content", out var cObj)
+                  && cObj is List<Dictionary<string, object>> blocks) || blocks.Count == 0) return;
+
+            // 末尾 block 不是 thinking/redacted_thinking → 无需处理
+            var lastType = GetStringValue(blocks[blocks.Count - 1], "type") ?? "";
+            if (lastType != "thinking" && lastType != "redacted_thinking") return;
+
+            // 从末尾往前砍连续的 thinking 块
+            int lastValidIdx = blocks.Count - 1;
+            while (lastValidIdx >= 0)
+            {
+                var bt = GetStringValue(blocks[lastValidIdx], "type") ?? "";
+                if (bt != "thinking" && bt != "redacted_thinking") break;
+                lastValidIdx--;
+            }
+
+            var newBlocks = new List<Dictionary<string, object>>();
+            if (lastValidIdx < 0)
+            {
+                // 全是 thinking → 插占位符（API 要求 assistant 非空且不能以 thinking 结尾）
+                newBlocks.Add(new Dictionary<string, object> { { "type", "text" }, { "text", "[thinking-only message, content stripped]" } });
+            }
+            else
+            {
+                for (int i = 0; i <= lastValidIdx; i++) newBlocks.Add(blocks[i]);
+            }
+            messages[lastAsstIdx]["content"] = newBlocks;
+        }
+
         /// <summary>
         /// 判断消息是否为含 tool_result block 的 user 消息。
         /// 用于 CompactHistory/TrimHistory 切点净化：这类消息若被切到保留段开头，
