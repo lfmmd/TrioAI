@@ -206,7 +206,13 @@ namespace TrioAI.MPPlugIn
         // 线程安全获取方法
         internal static bool ShouldUseControllerValidation()
         {
-            return _enableControllerValidation && IsSimulatorConnected();
+            // 逐行 EXECUTE 验证对多行 TrioBASIC 程序必然误报：控制器 ValidationService 用命令行模式
+            // 逐行验证，不接受 runtime 命令（GOSUB/PRINT/RUN → #25）、变量赋值（#115）、多行结构
+            // （IF/WHILE/WEND/ELSEIF → #39/40/41）。这些在真实程序里完全合法，逐行验证无法理解多行上下文。
+            // 弊大于利（误报远多于真错），已禁用。真实代码错误由 ValidateTrioBasicCode（签名）+
+            // ValidateWithTokenTable（token 表）两层白名单覆盖，且二者都支持多行程序。
+            // 若将来控制器提供「编译验证」API（非 EXECUTE 逐行），可在此重启用。
+            return false;
         }
     }
 }

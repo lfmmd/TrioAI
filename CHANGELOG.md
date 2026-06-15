@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+## [0.3.13] — 2026-06-15
+
+修复 write_source 对多行 TrioBASIC 程序的误报拦截，并解决 GLM 思考在长对话中越积越多、越来越长的循环思考问题。
+
+### 修复
+
+- **write_source 误报根因：禁用逐行 EXECUTE 验证** —— 三层 write_source 校验中最严格的 `ValidateByController`（`AiControllerValidation.cs`）用控制器 ValidationService 以**命令行模式逐行 EXECUTE 验证**，对多行 TrioBASIC 程序必然误报：runtime 命令（GOSUB/PRINT/RUN → #25）、变量赋值（#115）、多行结构（IF/WHILE/WEND/ELSEIF → #39/40/41）在真实程序里完全合法，逐行验证无法理解多行上下文。弊大于利（误报远多于真错），已禁用（`ShouldUseControllerValidation()` 固定返回 false）。真实代码错误仍由 `ValidateTrioBasicCode`（签名）+ `ValidateWithTokenTable`（token 表）两层白名单覆盖，二者都支持多行程序。若将来控制器提供「编译验证」API（非 EXECUTE 逐行）可在此重启用。
+
+- **ELSEIF 被误判为未知函数调用** —— `AiValidation.cs` 函数调用签名校验用正则匹配 `Name(...)`，`ELSEIF (expr)` 这类控制流会被当成函数调用，而控制流关键字没有单独 HTML 条目、不在 `_triobasicIds` 白名单 → 误报「Identifiers not in TrioBASIC reference」。新增按 `_builtinKeywords`（含全部控制流 + 类型 + 运算符关键字）跳过。
+
+- **思考累积 / 循环思考（对应 GLM clear_thinking）** —— GLM 官方说明：`clear_thinking=true`（默认）让每轮请求忽略历史轮次的 reasoning_content，若回传了历史 reasoning 则上下文越来越长、模型在旧推理上打转 →「思考越来越长停不下来」。此前 `AiHistory.cs` `BuildTrimmedMessages` 的 `KeepRecentThinking=3` 把**最近 3 轮** assistant 的 thinking 块原样回传进请求，正等于 `clear_thinking=false`。改为 `KeepRecentThinking=1`（只保留当前活跃那一轮的思考链头），等价 `clear_thinking=true` 效果。Anthropic/DeepSeek 同样接受删除历史 thinking（只禁止改 thinking content，删除整块合法），统一三家、不按端点区分（符合 thinking-unified 约定）。
+
 ## [0.3.12] — 2026-06-15
 
 对照 cc-haha 参考实现审查对话 / plan / task 共有功能，修复主工具执行路径未标 `is_error` 的问题。

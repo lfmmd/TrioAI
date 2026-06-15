@@ -523,7 +523,12 @@ namespace TrioAI.MPPlugIn
             foreach (var m in _conversationHistory)
                 if (GetStringValue(m, "role") == "assistant") totalAssistantMsgs++;
             int assistantSeen = 0;
-            const int KeepRecentThinking = 3;
+            // 只保留最近 1 条 assistant 的 thinking（= 当前活跃 turn 的思考链头），更早的 thinking 不进请求。
+            // 对应 GLM clear_thinking=true 语义：不回传历史 reasoning_content，否则历史思考越积越多 →
+            // 模型在旧推理上打转 →「思考越来越长停不下来」。Anthropic/DeepSeek 同样接受删除历史 thinking
+            // （只禁止改 thinking content，删除整块合法）。之前 =3 会累积 3 轮思考，是循环思考根因。
+            // 统一三家、不按端点区分（符合 thinking-unified 约定）。
+            const int KeepRecentThinking = 1;
 
             for (int idx = 0; idx < _conversationHistory.Count; idx++)
             {

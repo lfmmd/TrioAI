@@ -257,9 +257,10 @@ namespace TrioAI.MPPlugIn
                     // 未知调用：Name(...) 不在 _triobasicIds → 幻觉命令
                     if (_triobasicIds == null || !_triobasicIds.Contains(funcName))
                     {
-                        if (string.Equals(funcName, "if", StringComparison.OrdinalIgnoreCase) ||
-                            string.Equals(funcName, "while", StringComparison.OrdinalIgnoreCase) ||
-                            string.Equals(funcName, "for", StringComparison.OrdinalIgnoreCase))
+                        // 控制流关键字（if/elseif/else/endif/while/wend/for/next/do/loop/...）没有单独
+                        // HTML 文件，不在 _triobasicIds；ELSEIF (expr) 等会被正则当成函数调用误报，按
+                        // _builtinKeywords 跳过（_builtinKeywords 含全部控制流 + 类型 + 运算符关键字）
+                        if (_builtinKeywords.Contains(funcName))
                             continue;
                         var k = funcName.ToUpper() + "@unknown";
                         if (seen.Add(k))

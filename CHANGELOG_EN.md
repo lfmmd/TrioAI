@@ -7,6 +7,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.13] — 2026-06-15
+
+Fixed write_source false-positive blocking on multi-line TrioBASIC programs, and resolved GLM thinking accumulating across long conversations into a runaway loop ("thinking gets longer and longer, won't stop").
+
+### Fixed
+
+- **write_source false-positive root cause: disabled line-by-line EXECUTE validation** — The strictest of the three write_source layers, `ValidateByController` (`AiControllerValidation.cs`), validated via the controller's ValidationService in **command-line mode, line by line EXECUTE** — which inevitably false-positives on multi-line TrioBASIC programs: runtime commands (GOSUB/PRINT/RUN → #25), variable assignment (#115), multi-line structures (IF/WHILE/WEND/ELSEIF → #39/40/41) are all perfectly legal in real programs but a line-by-line validator can't see the multi-line context. Harm outweighs benefit (far more false positives than real errors), so it's disabled (`ShouldUseControllerValidation()` now always returns false). Real code errors are still covered by `ValidateTrioBasicCode` (signature) + `ValidateWithTokenTable` (token table) — both support multi-line programs. Can be re-enabled here if the controller ever offers a "compile validation" API (non-EXECUTE line-by-line).
+
+- **ELSEIF misidentified as an unknown function call** — The `AiValidation.cs` signature check regex-matches `Name(...)`, so `ELSEIF (expr)` control flow got matched as a function call, but control-flow keywords have no standalone HTML entry and aren't in the `_triobasicIds` whitelist → false "Identifiers not in TrioBASIC reference". Now skipped via `_builtinKeywords` (covers all control-flow + type + operator keywords).
+
+- **Thinking accumulation / runaway thinking (maps to GLM clear_thinking)** — GLM's official note: `clear_thinking=true` (default) makes each turn ignore prior turns' reasoning_content; if you round-trip historical reasoning, the context keeps growing and the model spins on its old reasoning → "thinking gets longer and longer, won't stop". Previously `BuildTrimmedMessages` in `AiHistory.cs` had `KeepRecentThinking=3`, round-tripping the **last 3 turns'** assistant thinking blocks into every request — exactly `clear_thinking=false`. Changed to `KeepRecentThinking=1` (keep only the current active turn's thinking-chain head), equivalent to `clear_thinking=true`. Anthropic/DeepSeek also accept deleting historical thinking (only modifying thinking content is forbidden; deleting the whole block is legal) — unified across all three, no per-endpoint branching (per the thinking-unified convention).
+
 ## [0.3.12] — 2026-06-15
 
 Audit of conversation/plan/task shared features against the cc-haha reference; fixed the main tool-execution path not marking `is_error`.

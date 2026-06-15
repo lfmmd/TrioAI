@@ -37,3 +37,6 @@ perf_log.txt
 # CHM extracted index files (#/$ prefixed) — 插件运行时不读，build_skills.py 副产物
 skills/**/#*
 skills/**/$*
+
+# Local deploy script（本机部署，不发布；由用户自行部署插件）
+deploy.ps1

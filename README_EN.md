@@ -16,7 +16,7 @@ An AI programming assistant plugin for the Trio MotionPerfect motion controller 
 - **Embedded AI assistant panel** — native WPF UI inside MotionPerfect, no external dependencies
 - **24 AI tools** — covering program read/write, controller interaction, VR/TABLE data, TrioBASIC lookup, etc.
 - **HTTP API server (MCP-style integration endpoint)** — built-in `localhost:9090` HTTP API, providing [MCP (Model Context Protocol)](https://modelcontextprotocol.io)-like tool access — lets external AI apps, automation scripts, and other LLM agents (Claude Desktop, Cursor, custom clients) invoke MotionPerfect's full functionality (program read/write, controller interaction, VR/TABLE data, etc.) via standard HTTP
-- **API format**: [Anthropic Messages API](https://docs.anthropic.com/en/api/messages) (endpoint `/v1/messages`; request body, response, and SSE streaming events all follow the Anthropic spec). **NOT compatible with OpenAI Chat Completions format**. Works with Zhipu GLM (`GLM-5.1`, `GLM-5`), DeepSeek, Anthropic official, and any Anthropic-Messages-API-compatible proxy or third-party service
+- **API format**: [Anthropic Messages API](https://docs.anthropic.com/en/api/messages) (endpoint `/v1/messages`; request body, response, and SSE streaming events all follow the Anthropic spec). **NOT compatible with OpenAI Chat Completions format**. Works with Zhipu GLM (`GLM-5.2`, `GLM-5.1`, `GLM-5`), DeepSeek, Anthropic official, and any Anthropic-Messages-API-compatible proxy or third-party service
 - **Streaming responses** — real-time view of AI reasoning and tool execution
 - **Two-step confirmation** — all destructive operations (writes, deletes, run, stop) require explicit user approval in the UI
 - **Strict TrioBASIC syntax enforcement** — built-in command reference, AI verifies syntax before writing code to prevent hallucination
@@ -60,7 +60,7 @@ After launching MotionPerfect, click the settings icon at the top of the AI assi
 
 | Provider | API URL (base_url) | Sample models | Get API key |
 |----------|---------------------|---------------|-------------|
-| **Zhipu GLM** | `https://open.bigmodel.cn/api/anthropic` | `GLM-5.1`, `GLM-5`, `GLM-4.6` | https://bigmodel.cn |
+| **Zhipu GLM** | `https://open.bigmodel.cn/api/anthropic` | `GLM-5.2`, `GLM-5.1`, `GLM-5`, `GLM-4.6` | https://bigmodel.cn |
 | **DeepSeek** | `https://api.deepseek.com/anthropic` | `deepseek-v4-pro`, `deepseek-v4-flash`, `deepseek-chat`, `deepseek-reasoner` | https://platform.deepseek.com |
 | **Anthropic official** | `https://api.anthropic.com` | `claude-sonnet-4-5`, `claude-opus-4-7`, `claude-haiku-4-5` | https://console.anthropic.com |
 | Any Anthropic-compatible proxy | Your proxy base URL | Whatever the proxy supports | Proxy provider |
