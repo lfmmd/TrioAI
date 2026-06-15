@@ -6,6 +6,14 @@
 
 ## [Unreleased]
 
+## [0.3.12] — 2026-06-15
+
+对照 cc-haha 参考实现审查对话 / plan / task 共有功能，修复主工具执行路径未标 `is_error` 的问题。
+
+### 修复
+
+- **工具失败标 `is_error`** —— Anthropic Messages API 约定 `tool_result` 用 `is_error: true` 标记工具执行失败，模型据此从结构上区分失败与成功并触发错误自愈。TrioAI 此前仅在历史裁剪恢复路径（`AiHistory.cs` 给缺失 tool_result 补合成 stub）用过 `is_error`，**主工具执行路径**（`AiService.cs` 组装 tool_result）的所有失败——异常 / Plan Mode 拒绝 / 用户拒绝 / TrioBASIC 验证拦截 / 未知工具 / 工具内部 error——都只把错误文本塞进 `content`，没标 `is_error`。新增 `AiTools.cs` `IsToolError(content)`（检测 `"Error: "` / `"BLOCKED:"` / `"User rejected"` / `{"error":...}` 顶层键），主循环据此标 `is_error: true`。`{"error":` 不误判 compile 的 `{"errors":[...]}`（复数 s 隔断）或 read_source 文本（JSON 转义后引号被转义）；compile 编译报错 `{success:false, errors:[...]}` 正确地不标（工具执行成功，只是结果含错）。`AiOptimizationTests.cs` 新增 `Phase-IsToolError` 覆盖 5 失败→true + 4 成功→false。
+
 ## [0.3.11] — 2026-06-15
 
 基于 chat_history 日志实测定位并修复 GLM 思考过程失控（单块达 6.8 万字）与 AI 失忆循环（同一句重复 256 次）。

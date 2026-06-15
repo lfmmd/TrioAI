@@ -91,6 +91,20 @@ namespace TrioAI.MPPlugIn
             }
         }
 
+        // ExecuteTool 返回的 content 字符串是否表示工具执行失败，供主循环据此标 tool_result.is_error。
+        // 失败信号：异常("Error: ") / Plan Mode 拒绝("BLOCKED:") / 用户拒绝("User rejected") /
+        //          DispatchTool 内部 error（验证拦截 / 未知工具 / 工具内部错误，序列化成 {"error":...} 顶层键）。
+        // "error": 不误判 compile 的 {"errors":[...]}（复数 s 隔断）或 read_source 文本（JSON 转义后引号被转义）；
+        // compile 编译报错返回 {success:false, errors:[...]} 不属工具执行失败，正确地不标 is_error。
+        internal static bool IsToolError(string content)
+        {
+            if (string.IsNullOrEmpty(content)) return false;
+            return content.StartsWith("Error: ", StringComparison.Ordinal)
+                || content.StartsWith("BLOCKED:", StringComparison.Ordinal)
+                || content.StartsWith("User rejected", StringComparison.Ordinal)
+                || content.IndexOf("\"error\":", StringComparison.Ordinal) >= 0;
+        }
+
         private object DispatchTool(string name, Dictionary<string, object> input)
         {
             switch (name)

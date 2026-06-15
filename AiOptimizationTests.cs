@@ -501,6 +501,25 @@ namespace TrioAI.MPPlugIn
                     ok ? "OK: thinking(sig) 保留 + tool_use 配对完整" : $"FAIL: thinking={thinkingN} tool_use={toolUseN}"));
             }
 
+            // --- IsToolError: 区分工具执行失败与成功结果（供 tool_result.is_error 标记）---
+            {
+                // 失败 → true
+                bool t1 = AiService.IsToolError("Error: object reference not set");                 // ExecuteTool 异常
+                bool t2 = AiService.IsToolError("BLOCKED: Plan Mode is active. ...");               // Plan Mode 拒绝
+                bool t3 = AiService.IsToolError("User rejected this operation.");                   // 用户拒绝
+                bool t4 = AiService.IsToolError("{\"error\":\"BLOCKED by TrioBASIC validation\"}");  // 验证拦截
+                bool t5 = AiService.IsToolError("{\"error\":\"Unknown tool: foo\"}");                // 未知工具 / 工具内部 error
+                // 成功 / 正常结果 → false（关键：不误判）
+                bool f1 = AiService.IsToolError("{\"success\":false,\"errors\":[\"line 5: undefined\"]}"); // compile 编译报错 ≠ 工具失败
+                bool f2 = AiService.IsToolError("{\"name\":\"MAIN\",\"source\":\"...err handler...\"}");    // read_source 文本含 err
+                bool f3 = AiService.IsToolError("{\"programs\":[\"MAIN\",\"SUB\"]}");                // list_programs
+                bool f4 = AiService.IsToolError("");                                                // 空
+                bool ok = t1 && t2 && t3 && t4 && t5 && !f1 && !f2 && !f3 && !f4;
+                results.Add(("Phase-IsToolError 工具失败判定", ok,
+                    ok ? "OK: 异常/拒绝/拦截=true，编译报错/正常结果=false" :
+                    $"FAIL: t1-5={t1}/{t2}/{t3}/{t4}/{t5} f1-4={f1}/{f2}/{f3}/{f4}"));
+            }
+
             // ========== 报告 ==========
             var sb = new StringBuilder();
             sb.AppendLine("=== TrioAI Optimization Tests ===");

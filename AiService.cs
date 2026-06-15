@@ -427,12 +427,16 @@ namespace TrioAI.MPPlugIn
                 {
                     var toolId = GetStringValue(toolBlock, "id");
                     var execResult = toolResultMap.ContainsKey(toolId) ? toolResultMap[toolId] : "Error: tool execution lost";
-                    toolResults.Add(new Dictionary<string, object>
+                    // 工具执行失败（异常/拒绝/验证拦截/未知工具）标 is_error，让模型按 Anthropic 约定区分失败与成功结果
+                    var toolEntry = new Dictionary<string, object>
                     {
                         { "type", "tool_result" },
                         { "tool_use_id", toolId },
                         { "content", execResult }
-                    });
+                    };
+                    if (IsToolError(execResult))
+                        toolEntry["is_error"] = true;
+                    toolResults.Add(toolEntry);
                 }
 
                 lock (_historyLock)

@@ -7,6 +7,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.12] — 2026-06-15
+
+Audit of conversation/plan/task shared features against the cc-haha reference; fixed the main tool-execution path not marking `is_error`.
+
+### Fixed
+
+- **Mark tool failures with `is_error`** — The Anthropic Messages API marks a failed `tool_result` with `is_error: true` so the model can structurally distinguish failure from success and trigger error self-repair. TrioAI previously used `is_error` only in the history-trim recovery path (`AiHistory.cs` synthesizing a stub for a missing tool_result); the **main tool-execution path** (`AiService.cs` assembling tool_result) put every failure — exception / Plan Mode rejection / user rejection / TrioBASIC validation block / unknown tool / tool-internal error — into `content` without marking `is_error`. New `AiTools.cs` `IsToolError(content)` (detects `"Error: "` / `"BLOCKED:"` / `"User rejected"` / top-level `{"error":...}` key); the main loop marks `is_error: true` accordingly. `{"error":` does not false-match compile's `{"errors":[...]}` (plural `s` breaks it) or read_source text (JSON-escaped quotes); compile errors `{success:false, errors:[...]}` are correctly not marked (tool executed successfully, result just contains errors). New `Phase-IsToolError` test in `AiOptimizationTests.cs` covers 5 failures→true + 4 successes→false.
+
 ## [0.3.11] — 2026-06-15
 
 Located and fixed GLM thinking runaway (single block reached 68K chars) and AI amnesia loop (same sentence repeated 256×) — both found by analyzing chat_history logs.
