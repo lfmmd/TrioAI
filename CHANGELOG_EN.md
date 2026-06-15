@@ -7,6 +7,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.11] — 2026-06-15
+
+Located and fixed GLM thinking runaway (single block reached 68K chars) and AI amnesia loop (same sentence repeated 256×) — both found by analyzing chat_history logs.
+
+### Fixed
+
+- **Client-side thinking hard-cap** — The GLM / Zhipu Anthropic-compatible endpoint ignores `thinking.budget_tokens` truncation (measured: a single thinking block hit 68K chars, far above budget=10000's theoretical ~5–7K). The `thinking_delta` branch in `AiService.cs` now caps at `budget_tokens×2` characters (~2 chars/token for Chinese), dropping further deltas and leaving a truncation marker. This only controls local display / storage / round-trip — it does not reduce the model's actual output tokens; to save tokens, disable `enableThinking` or switch to a budget-honoring endpoint.
+
+- **Task / Plan state injected into the system prompt every turn** — `SnapshotTasks()` was dead code (zero call sites project-wide). The AI could only "remember" its tasks via the tool_use chain in `conversation_history`, which `TrimHistory` compresses — so in long chats it forgot and re-created tasks / re-planned. `BuildDynamicContext()` in `AiPrompt.cs` is now an instance method that appends the current task list (with a "DO NOT recreate or re-plan" constraint) + Plan Mode status to the dynamic context every turn. `SnapshotTasks` return type `List<object>` → strongly-typed `List<Dictionary<string,object>>` (the old anonymous objects couldn't be read by key).
+
+- **Runaway-loop detection** — The agentic loop now does content-level loop detection: 3 consecutive turns with the same assistant text fingerprint (all text blocks concatenated, trimmed, first 60 chars) is judged a stuck loop and aborted early with a system message. `MaxTurns=50` stays as the hard backstop; this detects at the content layer and does not false-trigger on legitimate multi-step progress (where each turn's text differs). A measured session repeated the same sentence 256×, ran the full 50 turns, and burned 490K chars of thinking — now aborted at turn 4.
+
 ## [0.3.10] — 2026-06-14
 
 Fixed insufficient height of the Settings / About dialogs, where the bottom button row was clipped.

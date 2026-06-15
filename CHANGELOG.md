@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+## [0.3.11] — 2026-06-15
+
+基于 chat_history 日志实测定位并修复 GLM 思考过程失控（单块达 6.8 万字）与 AI 失忆循环（同一句重复 256 次）。
+
+### 修复
+
+- **thinking 客户端硬截断** —— GLM / 智谱 anthropic 兼容端点不执行 `thinking.budget_tokens` 截断（实测单块 thinking 达 6.8 万字，远超 budget=10000 的理论 ~5–7 千字）。`AiService.cs` `thinking_delta` 分支按 `budget_tokens×2` 字符（中文 ~2 字/token）封顶，超限丢弃后续 delta 并留截断标记。只控制本端显示/存储/回传，不减少模型实际 output token 消耗——要省 token 须关 `enableThinking` 或换支持 budget 的端点。
+
+- **任务/Plan 状态每轮注入 system prompt** —— `SnapshotTasks()` 此前是 dead code（全项目零调用），AI 只能靠被 `TrimHistory` 压缩的 conversation history 里的 tool_use 链「记住」自己建了哪些任务，长对话失忆后重复建任务/重新规划。`AiPrompt.cs` `BuildDynamicContext()` 改为 instance 方法，每轮在 dynamic context 末尾注入当前任务清单（带「DO NOT recreate or re-plan」强约束）+ Plan Mode 状态。`SnapshotTasks` 返回类型 `List<object>` → 强类型 `List<Dictionary<string,object>>`（原匿名对象无法按字段读取）。
+
+- **失控循环检测** —— agentic loop 新增内容层循环检测：连续 3 轮 assistant text 指纹相同（所有 text block 拼接、去空白、前 60 字）即判定失忆/空转循环，提前终止并发系统提示。`MaxTurns=50` 保留作硬兜底，此检测在内容层精准拦截，每轮 text 不同的合法多步推进（如批量处理多程序）不误伤。实测会话同一句重复 256 次跑满 50 轮、烧 49 万字 thinking，现提前在第 4 轮终止。
+
 ## [0.3.10] — 2026-06-14
 
 修复「设置」「关于」对话框高度不足、底部按钮被截断的问题。

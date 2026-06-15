@@ -203,9 +203,37 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
 
         // Dynamic context: controller status, project info, compile errors.
         // Changes every call — placed last to avoid breaking cache for stable blocks.
-        internal static string BuildDynamicContext()
+        // 改为 instance：需访问 _tasks / _planMode（instance 状态）。调用点 AiService.cs:480
+        // 在 SendAsync（instance）内，省略 this 合法；BuildProjectContext 仍为 static（不依赖 instance）。
+        internal string BuildDynamicContext()
         {
-            return BuildProjectContext();
+            var sb = new StringBuilder(BuildProjectContext());
+
+            // 每轮注入任务清单 + Plan Mode 状态：让 AI 不依赖被 TrimHistory 压缩的
+            // conversation history 也能看到当前进度。会话日志显示，AI 在失忆后会反复
+            // 重新规划 / 重复建任务（同一句重复 256 次），这是堵该循环的关键。
+            var tasks = SnapshotTasks();
+            if (tasks.Count > 0)
+            {
+                sb.AppendLine("\n## Current Tasks (your checklist — DO NOT recreate or re-plan; pick the next non-completed one and proceed)");
+                foreach (var t in tasks)
+                {
+                    var status = (t["status"] as string) ?? "?";
+                    var subject = (t["subject"] as string) ?? "";
+                    var desc = (t["description"] as string) ?? "";
+                    if (desc.Length > 80) desc = desc.Substring(0, 80) + "...";
+                    sb.AppendFormat("- #{0} [{1}] {2}{3}\n",
+                        t["id"], status, subject,
+                        string.IsNullOrEmpty(desc) ? "" : ": " + desc);
+                }
+            }
+
+            if (IsPlanMode)
+            {
+                sb.AppendLine("\n## Plan Mode: ACTIVE — write tools are BLOCKED. Continue read-only investigation, then call exit_plan_mode with your plan. Do NOT restart planning; pick up where the task list above left off.");
+            }
+
+            return sb.ToString();
         }
 
         private static string BuildMemoryInstructions()

@@ -41,23 +41,26 @@ namespace TrioAI.MPPlugIn
 
         /// <summary>
         /// 让 AI 跟踪多步任务的进度。每个任务有 id / subject / status。
-        /// 任务不进入 conversation history（不污染上下文），只通过 task_* 工具读写。
+        /// 任务不进入 conversation history（不污染上下文），但每轮由 BuildDynamicContext
+        /// 注入 system prompt，让 AI 不依赖被压缩的 history 链也能看到当前进度——
+        /// 直接防止失忆后重复建任务 / 重新规划（自循环根因，见 chat_history 日志）。
+        /// 返回强类型 Dictionary 以便格式化时按名取字段（原匿名对象无法强类型访问）。
         /// </summary>
-        internal List<object> SnapshotTasks()
+        internal List<Dictionary<string, object>> SnapshotTasks()
         {
             lock (_tasksLock)
             {
-                var result = new List<object>();
+                var result = new List<Dictionary<string, object>>();
                 foreach (var t in _tasks)
                 {
-                    result.Add(new
+                    result.Add(new Dictionary<string, object>
                     {
-                        id = t.Id,
-                        subject = t.Subject,
-                        description = t.Description,
-                        status = t.Status,
-                        created_at = t.CreatedAt.ToString("HH:mm:ss"),
-                        updated_at = t.UpdatedAt.HasValue ? t.UpdatedAt.Value.ToString("HH:mm:ss") : null
+                        { "id", t.Id },
+                        { "subject", t.Subject },
+                        { "description", t.Description },
+                        { "status", t.Status },
+                        { "created_at", t.CreatedAt.ToString("HH:mm:ss") },
+                        { "updated_at", t.UpdatedAt.HasValue ? (object)t.UpdatedAt.Value.ToString("HH:mm:ss") : null }
                     });
                 }
                 return result;

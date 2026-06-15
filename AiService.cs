@@ -32,6 +32,12 @@ namespace TrioAI.MPPlugIn
         private const int EscalatedMaxTokens = 64000;
         private int _currentMaxTokens = DefaultMaxTokens;
 
+        // GLM / 智谱 anthropic 兼容端点不执行 thinking.budget_tokens 截断（实测单块 thinking
+        // 达 6.8 万字，见 chat_history 日志）。DispatchSseEvent 按此标记做客户端硬截断：
+        // 超 budget_tokens×2 字符后丢弃后续 thinking_delta。只控制本端显示/存储/回传，
+        // 不减少模型实际 output token 消耗——要省 token 须关 enableThinking 或换支持 budget 的端点。
+        private const string ThinkTruncatedTag = "\n\n[…思考已截断：超过 budget_tokens 上限（GLM 端点未执行 budget_tokens 截断）…]";
+
         // Chat 串行保护:正常路径由 ChatPanel._isProcessing 拦截,此为防御层(防未来其他入口并发调用 Chat)
         private volatile bool _chatRunning;
 
@@ -146,6 +152,9 @@ namespace TrioAI.MPPlugIn
         // ---- Agentic Loop ----
 
         private const int MaxTurns = 50;
+        // 失控循环检测阈值：连续 N 轮 assistant text 指纹相同 → 判定失忆/空转循环，提前终止。
+        // 会话2 实测同一句重复 256 次跑满 MaxTurns=50；这里在内容层精准拦截，不误伤合法多步推进（每轮 text 不同）。
+        private const int LoopDetectThreshold = 3;
         // chars (≈100K tokens). 历史超此阈值时强制 TrimHistory；仍超则提示开新会话。
         private const int TokenBudgetLimit = 400_000;
 
@@ -187,6 +196,8 @@ namespace TrioAI.MPPlugIn
                 });
             }
 
+            string lastTextFp = null;   // 上一轮 assistant text 指纹（前 60 字），失控循环检测用
+            int loopRepeatCount = 0;    // 连续相同指纹计数
             for (int turn = 0; turn < MaxTurns; turn++)
             {
                 // 上下文预算检查：超阈值先尝试 TrimHistory；仍超则提示开新会话
@@ -254,6 +265,27 @@ namespace TrioAI.MPPlugIn
                 _totalOutputTokens += result.OutputTokens;
                 _totalCacheReadTokens += result.CacheReadTokens;
                 _totalCacheCreateTokens += result.CacheCreateTokens;
+
+                // 失控循环检测：本轮 text 指纹（所有 text block 拼接、去空白、前 60 字）连续
+                // LoopDetectThreshold 轮相同 → 判定卡住，提前终止。纯 tool_use 轮（无 text）不参与检测。
+                var sbFp = new StringBuilder();
+                foreach (var b in result.Content)
+                    if (GetStringValue(b, "type") == "text")
+                    { var t = GetStringValue(b, "text"); if (!string.IsNullOrEmpty(t)) sbFp.Append(t); }
+                var fp = sbFp.ToString().Trim();
+                if (fp.Length > 60) fp = fp.Substring(0, 60);
+                if (fp.Length > 0)
+                {
+                    if (fp == lastTextFp) loopRepeatCount++;
+                    else { loopRepeatCount = 0; lastTextFp = fp; }
+                    if (loopRepeatCount >= LoopDetectThreshold)
+                    {
+                        OnSystemMessage?.Invoke(Lang.L(
+                            $"⚠ 检测到 AI 连续 {LoopDetectThreshold + 1} 轮输出相同内容，疑似失控循环，已提前终止。建议检查任务或开启新会话。",
+                            $"⚠ AI produced identical output for {LoopDetectThreshold + 1} consecutive turns — possible runaway loop, aborted early. Check the task or start a new session."));
+                        return;
+                    }
+                }
 
                 lock (_historyLock)
                 {
@@ -842,8 +874,23 @@ namespace TrioAI.MPPlugIn
                         var thinkingText = GetStringValue(delta, "thinking");
                         if (!string.IsNullOrEmpty(thinkingText))
                         {
-                            pendingThinkingText = (pendingThinkingText ?? "") + thinkingText;
-                            OnAiThinkingDelta?.Invoke(thinkingText);
+                            // 客户端硬截断：GLM 端点不守 budget_tokens，按 budget_tokens×2 字符
+                            //（中文 ~2 字/token）封顶，超限后丢弃后续 delta 并留截断标记。
+                            var cur = pendingThinkingText ?? "";
+                            if (cur.EndsWith(ThinkTruncatedTag, StringComparison.Ordinal))
+                            {
+                                // 已截断，后续 thinking_delta 一律丢弃
+                            }
+                            else if (cur.Length + thinkingText.Length > _budgetTokens * 2)
+                            {
+                                pendingThinkingText = cur + ThinkTruncatedTag;
+                                OnAiThinkingDelta?.Invoke(ThinkTruncatedTag);
+                            }
+                            else
+                            {
+                                pendingThinkingText = cur + thinkingText;
+                                OnAiThinkingDelta?.Invoke(thinkingText);
+                            }
                         }
                     }
                     else if (deltaType == "signature_delta")
