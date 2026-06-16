@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+## [0.3.16] — 2026-06-16
+
+引入轻量 research 子 agent，让主模型把「查多个命令文档 / 大量源码」的研究重活委派到独立上下文执行，缓解主对话上下文被永久保留的参考内容撑大；同时修复 write_source / create_program 编辑器视图刷新静默失败。
+
+### 新增
+
+- **research 子 agent（上下文隔离）** —— 主循环是单一 `for` 循环、所有 tool_result 累积在 `_conversationHistory`，而 `lookup_command` / `read_skill` / `read_source` 的大块文档被 microCompact 永久保留（AI 写代码时反复引用的精确语法），是主上下文臃肿的根因。新增 `research` 工具：主模型把「需查多个命令文档 / 大量源码」的研究委派给一个在**独立 messages 列表**里跑的子 agent，复用 `ExecuteTool` 执行**只读工具白名单**（35 个：`get_status` / `list_*` / `read_*` / `lookup_command` / `read_skill` / `search_code` 等），跑完**只回传消化后的结论文本**，那些大块文档从不进 `_conversationHistory`。`AiService.cs` 抽出 `CallApiOnce`（参数化 messages / tools / thinking，子 agent 期间抑制 UI 流式回调），`CallApiStream` 改薄包装；新增 `AiSubagent.cs`（`RunSubagent` 主循环 + `CallSubagentWithRetry` + 纯逻辑 `ExtractText` / `BuildStubToolResults` / `ClampSubTurns` / `SubagentTrimIfNeeded`）、`AiPrompt.cs` `BuildSubagentPrompt`（精简研究版 system prompt，明令不写代码、结论 < ~2000 tokens、不重复查同一命令）、`AiTools.cs` `SubagentReadTools` 白名单 + `BuildSubagentToolDefinitions`（过滤 + 浅拷贝不污染主缓存 + 末项 `cache_control`）。双重保险：schema 不暴露写工具 + 运行时白名单拦截（`research` 本身也禁递归）；`research` 加入 `PureIoTools` 避免主循环 `Task.Run` 内二次 `DispatcherHelper.Invoke` 卡 UI。子 agent 关闭 thinking 以省 output token。**主循环零改动**——research 对它就是一个普通工具，结论作为 tool_result 进主线、由 microCompact 正常压缩（且不在永久保留白名单）。`AiOptimizationTests.cs` 新增 P-S1~9（ExtractText / stub 构造 / 白名单只读 + 禁递归 / 子 agent 工具集隔离不污染主缓存 / ClampSubTurns 钳制 / 取消立即传播 / write_source 运行时被拒 / 无 tool_use 单轮退出 / research 注册 + 纯 IO 分流 + query 空校验）。
+
+### 修复
+
+- **编辑器视图刷新静默失败** —— `Handlers.cs` `SetEditorTextSync` 原仅 pump 一次 `Loaded` 优先级的 dispatcher，文档刚打开或长时间未操作后视觉树未就绪时单次 pump 常拿不到控件 → 源码已写入项目但编辑器视图不刷新（用户以为没写进去）。改为最多 4 次 pump 重试并返回成功标志；`write_source` / `create_program` / IEC 源写入 3 处调用点据此：刷新失败时返回 `success: true` + `warning`（提示「源码已存入项目，重开程序查看」）而非静默返回 `success: true`。
+
 ## [0.3.14] — 2026-06-16
 
 对照 cc-haha（claudecodefx）参考实现审查推理上下文处理，进一步修复 0.3.13 的 `KeepRecentThinking=1` 之后仍出现的「连续两次长 / 基本重复推理后陷入循环推理」问题。

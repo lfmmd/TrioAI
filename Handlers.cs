@@ -115,7 +115,8 @@ namespace TrioAI.MPPlugIn
                 if (openError != null)
                     return new { success = true, name = item.ItemName, warning = $"Created but editor not opened: {openError}" };
 
-                SetEditorTextSync(item, sourceCode);
+                if (!SetEditorTextSync(item, sourceCode))
+                    return new { success = true, name = item.ItemName, warning = "Created and source saved, but editor view did not refresh. Reopen the program to see changes." };
             }
 
             return new { success = true, name = item.ItemName };
@@ -550,8 +551,10 @@ namespace TrioAI.MPPlugIn
                         return;
                     }
 
-                    SetEditorTextSync(item, sourceCode);
-                    result = new { success = true };
+                    var refreshed = SetEditorTextSync(item, sourceCode);
+                    result = refreshed
+                        ? (object)new { success = true }
+                        : new { success = true, warning = "Source saved to project, but editor view did not refresh. Reopen the program to see changes." };
                 });
                 return result ?? Error("Write failed");
             }
@@ -660,17 +663,20 @@ namespace TrioAI.MPPlugIn
             {
                 try
                 {
+                    bool refreshed = true;
                     if (textItem != null)
                     {
                         textItem.SaveSourceCode(currentSource);
                         EnsureDocumentOpen(item);
-                        SetEditorTextSync(item, currentSource);
+                        refreshed = SetEditorTextSync(item, currentSource);
                     }
                     else
                     {
                         WriteIecSource(item, currentSource, pouName);
                     }
-                    result = new { success = true, sourceCode = currentSource, operations = appliedOps };
+                    result = refreshed
+                        ? (object)new { success = true, sourceCode = currentSource, operations = appliedOps }
+                        : new { success = true, sourceCode = currentSource, operations = appliedOps, warning = "Source saved to project, but editor view did not refresh. Reopen the program to see changes." };
                 }
                 catch (Exception ex)
                 {
@@ -732,23 +738,30 @@ namespace TrioAI.MPPlugIn
             return count;
         }
 
-        private static void SetEditorTextSync(IProjectItem item, string text)
+        private static bool SetEditorTextSync(IProjectItem item, string text)
         {
             var mw = MW;
-            // Try immediate set (works if doc was already open and visual tree exists)
+            // 立即设置：文档已打开且视觉树就绪时直接成功
             var openDoc = mw?.HasOpenedDocumentFor(item);
             if (openDoc != null && TrySetEditorText(openDoc, text))
-                return;
+                return true;
 
-            // Doc just opened — pump dispatcher to let visual tree build, then retry
-            System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(
-                System.Windows.Threading.DispatcherPriority.Loaded,
-                new Action(() =>
-                {
-                    openDoc = mw?.HasOpenedDocumentFor(item);
-                    if (openDoc != null)
-                        TrySetEditorText(openDoc, text);
-                }));
+            // 文档刚打开 / 长时间未操作后视觉树未就绪：pump dispatcher 让视觉树构建后重试。
+            // 原实现仅 pump 一次 Loaded，长间隔下单次常拿不到控件 → 静默失败；改为多次 pump。
+            for (int attempt = 0; attempt < 4; attempt++)
+            {
+                bool done = false;
+                System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(
+                    System.Windows.Threading.DispatcherPriority.Loaded,
+                    new Action(() =>
+                    {
+                        openDoc = mw?.HasOpenedDocumentFor(item);
+                        if (openDoc != null && TrySetEditorText(openDoc, text))
+                            done = true;
+                    }));
+                if (done) return true;
+            }
+            return false;
         }
 
         private static bool TrySetEditorText(IDocumentContainer doc, string text)

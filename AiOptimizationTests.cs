@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace TrioAI.MPPlugIn
 {
@@ -173,9 +174,9 @@ namespace TrioAI.MPPlugIn
             // 补 rename_program（1 个）后 = 66 - 3 + 1 = 64
             {
                 var tools1 = GetToolDefinitions();
-                bool ok = tools1.Count == 64;
-                results.Add(("P1-1 tool数量=64", ok,
-                    ok ? "OK: 66 个 tool (含 Phase 1 新增 7 个)" : $"FAIL: 实际 {tools1.Count} 个"));
+                bool ok = tools1.Count == 66;
+                results.Add(("P1-1 tool数量=66", ok,
+                    ok ? "OK: 66 个 tool (65 + research 子 agent 工具)" : $"FAIL: 实际 {tools1.Count} 个"));
             }
 
             // --- P1-2: 多次调用返回新 list 实例 ---
@@ -624,6 +625,168 @@ namespace TrioAI.MPPlugIn
                           && GetStringValue(blocks[0], "text") == "hi";
                 results.Add(("Phase-Filter-3 末尾连续thinking砍除", ok,
                     ok ? "OK: 砍尾后留 [text(hi)]" : $"FAIL: blocks.Count={blocks.Count}（应=1）"));
+            }
+
+            // ========== P-S: research 子 agent（Subagent）==========
+
+            // --- P-S1: ExtractText —— 提取 text 块用空行连接，忽略 thinking/tool_use ---
+            {
+                var content = new List<Dictionary<string, object>>
+                {
+                    ThinkingBlock("inner reasoning", null),
+                    TextBlock("结论 A"),
+                    new Dictionary<string, object> { { "type", "tool_use" }, { "id", "x" }, { "name", "lookup_command" }, { "input", new Dictionary<string, object>() } },
+                    TextBlock("结论 B")
+                };
+                string extracted = AiService.ExtractText(content);
+                bool ok = extracted == "结论 A\n\n结论 B";
+                results.Add(("P-S1 ExtractText提取文本", ok,
+                    ok ? "OK: 两段 text 用空行连接，thinking/tool_use 被忽略" : $"FAIL: extracted=[{extracted}]"));
+            }
+
+            // --- P-S2: BuildStubToolResults —— tool_use 列表 → stub tool_result 列表（取消时补齐交替）---
+            {
+                var toolUses = new List<Dictionary<string, object>>
+                {
+                    new Dictionary<string, object> { { "type", "tool_use" }, { "id", "toolu_1" }, { "name", "lookup_command" }, { "input", new Dictionary<string, object>() } },
+                    new Dictionary<string, object> { { "type", "tool_use" }, { "id", "toolu_2" }, { "name", "read_source" }, { "input", new Dictionary<string, object>() } }
+                };
+                var stubs = AiService.BuildStubToolResults(toolUses, "[cancelled]");
+                bool ok = stubs.Count == 2
+                          && GetStringValue(stubs[0], "tool_use_id") == "toolu_1"
+                          && GetStringValue(stubs[0], "content") == "[cancelled]"
+                          && GetStringValue(stubs[0], "type") == "tool_result";
+                results.Add(("P-S2 BuildStubToolResults", ok,
+                    ok ? "OK: 2 个 stub，id/content/type 正确" : $"FAIL: count={stubs.Count}"));
+            }
+
+            // --- P-S3: SubagentReadTools 白名单 —— 只读、不含写工具、禁递归 research ---
+            {
+                var mustContain = new[] { "lookup_command", "read_source", "read_skill", "search_code", "get_status", "list_programs" };
+                var mustNotContain = new[] { "write_source", "patch_source", "write_vr", "write_table",
+                    "create_program", "delete_program", "compile_program", "run_program", "upload",
+                    "enter_plan_mode", "exit_plan_mode", "research" };   // 禁递归
+                bool hasReads = mustContain.All(n => SubagentReadTools.Contains(n));
+                bool noWrites = mustNotContain.All(n => !SubagentReadTools.Contains(n));
+                bool ok = hasReads && noWrites;
+                results.Add(("P-S3 白名单只读+禁递归", ok,
+                    ok ? $"OK: 含核心只读工具，排除所有写/控制/research（{SubagentReadTools.Count} 个）" :
+                    $"FAIL: hasReads={hasReads} noWrites={noWrites}"));
+            }
+
+            // --- P-S4: BuildSubagentToolDefinitions —— 过滤白名单 + 末项 cache_control + 不污染主缓存 ---
+            {
+                var subSvc = new AiService();
+                var subTools = subSvc.BuildSubagentToolDefinitions();
+                var allTools = GetToolDefinitions();
+                int expected = allTools.Count(t => SubagentReadTools.Contains(GetStr(t, "name")));
+                bool countOk = subTools.Count == expected && expected > 0;
+                bool lastHasCache = subTools[subTools.Count - 1].ContainsKey("cache_control");
+                bool mainNotPolluted = !allTools[allTools.Count - 1].ContainsKey("cache_control");
+                bool allWhitelisted = subTools.All(t => SubagentReadTools.Contains(GetStr(t, "name")));
+                bool ok = countOk && lastHasCache && mainNotPolluted && allWhitelisted;
+                results.Add(("P-S4 子agent工具集隔离", ok,
+                    ok ? $"OK: {expected} 个只读工具，末项 cache_control，主缓存未污染" :
+                    $"FAIL: countOk={countOk}(got {subTools.Count}/exp {expected}) lastHasCache={lastHasCache} mainNotPolluted={mainNotPolluted} allWhitelisted={allWhitelisted}"));
+            }
+
+            // --- P-S5: ClampSubTurns —— 钳制到 [1,12]，非法（0/负/过大）回落 12 ---
+            {
+                bool ok = ClampSubTurns(0) == 12
+                          && ClampSubTurns(-5) == 12
+                          && ClampSubTurns(13) == 12
+                          && ClampSubTurns(100) == 12
+                          && ClampSubTurns(1) == 1
+                          && ClampSubTurns(6) == 6
+                          && ClampSubTurns(12) == 12;
+                results.Add(("P-S5 ClampSubTurns钳制", ok,
+                    ok ? "OK: 非法→12，[1,12] 原样" :
+                    $"FAIL: Clamp(0)={ClampSubTurns(0)} (13)={ClampSubTurns(13)} (6)={ClampSubTurns(6)}"));
+            }
+
+            // --- P-S6: 取消传播 —— ct 已取消时 RunSubagent 立即抛 OperationCanceledException，不调 API ---
+            {
+                var subSvc2 = new AiService();
+                int apiCalls = 0;
+                subSvc2._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                { apiCalls++; return new StreamResult { Content = new List<Dictionary<string, object>>(), StopReason = "end_turn" }; };
+                var cts = new CancellationTokenSource();
+                cts.Cancel();
+                bool threw = false;
+                try { subSvc2.RunSubagent("test", 5, cts.Token); }
+                catch (OperationCanceledException) { threw = true; }
+                bool ok = threw && apiCalls == 0;
+                results.Add(("P-S6 取消立即传播", ok,
+                    ok ? "OK: ct 已取消 → 抛 OperationCanceledException，未调 API" :
+                    $"FAIL: threw={threw} apiCalls={apiCalls}"));
+            }
+
+            // --- P-S7: 白名单运行时拦截 —— model 返回 write_source tool_use，被拒为 "not available"，不崩、主线历史不污染 ---
+            {
+                var subSvc3 = new AiService();
+                int apiCalls = 0;
+                subSvc3._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                {
+                    apiCalls++;
+                    if (apiCalls == 1)
+                        return new StreamResult
+                        {
+                            Content = new List<Dictionary<string, object>>
+                            {
+                                new Dictionary<string, object>
+                                {
+                                    { "type", "tool_use" }, { "id", "toolu_w1" }, { "name", "write_source" },
+                                    { "input", new Dictionary<string, object> { { "name", "X" }, { "sourceCode", "Y" } } }
+                                }
+                            },
+                            StopReason = "tool_use"
+                        };
+                    return new StreamResult
+                    {
+                        Content = new List<Dictionary<string, object>> { TextBlock("研究完成：拦截生效") },
+                        StopReason = "end_turn"
+                    };
+                };
+                string ret = subSvc3.RunSubagent("test write block", 5, CancellationToken.None);
+                bool ok = apiCalls == 2 && ret.Contains("研究完成") && subSvc3._conversationHistory.Count == 0;
+                results.Add(("P-S7 白名单运行时拦截", ok,
+                    ok ? "OK: write_source 被拒 → 跑完终止，主线历史未污染" :
+                    $"FAIL: apiCalls={apiCalls} ret=[{ret}] mainHist={subSvc3._conversationHistory.Count}"));
+            }
+
+            // --- P-S8: 无 tool_use 立即退出 —— model 返回纯 text（无 tool_use），RunSubagent 单轮返回 ---
+            {
+                var subSvc4 = new AiService();
+                int apiCalls = 0;
+                subSvc4._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                {
+                    apiCalls++;
+                    return new StreamResult
+                    {
+                        Content = new List<Dictionary<string, object>> { TextBlock("直接给结论") },
+                        StopReason = "end_turn"
+                    };
+                };
+                string ret = subSvc4.RunSubagent("simple", 5, CancellationToken.None);
+                bool ok = apiCalls == 1 && ret == "直接给结论";
+                results.Add(("P-S8 无tool_use单轮退出", ok,
+                    ok ? "OK: 无 tool_use → 单轮返回 text" :
+                    $"FAIL: apiCalls={apiCalls} ret=[{ret}]"));
+            }
+
+            // --- P-S9: research 工具已注册 + 纯IO分流 + query 空校验 ---
+            {
+                var tools = GetToolDefinitions();
+                var names = new HashSet<string>(tools.Select(t => GetStr(t, "name")), StringComparer.OrdinalIgnoreCase);
+                bool registered = names.Contains("research");
+                bool isPure = PureIoTools.Contains("research");
+                var subSvc5 = new AiService();
+                var dispatchResult = subSvc5.DispatchTool("research", new Dictionary<string, object> { { "max_turns", 3 } });
+                bool queryGuard = _json.Serialize(dispatchResult).Contains("query is required");
+                bool ok = registered && isPure && queryGuard;
+                results.Add(("P-S9 research注册+分流+空校验", ok,
+                    ok ? "OK: research 已注册、属 PureIoTools、query 空时拒绝" :
+                    $"FAIL: registered={registered} isPure={isPure} queryGuard={queryGuard}"));
             }
 
             // ========== 报告 ==========

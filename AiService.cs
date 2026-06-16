@@ -41,6 +41,10 @@ namespace TrioAI.MPPlugIn
         // Chat 串行保护:正常路径由 ChatPanel._isProcessing 拦截,此为防御层(防未来其他入口并发调用 Chat)
         private volatile bool _chatRunning;
 
+        // 当前 ChatCore 的 CancellationToken，供 research 工具（在主循环 Task.Run 内经 ExecuteTool
+        // 调用，拿不到 ct 参数）透传给 RunSubagent。每次 ChatCore 入口覆盖；research 同步跑在 ChatCore 内。
+        private CancellationToken _currentCancellationToken;
+
         // ---- Token usage tracking ----
         private int _totalInputTokens, _totalOutputTokens, _totalCacheReadTokens, _totalCacheCreateTokens;
         public int TotalInputTokens => _totalInputTokens;
@@ -246,6 +250,9 @@ namespace TrioAI.MPPlugIn
         {
             // 每条用户消息从默认 max_tokens 开始,仅在当轮被截断时临时升级(避免升级后整个会话不回落)
             _currentMaxTokens = DefaultMaxTokens;
+
+            // 供 research 工具透传取消令牌（ExecuteTool 无 ct 参数）
+            _currentCancellationToken = ct;
 
             if (string.IsNullOrEmpty(_currentSessionId))
                 _currentSessionId = DateTime.Now.ToString("yyyyMMdd_HHmmss");
@@ -580,26 +587,61 @@ namespace TrioAI.MPPlugIn
                 tools[tools.Count - 1] = lastTool;
             }
 
+            return CallApiOnce(systemBlocks, tools, BuildTrimmedMessages(),
+                _currentMaxTokens, _enableThinking, _budgetTokens, suppressUiCallbacks: false, ct);
+        }
+
+        // 测试注入点：测试可替换为返回预制 StreamResult 的桩（生产为 null，走真实 HTTP）。
+        // 签名与 CallApiOnce 完全一致。
+        private delegate StreamResult CallApiOnceDelegate(
+            List<Dictionary<string, object>> systemBlocks,
+            List<Dictionary<string, object>> tools,
+            List<Dictionary<string, object>> messages,
+            int maxTokens, bool enableThinking, int budgetTokens,
+            bool suppressUiCallbacks, CancellationToken ct);
+
+        private CallApiOnceDelegate _callApiOnceOverride;
+
+        /// <summary>
+        /// 底层单次 API 请求（HTTP+SSE）。messages/tools/systemBlocks/thinking 由调用方传入，
+        /// 不再硬绑主线 _conversationHistory / GetToolDefinitions —— research 子 agent 复用它跑独立上下文。
+        /// suppressUiCallbacks=true 时（子 agent）临时置空 OnAiText*/OnAiThinking* 回调，避免子 agent
+        /// 流式输出灌进主聊天框（ReadSseStream/DispatchSseEvent 硬编码触发这些回调）。
+        /// 非线程安全：仅限 _chatRunning 串行保护下的单线程同步调用。
+        /// </summary>
+        private StreamResult CallApiOnce(
+            List<Dictionary<string, object>> systemBlocks,
+            List<Dictionary<string, object>> tools,
+            List<Dictionary<string, object>> messages,
+            int maxTokens,
+            bool enableThinking,
+            int budgetTokens,
+            bool suppressUiCallbacks,
+            CancellationToken ct)
+        {
+            if (_callApiOnceOverride != null)
+                return _callApiOnceOverride(systemBlocks, tools, messages, maxTokens, enableThinking, budgetTokens, suppressUiCallbacks, ct);
+
             var body = new Dictionary<string, object>
             {
                 { "model", _model },
-                { "max_tokens", _currentMaxTokens },
+                { "max_tokens", maxTokens },
                 { "system", systemBlocks },
-                { "messages", BuildTrimmedMessages() },
+                { "messages", messages },
                 { "tools", tools },
                 { "stream", true }
             };
 
-            if (_enableThinking)
+            if (enableThinking)
             {
                 var thinking = new Dictionary<string, object>
                 {
                     { "type", "enabled" },
-                    { "budget_tokens", _budgetTokens }
+                    { "budget_tokens", budgetTokens }
                 };
                 body["thinking"] = thinking;
-                if (_currentMaxTokens <= _budgetTokens)
-                    body["max_tokens"] = _budgetTokens + 8192;
+                if (maxTokens <= budgetTokens)
+                    body["max_tokens"] = budgetTokens + 8192;
             }
 
             var json = SerializeRequest(body);
@@ -619,7 +661,7 @@ namespace TrioAI.MPPlugIn
             catch (OperationCanceledException) { throw; }
             catch (System.IO.IOException ex)
             {
-                // 网络抖动 / 连接重置 → 让外层 CallApiWithRetry 重试
+                // 网络抖动 / 连接重置 → 让外层 retry 包装重试
                 throw new RetryableApiException("Network IO error: " + ex.Message);
             }
             catch (HttpRequestException ex)
@@ -629,8 +671,9 @@ namespace TrioAI.MPPlugIn
             }
             catch (Exception ex)
             {
-                OnSystemMessage?.Invoke(Lang.L($"API 错误: {ex.Message}",
-                                                    $"API Error: {ex.Message}"));
+                if (!suppressUiCallbacks)
+                    OnSystemMessage?.Invoke(Lang.L($"API 错误: {ex.Message}",
+                                                        $"API Error: {ex.Message}"));
                 return null;
             }
 
@@ -660,17 +703,35 @@ namespace TrioAI.MPPlugIn
                 }
 
                 // 4xx 其他（认证错、参数错等）→ 不可重试，直接报错
-                OnSystemMessage?.Invoke(Lang.L($"API 错误 ({code}): {Truncate(errText, 500)}",
-                                                    $"API Error ({code}): {Truncate(errText, 500)}"));
+                if (!suppressUiCallbacks)
+                    OnSystemMessage?.Invoke(Lang.L($"API 错误 ({code}): {Truncate(errText, 500)}",
+                                                        $"API Error ({code}): {Truncate(errText, 500)}"));
                 return null;
             }
 
+            // UI 抑制：子 agent 模式临时置空流式回调，finally 恢复（仅同步调用安全）。
+            Action savedTextStart = null, savedTextEnd = null, savedThinkStart = null, savedThinkEnd = null;
+            Action<string> savedTextDelta = null, savedThinkDelta = null;
+            if (suppressUiCallbacks)
+            {
+                savedTextStart = OnAiTextStart;       OnAiTextStart = null;
+                savedTextDelta = OnAiTextDelta;       OnAiTextDelta = null;
+                savedTextEnd   = OnAiTextEnd;         OnAiTextEnd = null;
+                savedThinkStart = OnAiThinkingStart;  OnAiThinkingStart = null;
+                savedThinkDelta = OnAiThinkingDelta;  OnAiThinkingDelta = null;
+                savedThinkEnd  = OnAiThinkingEnd;     OnAiThinkingEnd = null;
+            }
             try
             {
                 return ReadSseStream(response, ct);
             }
             finally
             {
+                if (suppressUiCallbacks)
+                {
+                    OnAiTextStart = savedTextStart;     OnAiTextDelta = savedTextDelta;     OnAiTextEnd = savedTextEnd;
+                    OnAiThinkingStart = savedThinkStart; OnAiThinkingDelta = savedThinkDelta; OnAiThinkingEnd = savedThinkEnd;
+                }
                 response.Dispose();
             }
         }

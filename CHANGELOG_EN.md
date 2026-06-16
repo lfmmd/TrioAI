@@ -7,6 +7,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.16] — 2026-06-16
+
+Introduces a lightweight research subagent that runs investigation tasks in an isolated context, relieving the main conversation of permanently-retained reference bloat; also fixes silent editor-view-refresh failures in write_source / create_program.
+
+### Added
+
+- **research subagent (context isolation)** — The main loop is a single `for` loop with every tool_result accumulated in `_conversationHistory`, and the large docs from `lookup_command` / `read_skill` / `read_source` are permanently retained by microCompact (they're the precise syntax the AI re-cites while writing code) — the root cause of main-context bloat. Adds a `research` tool: the main model delegates "consult multiple command docs / large source files" to a subagent that runs in its **own messages list**, reuses `ExecuteTool` against a **read-only tool whitelist** (35 tools: `get_status` / `list_*` / `read_*` / `lookup_command` / `read_skill` / `search_code`, etc.), and **returns only a digested textual conclusion** — the big docs never enter `_conversationHistory`. `AiService.cs` extracts `CallApiOnce` (parameterized messages / tools / thinking; UI streaming callbacks suppressed while the subagent runs) and thins `CallApiStream` to a wrapper; new `AiSubagent.cs` (`RunSubagent` main loop + `CallSubagentWithRetry` + pure-logic `ExtractText` / `BuildStubToolResults` / `ClampSubTurns` / `SubagentTrimIfNeeded`), `AiPrompt.cs` `BuildSubagentPrompt` (a lean research system prompt: don't write code, conclusion < ~2000 tokens, don't re-read the same command), `AiTools.cs` `SubagentReadTools` whitelist + `BuildSubagentToolDefinitions` (filter + shallow-copy so it never pollutes the main cache + `cache_control` on the last item). Defense in depth: the schema never exposes write tools + runtime whitelist interception (`research` itself is also non-recursive); `research` is added to `PureIoTools` to avoid a second `DispatcherHelper.Invoke` inside the main loop's `Task.Run` freezing the UI. The subagent disables thinking to save output tokens. **The main loop is unchanged** — research is just another tool to it; its conclusion enters the main line as a tool_result and is compacted normally by microCompact (and is not on the permanent-retention whitelist). `AiOptimizationTests.cs` adds P-S1~9 (ExtractText / stub construction / whitelist read-only + non-recursive / subagent tool-set isolation without polluting the main cache / ClampSubTurns clamping / immediate cancellation propagation / write_source rejected at runtime / single-turn exit on no tool_use / research registration + PureIoTools dispatch + empty-query guard).
+
+### Fixed
+
+- **Silent editor-view-refresh failure** — `Handlers.cs` `SetEditorTextSync` used to pump the dispatcher once at `Loaded` priority; when the document was just opened or had been idle a while, the visual tree wasn't ready and that single pump often failed to find the control → source was saved to the project but the editor view didn't refresh (user thought nothing was written). Now pumps up to 4 times and returns a success flag; the 3 call sites in `write_source` / `create_program` / IEC source writes use it: on refresh failure they return `success: true` + a `warning` ("source saved to project, reopen the program to see it") instead of silently returning `success: true`.
+
 ## [0.3.14] — 2026-06-16
 
 Reviewed reasoning-context handling against the cc-haha (claudecodefx) reference, further fixing the "after two long / near-duplicate reasoning passes, falls into a reasoning loop" issue that persisted after 0.3.13's `KeepRecentThinking=1`.

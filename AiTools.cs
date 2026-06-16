@@ -34,7 +34,8 @@ namespace TrioAI.MPPlugIn
             "task_update",       // 纯内存操作
             "task_list",         // 纯内存操作
             "enter_plan_mode",   // 纯内存操作（_planMode 字段）
-            "exit_plan_mode"     // 纯内存操作 + OnConfirmPlan 回调（UI 线程安全）
+            "exit_plan_mode",    // 纯内存操作 + OnConfirmPlan 回调（UI 线程安全）
+            "research"           // 子 agent：调 API + ExecuteTool（内部各自分流），不直接访问 MP 模型；避免主循环 Task.Run 内二次 Invoke 卡 UI（R3）
         };
 
         private string ExecuteTool(string name, Dictionary<string, object> input)
@@ -109,6 +110,16 @@ namespace TrioAI.MPPlugIn
         {
             switch (name)
             {
+                case "research":
+                {
+                    // 委派给 research 子 agent：独立上下文跑研究循环，只回传结论文本。
+                    var query = GetStr(input, "query");
+                    if (string.IsNullOrEmpty(query))
+                        return new { error = "query is required — describe what the subagent should investigate" };
+                    int maxTurns = GetInt(input, "max_turns", 12);
+                    var conclusion = RunSubagent(query, maxTurns, _currentCancellationToken);
+                    return new { conclusion = conclusion };
+                }
                 case "get_status": return Handlers.GetStatus();
                 case "list_programs": return Handlers.ListPrograms();
                 case "read_source":
@@ -385,6 +396,39 @@ namespace TrioAI.MPPlugIn
             }
         }
 
+        // research 子 agent 可用的只读工具白名单。双重保险：BuildSubagentToolDefinitions 只暴露这些，
+        // RunSubagent 运行时再校验一次（白名单外的 tool_use 返回 error）。不含任何写工具，禁递归 research。
+        private static readonly HashSet<string> SubagentReadTools = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "get_status", "list_programs", "read_source", "get_iec_task_detail",
+            "read_iec_variables", "read_vr", "read_table", "list_axes", "list_descriptors",
+            "download", "get_program_process", "lookup_command", "read_skill", "discover_skills",
+            "search_code", "get_axis_detail", "read_sysvar", "list_digital_io", "read_digital_io",
+            "list_analogue_io", "read_analogue_io", "list_processes", "get_process_variable",
+            "get_events", "list_breakpoints", "read_drive_param", "scan_ethercat", "read_ethercat_sdo",
+            "scan_msbus", "list_remote_devices", "list_robots", "list_recipes", "list_alarms",
+            "list_plugins", "list_project_items"
+        };
+
+        // 子 agent 工具集：从主 tool 列表过滤白名单 + 浅拷贝（不污染 _cachedToolDefs）+ 末项 cache_control。
+        private List<Dictionary<string, object>> BuildSubagentToolDefinitions()
+        {
+            var all = GetToolDefinitions();
+            var filtered = all
+                .Where(t => SubagentReadTools.Contains(GetStringValue(t, "name")))
+                .Select(t => new Dictionary<string, object>(t))
+                .ToList();
+            if (filtered.Count > 0)
+            {
+                var last = new Dictionary<string, object>(filtered[filtered.Count - 1])
+                {
+                    { "cache_control", new { type = "ephemeral" } }
+                };
+                filtered[filtered.Count - 1] = last;
+            }
+            return filtered;
+        }
+
         private static List<Dictionary<string, object>> BuildToolDefinitions()
         {
             return new List<Dictionary<string, object>>
@@ -576,6 +620,10 @@ namespace TrioAI.MPPlugIn
                 Tool("enter_plan_mode", "Enter Plan Mode: all write/modify tools (write_source, patch_source, compile_program, run_program, write_vr, write_table, etc.) are blocked. Use this at the start of a non-trivial task to investigate first with read-only tools, then present a plan via exit_plan_mode for user approval before making any changes. Avoid for trivial single-step requests, AND for batch same-operation-on-many-items tasks (fix/check all programs) — those are independent sub-tasks; use `task_create` + process one at a time instead.", NoParams()),
                 Tool("exit_plan_mode", "Present your plan to the user for approval and exit Plan Mode. The user will approve or reject. If rejected, Plan Mode stays active — revise the plan or do more investigation. If approved, write/modify tools become available.", Props(
                     ("plan", "The complete plan: what files/VR/programs you will change, why, and the verification steps. Be specific.", false)
+                )),
+                Tool("research", "Delegate an investigation task to a research subagent that runs in its OWN isolated context with read-only tools (lookup_command, read_source, read_skill, search_code, get_status, list_*, read_* etc.) and returns a digested conclusion. USE THIS when you need to consult MULTIPLE command docs or large source files — the raw tool_results stay in the subagent's context and never pollute the main conversation, keeping the main context lean. Do NOT use research for a single quick lookup (just call lookup_command/read_source directly). The subagent cannot write or modify anything.", Props(
+                    ("query", "The investigation task: what to find out, which commands/files to consult, and what the conclusion should contain. Be specific about which commands' syntax/examples you need.", false),
+                    ("max_turns", "Max investigation turns for the subagent (default 12, max 12). Lower for simple lookups.", true)
                 ))
             };
         }
