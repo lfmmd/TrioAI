@@ -7,6 +7,22 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.21] — 2026-06-16
+
+Adds a "light model": a second model-name field in Settings. When filled, **the lookup/exploration subagents (research/explore) use it**, while the review/debug/verify subagents keep using the main model to preserve reasoning quality; when left empty, everything uses the main model (= current behavior). The main conversation / code-writing always uses the main model and is unaffected.
+
+### Added
+
+- **Light-model field + per-agentType routing** — Previously every API request (main loop + all five subagents) shared a single `_model` and ran on the main model. The single bottom-level request builder `CallApiOnce` now takes a `model` argument (caller-specified); config gains a `lightModel` field. Routing splits by agentType into two tiers (same grouping as thinking): **research/explore** (doc lookup / exploration, simple) use `lightModel` (falling back to the main model when empty); **review/debug/verify** (review / diagnosis / verification, need reasoning) are pinned to the main model and never downgrade; the main loop (`CallApiStream`) always uses the main model. The Settings window (`ChatPanel.cs`) gains a "Light model" input below "Model" (`LoadConfigValue("lightModel")` for the value, passed to `SaveConfig` on save). **The main conversation / code-writing / planning always runs on the main model** — quality is unaffected; only research/explore background tasks switch to the light model when a name is filled in, saving tokens / running faster. The light model must be available under the same `apiUrl`/`apiKey` as the main model (e.g. Zhipu `glm-4-flash`, DeepSeek `deepseek-chat`). Empty = all-main-model = current behavior, zero behavior change. `AiOptimizationTests.cs` adds P-S19 (three-way check: research→light, research empty→falls back to main, verify→stays on main); the `CallApiOnce` signature change is synced across 7 test mocks.
+
+## [0.3.20] — 2026-06-16
+
+Subagent progress banner text no longer shows the fixed turn cap "/12" — only the current turn.
+
+### Changed
+
+- **Drop fixed turn cap from progress banner** — Since 0.3.17 the banner text read `[review] 轮 2/12: read_source`, where `/12` is the fixed `SubagentMaxTurns` cap. The user did not want this hard-coded-looking number exposed in the UI. Changed to `[review] 轮 2: read_source` — shows only the current turn, not the total. Progress bar `Maximum`/`Value` logic is unchanged (the bar still reflects progress graphically; full still = 12 turns). The start banner text (`subagent reviewing…`) never showed turns and is untouched; the `OnResearchTurn` callback signature is unchanged.
+
 ## [0.3.19] — 2026-06-16
 
 Adds a "subagent usage methodology" section to the main system prompt, teaching the main model how to use the five subagents (including how to decompose large tasks by project size). Fixes the gap where the main prompt had NO subagent guidance, so the main model often handed a "whole project" task to a single subagent (which exhausts its ~12-turn budget and returns a truncated result).

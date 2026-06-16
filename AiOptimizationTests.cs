@@ -707,7 +707,7 @@ namespace TrioAI.MPPlugIn
             {
                 var subSvc2 = new AiService();
                 int apiCalls = 0;
-                subSvc2._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                subSvc2._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, model, ct) =>
                 { apiCalls++; return new StreamResult { Content = new List<Dictionary<string, object>>(), StopReason = "end_turn" }; };
                 var cts = new CancellationTokenSource();
                 cts.Cancel();
@@ -724,7 +724,7 @@ namespace TrioAI.MPPlugIn
             {
                 var subSvc3 = new AiService();
                 int apiCalls = 0;
-                subSvc3._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                subSvc3._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, model, ct) =>
                 {
                     apiCalls++;
                     if (apiCalls == 1)
@@ -757,7 +757,7 @@ namespace TrioAI.MPPlugIn
             {
                 var subSvc4 = new AiService();
                 int apiCalls = 0;
-                subSvc4._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                subSvc4._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, model, ct) =>
                 {
                     apiCalls++;
                     return new StreamResult
@@ -848,7 +848,7 @@ namespace TrioAI.MPPlugIn
             {
                 var subSvc3 = new AiService();
                 int apiCalls = 0;
-                subSvc3._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                subSvc3._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, model, ct) =>
                 {
                     apiCalls++;
                     if (apiCalls == 1)
@@ -913,13 +913,13 @@ namespace TrioAI.MPPlugIn
             {
                 // (a) CallApiOnce 返回 null（API 全失败）→ success=false，conclusion 含 "API failed"
                 var svcA = new AiService();
-                svcA._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) => null;
+                svcA._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, model, ct) => null;
                 var (concA, okA) = svcA.RunSubagent("fail case", "research", 5, CancellationToken.None);
                 bool aFailed = !okA && concA.Contains("API failed");
                 // (b) 跑完但无 text（只 thinking、StopReason=end_turn → 直接退出，lastText 空）→ success=false
                 var svcB = new AiService();
                 int callsB = 0;
-                svcB._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                svcB._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, model, ct) =>
                 {
                     callsB++;
                     return new StreamResult
@@ -946,7 +946,7 @@ namespace TrioAI.MPPlugIn
                     _enableThinking = globalThinking;      // 构造之后再覆盖，确保 RunSubagent 读到测试值
                     _budgetTokens = budget;
                     bool captured = false; bool etVal = false; int btVal = -1;
-                    capSvc._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                    capSvc._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, model, ct) =>
                     {
                         if (!captured) { captured = true; etVal = et; btVal = bt; }
                         return new StreamResult { Content = new List<Dictionary<string, object>> { TextBlock("done") }, StopReason = "end_turn" };
@@ -988,6 +988,44 @@ namespace TrioAI.MPPlugIn
                 results.Add(("P-S18 verify判定格式", ok,
                     ok ? "OK: verify prompt 含 PASS/FAIL/PARTIAL 三态判定 + 明确只读（不编译）" :
                     $"FAIL: pass={hasPass} fail={hasFail} partial={hasPartial} noCompile={noCompile}"));
+            }
+
+            // --- P-S19: 模型按 agentType 分流（research/explore→轻；review/debug/verify→主；轻留空回退主）---
+            {
+                // (a) research + lightModel 非空 → 走轻模型
+                var svcA = new AiService();
+                svcA._model = "main-m";
+                svcA._lightModel = "light-m";
+                string capA = null;
+                svcA._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, model, ct) =>
+                { capA = model; return new StreamResult { Content = new List<Dictionary<string, object>>(), StopReason = "end_turn" }; };
+                svcA.RunSubagent("t", "research", 3, CancellationToken.None);
+                bool okA = capA == "light-m";
+
+                // (b) research + lightModel 空 → 回退主模型
+                var svcB = new AiService();
+                svcB._model = "main-m";
+                svcB._lightModel = "";
+                string capB = null;
+                svcB._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, model, ct) =>
+                { capB = model; return new StreamResult { Content = new List<Dictionary<string, object>>(), StopReason = "end_turn" }; };
+                svcB.RunSubagent("t", "research", 3, CancellationToken.None);
+                bool okB = capB == "main-m";
+
+                // (c) verify + lightModel 非空 → 仍走主模型（review/debug/verify 不降级到轻）
+                var svcC = new AiService();
+                svcC._model = "main-m";
+                svcC._lightModel = "light-m";
+                string capC = null;
+                svcC._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, model, ct) =>
+                { capC = model; return new StreamResult { Content = new List<Dictionary<string, object>>(), StopReason = "end_turn" }; };
+                svcC.RunSubagent("t", "verify", 3, CancellationToken.None);
+                bool okC = capC == "main-m";
+
+                bool ok = okA && okB && okC;
+                results.Add(("P-S19 模型按agentType分流", ok,
+                    ok ? "OK: research/explore→轻(空回退主)；review/debug/verify→主" :
+                    "FAIL: a=" + (capA ?? "<null>") + " b=" + (capB ?? "<null>") + " c=" + (capC ?? "<null>")));
             }
 
             // ========== 报告 ==========

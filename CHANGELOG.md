@@ -6,6 +6,22 @@
 
 ## [Unreleased]
 
+## [0.3.21] — 2026-06-16
+
+新增「轻模型」：设置里多一个模型名输入框，填了则**查文档/探索类子 agent（research/explore）走它**，审查/诊断/验证类（review/debug/verify）仍走主模型保推理质量；留空则全部用主模型（= 现状）。主对话/写代码永远走主模型，不受影响。
+
+### 新增
+
+- **轻模型输入框 + 子 agent 按 agentType 分流** —— 此前所有 API 请求（主循环 + 5 种子 agent）共用单一 `_model`、都走主模型。现给底层唯一请求构造点 `CallApiOnce` 加 `model` 参数（调用方指定），配置加 `lightModel` 字段。模型路由按 agentType 分两层（与 thinking 分流同分组）：**research/explore**（查文档/探索，简单）走 `lightModel`（留空回退主模型）；**review/debug/verify**（审查/诊断/验证，需推理）固定走主模型不降级；主循环（`CallApiStream`）永远主模型。设置窗口（`ChatPanel.cs`）在「模型」下加「轻模型」输入框（`LoadConfigValue("lightModel")` 填值、保存时传入 `SaveConfig`）。**主对话/写代码/规划永远走主模型**，质量不受影响；只有 research/explore 这类后台查询/探索任务在填了轻模型名时改走轻模型，省 token/更快。轻模型须与主模型同 `apiUrl`/`apiKey` 下可用（如智谱 `glm-4-flash`、DeepSeek `deepseek-chat`）。留空 = 全主模型 = 现状，零行为变化。`AiOptimizationTests.cs` 新增 P-S19（三层验证：research→轻、research 空→回退主、verify→不降级主）；`CallApiOnce` 签名变更同步 7 处测试 mock。
+
+## [0.3.20] — 2026-06-16
+
+子 agent 进度 banner 文字不再显示固定轮数上限「/12」，只显示当前轮次。
+
+### 改进
+
+- **进度 banner 去掉固定轮数上限显示** —— 0.3.17 起 banner 文字格式为 `[review] 轮 2/12: read_source`，其中 `/12` 是 `SubagentMaxTurns` 固定上限。用户不希望 UI 暴露这个看起来硬编码的固定数字。改为 `[review] 轮 2: read_source`，只显示当前第几轮、去掉总数；进度条 `Maximum`/`Value` 逻辑不变（图形进度照常反映进度，满格仍对应 12 轮）。开始时的 banner 文案（`子 agent 正在审查…`）本就不含轮数，未动；`OnResearchTurn` 回调签名未变。
+
 ## [0.3.19] — 2026-06-16
 
 主系统提示新增「子 agent 使用方法论」章节，教主模型正确使用 5 种子 agent（含如何按项目规模拆解大任务），弥补此前主 prompt 完全没有子 agent 使用引导、主模型常把「整个项目」整块塞给单个子 agent（~12 轮预算跑崩）的问题。

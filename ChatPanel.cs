@@ -231,7 +231,7 @@ namespace TrioAI.MPPlugIn
                 {
                     _researchBar.Maximum = maxTurns;
                     _researchBar.Value = turn;
-                    _researchLabel.Text = string.Format(Lang.L("[{0}] 轮 {1}/{2}: {3}", "[{0}] turn {1}/{2}: {3}"), agentType, turn, maxTurns, tools);
+                    _researchLabel.Text = string.Format(Lang.L("[{0}] 轮 {1}: {3}", "[{0}] turn {1}: {3}"), agentType, turn, maxTurns, tools);
                     _scrollViewer.ScrollToEnd();
                 }));
             };
@@ -1005,6 +1005,21 @@ namespace TrioAI.MPPlugIn
             };
             panel.Children.Add(modelBox);
 
+            // Light Model (subagents only; empty = fall back to main model)
+            panel.Children.Add(MakeLabel(Lang.S("LightModel")));
+            var lightModelBox = new TextBox
+            {
+                Text = LoadConfigValue("lightModel"),
+                Height = 28,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 14),
+                Background = new SolidColorBrush(Color.FromRgb(55, 55, 55)),
+                Foreground = Brushes.White,
+                BorderBrush = new SolidColorBrush(Color.FromRgb(80, 80, 80)),
+                Padding = new Thickness(6, 0, 6, 0)
+            };
+            panel.Children.Add(lightModelBox);
+
             // Show Tool Status checkbox
             var showStatusCheck = new CheckBox
             {
@@ -1174,6 +1189,7 @@ namespace TrioAI.MPPlugIn
                 var key = keyBox.Password.Trim();
                 var url = urlBox.Text.Trim();
                 var model = modelBox.Text.Trim();
+                var lightModel = lightModelBox.Text.Trim();
                 if (string.IsNullOrEmpty(key) && string.IsNullOrEmpty(url))
                 {
                     MessageBox.Show(win, Lang.S("EmptyKey"), Lang.S("Error"), MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -1181,7 +1197,7 @@ namespace TrioAI.MPPlugIn
                 }
                 int budget = AiService.BudgetTokens;
                 int.TryParse(budgetBox.Text, out budget);
-                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked, enableThinkingCheck.IsChecked, budget, showThinkingCheck.IsChecked, memoryEnabledCheck.IsChecked, localizeThinkingCheck.IsChecked);
+                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked, enableThinkingCheck.IsChecked, budget, showThinkingCheck.IsChecked, memoryEnabledCheck.IsChecked, localizeThinkingCheck.IsChecked, lightModel);
                 _messages.Add(new ChatMessage("System", Lang.S("SettingsSaved")));
                 _scrollViewer.ScrollToEnd();
                 win.DialogResult = true;
@@ -1730,6 +1746,7 @@ namespace TrioAI.MPPlugIn
                 { "ApiKey", "API Key:" },
                 { "ApiUrl", "API URL:" },
                 { "Model", "模型:" },
+                { "LightModel", "轻模型(子agent,留空同主模型):" },
                 { "Save", "保存" },
                 { "Cancel", "取消" },
                 { "Error", "错误" },

@@ -595,7 +595,7 @@ namespace TrioAI.MPPlugIn
             }
 
             return CallApiOnce(systemBlocks, tools, BuildTrimmedMessages(),
-                _currentMaxTokens, _enableThinking, _budgetTokens, suppressUiCallbacks: false, ct);
+                _currentMaxTokens, _enableThinking, _budgetTokens, suppressUiCallbacks: false, _model, ct);
         }
 
         // 测试注入点：测试可替换为返回预制 StreamResult 的桩（生产为 null，走真实 HTTP）。
@@ -605,7 +605,7 @@ namespace TrioAI.MPPlugIn
             List<Dictionary<string, object>> tools,
             List<Dictionary<string, object>> messages,
             int maxTokens, bool enableThinking, int budgetTokens,
-            bool suppressUiCallbacks, CancellationToken ct);
+            bool suppressUiCallbacks, string model, CancellationToken ct);
 
         private CallApiOnceDelegate _callApiOnceOverride;
 
@@ -624,14 +624,15 @@ namespace TrioAI.MPPlugIn
             bool enableThinking,
             int budgetTokens,
             bool suppressUiCallbacks,
+            string model,
             CancellationToken ct)
         {
             if (_callApiOnceOverride != null)
-                return _callApiOnceOverride(systemBlocks, tools, messages, maxTokens, enableThinking, budgetTokens, suppressUiCallbacks, ct);
+                return _callApiOnceOverride(systemBlocks, tools, messages, maxTokens, enableThinking, budgetTokens, suppressUiCallbacks, model, ct);
 
             var body = new Dictionary<string, object>
             {
-                { "model", _model },
+                { "model", model },
                 { "max_tokens", maxTokens },
                 { "system", systemBlocks },
                 { "messages", messages },

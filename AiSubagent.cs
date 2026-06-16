@@ -82,6 +82,7 @@ namespace TrioAI.MPPlugIn
             List<Dictionary<string, object>> tools,
             List<Dictionary<string, object>> msgs,
             int maxTokens, bool enableThinking, int budgetTokens,
+            string model,
             CancellationToken ct)
         {
             const int MaxAttempts = 3;
@@ -90,7 +91,7 @@ namespace TrioAI.MPPlugIn
                 try
                 {
                     return CallApiOnce(sys, tools, msgs, maxTokens, enableThinking, budgetTokens,
-                                       suppressUiCallbacks: true, ct);
+                                       suppressUiCallbacks: true, model, ct);
                 }
                 catch (OperationCanceledException) { throw; }
                 catch (RetryableApiException ex)
@@ -143,6 +144,9 @@ namespace TrioAI.MPPlugIn
             // thinking：仅 review/debug/verify 跟随全局开关（分析/诊断/验证类，深度推理有价值）；research/explore 始终关（查文档/遍历，不需要）。
             bool subThinking = (agentType == "review" || agentType == "debug" || agentType == "verify") && _enableThinking;
             int subBudget = subThinking ? _budgetTokens : 0;
+            // 模型分流（与 thinking 同分组）：research/explore（查文档/探索，简单）走轻模型；review/debug/verify（审查/诊断/验证，需推理）走主模型。轻模型留空则回退主。
+            string subModel = (agentType == "research" || agentType == "explore") && !string.IsNullOrEmpty(_lightModel)
+                ? _lightModel : _model;
 
             bool savedShowToolStatus = _showToolStatus;
             _showToolStatus = false;   // 抑制 ExecuteTool 内部逐工具 OnToolStatus 刷屏
@@ -155,7 +159,7 @@ namespace TrioAI.MPPlugIn
                     ct.ThrowIfCancellationRequested();
 
                     StreamResult result = CallSubagentWithRetry(subSystem, subTools, subMessages,
-                        DefaultMaxTokens, enableThinking: subThinking, budgetTokens: subBudget, ct);
+                        DefaultMaxTokens, enableThinking: subThinking, budgetTokens: subBudget, subModel, ct);
 
                     if (result == null)
                     {
