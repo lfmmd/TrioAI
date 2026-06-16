@@ -22,6 +22,14 @@ namespace TrioAI.MPPlugIn
             "set_program_process", "write_iec_variables"
         };
 
+        // 低风险写工具子集：程序编辑（增/删/改/重命名源码）+ 编译。纯工程文件操作，可重建、不碰实时控制器，
+        // 自动放行免逐次确认（减少确认摩擦）。必须是 WriteTools 的子集——Plan Mode 仍靠 WriteTools 拦截全部写工具。
+        // 运行/停止/上下传/写 VR·TABLE·IEC 等影响实时控制器状态的，不在本集合内，仍需人工逐次确认。
+        private static readonly HashSet<string> AutoAllowWriteTools = new HashSet<string>
+        {
+            "write_source", "patch_source", "create_program", "delete_program", "rename_program", "compile_program"
+        };
+
         // 纯 IO 工具：不需要 UI 线程（不访问 MP 项目模型），可绕过 DispatcherHelper.Invoke 直接调用。
         // 这些工具的 DispatchTool 路径是纯内存字典查询或纯文件读，线程安全。
         // 加它们到这个集合 → 可在 Task.Run 内真正并行执行。
@@ -69,10 +77,15 @@ namespace TrioAI.MPPlugIn
                                "Use read-only tools (read_source / list_programs / get_status / lookup_command / etc.) to complete your investigation, " +
                                "then call exit_plan_mode to present your plan for user approval. After approval, Plan Mode is disabled and write tools become available.";
                     }
-                    var argsPreview = _json.Serialize(input);
-                    var accepted = OnConfirmWrite?.Invoke(name, argsPreview) ?? false;
-                    if (!accepted)
-                        return "User rejected this operation.";
+                    // 风险分级：程序编辑/编译类（AutoAllowWriteTools）自动放行，减少确认摩擦；
+                    // 运行/上下传/变量写入类影响实时控制器状态，仍需人工逐次确认。
+                    if (!AutoAllowWriteTools.Contains(name))
+                    {
+                        var argsPreview = _json.Serialize(input);
+                        var accepted = OnConfirmWrite?.Invoke(name, argsPreview) ?? false;
+                        if (!accepted)
+                            return "User rejected this operation.";
+                    }
                 }
 
                 // 纯 IO 工具绕过 DispatcherHelper 直接执行（可在 Task.Run 内并行）；
@@ -639,7 +652,7 @@ namespace TrioAI.MPPlugIn
                     ("path", "Project file path", false)
                 )),
                 Tool("list_project_items", "List all project items with name/type/group", NoParams()),
-                Tool("update_memory", "Update your persistent memory (survives across sessions). Content replaces the entire memory file. Include all previous memories you want to keep plus new information. Use markdown formatting. Keep under 2000 tokens.", Props("content", "Full memory content to save")),
+                Tool("update_memory", "Update your persistent memory (survives across sessions). ONLY call this when the user EXPLICITLY asks you to remember something (e.g. \"记住…\" / \"记住这个\" / \"下次记住\" / \"remember this\"); NEVER call it on your own — not because you finished a task, found an issue, the user mentioned a detail in passing, or you think something might be useful. Content replaces the entire memory file. Include all previous memories you want to keep plus new information. Use markdown formatting. Keep under 2000 tokens.", Props("content", "Full memory content to save")),
                 Tool("task_create", "Create a new task to track a step in a multi-step workflow. Use this proactively when the user's request requires 3+ distinct steps. Each task gets a stable id you can update later.", Props(
                     ("subject", "Short imperative title (e.g. 'Fix axis 2 homing sequence')", false),
                     ("description", "What needs to be done, including acceptance criteria if relevant", true)

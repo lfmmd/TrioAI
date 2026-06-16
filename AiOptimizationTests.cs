@@ -1028,6 +1028,22 @@ namespace TrioAI.MPPlugIn
                     "FAIL: a=" + (capA ?? "<null>") + " b=" + (capB ?? "<null>") + " c=" + (capC ?? "<null>")));
             }
 
+            // --- P-S20: 写工具风险分级 —— AutoAllowWriteTools 是 WriteTools 子集（Plan Mode 仍拦截全部写），
+            //            仅含程序编辑/编译类（免确认）；运行/上下传/变量写入类保留人工确认 ---
+            {
+                var autoExpected = new[] { "write_source", "patch_source", "create_program", "delete_program", "rename_program", "compile_program" };
+                var mustConfirm = new[] { "run_program", "stop_program", "set_program_process", "upload", "download", "write_vr", "write_table", "write_iec_variables" };
+                bool allAuto = autoExpected.All(n => AutoAllowWriteTools.Contains(n));
+                bool subset = AutoAllowWriteTools.All(n => WriteTools.Contains(n));
+                bool mustNotAuto = mustConfirm.All(n => !AutoAllowWriteTools.Contains(n));
+                bool ok = allAuto && subset && mustNotAuto;
+                results.Add(("P-S20 写工具风险分级", ok,
+                    ok ? "OK: 程序编辑/编译免确认；运行/上下传/变量写入保留人工确认" :
+                    "FAIL: auto=" + string.Join(",", autoExpected.Where(n => !AutoAllowWriteTools.Contains(n))) +
+                    " subset=" + (subset ? "ok" : string.Join(",", AutoAllowWriteTools.Where(n => !WriteTools.Contains(n)))) +
+                    " leaked=" + string.Join(",", mustConfirm.Where(n => AutoAllowWriteTools.Contains(n)))));
+            }
+
             // ========== 报告 ==========
             var sb = new StringBuilder();
             sb.AppendLine("=== TrioAI Optimization Tests ===");

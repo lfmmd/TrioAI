@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+## [0.3.22] — 2026-06-16
+
+写工具按风险分级（程序编辑/编译免确认）；持久化记忆改为仅用户明确要求时 AI 才更新（不再自动塞）。
+
+### 改进
+
+- **写工具风险分级（免确认白名单）** —— 此前所有写工具（`WriteTools`，14 个）执行前都弹内嵌确认面板等用户点「允许」，频繁确认很繁琐。新增 `AutoAllowWriteTools` 子集（6 个低风险工具：`write_source`/`patch_source`/`create_program`/`delete_program`/`rename_program`/`compile_program`），确认闸门豁免它们——这些是纯工程文件操作（增删改源码 + 编译），可重建、不碰实时控制器，自动放行。其余 8 个（`run_program`/`stop_program`/`set_program_process`/`upload`/`download`/`write_vr`/`write_table`/`write_iec_variables`）影响控制器实时状态/行为，**仍需人工逐次确认**。`AutoAllowWriteTools` 是 `WriteTools` 的严格子集，Plan Mode 仍靠完整 `WriteTools` 拦截全部写工具，安全性不变。`AiOptimizationTests.cs` 新增 P-S20（验证子集关系 + 免确认成员 + 保留确认成员）。
+
+- **持久化记忆改为用户主导（移除 AI 自动更新）** —— 此前 system prompt（`AiPrompt.cs` `BuildMemoryInstructions`）以 `MANDATORY` 强制 AI 在多种情况自动调 `update_memory` 写记忆，含「AI 自己发现重复问题及解决方案」「用户随口提及的项目细节（VR/轴/IO）」「用户纠正做法」等自主触发——导致 AI 每完成一个任务就往记忆塞内容。而记忆本应是用户主动记录（常用于记 AI 易犯的错），不该 AI 随便编辑。现改为**唯一触发=用户明确要求记住**（「记住…」「记住这个」「下次记住」「remember this」），并明令禁止 AI 自行更新：不得记录自主发现的问题/方案、用户随口提及的细节、自己的「教训」或纠正；拿不准是否该记时不写、等用户开口。`update_memory` 工具保留（用户要求时仍能用），记忆手动编辑（工具栏「记忆」按钮）照常。Rules 中「主动清理过时项（proactively）」改为「仅用户要求记忆新内容时」。UI 描述（`ChatPanel.cs` `MemoryDesc` 中/英）同步去掉「AI 会自动更新记忆」。
+
 ## [0.3.21] — 2026-06-16
 
 新增「轻模型」：设置里多一个模型名输入框，填了则**查文档/探索类子 agent（research/explore）走它**，审查/诊断/验证类（review/debug/verify）仍走主模型保推理质量；留空则全部用主模型（= 现状）。主对话/写代码永远走主模型，不受影响。

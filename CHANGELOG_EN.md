@@ -7,6 +7,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.22] — 2026-06-16
+
+Write tools are now tiered by risk (program-editing/compiling auto-pass); persistent memory is now updated only when the user explicitly asks (no more AI auto-stuffing).
+
+### Changed
+
+- **Write-tool risk tiering (auto-allow allowlist)** — Previously every write tool (`WriteTools`, 14 of them) popped the inline confirmation panel and waited for "Allow" before executing, which was tedious under frequent use. Adds an `AutoAllowWriteTools` subset (6 low-risk tools: `write_source`/`patch_source`/`create_program`/`delete_program`/`rename_program`/`compile_program`) that the confirmation gate skips — these are pure project-file operations (source add/edit/delete + compile), rebuildable and not touching the live controller, so they pass automatically. The other 8 (`run_program`/`stop_program`/`set_program_process`/`upload`/`download`/`write_vr`/`write_table`/`write_iec_variables`) affect live controller state/behavior and **still require manual per-call confirmation**. `AutoAllowWriteTools` is a strict subset of `WriteTools`; Plan Mode still blocks all write tools via the full `WriteTools` set, so safety is unchanged. `AiOptimizationTests.cs` adds P-S20 (verifies the subset relation + auto-allow members + must-confirm members).
+
+- **Persistent memory is now user-driven (AI no longer auto-updates)** — Previously the system prompt (`AiPrompt.cs` `BuildMemoryInstructions`) forced the AI with `MANDATORY` to call `update_memory` on its own in several cases, including "you discover a recurring issue and its solution", project details the user mentioned in passing (VR/axes/IO), and user corrections — so the AI stuffed content into memory after every task. But memory should be user-authored (often used to log mistakes the AI keeps making), not something the AI edits freely. Now the **single trigger = the user explicitly asks to remember** ("记住…" / "记住这个" / "下次记住" / "remember this"), and the AI is explicitly forbidden from updating on its own: do not record self-discovered issues/solutions, casually-mentioned details, or its own "lessons"/corrections; when unsure whether the user wants something remembered, do not write — wait for the user to ask. The `update_memory` tool is retained (still usable when the user asks); manual editing (toolbar "Memory" button) is unchanged. The "remove outdated information proactively" rule now reads "only when the user asks to remember something new". UI descriptions (`ChatPanel.cs` `MemoryDesc`, zh/en) drop "AI automatically updates memory".
+
 ## [0.3.21] — 2026-06-16
 
 Adds a "light model": a second model-name field in Settings. When filled, **the lookup/exploration subagents (research/explore) use it**, while the review/debug/verify subagents keep using the main model to preserve reasoning quality; when left empty, everything uses the main model (= current behavior). The main conversation / code-writing always uses the main model and is unaffected.

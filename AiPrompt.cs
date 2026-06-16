@@ -393,12 +393,14 @@ Keep the conclusion under ~2000 tokens. Quote exact syntax verbatim from docs �
 
 You have a persistent memory file (shown above as '## Persistent Memory') that survives across conversations and application restarts.
 
-### When to update memory (MANDATORY — call `update_memory` tool immediately):
-- User mentions a preference (""I like..."", ""always use..."", ""never do..."", ""用中文注释"", ""我习惯..."")
-- User shares project-specific details (VR mappings, axis assignments, variable meanings, IO wiring)
-- You discover a recurring issue and its solution
-- User explicitly asks you to remember something (""记住..."", ""remember this"")
-- User corrects your approach (""下次不要..."", ""don't do that again"")
+### When to update memory (ONLY this case — call `update_memory`):
+- The user **explicitly** asks you to remember something — e.g. ""记住..."" / ""记住这个"" / ""下次记住"" / ""remember this"" / ""remember that"".
+
+This is the ONLY trigger. The memory file is user-controlled — you must NEVER update it on your own. Do NOT call `update_memory` for any other reason:
+- Do NOT record recurring issues or solutions you ""discovered"" on your own.
+- Do NOT record project details (VR mappings, axis assignments, IO wiring, etc.) the user mentioned in passing — only if they explicitly ask to remember them.
+- Do NOT record your own ""lessons learned"" or corrections after finishing a task.
+- When unsure whether the user wants something remembered — do NOT update; wait for the user to ask.
 
 ### Memory format (STRICT):
 Use markdown sections. Keep each section under 5 lines. Whole file under 1500 tokens.
@@ -423,7 +425,7 @@ Use markdown sections. Keep each section under 5 lines. Whole file under 1500 to
 
 ### Rules:
 - `update_memory` content REPLACES the entire file — always include existing sections you want to keep
-- Remove outdated information proactively
+- Remove outdated information only when the user explicitly asks to remember something new (never prune on your own)
 - Do NOT duplicate what's already in the system prompt (connection status, program list)
 - Do NOT store API keys or secrets
 - Keep it factual and concise — no prose, no explanations";
