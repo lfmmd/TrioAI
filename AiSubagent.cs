@@ -111,11 +111,14 @@ namespace TrioAI.MPPlugIn
         }
 
         /// <summary>
-        /// research 子 agent 主循环。独立 subMessages（局部，不碰 _conversationHistory），
-        /// 复用 ExecuteTool 执行白名单只读工具，跑完返回最后一条 assistant 文本结论。
-        /// 由 DispatchTool 的 case "research" 同步调用（跑在主循环 Task.Run 线程）。
+        /// 子 agent 主循环（agentType = research/review/debug/explore）。
+        /// 三类差异：prompt（GetSubagentPrompt）+ schema 工具池（BuildSubagentToolDefinitions(agentType)）+
+        /// thinking（review/debug 跟随全局开关；research/explore 始终关）。
+        /// 独立 subMessages（局部，不碰 _conversationHistory），复用 ExecuteTool 执行只读工具（运行时拦截共用 SubagentReadTools 超集）。
+        /// 返回 (conclusion, success)：success = 是否产出了文本结论（无产出 / API 全失败 → false，DispatchTool 据此返回 is_error）。
+        /// 由 DispatchTool 同步调用（跑在主循环 Task.Run 线程）。
         /// </summary>
-        private string RunSubagent(string task, int maxTurns, CancellationToken ct)
+        private (string conclusion, bool success) RunSubagent(string task, string agentType, int maxTurns, CancellationToken ct)
         {
             maxTurns = ClampSubTurns(maxTurns);
 
@@ -127,19 +130,23 @@ namespace TrioAI.MPPlugIn
                     { "content", task }
                 }
             };
-            var subTools = BuildSubagentToolDefinitions();
+            var subTools = BuildSubagentToolDefinitions(agentType);
             var subSystem = new List<Dictionary<string, object>>
             {
                 new Dictionary<string, object>
                 {
                     { "type", "text" },
-                    { "text", BuildSubagentPrompt() },
+                    { "text", GetSubagentPrompt(agentType) },
                     { "cache_control", new { type = "ephemeral" } }
                 }
             };
+            // thinking：仅 review/debug/verify 跟随全局开关（分析/诊断/验证类，深度推理有价值）；research/explore 始终关（查文档/遍历，不需要）。
+            bool subThinking = (agentType == "review" || agentType == "debug" || agentType == "verify") && _enableThinking;
+            int subBudget = subThinking ? _budgetTokens : 0;
 
             bool savedShowToolStatus = _showToolStatus;
             _showToolStatus = false;   // 抑制 ExecuteTool 内部逐工具 OnToolStatus 刷屏
+            OnResearchStart?.Invoke(agentType, maxTurns);   // 显示 ChatPanel 顶部进度条 banner
             try
             {
                 string lastText = "";
@@ -148,13 +155,13 @@ namespace TrioAI.MPPlugIn
                     ct.ThrowIfCancellationRequested();
 
                     StreamResult result = CallSubagentWithRetry(subSystem, subTools, subMessages,
-                        DefaultMaxTokens, enableThinking: false, budgetTokens: 0, ct);
+                        DefaultMaxTokens, enableThinking: subThinking, budgetTokens: subBudget, ct);
 
                     if (result == null)
                     {
                         return string.IsNullOrEmpty(lastText)
-                            ? "[research subagent: API failed before producing any findings]"
-                            : lastText + "\n\n[...research subagent: API failed, returning partial findings above...]";
+                            ? ("[" + agentType + " subagent: API failed before producing any findings]", false)
+                            : (lastText + "\n\n[..." + agentType + " subagent: API failed, returning partial findings above...]", true);
                     }
 
                     // token 计入主线总消耗（子 agent 的消耗是真实成本，计入正确）
@@ -180,12 +187,9 @@ namespace TrioAI.MPPlugIn
                     if (toolUses.Count == 0 || result.StopReason != "tool_use")
                         break;
 
-                    // 进度（受控的每轮一次摘要，[research] 前缀供 ChatPanel 区分）
-                    if (OnToolStatus != null)
-                    {
-                        var names = string.Join(", ", toolUses.Select(b => GetStringValue(b, "name")));
-                        OnToolStatus(string.Format("[research] turn {0}/{1}: {2}", turn + 1, maxTurns, names));
-                    }
+                    // 进度：结构化回调驱动 ChatPanel 顶部进度条（不再走 OnToolStatus，避免聊天流刷屏）
+                    var names = string.Join(", ", toolUses.Select(b => GetStringValue(b, "name")));
+                    OnResearchTurn?.Invoke(agentType, turn + 1, maxTurns, names);
 
                     // 并行执行工具：白名单外的拒绝，单结果超限截断
                     var toolResultMap = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -243,12 +247,13 @@ namespace TrioAI.MPPlugIn
                 }
 
                 return string.IsNullOrEmpty(lastText)
-                    ? "[research subagent completed with no textual conclusion]"
-                    : lastText;
+                    ? ("[" + agentType + " subagent completed with no textual conclusion]", false)
+                    : (lastText, true);
             }
             finally
             {
                 _showToolStatus = savedShowToolStatus;
+                OnResearchEnd?.Invoke();   // 隐藏进度条 banner（含取消 / 异常路径）
             }
         }
     }

@@ -35,7 +35,8 @@ namespace TrioAI.MPPlugIn
             "task_list",         // 纯内存操作
             "enter_plan_mode",   // 纯内存操作（_planMode 字段）
             "exit_plan_mode",    // 纯内存操作 + OnConfirmPlan 回调（UI 线程安全）
-            "research"           // 子 agent：调 API + ExecuteTool（内部各自分流），不直接访问 MP 模型；避免主循环 Task.Run 内二次 Invoke 卡 UI（R3）
+            "research",          // 子 agent：调 API + ExecuteTool（内部各自分流），不直接访问 MP 模型；避免主循环 Task.Run 内二次 Invoke 卡 UI（R3）
+            "review", "debug", "explore", "verify"   // 同 research：5 种子 agent 共用同一套机制
         };
 
         private string ExecuteTool(string name, Dictionary<string, object> input)
@@ -111,13 +112,21 @@ namespace TrioAI.MPPlugIn
             switch (name)
             {
                 case "research":
+                case "review":
+                case "debug":
+                case "explore":
+                case "verify":
                 {
-                    // 委派给 research 子 agent：独立上下文跑研究循环，只回传结论文本。
+                    // 委派给子 agent（research/review/debug/explore/verify）：独立上下文跑调研循环，只回传结论文本。
+                    // 差异：prompt（GetSubagentPrompt）+ schema 工具池（SubagentToolPools）+ thinking（review/debug/verify 跟随全局开关）。运行时拦截共用 SubagentReadTools 超集。
                     var query = GetStr(input, "query");
                     if (string.IsNullOrEmpty(query))
                         return new { error = "query is required — describe what the subagent should investigate" };
                     int maxTurns = GetInt(input, "max_turns", 12);
-                    var conclusion = RunSubagent(query, maxTurns, _currentCancellationToken);
+                    var (conclusion, success) = RunSubagent(query, name, maxTurns, _currentCancellationToken);
+                    // 子 agent 失败（API 错误 / 无文本产出）→ 返回 error 触发 tool_result.is_error，主模型据此重试或如实告知（不再把失败兜底文本伪装成结论）
+                    if (!success)
+                        return new { error = name + " subagent failed to produce a conclusion (API errors or no textual output). Consider retrying, possibly with a more specific query." };
                     return new { conclusion = conclusion };
                 }
                 case "get_status": return Handlers.GetStatus();
@@ -396,8 +405,9 @@ namespace TrioAI.MPPlugIn
             }
         }
 
-        // research 子 agent 可用的只读工具白名单。双重保险：BuildSubagentToolDefinitions 只暴露这些，
-        // RunSubagent 运行时再校验一次（白名单外的 tool_use 返回 error）。不含任何写工具，禁递归 research。
+        // 子 agent 运行时拦截用的只读工具【超集】（所有只读工具，不含任何写工具，禁递归 research）。
+        // 双重保险的"运行时"那一层：RunSubagent 对超集外的 tool_use 返回 error。
+        // 各 agentType 的 schema 暴露面用 SubagentToolPools（按定位裁剪的子集）控制，但运行时拦截始终用此超集兜底。
         private static readonly HashSet<string> SubagentReadTools = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "get_status", "list_programs", "read_source", "get_iec_task_detail",
@@ -410,12 +420,36 @@ namespace TrioAI.MPPlugIn
             "list_plugins", "list_project_items"
         };
 
-        // 子 agent 工具集：从主 tool 列表过滤白名单 + 浅拷贝（不污染 _cachedToolDefs）+ 末项 cache_control。
-        private List<Dictionary<string, object>> BuildSubagentToolDefinitions()
+        // 各 agentType 的 schema 工具池（按定位裁剪；严格 = 该 agent prompt 明确提到的工具，保证 schema 与 prompt 一致 ——
+        // 子 agent 不会调用 prompt 没告诉它的工具）。research = 全超集（万能查文档，不削弱）；未知 type 回落超集。
+        // 这里只控制 schema 暴露面（省 token + 提升选工具聚焦度）；运行时拦截仍由 SubagentReadTools 超集兜底。
+        private static readonly Dictionary<string, HashSet<string>> SubagentToolPools =
+            new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase)
         {
+            { "research", SubagentReadTools },
+            { "review", new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                { "read_source", "search_code", "get_iec_task_detail", "read_iec_variables",
+                  "lookup_command", "list_programs", "list_axes", "read_vr", "read_sysvar", "get_status" } },
+            { "debug", new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                { "get_status", "list_axes", "get_axis_detail", "read_vr", "read_sysvar", "read_table",
+                  "list_processes", "get_process_variable", "get_events", "read_drive_param",
+                  "scan_ethercat", "read_ethercat_sdo", "read_source" } },
+            { "explore", new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                { "list_programs", "list_project_items", "read_source", "search_code",
+                  "lookup_command", "get_iec_task_detail", "get_status", "list_axes", "list_processes" } },
+            { "verify", new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                { "read_source", "search_code", "get_iec_task_detail", "read_iec_variables", "lookup_command",
+                  "get_status", "list_axes", "read_vr", "read_sysvar", "read_table",
+                  "list_processes", "get_process_variable", "get_events" } },
+        };
+
+        // 子 agent 工具集：按 agentType 从主 tool 列表过滤对应池 + 浅拷贝（不污染 _cachedToolDefs）+ 末项 cache_control。
+        private List<Dictionary<string, object>> BuildSubagentToolDefinitions(string agentType)
+        {
+            var pool = SubagentToolPools.TryGetValue(agentType, out var p) ? p : SubagentReadTools;
             var all = GetToolDefinitions();
             var filtered = all
-                .Where(t => SubagentReadTools.Contains(GetStringValue(t, "name")))
+                .Where(t => pool.Contains(GetStringValue(t, "name")))
                 .Select(t => new Dictionary<string, object>(t))
                 .ToList();
             if (filtered.Count > 0)
@@ -624,6 +658,22 @@ namespace TrioAI.MPPlugIn
                 Tool("research", "Delegate an investigation task to a research subagent that runs in its OWN isolated context with read-only tools (lookup_command, read_source, read_skill, search_code, get_status, list_*, read_* etc.) and returns a digested conclusion. USE THIS when you need to consult MULTIPLE command docs or large source files — the raw tool_results stay in the subagent's context and never pollute the main conversation, keeping the main context lean. Do NOT use research for a single quick lookup (just call lookup_command/read_source directly). The subagent cannot write or modify anything.", Props(
                     ("query", "The investigation task: what to find out, which commands/files to consult, and what the conclusion should contain. Be specific about which commands' syntax/examples you need.", false),
                     ("max_turns", "Max investigation turns for the subagent (default 12, max 12). Lower for simple lookups.", true)
+                )),
+                Tool("review", "Delegate a code-review task to a review subagent that runs in its OWN isolated context with read-only tools and returns a SEVERITY-RANKED review report. USE THIS to review an EXISTING program for bugs, safety hazards, reserved-name collisions, and quality issues (e.g. before trusting unfamiliar code, or after a big change). The subagent reads the program fully, checks command usage against the docs, and reports Critical/Warning/Style findings with program:line pointers — it does NOT modify code. Do NOT use review for a single command lookup (use lookup_command) or to fix code (do that yourself after reading the report).", Props(
+                    ("query", "The review task: which program(s) to review and what to focus on (bugs, safety, naming, dead code, etc.).", false),
+                    ("max_turns", "Max review turns for the subagent (default 12, max 12).", true)
+                )),
+                Tool("debug", "Delegate a runtime-problem diagnosis to a debug subagent that runs in its OWN isolated context with read-only tools and returns a ROOT-CAUSE diagnosis. USE THIS to investigate why something misbehaves AT RUNTIME (axis won't move, error/fault reported, unexpected VR value, program not doing what it should) — the subagent reads LIVE controller state (axes, VR/TABLE, running processes, events, drive/EtherCAT faults) AND the relevant source code, then correlates them. It does NOT modify anything; it gives a diagnosis (symptom / root cause / evidence / fix direction). For a pure docs question use research; for static code quality use review.", Props(
+                    ("query", "The diagnosis task: the observed symptom (what goes wrong, when), and which program/axis/VR is involved.", false),
+                    ("max_turns", "Max diagnostic turns for the subagent (default 12, max 12).", true)
+                )),
+                Tool("explore", "Delegate a broad project survey to an explore subagent that runs in its OWN isolated context with read-only tools and returns a FINDINGS INDEX (what programs exist, what each does, where specific logic lives). USE THIS when you are UNFAMILIAR with the project and need a map before acting — the subagent builds a one-line-per-program overview by skimming (not deep-reading) each program and locating symbols via search_code. For deep syntax details of ONE command use research instead; explore favors breadth over depth.", Props(
+                    ("query", "The exploration task: what to map or locate (project structure overview, or 'where is X defined / which programs use Y').", false),
+                    ("max_turns", "Max exploration turns for the subagent (default 12, max 12).", true)
+                )),
+                Tool("verify", "Delegate an independent VERIFICATION to a verify subagent that runs in its OWN isolated context with read-only tools and returns a single VERDICT (PASS / FAIL / PARTIAL). USE THIS right after you write or modify a program — the subagent independently reads the code, checks each command's correct usage, and cross-checks LIVE controller state (are driven axes connected? are VR/TABLE indices initialized? do running processes set the expected values?) to judge whether the program is correct and safe. It does NOT compile or modify anything; you pass it the program (and any compile result you already obtained) and it gives an independent second opinion with a clear verdict. For listing defects without a verdict use review; for runtime fault diagnosis use debug.", Props(
+                    ("query", "The verification task: which program(s) to verify, the source or program name, and any compile result you already obtained. State what 'correct and safe' means for this program.", false),
+                    ("max_turns", "Max verification turns for the subagent (default 12, max 12).", true)
                 ))
             };
         }

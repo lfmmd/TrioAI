@@ -6,6 +6,42 @@
 
 ## [Unreleased]
 
+## [0.3.19] — 2026-06-16
+
+主系统提示新增「子 agent 使用方法论」章节，教主模型正确使用 5 种子 agent（含如何按项目规模拆解大任务），弥补此前主 prompt 完全没有子 agent 使用引导、主模型常把「整个项目」整块塞给单个子 agent（~12 轮预算跑崩）的问题。
+
+### 改进
+
+- **主 prompt 加 USING SUBAGENTS 章节** —— 此前主系统提示（`DefaultPrompt` / `AI_INSTRUCTIONS.md`）里完全没有 research/review/debug/explore/verify 的使用引导，主模型只靠各工具自己的 description 决定怎么用，遇到「分析整个项目」「审查所有代码」这类项目级任务时，常直接把整块塞给一个子 agent——而子 agent 是 ~12 轮预算的短任务执行器，无法 scale 到项目规模，半路耗尽轮数返回残缺结论。新增 `## USING SUBAGENTS` 章节（插在 BATCH 章节后、SAFETY 前）：① 五种 agent 各自适用场景（explore 先摸结构 / research 查多文档 / review 审查 / debug 诊断 / verify 写完验证给 PASS/FAIL/PARTIAL）；② 核心约束——子 agent 是短任务、不能接整块项目；③ **大任务拆解 4 步（MANDATORY）**：先 explore/list_programs 摸规模 → 拆成单程序/单问题聚焦块 → 按类型分派 + task_create 跟踪 → 综合答复；④ verify 专属引导（非 PASS 判定必须处理或告知用户，不得忽略）；⑤ FORBIDDEN 整块派发。把「规模感知 + 拆解」职责明确写进主模型提示词，而非指望子 agent 自己判断。`BuildStablePrompt` 组装逻辑与 safe-coding 嵌入未改动。
+
+  **生效**：改的是源码 `DefaultPrompt`，运行时读已部署的 `AI_INSTRUCTIONS.md`；后者仅 InitializeSkills 时强制覆盖（文件已存在不自动刷新）。故更新部署后须在 MP 里重新「初始化技能」一次，新引导才会写入并生效。
+
+## [0.3.18] — 2026-06-16
+
+对照 cc-haha 多 agent 框架审查 0.3.17 的多 agent 类型，补齐三处工程不足 + 新增 verify 验证子 agent。
+
+### 新增
+
+- **verify 验证子 agent（独立判定 PASS/FAIL/PARTIAL）** —— 主模型写完 / 改完程序后，派一个独立子 agent 做「第二意见」验证并给出明确判定，弥补 review 只列缺陷、缺「独立验证 + 判定」语义的空白。verify **保持只读**（与其余 4 种一致，不破坏只读隔离）：主模型写完本来就会 `compile_program`（编译错误是确定性的，编译器每次给同样答案），故把【源码 + 编译结果】一起传给 verify，verify 独立读源码 + 核对命令用法 + 交叉比对实时状态（轴是否连接、VR/TABLE 是否初始化、运行中进程是否设了期望值），输出 `VERDICT: PASS/FAIL/PARTIAL` + 依据；若传入的编译结果有错则直接 FAIL。verify 工具池 = 代码（`read_source`/`search_code`/`get_iec_task_detail`/`read_iec_variables`/`lookup_command`）+ 实时状态（`get_status`/`list_axes`/`read_vr`/`read_sysvar`/`read_table`/`list_processes`/`get_process_variable`/`get_events`）。`AiPrompt.cs` `GetSubagentPrompt` 加 `verify` 分支；`AiTools.cs` DispatchTool / BuildToolDefinitions / PureIoTools / SubagentToolPools 各加 verify；`ChatPanel.cs` banner 动词「验证」。`AiOptimizationTests.cs` 工具数 69 → 70。
+
+### 改进
+
+- **per-type 工具池（聚焦 + 省 token）** —— 0.3.17 四种子 agent 共用 35 个只读工具的 schema 暴露面，但每个 agent 的 prompt 只提到其中一部分，子 agent 可能调用 prompt 没告诉它的工具。新增 `SubagentToolPools`（`Dictionary<agentType, HashSet>`）：**research** = 35 全超集（万能查文档不削弱）、**review** = 10（读源码 / 搜索 / IEC / 命令用法核对）、**debug** = 13（实时状态优先 + 源码）、**explore** = 9（遍历程序 / 搜索 / 概览）、**verify** = 13（代码 + 实时状态）。`BuildSubagentToolDefinitions(agentType)` 按池过滤 schema；运行时拦截仍由 `SubagentReadTools` 超集兜底（双层防护不变）。
+
+- **thinking 按 agentType（深度推理定向开启）** —— 0.3.17 子 agent 一律关 thinking 省 token，但 review / debug / verify 这类分析 / 诊断 / 验证任务深度推理有价值。改为：review / debug / verify 跟随全局 `_enableThinking`（budget = `_budgetTokens`），research / explore 始终关（查文档 / 遍历不需要）。
+
+- **子 agent 失败语义（不再伪装结论）** —— 0.3.17 子 agent API 全失败或无文本产出时，返回 `[research subagent: API failed...]` / `[...completed with no textual conclusion]` 兜底字符串，主模型可能把它当真结论引用。`RunSubagent` 改返回 `(string conclusion, bool success)`：`success` = 是否产出文本结论；`DispatchTool` 在 `!success` 时返回 `{ error }` 触发 `tool_result.is_error`，主模型据此重试或如实告知用户。
+
+`AiOptimizationTests.cs` 新增 P-S15（per-type 工具池：research=超集、各池为超集子集无写工具泄漏、特征工具裁剪边界）、P-S16（失败语义 success=false：API 全失败 / 无文本产出两路）、P-S17（thinking 按 agentType：全局开→review/debug/verify 开、research/explore 关）、P-S18（verify prompt 含 PASS/FAIL/PARTIAL 三态 + 明确只读不编译）；P-S4/7/8/14 适配 agentType 参数与元组返回。
+
+## [0.3.17] — 2026-06-16
+
+把单个 research 子 agent 扩展为**多 agent 类型**：新增 review（代码审查）、debug（问题诊断）、explore（广度搜索）三种子 agent，每种有独立的定位与结论格式，像 Claude Code 那样让主模型按任务性质选不同子 agent。
+
+### 新增
+
+- **review / debug / explore 三种子 agent** —— 0.3.16 的 research 子 agent（独立 messages 列表 + 只读白名单 + 只回传结论）只覆盖「查文档 / 读源码」一种调研。审查发现 review / debug / explore 本质**都是只读调研类**，现有 `SubagentReadTools`（35 个只读工具）完全覆盖三者的工具需求，差异**只在 system prompt 的定位与结论格式**。故 4 种共用 `RunSubagent` 全套机制（独立上下文 / 只读白名单 / 进度条 banner / 取消传播 / token 计入主线），只加 `agentType` 维度：`RunSubagent(task, agentType, maxTurns, ct)` → `GetSubagentPrompt(agentType)` 按 type 选 prompt。`AiPrompt.cs` 把 `BuildSubagentPrompt` 重构为 `GetSubagentPrompt`，4 个 prompt 各有定位——**research**（查命令文档 / 源码语法 → 精确 Syntax / Examples / Gotchas，照搬原 prompt）、**review**（代码审查员 → 读 `read_source` / `search_code`，核对 `lookup_command` 用法，输出 Critical / Warning / Style 三级 + `program:line` 的审查报告）、**debug**（诊断专家 → 优先查实时状态 `get_status` / `list_axes` / `read_vr` / `get_events` / `read_drive_param` 再结合源码，输出症状 / 根因 / 证据 / 修复方向的诊断报告）、**explore**（广度探索员 → `list_programs` → `read_source` 摘要 / `search_code`，输出程序索引 + 发现汇总，深挖单命令留给 research）。`AiTools.cs` DispatchTool 用 `case "research": case "review": case "debug": case "explore":` 共用一个分支（`name` 即 agentType）；新增 3 个工具 schema（结构同 research，description 各自写明定位 + 适用场景以防滥用）；`review` / `debug` / `explore` 加入 `PureIoTools`（同 research，避免主循环 `Task.Run` 内二次 `DispatcherHelper.Invoke`）。4 种共用只读白名单，无递归。`ChatPanel.cs` 进度回调 `OnResearchStart` / `OnResearchTurn` 加 `agentType` 参数，banner 文案按 type 显示动词（调研 / 审查 / 诊断 / 探索）。`AiOptimizationTests.cs` 新增 P-S10~14（4 个 prompt 非空且互不相同 + 未知 type 回落 research / 新 agent 已注册 / 属 PureIoTools / query 空校验 / review 运行时拦截 write_source），工具数断言 66 → 69。
+
 ## [0.3.16] — 2026-06-16
 
 引入轻量 research 子 agent，让主模型把「查多个命令文档 / 大量源码」的研究重活委派到独立上下文执行，缓解主对话上下文被永久保留的参考内容撑大；同时修复 write_source / create_program 编辑器视图刷新静默失败。

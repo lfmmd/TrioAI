@@ -37,6 +37,9 @@ namespace TrioAI.MPPlugIn
         private const int StreamFlushChars = 160;
         private TextBlock _statusInfo;
         private Border _planModeBanner;
+        private Border _researchBanner;
+        private ProgressBar _researchBar;
+        private TextBlock _researchLabel;
 
         // --- Oscilloscope pattern: static factory ---
         private static readonly ToolPositionSettings _defaultPosition = new ToolPositionSettings(SizeToContent.Manual)
@@ -209,6 +212,34 @@ namespace TrioAI.MPPlugIn
                 {
                     _messages.Add(new ChatMessage("System", UnescapeJsonDisplay(status)));
                     _scrollViewer.ScrollToEnd();
+                }));
+            };
+            _ai.OnResearchStart = (agentType, maxTurns) =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _researchBar.Maximum = maxTurns;
+                    _researchBar.Value = 0;
+                    _researchLabel.Text = string.Format(Lang.L("[{0}] 子 agent 正在{1}…", "[{0}] subagent {1}…"), agentType, SubagentVerb(agentType));
+                    _researchBanner.Visibility = Visibility.Visible;
+                    _scrollViewer.ScrollToEnd();
+                }));
+            };
+            _ai.OnResearchTurn = (agentType, turn, maxTurns, tools) =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _researchBar.Maximum = maxTurns;
+                    _researchBar.Value = turn;
+                    _researchLabel.Text = string.Format(Lang.L("[{0}] 轮 {1}/{2}: {3}", "[{0}] turn {1}/{2}: {3}"), agentType, turn, maxTurns, tools);
+                    _scrollViewer.ScrollToEnd();
+                }));
+            };
+            _ai.OnResearchEnd = () =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _researchBanner.Visibility = Visibility.Collapsed;
                 }));
             };
             _ai.OnConfirmWrite = (toolName, argsJson) =>
@@ -391,6 +422,36 @@ namespace TrioAI.MPPlugIn
             };
             _planModeBanner.Child = bannerText;
             root.Children.Add(_planModeBanner);
+
+            // ---- research 子 agent 进度条 banner（蓝色，仅 research 运行时可见）----
+            _researchBanner = new Border
+            {
+                Background = new SolidColorBrush(Color.FromRgb(20, 60, 110)),
+                Padding = new Thickness(8, 4, 8, 4),
+                Visibility = Visibility.Collapsed
+            };
+            _researchBanner.SetValue(DockPanel.DockProperty, Dock.Top);
+            var researchStack = new StackPanel { Orientation = Orientation.Vertical };
+            _researchLabel = new TextBlock
+            {
+                Text = Lang.L("[research] 子 agent 正在调研…", "[research] subagent investigating…"),
+                Foreground = Brushes.White,
+                FontSize = 12,
+                TextTrimming = TextTrimming.CharacterEllipsis
+            };
+            _researchBar = new ProgressBar
+            {
+                Minimum = 0,
+                Maximum = 12,
+                Value = 0,
+                Height = 8,
+                Margin = new Thickness(0, 3, 0, 0),
+                Foreground = new SolidColorBrush(Color.FromRgb(90, 170, 255))
+            };
+            researchStack.Children.Add(_researchLabel);
+            researchStack.Children.Add(_researchBar);
+            _researchBanner.Child = researchStack;
+            root.Children.Add(_researchBanner);
 
             // Top separator
             var topSep = new Border { Height = 1, Background = new SolidColorBrush(Color.FromRgb(60, 60, 60)) };
@@ -1155,6 +1216,19 @@ namespace TrioAI.MPPlugIn
             {
                 var tokens = _ai.HistoryTokenEstimate;
                 _statusInfo.Text = $"~{tokens}K M:{msgCount}";
+            }
+        }
+
+        // 子 agent 类型 → 本地化动作动词（驱动进度条 banner 文案，区分 research/review/debug/explore/verify）
+        private static string SubagentVerb(string agentType)
+        {
+            switch (agentType)
+            {
+                case "review":  return Lang.L("审查", "reviewing");
+                case "debug":   return Lang.L("诊断", "diagnosing");
+                case "explore": return Lang.L("探索", "exploring");
+                case "verify":  return Lang.L("验证", "verifying");
+                default:        return Lang.L("调研", "investigating");   // research
             }
         }
 

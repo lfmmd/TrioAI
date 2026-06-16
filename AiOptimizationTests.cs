@@ -170,13 +170,12 @@ namespace TrioAI.MPPlugIn
 
             // ========== P1: GetToolDefinitions 缓存测试 ==========
             // --- P1-1: 返回正确数量的 tools ---
-            // 当前注册的 tool 总数：删 task_get/open_oscilloscope/get_sysvars（3 个），
-            // 补 rename_program（1 个）后 = 66 - 3 + 1 = 64
+            // 当前注册的 tool 总数：65 基础 + research/review/debug/explore（4 个子 agent 工具）= 69
             {
                 var tools1 = GetToolDefinitions();
-                bool ok = tools1.Count == 66;
-                results.Add(("P1-1 tool数量=66", ok,
-                    ok ? "OK: 66 个 tool (65 + research 子 agent 工具)" : $"FAIL: 实际 {tools1.Count} 个"));
+                bool ok = tools1.Count == 70;
+                results.Add(("P1-1 tool数量=70", ok,
+                    ok ? "OK: 70 个 tool (65 + research/review/debug/explore/verify 子 agent 工具)" : $"FAIL: 实际 {tools1.Count} 个"));
             }
 
             // --- P1-2: 多次调用返回新 list 实例 ---
@@ -677,7 +676,7 @@ namespace TrioAI.MPPlugIn
             // --- P-S4: BuildSubagentToolDefinitions —— 过滤白名单 + 末项 cache_control + 不污染主缓存 ---
             {
                 var subSvc = new AiService();
-                var subTools = subSvc.BuildSubagentToolDefinitions();
+                var subTools = subSvc.BuildSubagentToolDefinitions("research");
                 var allTools = GetToolDefinitions();
                 int expected = allTools.Count(t => SubagentReadTools.Contains(GetStr(t, "name")));
                 bool countOk = subTools.Count == expected && expected > 0;
@@ -713,7 +712,7 @@ namespace TrioAI.MPPlugIn
                 var cts = new CancellationTokenSource();
                 cts.Cancel();
                 bool threw = false;
-                try { subSvc2.RunSubagent("test", 5, cts.Token); }
+                try { subSvc2.RunSubagent("test", "research", 5, cts.Token); }
                 catch (OperationCanceledException) { threw = true; }
                 bool ok = threw && apiCalls == 0;
                 results.Add(("P-S6 取消立即传播", ok,
@@ -747,11 +746,11 @@ namespace TrioAI.MPPlugIn
                         StopReason = "end_turn"
                     };
                 };
-                string ret = subSvc3.RunSubagent("test write block", 5, CancellationToken.None);
-                bool ok = apiCalls == 2 && ret.Contains("研究完成") && subSvc3._conversationHistory.Count == 0;
+                var (ret, success) = subSvc3.RunSubagent("test write block", "research", 5, CancellationToken.None);
+                bool ok = apiCalls == 2 && success && ret.Contains("研究完成") && subSvc3._conversationHistory.Count == 0;
                 results.Add(("P-S7 白名单运行时拦截", ok,
-                    ok ? "OK: write_source 被拒 → 跑完终止，主线历史未污染" :
-                    $"FAIL: apiCalls={apiCalls} ret=[{ret}] mainHist={subSvc3._conversationHistory.Count}"));
+                    ok ? "OK: write_source 被拒 → 跑完终止、success=true，主线历史未污染" :
+                    $"FAIL: apiCalls={apiCalls} success={success} ret=[{ret}] mainHist={subSvc3._conversationHistory.Count}"));
             }
 
             // --- P-S8: 无 tool_use 立即退出 —— model 返回纯 text（无 tool_use），RunSubagent 单轮返回 ---
@@ -767,11 +766,11 @@ namespace TrioAI.MPPlugIn
                         StopReason = "end_turn"
                     };
                 };
-                string ret = subSvc4.RunSubagent("simple", 5, CancellationToken.None);
-                bool ok = apiCalls == 1 && ret == "直接给结论";
+                var (ret, success) = subSvc4.RunSubagent("simple", "research", 5, CancellationToken.None);
+                bool ok = apiCalls == 1 && success && ret == "直接给结论";
                 results.Add(("P-S8 无tool_use单轮退出", ok,
-                    ok ? "OK: 无 tool_use → 单轮返回 text" :
-                    $"FAIL: apiCalls={apiCalls} ret=[{ret}]"));
+                    ok ? "OK: 无 tool_use → 单轮返回 text、success=true" :
+                    $"FAIL: apiCalls={apiCalls} success={success} ret=[{ret}]"));
             }
 
             // --- P-S9: research 工具已注册 + 纯IO分流 + query 空校验 ---
@@ -787,6 +786,208 @@ namespace TrioAI.MPPlugIn
                 results.Add(("P-S9 research注册+分流+空校验", ok,
                     ok ? "OK: research 已注册、属 PureIoTools、query 空时拒绝" :
                     $"FAIL: registered={registered} isPure={isPure} queryGuard={queryGuard}"));
+            }
+
+            // --- P-S10: GetSubagentPrompt 4 种 agent type 都非空且互不相同 ---
+            {
+                var p_research = AiService.GetSubagentPrompt("research");
+                var p_review   = AiService.GetSubagentPrompt("review");
+                var p_debug    = AiService.GetSubagentPrompt("debug");
+                var p_explore  = AiService.GetSubagentPrompt("explore");
+                var p_verify   = AiService.GetSubagentPrompt("verify");
+                var prompts = new[] { p_research, p_review, p_debug, p_explore, p_verify };
+                bool allNonEmpty = prompts.All(p => !string.IsNullOrEmpty(p) && p.Length > 50);
+                int distinctCount = new HashSet<string>(prompts).Count;
+                bool fallbackOk = AiService.GetSubagentPrompt("nonexistent") == p_research;   // 未知 type 安全回落 research
+                bool ok = allNonEmpty && distinctCount == 5 && fallbackOk;
+                results.Add(("P-S10 五种agent prompt", ok,
+                    ok ? "OK: research/review/debug/explore/verify 5 个 prompt 非空且互不相同，未知 type 回落 research" :
+                    $"FAIL: allNonEmpty={allNonEmpty} distinctCount={distinctCount} fallbackOk={fallbackOk}"));
+            }
+
+            // --- P-S11: review/debug/explore 已注册 ---
+            {
+                var tools = GetToolDefinitions();
+                var names = new HashSet<string>(tools.Select(t => GetStr(t, "name")), StringComparer.OrdinalIgnoreCase);
+                bool hasReview  = names.Contains("review");
+                bool hasDebug   = names.Contains("debug");
+                bool hasExplore = names.Contains("explore");
+                bool hasVerify  = names.Contains("verify");
+                bool ok = hasReview && hasDebug && hasExplore && hasVerify;
+                results.Add(("P-S11 新agent已注册", ok,
+                    ok ? "OK: review/debug/explore/verify 都在 GetToolDefinitions 中" :
+                    "FAIL: review=" + hasReview + " debug=" + hasDebug + " explore=" + hasExplore + " verify=" + hasVerify));
+            }
+
+            // --- P-S12: review/debug/explore 属于 PureIoTools（与 research 同机制，避免主循环 Task.Run 内二次 Invoke）---
+            {
+                bool hasReview  = PureIoTools.Contains("review");
+                bool hasDebug   = PureIoTools.Contains("debug");
+                bool hasExplore = PureIoTools.Contains("explore");
+                bool hasVerify  = PureIoTools.Contains("verify");
+                bool ok = hasReview && hasDebug && hasExplore && hasVerify;
+                results.Add(("P-S12 新agent属PureIo", ok,
+                    ok ? "OK: review/debug/explore/verify 都在 PureIoTools 中" :
+                    "FAIL: review=" + hasReview + " debug=" + hasDebug + " explore=" + hasExplore + " verify=" + hasVerify));
+            }
+
+            // --- P-S13: review/debug/explore/verify query 空校验（DispatchTool 返回 "query is required"）---
+            {
+                var subSvc = new AiService();
+                bool reviewGuard  = _json.Serialize(subSvc.DispatchTool("review",  new Dictionary<string, object>())).Contains("query is required");
+                bool debugGuard   = _json.Serialize(subSvc.DispatchTool("debug",   new Dictionary<string, object>())).Contains("query is required");
+                bool exploreGuard = _json.Serialize(subSvc.DispatchTool("explore", new Dictionary<string, object>())).Contains("query is required");
+                bool verifyGuard  = _json.Serialize(subSvc.DispatchTool("verify",  new Dictionary<string, object>())).Contains("query is required");
+                bool ok = reviewGuard && debugGuard && exploreGuard && verifyGuard;
+                results.Add(("P-S13 新agent空query拒绝", ok,
+                    ok ? "OK: review/debug/explore/verify query 为空时返回 query is required" :
+                    "FAIL: review=" + reviewGuard + " debug=" + debugGuard + " explore=" + exploreGuard + " verify=" + verifyGuard));
+            }
+
+            // --- P-S14: review 子 agent 白名单运行时拦截 —— write_source tool_use 被拒，不崩、主线历史不污染 ---
+            {
+                var subSvc3 = new AiService();
+                int apiCalls = 0;
+                subSvc3._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                {
+                    apiCalls++;
+                    if (apiCalls == 1)
+                        return new StreamResult
+                        {
+                            Content = new List<Dictionary<string, object>>
+                            {
+                                new Dictionary<string, object>
+                                {
+                                    { "type", "tool_use" }, { "id", "toolu_rw1" }, { "name", "write_source" },
+                                    { "input", new Dictionary<string, object> { { "name", "X" }, { "sourceCode", "Y" } } }
+                                }
+                            },
+                            StopReason = "tool_use"
+                        };
+                    return new StreamResult
+                    {
+                        Content = new List<Dictionary<string, object>> { TextBlock("审查完成：拦截生效") },
+                        StopReason = "end_turn"
+                    };
+                };
+                var (ret, success) = subSvc3.RunSubagent("review program X", "review", 5, CancellationToken.None);
+                bool ok = apiCalls == 2 && success && ret.Contains("审查完成") && subSvc3._conversationHistory.Count == 0;
+                results.Add(("P-S14 review拦截write_source", ok,
+                    ok ? "OK: review 子 agent write_source 被拒 → 跑完终止、success=true，主线历史未污染" :
+                    "FAIL: apiCalls=" + apiCalls + " success=" + success + " ret=[" + ret + "] mainHist=" + subSvc3._conversationHistory.Count));
+            }
+
+            // --- P-S15: per-type 工具池正确性（research=超集；review/debug/explore 各裁剪且均为超集子集，无写工具泄漏）---
+            {
+                bool researchIsSuperset = SubagentToolPools["research"].SetEquals(SubagentReadTools);
+                bool allPoolsSubsetOfSuperset = SubagentToolPools.Values.All(pool => pool.All(n => SubagentReadTools.Contains(n)));
+                bool reviewTrimmed  = SubagentToolPools["review"].Count  < SubagentReadTools.Count;
+                bool debugTrimmed   = SubagentToolPools["debug"].Count   < SubagentReadTools.Count;
+                bool exploreTrimmed = SubagentToolPools["explore"].Count < SubagentReadTools.Count;
+                bool verifyTrimmed  = SubagentToolPools["verify"].Count  < SubagentReadTools.Count;
+                // 特征工具裁剪边界：read_drive_param（实时驱动参数）只在 research 超集 + debug（诊断需读驱动），不在 review/explore/verify
+                bool driveInDebug      =  SubagentToolPools["debug"].Contains("read_drive_param");
+                bool driveNotInReview  = !SubagentToolPools["review"].Contains("read_drive_param");
+                bool driveNotInExplore = !SubagentToolPools["explore"].Contains("read_drive_param");
+                bool driveNotInVerify  = !SubagentToolPools["verify"].Contains("read_drive_param");
+                // read_skill（读技能文档）只在 research 超集；review/debug/explore/verify 查代码/实时状态，不查 skill 文档
+                bool skillOnlyResearch = SubagentToolPools["research"].Contains("read_skill")
+                                         && !SubagentToolPools["review"].Contains("read_skill")
+                                         && !SubagentToolPools["debug"].Contains("read_skill")
+                                         && !SubagentToolPools["explore"].Contains("read_skill")
+                                         && !SubagentToolPools["verify"].Contains("read_skill");
+                // verify 池兼顾代码 + 实时状态（独立验证需两者）：含 read_source（代码）且 get_events（实时事件）
+                bool verifyCodeAndLive = SubagentToolPools["verify"].Contains("read_source") && SubagentToolPools["verify"].Contains("get_events");
+                // BuildSubagentToolDefinitions("review") 输出 ⊆ review 池（按池过滤，不泄漏池外工具）
+                var subSvc15 = new AiService();
+                var reviewOut = subSvc15.BuildSubagentToolDefinitions("review");
+                bool reviewOutSubset = reviewOut.Count > 0 && reviewOut.All(t => SubagentToolPools["review"].Contains(GetStr(t, "name")));
+                bool ok = researchIsSuperset && allPoolsSubsetOfSuperset && reviewTrimmed && debugTrimmed && exploreTrimmed && verifyTrimmed
+                          && driveInDebug && driveNotInReview && driveNotInExplore && driveNotInVerify && skillOnlyResearch && verifyCodeAndLive && reviewOutSubset;
+                results.Add(("P-S15 per-type工具池", ok,
+                    ok ? "OK: research=超集，review/debug/explore/verify 各裁剪且为超集子集（无写工具泄漏），BuildSubagentToolDefinitions 按池过滤" :
+                    $"FAIL: researchSuperset={researchIsSuperset} allPoolsSubset={allPoolsSubsetOfSuperset} review/dbg/exp/vrf trimmed={reviewTrimmed}/{debugTrimmed}/{exploreTrimmed}/{verifyTrimmed} drive(dbg/rev/exp/vrf)={driveInDebug}/{driveNotInReview}/{driveNotInExplore}/{driveNotInVerify} skillOnly={skillOnlyResearch} verifyCodeAndLive={verifyCodeAndLive} reviewOutSubset={reviewOutSubset}"));
+            }
+
+            // --- P-S16: 失败语义（item 1）—— API 全失败 / 无文本产出 → RunSubagent 返回 success=false ---
+            {
+                // (a) CallApiOnce 返回 null（API 全失败）→ success=false，conclusion 含 "API failed"
+                var svcA = new AiService();
+                svcA._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) => null;
+                var (concA, okA) = svcA.RunSubagent("fail case", "research", 5, CancellationToken.None);
+                bool aFailed = !okA && concA.Contains("API failed");
+                // (b) 跑完但无 text（只 thinking、StopReason=end_turn → 直接退出，lastText 空）→ success=false
+                var svcB = new AiService();
+                int callsB = 0;
+                svcB._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                {
+                    callsB++;
+                    return new StreamResult
+                    {
+                        Content = new List<Dictionary<string, object>> { ThinkingBlock("only thinking no text", null) },
+                        StopReason = "end_turn"
+                    };
+                };
+                var (concB, okB) = svcB.RunSubagent("no text", "research", 5, CancellationToken.None);
+                bool bFailed = !okB && callsB == 1 && concB.Contains("no textual conclusion");
+                bool ok = aFailed && bFailed;
+                results.Add(("P-S16 失败语义success=false", ok,
+                    ok ? "OK: API 全失败/无文本产出 → success=false（DispatchTool 据此返回 is_error，不再把失败伪装成结论）" :
+                    $"FAIL: aFailed={aFailed}(okA={okA} concA=[{concA}]) bFailed={bFailed}(okB={okB} callsB={callsB} concB=[{concB}])"));
+            }
+
+            // --- P-S17: thinking 按 agentType（item 3）—— 全局开时 review/debug 跟随（budget=_budgetTokens），research/explore 始终关 ---
+            {
+                // 注意：AiService 构造函数调 LoadConfig() 会从磁盘 config 覆盖静态 _enableThinking/_budgetTokens，
+                // 故必须在 new AiService() 【之后】设置测试值，RunSubagent 才读得到。
+                (bool et, int bt) Capture(string type, bool globalThinking, int budget)
+                {
+                    var capSvc = new AiService();          // LoadConfig 在此运行，覆盖静态字段
+                    _enableThinking = globalThinking;      // 构造之后再覆盖，确保 RunSubagent 读到测试值
+                    _budgetTokens = budget;
+                    bool captured = false; bool etVal = false; int btVal = -1;
+                    capSvc._callApiOnceOverride = (sys, tools, msgs, mt, et, bt, suppress, ct) =>
+                    {
+                        if (!captured) { captured = true; etVal = et; btVal = bt; }
+                        return new StreamResult { Content = new List<Dictionary<string, object>> { TextBlock("done") }, StopReason = "end_turn" };
+                    };
+                    capSvc.RunSubagent("t", type, 3, CancellationToken.None);
+                    return (etVal, btVal);
+                }
+                bool savedEt = _enableThinking;
+                int savedBt = _budgetTokens;
+                try
+                {
+                    // 全局开（budget=7777）：review/debug → et=true,bt=7777；research/explore → et=false,bt=0
+                    var rev = Capture("review",   true, 7777);
+                    var dbg = Capture("debug",    true, 7777);
+                    var vrf = Capture("verify",   true, 7777);
+                    var res = Capture("research", true, 7777);
+                    var exp = Capture("explore",  true, 7777);
+                    bool onOk  = rev.et && rev.bt == 7777 && dbg.et && dbg.bt == 7777 && vrf.et && vrf.bt == 7777;
+                    bool offOk = !res.et && res.bt == 0 && !exp.et && exp.bt == 0;
+                    // 全局关：review 也应关
+                    var revOff = Capture("review", false, 7777);
+                    bool globalOffOk = !revOff.et && revOff.bt == 0;
+                    bool ok = onOk && offOk && globalOffOk;
+                    results.Add(("P-S17 thinking按agentType", ok,
+                        ok ? "OK: 全局开→review/debug/verify et=true,bt=_budgetTokens；research/explore et=false；全局关→全关" :
+                        $"FAIL: review(et={rev.et},bt={rev.bt}) debug(et={dbg.et},bt={dbg.bt}) verify(et={vrf.et},bt={vrf.bt}) research(et={res.et},bt={res.bt}) explore(et={exp.et},bt={exp.bt}) review-global-off(et={revOff.et},bt={revOff.bt})"));
+                }
+                finally { _enableThinking = savedEt; _budgetTokens = savedBt; }
+            }
+
+            // --- P-S18: verify prompt 含 PASS/FAIL/PARTIAL 三态判定 + 明确只读（不编译）—— 验证语义核心 ---
+            {
+                var p = AiService.GetSubagentPrompt("verify");
+                bool hasPass    = p.Contains("VERDICT: PASS");
+                bool hasFail    = p.Contains("VERDICT: FAIL");
+                bool hasPartial = p.Contains("VERDICT: PARTIAL");
+                bool noCompile  = p.Contains("do NOT compile");   // 保持只读：明确禁止编译
+                bool ok = hasPass && hasFail && hasPartial && noCompile;
+                results.Add(("P-S18 verify判定格式", ok,
+                    ok ? "OK: verify prompt 含 PASS/FAIL/PARTIAL 三态判定 + 明确只读（不编译）" :
+                    $"FAIL: pass={hasPass} fail={hasFail} partial={hasPartial} noCompile={noCompile}"));
             }
 
             // ========== 报告 ==========

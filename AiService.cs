@@ -76,6 +76,13 @@ namespace TrioAI.MPPlugIn
         public Action OnAiThinkingEnd { get; set; }
         public Action<string> OnSystemMessage { get; set; }
         public Action<string> OnToolStatus { get; set; }
+        // 子 agent（research/review/debug/explore）进度回调（驱动 ChatPanel 顶部进度条 banner）：
+        //   OnResearchStart(agentType, maxTurns)           → 显示 banner、进度归零
+        //   OnResearchTurn(agentType, turn, maxTurns, csv) → 更新进度与轮次文本
+        //   OnResearchEnd()                                → 隐藏 banner
+        public Action<string, int> OnResearchStart { get; set; }
+        public Action<string, int, int, string> OnResearchTurn { get; set; }
+        public Action OnResearchEnd { get; set; }
         public Func<string, string, bool> OnConfirmWrite { get; set; }
         // Plan Mode 审批回调：参数是 AI 的 plan 文本，返回 true=批准（退出 plan mode），false=拒绝
         public Func<string, bool> OnConfirmPlan { get; set; }
