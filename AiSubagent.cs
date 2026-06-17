@@ -14,6 +14,11 @@ namespace TrioAI.MPPlugIn
     internal partial class AiService
     {
         private const int SubagentMaxTurns = 12;
+
+        // 子 agent 执行标志：RunSubagent 期间为 true。ExecuteTool 据此跳过主线专属的 lookup 去重
+        // （去重扫的是 _conversationHistory 主历史；子 agent 的调用在隔离 subMessages，既扫不到自己的、
+        // 又会误命中主线历史返回误导性的 "reference earlier tool_result"。子 agent 靠 prompt + cap 兜底）。
+        private bool _inSubagent = false;
         private const int SubagentToolResultCap = 16000;   // 单工具结果上限，防 full HTML 把子 agent 自己撑爆
         private const int SubagentTrimCap = 40;            // subMessages 条数兜底上限
 
@@ -166,6 +171,7 @@ namespace TrioAI.MPPlugIn
             bool savedShowToolStatus = _showToolStatus;
             _showToolStatus = false;   // 抑制 ExecuteTool 内部逐工具 OnToolStatus 刷屏
             OnResearchStart?.Invoke(agentType, maxTurns);   // 显示 ChatPanel 顶部进度条 banner
+            _inSubagent = true;   // 标记子 agent 执行中：ExecuteTool 据此跳过主线专属的 lookup 去重
             try
             {
                 string lastText = "";
@@ -271,6 +277,7 @@ namespace TrioAI.MPPlugIn
             }
             finally
             {
+                _inSubagent = false;
                 _showToolStatus = savedShowToolStatus;
                 OnResearchEnd?.Invoke();   // 隐藏进度条 banner（含取消 / 异常路径）
             }

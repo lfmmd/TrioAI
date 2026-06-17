@@ -6,6 +6,21 @@
 
 ## [Unreleased]
 
+## [0.3.27] — 2026-06-17
+
+主线命令查证改走 research 子 agent（隔离上下文，full HTML 不进主对话）；research 内部分层 lookup；修 signature 空返回 bug；子 agent 跳过主线 dedup。
+
+### 改进
+
+- **主线 full 命令查证改走 research 子 agent** —— 此前主线直接 `lookup_command full=true` 把完整 HTML（~16KB/次）拉进主对话历史，是主上下文膨胀主因之一。现改为：需要命令完整语法/示例/参数时派 research 子 agent（在隔离上下文读 full 文档、返回精炼结论，raw HTML 不进主历史）；`lookup_command`（full=false）仅作轻量确认/签名。撤回 0.3.26 的"主线 lookup 强制 full=true"。
+- **research 内部分层 lookup（两档）** —— 此前 research 对每个命令都 `full=true` 一次；改为先 `full=false`（name+signature+description），仅在不足以提取所需时才对该命令升级 `full=true`，多数命令只需 summary。
+- **research 工具描述** 去掉"单命令别用 research"，改为单/多命令完整查证都可用 research（可批量）。
+
+### 修复
+
+- **修 lookup summary 档 signature 空返回 bug** —— `LookupCommand` 取签名表前未触发 `EnsureValidationIndex()`，导致 full=false 时 signature 经常空（日志 7 个命令全空）。补 `EnsureValidationIndex()` 后 summary 档带真实签名，分层第一档可用。
+- **子 agent 跳过主线 lookup 去重（修误命中）** —— 主线去重扫 `_conversationHistory`，子 agent 调用在隔离 subMessages，既扫不到自己的、又会误命中主线历史返回 `"reference earlier tool_result"`（但子 agent 隔离看不到，被误导）。加 `_inSubagent` 标志，子 agent 执行期间 ExecuteTool 跳过去重。
+
 ## [0.3.26] — 2026-06-17
 
 修复主线 system prompt 自身的 DIM 语法错误（曾误导 agent 把用户的裸 DIM 认证为"语法正确"），并强制主线 lookup 传 full=true。

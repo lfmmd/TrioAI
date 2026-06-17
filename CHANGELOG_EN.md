@@ -7,6 +7,21 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.27] — 2026-06-17
+
+Main-line command verification now goes through the research subagent (isolated context, full HTML stays out of the main conversation); research does tiered lookups internally; fix empty-signature bug; subagent skips main-line dedup.
+
+### Changed
+
+- **Main-line full command verification via research subagent** — previously the main line called `lookup_command full=true` directly, pulling complete HTML (~16KB each) into the main conversation history — a primary cause of main-context bloat. Now: when you need complete command syntax/examples/params, dispatch the research subagent (reads the full doc in its isolated context, returns a digest; raw HTML never enters the main history); `lookup_command` (full=false) is only for quick name/signature/description checks. Reverts 0.3.26's "main-line lookup must use full=true".
+- **Tiered lookup inside research (two tiers)** — research previously did `full=true` for every command; now it starts with `full=false` (name+signature+description) and only escalates a single command to `full=true` when the summary is too thin to extract what's needed. Most commands need only the summary.
+- **research tool description** drops "do NOT use research for a single quick lookup" — single or multiple complete-command lookups both go through research (batch several commands into one call when convenient).
+
+### Fixed
+
+- **Fix empty-signature bug in lookup summary tier** — `LookupCommand` did not call `EnsureValidationIndex()` before reading `_signatures`, so full=false often returned an empty signature (all 7 commands empty in the log). With `EnsureValidationIndex()` the summary tier carries real signatures, making the first tier usable.
+- **Subagent skips main-line lookup dedup (fixes false hit)** — main-line dedup scans `_conversationHistory`; subagent calls live in isolated subMessages, so dedup can't see its own repeats and may FALSELY match a main-line history entry, returning `"reference earlier tool_result"` — which the isolated subagent can't see and is misled by. Added `_inSubagent` flag; ExecuteTool skips dedup while a subagent runs.
+
 ## [0.3.26] — 2026-06-17
 
 Fix a DIM-syntax error in the MAIN system prompt that had been misdirecting the agent into certifying users' bare DIM as "correct", and force full=true on main-line lookups.

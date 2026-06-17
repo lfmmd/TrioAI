@@ -422,6 +422,10 @@ namespace TrioAI.MPPlugIn
             if (string.IsNullOrEmpty(query))
                 return new { error = "query is required" };
 
+            // 确保签名表已构建：summary 档（full=false）需要 _signatures 填真实签名，
+            // 否则返回空 signature（日志中 7 个命令 signature 全空的根因）。
+            EnsureValidationIndex();
+
             var index = LoadIndex();
 
             // 按库过滤

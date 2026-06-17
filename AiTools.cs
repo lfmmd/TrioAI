@@ -51,8 +51,10 @@ namespace TrioAI.MPPlugIn
         {
             try
             {
-                // P0: lookup_command 同会话去重 — 避免重复查询同一命令的完整 HTML（每次 ~16KB）
-                if (string.Equals(name, "lookup_command", StringComparison.OrdinalIgnoreCase))
+                // P0: lookup_command 同会话去重 — 避免重复查询同一命令的完整 HTML（每次 ~16KB）。
+                // 仅主线生效：子 agent 的调用在隔离 subMessages，dedup 扫 _conversationHistory 既扫不到自己的、
+                // 又会误命中主线历史返回误导性 note（子 agent 看不到那个 tool_result）。子 agent 靠 prompt + cap 兜底。
+                if (!_inSubagent && string.Equals(name, "lookup_command", StringComparison.OrdinalIgnoreCase))
                 {
                     var dedupResult = TryDedupLookupCommand(input);
                     if (dedupResult != null)
@@ -673,7 +675,7 @@ namespace TrioAI.MPPlugIn
                 Tool("exit_plan_mode", "Present your plan to the user for approval and exit Plan Mode. The user will approve or reject. If rejected, Plan Mode stays active — revise the plan or do more investigation. If approved, write/modify tools become available.", Props(
                     ("plan", "The complete plan: what files/VR/programs you will change, why, and the verification steps. Be specific.", false)
                 )),
-                Tool("research", "Delegate an investigation task to a research subagent that runs in its OWN isolated context with read-only tools (lookup_command, read_source, read_skill, search_code, get_status, list_*, read_* etc.) and returns a digested conclusion. USE THIS when you need to consult MULTIPLE command docs or large source files — the raw tool_results stay in the subagent's context and never pollute the main conversation, keeping the main context lean. Do NOT use research for a single quick lookup (just call lookup_command/read_source directly). The subagent cannot write or modify anything.", Props(
+                Tool("research", "Delegate an investigation task to a research subagent that runs in its OWN isolated context with read-only tools (lookup_command, read_source, read_skill, search_code, get_status, list_*, read_* etc.) and returns a digested conclusion. USE THIS whenever you need COMPLETE command info (full syntax / examples / params / preconditions) — the subagent reads the full docs in its own context and returns only a digest, so the raw HTML never pollutes the main conversation. Works for a single command or many; batch several commands into one research call when convenient. For a quick name/signature check use lookup_command directly. The subagent cannot write or modify anything.", Props(
                     ("query", "The investigation task: what to find out, which commands/files to consult, and what the conclusion should contain. Be specific about which commands' syntax/examples you need.", false),
                     ("max_turns", "Max investigation turns for the subagent (default 12, max 12). Lower for simple lookups.", true)
                 )),
