@@ -6,6 +6,21 @@
 
 ## [Unreleased]
 
+## [0.3.30] — 2026-06-17
+
+适配 Motion Perfect V5.7（TrioSharedLibrary 5.7.2.0）的 API 变更；并加强主线"写后必须编译验证"流程。**此版本需 MP V5.7；V5.6 及更早不再兼容**（运行时会因 API 不匹配报 `MissingMethodException`）。
+
+### 新增
+
+- **主线 AFTER-WRITE COMPILE GATE（写后编译门禁）** —— 修复"主线改完代码不编译验证"的问题：主线 prompt 此前从未要求写后编译（那个名叫 `AFTER-WRITE SELF-CHECK` 的段落实际是写前检查）。现强制：写/改代码后立即 `compile_program`，报错则修+重编循环到零错误，clean compile 后再派 `verify` 二次确认，编译通过且 verify PASS 才报告完成。原 `AFTER-WRITE SELF-CHECK` 顺手改名 `PRE-WRITE SELF-CHECK`（消除"名叫 AFTER 却 DO THIS BEFORE"的歧义）。
+
+### 修复（V5.7 兼容）
+
+- **COMPILEStateEventArgs 错误模型重构** —— V5.7 移除 `ErrorCode/ErrorLine/ErrorDescription`，改为 `isError`(bool) + `Errors` 列表（每条 `ProgramBuildResultEntry{Line,Text,Code}`）。`OnCompileStateChanged`（AiService.cs）改用 `isError` 并逐条展示全部 `Errors`；`compile_state` 事件 payload（Handlers.cs）改为 `isError` + `errors[]`。
+- **CompileProgram 返回类型变更** —— V5.7 的 `IController.CompileProgram` 返回 `List<TrioBasicError>`（空列表=无错），不再返回单个可空 `TrioBasicError?`。编译结果处理（Handlers.cs）改用 `Count>0` 判断 + 返回全部 `errors[]`（首条仍作 `error` 摘要）；移除 V5.7 已删的 `includeProgramName/includeProgramLine`。
+- **Parser_BAS 命名空间迁移** —— V5.7 把 `Parser_BAS` 移到 `Trio.SharedLibrary.CodeCompletion.BAS`，AiControllerValidation.cs 补 `using`（`EnumTokenDelegate` 签名不变）。
+- **开发引用 DLL 对齐 V5.7** —— 编译引用的 `..\Trio*.dll` 从 5.6.3.0 更新为 5.7.2.0（旧版备份为 `*.v56`）。
+
 ## [0.3.28] — 2026-06-17
 
 子 agent（research/review/debug/explore/verify）跑完后，聊天流新增一条可折叠的内部轨迹消息，用户可见其每轮思考、工具调用与结果摘要。

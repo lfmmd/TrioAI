@@ -126,11 +126,15 @@ namespace TrioAI.MPPlugIn
         {
             try
             {
-                if (e.ErrorCode != 0)
+                if (e.isError)
                 {
-                    var errMsg = string.Format(Lang.L("[编译错误] {0}: 第 {1} 行, 错误 #{2} - {3}",
-                                                          "[Compile Error] {0}: line {1}, error #{2} - {3}"),
-                        e.ProgramName ?? "?", e.ErrorLine, e.ErrorCode, e.ErrorDescription ?? "");
+                    // V5.7：编译错误是 Errors 列表（每条 Line/Text/Code），全部逐条展示，不丢错误。
+                    var errMsg = (e.Errors == null || e.Errors.Count == 0)
+                        ? string.Format(Lang.L("[编译错误] {0}", "[Compile Error] {0}"), e.ProgramName ?? "?")
+                        : string.Join("\n", e.Errors.Select(er =>
+                            string.Format(Lang.L("[编译错误] {0}: 第 {1} 行, 错误 #{2} - {3}",
+                                                  "[Compile Error] {0}: line {1}, error #{2} - {3}"),
+                                e.ProgramName ?? "?", er.Line, er.Code, er.Text ?? "")));
                     _lastCompileError = errMsg;
                     OnSystemMessage?.Invoke(errMsg);
                 }

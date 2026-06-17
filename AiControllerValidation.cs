@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Trio.CommunicationsLibrary;
 using Trio.SharedLibrary;
+using Trio.SharedLibrary.CodeCompletion.BAS;
 using Trio.SharedLibrary.ControllerServices;
 
 namespace TrioAI.MPPlugIn

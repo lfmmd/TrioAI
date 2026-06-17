@@ -960,18 +960,23 @@ namespace TrioAI.MPPlugIn
             }
 
             if (item.RemoteState == null) return Error("No remote state");
-            var err = Controller.CompileProgram(item.RemoteState);
-            if (err != null)
+            // V5.7：CompileProgram 返回 List<TrioBasicError>（空列表=无错），不再返回单个可空 TrioBasicError?。
+            var compileErrs = Controller.CompileProgram(item.RemoteState);
+            if (compileErrs != null && compileErrs.Count > 0)
             {
                 return new
                 {
                     success = false,
-                    error = err.errorText ?? $"Compile error #{err.errorNumber}",
-                    errorCode = err.errorNumber,
-                    errorLine = System.Math.Max(err.lineNumber, 0),
-                    errorDescription = err.errorText,
-                    includeProgramName = err.includeProgramName,
-                    includeProgramLine = err.includeProgramLine
+                    // 首条作为快速摘要，全部错误见 errors（不丢错误）
+                    error = compileErrs[0].errorText ?? $"Compile error #{compileErrs[0].errorNumber}",
+                    errors = compileErrs.Select(e => new
+                    {
+                        lineNumber = e.lineNumber,
+                        errorNumber = e.errorNumber,
+                        errorText = e.errorText,
+                        isWarning = e.isWarning,
+                        programName = e.programName
+                    })
                 };
             }
             return new { success = true };
@@ -2680,9 +2685,9 @@ namespace TrioAI.MPPlugIn
             _compileHandler = (s, e) => Add("compile_state", new
             {
                 program = e?.ProgramName,
-                errorCode = e?.ErrorCode,
-                errorLine = e?.ErrorLine,
-                errorDescription = e?.ErrorDescription,
+                isError = e?.isError,
+                // V5.7：编译错误改为 Errors 列表（每条 Line/Text/Code），原单条 errorCode/errorLine/errorDescription 移除。
+                errors = e?.Errors?.Select(x => new { line = x.Line, code = x.Code, text = x.Text }),
                 compiledSize = e?.CompiledSize
             });
             ctrl.CompileStateChanged += _compileHandler;

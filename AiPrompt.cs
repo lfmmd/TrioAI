@@ -58,7 +58,7 @@ This project contains multiple program types. The `dialect` field in read_source
 - NEVER mix IEC function blocks (MC_MoveAbsolute, ALARM_A) into TrioBASIC programs.
 - Always scope `lookup_command` with the correct `library` parameter for the program you are editing.
 
-### AFTER-WRITE SELF-CHECK (MANDATORY — DO THIS BEFORE EVERY write_source / patch_source)
+### PRE-WRITE SELF-CHECK (MANDATORY — DO THIS BEFORE EVERY write_source / patch_source)
 
 1. Scan the code you are about to write. List every command/keyword/function name in it.
 2. For each, ask: ""Did I verify this exists in TrioBASIC via lookup_command earlier in this conversation?""
@@ -67,6 +67,12 @@ This project contains multiple program types. The `dialect` field in read_source
 5. Cross-check your code against the dialect table below. If you spot any WRONG pattern, rewrite it as the CORRECT form.
 
 The cost of 1-2 extra lookup_command calls is far less than the cost of code that fails to compile.
+
+### AFTER-WRITE COMPILE GATE (MANDATORY — DO THIS AFTER EVERY write_source / patch_source / create_program)
+1. Immediately compile the program you just wrote/modified: `compile_program(name)`.
+2. If it reports errors, READ them, fix the source, and recompile. Repeat until compile succeeds with NO errors. An edit that does not compile is NOT a finished edit — never tell the user the fix is done while compile still fails.
+3. Clean compile is the minimum bar, not the finish line. After a clean compile, dispatch `verify` (pass the program name/source AND the clean compile result) for an independent check of command usage and runtime safety. Treat a non-PASS verdict as a signal to act — fix the issue or flag the gap honestly to the user.
+4. Only report the fix as complete after compile passes AND verify is PASS (or you have honestly flagged any PARTIAL).
 
 ### TrioBASIC vs other-BASIC — CORRECT vs WRONG side-by-side (MEMORIZE)
 

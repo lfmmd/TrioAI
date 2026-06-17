@@ -7,6 +7,21 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.30] — 2026-06-17
+
+Adapt to Motion Perfect V5.7 (TrioSharedLibrary 5.7.2.0) API changes; and strengthen the main agent's "must compile-verify after writing" flow. **This version requires MP V5.7; V5.6 and earlier are no longer compatible** (running on them raises `MissingMethodException` due to API mismatch).
+
+### Added
+
+- **Main-line AFTER-WRITE COMPILE GATE** — fixes the "main agent never compile-verifies after editing" problem: the main prompt previously never required post-write compilation (the section oddly named `AFTER-WRITE SELF-CHECK` was actually a pre-write check). Now mandatory: right after write/edit, immediately `compile_program`; on errors, fix + recompile in a loop until zero errors; after a clean compile, dispatch `verify` for an independent second opinion; only report the fix as complete once compile passes AND verify is PASS. The old `AFTER-WRITE SELF-CHECK` was renamed `PRE-WRITE SELF-CHECK` (resolving the "named AFTER but DO THIS BEFORE" ambiguity).
+
+### Fixed (V5.7 compatibility)
+
+- **COMPILEStateEventArgs error model reworked** — V5.7 removed `ErrorCode/ErrorLine/ErrorDescription`, replacing them with `isError` (bool) + an `Errors` list (each `ProgramBuildResultEntry{Line,Text,Code}`). `OnCompileStateChanged` (AiService.cs) now uses `isError` and lists every `Errors` entry; the `compile_state` event payload (Handlers.cs) now carries `isError` + `errors[]`.
+- **CompileProgram return type changed** — V5.7 `IController.CompileProgram` returns `List<TrioBasicError>` (empty list = no error) instead of a single nullable `TrioBasicError?`. The compile-result handling (Handlers.cs) now checks `Count>0` and returns the full `errors[]` (first entry still used as the `error` summary); dropped V5.7-removed `includeProgramName/includeProgramLine`.
+- **Parser_BAS namespace moved** — V5.7 relocated `Parser_BAS` to `Trio.SharedLibrary.CodeCompletion.BAS`; AiControllerValidation.cs adds the `using` (the `EnumTokenDelegate` signature is unchanged).
+- **Dev reference DLLs aligned to V5.7** — the compile-referenced `..\Trio*.dll` updated from 5.6.3.0 to 5.7.2.0 (old versions backed up as `*.v56`).
+
 ## [0.3.28] — 2026-06-17
 
 After a subagent (research/review/debug/explore/verify) finishes, the chat stream now gets a collapsible internal-trace message so the user can see its per-turn thinking, tool calls, and result summaries.
