@@ -6,6 +6,26 @@
 
 ## [Unreleased]
 
+## [0.3.26] — 2026-06-17
+
+修复主线 system prompt 自身的 DIM 语法错误（曾误导 agent 把用户的裸 DIM 认证为"语法正确"），并强制主线 lookup 传 full=true。
+
+### 修复
+
+- **主线 safe-coding 对照表的 DIM 行原本是错的** —— 旧表把数组"正确"写法标为 `DIM arr(10)`（不带 AS type），与官方文档 `DIM name AS type(size)` 冲突。**这正是日志中 agent 对 FINDMARK 的 `DIM userregpos`（裸、不带类型）下"在 TrioBASIC 正确"结论的根因——system prompt 自己误导了它。** 现按 `skills/triobasic/DIM.html` 纠正：标量 `x = 0`（隐式 FLOAT）或 `DIM x AS FLOAT`；数组 `DIM name AS type(size)`；**新增一行：裸 `DIM x`（不带 AS type）在 TrioBASIC 非法**（VB.NET 合法 / TrioBASIC 非法，典型方言 drift）。
+- **主线 lookup 强制 full=true** —— 旧版不带 full=true 只拿到截断摘要 + 空 signature，判不了带参数用法（此前仅 research 子 agent 强制）。MANDATORY 条款现明确要求 full=true，并说明不带 full=true 返回的是空 signature、不足以判断。
+- **MANDATORY 点名声明/类型 drift 高危** —— DIM/AS/类型/数组是 BASIC 方言差异最大的地方，明令不得凭记忆判断这类语句，写或判断前必须 lookup。
+
+> 此次错误来自主线模型，非子 agent；0.3.25 的子 agent 加强不覆盖主线，本次补主线侧。
+
+## [0.3.25] — 2026-06-17
+
+加强子 agent 对命令用法的查证要求：review/verify 对每个非常规/易错命令（运动/安全类）都查证（不再仅 when unsure）；debug 补查证涉及命令的用法。
+
+### 改进
+
+- **子 agent lookup_command 查证要求硬化** —— 此前 review/verify 的 lookup 要求是「when unsure」（不确定时才查），子 agent 若自以为确定（凭不准的训练记忆）就可能漏判错误命令用法；debug 的 discipline 甚至没要求查 lookup。改为：review/verify 对**每个非常规/易错命令调用**（尤其运动/安全类：MOVE/WAITS/CONNECT/WDOG/SERVO/BASE/AXIS/速度加速度参数等）都查证真实语法，明令「不靠记忆」，仅完全平凡的语句（简单赋值/基础运算）可跳过；debug 新增一条 discipline，对涉及代码依赖的命令（尤其运动/安全类）查证用法与前置条件（错误语法或缺失前置如 MOVE 前无 CONNECT/WDOG、缺 WAITS 是常见根因）。research/explore 的 lookup 要求不变（research 已要求每个相关命令 full=true 查一次，explore 仅 brief 命名）。
+
 ## [0.3.24] — 2026-06-17
 
 子 agent 现在也注入持久化记忆，遵循用户偏好/项目约定（如中文注释）。

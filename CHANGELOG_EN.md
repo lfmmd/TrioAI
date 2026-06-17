@@ -7,6 +7,26 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.26] — 2026-06-17
+
+Fix a DIM-syntax error in the MAIN system prompt that had been misdirecting the agent into certifying users' bare DIM as "correct", and force full=true on main-line lookups.
+
+### Fixed
+
+- **The DIM rows in the main safe-coding dialect table were wrong** — the old table marked `DIM arr(10)` (no AS type) as the "correct" array form, contradicting the official `DIM name AS type(size)`. **This is the root cause of the logged case where the agent certified FINDMARK's `DIM userregpos` (bare, no type) as "correct in TrioBASIC" — the system prompt itself misled it.** Corrected against `skills/triobasic/DIM.html`: scalars are `x = 0` (implicit FLOAT) or `DIM x AS FLOAT`; arrays are `DIM name AS type(size)`; **added a row: a bare `DIM x` (no AS type) is INVALID in TrioBASIC** (legal in VB.NET, invalid here — textbook drift).
+- **Main-line lookups now require full=true** — without full=true you only get a truncated summary + an EMPTY signature, insufficient to judge parameterized usage like `REGIST(3+256)` (only the research subagent previously enforced this). The MANDATORY clause now states full=true explicitly.
+- **MANDATORY now names declarations/types as the top drift zone** — DIM/AS/types/arrays differ most across BASIC dialects; do not judge these "basic" statements from memory — lookup the declaration form before writing or judging it.
+
+> This bug was in the MAIN model, not a subagent; 0.3.25's subagent lookup hardening does not cover the main line — this version closes that gap.
+
+## [0.3.25] — 2026-06-17
+
+Tighten subagent command-usage verification: review/verify now verify EVERY non-trivial/error-prone command (motion/safety class), not just "when unsure"; debug gains a rule to verify involved commands' usage.
+
+### Changed
+
+- **Hardened subagent lookup_command verification** — Previously review/verify required lookup only "when unsure", so a subagent that felt sure (relying on inaccurate training memory) could miss wrong command usage; debug's discipline didn't require lookup at all. Now: review/verify verify the real syntax of EVERY non-trivial / error-prone command call (motion & safety commands especially — MOVE, WAITS, CONNECT, WDOG, SERVO, BASE, AXIS, speed/accel parameters, etc.), explicitly "do NOT rely on your memory", skipping lookup only for completely trivial statements (simple assignment, basic math); debug gains a discipline rule to verify the usage and preconditions of commands the implicated code relies on (especially motion/safety ones — wrong syntax or a missing precondition like MOVE without CONNECT/WDOG or missing WAITS is a frequent root cause). research/explore lookup requirements unchanged (research already requires full=true lookup per relevant command; explore only brief naming).
+
 ## [0.3.24] — 2026-06-17
 
 Subagents now also get the persistent memory, so they follow user preferences / project conventions (e.g. Chinese comments).
