@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Trio.CommunicationsLibrary;
 using Trio.SharedLibrary;
-using Trio.SharedLibrary.CodeCompletion.BAS;
 using Trio.SharedLibrary.ControllerServices;
 
 namespace TrioAI.MPPlugIn
@@ -70,7 +69,7 @@ namespace TrioAI.MPPlugIn
             };
 
             var clean = _reLineComment.Replace(code, "");
-            Parser_BAS.EnumTokens(clean, 0, clean.Length - 1,
+            CompileApiCompat.EnumTokensCompat(clean, 0, clean.Length - 1,
                 (string word, bool isSystem, int pos, int pStart, int pEnd, int tokenEnd) =>
                 {
                     if (word == null) return false;

@@ -6,6 +6,17 @@
 
 ## [Unreleased]
 
+## [0.3.31] — 2026-06-17
+
+在 0.3.30 的 V5.7 适配之上，**恢复 V5.6 兼容**：同一个 `TrioAI.MPPlugin` 现在可同时运行在 Motion Perfect V5.6 与 V5.7 上。0.3.30 是过渡版（仅 V5.7），0.3.31 是首个双版本兼容版。
+
+### 修复
+
+- **V5.6/V5.7 双版本兼容（运行时反射）** —— 编译错误 API 在 V5.6→V5.7 被整体重做（成员互斥），静态绑定注定只能认一个版本。新增独立反射层 `CompileApiCompat`（AiCompat.cs），运行时探测实际 API 形态，让按 V5.7 编译的 DLL 同时在两版运行：
+  - **编译事件**（`COMPILEStateEventArgs`）：V5.6 读 `ErrorCode/ErrorLine/ErrorDescription`、V5.7 读 `isError`+`Errors`，统一成同一错误列表，供 `OnCompileStateChanged`（AiService.cs）逐条展示与 `compile_state` 事件 payload（Handlers.cs）使用。
+  - **CompileProgram**：反射调用，兼容 V5.6 返回单个 `TrioBasicError` 与 V5.7 返回 `List<TrioBasicError>`（字段名两版一致，按名反射读取），全部错误不丢。
+  - **Parser_BAS.EnumTokens**：V5.6/V5.7 仅命名空间不同（`EnumTokens` 签名与 `EnumTokenDelegate` 两版一致），反射探测命名空间并把 lambda 重绑到运行时 `EnumTokenDelegate`，token 表校验两版均可用。
+
 ## [0.3.30] — 2026-06-17
 
 适配 Motion Perfect V5.7（TrioSharedLibrary 5.7.2.0）的 API 变更；并加强主线"写后必须编译验证"流程。**此版本需 MP V5.7；V5.6 及更早不再兼容**（运行时会因 API 不匹配报 `MissingMethodException`）。

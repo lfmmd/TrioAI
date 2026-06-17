@@ -960,22 +960,22 @@ namespace TrioAI.MPPlugIn
             }
 
             if (item.RemoteState == null) return Error("No remote state");
-            // V5.7：CompileProgram 返回 List<TrioBasicError>（空列表=无错），不再返回单个可空 TrioBasicError?。
-            var compileErrs = Controller.CompileProgram(item.RemoteState);
-            if (compileErrs != null && compileErrs.Count > 0)
+            // V5.6/V5.7 双版本：反射调用 CompileProgram，兼容单个错误(V5.6)/List(V5.7)，字段名两版一致。
+            var compileErrs = CompileApiCompat.InvokeCompileProgramErrors(Controller, item.RemoteState);
+            if (compileErrs.Count > 0)
             {
                 return new
                 {
                     success = false,
                     // 首条作为快速摘要，全部错误见 errors（不丢错误）
-                    error = compileErrs[0].errorText ?? $"Compile error #{compileErrs[0].errorNumber}",
+                    error = compileErrs[0].Text ?? $"Compile error #{compileErrs[0].Number}",
                     errors = compileErrs.Select(e => new
                     {
-                        lineNumber = e.lineNumber,
-                        errorNumber = e.errorNumber,
-                        errorText = e.errorText,
-                        isWarning = e.isWarning,
-                        programName = e.programName
+                        lineNumber = e.Line,
+                        errorNumber = e.Number,
+                        errorText = e.Text,
+                        isWarning = e.IsWarning,
+                        programName = e.ProgramName
                     })
                 };
             }
@@ -2682,14 +2682,18 @@ namespace TrioAI.MPPlugIn
             _ioHandler = (s, e) => Add("io_changed", new { });
             ctrl.IOLinesChanged += _ioHandler;
 
-            _compileHandler = (s, e) => Add("compile_state", new
+            _compileHandler = (s, e) =>
             {
-                program = e?.ProgramName,
-                isError = e?.isError,
-                // V5.7：编译错误改为 Errors 列表（每条 Line/Text/Code），原单条 errorCode/errorLine/errorDescription 移除。
-                errors = e?.Errors?.Select(x => new { line = x.Line, code = x.Code, text = x.Text }),
-                compiledSize = e?.CompiledSize
-            });
+                // V5.6/V5.7 双版本：反射读取编译错误（V5.6=ErrorCode/ErrorLine/ErrorDescription，V5.7=isError+Errors）。
+                var errs = CompileApiCompat.ReadCompileEventErrors(e, out bool isError);
+                Add("compile_state", new
+                {
+                    program = e?.ProgramName,
+                    isError,
+                    errors = errs.Select(x => new { line = x.Line, code = x.Code, text = x.Text }),
+                    compiledSize = e?.CompiledSize
+                });
+            };
             ctrl.CompileStateChanged += _compileHandler;
         }
 

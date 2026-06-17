@@ -126,12 +126,13 @@ namespace TrioAI.MPPlugIn
         {
             try
             {
-                if (e.isError)
+                // V5.6/V5.7 双版本：反射读取编译错误（V5.6=ErrorCode/ErrorLine/ErrorDescription，V5.7=isError+Errors），逐条展示不丢错误。
+                var errs = CompileApiCompat.ReadCompileEventErrors(e, out bool isError);
+                if (isError)
                 {
-                    // V5.7：编译错误是 Errors 列表（每条 Line/Text/Code），全部逐条展示，不丢错误。
-                    var errMsg = (e.Errors == null || e.Errors.Count == 0)
+                    var errMsg = errs.Count == 0
                         ? string.Format(Lang.L("[编译错误] {0}", "[Compile Error] {0}"), e.ProgramName ?? "?")
-                        : string.Join("\n", e.Errors.Select(er =>
+                        : string.Join("\n", errs.Select(er =>
                             string.Format(Lang.L("[编译错误] {0}: 第 {1} 行, 错误 #{2} - {3}",
                                                   "[Compile Error] {0}: line {1}, error #{2} - {3}"),
                                 e.ProgramName ?? "?", er.Line, er.Code, er.Text ?? "")));

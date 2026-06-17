@@ -7,6 +7,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.31] — 2026-06-17
+
+On top of 0.3.30's V5.7 adaptation, **restores V5.6 compatibility**: a single `TrioAI.MPPlugin` now runs on both Motion Perfect V5.6 and V5.7. 0.3.30 was the transitional release (V5.7 only); 0.3.31 is the first dual-version-compatible build.
+
+### Fixed
+
+- **V5.6/V5.7 dual-version compatibility (runtime reflection)** — the compile-error API was reworked between V5.6 and V5.7 (mutually exclusive members), so static binding can only ever match one version. Added a standalone reflection layer `CompileApiCompat` (AiCompat.cs) that probes the actual API shape at runtime, letting the V5.7-compiled DLL run on both:
+  - **Compile event** (`COMPILEStateEventArgs`): V5.6 reads `ErrorCode/ErrorLine/ErrorDescription`, V5.7 reads `isError`+`Errors`; unified into a single error list, used by `OnCompileStateChanged` (AiService.cs) for per-entry display and by the `compile_state` event payload (Handlers.cs).
+  - **CompileProgram**: invoked via reflection, tolerating V5.6's single `TrioBasicError` return and V5.7's `List<TrioBasicError>` (field names are identical across versions, read by name); no error is dropped.
+  - **Parser_BAS.EnumTokens**: V5.6/V5.7 differ only by namespace (`EnumTokens` signature and `EnumTokenDelegate` are identical across versions); the layer probes the namespace and rebinds the lambda onto the runtime `EnumTokenDelegate`, so token-table validation works on both.
+
 ## [0.3.30] — 2026-06-17
 
 Adapt to Motion Perfect V5.7 (TrioSharedLibrary 5.7.2.0) API changes; and strengthen the main agent's "must compile-verify after writing" flow. **This version requires MP V5.7; V5.6 and earlier are no longer compatible** (running on them raises `MissingMethodException` due to API mismatch).
