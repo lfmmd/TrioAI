@@ -1044,6 +1044,24 @@ namespace TrioAI.MPPlugIn
                     " leaked=" + string.Join(",", mustConfirm.Where(n => AutoAllowWriteTools.Contains(n)))));
             }
 
+            // --- P-S21: 编辑类会话级许可重置语义 —— 本对话首次确认后放行，新对话/清空重置回 false ---
+            //            （0.3.23：编辑/编译类从「永久免确认」改为「会话级首次许可」，每轮对话一道人工闸）---
+            {
+                var svcS21 = new AiService();
+                svcS21.StartNewSession();
+                bool a = !svcS21._sessionEditApproved;          // 初始/新会话 = false
+                svcS21._sessionEditApproved = true;             // 模拟本对话已许可编辑类
+                svcS21.StartNewSession();
+                bool b = !svcS21._sessionEditApproved;          // 新会话重置
+                svcS21._sessionEditApproved = true;
+                svcS21.ClearHistory();
+                bool c = !svcS21._sessionEditApproved;          // 清空重置
+                bool ok = a && b && c;
+                results.Add(("P-S21 编辑类许可会话重置", ok,
+                    ok ? "OK: 初始/StartNewSession/ClearHistory 后 _sessionEditApproved=false（每轮对话重新要首次许可）" :
+                    "FAIL: a=" + a + " b=" + b + " c=" + c));
+            }
+
             // ========== 报告 ==========
             var sb = new StringBuilder();
             sb.AppendLine("=== TrioAI Optimization Tests ===");

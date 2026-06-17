@@ -6,6 +6,14 @@
 
 ## [Unreleased]
 
+## [0.3.23] — 2026-06-17
+
+修正 0.3.22 写工具免确认语义：编辑/编译类从「永久免确认」改为「本对话首次确认后放行」（每轮对话一道人工闸）；运行/上下传/变量写入类仍每次确认。
+
+### 改进
+
+- **编辑类免确认改为会话级首次许可** —— 0.3.22 把 6 个编辑/编译类工具（`write_source`/`patch_source`/`create_program`/`delete_program`/`rename_program`/`compile_program`）设为永久免确认（任何对话、每次都直接执行），但这意味着 AI 可在新对话一上来就随意改/删程序源码而用户完全不介入。改为**会话级首次许可**：当前对话内首次用到编辑/编译类工具时仍弹一次确认，用户点「允许」后本对话内这类操作自动放行、不再逐次确认；新对话或切换会话重新要首次许可。运行/上下传/变量写入类（`run_program`/`stop_program`/`set_program_process`/`upload`/`download`/`write_vr`/`write_table`/`write_iec_variables`）不受影响，仍每次确认。新增会话级状态 `_sessionEditApproved`（`AiSession.cs`），在 `StartNewSession`/`LoadSession`/`ClearHistory` 三处重置（AiHistory 历史压缩的 Clear 不重置，因为是同一对话内）。`AiOptimizationTests` 新增 P-S21（验证重置语义）。
+
 ## [0.3.22] — 2026-06-16
 
 写工具按风险分级（程序编辑/编译免确认）；持久化记忆改为仅用户明确要求时 AI 才更新（不再自动塞）。

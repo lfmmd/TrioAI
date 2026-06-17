@@ -7,6 +7,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.23] — 2026-06-17
+
+Refines 0.3.22's write-tool auto-pass: edit/compile tools go from "always auto-pass" to "auto-pass after the first confirmation in the current conversation" (one human gate per conversation); run/transfer/variable-write tools still confirm every time.
+
+### Changed
+
+- **Edit-class auto-pass is now per-conversation first-approval** — 0.3.22 made the 6 edit/compile tools (`write_source`/`patch_source`/`create_program`/`delete_program`/`rename_program`/`compile_program`) permanently auto-pass (executed directly in any conversation, every time), which meant the AI could freely edit/delete program source at the start of a brand-new conversation with zero user involvement. Changed to **per-conversation first-approval**: the first time an edit/compile tool is used in the current conversation it still pops a confirmation; once you click "Allow", that class auto-passes for the rest of the conversation (no per-call prompts); a new conversation or session switch re-requires the first approval. Run/transfer/variable-write tools (`run_program`/`stop_program`/`set_program_process`/`upload`/`download`/`write_vr`/`write_table`/`write_iec_variables`) are unaffected — still confirm every time. Adds a session-level flag `_sessionEditApproved` (`AiSession.cs`), reset in `StartNewSession`/`LoadSession`/`ClearHistory` (the AiHistory compaction Clears are NOT reset, since they're within the same conversation). `AiOptimizationTests` adds P-S21 (verifies the reset semantics).
+
 ## [0.3.22] — 2026-06-16
 
 Write tools are now tiered by risk (program-editing/compiling auto-pass); persistent memory is now updated only when the user explicitly asks (no more AI auto-stuffing).

@@ -17,6 +17,11 @@ namespace TrioAI.MPPlugIn
         private const int MaxRestoredFileChars = 6000;
         private readonly List<Tuple<string, string>> _recentReadFiles = new List<Tuple<string, string>>();
 
+        // 会话级编辑类许可：本对话内首次确认一个编辑/编译类工具（AutoAllowWriteTools）后置 true，
+        // 后续同类工具直接放行（不逐次确认）；新对话/切换会话/清空时重置回 false。
+        // 运行/上下传/变量写入类（run_program/upload/write_vr 等）不受此影响，仍每次确认。
+        private bool _sessionEditApproved = false;
+
         // ---- Task / Todo 系统（AI 自跟踪多步任务）----
         private readonly List<TaskItem> _tasks = new List<TaskItem>();
         private readonly object _tasksLock = new object();
@@ -80,6 +85,7 @@ namespace TrioAI.MPPlugIn
             {
                 _conversationHistory.Clear();
                 _recentReadFiles.Clear();
+                _sessionEditApproved = false;
                 _totalInputTokens = _totalOutputTokens = _totalCacheReadTokens = _totalCacheCreateTokens = 0;
                 _currentMaxTokens = DefaultMaxTokens;
                 _currentSessionId = DateTime.Now.ToString("yyyyMMdd_HHmmss");
@@ -114,6 +120,7 @@ namespace TrioAI.MPPlugIn
             {
                 _conversationHistory.Clear();
                 _currentSessionId = null;
+                _sessionEditApproved = false;
             }
         }
 
@@ -149,6 +156,7 @@ namespace TrioAI.MPPlugIn
             {
                 _currentSessionId = sessionId;
                 _conversationHistory.Clear();
+                _sessionEditApproved = false;
                 try
                 {
                     var data = _json.Deserialize<Dictionary<string, object>>(text);

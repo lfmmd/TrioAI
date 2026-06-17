@@ -77,14 +77,19 @@ namespace TrioAI.MPPlugIn
                                "Use read-only tools (read_source / list_programs / get_status / lookup_command / etc.) to complete your investigation, " +
                                "then call exit_plan_mode to present your plan for user approval. After approval, Plan Mode is disabled and write tools become available.";
                     }
-                    // 风险分级：程序编辑/编译类（AutoAllowWriteTools）自动放行，减少确认摩擦；
-                    // 运行/上下传/变量写入类影响实时控制器状态，仍需人工逐次确认。
-                    if (!AutoAllowWriteTools.Contains(name))
+                    // 风险分级 + 会话级许可：
+                    // - 编辑/编译类（AutoAllowWriteTools）：本对话首次确认后置 _sessionEditApproved=true，后续同类直接放行；
+                    // - 运行/上下传/变量写入类：每次都确认（不受会话许可影响）。
+                    bool isEditClass = AutoAllowWriteTools.Contains(name);
+                    bool needsConfirm = isEditClass ? !_sessionEditApproved : true;
+                    if (needsConfirm)
                     {
                         var argsPreview = _json.Serialize(input);
                         var accepted = OnConfirmWrite?.Invoke(name, argsPreview) ?? false;
                         if (!accepted)
                             return "User rejected this operation.";
+                        if (isEditClass)
+                            _sessionEditApproved = true;
                     }
                 }
 
