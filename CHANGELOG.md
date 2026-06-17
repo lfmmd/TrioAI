@@ -6,6 +6,14 @@
 
 ## [Unreleased]
 
+## [0.3.24] — 2026-06-17
+
+子 agent 现在也注入持久化记忆，遵循用户偏好/项目约定（如中文注释）。
+
+### 改进
+
+- **子 agent 注入持久化记忆** —— 此前持久化记忆（memory.md）只注入主对话 system（`CallApiStream`），5 种子 agent（research/review/debug/explore/verify）的 system 只有各自定位 prompt，拿不到 memory——所以 review/debug 等子 agent 写结论时可能不遵循用户偏好（如注释语言）。现给子 agent system 追加 memory 块（`_memoryEnabled` 且 memory 非空时），与主线一致，让子 agent 遵循用户偏好/项目约定。子 agent 仍不拿主线历史/项目上下文/task 清单（独立上下文设计不变），memory 是它了解用户偏好的唯一补充来源。memory 块放在 prompt 块之后（prompt 块保留 cache_control 前缀缓存断点，memory 变化不影响其缓存）。
+
 ## [0.3.23] — 2026-06-17
 
 修正 0.3.22 写工具免确认语义：编辑/编译类从「永久免确认」改为「本对话首次确认后放行」（每轮对话一道人工闸）；运行/上下传/变量写入类仍每次确认。

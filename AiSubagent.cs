@@ -141,6 +141,21 @@ namespace TrioAI.MPPlugIn
                     { "cache_control", new { type = "ephemeral" } }
                 }
             };
+            // 注入持久化记忆：子 agent 拿不到主线历史/项目上下文/task 清单，memory 是它了解用户偏好
+            // （语言、注释风格等）与项目约定的唯一补充来源。与主线一致（CallApiStream 的 memory 块）。
+            // 放在 prompt 块之后且不加 cache_control——prompt 块保留前缀缓存断点，memory 变化不影响其缓存。
+            if (_memoryEnabled)
+            {
+                var memText = LoadMemory();
+                if (!string.IsNullOrEmpty(memText))
+                {
+                    subSystem.Add(new Dictionary<string, object>
+                    {
+                        { "type", "text" },
+                        { "text", "## Persistent Memory (user preferences / project conventions — follow these in your findings)\n\n" + memText }
+                    });
+                }
+            }
             // thinking：仅 review/debug/verify 跟随全局开关（分析/诊断/验证类，深度推理有价值）；research/explore 始终关（查文档/遍历，不需要）。
             bool subThinking = (agentType == "review" || agentType == "debug" || agentType == "verify") && _enableThinking;
             int subBudget = subThinking ? _budgetTokens : 0;

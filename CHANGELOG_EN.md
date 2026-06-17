@@ -7,6 +7,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.24] — 2026-06-17
+
+Subagents now also get the persistent memory, so they follow user preferences / project conventions (e.g. Chinese comments).
+
+### Changed
+
+- **Subagents inject persistent memory** — Previously the persistent memory (memory.md) was only injected into the main conversation's system (`CallApiStream`); the five subagents' (research/review/debug/explore/verify) system had only their own role prompt and got no memory — so review/debug subagents might not follow user preferences (e.g. comment language) when writing findings. Now appends a memory block to the subagent system (when `_memoryEnabled` and memory is non-empty), matching the main loop, so subagents follow user preferences / project conventions. Subagents still do NOT get the main history / project context / task list (the isolated-context design is unchanged); memory is their only supplementary source for user preferences. The memory block is placed after the prompt block (the prompt block keeps its cache_control prefix-cache breakpoint, so memory changes don't break the prompt cache).
+
 ## [0.3.23] — 2026-06-17
 
 Refines 0.3.22's write-tool auto-pass: edit/compile tools go from "always auto-pass" to "auto-pass after the first confirmation in the current conversation" (one human gate per conversation); run/transfer/variable-write tools still confirm every time.
