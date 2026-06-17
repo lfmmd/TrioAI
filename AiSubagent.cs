@@ -48,6 +48,24 @@ namespace TrioAI.MPPlugIn
             return sb.ToString();
         }
 
+        /// <summary>轨迹摘要用：压扁换行/制表为单空格、合并连续空格、截断到 max 并加省略号。</summary>
+        private static string Clip(string s, int max)
+        {
+            if (string.IsNullOrEmpty(s)) return "";
+            var sb = new StringBuilder(s.Length);
+            bool prevSpace = false;
+            foreach (var ch in s)
+            {
+                if (ch == '\r' || ch == '\n' || ch == '\t' || ch == ' ')
+                {
+                    if (!prevSpace) { sb.Append(' '); prevSpace = true; }
+                }
+                else { sb.Append(ch); prevSpace = false; }
+            }
+            var flat = sb.ToString().Trim();
+            return flat.Length <= max ? flat : flat.Substring(0, max) + "…";
+        }
+
         /// <summary>构造 stub tool_result 列表（取消时补齐，保持 user/assistant 交替合法）。</summary>
         private static List<Dictionary<string, object>> BuildStubToolResults(
             List<Dictionary<string, object>> toolUses, string reason)
@@ -168,6 +186,11 @@ namespace TrioAI.MPPlugIn
             string subModel = (agentType == "research" || agentType == "explore") && !string.IsNullOrEmpty(_lightModel)
                 ? _lightModel : _model;
 
+            // 内部轨迹收集：每轮思考 + 工具调用 + 结果摘要 + 最终结论，跑完通过 OnResearchTrace 回传给
+            // ChatPanel 折叠显示（用户可见 subagent 内部过程）。声明在 try 外，确保取消/异常路径 finally 也能回传已有部分。
+            var trace = new StringBuilder();
+            trace.AppendLine("[" + agentType + "] subagent trace (cap " + maxTurns + " turns)");
+
             bool savedShowToolStatus = _showToolStatus;
             _showToolStatus = false;   // 抑制 ExecuteTool 内部逐工具 OnToolStatus 刷屏
             OnResearchStart?.Invoke(agentType, maxTurns);   // 显示 ChatPanel 顶部进度条 banner
@@ -184,6 +207,8 @@ namespace TrioAI.MPPlugIn
 
                     if (result == null)
                     {
+                        trace.AppendLine();
+                        trace.AppendLine("[API failed — partial trace above]");
                         return string.IsNullOrEmpty(lastText)
                             ? ("[" + agentType + " subagent: API failed before producing any findings]", false)
                             : (lastText + "\n\n[..." + agentType + " subagent: API failed, returning partial findings above...]", true);
@@ -197,6 +222,21 @@ namespace TrioAI.MPPlugIn
 
                     var turnText = ExtractText(result.Content);
                     if (!string.IsNullOrEmpty(turnText)) lastText = turnText;
+
+                    // 轨迹：本轮思考（仅 review/debug/verify 开了 thinking；research/explore 此处为空跳过）。
+                    bool turnHeadered = false;
+                    foreach (var b in result.Content)
+                    {
+                        if (GetStringValue(b, "type") == "thinking")
+                        {
+                            var th = GetStringValue(b, "thinking");
+                            if (!string.IsNullOrEmpty(th))
+                            {
+                                if (!turnHeadered) { trace.AppendLine(); trace.AppendLine("── turn " + (turn + 1) + " ──"); turnHeadered = true; }
+                                trace.Append("💭 ").Append(Clip(th, 500)).AppendLine();
+                            }
+                        }
+                    }
 
                     subMessages.Add(new Dictionary<string, object>
                     {
@@ -215,6 +255,17 @@ namespace TrioAI.MPPlugIn
                     // 进度：结构化回调驱动 ChatPanel 顶部进度条（不再走 OnToolStatus，避免聊天流刷屏）
                     var names = string.Join(", ", toolUses.Select(b => GetStringValue(b, "name")));
                     OnResearchTurn?.Invoke(agentType, turn + 1, maxTurns, names);
+
+                    // 轨迹：本轮工具调用（name + 入参摘要）
+                    if (!turnHeadered) { trace.AppendLine(); trace.AppendLine("── turn " + (turn + 1) + " ──"); turnHeadered = true; }
+                    foreach (var tb in toolUses)
+                    {
+                        var tn = GetStringValue(tb, "name");
+                        var ti = GetDictValue(tb, "input") ?? new Dictionary<string, object>();
+                        string inputBrief;
+                        try { inputBrief = _json.Serialize(ti); } catch { inputBrief = ""; }
+                        trace.Append("🔧 ").Append(tn).Append("  ").Append(Clip(inputBrief, 200)).AppendLine();
+                    }
 
                     // 并行执行工具：白名单外的拒绝，单结果超限截断
                     var toolResultMap = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -253,6 +304,7 @@ namespace TrioAI.MPPlugIn
                     {
                         var id = GetStringValue(tb, "id");
                         var execResult = toolResultMap.ContainsKey(id) ? toolResultMap[id] : "Error: tool execution lost";
+                        trace.Append("   → ").Append(Clip(execResult, 500)).AppendLine();   // 轨迹：结果摘要
                         var entry = new Dictionary<string, object>
                         {
                             { "type", "tool_result" },
@@ -271,6 +323,12 @@ namespace TrioAI.MPPlugIn
                     SubagentTrimIfNeeded(subMessages, SubagentTrimCap);
                 }
 
+                if (!string.IsNullOrEmpty(lastText))
+                {
+                    trace.AppendLine();
+                    trace.AppendLine("── conclusion ──");
+                    trace.AppendLine(Clip(lastText, 1500));
+                }
                 return string.IsNullOrEmpty(lastText)
                     ? ("[" + agentType + " subagent completed with no textual conclusion]", false)
                     : (lastText, true);
@@ -280,6 +338,7 @@ namespace TrioAI.MPPlugIn
                 _inSubagent = false;
                 _showToolStatus = savedShowToolStatus;
                 OnResearchEnd?.Invoke();   // 隐藏进度条 banner（含取消 / 异常路径）
+                OnResearchTrace?.Invoke(agentType, trace.ToString());   // 折叠显示内部轨迹（取消/异常也回传已有部分）
             }
         }
     }

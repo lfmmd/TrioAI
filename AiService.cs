@@ -83,6 +83,9 @@ namespace TrioAI.MPPlugIn
         public Action<string, int> OnResearchStart { get; set; }
         public Action<string, int, int, string> OnResearchTurn { get; set; }
         public Action OnResearchEnd { get; set; }
+        // subagent 跑完回传内部轨迹（每轮思考 + 工具调用 + 结果摘要 + 最终结论），ChatPanel 据此插一条折叠消息。
+        // 与 OnResearchStart/Turn/End 的进度 banner 互补：banner 看实时进度，trace 看完整过程。
+        public Action<string, string> OnResearchTrace { get; set; }
         public Func<string, string, bool> OnConfirmWrite { get; set; }
         // Plan Mode 审批回调：参数是 AI 的 plan 文本，返回 true=批准（退出 plan mode），false=拒绝
         public Func<string, bool> OnConfirmPlan { get; set; }

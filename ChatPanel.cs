@@ -242,6 +242,18 @@ namespace TrioAI.MPPlugIn
                     _researchBanner.Visibility = Visibility.Collapsed;
                 }));
             };
+            _ai.OnResearchTrace = (agentType, traceText) =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    var m = new ChatMessage("Subagent",
+                        "[" + agentType + "] " + SubagentVerb(agentType)
+                        + " — " + Lang.L("内部轨迹见下方 ▼", "internal trace under ▼ below"));
+                    m.ThinkingText = traceText;
+                    _messages.Add(m);
+                    _scrollViewer.ScrollToEnd();
+                }));
+            };
             _ai.OnConfirmWrite = (toolName, argsJson) =>
             {
                 return ShowInlineConfirmation(toolName, argsJson);
@@ -600,8 +612,8 @@ namespace TrioAI.MPPlugIn
             expanderFactory.SetBinding(Expander.VisibilityProperty,
                 new System.Windows.Data.Binding("ThinkingText") { Converter = new ThinkingVisibilityConverter() });
 
-            // Expander header
-            expanderFactory.SetValue(Expander.HeaderProperty, Lang.S("ThinkingLabel"));
+            // Expander header — 按 Role 区分：普通消息显示"思考"，Subagent 轨迹消息显示"子 agent 轨迹"
+            expanderFactory.SetBinding(Expander.HeaderProperty, new System.Windows.Data.Binding("Role") { Converter = new RoleToHeaderConverter() });
 
             // Expander content — thinking text
             var thinkingTextFactory = new FrameworkElementFactory(typeof(TextBox));
@@ -1663,6 +1675,7 @@ namespace TrioAI.MPPlugIn
             var role = value as string;
             if (role == "User") return new SolidColorBrush(Color.FromRgb(0, 100, 200));
             if (role == "System") return new SolidColorBrush(Color.FromRgb(60, 50, 20));
+            if (role == "Subagent") return new SolidColorBrush(Color.FromRgb(20, 60, 110));   // 深蓝（与 research banner 同色系）
             return new SolidColorBrush(Color.FromRgb(55, 55, 55));
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => null;
@@ -1686,6 +1699,16 @@ namespace TrioAI.MPPlugIn
             if (role == "User") return Brushes.White;
             if (role == "System") return new SolidColorBrush(Color.FromRgb(255, 200, 50));
             return (Brush)new SolidColorBrush(Color.FromRgb(220, 220, 220));
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => null;
+    }
+    internal class RoleToHeaderConverter : System.Windows.Data.IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            var role = value as string;
+            if (role == "Subagent") return Lang.L("📋 子 agent 轨迹", "📋 Subagent trace");
+            return Lang.S("ThinkingLabel");
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => null;
     }

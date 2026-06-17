@@ -7,6 +7,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.28] — 2026-06-17
+
+After a subagent (research/review/debug/explore/verify) finishes, the chat stream now gets a collapsible internal-trace message so the user can see its per-turn thinking, tool calls, and result summaries.
+
+### Added
+
+- **Collapsible subagent internal trace** — previously a running subagent only showed the top progress banner; its internal thinking/tool calls/results were discarded on completion, so the user could never see what it did. `RunSubagent` now collects a trace (per turn `💭` thinking + `🔧` tool call + args + `→` result summary + `── conclusion ──`), returned via a new `OnResearchTrace` callback; ChatPanel inserts a dark-blue `[agentType]` collapsible message (reusing the existing Expander). Each step is clipped to ~500 chars for compactness; cancellation/exceptions still return whatever was collected. The Expander header switches by Role (normal message = "Thinking" / Subagent = "📋 Subagent trace").
+
 ## [0.3.27] — 2026-06-17
 
 Main-line command verification now goes through the research subagent (isolated context, full HTML stays out of the main conversation); research does tiered lookups internally; fix empty-signature bug; subagent skips main-line dedup.

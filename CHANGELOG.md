@@ -6,6 +6,14 @@
 
 ## [Unreleased]
 
+## [0.3.28] — 2026-06-17
+
+子 agent（research/review/debug/explore/verify）跑完后，聊天流新增一条可折叠的内部轨迹消息，用户可见其每轮思考、工具调用与结果摘要。
+
+### 新增
+
+- **子 agent 内部轨迹折叠显示** —— 此前 subagent 跑时 UI 只有顶部进度条 banner，内部 thinking/工具调用/结果跑完即丢，用户无法看见它做了什么。现 `RunSubagent` 收集轨迹（每轮 `💭` 思考 + `🔧` 工具调用+入参 + `→` 结果摘要 + `── conclusion ──`），跑完通过新回调 `OnResearchTrace` 回传，ChatPanel 插一条深蓝色 `[agentType]` 折叠消息（复用现成 Expander）。每步摘要按 ~500 字截断，紧凑可读；取消/异常也回传已有部分。Expander header 按 Role 区分（普通消息="思考" / Subagent="📋 子 agent 轨迹"）。
+
 ## [0.3.27] — 2026-06-17
 
 主线命令查证改走 research 子 agent（隔离上下文，full HTML 不进主对话）；research 内部分层 lookup；修 signature 空返回 bug；子 agent 跳过主线 dedup。
