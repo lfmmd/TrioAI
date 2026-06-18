@@ -1,0 +1,5 @@
+<h1 id=_1>调用子程序</h1><p>子程序被另一个程序调用。与函数块不同，子程序的局部变量没有实例化，因此不需要声明实例。对子程序的调用使用指定的输入参数处理块算法。然后可以访问输出参数。<h2 id=st>ST语言</h2><p>要在ST中调用一个子程序，必须指定它的名称，后跟在括号之间写入并由comas分隔的输入参数。要访问输出参数，请使用子程序的名称后跟点“.”和所需参数的名称：<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>MySubProg (i1, i2); (* calls the sub-program *)
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>Res1 := MySubProg.Q1;
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>Res2 := MySubProg.Q2;
+</span></code></pre></div><p>或者，如果一个子程序只有一个输出参数，则可以用ST语言将其作为函数调用：<div class="language-text highlight"><pre><span></span><code><span id=__span-1-1><a href=#__codelineno-1-1 id=__codelineno-1-1 name=__codelineno-1-1></a>Res := MySubProg (i1, i2);
+</span></code></pre></div><h2 id=fbd-ld>FBD 和 LD 语言</h2><p>要用FBD或LD语言调用子程序，只需在图中插入块并连接其输入和输出。

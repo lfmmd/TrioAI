@@ -7,6 +7,22 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.32] — 2026-06-18
+
+Replaces the three reference libraries (TrioBASIC / IEC / PLCopen) with the bilingual (en/zh) help shipped with Motion Perfect V5.7, and adds a "Use Chinese Documentation" toggle (defaults to English).
+
+### Changes
+
+- **Reference libraries switched to V5.7 mkdocs help** — The three libraries (triobasic / iec / plcopen) previously held .chm-extracted data; they now use MP V5.7's own mkdocs help (`Help/HTML/sites/{en,zh}/`). V5.7 bodies are cleaner (extracting the `<article>` drops about 90% of the nav chrome) and types are more accurate (TrioBASIC reads the Type heading directly instead of inferring from .hhc). New build script `build_skills_v57.py`.
+- **Bilingual (en/zh) + language toggle** — Each library is now organised as `{lib}/{lang}/` (en/zh), shipping both languages. New setting "Use Chinese Documentation" (`useChineseDocs`, off by default = English). `LoadIndex` in `AiSkills.cs` picks the language directory from the toggle and clears the index + detail caches on switch.
+- **Images / nav assets dropped** — A text-only API cannot render images, so per-command image folders and mkdocs's `assets/` / `index.html` / `404.html` are dropped at build time for a smaller footprint.
+
+### Fixes (lookup stability)
+
+- **Command signatures restored** — V5.7 mkdocs description paragraphs carry no signature line (the old .chm data concatenated the signature into desc, giving ~25% of commands a signature). `build_skills_v57.py` gains `extract_syntax`, which pulls the authoritative signature from each page's Syntax `<code>` (e.g. `MOVE(distance1, ...)`, `value = ABS(expression)`) into a dedicated `sig` field in index.json; `SkillIndexEntry` gets a `Sig` field and `ParseSignature` prefers `sig` (falling back to desc). Signature coverage is back on par with the old data (~25% for triobasic), so `lookup_command`'s summary tier and the arg-count code check work again.
+- **Library identifier fixed (regression)** — The `{lib}/{lang}` directory rework introduced a regression: `SkillIndexEntry` lacked a library id, and several `Path.GetFileName(Dir)` sites resolved to the language dir name rather than the library name. Added a `Lib` field and fixed `BuildSkillsCatalog` grouping, `lookup_command` library filtering/return, and `EnsureValidationIndex`'s triobasic check + directory path.
+- **Rebuild validation index after language switch** — `SaveConfig` now sets `_validationIndexBuilt = false` when toggling en/zh, so `_triobasicIds` / `_signatures` rebuild against the new language dir's files (zh has ~4% fewer commands than en).
+
 ## [0.3.31] — 2026-06-17
 
 On top of 0.3.30's V5.7 adaptation, **restores V5.6 compatibility**: a single `TrioAI.MPPlugin` now runs on both Motion Perfect V5.6 and V5.7. 0.3.30 was the transitional release (V5.7 only); 0.3.31 is the first dual-version-compatible build.

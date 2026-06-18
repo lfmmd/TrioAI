@@ -1,0 +1,16 @@
+<h1 id=bitcount>BITCOUNT</h1><h2 id=_1>类型</h2><p><em><strong>数学函数</strong></em><h2 id=_2>语法</h2><p><code>value = BITCOUNT(expression)</code><h2 id=_3>描述</h2><p><code>当作为64位整数处理时，返回表达式中设置(=1)的位数。</code><h2 id=_4>参数</h2><table><thead><tr><th><th><tbody><tr><td>value:<td>64位整数表达式中设置的位数。<tr><td>expression:<td>任何有效的表示数值的TrioBASIC表达式。</table><h2 id=_5>例</h2><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>>>?bitcount(255)
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>8
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>>>?bitcount(65534)
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>15
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>>>?bitcount($1001200240048008)
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>8
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a>>>?bitcount(-1) 
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a>64
+</span><span id=__span-0-9><a href=#__codelineno-0-9 id=__codelineno-0-9 name=__codelineno-0-9></a>>>?bitcount(-2)
+</span><span id=__span-0-10><a href=#__codelineno-0-10 id=__codelineno-0-10 name=__codelineno-0-10></a>63
+</span><span id=__span-0-11><a href=#__codelineno-0-11 id=__codelineno-0-11 name=__codelineno-0-11></a>>>?bitcount(4.8892)
+</span><span id=__span-0-12><a href=#__codelineno-0-12 id=__codelineno-0-12 name=__codelineno-0-12></a>1
+</span><span id=__span-0-13><a href=#__codelineno-0-13 id=__codelineno-0-13 name=__codelineno-0-13></a>>>?bitcount($2000+$C9)
+</span><span id=__span-0-14><a href=#__codelineno-0-14 id=__codelineno-0-14 name=__codelineno-0-14></a>5
+</span><span id=__span-0-15><a href=#__codelineno-0-15 id=__codelineno-0-15 name=__codelineno-0-15></a>>>
+</span></code></pre></div><h2 id=_6>查看</h2><p><a href=BitNumber.html>Bit Number</a>, <a href=CLEAR_BIT.html>CLEAR_BIT</a>, <a href=READ_BIT.html>READ_BIT</a>, <a href=SET_BIT.html>SET_BIT</a><nav class=md-tags><span class=md-tag>数学函数</span></nav>

@@ -1,0 +1,9 @@
+<h1 id=waitwait_time>WAIT/WAIT_TIME</h1><p><em><strong>Statement (表达式)</strong></em><p>暂停执行ST程序。<h2 id=_1>句法</h2><p><code>WAIT &lt;BOOL expression> ;</code><p><code>WAIT_TIME &lt;TIME expression> ;</code><h2 id=_2>备注</h2><p>WAIT语句检查附加的布尔表达式并执行以下操作：<p>- 如果表达式为TRUE，程序将正常继续。<p>- 如果表达式为FALSE，则程序的执行将暂停到下一个PLC周期。布尔表达式将在下一个周期中再次检查，直到它变为真。其他程序的执行不受影响。<p>WAIT_TIME语句在指定的持续时间内暂停程序的执行。其他程序的执行不受影响。<p>这些说明仅以ST语言提供，没有其他语言的通信。这些指令不能在用户定义的功能块（UDFB）中调用。在UDFB中使用WAIT或WAIT_TIME会引发编译错误。<p>在子程序中可以调用WAIT和WAIT时间指令。但是，如果从不同的程序调用相同的子程序，这可能会导致一些不安全的情况。等待和等待时间指令不支持重新进入。避免这种情况是程序员的责任。如果从多个程序调用包含等待或等待时间指令的子程序，编译器将输出一些警告消息。<p>这些指示不应来自SFC程序的ST部分。这毫无意义，因为SFC已经是一个状态机。在SFC或从SFC调用的子程序中使用WAIT或WAIT会引发编译错误。<p>通过“C”编译器编译代码时，这些指令不可用。对包含等待或等待时间指令的程序使用“C”代码生成会在后期编译期间引发错误。<p>这些声明是标准的扩展，不符合IEC61131-3。<h2 id=st>ST 语言</h2><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>(* use of WAIT with different kinds of BOOL expressions *)
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>WAIT BoolVariable;
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>WAIT (diLevel > 100) AND NOT bAlarm;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>WAIT SubProgCall ();
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>(* use of WAIT_TIME with different kinds of TIME expressions *)
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a>WAIT_TIME t#2s;
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a>WAIT_TIME TimeVariable;
+</span></code></pre></div><nav class=md-tags><span class=md-tag>Statement</span></nav>

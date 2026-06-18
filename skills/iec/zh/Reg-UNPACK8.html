@@ -1,0 +1,10 @@
+<h1 id=unpack8>UNPACK8</h1><p><em><strong>Function (功能块)</strong></em><p>提取字节的位。<h2 id=_1>输入</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>IN<td>USINT<td>8位寄存器。</table><h2 id=_2>输出</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>Q0<td>BOOL<td>低有效位。<tr><td>...<td><td><tr><td>Q7<td>BOOL<td>最高有效位。</table><h2 id=_3>备注</h2><p>在LD语言中，输出梯级是Q0输出。该操作仅在输入梯级（EN）为真时执行。<h2 id=st>ST 语言</h2><p>MyUnpack是UNPACK8函数块的声明实例。<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>MyUnpack (IN);
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>Q0 := MyUnpack.Q0;
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>Q1 := MyUnpack.Q1;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>Q2 := MyUnpack.Q2;
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>Q3 := MyUnpack.Q3;
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>Q4 := MyUnpack.Q4;
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a>Q5 := MyUnpack.Q5;
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a>Q6 := MyUnpack.Q6;
+</span><span id=__span-0-9><a href=#__codelineno-0-9 id=__codelineno-0-9 name=__codelineno-0-9></a>Q7 := MyUnpack.Q7;
+</span></code></pre></div><h2 id=fbd>FBD 语言</h2><p><h2 id=ld>LD 语言</h2><p>该函数仅当EN为TRUE时执行。<br> <h2 id=_4>查看</h2><p><a href=Reg-PACK8.html>PACK8</a><nav class=md-tags><span class=md-tag>Function</span></nav>

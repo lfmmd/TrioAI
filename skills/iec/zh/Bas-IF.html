@@ -1,0 +1,32 @@
+<h1 id=if-then-else-elsif-end_if>IF THEN ELSE ELSIF END_IF</h1><p><em><strong>Statement (表达式)</strong></em><p>语句的条件执行。<h2 id=_1>句法</h2><p><code>IF &lt;BOOL expression> THEN
+    &lt;statements>
+ELSIF &lt;BOOL expression> THEN
+    &lt;statements> 
+ELSE
+    &lt;statements> 
+END_IF;</code><h2 id=_2>备注</h2><p>IF语句仅在ST中可用。语句的执行受布尔表达式的约束。ELSIF和ELSE语句是可选的。可以有几个ELSIF语句。<h2 id=st>ST 语言</h2><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>(* simple condition *)
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>IF bCond THEN
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>   Q1 := IN1;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>   Q2 := TRUE;
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>END_IF;
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a>(* binary selection *)
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a>IF bCond THEN
+</span><span id=__span-0-9><a href=#__codelineno-0-9 id=__codelineno-0-9 name=__codelineno-0-9></a>   Q1 := IN1;
+</span><span id=__span-0-10><a href=#__codelineno-0-10 id=__codelineno-0-10 name=__codelineno-0-10></a>   Q2 := TRUE;
+</span><span id=__span-0-11><a href=#__codelineno-0-11 id=__codelineno-0-11 name=__codelineno-0-11></a>ELSE
+</span><span id=__span-0-12><a href=#__codelineno-0-12 id=__codelineno-0-12 name=__codelineno-0-12></a>   Q1 := IN2;
+</span><span id=__span-0-13><a href=#__codelineno-0-13 id=__codelineno-0-13 name=__codelineno-0-13></a>   Q2 := FALSE;
+</span><span id=__span-0-14><a href=#__codelineno-0-14 id=__codelineno-0-14 name=__codelineno-0-14></a>END_IF;
+</span><span id=__span-0-15><a href=#__codelineno-0-15 id=__codelineno-0-15 name=__codelineno-0-15></a>
+</span><span id=__span-0-16><a href=#__codelineno-0-16 id=__codelineno-0-16 name=__codelineno-0-16></a>(* enumerated conditions *)
+</span><span id=__span-0-17><a href=#__codelineno-0-17 id=__codelineno-0-17 name=__codelineno-0-17></a>IF bCond1 THEN
+</span><span id=__span-0-18><a href=#__codelineno-0-18 id=__codelineno-0-18 name=__codelineno-0-18></a>   Q1 := IN1;
+</span><span id=__span-0-19><a href=#__codelineno-0-19 id=__codelineno-0-19 name=__codelineno-0-19></a>ELSIF bCond2 THEN
+</span><span id=__span-0-20><a href=#__codelineno-0-20 id=__codelineno-0-20 name=__codelineno-0-20></a>   Q1 := IN2;
+</span><span id=__span-0-21><a href=#__codelineno-0-21 id=__codelineno-0-21 name=__codelineno-0-21></a>ELSIF bCond3 THEN
+</span><span id=__span-0-22><a href=#__codelineno-0-22 id=__codelineno-0-22 name=__codelineno-0-22></a>   Q1 := IN3;
+</span><span id=__span-0-23><a href=#__codelineno-0-23 id=__codelineno-0-23 name=__codelineno-0-23></a>ELSE
+</span><span id=__span-0-24><a href=#__codelineno-0-24 id=__codelineno-0-24 name=__codelineno-0-24></a>   Q1 := IN4;
+</span><span id=__span-0-25><a href=#__codelineno-0-25 id=__codelineno-0-25 name=__codelineno-0-25></a>END_IF;
+</span></code></pre></div><h2 id=fbd>FBD 语言</h2><p>不可用。<h2 id=ld>LD 语言</h2><p>不可用。<h2 id=_3>查看</h2><p><a href=Bas-WHILE.html>WHILE</a><p><a href=Bas-REPEAT.html>REPEAT</a><p><a href=Bas-FOR.html>FOR</a><p><a href=Bas-CASE.html>CASE</a><p><a href=Bas-EXIT.html>EXIT</a><nav class=md-tags><span class=md-tag>Statement</span></nav>

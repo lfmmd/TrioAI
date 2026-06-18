@@ -1,0 +1,10 @@
+<h1 id=lim_alrm>LIM_ALRM</h1><p><em><strong>Function Block</strong></em><p>Detects High and Low limits of a signal with hysteresis.<h2 id=inputs>Inputs</h2><table><thead><tr><th><strong>Name</strong><th><strong>Type</strong><th><strong>Description</strong><tbody><tr><td>H<td>REAL<td>Value of the High limit.<tr><td>X<td>REAL<td>Input signal.<tr><td>L<td>REAL<td>Value of the Low limit.<tr><td>EPS<td>REAL<td>Value of the hysteresis.</table><h2 id=outputs>Outputs</h2><table><thead><tr><th><strong>Name</strong><th><strong>Type</strong><th><strong>Description</strong><tbody><tr><td>QH<td>BOOL<td><strong>TRUE</strong> if the signal exceeds the High limit.<tr><td>Q<td>BOOL<td><strong>TRUE</strong> if the signal exceeds one of the limits (equals to QH OR QL).<tr><td>QL<td>BOOL<td><strong>TRUE</strong> if the signal exceeds the Low limit.</table><h2 id=remarks>Remarks</h2><p>In LD language, the input rung (EN) is used for enabling the block. The output rung is the QH output.<h2 id=st-language>ST Language</h2><p>MyAlarm is a declared instance of LIM_ALRM function block.<p><code>MyAlarm (H, X, L, EPS);
+QH := MyAlarm.QH;
+Q := MyAlarm.Q;
+QL := MyAlarm.QL;</code><h2 id=fbd-language>FBD Language</h2><p><h2 id=ld-language>LD Language</h2><p>The block is not called if EN is FALSE.<br> <h2 id=il-language>IL Language</h2><p>MyAlarm is a declared instance of LIM_ALRM function block.<p><code>Op1: CAL MyAlarm (H, X, L, EPS)
+     LD  MyAlarm.QH
+     ST  QH
+     LD  MyAlarm.Q
+     ST  Q
+     LD  MyAlarm.QL
+     ST  QL</code><h2 id=see-also>See also</h2><p><a href=AO-ALARM_A.html>ALARM_A</a><p><a href=AO-ALARM_M.html>ALARM_M</a><nav class=md-tags><span class=md-tag>Function Block</span></nav>

@@ -1,0 +1,10 @@
+<h1 id=lim_alrm>LIM_ALRM</h1><p><em><strong>Function Block (功能块)</strong></em><p>检测滞后信号的高限和低限。<h2 id=_1>输入</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>H<td>REAL<td>上限值。<tr><td>X<td>REAL<td>输入信号。<tr><td>L<td>REAL<td>下限值。<tr><td>EPS<td>REAL<td>滞后值。</table><h2 id=_2>输出</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>QH<td>BOOL<td>如果信号超过上限，则为TRUE。<tr><td>Q<td>BOOL<td>如果信号超过某个限制（等于QH或QL），则为TRUE。<tr><td>QL<td>BOOL<td>如果信号超过下限，则为TRUE。</table><h2 id=_3>备注</h2><p>在LD语言中，输入梯级（EN）用于启用块。输出梯级是输出QH。<h2 id=st>ST 语言</h2><p>MyAlarm是LIM_ALRM函数块的声明实例。<p><code>MyAlarm (H, X, L, EPS);
+QH := MyAlarm.QH;
+Q := MyAlarm.Q;
+QL := MyAlarm.QL;</code><h2 id=fbd>FBD 语言</h2><p><h2 id=ld>LD 语言</h2><p>如果EN为FALSE，则不调用块。<br> <h2 id=il>IL 语言</h2><p>MyAlarm是LIM_ALRM函数块的声明实例。<p><code>Op1: CAL MyAlarm (H, X, L, EPS)
+     LD  MyAlarm.QH
+     ST  QH
+     LD  MyAlarm.Q
+     ST  Q
+     LD  MyAlarm.QL
+     ST  QL</code><h2 id=_4>查看</h2><p><a href=AO-ALARM_A.html>ALARM_A</a><p><a href=AO-ALARM_M.html>ALARM_M</a><nav class=md-tags><span class=md-tag>Function Block</span></nav>

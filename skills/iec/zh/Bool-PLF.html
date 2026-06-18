@@ -1,0 +1,9 @@
+<h1 id=plf>PLF</h1><p><em><strong>Function Block (功能块)</strong></em><p>在‘xExecute’ 输入的下降沿输出一个脉冲。<h2 id=_1>输入</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>xExecute<td>BOOL<td>下降沿将在‘xOut’输出一个周期脉冲</table><h2 id=_2>输出</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>xOut<td>BOOL<td>如果‘xExecute’下降沿被检测到，输出一个脉冲</table><h2 id=_3>备注</h2><p>输出脉冲将会保持到下一个调用。<h2 id=st>ST 语言</h2><p>使用PLF ‘Inst_PLF’的实例输出一个脉冲来输出脉冲:<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>bExe := TRUE;
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>Inst_PLF(bExe);
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>bRes:=Inst_PLF.xOut;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>bExe := FALSE;
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>Inst_PLF(bExe); 
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>bRes:=Inst_PLF.xOut; //Output TRUE
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a>Inst_PLF(bExe); 
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a>bRes:=Inst_PLF.xOut; // Output changes to FALSE
+</span></code></pre></div><h2 id=fbd>FBD 语言</h2><p><h2 id=ld>LD 语言</h2><p>‘bExe’ 的下降沿将在‘bRes’上输出一个脉冲：<br> <h2 id=_4>查看</h2><p>F_TRIG<p>R_TRIG<p>PLR<nav class=md-tags><span class=md-tag>Function Block</span></nav>

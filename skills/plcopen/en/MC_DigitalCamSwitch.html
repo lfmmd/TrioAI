@@ -1,0 +1,212 @@
+<h1 id=mc_digitalcamswitch>MC_DigitalCamSwitch</h1><p>Commands a group of discrete output bits to switch in analogy to a set of mechanical cam-controlled switches connected to an axis.<p><h2 id=description>Description</h2><p>MC_DigitalCamSwitch is the analogy to switches on a motor shaft: it commands a group of discrete output bits to switch in analogy to a set of mechanical cam-controlled switches connected to an axis. Forward and backward movements are allowed.<p>A track is one cam that contains a set of switches related to one output. ‘TrackNumber’ corresponds to the cam number. When ‘Enable’ is TRUE, ‘EnableMask’ specifies whether each track is enabled or disabled. Bit 0 corresponds to track 0 and bit 15 corresponds to track 15. The corresponding track is enabled if a bit is set to 1 and disabled if the bit is set to 0. If the value of a bit changes from 1 to 0, the output of the corresponding track will turn OFF. This functionality is sometimes called PLS – Phase or Position or Programmable Limit Switch.<p>Upon rising edge of ‘Enable’, the parameters for the configured ‘Switches’, ‘Outputs’, and ‘TrackOptions’ are initialized. Internal switching begins immediately following the initialization.<p>Upon rising edge of "EnableMask", the digital output will be enabled. The output will be set and reset according to the configured ‘Switches’ and ‘TrackOptions’. When outputs are disabled, the outputs are reset.<p><p><p>‘EnableMask’ is used to enable and disable the corresponding track. If ‘FirstOnPositon[n]’ equal to ‘LastOnPosition[0]’, the corresponding output defined in ‘OutputNumber[n]’ will always be set.<p>‘AxisDirection’ is used to define the resource which the direction of digital cam is based on.<p>‘Duration’ is used when ‘CamSwitchMode’ is set to ‘Time based’.<p>The above timing diagram is ‘Position based’, and ‘AxisDirection’ is ‘Positive (1)’ or ‘Both (0)’. The axis is moving in constant velocity.<p>‘Duration’ is used when the ‘CamSwitchMode’ is time based. It specifies the output time after the corresponding ’OutputNumber’ is set to TRUE. It is a non-negative value.<p><p>The above diagram shows the outputs of the first three tracks with ‘OffCompensation’ for all tracks, and ‘OnCompensation’ for the second track.<p>‘OffCompensation’ is used to compensate output time delay for the outputs switching off. ‘OnCompensation’ is used to compensate output time delay for switching on. The index for ‘OffCompensation’ and ‘OnCompensation’ is used for corresponding track number. It can be positive or negative value. The time is delayed for a positive value and advanced for a negative value.<p>The negative time value will be calculated according to the actual velocity. ‘OnCompensation’ and ‘OffCompensation’ can be used in both ‘CamSwitchMode’ mode ‘Position based’ and ‘Time based’ and any direction of ‘AxisDircetion’. The output time for a track Ttrack is calculated as follows:<p>Ttrack = Tout – TOnCompensation + TOffCompensation<p>Ttrack: The output time for a track<p>Tout: The output time for a track without compensation<p>TOnCompensation: The compensation time for ‘OnCompensation’<p>TOffCompensation: The compensation time for ‘OffCompensation’<table><thead><tr><th><strong>Important</strong><tbody><tr><td>MC_DigitalCamSwitch is always used when the axis is moving in constant velocity.<br>If the axis is set as a rotation axis, the following operation will occur for ‘OnCompensiation’ or ‘OffCompensation’ and the axis changes abruptly.<br>Long time value for ‘OnCompensation’ or ‘OffCompensation’ may cause unstable output timing, such as the time is equivalent to the time for a rotation.<br>If the value of ‘OnCompensation’ results in exceeding ‘LastOnPosition’ point + ’OffCompensation’, the output timing will be unstable.<br>If the value of ‘OffCompensation’ results in execeeding ‘FirstOnPosition’ point + ‘OnCompensation’, the output timing will be unstable.</table><p><p>The above diagram provides an example of how the hysteresis function can be used. Specifying a hysteresis window prevents an unwanted series of pulses in the area around the switching position. The output corresponds to track 0 is set at the position ‘FirstOnPosition’ and ‘LastOnPosition’ are changed to ‘FirstOnPosition+Hysteresis’ and ‘LastOnPosition+Hysteresis’.<p>Example of an axis moving in the positive direction:<p>At point a, the axis position reaches the configured "FirstOnPosition". The output is turned on when the position "FirstOnPosition + Hysteresis" is reached.<p>At point b, the axis position reaches the turn-off position "LastOnPosition". The output is turned off when the position "LastOnPosition + Hysteresis" is reached.<p>‘Hysteresis’ is to avoid multiple switching around the switching point.<div class="admonition success"><p>Make sure the input and output parameters are of data type indicated in the table below.</div><div class="admonition note"><p><em>MC_CAMSWITCH_REF is a switch structure for use as ON/OFF switch pattern data.</em></div><table><thead><tr><th><tbody><tr><td><code>STRUCT</code><br><code>TrackNumber : ARRAY[0..15] of UINT; (*TrackNumber is     the reference to the track*)</code><br><code>OutputNumber : ARRAY[0..15] of UINT; (* Output number     *)</code><br><code>FirstOnPosition : ARRAY[0..15] of LREAL;</code><br><code>LastOnPosition : ARRAY[0..15] of LREAL;</code><br><code>AxisDirection : ARRAY[0..15] of MC_AXIS_DIRECTION;(* 0:  Both directions, 1:Positive direction, 2:Negative   direction *)</code><br><code>CamSwitchMode : ARRAY[0..15] of MC_CAMSWITCH_MODE;(*  Default 0:Position based; 1:Time based *)</code><br><code>Duration:  ARRAY[0..15] of TIME;</code><br><code>END_STRUCT</code></table><div class="admonition note"><p><em>MC_TRACK_REF is a specific structure containing the track properties.</em></div><table><thead><tr><th><tbody><tr><td><code>STRUCT</code><br><code>OnCompensation: ARRAY[0..15] TIME;(* Compensation time   with which the switching on is delayed in time per  track.*)</code><br><code>OffCompensation: ARRAY[0..15] TIME;(*Time compensation    the switching off is delayed per track.*)</code><br><code>Hysteresis: ARRAY[0..15]LREAL; (*Distance from the   switching point (in positive and negative direction) in     which the switch is not executed until the axis has     left this area, in order to avoid multiple switching    aroundthe switching point.*)</code><br><code>END_STRUCT</code></table><h2 id=inputsoutputs>Inputs/Outputs</h2><table><thead><tr><th><th><th><tbody><tr><td><strong>Name</strong><td><strong>Data Type</strong><td><strong>Description</strong><tr><td colspan=3 style=text-align:left><strong>INPUTS</strong><tr><td>Enable<td>BOOL<td>Enables FB. When SET all FB parameters are downloaded and internal switching begins.<tr><td>Axis<td>AXIS_REF<td>Reference to the axis where the switch is connected.<tr><td>Switches<td>MC_CAMSWITCH_REF<td>Reference to the switching actions.<tr><td>TrackOptions<td>MC_TRACK_REF<td>Reference track related properties.<tr><td>EnableMask<td>UINT<td>Enables "Outputs" when SET. The digital output will be switched ON and OFF according to the "Switches" and "TrackOptions".<br>When RESET, the digital output will be RESET.<tr><td>ValueSource<td>MC_SOURCE<td><strong>mcSetValue</strong>: Synchronization on set value<br><strong>mcCommandValue</strong>: Synchronization on command value<br><strong>mcActualValue</strong>: Synchronization on actual value<tr><td colspan=3 style=text-align:left><strong>OUTPUTS</strong><tr><td>InOperation<td>BOOL<td>When ‘Enable’ is TRUE, there are commanded tracks are enabled.<tr><td>Busy<td>BOOL<td>The FB is not finished and new output values are to be expected<tr><td>Error<td>BOOL<td>Signals that an error has occurred within the Function Block<tr><td>ErrorID<td>UINT<td>Error identification</table><h2 id=examples>Examples</h2><h3 id=example-1>Example 1</h3><p>MC_CAMSWITCH_REF data type ‘Switches’ definition for this example:<table><thead><tr><th><strong>Track</strong><th><strong>Type</strong><th><strong>0</strong><th><strong>1</strong><th><strong>2</strong><th><strong>3</strong><th><strong>…</strong><th><strong>TrackN</strong><tbody><tr><td>OutputNumber<td>INT<td>0<td>1<td>2<td>3<td><td><tr><td>FirstOnPosition [u]<td>LREAL<td>2000.0<td>2500.0<td>3500.0<td>5000.0<td><td><tr><td>LastOnPosition [u]<td>LREAL<td>3000.0<td>3000.0<td>4000.0<td>1000.0<td><td><tr><td>AxisDirection<td>INT<td>1=Pos<td>2=Neg<td>0=Both<td>0=Both<td><td><tr><td>CamSwitchMode<td>INT<td>0<td>0<td>0<td>0<td><td></table><p>Note: Every ‘Output[x]’ can be bound to any physical output port, even to the same one (The last track with the same output as the one before will cover the output result). In this example, they are bound to different ports.<p><p><p>The example below uses the values from the example above for ‘Switches’ (MC_CAMSWITCH_REF data type). It does not use ‘OnCompensation’ / ‘OffCompensation’ and ‘Hysteresis’. It is the behaviour of the outputs when the axis is moving continuously in the positive direction. The axis is a rotation axis with a modular length of 5000 units.<p>Set ‘EnableDigiCam’ to activate the FB ‘Inst_MC_DigitalCamSwitch’. Switching data and track options can be initialized while the FB is enabled. If no errors occur, the output in motion controller is activated and the machine enters STATE_READY state.<p>Axis0 can be made to move positive or negative. It is possible to observe the action of commanded outputs.<p><p><strong> Example</strong><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>(\* Defines for MC_DigitalCamSwitch example \*)
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>\#define STATE_READY     0
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>\#define STATE_CAMIN     1
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>\#define STATE_DIGITALCAM 2
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>\#define NEXT_STEP       3
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>\#define STATE_MOVE_POS  9
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a>\#define STATE_MOVE_NEG  6
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a>\#define STATE_STOP      5
+</span><span id=__span-0-9><a href=#__codelineno-0-9 id=__codelineno-0-9 name=__codelineno-0-9></a>\#define ERROR_STEP      7
+</span><span id=__span-0-10><a href=#__codelineno-0-10 id=__codelineno-0-10 name=__codelineno-0-10></a>\#define STATE_ERROR     8 
+</span></code></pre></div><div class="language-text highlight"><pre><span></span><code><span id=__span-1-1><a href=#__codelineno-1-1 id=__codelineno-1-1 name=__codelineno-1-1></a>VAR
+</span><span id=__span-1-2><a href=#__codelineno-1-2 id=__codelineno-1-2 name=__codelineno-1-2></a> state : USINT ;
+</span><span id=__span-1-3><a href=#__codelineno-1-3 id=__codelineno-1-3 name=__codelineno-1-3></a> RefTrack : lib:MC_TRACK_REF ;
+</span><span id=__span-1-4><a href=#__codelineno-1-4 id=__codelineno-1-4 name=__codelineno-1-4></a> RefSwith : lib:MC_CAMSWITCH_REF ;
+</span><span id=__span-1-5><a href=#__codelineno-1-5 id=__codelineno-1-5 name=__codelineno-1-5></a> EnableDigiCam : BOOL := FALSE ;
+</span><span id=__span-1-6><a href=#__codelineno-1-6 id=__codelineno-1-6 name=__codelineno-1-6></a> Inst_MC_DigitalCamSwitch : MC_DigitalCamSwitch ;
+</span><span id=__span-1-7><a href=#__codelineno-1-7 id=__codelineno-1-7 name=__codelineno-1-7></a> mcSource : MC_SOURCE ;
+</span><span id=__span-1-8><a href=#__codelineno-1-8 id=__codelineno-1-8 name=__codelineno-1-8></a> Axis0Ref : lib:AXIS_REF ;
+</span><span id=__span-1-9><a href=#__codelineno-1-9 id=__codelineno-1-9 name=__codelineno-1-9></a> MovePositive : BOOL := TRUE ;
+</span><span id=__span-1-10><a href=#__codelineno-1-10 id=__codelineno-1-10 name=__codelineno-1-10></a>  (\*\$desc=Move positive direction enable variable\*)
+</span><span id=__span-1-11><a href=#__codelineno-1-11 id=__codelineno-1-11 name=__codelineno-1-11></a> Inst_MC_MoveVelocity1 : MC_MoveVelocity ;
+</span><span id=__span-1-12><a href=#__codelineno-1-12 id=__codelineno-1-12 name=__codelineno-1-12></a> mDirection : MC_DIRECTION ;
+</span><span id=__span-1-13><a href=#__codelineno-1-13 id=__codelineno-1-13 name=__codelineno-1-13></a> BufferMode : MC_BUFFER_MODE ;
+</span><span id=__span-1-14><a href=#__codelineno-1-14 id=__codelineno-1-14 name=__codelineno-1-14></a> ErrorID0 : UINT ;
+</span><span id=__span-1-15><a href=#__codelineno-1-15 id=__codelineno-1-15 name=__codelineno-1-15></a> MoveNegative : BOOL := FALSE ;
+</span><span id=__span-1-16><a href=#__codelineno-1-16 id=__codelineno-1-16 name=__codelineno-1-16></a>  (\*\$desc=Enable variable for negative movement\*)
+</span><span id=__span-1-17><a href=#__codelineno-1-17 id=__codelineno-1-17 name=__codelineno-1-17></a> bStop : BOOL := TRUE ;
+</span><span id=__span-1-18><a href=#__codelineno-1-18 id=__codelineno-1-18 name=__codelineno-1-18></a>  (\*\$desc=To stop motion, it is bound to IO1\*)
+</span><span id=__span-1-19><a href=#__codelineno-1-19 id=__codelineno-1-19 name=__codelineno-1-19></a>  (\*\$profile=IO\*)
+</span><span id=__span-1-20><a href=#__codelineno-1-20 id=__codelineno-1-20 name=__codelineno-1-20></a>  (\*\$embed=(VERS=1    MODE=0    POINT=1)\*)
+</span><span id=__span-1-21><a href=#__codelineno-1-21 id=__codelineno-1-21 name=__codelineno-1-21></a> Inst_MC_Stop4 : MC_Stop ;
+</span><span id=__span-1-22><a href=#__codelineno-1-22 id=__codelineno-1-22 name=__codelineno-1-22></a>END_VAR
+</span></code></pre></div><div class="language-text highlight"><pre><span></span><code><span id=__span-2-1><a href=#__codelineno-2-1 id=__codelineno-2-1 name=__codelineno-2-1></a>(\* Variables initialization \*)
+</span><span id=__span-2-2><a href=#__codelineno-2-2 id=__codelineno-2-2 name=__codelineno-2-2></a>
+</span><span id=__span-2-3><a href=#__codelineno-2-3 id=__codelineno-2-3 name=__codelineno-2-3></a>(\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* SWITCH SETUP\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-2-4><a href=#__codelineno-2-4 id=__codelineno-2-4 name=__codelineno-2-4></a>RefSwith.TrackNumber[0] := UINT\#0;
+</span><span id=__span-2-5><a href=#__codelineno-2-5 id=__codelineno-2-5 name=__codelineno-2-5></a>RefSwith.OutputNumber[0] := UINT\#0;
+</span><span id=__span-2-6><a href=#__codelineno-2-6 id=__codelineno-2-6 name=__codelineno-2-6></a>RefSwith.FirstOnPosition[0] := LREAL\#2000.0;
+</span><span id=__span-2-7><a href=#__codelineno-2-7 id=__codelineno-2-7 name=__codelineno-2-7></a>RefSwith.LastOnPosition[0] := LREAL\#3000.0;
+</span><span id=__span-2-8><a href=#__codelineno-2-8 id=__codelineno-2-8 name=__codelineno-2-8></a>RefSwith.AxisDirection[0] := mcPositive;
+</span><span id=__span-2-9><a href=#__codelineno-2-9 id=__codelineno-2-9 name=__codelineno-2-9></a>RefSwith.Duration[0] := time\#0;
+</span><span id=__span-2-10><a href=#__codelineno-2-10 id=__codelineno-2-10 name=__codelineno-2-10></a>RefSwith.CamSwitchMode[0] := mcPosition;
+</span><span id=__span-2-11><a href=#__codelineno-2-11 id=__codelineno-2-11 name=__codelineno-2-11></a>
+</span><span id=__span-2-12><a href=#__codelineno-2-12 id=__codelineno-2-12 name=__codelineno-2-12></a>RefSwith.TrackNumber[1] := UINT\#1;
+</span><span id=__span-2-13><a href=#__codelineno-2-13 id=__codelineno-2-13 name=__codelineno-2-13></a>RefSwith.OutputNumber[1] := UINT\#1;
+</span><span id=__span-2-14><a href=#__codelineno-2-14 id=__codelineno-2-14 name=__codelineno-2-14></a>RefSwith.FirstOnPosition[1] := LREAL\#2500.0;
+</span><span id=__span-2-15><a href=#__codelineno-2-15 id=__codelineno-2-15 name=__codelineno-2-15></a>RefSwith.LastOnPosition[1] := LREAL\#3000.0;
+</span><span id=__span-2-16><a href=#__codelineno-2-16 id=__codelineno-2-16 name=__codelineno-2-16></a>RefSwith.AxisDirection[1] := mcNegative;
+</span><span id=__span-2-17><a href=#__codelineno-2-17 id=__codelineno-2-17 name=__codelineno-2-17></a>RefSwith.Duration[1] := time\#0;
+</span><span id=__span-2-18><a href=#__codelineno-2-18 id=__codelineno-2-18 name=__codelineno-2-18></a>RefSwith.CamSwitchMode[1] := mcPosition;
+</span><span id=__span-2-19><a href=#__codelineno-2-19 id=__codelineno-2-19 name=__codelineno-2-19></a>
+</span><span id=__span-2-20><a href=#__codelineno-2-20 id=__codelineno-2-20 name=__codelineno-2-20></a>RefSwith.TrackNumber[2] := UINT\#2;
+</span><span id=__span-2-21><a href=#__codelineno-2-21 id=__codelineno-2-21 name=__codelineno-2-21></a>RefSwith.OutputNumber[2] := UINT\#2;
+</span><span id=__span-2-22><a href=#__codelineno-2-22 id=__codelineno-2-22 name=__codelineno-2-22></a>RefSwith.FirstOnPosition[2] := LREAL\#3500.0;
+</span><span id=__span-2-23><a href=#__codelineno-2-23 id=__codelineno-2-23 name=__codelineno-2-23></a>RefSwith.LastOnPosition[2] := LREAL\#4000.0;
+</span><span id=__span-2-24><a href=#__codelineno-2-24 id=__codelineno-2-24 name=__codelineno-2-24></a>RefSwith.AxisDirection[2] := mcBoth;
+</span><span id=__span-2-25><a href=#__codelineno-2-25 id=__codelineno-2-25 name=__codelineno-2-25></a>RefSwith.Duration[2] := time\#0;
+</span><span id=__span-2-26><a href=#__codelineno-2-26 id=__codelineno-2-26 name=__codelineno-2-26></a>RefSwith.CamSwitchMode[2] := mcPosition;
+</span><span id=__span-2-27><a href=#__codelineno-2-27 id=__codelineno-2-27 name=__codelineno-2-27></a>
+</span><span id=__span-2-28><a href=#__codelineno-2-28 id=__codelineno-2-28 name=__codelineno-2-28></a>RefSwith.TrackNumber[3] := UINT\#3;
+</span><span id=__span-2-29><a href=#__codelineno-2-29 id=__codelineno-2-29 name=__codelineno-2-29></a>RefSwith.OutputNumber[3] := UINT\#3;
+</span><span id=__span-2-30><a href=#__codelineno-2-30 id=__codelineno-2-30 name=__codelineno-2-30></a>RefSwith.FirstOnPosition[3] := LREAL\#5000.0;
+</span><span id=__span-2-31><a href=#__codelineno-2-31 id=__codelineno-2-31 name=__codelineno-2-31></a>RefSwith.LastOnPosition[3] := LREAL\#1000.0;
+</span><span id=__span-2-32><a href=#__codelineno-2-32 id=__codelineno-2-32 name=__codelineno-2-32></a>RefSwith.AxisDirection[3] := mcBoth;
+</span><span id=__span-2-33><a href=#__codelineno-2-33 id=__codelineno-2-33 name=__codelineno-2-33></a>RefSwith.Duration[3] := time\#0;
+</span><span id=__span-2-34><a href=#__codelineno-2-34 id=__codelineno-2-34 name=__codelineno-2-34></a>RefSwith.CamSwitchMode[3] := mcPosition;
+</span><span id=__span-2-35><a href=#__codelineno-2-35 id=__codelineno-2-35 name=__codelineno-2-35></a>
+</span><span id=__span-2-36><a href=#__codelineno-2-36 id=__codelineno-2-36 name=__codelineno-2-36></a>(\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* TRACK SETUP\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-2-37><a href=#__codelineno-2-37 id=__codelineno-2-37 name=__codelineno-2-37></a>RefTrack.OnCompensation[0] := T\#0;
+</span><span id=__span-2-38><a href=#__codelineno-2-38 id=__codelineno-2-38 name=__codelineno-2-38></a>RefTrack.OffCompensation[0] := t\#0;
+</span><span id=__span-2-39><a href=#__codelineno-2-39 id=__codelineno-2-39 name=__codelineno-2-39></a>RefTrack.Hysteresis[0] := 0;
+</span><span id=__span-2-40><a href=#__codelineno-2-40 id=__codelineno-2-40 name=__codelineno-2-40></a>
+</span><span id=__span-2-41><a href=#__codelineno-2-41 id=__codelineno-2-41 name=__codelineno-2-41></a>RefTrack.OnCompensation[1] := T\#0;
+</span><span id=__span-2-42><a href=#__codelineno-2-42 id=__codelineno-2-42 name=__codelineno-2-42></a>RefTrack.OffCompensation[1] := t\#0;
+</span><span id=__span-2-43><a href=#__codelineno-2-43 id=__codelineno-2-43 name=__codelineno-2-43></a>RefTrack.Hysteresis[1] := 0;
+</span><span id=__span-2-44><a href=#__codelineno-2-44 id=__codelineno-2-44 name=__codelineno-2-44></a>
+</span><span id=__span-2-45><a href=#__codelineno-2-45 id=__codelineno-2-45 name=__codelineno-2-45></a>RefTrack.OnCompensation[2] := T\#0;
+</span><span id=__span-2-46><a href=#__codelineno-2-46 id=__codelineno-2-46 name=__codelineno-2-46></a>RefTrack.OffCompensation[2] := t\#0;
+</span><span id=__span-2-47><a href=#__codelineno-2-47 id=__codelineno-2-47 name=__codelineno-2-47></a>RefTrack.Hysteresis[2] := 0;
+</span><span id=__span-2-48><a href=#__codelineno-2-48 id=__codelineno-2-48 name=__codelineno-2-48></a>
+</span><span id=__span-2-49><a href=#__codelineno-2-49 id=__codelineno-2-49 name=__codelineno-2-49></a>RefTrack.OnCompensation[3] := T\#0;
+</span><span id=__span-2-50><a href=#__codelineno-2-50 id=__codelineno-2-50 name=__codelineno-2-50></a>RefTrack.OffCompensation[3] := t\#0;
+</span><span id=__span-2-51><a href=#__codelineno-2-51 id=__codelineno-2-51 name=__codelineno-2-51></a>RefTrack.Hysteresis[3] := 0;
+</span><span id=__span-2-52><a href=#__codelineno-2-52 id=__codelineno-2-52 name=__codelineno-2-52></a>
+</span><span id=__span-2-53><a href=#__codelineno-2-53 id=__codelineno-2-53 name=__codelineno-2-53></a>mcSource := mcCommandedValue;
+</span><span id=__span-2-54><a href=#__codelineno-2-54 id=__codelineno-2-54 name=__codelineno-2-54></a>Axis0Ref.AxisNo := 0;
+</span><span id=__span-2-55><a href=#__codelineno-2-55 id=__codelineno-2-55 name=__codelineno-2-55></a>mDirection := mcPositiveDirection;
+</span><span id=__span-2-56><a href=#__codelineno-2-56 id=__codelineno-2-56 name=__codelineno-2-56></a>BufferMode := mcAborting;
+</span><span id=__span-2-57><a href=#__codelineno-2-57 id=__codelineno-2-57 name=__codelineno-2-57></a>
+</span><span id=__span-2-58><a href=#__codelineno-2-58 id=__codelineno-2-58 name=__codelineno-2-58></a>(\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* cyclic program\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-2-59><a href=#__codelineno-2-59 id=__codelineno-2-59 name=__codelineno-2-59></a>CASE State OF
+</span><span id=__span-2-60><a href=#__codelineno-2-60 id=__codelineno-2-60 name=__codelineno-2-60></a>    (\*power and home axis before moving... \*)
+</span><span id=__span-2-61><a href=#__codelineno-2-61 id=__codelineno-2-61 name=__codelineno-2-61></a>    (\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*STATE_READY\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-2-62><a href=#__codelineno-2-62 id=__codelineno-2-62 name=__codelineno-2-62></a>    STATE_READY:
+</span><span id=__span-2-63><a href=#__codelineno-2-63 id=__codelineno-2-63 name=__codelineno-2-63></a>    IF(EnableDigiCam) THEN 
+</span><span id=__span-2-64><a href=#__codelineno-2-64 id=__codelineno-2-64 name=__codelineno-2-64></a>        Inst_MC_DigitalCamSwitch( Enable := TRUE(\*BOOL\*), 
+</span><span id=__span-2-65><a href=#__codelineno-2-65 id=__codelineno-2-65 name=__codelineno-2-65></a>                                    Axis := Axis0Ref(\*AXIS_REF\*), 
+</span><span id=__span-2-66><a href=#__codelineno-2-66 id=__codelineno-2-66 name=__codelineno-2-66></a>                                    Switches := RefSwith(\*MC_CAMSWITCH_REF\*), 
+</span><span id=__span-2-67><a href=#__codelineno-2-67 id=__codelineno-2-67 name=__codelineno-2-67></a>                                    TrackOptions := RefTrack(\*MC_TRACK_REF\*),         
+</span><span id=__span-2-68><a href=#__codelineno-2-68 id=__codelineno-2-68 name=__codelineno-2-68></a>                                    EnableMask := UINT\#15(\*UINT\*), 
+</span><span id=__span-2-69><a href=#__codelineno-2-69 id=__codelineno-2-69 name=__codelineno-2-69></a>                                    ValueSource := mcSource(\*MC_SOURCE\*) );
+</span><span id=__span-2-70><a href=#__codelineno-2-70 id=__codelineno-2-70 name=__codelineno-2-70></a>        
+</span><span id=__span-2-71><a href=#__codelineno-2-71 id=__codelineno-2-71 name=__codelineno-2-71></a>        State:=STATE_DIGITALCAM;
+</span><span id=__span-2-72><a href=#__codelineno-2-72 id=__codelineno-2-72 name=__codelineno-2-72></a>    END_IF;
+</span><span id=__span-2-73><a href=#__codelineno-2-73 id=__codelineno-2-73 name=__codelineno-2-73></a>    (\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*STATE_DIGITALCAM\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-2-74><a href=#__codelineno-2-74 id=__codelineno-2-74 name=__codelineno-2-74></a>    STATE_DIGITALCAM: 
+</span><span id=__span-2-75><a href=#__codelineno-2-75 id=__codelineno-2-75 name=__codelineno-2-75></a>    IF (Inst_MC_DigitalCamSwitch.InOperation) AND (MovePositive = TRUE) THEN        
+</span><span id=__span-2-76><a href=#__codelineno-2-76 id=__codelineno-2-76 name=__codelineno-2-76></a>        mDirection := mcPositiveDirection;
+</span><span id=__span-2-77><a href=#__codelineno-2-77 id=__codelineno-2-77 name=__codelineno-2-77></a>        
+</span><span id=__span-2-78><a href=#__codelineno-2-78 id=__codelineno-2-78 name=__codelineno-2-78></a>        Inst_MC_MoveVelocity1( Execute := FALSE (\*BOOL\*), 
+</span><span id=__span-2-79><a href=#__codelineno-2-79 id=__codelineno-2-79 name=__codelineno-2-79></a>                                Axis := Axis0Ref (\*AXIS_REF\*),         
+</span><span id=__span-2-80><a href=#__codelineno-2-80 id=__codelineno-2-80 name=__codelineno-2-80></a>                                ContinuousUpdate := TRUE (\*BOOL\*), 
+</span><span id=__span-2-81><a href=#__codelineno-2-81 id=__codelineno-2-81 name=__codelineno-2-81></a>                                Velocity := LREAL\#100.0 (\*LREAL\*), 
+</span><span id=__span-2-82><a href=#__codelineno-2-82 id=__codelineno-2-82 name=__codelineno-2-82></a>                                Acceleration := LREAL\#1000.0 (\*LREAL\*), 
+</span><span id=__span-2-83><a href=#__codelineno-2-83 id=__codelineno-2-83 name=__codelineno-2-83></a>                                Deceleration := LREAL\#1000.0 (\*LREAL\*), 
+</span><span id=__span-2-84><a href=#__codelineno-2-84 id=__codelineno-2-84 name=__codelineno-2-84></a>                                Jerk := LREAL\#500.0(\*LREAL\*), 
+</span><span id=__span-2-85><a href=#__codelineno-2-85 id=__codelineno-2-85 name=__codelineno-2-85></a>                                Direction := mDirection (\*MC_DIRECTION\*), 
+</span><span id=__span-2-86><a href=#__codelineno-2-86 id=__codelineno-2-86 name=__codelineno-2-86></a>                                BufferMode := BufferMode (\*MC_BUFFER_MODE\*) );
+</span><span id=__span-2-87><a href=#__codelineno-2-87 id=__codelineno-2-87 name=__codelineno-2-87></a>        
+</span><span id=__span-2-88><a href=#__codelineno-2-88 id=__codelineno-2-88 name=__codelineno-2-88></a>        
+</span><span id=__span-2-89><a href=#__codelineno-2-89 id=__codelineno-2-89 name=__codelineno-2-89></a>        Inst_MC_MoveVelocity1( Execute := TRUE (\*BOOL\*), 
+</span><span id=__span-2-90><a href=#__codelineno-2-90 id=__codelineno-2-90 name=__codelineno-2-90></a>                                Axis := Axis0Ref (\*AXIS_REF\*),         
+</span><span id=__span-2-91><a href=#__codelineno-2-91 id=__codelineno-2-91 name=__codelineno-2-91></a>                                ContinuousUpdate := TRUE (\*BOOL\*), 
+</span><span id=__span-2-92><a href=#__codelineno-2-92 id=__codelineno-2-92 name=__codelineno-2-92></a>                                Velocity := LREAL\#100.0 (\*LREAL\*), 
+</span><span id=__span-2-93><a href=#__codelineno-2-93 id=__codelineno-2-93 name=__codelineno-2-93></a>                                Acceleration := LREAL\#1000.0 (\*LREAL\*), 
+</span><span id=__span-2-94><a href=#__codelineno-2-94 id=__codelineno-2-94 name=__codelineno-2-94></a>                                Deceleration := LREAL\#1000.0 (\*LREAL\*), 
+</span><span id=__span-2-95><a href=#__codelineno-2-95 id=__codelineno-2-95 name=__codelineno-2-95></a>                                Jerk := LREAL\#500.0(\*LREAL\*), 
+</span><span id=__span-2-96><a href=#__codelineno-2-96 id=__codelineno-2-96 name=__codelineno-2-96></a>                                Direction := mDirection (\*MC_DIRECTION\*), 
+</span><span id=__span-2-97><a href=#__codelineno-2-97 id=__codelineno-2-97 name=__codelineno-2-97></a>                                BufferMode := BufferMode (\*MC_BUFFER_MODE\*) );
+</span><span id=__span-2-98><a href=#__codelineno-2-98 id=__codelineno-2-98 name=__codelineno-2-98></a>        
+</span><span id=__span-2-99><a href=#__codelineno-2-99 id=__codelineno-2-99 name=__codelineno-2-99></a>        State := STATE_MOVE_POS;
+</span><span id=__span-2-100><a href=#__codelineno-2-100 id=__codelineno-2-100 name=__codelineno-2-100></a>    ELSIF (Inst_MC_DigitalCamSwitch.Error) THEN
+</span><span id=__span-2-101><a href=#__codelineno-2-101 id=__codelineno-2-101 name=__codelineno-2-101></a>        (\*Store ErrorID in a variable\*)
+</span><span id=__span-2-102><a href=#__codelineno-2-102 id=__codelineno-2-102 name=__codelineno-2-102></a>        ErrorID0:=Inst_MC_DigitalCamSwitch.ErrorID;
+</span><span id=__span-2-103><a href=#__codelineno-2-103 id=__codelineno-2-103 name=__codelineno-2-103></a>        State:= STATE_ERROR;
+</span><span id=__span-2-104><a href=#__codelineno-2-104 id=__codelineno-2-104 name=__codelineno-2-104></a>    END_IF;
+</span><span id=__span-2-105><a href=#__codelineno-2-105 id=__codelineno-2-105 name=__codelineno-2-105></a>    (\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*STATE_MOVE_POS\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-2-106><a href=#__codelineno-2-106 id=__codelineno-2-106 name=__codelineno-2-106></a>    STATE_MOVE_POS:    
+</span><span id=__span-2-107><a href=#__codelineno-2-107 id=__codelineno-2-107 name=__codelineno-2-107></a>    IF (Inst_MC_MoveVelocity1.InVelocity) AND (MoveNegative = TRUE) THEN
+</span><span id=__span-2-108><a href=#__codelineno-2-108 id=__codelineno-2-108 name=__codelineno-2-108></a>        mDirection := mcNegativeDirection;
+</span><span id=__span-2-109><a href=#__codelineno-2-109 id=__codelineno-2-109 name=__codelineno-2-109></a>        
+</span><span id=__span-2-110><a href=#__codelineno-2-110 id=__codelineno-2-110 name=__codelineno-2-110></a>        Inst_MC_MoveVelocity1( Execute := FALSE (\*BOOL\*),
+</span><span id=__span-2-111><a href=#__codelineno-2-111 id=__codelineno-2-111 name=__codelineno-2-111></a>                                Axis := Axis0Ref (\*AXIS_REF\*), 
+</span><span id=__span-2-112><a href=#__codelineno-2-112 id=__codelineno-2-112 name=__codelineno-2-112></a>                                ContinuousUpdate := TRUE (\*BOOL\*), 
+</span><span id=__span-2-113><a href=#__codelineno-2-113 id=__codelineno-2-113 name=__codelineno-2-113></a>                                Velocity := LREAL\#100.0 (\*LREAL\*), 
+</span><span id=__span-2-114><a href=#__codelineno-2-114 id=__codelineno-2-114 name=__codelineno-2-114></a>                                Acceleration := LREAL\#1000.0 (\*LREAL\*), 
+</span><span id=__span-2-115><a href=#__codelineno-2-115 id=__codelineno-2-115 name=__codelineno-2-115></a>                                Deceleration := LREAL\#1000.0 (\*LREAL\*), 
+</span><span id=__span-2-116><a href=#__codelineno-2-116 id=__codelineno-2-116 name=__codelineno-2-116></a>                                Jerk := LREAL\#500.0(\*LREAL\*), 
+</span><span id=__span-2-117><a href=#__codelineno-2-117 id=__codelineno-2-117 name=__codelineno-2-117></a>                                Direction := mDirection (\*MC_DIRECTION\*), 
+</span><span id=__span-2-118><a href=#__codelineno-2-118 id=__codelineno-2-118 name=__codelineno-2-118></a>                                BufferMode := BufferMode (\*MC_BUFFER_MODE\*) );
+</span><span id=__span-2-119><a href=#__codelineno-2-119 id=__codelineno-2-119 name=__codelineno-2-119></a>        
+</span><span id=__span-2-120><a href=#__codelineno-2-120 id=__codelineno-2-120 name=__codelineno-2-120></a>        Inst_MC_MoveVelocity1( Execute := TRUE (\*BOOL\*),  
+</span><span id=__span-2-121><a href=#__codelineno-2-121 id=__codelineno-2-121 name=__codelineno-2-121></a>                                Axis := Axis0Ref (\*AXIS_REF\*),
+</span><span id=__span-2-122><a href=#__codelineno-2-122 id=__codelineno-2-122 name=__codelineno-2-122></a>                                ContinuousUpdate := TRUE (\*BOOL\*), 
+</span><span id=__span-2-123><a href=#__codelineno-2-123 id=__codelineno-2-123 name=__codelineno-2-123></a>                                Velocity := LREAL\#100.0 (\*LREAL\*), 
+</span><span id=__span-2-124><a href=#__codelineno-2-124 id=__codelineno-2-124 name=__codelineno-2-124></a>                                Acceleration := LREAL\#1000.0 (\*LREAL\*), 
+</span><span id=__span-2-125><a href=#__codelineno-2-125 id=__codelineno-2-125 name=__codelineno-2-125></a>                                Deceleration := LREAL\#1000.0 (\*LREAL\*), 
+</span><span id=__span-2-126><a href=#__codelineno-2-126 id=__codelineno-2-126 name=__codelineno-2-126></a>                                Jerk := LREAL\#500.0(\*LREAL\*), 
+</span><span id=__span-2-127><a href=#__codelineno-2-127 id=__codelineno-2-127 name=__codelineno-2-127></a>                                Direction := mDirection (\*MC_DIRECTION\*), 
+</span><span id=__span-2-128><a href=#__codelineno-2-128 id=__codelineno-2-128 name=__codelineno-2-128></a>                                BufferMode := BufferMode (\*MC_BUFFER_MODE\*) );
+</span><span id=__span-2-129><a href=#__codelineno-2-129 id=__codelineno-2-129 name=__codelineno-2-129></a>        
+</span><span id=__span-2-130><a href=#__codelineno-2-130 id=__codelineno-2-130 name=__codelineno-2-130></a>        State:=STATE_MOVE_NEG;
+</span><span id=__span-2-131><a href=#__codelineno-2-131 id=__codelineno-2-131 name=__codelineno-2-131></a>    ELSIF (Inst_MC_MoveVelocity1.Error) THEN
+</span><span id=__span-2-132><a href=#__codelineno-2-132 id=__codelineno-2-132 name=__codelineno-2-132></a>        (\*Store ErrorID in a variable\*)
+</span><span id=__span-2-133><a href=#__codelineno-2-133 id=__codelineno-2-133 name=__codelineno-2-133></a>        ErrorID0:=Inst_MC_MoveVelocity1.ErrorID;
+</span><span id=__span-2-134><a href=#__codelineno-2-134 id=__codelineno-2-134 name=__codelineno-2-134></a>        State:= STATE_ERROR;
+</span><span id=__span-2-135><a href=#__codelineno-2-135 id=__codelineno-2-135 name=__codelineno-2-135></a>    END_IF;
+</span><span id=__span-2-136><a href=#__codelineno-2-136 id=__codelineno-2-136 name=__codelineno-2-136></a>    (\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*STATE_MOVE_NEG\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-2-137><a href=#__codelineno-2-137 id=__codelineno-2-137 name=__codelineno-2-137></a>    STATE_MOVE_NEG:
+</span><span id=__span-2-138><a href=#__codelineno-2-138 id=__codelineno-2-138 name=__codelineno-2-138></a>    IF((Inst_MC_MoveVelocity1.InVelocity) AND (bStop = TRUE)) THEN
+</span><span id=__span-2-139><a href=#__codelineno-2-139 id=__codelineno-2-139 name=__codelineno-2-139></a>        Inst_MC_Stop4( Execute := FALSE(\*BOOL\*), 
+</span><span id=__span-2-140><a href=#__codelineno-2-140 id=__codelineno-2-140 name=__codelineno-2-140></a>                        Axis := Axis0Ref(\*AXIS_REF\*), 
+</span><span id=__span-2-141><a href=#__codelineno-2-141 id=__codelineno-2-141 name=__codelineno-2-141></a>                        Deceleration := LREAL\#2000.0(\*LREAL\*), 
+</span><span id=__span-2-142><a href=#__codelineno-2-142 id=__codelineno-2-142 name=__codelineno-2-142></a>                        Jerk := LREAL\#1000.0(\*LREAL\*) );
+</span><span id=__span-2-143><a href=#__codelineno-2-143 id=__codelineno-2-143 name=__codelineno-2-143></a>        
+</span><span id=__span-2-144><a href=#__codelineno-2-144 id=__codelineno-2-144 name=__codelineno-2-144></a>        Inst_MC_Stop4( Execute := TRUE(\*BOOL\*), 
+</span><span id=__span-2-145><a href=#__codelineno-2-145 id=__codelineno-2-145 name=__codelineno-2-145></a>                        Axis := Axis0Ref(\*AXIS_REF\*), 
+</span><span id=__span-2-146><a href=#__codelineno-2-146 id=__codelineno-2-146 name=__codelineno-2-146></a>                        Deceleration := LREAL\#2000.0(\*LREAL\*), 
+</span><span id=__span-2-147><a href=#__codelineno-2-147 id=__codelineno-2-147 name=__codelineno-2-147></a>                        Jerk := LREAL\#1000.0(\*LREAL\*) );
+</span><span id=__span-2-148><a href=#__codelineno-2-148 id=__codelineno-2-148 name=__codelineno-2-148></a>        
+</span><span id=__span-2-149><a href=#__codelineno-2-149 id=__codelineno-2-149 name=__codelineno-2-149></a>        State:= STATE_STOP;
+</span><span id=__span-2-150><a href=#__codelineno-2-150 id=__codelineno-2-150 name=__codelineno-2-150></a>    ELSIF (Inst_MC_MoveVelocity1.Error) THEN
+</span><span id=__span-2-151><a href=#__codelineno-2-151 id=__codelineno-2-151 name=__codelineno-2-151></a>        (\*Store ErrorID in a variable\*)
+</span><span id=__span-2-152><a href=#__codelineno-2-152 id=__codelineno-2-152 name=__codelineno-2-152></a>        ErrorID0:=Inst_MC_MoveVelocity1.ErrorID;
+</span><span id=__span-2-153><a href=#__codelineno-2-153 id=__codelineno-2-153 name=__codelineno-2-153></a>        State:= STATE_ERROR;
+</span><span id=__span-2-154><a href=#__codelineno-2-154 id=__codelineno-2-154 name=__codelineno-2-154></a>    END_IF;
+</span><span id=__span-2-155><a href=#__codelineno-2-155 id=__codelineno-2-155 name=__codelineno-2-155></a>    (\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*STATE_STOP\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-2-156><a href=#__codelineno-2-156 id=__codelineno-2-156 name=__codelineno-2-156></a>    STATE_STOP:  (\*stop movement\*)
+</span><span id=__span-2-157><a href=#__codelineno-2-157 id=__codelineno-2-157 name=__codelineno-2-157></a>    IF (Inst_MC_Stop4.Done = TRUE) THEN
+</span><span id=__span-2-158><a href=#__codelineno-2-158 id=__codelineno-2-158 name=__codelineno-2-158></a>        Inst_MC_Stop4( Execute := FALSE(\*BOOL\*),
+</span><span id=__span-2-159><a href=#__codelineno-2-159 id=__codelineno-2-159 name=__codelineno-2-159></a>                        Axis := Axis0Ref(\*AXIS_REF\*),  
+</span><span id=__span-2-160><a href=#__codelineno-2-160 id=__codelineno-2-160 name=__codelineno-2-160></a>                        Deceleration := LREAL\#2000.0(\*LREAL\*), 
+</span><span id=__span-2-161><a href=#__codelineno-2-161 id=__codelineno-2-161 name=__codelineno-2-161></a>                        Jerk := LREAL\#1000.0(\*LREAL\*) );
+</span><span id=__span-2-162><a href=#__codelineno-2-162 id=__codelineno-2-162 name=__codelineno-2-162></a>        State:=NEXT_STEP;
+</span><span id=__span-2-163><a href=#__codelineno-2-163 id=__codelineno-2-163 name=__codelineno-2-163></a>    ELSIF (Inst_MC_Stop4.Error = TRUE) THEN
+</span><span id=__span-2-164><a href=#__codelineno-2-164 id=__codelineno-2-164 name=__codelineno-2-164></a>        (\*Store ErrorID in a variable,\*)
+</span><span id=__span-2-165><a href=#__codelineno-2-165 id=__codelineno-2-165 name=__codelineno-2-165></a>        ErrorID0:= Inst_MC_Stop4.ErrorID;
+</span><span id=__span-2-166><a href=#__codelineno-2-166 id=__codelineno-2-166 name=__codelineno-2-166></a>        Inst_MC_Stop4( Execute := FALSE(\*BOOL\*), 
+</span><span id=__span-2-167><a href=#__codelineno-2-167 id=__codelineno-2-167 name=__codelineno-2-167></a>                        Axis := Axis0Ref(\*AXIS_REF\*), 
+</span><span id=__span-2-168><a href=#__codelineno-2-168 id=__codelineno-2-168 name=__codelineno-2-168></a>                        Deceleration := LREAL\#2000.0(\*LREAL\*), 
+</span><span id=__span-2-169><a href=#__codelineno-2-169 id=__codelineno-2-169 name=__codelineno-2-169></a>                        Jerk := LREAL\#1000.0(\*LREAL\*) );
+</span><span id=__span-2-170><a href=#__codelineno-2-170 id=__codelineno-2-170 name=__codelineno-2-170></a>        State:=ERROR_STEP;        
+</span><span id=__span-2-171><a href=#__codelineno-2-171 id=__codelineno-2-171 name=__codelineno-2-171></a>    END_IF;
+</span><span id=__span-2-172><a href=#__codelineno-2-172 id=__codelineno-2-172 name=__codelineno-2-172></a>
+</span><span id=__span-2-173><a href=#__codelineno-2-173 id=__codelineno-2-173 name=__codelineno-2-173></a>    ERROR_STEP:
+</span><span id=__span-2-174><a href=#__codelineno-2-174 id=__codelineno-2-174 name=__codelineno-2-174></a>    (\* Adding code here, when motion got errors \*)
+</span><span id=__span-2-175><a href=#__codelineno-2-175 id=__codelineno-2-175 name=__codelineno-2-175></a>    
+</span><span id=__span-2-176><a href=#__codelineno-2-176 id=__codelineno-2-176 name=__codelineno-2-176></a>    NEXT_STEP:
+</span><span id=__span-2-177><a href=#__codelineno-2-177 id=__codelineno-2-177 name=__codelineno-2-177></a>    (\* Adding code here, after MC_Stop calling \*)
+</span><span id=__span-2-178><a href=#__codelineno-2-178 id=__codelineno-2-178 name=__codelineno-2-178></a>
+</span><span id=__span-2-179><a href=#__codelineno-2-179 id=__codelineno-2-179 name=__codelineno-2-179></a>END_CASE; 
+</span></code></pre></div>

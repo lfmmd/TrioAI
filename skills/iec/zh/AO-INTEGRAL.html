@@ -1,0 +1,7 @@
+<h1 id=integral>INTEGRAL</h1><p><em><strong>Function Block (功能块)</strong></em><p>计算信号的积分。<h2 id=_1>输入</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>RUN<td>BOOL<td>运行命令：TRUE=integrate/FALSE=hold。<tr><td>R1<td>BOOL<td>覆盖重置。<tr><td>XIN<td>REAL<td>输入信号。<tr><td>X0<td>REAL<td>初始值。<tr><td>CYCLE<td>TIME<td>采样周期（不应小于目标周期定时）。</table><h2 id=_2>输出</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>Q<td>DINT<td>运行模式报告：不是（R1）。<tr><td>XOUT<td>REAL<td>输出信号。</table><h2 id=_3>备注</h2><p>在LD语言中，输入梯级是RUN命令。输出梯级是Q报告状态。<h2 id=st>ST 语言</h2><p>MyIntg是INTEGRAL功能块的声明实例。<p><code>MyIntg (RUN, R1, XIN, X0, CYCLE);
+Q := MyIntg.Q;
+XOUT := MyIntg.XOUT;</code><h2 id=fbd>FBD 语言</h2><p><h2 id=ld>LD 语言</h2><p><h2 id=il>IL 语言</h2><p>MyIntg是INTEGRAL功能块的声明实例。<p><code>Op1: CAL MyIntg (RUN, R1, XIN, X0, CYCLE)
+     LD  MyIntg.Q
+     ST  Q
+     LD  MyIntg.XOUT
+     ST  XOUT</code><h2 id=_4>查看</h2><p><a href=AO-AVERAGE.html>AVERAGE</a><p><a href=AO-DERIVATE.html>DERIVATE</a><p><a href=AO-LIM_ALRM.html>LIM_ALRM</a><p><a href=AO-HYSTER.html>HYSTER</a><p><a href=AO-STACKINT.html>STACKINT</a><nav class=md-tags><span class=md-tag>Function Block</span></nav>

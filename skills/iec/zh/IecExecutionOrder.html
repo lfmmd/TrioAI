@@ -1,0 +1,11 @@
+<h1 id=_1>程序执行顺序</h1><p>默认情况下，在任务中创建的程序按创建顺序执行。这意味着，如果程序A是在程序B之前创建的，则当任务执行时，其周期将如下所示：<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>Program A
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>Program B
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>Other programs
+</span></code></pre></div><p>有时需要更改任务周期中程序的执行顺序。Motion Perfect通过“程序执行顺序”工具提供此功能。它可以从控制器和项目树视图中任务的上下文菜单启动，也可以从任务设置“执行模式”页启动。<p><p>该工具列出任务中的所有主程序。这里没有列出子程序和用户定义的功能块，因为它们不是在循环中执行的，而是从其他主程序调用的。<table><thead><tr><th><strong>命令</strong><th colspan=3 style=text-align:left><strong>描述</strong><tbody><tr><td>向上移动<td colspan=3 style=text-align:left>在任务周期中将所选程序上移。这意味着此程序将在列表中较低位置的程序之前执行<tr><td>向下移动<td colspan=3 style=text-align:left>在任务周期中将所选程序下移。这意味着该程序将在列表中较高位置的程序之后执行<tr><td>使能/不使能程序<td colspan=3 style=text-align:left>在任务周期中启用或禁用程序。当程序未启用时，它将不会在周期中执行，即使它将被编译<tr><td colspan=2 style=text-align:left>撤销<td colspan=2 style=text-align:left>撤消上次操作<tr><td colspan=3 style=text-align:left>重做<td>重做上一个操作</table><p>例如，任务中有三个程序<div class="language-text highlight"><pre><span></span><code><span id=__span-1-1><a href=#__codelineno-1-1 id=__codelineno-1-1 name=__codelineno-1-1></a>MAIN
+</span><span id=__span-1-2><a href=#__codelineno-1-2 id=__codelineno-1-2 name=__codelineno-1-2></a>INPUT
+</span><span id=__span-1-3><a href=#__codelineno-1-3 id=__codelineno-1-3 name=__codelineno-1-3></a>OUTPUT
+</span><span id=__span-1-4><a href=#__codelineno-1-4 id=__codelineno-1-4 name=__codelineno-1-4></a>DBG
+</span></code></pre></div><p>主程序包含主控制器逻辑，输入程序读取一些数字输入，输出写入一些模拟输出，DBG程序包含一些在生产环境中不需要的日志和调试功能。它们是按照“MAIN”、“DBG”、“INPUT”、“OUTPUT”的顺序创建的。但是，执行顺序需要<div class="language-text highlight"><pre><span></span><code><span id=__span-2-1><a href=#__codelineno-2-1 id=__codelineno-2-1 name=__codelineno-2-1></a>INPUT
+</span><span id=__span-2-2><a href=#__codelineno-2-2 id=__codelineno-2-2 name=__codelineno-2-2></a>MAIN
+</span><span id=__span-2-3><a href=#__codelineno-2-3 id=__codelineno-2-3 name=__codelineno-2-3></a>OUTPUT
+</span></code></pre></div><p>DBG程序仅在开发和优化期间才需要，因此在任务周期中通过删除列表中相应的复选标记将其禁用。<p><em><strong>请注意，此窗口中的操作将立即执行。不允许在任务运行时更改执行顺序。</strong></em>

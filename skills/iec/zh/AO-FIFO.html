@@ -1,0 +1,18 @@
+<h1 id=fifo>FIFO</h1><p><em><strong>Function Block (功能块)</strong></em><p>管理先进先出列表。<h2 id=_1>输入</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>PUSH<td>BOOL<td>推入一个新值（在上升沿）。<tr><td>POP<td>BOOL<td>弹出一个新值（在上升沿）。<tr><td>RST<td>BOOL<td>重置列表。<tr><td>NEXTIN<td>ANY<td>要推送的值。<tr><td>NEXTOUT<td>ANY<td>最旧的推送值的值-调用后更新！<tr><td>BUFFER<td>ANY<td>存储值的数组。</table><h2 id=_2>输出</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>EMPTY<td>BOOL<td>如果列表为空，则为TRUE<tr><td>OFLO<td>BOOL<td>如果PUSH命令溢出，则为TRUE。<tr><td>COUNT<td>DINT<td>列表中的值数。<tr><td>PREAD<td>DINT<td>在最旧的推送值缓冲区中的索引。<tr><td>PWRITE<td>DINT<td>下一个推送位置的缓冲区中的索引。</table><h2 id=_3>备注</h2><p>NEXTIN、NEXTOUT和BUFFER必须具有相同的数据类型，并且不能是字符串。<p>NEXTOUT参数指定一个变量，该变量在调用块后填充最旧的push值。<p>值存储在缓冲区数组中。数据被安排为一个滚动缓冲区，不被移动或重置。只更新读写指针和推送值。列表的最大大小是数组的维数。<p>第一次调用块时，它会记住应该在哪个数组上工作。如果稍后使用另一个缓冲区输入调用同一实例，则该调用将被视为无效且不产生任何结果。在这种情况下，输出报告一个空列表。<p>在LD语言中，input rung是PUSH输入。输出梯级是空输出。.<h2 id=st>ST 语言</h2><p>MyFIFO是FIFO函数块的声明实例。<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>SMyFIFO (PUSH, POP, RST, NEXTIN, NEXTOUT, BUFFER);
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>EMPTY := MyFIFO.EMPTY;
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>OFLO := MyFIFO.OFLO;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>COUNT := MyFIFO.COUNT;
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>PREAD := MyFIFO.PREAD;
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>PWRITE := MyFIFO.PWRITE;
+</span></code></pre></div><h2 id=fbd>FBD 语言</h2><p><h2 id=ld>LD 语言</h2><p><h2 id=il>IL 语言</h2><p>MyFIFO是FIFO函数块的声明实例。<div class="language-text highlight"><pre><span></span><code><span id=__span-1-1><a href=#__codelineno-1-1 id=__codelineno-1-1 name=__codelineno-1-1></a>Op1: CAL MyFIFO (PUSH, POP, RST, NEXTIN, NEXTOUT, BUFFER)
+</span><span id=__span-1-2><a href=#__codelineno-1-2 id=__codelineno-1-2 name=__codelineno-1-2></a>     LD  MyFIFO.EMPTY
+</span><span id=__span-1-3><a href=#__codelineno-1-3 id=__codelineno-1-3 name=__codelineno-1-3></a>     ST  EMPTY
+</span><span id=__span-1-4><a href=#__codelineno-1-4 id=__codelineno-1-4 name=__codelineno-1-4></a>     LD  MyFIFO.OFLO
+</span><span id=__span-1-5><a href=#__codelineno-1-5 id=__codelineno-1-5 name=__codelineno-1-5></a>     ST  OFLO
+</span><span id=__span-1-6><a href=#__codelineno-1-6 id=__codelineno-1-6 name=__codelineno-1-6></a>     LD  MyFIFO.COUNT
+</span><span id=__span-1-7><a href=#__codelineno-1-7 id=__codelineno-1-7 name=__codelineno-1-7></a>     ST  COUNT
+</span><span id=__span-1-8><a href=#__codelineno-1-8 id=__codelineno-1-8 name=__codelineno-1-8></a>     LD  MyFIFO.PREAD
+</span><span id=__span-1-9><a href=#__codelineno-1-9 id=__codelineno-1-9 name=__codelineno-1-9></a>     ST  PREAD
+</span><span id=__span-1-10><a href=#__codelineno-1-10 id=__codelineno-1-10 name=__codelineno-1-10></a>     LD  MyFIFO.PWRITE
+</span><span id=__span-1-11><a href=#__codelineno-1-11 id=__codelineno-1-11 name=__codelineno-1-11></a>     ST  PWRITE
+</span></code></pre></div><h2 id=_4>查看</h2><p><a href=AO-LIFO.html>LIFO</a><nav class=md-tags><span class=md-tag>Function Block</span></nav>

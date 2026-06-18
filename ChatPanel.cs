@@ -1124,6 +1124,17 @@ namespace TrioAI.MPPlugIn
             };
             panel.Children.Add(localizeThinkingCheck);
 
+            // Use Chinese documentation checkbox
+            var useChineseDocsCheck = new CheckBox
+            {
+                Content = Lang.S("UseChineseDocs"),
+                IsChecked = AiService.UseChineseDocs,
+                Foreground = Brushes.White,
+                Margin = new Thickness(0, 0, 0, 14),
+                ToolTip = Lang.S("UseChineseDocsDesc")
+            };
+            panel.Children.Add(useChineseDocsCheck);
+
             // Buttons
             var btnRow = new DockPanel { LastChildFill = false };
 
@@ -1209,7 +1220,7 @@ namespace TrioAI.MPPlugIn
                 }
                 int budget = AiService.BudgetTokens;
                 int.TryParse(budgetBox.Text, out budget);
-                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked, enableThinkingCheck.IsChecked, budget, showThinkingCheck.IsChecked, memoryEnabledCheck.IsChecked, localizeThinkingCheck.IsChecked, lightModel);
+                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked, enableThinkingCheck.IsChecked, budget, showThinkingCheck.IsChecked, memoryEnabledCheck.IsChecked, localizeThinkingCheck.IsChecked, useChineseDocsCheck.IsChecked, lightModel);
                 _messages.Add(new ChatMessage("System", Lang.S("SettingsSaved")));
                 _scrollViewer.ScrollToEnd();
                 win.DialogResult = true;
@@ -1806,6 +1817,8 @@ namespace TrioAI.MPPlugIn
                 { "MemoryEnabledDesc", "启用后 AI 可以跨会话记住用户偏好和项目知识" },
                 { "LocalizeThinking", "思考过程本地化" },
                 { "LocalizeThinkingDesc", "启用后 AI 的扩展思考（推理过程）会跟随 MotionPerfect 系统语言，而非默认英文" },
+                { "UseChineseDocs", "使用中文帮助文档" },
+                { "UseChineseDocsDesc", "启用后命令查询返回中文文档（默认关闭=英文）" },
             },
             ["en"] = new Dictionary<string, string>
             {
@@ -1862,6 +1875,8 @@ namespace TrioAI.MPPlugIn
                 { "MemoryEnabledDesc", "When enabled, AI can remember user preferences and project knowledge across sessions" },
                 { "LocalizeThinking", "Localize Thinking" },
                 { "LocalizeThinkingDesc", "When enabled, AI's extended thinking (reasoning) follows MotionPerfect's system language instead of defaulting to English" },
+                { "UseChineseDocs", "Use Chinese Documentation" },
+                { "UseChineseDocsDesc", "When enabled, command lookups return Chinese docs (off by default = English)" },
             },
             ["de"] = new Dictionary<string, string>
             {
@@ -1918,6 +1933,8 @@ namespace TrioAI.MPPlugIn
                 { "MemoryEnabledDesc", "KI kann Benutzereinstellungen ueber Sitzungen hinweg merken" },
                 { "LocalizeThinking", "Denken lokalisieren" },
                 { "LocalizeThinkingDesc", "Wenn aktiviert, folgt das erweiterte Denken der Sprache von MotionPerfect statt standardmaessig Englisch" },
+                { "UseChineseDocs", "Chinesische Dokumentation verwenden" },
+                { "UseChineseDocsDesc", "Wenn aktiviert, liefern Befehlsabfragen chinesische Doku (standardmaessig aus = Englisch)" },
             },
             ["fr"] = new Dictionary<string, string>
             {
@@ -1974,6 +1991,8 @@ namespace TrioAI.MPPlugIn
                 { "MemoryEnabledDesc", "L'IA peut mémoriser les préférences utilisateur entre les sessions" },
                 { "LocalizeThinking", "Localiser la réflexion" },
                 { "LocalizeThinkingDesc", "Si activé, la réflexion étendue de l'IA suit la langue système de MotionPerfect au lieu de l'anglais par défaut" },
+                { "UseChineseDocs", "Utiliser la documentation chinoise" },
+                { "UseChineseDocsDesc", "Si activé, les recherches de commandes renvoient la documentation chinoise (désactivé par défaut = anglais)" },
             },
         };
 

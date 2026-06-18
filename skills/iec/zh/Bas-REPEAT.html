@@ -1,0 +1,9 @@
+<h1 id=repeat-until-end_repeat>REPEAT UNTIL END_REPEAT</h1><p><em><strong>Statement (表达式)</strong></em><p>重复一系列的表达式。<h2 id=_1>句法</h2><p><code>REPEAT
+    &lt;statements>
+UNTIL &lt;BOOL expression> END_REPEAT;</code><h2 id=_2>备注</h2><p>REPEAT和UNTIL之间的语句将一直执行，直到布尔表达式为TRUE。在执行语句后计算条件。语句至少执行一次。<div class="admonition danger"><p>循环指令可能导致无限循环，从而阻塞目标循环。不要在条件中测试输入的状态，因为在下一个周期之前不会刷新输入。</div><h2 id=st>ST 语言</h2><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>iPos := 0;
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>REPEAT
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>   MyArray[iPos] := 0;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>   iNbCleared := iNbCleared + 1;
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>   iPos := iPos + 1;
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>UNTIL iPos = iMax END_REPEAT;
+</span></code></pre></div><h2 id=fbd>FBD 语言</h2><p>不可用。<h2 id=ld>LD 语言</h2><p>不可用。<h2 id=_3>查看</h2><p><a href=Bas-IF.html>IF</a><p><a href=Bas-WHILE.html>WHILE</a><p><a href=Bas-FOR.html>FOR</a><p><a href=Bas-CASE.html>CASE</a><p><a href=Bas-EXIT.html>EXIT</a><nav class=md-tags><span class=md-tag>Statement</span></nav>

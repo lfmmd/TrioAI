@@ -1,0 +1,7 @@
+<h1 id=on>ON</h1><p><em><strong>Statement</strong></em><p>Conditional execution of statements.<h2 id=syntax>Syntax</h2><p><code>ON &lt;BOOL expression> DO
+    &lt;statements>
+END_DO;</code><h2 id=remarks>Remarks</h2><p>Statements within the ON structure are executed only when the Boolean expression rises from FALSE to TRUE. The ON instruction avoids systematic use of the R_TRIG function block or other "last state" flags.<p>The ON syntax is available in any program, sub-program or UDFB. It is available in both T5 p-code or native code compilation modes.<p>This statement is an extension to the standard and is not IEC 61131-3 compliant.<h2 id=st-language>ST Language</h2><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>(* This example counts the rising edges of variable bIN *)
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>ON bIN DO
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>   diCount := diCount + 1;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>END_DO;
+</span></code></pre></div><nav class=md-tags><span class=md-tag>Statement</span></nav>

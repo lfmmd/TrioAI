@@ -1,0 +1,35 @@
+<h1 id=add_dac>ADD_DAC</h1><h2 id=_1>类型</h2><p><em><strong>轴命令</strong></em><h2 id=_2>语法</h2><p><code>ADD_DAC(axis)</code><h2 id=_3>描述</h2><p>将从轴的伺服控制输出与主轴的输出相加。主轴的最终 <a href=DAC_OUT.html>DAC_OUT</a>是两个控制环的输出总和。<p>提供ADD_DAC命令以允许在伺服轴上使用辅助编码器以实现双反馈控制。<div class="admonition success"><p>这通常用于诸如卷筒进纸的应用中，在这种应用中，需要使用辅助编码器来补偿打滑。</div><h2 id=_4>参数</h2><table><thead><tr><th><th><tbody><tr><td>axis:<td>第二个轴的轴号，其输出将添加到主轴中。<br>-1 将会终止 ADD_DAC的链接。</table><h2 id=_5>例</h2><p>使用ADD_DAC将测量轮的输出添加到控制滚动进给的伺服电机轴上。 正常设置伺服电机轴，并从电机驱动器获得编码器反馈。 测量轮轴也必须设置为伺服模式。 这样，软件将在该轴上执行伺服控制计算。<p>这两个轴必须共同使用同一个位置指令去控制。通常可以通过使用 <a href=ADDAX.html>ADDAX</a>在两个轴上生成匹配的 <a href=DPOS.html>DPOS</a> 来实现。然后在两个轴上设置伺服增益，并使用ADD_DAC求和，然后到一个硬件（物理）输出上。<div class="admonition success"><p>如果由于两个反馈设备之间的分辨率差异而导致两个轴上的所需需求位置不相同，则可以在一个轴上使用ENCODER_RATIO来生成匹配的UNITS。</div><p><div class="language-BASIC highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a><span class=k>BASE</span><span class=p>(</span><span class=il>1</span><span class=p>)</span>
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a><span class=vg>ATYPE</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=il>44</span>
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a><span class=c1>'无需缩放伺服编码器，因为它是最高分辨率</span>
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a><span class=vg>ENCODER_RATIO</span><span class=p>(</span><span class=il>1</span><span class=p>,</span><span class=il>1</span><span class=p>)</span>
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a><span class=c1>'链接到编码器虚拟DAC的输出</span>
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a><span class=vg>ADD_DAC</span><span class=p>(</span><span class=il>2</span><span class=p>)</span>
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a><span class=vg>UNITS</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=il>10000</span>
+</span><span id=__span-0-9><a href=#__codelineno-0-9 id=__codelineno-0-9 name=__codelineno-0-9></a>
+</span><span id=__span-0-10><a href=#__codelineno-0-10 id=__codelineno-0-10 name=__codelineno-0-10></a><span class=c1>'通过设置PGAIN = 0禁用伺服控制块的输出</span>
+</span><span id=__span-0-11><a href=#__codelineno-0-11 id=__codelineno-0-11 name=__codelineno-0-11></a><span class=vg>P_GAIN</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=il>0</span>
+</span><span id=__span-0-12><a href=#__codelineno-0-12 id=__codelineno-0-12 name=__codelineno-0-12></a><span class=vg>SERVO</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kr>ON</span>
+</span><span id=__span-0-13><a href=#__codelineno-0-13 id=__codelineno-0-13 name=__codelineno-0-13></a>
+</span><span id=__span-0-14><a href=#__codelineno-0-14 id=__codelineno-0-14 name=__codelineno-0-14></a><span class=k>BASE</span><span class=p>(</span><span class=il>2</span><span class=p>)</span>
+</span><span id=__span-0-15><a href=#__codelineno-0-15 id=__codelineno-0-15 name=__codelineno-0-15></a><span class=c1>'必须将ATYPE设置为伺服ATYPE以启用位置闭环</span>
+</span><span id=__span-0-16><a href=#__codelineno-0-16 id=__codelineno-0-16 name=__codelineno-0-16></a><span class=vg>ATYPE</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=il>44</span>
+</span><span id=__span-0-17><a href=#__codelineno-0-17 id=__codelineno-0-17 name=__codelineno-0-17></a>
+</span><span id=__span-0-18><a href=#__codelineno-0-18 id=__codelineno-0-18 name=__codelineno-0-18></a><span class=c1>'设置编码器比率，使其与伺服的每转计数相同</span>
+</span><span id=__span-0-19><a href=#__codelineno-0-19 id=__codelineno-0-19 name=__codelineno-0-19></a><span class=vg>ENCODER_RATIO</span><span class=p>(</span><span class=il>10000</span><span class=p>,</span><span class=il>4096</span><span class=p>)</span>
+</span><span id=__span-0-20><a href=#__codelineno-0-20 id=__codelineno-0-20 name=__codelineno-0-20></a>
+</span><span id=__span-0-21><a href=#__codelineno-0-21 id=__codelineno-0-21 name=__codelineno-0-21></a><span class=c1>'在轴2上叠加轴1</span>
+</span><span id=__span-0-22><a href=#__codelineno-0-22 id=__codelineno-0-22 name=__codelineno-0-22></a><span class=vg>ADDAX</span><span class=p>(</span><span class=il>1</span><span class=p>)</span>
+</span><span id=__span-0-23><a href=#__codelineno-0-23 id=__codelineno-0-23 name=__codelineno-0-23></a><span class=vg>UNITS</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=il>10000</span>
+</span><span id=__span-0-24><a href=#__codelineno-0-24 id=__codelineno-0-24 name=__codelineno-0-24></a>
+</span><span id=__span-0-25><a href=#__codelineno-0-25 id=__codelineno-0-25 name=__codelineno-0-25></a><span class=c1>'通过设置P_GAIN（>0) 使用编码器轴上的伺服控制块</span>
+</span><span id=__span-0-26><a href=#__codelineno-0-26 id=__codelineno-0-26 name=__codelineno-0-26></a><span class=vg>P_GAIN</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mf>0.5</span>
+</span><span id=__span-0-27><a href=#__codelineno-0-27 id=__codelineno-0-27 name=__codelineno-0-27></a><span class=vg>SERVO</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kr>ON</span>
+</span><span id=__span-0-28><a href=#__codelineno-0-28 id=__codelineno-0-28 name=__codelineno-0-28></a>
+</span><span id=__span-0-29><a href=#__codelineno-0-29 id=__codelineno-0-29 name=__codelineno-0-29></a><span class=vg>WDOG</span><span class=o>=</span><span class=kr>ON</span>
+</span><span id=__span-0-30><a href=#__codelineno-0-30 id=__codelineno-0-30 name=__codelineno-0-30></a>
+</span><span id=__span-0-31><a href=#__codelineno-0-31 id=__codelineno-0-31 name=__codelineno-0-31></a><span class=k>BASE</span><span class=p>(</span><span class=il>1</span><span class=p>)</span>
+</span><span id=__span-0-32><a href=#__codelineno-0-32 id=__codelineno-0-32 name=__codelineno-0-32></a><span class=c1>'开始运动</span>
+</span><span id=__span-0-33><a href=#__codelineno-0-33 id=__codelineno-0-33 name=__codelineno-0-33></a><span class=vg>MOVE</span><span class=p>(</span><span class=il>1200</span><span class=p>)</span>
+</span><span id=__span-0-34><a href=#__codelineno-0-34 id=__codelineno-0-34 name=__codelineno-0-34></a><span class=kr>WAIT</span><span class=w> </span><span class=vg>IDLE</span>
+</span></code></pre></div><nav class=md-tags><span class=md-tag>轴命令</span></nav>

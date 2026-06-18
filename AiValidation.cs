@@ -68,16 +68,16 @@ namespace TrioAI.MPPlugIn
                 foreach (var entry in LoadIndex())
                 {
                     if (string.IsNullOrEmpty(entry?.Name)) continue;
-                    if (!entry.Dir.EndsWith("triobasic", StringComparison.OrdinalIgnoreCase)) continue;
+                    if (!string.Equals(entry.Lib, "triobasic", StringComparison.OrdinalIgnoreCase)) continue;
                     ids.Add(entry.Name);
-                    var sig = ParseSignature(entry.Name, entry.Desc ?? "");
+                    var sig = ParseSignature(entry.Name, entry.Sig ?? entry.Desc ?? "");
                     if (sig != null) sigs[entry.Name] = sig;
                 }
 
                 // 2. 扫描 skills/triobasic/ 下所有 .html 文件名（兜底 index.json 不全的情况，如关键字 IF/FOR/DIM）
                 //    注意：仅扫 triobasic 目录。IEC/PLCopen 的库（AO-printf 之类）不能混进 TrioBASIC 白名单，
                 //    否则 AI 写 printf() 这种 IEC 函数会被误判为合法 TrioBASIC。
-                var triobasicDir = Path.Combine(SkillsDir, "triobasic");
+                var triobasicDir = Path.Combine(SkillsDir, "triobasic", _useChineseDocs ? "zh" : "en");
                 if (Directory.Exists(triobasicDir))
                 {
                     foreach (var html in Directory.GetFiles(triobasicDir, "*.html"))

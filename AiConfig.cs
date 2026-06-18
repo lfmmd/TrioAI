@@ -22,6 +22,7 @@ namespace TrioAI.MPPlugIn
         private static bool _showThinking = true;
         private static bool _memoryEnabled = true;
         private static bool _localizeThinking = true;
+        private static bool _useChineseDocs = false;   // skill 文档语言：false=英文（默认），true=中文
 
         // ---- Config ----
 
@@ -83,12 +84,17 @@ namespace TrioAI.MPPlugIn
                         bool b;
                         if (val != null && bool.TryParse(val.ToString(), out b)) _localizeThinking = b;
                     }
+                    if (cfg.TryGetValue("useChineseDocs", out val))
+                    {
+                        bool b;
+                        if (val != null && bool.TryParse(val.ToString(), out b)) _useChineseDocs = b;
+                    }
                 }
             }
             catch { }
         }
 
-        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null, bool? enableControllerValidation = null, bool? enableThinking = null, int? budgetTokens = null, bool? showThinking = null, bool? memoryEnabled = null, bool? localizeThinking = null, string lightModel = null)
+        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null, bool? enableControllerValidation = null, bool? enableThinking = null, int? budgetTokens = null, bool? showThinking = null, bool? memoryEnabled = null, bool? localizeThinking = null, bool? useChineseDocs = null, string lightModel = null)
         {
             _apiKey = apiKey;
             if (!string.IsNullOrEmpty(model)) _model = model;
@@ -106,7 +112,14 @@ namespace TrioAI.MPPlugIn
             if (showThinking.HasValue) _showThinking = showThinking.Value;
             if (memoryEnabled.HasValue) _memoryEnabled = memoryEnabled.Value;
             if (localizeThinking.HasValue) _localizeThinking = localizeThinking.Value;
-            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, lightModel = _lightModel ?? "", apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled, localizeThinking = _localizeThinking });
+            if (useChineseDocs.HasValue && useChineseDocs.Value != _useChineseDocs)
+            {
+                _useChineseDocs = useChineseDocs.Value;
+                _index = null;                  // reload the other language's index
+                _skillDetailCache.Clear();      // cached HTML is language-specific
+                _validationIndexBuilt = false;  // _triobasicIds/_signatures reflect the lang dir's files
+            }
+            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, lightModel = _lightModel ?? "", apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled, localizeThinking = _localizeThinking, useChineseDocs = _useChineseDocs });
             File.WriteAllText(ConfigPath, json);
         }
 
@@ -157,7 +170,7 @@ namespace TrioAI.MPPlugIn
 
             _skillsInitialized = true;
             _index = null; // force reload
-            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", lightModel = _lightModel ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled, localizeThinking = _localizeThinking });
+            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", lightModel = _lightModel ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled, localizeThinking = _localizeThinking, useChineseDocs = _useChineseDocs });
             File.WriteAllText(ConfigPath, json);
             return null;
         }
@@ -180,5 +193,6 @@ namespace TrioAI.MPPlugIn
         public static bool ShowThinking => _showThinking;
         public static bool MemoryEnabled => _memoryEnabled;
         public static bool LocalizeThinking => _localizeThinking;
+        public static bool UseChineseDocs => _useChineseDocs;
     }
 }

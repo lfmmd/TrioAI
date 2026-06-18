@@ -1,0 +1,14 @@
+<h1 id=for-to-by-end_for>FOR TO BY END_FOR</h1><p><em><strong>Statement (表达式)</strong></em><p>语句执行的迭代。<h2 id=_1>句法</h2><p><code>FOR &lt;index> := &lt;minimum> TO &lt;maximum> BY &lt;step> DO
+    &lt;statements>
+END_FOR;</code><p>式中:<table><thead><tr><th><th><tbody><tr><td>Index<td>用作索引的DINT内部变量。<tr><td>minimum<td>DINT表达式：索引的初始值。<tr><td>maximum<td>DINT表达式：索引的最大允许值。<tr><td>step<td>DINT表达式：每次迭代后增加索引步数（默认为1）。</table><h2 id=_2>备注</h2><p><strong>BY &lt;step></strong> 语句可以省略。步骤的默认值为1<h2 id=st>ST 语言</h2><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>iArrayDim := 10;
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>(* resets all items of the array to 0 *)
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>FOR iPos := 0 TO (iArrayDim - 1) DO
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>   MyArray[iPos] := 0;
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>END_FOR;
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a>
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a>(* set all items with odd index to 1 *)
+</span><span id=__span-0-9><a href=#__codelineno-0-9 id=__codelineno-0-9 name=__codelineno-0-9></a>FOR iPos := 1 TO 9 BY 2 DO
+</span><span id=__span-0-10><a href=#__codelineno-0-10 id=__codelineno-0-10 name=__codelineno-0-10></a>   MyArray[ipos] := 1;
+</span><span id=__span-0-11><a href=#__codelineno-0-11 id=__codelineno-0-11 name=__codelineno-0-11></a>END_FOR;
+</span></code></pre></div><h2 id=fbd>FBD 语言</h2><p>不可用。<h2 id=ld>LD 语言</h2><p>不可用。<h2 id=_3>查看</h2><p><a href=Bas-IF.html>IF</a><p><a href=Bas-WHILE.html>WHILE</a><p><a href=Bas-REPEAT.html>REPEAT</a><p><a href=Bas-CASE.html>CASE</a><p><a href=Bas-EXIT.html>EXIT</a><nav class=md-tags><span class=md-tag>Statement</span></nav>

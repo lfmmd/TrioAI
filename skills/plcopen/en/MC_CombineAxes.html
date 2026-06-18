@@ -1,0 +1,246 @@
+<h1 id=mc_combineaxes>MC_CombineAxes</h1><p>Combines the motion of 2 axes into a third axis with selectable combination method.<p><h2 id=description>Description</h2><p>MC_CombineAxes combines the motion of 2 axes into a third axis with selectable combination method. In essence, it is a calculation of a new position setpoint based on the 2 position setpoints of the input axes. This FB is reflected in the state diagram like a synchronized motion type.<p>MC_CombineAxes supports two combine modes: mcAddAxes and mcSubAxes.<ul><li>mcAddAxes: Slave position = Master1 position (relative position) + Master2 position (relative position).<li>mcSubAxes: Slave position = Master1 position (relative position) - Master2 position (relative position).</ul><p><p>MC_CombineAxes is not affected by errors in ‘<em>Master_1’ or ‘_Master_2’. After the error is cleared and the Masters are back in motion, the _Slave</em> will resume the combined positioning operation. Masters are not affected by errors in Slave.<p>As application example one can work with a separate profile synchronized to an object on a moving belt, or a rotating knife with flexible covered distance to be cut.<div class="admonition success"><p>Make sure the input and output parameters are of data type indicated in the table below.</div><div class="admonition note"><p><em>To stop the motion, MC_CombineAxes must be interrupted by another FB issuing a new command.</em></div><h2 id=inputsoutputs>Inputs/Outputs</h2><table><thead><tr><th><th><th><tbody><tr><td><strong>Name</strong><td><strong>Data Type</strong><td><strong>Description</strong><tr><td colspan=3 style=text-align:left><strong>INPUTS</strong><tr><td>Execute<td>BOOL<td>Start the combination process at rising edge<tr><td>Master1<td>AXIS_REF<td>Reference to the axis<tr><td>Master2<td>AXIS_REF<td>Reference to the axis<tr><td>Slave<td>AXIS_REF<td>Reference to the resulting combined axis. It can be a virtual axis or linked directly to a real axis<tr><td>ContinuousUpdate<td>BOOL<td>TRUE: when the function block is triggered (rising ‘Execute’), it will - as long as it stays TRUE – make the function block use the current values of the input variables and apply it to the ongoing movement.<br>FALSE: with the rising edge of the ‘Execute’ input, a change in the input parameters is ignored during the whole movement.<tr><td>CombineMode<td>MC_COMBINE_MODE<td>Defines the type of combination applied to AxisOut:<br>mcAddAxes: Addition of the 2 input axes positions<br>mcSubAxes: Subtraction of the 2 input axes positions<tr><td>GearRatioNumeratorM1<td>INT<td>Numerator for the gear factor for master axis 1 towards the slave<tr><td>GearRatioDenominatorM1<td>INT<td>Corresponding denominator for master axis 1<tr><td>GearRatioNumeratorM2<td>INT<td>Numerator for the gear factor for master axis 2 towards the slave<tr><td>GearRatioDenominatorM2<td>INT<td>Corresponding denominator for master axis 2<tr><td>MasterValueSourceM1<td>MC_SOURCE<td>Defines the source for synchronization for master axis 1:<br><strong>mcSetValue</strong>: Synchronization on master set value<br><strong>mcActualValue</strong>: Synchronization on master actual value<br><strong>mcCommandValue</strong>: Synchronization on master command value<tr><td>MasterValueSourceM2<td>MC_SOURCE<td>Defines the source for synchronization for master axis 2:<br><strong>mcSetValue</strong>: Synchronization on master set value<br><strong>mcActualValue</strong>: Synchronization on master actual value<br><strong>mcCommandValue</strong>: Synchronization on master command value<tr><td colspan=3 style=text-align:left><strong>OUTPUTS</strong><tr><td>InSync<td>BOOL<td>TRUE if the set value = the commanded value.<tr><td>Busy<td>BOOL<td>The FB is not finished and new output value is to be expected.<tr><td>Active<td>BOOL<td>Indicates that the FB has control on the combined axis<tr><td>CommandAborted<td>BOOL<td>‘Command’ is aborted by another command.<tr><td>Error<td>BOOL<td>Signals that an error has occurred within the Function Block<tr><td>ErrorID<td>UINT<td>Error identification</table><h2 id=examples>Examples</h2><h3 id=example-1>Example 1</h3><p>Axis 1 is the master axis of MC_CamIn. Axis 0 is the slave. The master axis will move along the Cam table defined with sinusoid velocity profile. Axis 1 will move with MC_GearIn as axis 0 when it is synchronized with its master axis. When axis 1 is synchronized with axis 0, axis 3 will start with MC_MoveAbsolute. Axis 0 and axis 1 are combined with mcAddAxes mode to axis 3. The following picture shows the velocity profile for these axes.<p><p><strong> Example</strong><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>(\* Defines for MC_CombineAxes example \*)
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>\#define STATE_READY     0
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>\#define STATE_CAMIN     1
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>\#define STATE_GEARIN    2
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>\#define STATE_COMBINE   3
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>\#define STATE_ERROR     8
+</span></code></pre></div><div class="language-text highlight"><pre><span></span><code><span id=__span-1-1><a href=#__codelineno-1-1 id=__codelineno-1-1 name=__codelineno-1-1></a>(\* Defines for Variables used in MC_CombineAxes \*)
+</span><span id=__span-1-2><a href=#__codelineno-1-2 id=__codelineno-1-2 name=__codelineno-1-2></a>VAR
+</span><span id=__span-1-3><a href=#__codelineno-1-3 id=__codelineno-1-3 name=__codelineno-1-3></a> state : USINT ;
+</span><span id=__span-1-4><a href=#__codelineno-1-4 id=__codelineno-1-4 name=__codelineno-1-4></a>  (\*\$desc=Current state\*)
+</span><span id=__span-1-5><a href=#__codelineno-1-5 id=__codelineno-1-5 name=__codelineno-1-5></a> Inst_MC_CamIn : MC_CamIn ;
+</span><span id=__span-1-6><a href=#__codelineno-1-6 id=__codelineno-1-6 name=__codelineno-1-6></a>  (\*\$desc=MC_CamIn instant\*)
+</span><span id=__span-1-7><a href=#__codelineno-1-7 id=__codelineno-1-7 name=__codelineno-1-7></a> Axis0Ref : lib:AXIS_REF ;
+</span><span id=__span-1-8><a href=#__codelineno-1-8 id=__codelineno-1-8 name=__codelineno-1-8></a>  (\*\$desc=Axis 0 reference\*)
+</span><span id=__span-1-9><a href=#__codelineno-1-9 id=__codelineno-1-9 name=__codelineno-1-9></a> Axis2Ref : lib:AXIS_REF ;
+</span><span id=__span-1-10><a href=#__codelineno-1-10 id=__codelineno-1-10 name=__codelineno-1-10></a>  (\*\$desc=Axis 2 reference\*)
+</span><span id=__span-1-11><a href=#__codelineno-1-11 id=__codelineno-1-11 name=__codelineno-1-11></a> CamId : UINT ;
+</span><span id=__span-1-12><a href=#__codelineno-1-12 id=__codelineno-1-12 name=__codelineno-1-12></a>  (\*\$desc=Cam table ID\*)
+</span><span id=__span-1-13><a href=#__codelineno-1-13 id=__codelineno-1-13 name=__codelineno-1-13></a> bGearStart : BOOL := FALSE ;
+</span><span id=__span-1-14><a href=#__codelineno-1-14 id=__codelineno-1-14 name=__codelineno-1-14></a>  (\*\$desc=To start Gear motion, it is bound to IO6\*)
+</span><span id=__span-1-15><a href=#__codelineno-1-15 id=__codelineno-1-15 name=__codelineno-1-15></a>  (\*\$profile=IO\*)
+</span><span id=__span-1-16><a href=#__codelineno-1-16 id=__codelineno-1-16 name=__codelineno-1-16></a>  (\*\$embed=(VERS=1    MODE=0    POINT=7)\*)
+</span><span id=__span-1-17><a href=#__codelineno-1-17 id=__codelineno-1-17 name=__codelineno-1-17></a> Inst_MC_GearIn : MC_GearIn ;
+</span><span id=__span-1-18><a href=#__codelineno-1-18 id=__codelineno-1-18 name=__codelineno-1-18></a> Axis1Ref : lib:AXIS_REF ;
+</span><span id=__span-1-19><a href=#__codelineno-1-19 id=__codelineno-1-19 name=__codelineno-1-19></a>  (\*\$desc=A slave axis which will move in Gear motion\*)
+</span><span id=__span-1-20><a href=#__codelineno-1-20 id=__codelineno-1-20 name=__codelineno-1-20></a> bStartCombine : BOOL ;
+</span><span id=__span-1-21><a href=#__codelineno-1-21 id=__codelineno-1-21 name=__codelineno-1-21></a>  (\*\$desc=A slave axis which will move in combine motion\*)
+</span><span id=__span-1-22><a href=#__codelineno-1-22 id=__codelineno-1-22 name=__codelineno-1-22></a>  (\*\$profile=IO\*)
+</span><span id=__span-1-23><a href=#__codelineno-1-23 id=__codelineno-1-23 name=__codelineno-1-23></a>  (\*\$embed=(VERS=1    MODE=0    POINT=7)\*)
+</span><span id=__span-1-24><a href=#__codelineno-1-24 id=__codelineno-1-24 name=__codelineno-1-24></a> Inst_MC_CombineAxes : MC_CombineAxes ;
+</span><span id=__span-1-25><a href=#__codelineno-1-25 id=__codelineno-1-25 name=__codelineno-1-25></a> Axis3Ref : lib:AXIS_REF ;
+</span><span id=__span-1-26><a href=#__codelineno-1-26 id=__codelineno-1-26 name=__codelineno-1-26></a> bStop : BOOL := FALSE ;
+</span><span id=__span-1-27><a href=#__codelineno-1-27 id=__codelineno-1-27 name=__codelineno-1-27></a>  (\*\$profile=IO\*)
+</span><span id=__span-1-28><a href=#__codelineno-1-28 id=__codelineno-1-28 name=__codelineno-1-28></a>  (\*\$embed=(VERS=1    MODE=0    POINT=1)\*)
+</span><span id=__span-1-29><a href=#__codelineno-1-29 id=__codelineno-1-29 name=__codelineno-1-29></a> Inst_MC_Stop1 : MC_Stop ;
+</span><span id=__span-1-30><a href=#__codelineno-1-30 id=__codelineno-1-30 name=__codelineno-1-30></a> Inst_MC_Stop2 : MC_Stop ;
+</span><span id=__span-1-31><a href=#__codelineno-1-31 id=__codelineno-1-31 name=__codelineno-1-31></a> Inst_MC_Stop3 : MC_Stop ;
+</span><span id=__span-1-32><a href=#__codelineno-1-32 id=__codelineno-1-32 name=__codelineno-1-32></a> bStart : BOOL := FALSE ;
+</span><span id=__span-1-33><a href=#__codelineno-1-33 id=__codelineno-1-33 name=__codelineno-1-33></a>  (\*\$desc=To start comine motion example\*)
+</span><span id=__span-1-34><a href=#__codelineno-1-34 id=__codelineno-1-34 name=__codelineno-1-34></a>  (\*\$profile=IO\*)
+</span><span id=__span-1-35><a href=#__codelineno-1-35 id=__codelineno-1-35 name=__codelineno-1-35></a>  (\*\$embed=(VERS=1    MODE=0    POINT=0)\*)
+</span><span id=__span-1-36><a href=#__codelineno-1-36 id=__codelineno-1-36 name=__codelineno-1-36></a> SrcValue : MC_SOURCE := mcSetValue ;
+</span><span id=__span-1-37><a href=#__codelineno-1-37 id=__codelineno-1-37 name=__codelineno-1-37></a> StartMode : MC_START_MODE ;
+</span><span id=__span-1-38><a href=#__codelineno-1-38 id=__codelineno-1-38 name=__codelineno-1-38></a> CombMode : MC_COMBINE_MODE ;
+</span><span id=__span-1-39><a href=#__codelineno-1-39 id=__codelineno-1-39 name=__codelineno-1-39></a> Inst_MC_MoveAbsolute : MC_MoveAbsolute ;
+</span><span id=__span-1-40><a href=#__codelineno-1-40 id=__codelineno-1-40 name=__codelineno-1-40></a> mDirection : MC_DIRECTION ;
+</span><span id=__span-1-41><a href=#__codelineno-1-41 id=__codelineno-1-41 name=__codelineno-1-41></a> BufferMode : MC_BUFFER_MODE ;
+</span><span id=__span-1-42><a href=#__codelineno-1-42 id=__codelineno-1-42 name=__codelineno-1-42></a>END_VAR
+</span><span id=__span-1-43><a href=#__codelineno-1-43 id=__codelineno-1-43 name=__codelineno-1-43></a>(\* Variables initialization \*)
+</span><span id=__span-1-44><a href=#__codelineno-1-44 id=__codelineno-1-44 name=__codelineno-1-44></a>CamId := UINT\#25616; (\* This Cam table should be created before using \*)
+</span><span id=__span-1-45><a href=#__codelineno-1-45 id=__codelineno-1-45 name=__codelineno-1-45></a>Axis0Ref.AxisNo := 0; (\* The slave axis for Cam motion \*)
+</span><span id=__span-1-46><a href=#__codelineno-1-46 id=__codelineno-1-46 name=__codelineno-1-46></a>Axis1Ref.AxisNo := 1; (\* The slave axis for Gear motion \*)
+</span><span id=__span-1-47><a href=#__codelineno-1-47 id=__codelineno-1-47 name=__codelineno-1-47></a>Axis2Ref.AxisNo := 2; (\* The master axis for Cam motion \*)
+</span><span id=__span-1-48><a href=#__codelineno-1-48 id=__codelineno-1-48 name=__codelineno-1-48></a>Axis3Ref.AxisNo := 3; (\* The slave axis for combine motion \*)
+</span><span id=__span-1-49><a href=#__codelineno-1-49 id=__codelineno-1-49 name=__codelineno-1-49></a>SrcValue := mcSetValue;
+</span><span id=__span-1-50><a href=#__codelineno-1-50 id=__codelineno-1-50 name=__codelineno-1-50></a>StartMode := mcAbsolute;
+</span><span id=__span-1-51><a href=#__codelineno-1-51 id=__codelineno-1-51 name=__codelineno-1-51></a>CombMode := mcAddAxes;
+</span><span id=__span-1-52><a href=#__codelineno-1-52 id=__codelineno-1-52 name=__codelineno-1-52></a>mDirection := mcPositiveDirection;
+</span><span id=__span-1-53><a href=#__codelineno-1-53 id=__codelineno-1-53 name=__codelineno-1-53></a>BufferMode := mcAborting;
+</span><span id=__span-1-54><a href=#__codelineno-1-54 id=__codelineno-1-54 name=__codelineno-1-54></a>
+</span><span id=__span-1-55><a href=#__codelineno-1-55 id=__codelineno-1-55 name=__codelineno-1-55></a>
+</span><span id=__span-1-56><a href=#__codelineno-1-56 id=__codelineno-1-56 name=__codelineno-1-56></a>(\* cyclic program \*)
+</span><span id=__span-1-57><a href=#__codelineno-1-57 id=__codelineno-1-57 name=__codelineno-1-57></a>CASE state OF
+</span><span id=__span-1-58><a href=#__codelineno-1-58 id=__codelineno-1-58 name=__codelineno-1-58></a>    (\* ...power and home axis before moving... \*)
+</span><span id=__span-1-59><a href=#__codelineno-1-59 id=__codelineno-1-59 name=__codelineno-1-59></a>    (\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*STATE_READY\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-1-60><a href=#__codelineno-1-60 id=__codelineno-1-60 name=__codelineno-1-60></a>    STATE_READY:
+</span><span id=__span-1-61><a href=#__codelineno-1-61 id=__codelineno-1-61 name=__codelineno-1-61></a>    (\*wait for user to start movement\*)
+</span><span id=__span-1-62><a href=#__codelineno-1-62 id=__codelineno-1-62 name=__codelineno-1-62></a>    IF (bStart) THEN
+</span><span id=__span-1-63><a href=#__codelineno-1-63 id=__codelineno-1-63 name=__codelineno-1-63></a>        Inst_MC_CamIn( Execute := FALSE (\*BOOL\*),
+</span><span id=__span-1-64><a href=#__codelineno-1-64 id=__codelineno-1-64 name=__codelineno-1-64></a>                        Master := Axis2Ref(\*AXIS_REF\*), 
+</span><span id=__span-1-65><a href=#__codelineno-1-65 id=__codelineno-1-65 name=__codelineno-1-65></a>                        Slave := Axis0Ref (\*AXIS_REF\*),         
+</span><span id=__span-1-66><a href=#__codelineno-1-66 id=__codelineno-1-66 name=__codelineno-1-66></a>                        MasterOffset := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-67><a href=#__codelineno-1-67 id=__codelineno-1-67 name=__codelineno-1-67></a>                        SlaveOffset := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-68><a href=#__codelineno-1-68 id=__codelineno-1-68 name=__codelineno-1-68></a>                        MasterScaling := REAL\#1.0 (\*REAL\*), 
+</span><span id=__span-1-69><a href=#__codelineno-1-69 id=__codelineno-1-69 name=__codelineno-1-69></a>                        SlaveScaling := REAL\#1.0 (\*REAL\*), 
+</span><span id=__span-1-70><a href=#__codelineno-1-70 id=__codelineno-1-70 name=__codelineno-1-70></a>                        MasterStartDistance := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-71><a href=#__codelineno-1-71 id=__codelineno-1-71 name=__codelineno-1-71></a>                        MasterSyncPosition := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-72><a href=#__codelineno-1-72 id=__codelineno-1-72 name=__codelineno-1-72></a>                        StartMode := StartMode(\*MC_START_MODE\*), 
+</span><span id=__span-1-73><a href=#__codelineno-1-73 id=__codelineno-1-73 name=__codelineno-1-73></a>                        MasterValueSource := SrcValue(\*MC_SOURCE\*), 
+</span><span id=__span-1-74><a href=#__codelineno-1-74 id=__codelineno-1-74 name=__codelineno-1-74></a>                        CamTableID := CamId(\*UINT\*) );
+</span><span id=__span-1-75><a href=#__codelineno-1-75 id=__codelineno-1-75 name=__codelineno-1-75></a>        
+</span><span id=__span-1-76><a href=#__codelineno-1-76 id=__codelineno-1-76 name=__codelineno-1-76></a>        state:= STATE_CAMIN;
+</span><span id=__span-1-77><a href=#__codelineno-1-77 id=__codelineno-1-77 name=__codelineno-1-77></a>    END_IF;
+</span><span id=__span-1-78><a href=#__codelineno-1-78 id=__codelineno-1-78 name=__codelineno-1-78></a>    (\*\*\*\*\*\*\*\*STATE CAM IN\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-1-79><a href=#__codelineno-1-79 id=__codelineno-1-79 name=__codelineno-1-79></a>    STATE_CAMIN:  (\*start cam in\*)
+</span><span id=__span-1-80><a href=#__codelineno-1-80 id=__codelineno-1-80 name=__codelineno-1-80></a>    Inst_MC_CamIn(Execute := TRUE (\*BOOL\*), 
+</span><span id=__span-1-81><a href=#__codelineno-1-81 id=__codelineno-1-81 name=__codelineno-1-81></a>                    Master := Axis2Ref(\*AXIS_REF\*), 
+</span><span id=__span-1-82><a href=#__codelineno-1-82 id=__codelineno-1-82 name=__codelineno-1-82></a>                    Slave := Axis0Ref (\*AXIS_REF\*), 
+</span><span id=__span-1-83><a href=#__codelineno-1-83 id=__codelineno-1-83 name=__codelineno-1-83></a>                    MasterOffset := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-84><a href=#__codelineno-1-84 id=__codelineno-1-84 name=__codelineno-1-84></a>                    SlaveOffset := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-85><a href=#__codelineno-1-85 id=__codelineno-1-85 name=__codelineno-1-85></a>                    MasterScaling := REAL\#1.0 (\*REAL\*), 
+</span><span id=__span-1-86><a href=#__codelineno-1-86 id=__codelineno-1-86 name=__codelineno-1-86></a>                    SlaveScaling := REAL\#1.0 (\*REAL\*), 
+</span><span id=__span-1-87><a href=#__codelineno-1-87 id=__codelineno-1-87 name=__codelineno-1-87></a>                    MasterStartDistance := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-88><a href=#__codelineno-1-88 id=__codelineno-1-88 name=__codelineno-1-88></a>                    MasterSyncPosition := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-89><a href=#__codelineno-1-89 id=__codelineno-1-89 name=__codelineno-1-89></a>                    StartMode := StartMode(\*MC_START_MODE\*), 
+</span><span id=__span-1-90><a href=#__codelineno-1-90 id=__codelineno-1-90 name=__codelineno-1-90></a>                    MasterValueSource := SrcValue(\*MC_SOURCE\*), 
+</span><span id=__span-1-91><a href=#__codelineno-1-91 id=__codelineno-1-91 name=__codelineno-1-91></a>                    CamTableID := CamId(\*UINT\*) );
+</span><span id=__span-1-92><a href=#__codelineno-1-92 id=__codelineno-1-92 name=__codelineno-1-92></a>    
+</span><span id=__span-1-93><a href=#__codelineno-1-93 id=__codelineno-1-93 name=__codelineno-1-93></a>    IF ( (bGearStart =TRUE) AND (Inst_MC_CamIn.InSync)) THEN
+</span><span id=__span-1-94><a href=#__codelineno-1-94 id=__codelineno-1-94 name=__codelineno-1-94></a>        Inst_MC_GearIn( Execute := FALSE(\*BOOL\*), 
+</span><span id=__span-1-95><a href=#__codelineno-1-95 id=__codelineno-1-95 name=__codelineno-1-95></a>                        Master  := Axis2Ref(\*AXIS_REF\*), 
+</span><span id=__span-1-96><a href=#__codelineno-1-96 id=__codelineno-1-96 name=__codelineno-1-96></a>                        Slave  := Axis1Ref(\*AXIS_REF\*),         
+</span><span id=__span-1-97><a href=#__codelineno-1-97 id=__codelineno-1-97 name=__codelineno-1-97></a>                        ContinuousUpdate := TRUE(\*BOOL\*), 
+</span><span id=__span-1-98><a href=#__codelineno-1-98 id=__codelineno-1-98 name=__codelineno-1-98></a>                        RatioNumerator := INT\#1(\*INT\*), 
+</span><span id=__span-1-99><a href=#__codelineno-1-99 id=__codelineno-1-99 name=__codelineno-1-99></a>                        RatioDenominator := UINT\#1(\*UINT\*), 
+</span><span id=__span-1-100><a href=#__codelineno-1-100 id=__codelineno-1-100 name=__codelineno-1-100></a>                        MasterValueSource := SrcValue(\*MC_SOURCE\*), 
+</span><span id=__span-1-101><a href=#__codelineno-1-101 id=__codelineno-1-101 name=__codelineno-1-101></a>                        Acceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-102><a href=#__codelineno-1-102 id=__codelineno-1-102 name=__codelineno-1-102></a>                        Deceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-103><a href=#__codelineno-1-103 id=__codelineno-1-103 name=__codelineno-1-103></a>                        Jerk := LREAL\#100.0(\*LREAL\*) );
+</span><span id=__span-1-104><a href=#__codelineno-1-104 id=__codelineno-1-104 name=__codelineno-1-104></a>          
+</span><span id=__span-1-105><a href=#__codelineno-1-105 id=__codelineno-1-105 name=__codelineno-1-105></a>        state:=STATE_GEARIN;
+</span><span id=__span-1-106><a href=#__codelineno-1-106 id=__codelineno-1-106 name=__codelineno-1-106></a>    ELSIF (Inst_MC_CamIn.Error) THEN        
+</span><span id=__span-1-107><a href=#__codelineno-1-107 id=__codelineno-1-107 name=__codelineno-1-107></a>        Inst_MC_CamIn( Execute := FALSE (\*BOOL\*), 
+</span><span id=__span-1-108><a href=#__codelineno-1-108 id=__codelineno-1-108 name=__codelineno-1-108></a>                        Master := Axis2Ref(\*AXIS_REF\*), 
+</span><span id=__span-1-109><a href=#__codelineno-1-109 id=__codelineno-1-109 name=__codelineno-1-109></a>                        Slave := Axis0Ref (\*AXIS_REF\*),         
+</span><span id=__span-1-110><a href=#__codelineno-1-110 id=__codelineno-1-110 name=__codelineno-1-110></a>                        MasterOffset := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-111><a href=#__codelineno-1-111 id=__codelineno-1-111 name=__codelineno-1-111></a>                        SlaveOffset := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-112><a href=#__codelineno-1-112 id=__codelineno-1-112 name=__codelineno-1-112></a>                        MasterScaling := REAL\#1.0 (\*REAL\*), 
+</span><span id=__span-1-113><a href=#__codelineno-1-113 id=__codelineno-1-113 name=__codelineno-1-113></a>                        SlaveScaling := REAL\#1.0 (\*REAL\*), 
+</span><span id=__span-1-114><a href=#__codelineno-1-114 id=__codelineno-1-114 name=__codelineno-1-114></a>                        MasterStartDistance := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-115><a href=#__codelineno-1-115 id=__codelineno-1-115 name=__codelineno-1-115></a>                        MasterSyncPosition := LREAL\#0.0 (\*LREAL\*), 
+</span><span id=__span-1-116><a href=#__codelineno-1-116 id=__codelineno-1-116 name=__codelineno-1-116></a>                        StartMode := StartMode(\*MC_START_MODE\*), 
+</span><span id=__span-1-117><a href=#__codelineno-1-117 id=__codelineno-1-117 name=__codelineno-1-117></a>                        MasterValueSource := SrcValue(\*MC_SOURCE\*), 
+</span><span id=__span-1-118><a href=#__codelineno-1-118 id=__codelineno-1-118 name=__codelineno-1-118></a>                        CamTableID := CamId(\*UINT\*) );
+</span><span id=__span-1-119><a href=#__codelineno-1-119 id=__codelineno-1-119 name=__codelineno-1-119></a>        
+</span><span id=__span-1-120><a href=#__codelineno-1-120 id=__codelineno-1-120 name=__codelineno-1-120></a>        state:=STATE_ERROR;
+</span><span id=__span-1-121><a href=#__codelineno-1-121 id=__codelineno-1-121 name=__codelineno-1-121></a>    END_IF;
+</span><span id=__span-1-122><a href=#__codelineno-1-122 id=__codelineno-1-122 name=__codelineno-1-122></a>    (\*\*\*\*\*\*\*\*STATE GEAR IN\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-1-123><a href=#__codelineno-1-123 id=__codelineno-1-123 name=__codelineno-1-123></a>    STATE_GEARIN:  (\*start cam in\*)
+</span><span id=__span-1-124><a href=#__codelineno-1-124 id=__codelineno-1-124 name=__codelineno-1-124></a>    
+</span><span id=__span-1-125><a href=#__codelineno-1-125 id=__codelineno-1-125 name=__codelineno-1-125></a>    Inst_MC_GearIn( Execute := TRUE(\*BOOL\*), 
+</span><span id=__span-1-126><a href=#__codelineno-1-126 id=__codelineno-1-126 name=__codelineno-1-126></a>                    Master  := Axis2Ref(\*AXIS_REF\*), 
+</span><span id=__span-1-127><a href=#__codelineno-1-127 id=__codelineno-1-127 name=__codelineno-1-127></a>                    Slave  := Axis1Ref(\*AXIS_REF\*),     
+</span><span id=__span-1-128><a href=#__codelineno-1-128 id=__codelineno-1-128 name=__codelineno-1-128></a>                    ContinuousUpdate := TRUE(\*BOOL\*), 
+</span><span id=__span-1-129><a href=#__codelineno-1-129 id=__codelineno-1-129 name=__codelineno-1-129></a>                    RatioNumerator := INT\#1(\*INT\*), 
+</span><span id=__span-1-130><a href=#__codelineno-1-130 id=__codelineno-1-130 name=__codelineno-1-130></a>                    RatioDenominator := UINT\#1(\*UINT\*), 
+</span><span id=__span-1-131><a href=#__codelineno-1-131 id=__codelineno-1-131 name=__codelineno-1-131></a>                    MasterValueSource := SrcValue(\*MC_SOURCE\*), 
+</span><span id=__span-1-132><a href=#__codelineno-1-132 id=__codelineno-1-132 name=__codelineno-1-132></a>                    Acceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-133><a href=#__codelineno-1-133 id=__codelineno-1-133 name=__codelineno-1-133></a>                    Deceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-134><a href=#__codelineno-1-134 id=__codelineno-1-134 name=__codelineno-1-134></a>                    Jerk := LREAL\#100.0(\*LREAL\*) );
+</span><span id=__span-1-135><a href=#__codelineno-1-135 id=__codelineno-1-135 name=__codelineno-1-135></a>    
+</span><span id=__span-1-136><a href=#__codelineno-1-136 id=__codelineno-1-136 name=__codelineno-1-136></a>    IF ((bStartCombine =TRUE) AND (Inst_MC_GearIn.InGear)) THEN
+</span><span id=__span-1-137><a href=#__codelineno-1-137 id=__codelineno-1-137 name=__codelineno-1-137></a>        Inst_MC_CombineAxes( Execute := FALSE(\*BOOL\*),
+</span><span id=__span-1-138><a href=#__codelineno-1-138 id=__codelineno-1-138 name=__codelineno-1-138></a>                            Master1 := Axis0Ref(\*AXIS_REF\*),
+</span><span id=__span-1-139><a href=#__codelineno-1-139 id=__codelineno-1-139 name=__codelineno-1-139></a>                            Master2 := Axis1Ref(\*AXIS_REF\*), 
+</span><span id=__span-1-140><a href=#__codelineno-1-140 id=__codelineno-1-140 name=__codelineno-1-140></a>                            Slave := Axis3Ref(\*AXIS_REF\*),                              
+</span><span id=__span-1-141><a href=#__codelineno-1-141 id=__codelineno-1-141 name=__codelineno-1-141></a>                            ContinuousUpdate := TRUE(\*BOOL\*), 
+</span><span id=__span-1-142><a href=#__codelineno-1-142 id=__codelineno-1-142 name=__codelineno-1-142></a>                            CombineMode := CombMode(\*MC_COMBINE_MODE\*),
+</span><span id=__span-1-143><a href=#__codelineno-1-143 id=__codelineno-1-143 name=__codelineno-1-143></a>                            GearRatioNumeratorM1 := INT\#1(\*INT\*), 
+</span><span id=__span-1-144><a href=#__codelineno-1-144 id=__codelineno-1-144 name=__codelineno-1-144></a>                            GearRatioDenominatorM1 := INT\#1(\*INT\*), 
+</span><span id=__span-1-145><a href=#__codelineno-1-145 id=__codelineno-1-145 name=__codelineno-1-145></a>                            GearRatioNumeratorM2 := INT\#1(\*INT\*), 
+</span><span id=__span-1-146><a href=#__codelineno-1-146 id=__codelineno-1-146 name=__codelineno-1-146></a>                            GearRatioDenominatorM2 := INT\#1(\*INT\*), 
+</span><span id=__span-1-147><a href=#__codelineno-1-147 id=__codelineno-1-147 name=__codelineno-1-147></a>                            MasterValueSourceM1 := SrcValue(\*MC_SOURCE\*), 
+</span><span id=__span-1-148><a href=#__codelineno-1-148 id=__codelineno-1-148 name=__codelineno-1-148></a>                            MasterValueSourceM2 := SrcValue(\*MC_SOURCE\*) );
+</span><span id=__span-1-149><a href=#__codelineno-1-149 id=__codelineno-1-149 name=__codelineno-1-149></a>        
+</span><span id=__span-1-150><a href=#__codelineno-1-150 id=__codelineno-1-150 name=__codelineno-1-150></a>        Inst_MC_MoveAbsolute( Execute := FALSE(\*BOOL\*),
+</span><span id=__span-1-151><a href=#__codelineno-1-151 id=__codelineno-1-151 name=__codelineno-1-151></a>                            Axis := Axis3Ref(\*AXIS_REF\*),
+</span><span id=__span-1-152><a href=#__codelineno-1-152 id=__codelineno-1-152 name=__codelineno-1-152></a>                            ContinuousUpdate := FALSE(\*BOOL\*), 
+</span><span id=__span-1-153><a href=#__codelineno-1-153 id=__codelineno-1-153 name=__codelineno-1-153></a>                            Position := LREAL\#10000.0(\*LREAL\*), 
+</span><span id=__span-1-154><a href=#__codelineno-1-154 id=__codelineno-1-154 name=__codelineno-1-154></a>                            Velocity := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-155><a href=#__codelineno-1-155 id=__codelineno-1-155 name=__codelineno-1-155></a>                            Acceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-156><a href=#__codelineno-1-156 id=__codelineno-1-156 name=__codelineno-1-156></a>                            Deceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-157><a href=#__codelineno-1-157 id=__codelineno-1-157 name=__codelineno-1-157></a>                            Jerk := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-158><a href=#__codelineno-1-158 id=__codelineno-1-158 name=__codelineno-1-158></a>                            Direction := mDirection(\*MC_DIRECTION\*), 
+</span><span id=__span-1-159><a href=#__codelineno-1-159 id=__codelineno-1-159 name=__codelineno-1-159></a>                            BufferMode := BufferMode(\*MC_BUFFER_MODE\*) );
+</span><span id=__span-1-160><a href=#__codelineno-1-160 id=__codelineno-1-160 name=__codelineno-1-160></a>        
+</span><span id=__span-1-161><a href=#__codelineno-1-161 id=__codelineno-1-161 name=__codelineno-1-161></a>        state:=STATE_COMBINE;
+</span><span id=__span-1-162><a href=#__codelineno-1-162 id=__codelineno-1-162 name=__codelineno-1-162></a>    ELSIF (Inst_MC_GearIn.Error) THEN        
+</span><span id=__span-1-163><a href=#__codelineno-1-163 id=__codelineno-1-163 name=__codelineno-1-163></a>        Inst_MC_GearIn( Execute := FALSE (\*BOOL\*), 
+</span><span id=__span-1-164><a href=#__codelineno-1-164 id=__codelineno-1-164 name=__codelineno-1-164></a>                            Master  := Axis2Ref(\*AXIS_REF\*), 
+</span><span id=__span-1-165><a href=#__codelineno-1-165 id=__codelineno-1-165 name=__codelineno-1-165></a>                            Slave  := Axis1Ref(\*AXIS_REF\*),
+</span><span id=__span-1-166><a href=#__codelineno-1-166 id=__codelineno-1-166 name=__codelineno-1-166></a>                            ContinuousUpdate := TRUE(\*BOOL\*), 
+</span><span id=__span-1-167><a href=#__codelineno-1-167 id=__codelineno-1-167 name=__codelineno-1-167></a>                            RatioNumerator := INT\#1(\*INT\*), 
+</span><span id=__span-1-168><a href=#__codelineno-1-168 id=__codelineno-1-168 name=__codelineno-1-168></a>                            RatioDenominator := UINT\#1(\*UINT\*), 
+</span><span id=__span-1-169><a href=#__codelineno-1-169 id=__codelineno-1-169 name=__codelineno-1-169></a>                            MasterValueSource := SrcValue(\*MC_SOURCE\*), 
+</span><span id=__span-1-170><a href=#__codelineno-1-170 id=__codelineno-1-170 name=__codelineno-1-170></a>                            Acceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-171><a href=#__codelineno-1-171 id=__codelineno-1-171 name=__codelineno-1-171></a>                            Deceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-172><a href=#__codelineno-1-172 id=__codelineno-1-172 name=__codelineno-1-172></a>                            Jerk := LREAL\#100.0(\*LREAL\*) );
+</span><span id=__span-1-173><a href=#__codelineno-1-173 id=__codelineno-1-173 name=__codelineno-1-173></a>        state:=STATE_ERROR;
+</span><span id=__span-1-174><a href=#__codelineno-1-174 id=__codelineno-1-174 name=__codelineno-1-174></a>    END_IF;
+</span><span id=__span-1-175><a href=#__codelineno-1-175 id=__codelineno-1-175 name=__codelineno-1-175></a>    (\*\*\*\*\*\*\*\*STATE COMBINE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-1-176><a href=#__codelineno-1-176 id=__codelineno-1-176 name=__codelineno-1-176></a>    STATE_COMBINE:  (\*start combine \*)    
+</span><span id=__span-1-177><a href=#__codelineno-1-177 id=__codelineno-1-177 name=__codelineno-1-177></a>    Inst_MC_CombineAxes( Execute := TRUE(\*BOOL\*),
+</span><span id=__span-1-178><a href=#__codelineno-1-178 id=__codelineno-1-178 name=__codelineno-1-178></a>                            Master1 := Axis0Ref(\*AXIS_REF\*),
+</span><span id=__span-1-179><a href=#__codelineno-1-179 id=__codelineno-1-179 name=__codelineno-1-179></a>                            Master2 := Axis1Ref(\*AXIS_REF\*),  
+</span><span id=__span-1-180><a href=#__codelineno-1-180 id=__codelineno-1-180 name=__codelineno-1-180></a>                            Slave := Axis3Ref(\*AXIS_REF\*),
+</span><span id=__span-1-181><a href=#__codelineno-1-181 id=__codelineno-1-181 name=__codelineno-1-181></a>                            ContinuousUpdate := TRUE(\*BOOL\*), 
+</span><span id=__span-1-182><a href=#__codelineno-1-182 id=__codelineno-1-182 name=__codelineno-1-182></a>                            CombineMode := CombMode(\*MC_COMBINE_MODE\*),
+</span><span id=__span-1-183><a href=#__codelineno-1-183 id=__codelineno-1-183 name=__codelineno-1-183></a>                            GearRatioNumeratorM1 := INT\#1(\*INT\*), 
+</span><span id=__span-1-184><a href=#__codelineno-1-184 id=__codelineno-1-184 name=__codelineno-1-184></a>                            GearRatioDenominatorM1 := INT\#1(\*INT\*), 
+</span><span id=__span-1-185><a href=#__codelineno-1-185 id=__codelineno-1-185 name=__codelineno-1-185></a>                            GearRatioNumeratorM2 := INT\#1(\*INT\*), 
+</span><span id=__span-1-186><a href=#__codelineno-1-186 id=__codelineno-1-186 name=__codelineno-1-186></a>                            GearRatioDenominatorM2 := INT\#1(\*INT\*), 
+</span><span id=__span-1-187><a href=#__codelineno-1-187 id=__codelineno-1-187 name=__codelineno-1-187></a>                            MasterValueSourceM1 := SrcValue(\*MC_SOURCE\*), 
+</span><span id=__span-1-188><a href=#__codelineno-1-188 id=__codelineno-1-188 name=__codelineno-1-188></a>                            MasterValueSourceM2 := SrcValue(\*MC_SOURCE\*) );
+</span><span id=__span-1-189><a href=#__codelineno-1-189 id=__codelineno-1-189 name=__codelineno-1-189></a>    
+</span><span id=__span-1-190><a href=#__codelineno-1-190 id=__codelineno-1-190 name=__codelineno-1-190></a>    Inst_MC_MoveAbsolute( Execute := TRUE(\*BOOL\*),
+</span><span id=__span-1-191><a href=#__codelineno-1-191 id=__codelineno-1-191 name=__codelineno-1-191></a>                            Axis := Axis3Ref(\*AXIS_REF\*), 
+</span><span id=__span-1-192><a href=#__codelineno-1-192 id=__codelineno-1-192 name=__codelineno-1-192></a>                            ContinuousUpdate := FALSE(\*BOOL\*), 
+</span><span id=__span-1-193><a href=#__codelineno-1-193 id=__codelineno-1-193 name=__codelineno-1-193></a>                            Position := LREAL\#10000.0(\*LREAL\*), 
+</span><span id=__span-1-194><a href=#__codelineno-1-194 id=__codelineno-1-194 name=__codelineno-1-194></a>                            Velocity := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-195><a href=#__codelineno-1-195 id=__codelineno-1-195 name=__codelineno-1-195></a>                            Acceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-196><a href=#__codelineno-1-196 id=__codelineno-1-196 name=__codelineno-1-196></a>                            Deceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-197><a href=#__codelineno-1-197 id=__codelineno-1-197 name=__codelineno-1-197></a>                            Jerk := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-198><a href=#__codelineno-1-198 id=__codelineno-1-198 name=__codelineno-1-198></a>                            Direction := mDirection(\*MC_DIRECTION\*), 
+</span><span id=__span-1-199><a href=#__codelineno-1-199 id=__codelineno-1-199 name=__codelineno-1-199></a>                            BufferMode := BufferMode(\*MC_BUFFER_MODE\*) );
+</span><span id=__span-1-200><a href=#__codelineno-1-200 id=__codelineno-1-200 name=__codelineno-1-200></a>    
+</span><span id=__span-1-201><a href=#__codelineno-1-201 id=__codelineno-1-201 name=__codelineno-1-201></a>    IF ( bStop = TRUE) THEN
+</span><span id=__span-1-202><a href=#__codelineno-1-202 id=__codelineno-1-202 name=__codelineno-1-202></a>        Inst_MC_Stop1( Execute := TRUE(\*BOOL\*), 
+</span><span id=__span-1-203><a href=#__codelineno-1-203 id=__codelineno-1-203 name=__codelineno-1-203></a>                        Axis := Axis3Ref(\*AXIS_REF\*),
+</span><span id=__span-1-204><a href=#__codelineno-1-204 id=__codelineno-1-204 name=__codelineno-1-204></a>                        Deceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-205><a href=#__codelineno-1-205 id=__codelineno-1-205 name=__codelineno-1-205></a>                        Jerk := LREAL\#1000.0(\*LREAL\*) );
+</span><span id=__span-1-206><a href=#__codelineno-1-206 id=__codelineno-1-206 name=__codelineno-1-206></a>        
+</span><span id=__span-1-207><a href=#__codelineno-1-207 id=__codelineno-1-207 name=__codelineno-1-207></a>        Inst_MC_Stop2( Execute := TRUE(\*BOOL\*), 
+</span><span id=__span-1-208><a href=#__codelineno-1-208 id=__codelineno-1-208 name=__codelineno-1-208></a>                        Axis := Axis0Ref(\*AXIS_REF\*),
+</span><span id=__span-1-209><a href=#__codelineno-1-209 id=__codelineno-1-209 name=__codelineno-1-209></a>                        Deceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-210><a href=#__codelineno-1-210 id=__codelineno-1-210 name=__codelineno-1-210></a>                        Jerk := LREAL\#1000.0(\*LREAL\*) );
+</span><span id=__span-1-211><a href=#__codelineno-1-211 id=__codelineno-1-211 name=__codelineno-1-211></a>        
+</span><span id=__span-1-212><a href=#__codelineno-1-212 id=__codelineno-1-212 name=__codelineno-1-212></a>        Inst_MC_Stop3( Execute := TRUE(\*BOOL\*), 
+</span><span id=__span-1-213><a href=#__codelineno-1-213 id=__codelineno-1-213 name=__codelineno-1-213></a>                        Axis := Axis1Ref(\*AXIS_REF\*),
+</span><span id=__span-1-214><a href=#__codelineno-1-214 id=__codelineno-1-214 name=__codelineno-1-214></a>                        Deceleration := LREAL\#1000.0(\*LREAL\*), 
+</span><span id=__span-1-215><a href=#__codelineno-1-215 id=__codelineno-1-215 name=__codelineno-1-215></a>                        Jerk := LREAL\#1000.0(\*LREAL\*) );
+</span><span id=__span-1-216><a href=#__codelineno-1-216 id=__codelineno-1-216 name=__codelineno-1-216></a>        
+</span><span id=__span-1-217><a href=#__codelineno-1-217 id=__codelineno-1-217 name=__codelineno-1-217></a>        state:=STATE_READY;
+</span><span id=__span-1-218><a href=#__codelineno-1-218 id=__codelineno-1-218 name=__codelineno-1-218></a>    ELSIF (Inst_MC_CombineAxes.Error) THEN
+</span><span id=__span-1-219><a href=#__codelineno-1-219 id=__codelineno-1-219 name=__codelineno-1-219></a>        
+</span><span id=__span-1-220><a href=#__codelineno-1-220 id=__codelineno-1-220 name=__codelineno-1-220></a>        Inst_MC_CombineAxes( Execute := FALSE(\*BOOL\*),
+</span><span id=__span-1-221><a href=#__codelineno-1-221 id=__codelineno-1-221 name=__codelineno-1-221></a>                                Master1 := Axis0Ref(\*AXIS_REF\*),
+</span><span id=__span-1-222><a href=#__codelineno-1-222 id=__codelineno-1-222 name=__codelineno-1-222></a>                                Master2 := Axis1Ref(\*AXIS_REF\*), 
+</span><span id=__span-1-223><a href=#__codelineno-1-223 id=__codelineno-1-223 name=__codelineno-1-223></a>                                Slave := Axis3Ref(\*AXIS_REF\*),                                  
+</span><span id=__span-1-224><a href=#__codelineno-1-224 id=__codelineno-1-224 name=__codelineno-1-224></a>                                ContinuousUpdate := TRUE(\*BOOL\*), 
+</span><span id=__span-1-225><a href=#__codelineno-1-225 id=__codelineno-1-225 name=__codelineno-1-225></a>                                CombineMode := CombMode(\*MC_COMBINE_MODE\*),
+</span><span id=__span-1-226><a href=#__codelineno-1-226 id=__codelineno-1-226 name=__codelineno-1-226></a>                                GearRatioNumeratorM1 := INT\#1(\*INT\*), 
+</span><span id=__span-1-227><a href=#__codelineno-1-227 id=__codelineno-1-227 name=__codelineno-1-227></a>                                GearRatioDenominatorM1 := INT\#1(\*INT\*), 
+</span><span id=__span-1-228><a href=#__codelineno-1-228 id=__codelineno-1-228 name=__codelineno-1-228></a>                                GearRatioNumeratorM2 := INT\#1(\*INT\*), 
+</span><span id=__span-1-229><a href=#__codelineno-1-229 id=__codelineno-1-229 name=__codelineno-1-229></a>                                GearRatioDenominatorM2 := INT\#1(\*INT\*), 
+</span><span id=__span-1-230><a href=#__codelineno-1-230 id=__codelineno-1-230 name=__codelineno-1-230></a>                                MasterValueSourceM1 := SrcValue(\*MC_SOURCE\*), 
+</span><span id=__span-1-231><a href=#__codelineno-1-231 id=__codelineno-1-231 name=__codelineno-1-231></a>                                MasterValueSourceM2 := SrcValue(\*MC_SOURCE\*) );
+</span><span id=__span-1-232><a href=#__codelineno-1-232 id=__codelineno-1-232 name=__codelineno-1-232></a>        
+</span><span id=__span-1-233><a href=#__codelineno-1-233 id=__codelineno-1-233 name=__codelineno-1-233></a>        state:=STATE_ERROR;
+</span><span id=__span-1-234><a href=#__codelineno-1-234 id=__codelineno-1-234 name=__codelineno-1-234></a>    END_IF;
+</span><span id=__span-1-235><a href=#__codelineno-1-235 id=__codelineno-1-235 name=__codelineno-1-235></a>    (\*\*\*\*\*\*\*\*STATE ERROR\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)
+</span><span id=__span-1-236><a href=#__codelineno-1-236 id=__codelineno-1-236 name=__codelineno-1-236></a>    STATE_ERROR:  
+</span><span id=__span-1-237><a href=#__codelineno-1-237 id=__codelineno-1-237 name=__codelineno-1-237></a>    (\* Add user's code here \*)
+</span><span id=__span-1-238><a href=#__codelineno-1-238 id=__codelineno-1-238 name=__codelineno-1-238></a>
+</span><span id=__span-1-239><a href=#__codelineno-1-239 id=__codelineno-1-239 name=__codelineno-1-239></a>END_CASE;
+</span></code></pre></div>

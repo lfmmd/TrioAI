@@ -19,6 +19,7 @@ obj/
 # Packaged output (released as GitHub Release assets, not in repo)
 *.MPPlugin
 *.MPPlugin.bak
+*.mmplugin
 
 # Local dependencies (Trio copyrighted — users must obtain from their own MotionPerfect install)
 TrioSharedLibrary.dll

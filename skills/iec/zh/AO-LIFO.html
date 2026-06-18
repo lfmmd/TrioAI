@@ -1,0 +1,16 @@
+<h1 id=lifo>LIFO</h1><p><em><strong>Function Block (功能块)</strong></em><p>管理后进先出堆栈。<h2 id=_1>输入</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>PUSH<td>BOOL<td>推入一个新值（在上升沿）。<tr><td>POP<td>BOOL<td>弹出一个新值（在上升沿）。<tr><td>RST<td>BOOL<td>重置列表。<tr><td>NEXTIN<td>ANY<td>要推送的值。<tr><td>NEXTOUT<td>ANY<td>堆栈顶部的值-调用后更新！<tr><td>BUFFER<td>ANY<td>存储值的数组。</table><h2 id=_2>输出</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>EMPTY<td>BOOL<td>如果堆栈为空，则为TRUE。<tr><td>OFLO<td>BOOL<td>如果PUSH命令溢出，则为TRUE。<tr><td>COUNT<td>DINT<td>堆栈中的值数。<tr><td>PREAD<td>DINT<td>堆栈顶部缓冲区中的索引。<tr><td>PWRITE<td>DINT<td>下一个推送位置的缓冲区中的索引。</table><h2 id=_3>备注</h2><p>NEXTIN、NEXTOUT和BUFFER必须具有相同的数据类型，并且不能是字符串。<p>NEXTOUT参数指定一个变量，该变量在调用块后由堆栈顶部的值填充。<p>值存储在缓冲区数组中。数据永远不会移动或重置。只更新读写指针和推送值。堆栈的最大大小是数组的维数。<p>第一次调用块时，它会记住应该在哪个数组上工作。如果稍后使用另一个缓冲区输入调用同一实例，则该调用将被视为无效且不产生任何结果。在这种情况下，输出报告一个空堆栈。<p>在LD语言中，输入梯级是PUSH输入。输出梯级是空输出。<h2 id=st>ST 语言</h2><p>MyLIFO是后进先出功能块的声明实例。<p><code>MyLIFO (PUSH, POP, RST, NEXTIN, NEXTOUT, BUFFER);
+EMPTY := MyLIFO.EMPTY;
+OFLO := MyLIFO.OFLO;
+COUNT := MyLIFO.COUNT;
+PREAD := MyLIFO.PREAD;
+PWRITE := MyLIFO.PWRITE;</code><h2 id=fbd>FBD 语言</h2><p><h2 id=ld>LD 语言</h2><p><h2 id=il>IL 语言</h2><p>MyLIFO是后进先出功能块的声明实例。<p><code>Op1: CAL MyLIFO (PUSH, POP, RST, NEXTIN, NEXTOUT, BUFFER)
+     LD  MyLIFO.EMPTY
+     ST  EMPTY
+     LD  MyLIFO.OFLO
+     ST  OFLO
+     LD  MyLIFO.COUNT
+     ST  COUNT
+     LD  MyLIFO.PREAD
+     ST  PREAD
+     LD  MyLIFO.PWRITE
+     ST  PWRITE</code><h2 id=_4>查看</h2><p><a href=AO-FIFO.html>FIFO</a><nav class=md-tags><span class=md-tag>Function Block</span></nav>

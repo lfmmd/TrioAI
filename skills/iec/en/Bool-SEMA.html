@@ -1,0 +1,9 @@
+<h1 id=sema>SEMA</h1><p><em><strong>Function Block</strong></em><p>Semaphore.<h2 id=inputs>Inputs</h2><table><thead><tr><th><strong>Name</strong><th><strong>Type</strong><th><strong>Description</strong><tbody><tr><td>CLAIM<td>BOOL<td>Takes the semaphore.<tr><td>RELEASE<td>BOOL<td>Releases the semaphore.</table><h2 id=outputs>Outputs</h2><table><thead><tr><th><strong>Name</strong><th><strong>Type</strong><th><strong>Description</strong><tbody><tr><td>BUSY<td>BOOL<td>TRUE if semaphore is busy.</table><h2 id=remarks>Remarks</h2><p>The function block implements the following algorithm:<p><code>BUSY := mem;
+IF CLAIM THEN
+   mem := TRUE;
+ELSE IF RELEASE THEN
+   BUSY := FALSE;
+   mem := FALSE;
+END_IF;</code><p>In LD language, the input rung is the CLAIM command. The output rung is the BUSY output signal.<h2 id=st-language>ST Language</h2><p>MySema is a declared instance of SEMA function block:<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>MySema (CLAIM, RELEASE);
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>BUSY := MyBlinker.BUSY;
+</span></code></pre></div><h2 id=fbd-language>FBD Language</h2><p><h2 id=ld-language>LD Language</h2><p><nav class=md-tags><span class=md-tag>Function Block</span></nav>

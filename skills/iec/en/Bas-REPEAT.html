@@ -1,0 +1,9 @@
+<h1 id=repeat-until-end_repeat>REPEAT UNTIL END_REPEAT</h1><p><em><strong>Statement</strong></em><p>Repeat a list of statements.<h2 id=syntax>Syntax</h2><p><code>REPEAT
+    &lt;statements>
+UNTIL &lt;BOOL expression> END_REPEAT;</code><h2 id=remarks>Remarks</h2><p>The statements between REPEAT and UNTIL are executed until the Boolean expression is TRUE. The condition is evaluated after the statements are executed. Statements are executed at least once.<div class="admonition danger"><p>Loop instructions may lead to infinite loops that block the target cycle. Never test the state of an input in the condition as the input will not be refreshed before the next cycle.</div><h2 id=st-language>ST Language</h2><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>iPos := 0;
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>REPEAT
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>   MyArray[iPos] := 0;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>   iNbCleared := iNbCleared + 1;
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>   iPos := iPos + 1;
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>UNTIL iPos = iMax END_REPEAT;
+</span></code></pre></div><h2 id=fbd-language>FBD Language</h2><p>Not available.<h2 id=ld-language>LD Language</h2><p>Not available.<h2 id=see-also>See also</h2><p><a href=Bas-IF.html>IF</a><p><a href=Bas-WHILE.html>WHILE</a><p><a href=Bas-FOR.html>FOR</a><p><a href=Bas-CASE.html>CASE</a><p><a href=Bas-EXIT.html>EXIT</a><nav class=md-tags><span class=md-tag>Statement</span></nav>

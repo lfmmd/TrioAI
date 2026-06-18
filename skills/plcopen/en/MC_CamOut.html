@@ -1,0 +1,131 @@
+<h1 id=mc_camout>MC_CamOut</h1><p>Disengages the slave axis from the master axis immediately.<p><h2 id=description>Description</h2><p>MC_CamOut is executed when ‘Execute’ changes to TRUE. If the default value of ‘Execute’ is TRUE, this instruction will not be executed in the first cycle. Re-triggering this FB will be ignored if it is already running.<div class="admonition success"><p>Make sure the input and output parameters are of data type indicated in the table below.</div><div class="admonition note"><p><em>It is assumed that this command is followed by another command, for instance MC_Stop, MC_GearIn, orany other command. If there is no new command, the default condition should be: maintain last velocity.</em></div><div class="admonition note"><p><em>After issuing MC_CamOut, there is no FB active on the slave axis until the next FB is issued. This can result in problems because no motion command is controlling the axis. Alternatively, the actual velocity can be read via MC_ReadActualVelocity and MC_MoveVelocity can be issued on the slave axis with the actual velocity as input. The FB is here because of compatibility reasons.</em></div><h2 id=inputsoutputs>Inputs/Outputs</h2><table><thead><tr><th><th><th><tbody><tr><td><strong>Name</strong><td><strong>Data Type</strong><td><strong>Description</strong><tr><td colspan=3 style=text-align:left><strong>INPUTS</strong><tr><td>Execute<td>BOOL<td>Start to disengage the slave from the master at rising edge<tr><td>Slave<td>AXIS_REF<td>Reference to the slave axis<tr><td colspan=3 style=text-align:left><strong>OUTPUTS</strong><tr><td>Done<td>BOOL<td>Disengaging completed<tr><td>Busy<td>BOOL<td>The FB is not finished and new output values are to be expected<tr><td>Error<td>BOOL<td>Signals that an error has occurred within the FB<tr><td>ErrorID<td>UINT<td>Error identification</table><h2 id=examples>Examples</h2><h3 id=example-1>Example 1</h3><p><strong> Example</strong><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>inst_CamOut (Execute := bExecute, Slave := SlaveRef);
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>bDone := inst_CamOut.Done; 
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>bBusy := inst_CamOut.Busy; 
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>bError := inst_CamOut.Error; 
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>ErrorId := inst_CamOut.ErrorID;
+</span></code></pre></div><h3 id=example-2>Example 2</h3><p>Table 200 to 211 is used to map the relationship between master and slave position as shown in the diagram below.<p><p>Table index 200-211 is thus populated with values as shown below.<p><p><strong>Local Variables:</strong><div class="language-text highlight"><pre><span></span><code><span id=__span-1-1><a href=#__codelineno-1-1 id=__codelineno-1-1 name=__codelineno-1-1></a>VAR
+</span><span id=__span-1-2><a href=#__codelineno-1-2 id=__codelineno-1-2 name=__codelineno-1-2></a> bCamInExecute : BOOL ;
+</span><span id=__span-1-3><a href=#__codelineno-1-3 id=__codelineno-1-3 name=__codelineno-1-3></a> bCamOutExecute : BOOL ;
+</span><span id=__span-1-4><a href=#__codelineno-1-4 id=__codelineno-1-4 name=__codelineno-1-4></a> bCamTableExecute : BOOL ;
+</span><span id=__span-1-5><a href=#__codelineno-1-5 id=__codelineno-1-5 name=__codelineno-1-5></a> CamTable : lib:MC_CAM_REF ;
+</span><span id=__span-1-6><a href=#__codelineno-1-6 id=__codelineno-1-6 name=__codelineno-1-6></a> CamTableId : UINT ;
+</span><span id=__span-1-7><a href=#__codelineno-1-7 id=__codelineno-1-7 name=__codelineno-1-7></a> Inst_MC_CamIn : MC_CamIn ;
+</span><span id=__span-1-8><a href=#__codelineno-1-8 id=__codelineno-1-8 name=__codelineno-1-8></a> Inst_MC_CamOut : MC_CamOut ;
+</span><span id=__span-1-9><a href=#__codelineno-1-9 id=__codelineno-1-9 name=__codelineno-1-9></a> Inst_MC_CamTableSelect : MC_CamTableSelect ;
+</span><span id=__span-1-10><a href=#__codelineno-1-10 id=__codelineno-1-10 name=__codelineno-1-10></a> Inst_TC_CANCEL : TC_CANCEL ;
+</span><span id=__span-1-11><a href=#__codelineno-1-11 id=__codelineno-1-11 name=__codelineno-1-11></a> Inst_TC_CANCEL1 : TC_CANCEL ;
+</span><span id=__span-1-12><a href=#__codelineno-1-12 id=__codelineno-1-12 name=__codelineno-1-12></a> Inst_TC_DEFPOS0 : TC_DEFPOS1 ;
+</span><span id=__span-1-13><a href=#__codelineno-1-13 id=__codelineno-1-13 name=__codelineno-1-13></a> Inst_TC_DEFPOS1 : TC_DEFPOS1 ;
+</span><span id=__span-1-14><a href=#__codelineno-1-14 id=__codelineno-1-14 name=__codelineno-1-14></a> Inst_TC_FORWARD : TC_FORWARD ;
+</span><span id=__span-1-15><a href=#__codelineno-1-15 id=__codelineno-1-15 name=__codelineno-1-15></a> Master : lib:AXIS_REF ;
+</span><span id=__span-1-16><a href=#__codelineno-1-16 id=__codelineno-1-16 name=__codelineno-1-16></a> MasterAbsolute : BOOL ;
+</span><span id=__span-1-17><a href=#__codelineno-1-17 id=__codelineno-1-17 name=__codelineno-1-17></a> MasterOffset : LREAL ;
+</span><span id=__span-1-18><a href=#__codelineno-1-18 id=__codelineno-1-18 name=__codelineno-1-18></a> MasterScaling : REAL ;
+</span><span id=__span-1-19><a href=#__codelineno-1-19 id=__codelineno-1-19 name=__codelineno-1-19></a> MasterStartDistance : LREAL ;
+</span><span id=__span-1-20><a href=#__codelineno-1-20 id=__codelineno-1-20 name=__codelineno-1-20></a> MasterSyncPosition : LREAL ;
+</span><span id=__span-1-21><a href=#__codelineno-1-21 id=__codelineno-1-21 name=__codelineno-1-21></a> MasterValueSource : MC_SOURCE ;
+</span><span id=__span-1-22><a href=#__codelineno-1-22 id=__codelineno-1-22 name=__codelineno-1-22></a> Periodic : BOOL ;
+</span><span id=__span-1-23><a href=#__codelineno-1-23 id=__codelineno-1-23 name=__codelineno-1-23></a> Slave : lib:AXIS_REF ;
+</span><span id=__span-1-24><a href=#__codelineno-1-24 id=__codelineno-1-24 name=__codelineno-1-24></a> SlaveAbsolute : BOOL ;
+</span><span id=__span-1-25><a href=#__codelineno-1-25 id=__codelineno-1-25 name=__codelineno-1-25></a> SlaveOffset : LREAL ;
+</span><span id=__span-1-26><a href=#__codelineno-1-26 id=__codelineno-1-26 name=__codelineno-1-26></a> SlaveScaling : REAL ;
+</span><span id=__span-1-27><a href=#__codelineno-1-27 id=__codelineno-1-27 name=__codelineno-1-27></a> StartMode : MC_START_MODE ;
+</span><span id=__span-1-28><a href=#__codelineno-1-28 id=__codelineno-1-28 name=__codelineno-1-28></a>END_VAR
+</span></code></pre></div><p><strong>Code:</strong><div class="language-text highlight"><pre><span></span><code><span id=__span-2-1><a href=#__codelineno-2-1 id=__codelineno-2-1 name=__codelineno-2-1></a>// Cancel all previous moves in MTYPE
+</span><span id=__span-2-2><a href=#__codelineno-2-2 id=__codelineno-2-2 name=__codelineno-2-2></a>Inst_TC_CANCEL(TRUE,0,0);
+</span><span id=__span-2-3><a href=#__codelineno-2-3 id=__codelineno-2-3 name=__codelineno-2-3></a>Inst_TC_CANCEL1(TRUE,1,0);
+</span><span id=__span-2-4><a href=#__codelineno-2-4 id=__codelineno-2-4 name=__codelineno-2-4></a>
+</span><span id=__span-2-5><a href=#__codelineno-2-5 id=__codelineno-2-5 name=__codelineno-2-5></a>// Cam axis configuration
+</span><span id=__span-2-6><a href=#__codelineno-2-6 id=__codelineno-2-6 name=__codelineno-2-6></a>TCW_UNITS(0,1);
+</span><span id=__span-2-7><a href=#__codelineno-2-7 id=__codelineno-2-7 name=__codelineno-2-7></a>TCW_SPEED(0,10);
+</span><span id=__span-2-8><a href=#__codelineno-2-8 id=__codelineno-2-8 name=__codelineno-2-8></a>TCW_ACCEL(0,10);
+</span><span id=__span-2-9><a href=#__codelineno-2-9 id=__codelineno-2-9 name=__codelineno-2-9></a>TCW_DECEL(0,10);
+</span><span id=__span-2-10><a href=#__codelineno-2-10 id=__codelineno-2-10 name=__codelineno-2-10></a>Inst_TC_DEFPOS0(TRUE,0,0);
+</span><span id=__span-2-11><a href=#__codelineno-2-11 id=__codelineno-2-11 name=__codelineno-2-11></a>TCW_SERVO(0,TRUE);
+</span><span id=__span-2-12><a href=#__codelineno-2-12 id=__codelineno-2-12 name=__codelineno-2-12></a>
+</span><span id=__span-2-13><a href=#__codelineno-2-13 id=__codelineno-2-13 name=__codelineno-2-13></a>// Master axis configuration
+</span><span id=__span-2-14><a href=#__codelineno-2-14 id=__codelineno-2-14 name=__codelineno-2-14></a>TCW_UNITS(1,1);
+</span><span id=__span-2-15><a href=#__codelineno-2-15 id=__codelineno-2-15 name=__codelineno-2-15></a>TCW_SPEED(1,1);
+</span><span id=__span-2-16><a href=#__codelineno-2-16 id=__codelineno-2-16 name=__codelineno-2-16></a>TCW_ACCEL(1,10);
+</span><span id=__span-2-17><a href=#__codelineno-2-17 id=__codelineno-2-17 name=__codelineno-2-17></a>TCW_DECEL(1,10);
+</span><span id=__span-2-18><a href=#__codelineno-2-18 id=__codelineno-2-18 name=__codelineno-2-18></a>Inst_TC_DEFPOS1(TRUE,1,0);
+</span><span id=__span-2-19><a href=#__codelineno-2-19 id=__codelineno-2-19 name=__codelineno-2-19></a>TCW_SERVO(1,TRUE);
+</span><span id=__span-2-20><a href=#__codelineno-2-20 id=__codelineno-2-20 name=__codelineno-2-20></a>
+</span><span id=__span-2-21><a href=#__codelineno-2-21 id=__codelineno-2-21 name=__codelineno-2-21></a>TCW_WDOG(1);
+</span><span id=__span-2-22><a href=#__codelineno-2-22 id=__codelineno-2-22 name=__codelineno-2-22></a>
+</span><span id=__span-2-23><a href=#__codelineno-2-23 id=__codelineno-2-23 name=__codelineno-2-23></a>// Set Cam Table
+</span><span id=__span-2-24><a href=#__codelineno-2-24 id=__codelineno-2-24 name=__codelineno-2-24></a>CamTable.TableStart:=200;
+</span><span id=__span-2-25><a href=#__codelineno-2-25 id=__codelineno-2-25 name=__codelineno-2-25></a>CamTable.TableFinish:=211;
+</span><span id=__span-2-26><a href=#__codelineno-2-26 id=__codelineno-2-26 name=__codelineno-2-26></a>Inst_MC_CamTableSelect(TRUE, CamTable, FALSE, FALSE, FALSE);
+</span><span id=__span-2-27><a href=#__codelineno-2-27 id=__codelineno-2-27 name=__codelineno-2-27></a>CamTableId:=Inst_MC_CamTableSelect.CamTableID;
+</span><span id=__span-2-28><a href=#__codelineno-2-28 id=__codelineno-2-28 name=__codelineno-2-28></a>
+</span><span id=__span-2-29><a href=#__codelineno-2-29 id=__codelineno-2-29 name=__codelineno-2-29></a>// MC_CamIn configuration
+</span><span id=__span-2-30><a href=#__codelineno-2-30 id=__codelineno-2-30 name=__codelineno-2-30></a>master.AxisNo:=1;
+</span><span id=__span-2-31><a href=#__codelineno-2-31 id=__codelineno-2-31 name=__codelineno-2-31></a>Slave.AxisNo:=0;
+</span><span id=__span-2-32><a href=#__codelineno-2-32 id=__codelineno-2-32 name=__codelineno-2-32></a>StartMode:=mcAbsolute;
+</span><span id=__span-2-33><a href=#__codelineno-2-33 id=__codelineno-2-33 name=__codelineno-2-33></a>MasterValueSource:=mcCommandedValue;
+</span><span id=__span-2-34><a href=#__codelineno-2-34 id=__codelineno-2-34 name=__codelineno-2-34></a>Inst_MC_CamIn(TRUE, Master, Slave, 0, 0, 1, 1, 0, 0, StartMode, MasterValueSource, CamTableID);
+</span><span id=__span-2-35><a href=#__codelineno-2-35 id=__codelineno-2-35 name=__codelineno-2-35></a>
+</span><span id=__span-2-36><a href=#__codelineno-2-36 id=__codelineno-2-36 name=__codelineno-2-36></a>// MC_CamOut setup
+</span><span id=__span-2-37><a href=#__codelineno-2-37 id=__codelineno-2-37 name=__codelineno-2-37></a>bCamOutExecute:=FALSE;
+</span><span id=__span-2-38><a href=#__codelineno-2-38 id=__codelineno-2-38 name=__codelineno-2-38></a>Inst_MC_CamOut(bCamOutExecute, Slave);
+</span><span id=__span-2-39><a href=#__codelineno-2-39 id=__codelineno-2-39 name=__codelineno-2-39></a>
+</span><span id=__span-2-40><a href=#__codelineno-2-40 id=__codelineno-2-40 name=__codelineno-2-40></a>// Run master axis
+</span><span id=__span-2-41><a href=#__codelineno-2-41 id=__codelineno-2-41 name=__codelineno-2-41></a>Inst_TC_FORWARD(TRUE,1);
+</span></code></pre></div><h3 id=example-3>Example 3</h3><p>Example 2 in FBD.<p><strong>Local Variables:</strong><div class="language-text highlight"><pre><span></span><code><span id=__span-3-1><a href=#__codelineno-3-1 id=__codelineno-3-1 name=__codelineno-3-1></a>VAR
+</span><span id=__span-3-2><a href=#__codelineno-3-2 id=__codelineno-3-2 name=__codelineno-3-2></a> bCamInExecute : BOOL ;
+</span><span id=__span-3-3><a href=#__codelineno-3-3 id=__codelineno-3-3 name=__codelineno-3-3></a> bCamOutExecute : BOOL ;
+</span><span id=__span-3-4><a href=#__codelineno-3-4 id=__codelineno-3-4 name=__codelineno-3-4></a> bMoveMaster : BOOL ;
+</span><span id=__span-3-5><a href=#__codelineno-3-5 id=__codelineno-3-5 name=__codelineno-3-5></a> camIn_active : BOOL ;
+</span><span id=__span-3-6><a href=#__codelineno-3-6 id=__codelineno-3-6 name=__codelineno-3-6></a> camIn_busy : BOOL ;
+</span><span id=__span-3-7><a href=#__codelineno-3-7 id=__codelineno-3-7 name=__codelineno-3-7></a> CamTable : lib:MC_CAM_REF ;
+</span><span id=__span-3-8><a href=#__codelineno-3-8 id=__codelineno-3-8 name=__codelineno-3-8></a> CamTableId : UINT ;
+</span><span id=__span-3-9><a href=#__codelineno-3-9 id=__codelineno-3-9 name=__codelineno-3-9></a> Inst_MC_CamTableSelect : MC_CamTableSelect ;
+</span><span id=__span-3-10><a href=#__codelineno-3-10 id=__codelineno-3-10 name=__codelineno-3-10></a> Inst_TC_FORWARD : TC_FORWARD ;
+</span><span id=__span-3-11><a href=#__codelineno-3-11 id=__codelineno-3-11 name=__codelineno-3-11></a> Master : lib:AXIS_REF ;
+</span><span id=__span-3-12><a href=#__codelineno-3-12 id=__codelineno-3-12 name=__codelineno-3-12></a> MasterAbsolute : BOOL ;
+</span><span id=__span-3-13><a href=#__codelineno-3-13 id=__codelineno-3-13 name=__codelineno-3-13></a> MasterOffset : LREAL ;
+</span><span id=__span-3-14><a href=#__codelineno-3-14 id=__codelineno-3-14 name=__codelineno-3-14></a> MasterScaling : REAL ;
+</span><span id=__span-3-15><a href=#__codelineno-3-15 id=__codelineno-3-15 name=__codelineno-3-15></a> MasterStartDistance : LREAL ;
+</span><span id=__span-3-16><a href=#__codelineno-3-16 id=__codelineno-3-16 name=__codelineno-3-16></a> MasterSyncPosition : LREAL ;
+</span><span id=__span-3-17><a href=#__codelineno-3-17 id=__codelineno-3-17 name=__codelineno-3-17></a> MasterValueSource : MC_SOURCE ;
+</span><span id=__span-3-18><a href=#__codelineno-3-18 id=__codelineno-3-18 name=__codelineno-3-18></a> Periodic : BOOL ;
+</span><span id=__span-3-19><a href=#__codelineno-3-19 id=__codelineno-3-19 name=__codelineno-3-19></a> Slave : lib:AXIS_REF ;
+</span><span id=__span-3-20><a href=#__codelineno-3-20 id=__codelineno-3-20 name=__codelineno-3-20></a> SlaveAbsolute : BOOL ;
+</span><span id=__span-3-21><a href=#__codelineno-3-21 id=__codelineno-3-21 name=__codelineno-3-21></a> SlaveOffset : LREAL ;
+</span><span id=__span-3-22><a href=#__codelineno-3-22 id=__codelineno-3-22 name=__codelineno-3-22></a> SlaveScaling : REAL ;
+</span><span id=__span-3-23><a href=#__codelineno-3-23 id=__codelineno-3-23 name=__codelineno-3-23></a> StartMode : MC_START_MODE ;
+</span><span id=__span-3-24><a href=#__codelineno-3-24 id=__codelineno-3-24 name=__codelineno-3-24></a> done : BOOL ;
+</span><span id=__span-3-25><a href=#__codelineno-3-25 id=__codelineno-3-25 name=__codelineno-3-25></a> busy : BOOL ;
+</span><span id=__span-3-26><a href=#__codelineno-3-26 id=__codelineno-3-26 name=__codelineno-3-26></a> error : BOOL ;
+</span><span id=__span-3-27><a href=#__codelineno-3-27 id=__codelineno-3-27 name=__codelineno-3-27></a> errID : UINT ;
+</span><span id=__span-3-28><a href=#__codelineno-3-28 id=__codelineno-3-28 name=__codelineno-3-28></a> Inst_TC_FORWARD1 : TC_FORWARD ;
+</span><span id=__span-3-29><a href=#__codelineno-3-29 id=__codelineno-3-29 name=__codelineno-3-29></a> camin_err : BOOL ;
+</span><span id=__span-3-30><a href=#__codelineno-3-30 id=__codelineno-3-30 name=__codelineno-3-30></a> camIn_errID : UINT ;
+</span><span id=__span-3-31><a href=#__codelineno-3-31 id=__codelineno-3-31 name=__codelineno-3-31></a> inst_CamIn : MC_CamIn ;
+</span><span id=__span-3-32><a href=#__codelineno-3-32 id=__codelineno-3-32 name=__codelineno-3-32></a> Inst_MC_Power : MC_Power ;
+</span><span id=__span-3-33><a href=#__codelineno-3-33 id=__codelineno-3-33 name=__codelineno-3-33></a> status : BOOL ;
+</span><span id=__span-3-34><a href=#__codelineno-3-34 id=__codelineno-3-34 name=__codelineno-3-34></a> busy_power : BOOL ;
+</span><span id=__span-3-35><a href=#__codelineno-3-35 id=__codelineno-3-35 name=__codelineno-3-35></a> power_error : BOOL ;
+</span><span id=__span-3-36><a href=#__codelineno-3-36 id=__codelineno-3-36 name=__codelineno-3-36></a> power_errID : UINT ;
+</span><span id=__span-3-37><a href=#__codelineno-3-37 id=__codelineno-3-37 name=__codelineno-3-37></a> Inst_MC_Power1 : MC_Power ;
+</span><span id=__span-3-38><a href=#__codelineno-3-38 id=__codelineno-3-38 name=__codelineno-3-38></a> power2_status : BOOL ;
+</span><span id=__span-3-39><a href=#__codelineno-3-39 id=__codelineno-3-39 name=__codelineno-3-39></a> power2_busy : BOOL ;
+</span><span id=__span-3-40><a href=#__codelineno-3-40 id=__codelineno-3-40 name=__codelineno-3-40></a> power2_error : BOOL ;
+</span><span id=__span-3-41><a href=#__codelineno-3-41 id=__codelineno-3-41 name=__codelineno-3-41></a> power2_errorID : UINT ;
+</span><span id=__span-3-42><a href=#__codelineno-3-42 id=__codelineno-3-42 name=__codelineno-3-42></a> cmd_aborted : BOOL ;
+</span><span id=__span-3-43><a href=#__codelineno-3-43 id=__codelineno-3-43 name=__codelineno-3-43></a> endofprofile : BOOL ;
+</span><span id=__span-3-44><a href=#__codelineno-3-44 id=__codelineno-3-44 name=__codelineno-3-44></a> insync : BOOL ;
+</span><span id=__span-3-45><a href=#__codelineno-3-45 id=__codelineno-3-45 name=__codelineno-3-45></a>END_VAR
+</span></code></pre></div><p><strong>Code:</strong><p><p><p><h3 id=example-4>Example 4</h3><p>Example 2 in LD.<p><strong>Local Variables:</strong><div class="language-text highlight"><pre><span></span><code><span id=__span-4-1><a href=#__codelineno-4-1 id=__codelineno-4-1 name=__codelineno-4-1></a>VAR
+</span><span id=__span-4-2><a href=#__codelineno-4-2 id=__codelineno-4-2 name=__codelineno-4-2></a> Inst_MC_CamTableSelect : MC_CamTableSelect ;
+</span><span id=__span-4-3><a href=#__codelineno-4-3 id=__codelineno-4-3 name=__codelineno-4-3></a> Inst_MC_CamIn : MC_CamIn ;
+</span><span id=__span-4-4><a href=#__codelineno-4-4 id=__codelineno-4-4 name=__codelineno-4-4></a> Inst_TC_FORWARD : TC_FORWARD ;
+</span><span id=__span-4-5><a href=#__codelineno-4-5 id=__codelineno-4-5 name=__codelineno-4-5></a> Inst_MC_Power : MC_Power ;
+</span><span id=__span-4-6><a href=#__codelineno-4-6 id=__codelineno-4-6 name=__codelineno-4-6></a> Inst_MC_Power1 : MC_Power ;
+</span><span id=__span-4-7><a href=#__codelineno-4-7 id=__codelineno-4-7 name=__codelineno-4-7></a> CamTable : lib:MC_CAM_REF ;
+</span><span id=__span-4-8><a href=#__codelineno-4-8 id=__codelineno-4-8 name=__codelineno-4-8></a> Master : lib:AXIS_REF ;
+</span><span id=__span-4-9><a href=#__codelineno-4-9 id=__codelineno-4-9 name=__codelineno-4-9></a> Slave : lib:AXIS_REF ;
+</span><span id=__span-4-10><a href=#__codelineno-4-10 id=__codelineno-4-10 name=__codelineno-4-10></a> bMoveMaster : BOOL ;
+</span><span id=__span-4-11><a href=#__codelineno-4-11 id=__codelineno-4-11 name=__codelineno-4-11></a>END_VAR
+</span></code></pre></div><p><strong>Code:</strong><p><h2 id=see-also>See also</h2><p><a href=MC_CamIn.html>MC_CamIn</a>, <a href=MC_CamTableSelect.html>MC_CamTableSelect</a>

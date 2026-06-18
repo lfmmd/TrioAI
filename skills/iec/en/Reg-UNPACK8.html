@@ -1,0 +1,10 @@
+<h1 id=unpack8>UNPACK8</h1><p><em><strong>Function block</strong></em><p>Extract bits of a byte.<h2 id=inputs>Inputs</h2><table><thead><tr><th><strong>Name</strong><th><strong>Type</strong><th><strong>Description</strong><tbody><tr><td>IN<td>USINT<td>8-bit register.</table><h2 id=outputs>Outputs</h2><table><thead><tr><th><strong>Name</strong><th><strong>Type</strong><th><strong>Description</strong><tbody><tr><td>Q0<td>BOOL<td>Least significant bit.<tr><td>...<td><td><tr><td>Q7<td>BOOL<td>Most significant bit.</table><h2 id=remarks>Remarks</h2><p>In LD language, the output rung is the Q0 output. The operation is executed only in the input rung (EN) is TRUE.<h2 id=st-language>ST Language</h2><p>MyUnpack is a declared instance of the UNPACK8 function block.<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>MyUnpack (IN);
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>Q0 := MyUnpack.Q0;
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>Q1 := MyUnpack.Q1;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>Q2 := MyUnpack.Q2;
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>Q3 := MyUnpack.Q3;
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>Q4 := MyUnpack.Q4;
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a>Q5 := MyUnpack.Q5;
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a>Q6 := MyUnpack.Q6;
+</span><span id=__span-0-9><a href=#__codelineno-0-9 id=__codelineno-0-9 name=__codelineno-0-9></a>Q7 := MyUnpack.Q7;
+</span></code></pre></div><h2 id=fbd-language>FBD Language</h2><p><h2 id=ld-language>LD Language</h2><p>The operation is performed if EN = TRUE:<br> <h2 id=see-also>See also</h2><p><a href=Reg-PACK8.html>PACK8</a><nav class=md-tags><span class=md-tag>Function block</span></nav>

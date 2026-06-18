@@ -1,0 +1,7 @@
+<h1 id=on>ON</h1><p><em><strong>Statement (表达式)</strong></em><p>语句的有条件执行。<h2 id=_1>句法</h2><p><code>ON &lt;BOOL expression> DO
+    &lt;statements>
+END_DO;</code><h2 id=_2>备注</h2><p>只有当布尔表达式从FALSE变为TRUE时，才会执行ON结构中的语句。ON指令避免系统地使用R_TRIG函数块或其他“最后状态”标志。<p>ON语法可用于任何程序、子程序或UDFB。它在T5 p-code或本机代码编译模式下都可用。<p>本声明是标准的扩展，不符合IEC61131-3。<h2 id=st>ST 语言</h2><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>(* This example counts the rising edges of variable bIN *)
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>ON bIN DO
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>   diCount := diCount + 1;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>END_DO;
+</span></code></pre></div><nav class=md-tags><span class=md-tag>Statement</span></nav>

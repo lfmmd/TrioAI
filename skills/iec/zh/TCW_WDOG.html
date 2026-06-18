@@ -1,0 +1,22 @@
+<h1 id=tcw_wdog>TCW_WDOG</h1><h2 id=_1>类型</h2><p>系统函数。<h2 id=_2>函数</h2><p>写入WDOG参数。<div class="admonition note"><p><em>请注意输入输出数据类型为DINT。0等于OFF。1或非0等于ON。</em></div><h2 id=_3>输入</h2><table><thead><tr><th><th><tbody><tr><td>WDOG : DINT;<td>WDOG状态</table><h2 id=_4>输出</h2><table><thead><tr><th><th><tbody><tr><td>Q : DINT;<td></table><h2 id=_5>描述</h2><p>设置WDOG状态。<h2 id=st>ST 语言</h2><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>TCW_WDOG( WDOG(*DINT*) );
+</span></code></pre></div><h3 id=1>例 1</h3><p>轴0和轴1在初始配置中被设置。一旦完成后，使用TCW_WDOG指令切换WDOG ON。轴相对于当前位置移动1000个单位。<div class="language-text highlight"><pre><span></span><code><span id=__span-1-1><a href=#__codelineno-1-1 id=__codelineno-1-1 name=__codelineno-1-1></a>// Axis 0 & 1 setup
+</span><span id=__span-1-2><a href=#__codelineno-1-2 id=__codelineno-1-2 name=__codelineno-1-2></a>FOR i:=0 TO 1 DO    
+</span><span id=__span-1-3><a href=#__codelineno-1-3 id=__codelineno-1-3 name=__codelineno-1-3></a>    TCW_UNITS(i,1); // Set UNITS    
+</span><span id=__span-1-4><a href=#__codelineno-1-4 id=__codelineno-1-4 name=__codelineno-1-4></a>    TCW_SPEED(i,4000); // Set SPEED    
+</span><span id=__span-1-5><a href=#__codelineno-1-5 id=__codelineno-1-5 name=__codelineno-1-5></a>    TCW_ACCEL(i,20*TCR_SPEED(0)); // Set ACCEL    
+</span><span id=__span-1-6><a href=#__codelineno-1-6 id=__codelineno-1-6 name=__codelineno-1-6></a>    TCW_DECEL(i,TCR_ACCEL(i)); // Set DECEL    
+</span><span id=__span-1-7><a href=#__codelineno-1-7 id=__codelineno-1-7 name=__codelineno-1-7></a>    TCW_DGAIN(i,30); // Set D_GAIN    
+</span><span id=__span-1-8><a href=#__codelineno-1-8 id=__codelineno-1-8 name=__codelineno-1-8></a>    TCW_SERVO(i,TRUE); // Switch on SERVO
+</span><span id=__span-1-9><a href=#__codelineno-1-9 id=__codelineno-1-9 name=__codelineno-1-9></a>END_FOR;
+</span><span id=__span-1-10><a href=#__codelineno-1-10 id=__codelineno-1-10 name=__codelineno-1-10></a>
+</span><span id=__span-1-11><a href=#__codelineno-1-11 id=__codelineno-1-11 name=__codelineno-1-11></a>// Switch on WDOG
+</span><span id=__span-1-12><a href=#__codelineno-1-12 id=__codelineno-1-12 name=__codelineno-1-12></a>TCW_WDOG(1); 
+</span><span id=__span-1-13><a href=#__codelineno-1-13 id=__codelineno-1-13 name=__codelineno-1-13></a>
+</span><span id=__span-1-14><a href=#__codelineno-1-14 id=__codelineno-1-14 name=__codelineno-1-14></a>// Move axis0 and axis1 (relative) 1000 units
+</span><span id=__span-1-15><a href=#__codelineno-1-15 id=__codelineno-1-15 name=__codelineno-1-15></a>Inst_TC_MOVE1_0(TRUE,0,1000); 
+</span><span id=__span-1-16><a href=#__codelineno-1-16 id=__codelineno-1-16 name=__codelineno-1-16></a>Inst_TC_MOVE1_1(TRUE,1,1000); 
+</span></code></pre></div><h3 id=2>例 2</h3><p>当轴0和轴1完成移动后关闭WDOG<div class="language-text highlight"><pre><span></span><code><span id=__span-2-1><a href=#__codelineno-2-1 id=__codelineno-2-1 name=__codelineno-2-1></a>// Switch off WDOG once moves are done
+</span><span id=__span-2-2><a href=#__codelineno-2-2 id=__codelineno-2-2 name=__codelineno-2-2></a>IF Inst_TC_MOVE1_0.Done=TRUE AND Inst_TC_MOVE1_1.Done=TRUE THEN
+</span><span id=__span-2-3><a href=#__codelineno-2-3 id=__codelineno-2-3 name=__codelineno-2-3></a>    TCW_WDOG(0);
+</span><span id=__span-2-4><a href=#__codelineno-2-4 id=__codelineno-2-4 name=__codelineno-2-4></a>END_IF;
+</span></code></pre></div><h2 id=fbd>FBD 语言</h2><p><h3 id=1_1>例 1</h3><p>FBD_Init是一个配置轴参数的子程序。WDOG在执行处理轴移动的FBD_Move1子程序前被打开。<p><h3 id=2_1>例 2</h3><p>程序从轴参数初始化开始。一旦设置完成，WDOG在轴继续运动前切换为ON。<p><h2 id=ld>LD 语言</h2><p><h3 id=1_2>例 1</h3><p>在设置所有轴参数的第一个梯级上调用初始化程序。一旦初始化完成，WDOG被切换为ON。只有当Stop按钮被按下时，WDOG切换为OFF。<p><h3 id=2_2>例 2</h3><p>程序从坐标轴参数的初始化开始。一旦设置完成，WDOG在继续轴移动前被切换到ON。<p><h3 id=3>例 3</h3><p>一旦轴完成移动，切换WDOG为OFF。<p><h2 id=_6>查看</h2><p><a href=_Errors.html>TrioBasic 错误清单</a>

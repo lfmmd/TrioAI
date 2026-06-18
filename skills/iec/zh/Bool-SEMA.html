@@ -1,0 +1,9 @@
+<h1 id=sema>SEMA</h1><p><em><strong>Function Block (功能块)</strong></em><p>信号量<h2 id=_1>输入</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>CLAIM<td>BOOL<td>获取信号量。<tr><td>RELEASE<td>BOOL<td>释放信号量。</table><h2 id=_2>输出</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>BUSY<td>BOOL<td>如果信号量正忙，则为TRUE</table><h2 id=_3>备注</h2><p>功能块实现以下算法：<p><code>BUSY := mem;
+if CLAIM then
+   mem := TRUE;
+else if RELEASE then
+   BUSY := FALSE;
+   mem := FALSE;
+end_if;</code><p>在LD语言中，输入横档是CLAIM命令。输出横档是正忙的输出信号。<h2 id=st>ST 语言</h2><p>MySema是SEMA函数块的声明实例：<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>MySema (CLAIM, RELEASE);
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>BUSY := MyBlinker.BUSY;
+</span></code></pre></div><h2 id=fbd>FBD 语言</h2><p><h2 id=ld>LD 语言</h2><p><nav class=md-tags><span class=md-tag>Function Block</span></nav>

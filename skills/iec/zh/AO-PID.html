@@ -1,0 +1,27 @@
+<h1 id=pid>PID</h1><p><em><strong>Function Block (功能块)</strong></em><p>PID运行.<h2 id=_1>输入</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>AUTO<td>BOOL<td><em>TRUE=正常模式-FALSE=手动模式。</em><tr><td>PV<td>REAL<td>过程值。<tr><td>SP<td>REAL<td>设定值。<tr><td>Xout_Manu<td>REAL<td>手动模式下输出值。<tr><td>KP<td>REAL<td>增益。<tr><td>TI<td>REAL<td>积分时间。<tr><td>TD<td>REAL<td>微分时间。<tr><td>TS<td>TIME<td>采样周期。<tr><td>XMIN<td>REAL<td>最小允许输出值。<tr><td>XMAX<td>REAL<td>最大输出值。<tr><td>I_SEL<td>BOOL<td>如果为FALSE，则忽略积分值。<tr><td>INT_HOLD<td>BOOL<td>如果为TRUE，则冻结积分值。<tr><td>I_ITL_ON<td>BOOL<td>如果为TRUE，则积分值将重置为I_ITLVAL。<tr><td>I_ITLVAL<td>REAL<td>当I_ITL_ON为TRUE时，重置积分值。<tr><td>DEADB_ERR<td>REAL<td>PV滞后。如果PV大于（PVprev- DEADBAND_W）且小于（PRprev+ DEADBAND_W），则视为PV不变。<tr><td>FFD<td>REAL<td>输出扰动值。</table><h2 id=_2>输出</h2><table><thead><tr><th><strong>名称</strong><th><strong>类型</strong><th><strong>描述</strong><tbody><tr><td>Xout<td>REAL<td>输出命令值。<tr><td>ER<td>REAL<td>上次计算的错误。<tr><td>Xout_P<td>REAL<td>上次计算的比例值。<tr><td>Xout_I<td>REAL<td>上次计算的积分值。<tr><td>Xout_D<td>REAL<td>上次计算的微分值。<tr><td>Xout_HLM<td>BOOL<td><em>如果输出值饱和为XMIN，则为TRUE。</em><tr><td>Xout_LLM<td>BOOL<td><em>如果输出值饱和为XMAX，则为TRUE。</em></table><h2 id=_3>图像</h2><p><h2 id=_4>备注</h2><p>为了实现稳定的控制，TS采样周期要大于循环时间十分重要。<br> 在LD语言中，输出梯级的值与自动输入相同，对应于输入梯级。<h2 id=st>ST 语言</h2><p>MyPID是PID模块的一个声明实例。<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>MyPID (AUTO, PV, SP, XOUT_MANU, KP, TI, TD, TS, XMIN, XMAX,
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>       I_SEL, I_ITL_ON, I_ITLVAL, DEADB_ERR, FFD);
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>XOUT := MyPID.XOUT;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>ER := MyPID.ER;
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>XOUT_P := MyPID.XOUT_P;
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>XOUT_I := MyPID.XOUT_I;
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a>XOUT_D := MyPID.XOUT_D;
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a>XOUT_HLM := MyPID.XOUT_HLM;
+</span><span id=__span-0-9><a href=#__codelineno-0-9 id=__codelineno-0-9 name=__codelineno-0-9></a>XOUT_LLM := MyPID.XOUT_LLM;
+</span></code></pre></div><h2 id=fbd>FBD 语言</h2><p><h2 id=ld>LD 语言</h2><p>ENO与输入梯级的状态相同，<br> <h2 id=il>IL 语言</h2><p>MyPID是PID模块的一个声明实例。<div class="language-text highlight"><pre><span></span><code><span id=__span-1-1><a href=#__codelineno-1-1 id=__codelineno-1-1 name=__codelineno-1-1></a>Op1: CAL MyPID (AUTO, PV, SP, XOUT_MANU, KP, TI, TD, TS,
+</span><span id=__span-1-2><a href=#__codelineno-1-2 id=__codelineno-1-2 name=__codelineno-1-2></a>                XMIN, XMAX, I_SEL, I_ITL_ON, I_ITLVAL,
+</span><span id=__span-1-3><a href=#__codelineno-1-3 id=__codelineno-1-3 name=__codelineno-1-3></a>                DEADB_ERR, FFD)
+</span><span id=__span-1-4><a href=#__codelineno-1-4 id=__codelineno-1-4 name=__codelineno-1-4></a>     LD  MyPID.XOUT
+</span><span id=__span-1-5><a href=#__codelineno-1-5 id=__codelineno-1-5 name=__codelineno-1-5></a>     ST  XOUT
+</span><span id=__span-1-6><a href=#__codelineno-1-6 id=__codelineno-1-6 name=__codelineno-1-6></a>     LD  MyPID.ER
+</span><span id=__span-1-7><a href=#__codelineno-1-7 id=__codelineno-1-7 name=__codelineno-1-7></a>     ST  ER
+</span><span id=__span-1-8><a href=#__codelineno-1-8 id=__codelineno-1-8 name=__codelineno-1-8></a>     LD  MyPID.XOUT_P
+</span><span id=__span-1-9><a href=#__codelineno-1-9 id=__codelineno-1-9 name=__codelineno-1-9></a>     ST  XOUT_P
+</span><span id=__span-1-10><a href=#__codelineno-1-10 id=__codelineno-1-10 name=__codelineno-1-10></a>     LD  MyPID.XOUT_I
+</span><span id=__span-1-11><a href=#__codelineno-1-11 id=__codelineno-1-11 name=__codelineno-1-11></a>     ST  XOUT_I
+</span><span id=__span-1-12><a href=#__codelineno-1-12 id=__codelineno-1-12 name=__codelineno-1-12></a>     LD  MyPID.XOUT_D
+</span><span id=__span-1-13><a href=#__codelineno-1-13 id=__codelineno-1-13 name=__codelineno-1-13></a>     ST  XOUT_D
+</span><span id=__span-1-14><a href=#__codelineno-1-14 id=__codelineno-1-14 name=__codelineno-1-14></a>     LD  MyPID.XOUT_HLM
+</span><span id=__span-1-15><a href=#__codelineno-1-15 id=__codelineno-1-15 name=__codelineno-1-15></a>     ST  XOUT_HLM
+</span><span id=__span-1-16><a href=#__codelineno-1-16 id=__codelineno-1-16 name=__codelineno-1-16></a>     LD  MyPID.XOUT_LLM
+</span><span id=__span-1-17><a href=#__codelineno-1-17 id=__codelineno-1-17 name=__codelineno-1-17></a>     ST  XOUT_LLM
+</span></code></pre></div><nav class=md-tags><span class=md-tag>Function Block</span></nav>

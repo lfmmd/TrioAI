@@ -1,0 +1,3 @@
+<h1 id=_1>调用函数</h1><p>函数根据其输入的当前值计算结果。与函数块不同，函数没有内部数据，也没有链接到声明的实例。函数只有一个输出：函数的结果。函数可以是：<p>标准功能（SHL、SIN……）。<p>用“C”语言编写并嵌入目标系统的功能<h2 id=st>ST 语言</h2><p>要在ST中调用一个函数块，必须输入它的名称，然后输入括号中的输入参数，并用comas分隔。函数调用可以插入到任何复杂表达式中。函数调用可以用作另一个函数的输入参数。下面的示例演示对ODD和SEL函数的调用：<h3 id=_2>例</h3><div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>(* The following statement converts any odd integer value into the nearest even integer: *)
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>iEvenVal := SEL ( ODD( iValue ), iValue, iValue+1 );
+</span></code></pre></div><h2 id=fbdld>FBD和LD语言</h2><p>要用FBD或LD语言调用函数块，只需将函数插入到图中并连接其输入和输出。

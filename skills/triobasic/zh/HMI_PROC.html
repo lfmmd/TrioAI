@@ -1,0 +1,1 @@
+<h1 id=hmi_proc>HMI_PROC</h1><h2 id=_1>类型</h2><p><em><strong>系统参数(MC_CONFIG)</strong></em><h2 id=_2>语法</h2><p>HMI_PROC=value<h2 id=_3>描述</h2><p>设置启动HMI服务器协议的进程号。此值必须在第一个HMI Client连接发生之前设置。上电时的默认值是-1，它会根据正常的RUN命令规则自动选择进程号。<p>如果要设置这个值，那么建议在特殊的MC_CONFIG程序中设置它，以确保在任何HMI 客户端可以连接到运动控制器之前该值是有效的。<nav class=md-tags><span class=md-tag>系统参数</span></nav>

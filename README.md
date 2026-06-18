@@ -7,7 +7,7 @@
 [![Version](https://img.shields.io/badge/version-0.3.10-blue.svg)](https://github.com/lfmmd/TrioAI/releases)
 [![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-blue.svg)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
-[![MotionPerfect](https://img.shields.io/badge/MotionPerfect-V5.6+-orange.svg)](https://www.triomotion.com/)
+[![MotionPerfect](https://img.shields.io/badge/MotionPerfect-V5.6%20%2F%20V5.7-orange.svg)](https://www.triomotion.com/)
 [![API: Anthropic Messages](https://img.shields.io/badge/API-Anthropic%20Messages%20%2Fv1%2Fmessages-ff6b6b.svg)](https://docs.anthropic.com/en/api/messages)
 [![GitHub Release](https://img.shields.io/github/v/release/lfmmd/TrioAI?include_prereleases)](https://github.com/lfmmd/TrioAI/releases)
 [![GitHub stars](https://img.shields.io/github/stars/lfmmd/TrioAI?style=social)](https://github.com/lfmmd/TrioAI/stargazers)
@@ -42,7 +42,7 @@
 
 1. 解压 `TrioAI.MPPlugIn`（实质是 ZIP，内部路径带 `TrioAI/` 前缀）到 MotionPerfect 的插件目录：
    ```
-   %LOCALAPPDATA%\TrioMotion\MotionPerfectV5.6\Plugins\TrioAI\
+   %LOCALAPPDATA%\TrioMotion\MotionPerfectV5.7\Plugins\TrioAI\
    ```
    解压后结构：
    ```
@@ -308,7 +308,7 @@ with zipfile.ZipFile('TrioAI.MPPlugIn', 'w', zipfile.ZIP_DEFLATED) as z:
 
 ## 兼容性
 
-- MotionPerfect V5.6+
+- MotionPerfect V5.6 / V5.7
 - .NET Framework 4.8
 - Windows 10 / 11
 

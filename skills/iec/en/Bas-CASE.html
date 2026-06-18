@@ -1,0 +1,22 @@
+<h1 id=case-of-else-end_case>CASE OF ELSE END_CASE</h1><p><em><strong>Statement</strong></em><p>Switch between enumerated statements.<h2 id=syntax>Syntax</h2><p><code>CASE &lt;DINT expression> OF
+    &lt;value>:
+        &lt;statements>
+    &lt;value>, &lt;value>:
+        &lt;statements>;
+    &lt;value>..&lt;value>:
+        &lt;statements>;
+    ELSE
+        &lt;statements> 
+    END_CASE;</code><h2 id=remarks>Remarks</h2><p>All enumerated values correspond to the evaluation of the DINT expression and are possible cases in the execution of the statements. The statements specified after the ELSE keyword are executed if the expression takes a value that is not enumerated in the switch. For each case, you must specify either a value, or a list of possible values separated by comas ("<em>,</em>") or a range of values specified by a "min .. max" interval. You must enter space characters before and after the ".." separator.<h2 id=st-language>ST Language</h2><h3 id=example>Example</h3><p>This example checks the first prime numbers:<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>CASE iNumber OF
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a>0:
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a>   Alarm := TRUE;
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a>   AlarmText := '0 gives no result';
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a>1..3, 5:
+</span><span id=__span-0-6><a href=#__codelineno-0-6 id=__codelineno-0-6 name=__codelineno-0-6></a>   bPrime := TRUE;
+</span><span id=__span-0-7><a href=#__codelineno-0-7 id=__codelineno-0-7 name=__codelineno-0-7></a>4, 6:
+</span><span id=__span-0-8><a href=#__codelineno-0-8 id=__codelineno-0-8 name=__codelineno-0-8></a>   bPrime := FALSE;
+</span><span id=__span-0-9><a href=#__codelineno-0-9 id=__codelineno-0-9 name=__codelineno-0-9></a>ELSE
+</span><span id=__span-0-10><a href=#__codelineno-0-10 id=__codelineno-0-10 name=__codelineno-0-10></a>   Alarm := TRUE;
+</span><span id=__span-0-11><a href=#__codelineno-0-11 id=__codelineno-0-11 name=__codelineno-0-11></a>   AlarmText := 'I don't know after 6!';
+</span><span id=__span-0-12><a href=#__codelineno-0-12 id=__codelineno-0-12 name=__codelineno-0-12></a>END_CASE;
+</span></code></pre></div><h2 id=fbd-language>FBD Language</h2><p>Not available.<h2 id=ld-language>LD Language</h2><p>Not available.<h2 id=see-also>See also</h2><p><a href=Bas-IF.html>IF</a><p><a href=Bas-WHILE.html>WHILE</a><p><a href=Bas-REPEAT.html>REPEAT</a><p><a href=Bas-FOR.html>FOR</a><p><a href=Bas-EXIT.html>EXIT</a><h2 id=_1></h2><nav class=md-tags><span class=md-tag>Statement</span></nav>

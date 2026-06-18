@@ -1,0 +1,5 @@
+<h1 id=sfc>检查SFC步骤的超时</h1><p>系统可以检查任何SFC步骤活动持续时间的超时。为此，您需要在步骤的主“操作”列表中输入以下说明：<div class="language-text highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a>__StepTimeout ( timeOut , errString );
+</span></code></pre></div><p>式中:<p>timeout是指定超时持续时间的时间常数或时间变量。<br> errString 是指定要输出的错误消息的字符串常量或字符串变量。<p>在运行时，每当步骤的激活时间大于指定的超时时，错误字符串将发送到工作台并显示在日志窗口中。<div class="admonition danger"><p>将日志消息字符串发送到日志窗口要求运行时通过以太网连接，并且您的T5运行时系统支持纯文本跟踪消息。</div><div class="admonition note"><p><em>您还可以将此语句放在#ifdef __DEBUG测试中，以便仅在调试模式下启用超时检查。</em></div><div class="admonition note"><p><em>或者，如果需要对超时进行更具体的处理，可以在步骤的“N”操作块中输入以下ST程序：</em></div><div class="language-text highlight"><pre><span></span><code><span id=__span-1-1><a href=#__codelineno-1-1 id=__codelineno-1-1 name=__codelineno-1-1></a>if GSn.T > timeout then /* 'n' is the number of the step */
+</span><span id=__span-1-2><a href=#__codelineno-1-2 id=__codelineno-1-2 name=__codelineno-1-2></a>   ...statements...
+</span><span id=__span-1-3><a href=#__codelineno-1-3 id=__codelineno-1-3 name=__codelineno-1-3></a>end_if;
+</span></code></pre></div>

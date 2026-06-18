@@ -6,6 +6,22 @@
 
 ## [Unreleased]
 
+## [0.3.32] — 2026-06-18
+
+用 Motion Perfect V5.7 自带的中英双语帮助文件替换三个参考库（TrioBASIC / IEC / PLCopen），并新增「使用中文帮助文档」开关（默认英文）。
+
+### 变更
+
+- **参考库切换为 V5.7 mkdocs 帮助** —— 三个库（triobasic / iec / plcopen）原数据来自旧版 .chm 解压，现替换为 MP V5.7 自带的 mkdocs 帮助（`Help/HTML/sites/{en,zh}/`）。V5.7 正文更干净（提取 `<article>` 后去掉约 90% 导航 chrome）、类别（type）更准（TrioBASIC 直接读 Type 标题，不再靠 .hhc 推断）。新增构建脚本 `build_skills_v57.py`。
+- **中英双语 + 语言开关** —— 每个库现按 `{lib}/{lang}/`（en/zh）组织，自带中英两套。新增设置项「使用中文帮助文档」（`useChineseDocs`，默认关闭=英文）。`AiSkills.cs` 的 `LoadIndex` 按开关选语言目录，切换时清索引与详情缓存重载。
+- **丢弃图片/导航资源** —— 纯文本 API 渲染不了图片，构建时丢弃每命令的图片目录与 mkdocs 的 `assets/`/`index.html`/`404.html`，体积更小。
+
+### 修复（lookup 查询稳定性）
+
+- **命令签名恢复** —— V5.7 mkdocs 的描述段落不含签名行（旧 .chm 把签名拼进 desc，约 25% 命令带签名）。`build_skills_v57.py` 新增 `extract_syntax`，从每页 Syntax 段 `<code>` 提取权威签名（如 `MOVE(distance1, ...)`、`value = ABS(expression)`），存入 index.json 独立 `sig` 字段；`SkillIndexEntry` 加 `Sig`，`ParseSignature` 优先用 `sig`（缺失回退 desc）。签名覆盖恢复到与旧数据持平（triobasic 约 25%），`lookup_command` summary 档与代码参数个数校验恢复正常。
+- **库标识修正（回归）** —— `{lib}/{lang}` 目录改造时引入回归：`SkillIndexEntry` 缺库标识，多处 `Path.GetFileName(Dir)` 取到的是语言目录名而非库名。新增 `Lib` 字段，修正 `BuildSkillsCatalog` 分类、`lookup_command` 库过滤与返回值、`EnsureValidationIndex` 的 triobasic 判定与目录路径。
+- **切换语言后重建校验索引** —— `SaveConfig` 切换中/英文时新增 `_validationIndexBuilt = false`，让 `_triobasicIds`/`_signatures` 按新语言目录的文件重建（zh 比 en 少约 4% 命令）。
+
 ## [0.3.31] — 2026-06-17
 
 在 0.3.30 的 V5.7 适配之上，**恢复 V5.6 兼容**：同一个 `TrioAI.MPPlugin` 现在可同时运行在 Motion Perfect V5.6 与 V5.7 上。0.3.30 是过渡版（仅 V5.7），0.3.31 是首个双版本兼容版。

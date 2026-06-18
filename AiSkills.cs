@@ -17,8 +17,10 @@ namespace TrioAI.MPPlugIn
             public string Name;
             public string Type;
             public string Desc;
+            public string Lib;   // library name (triobasic/iec/plcopen); Dir holds {lib}/{lang}
             public string File;  // HTML file name within Dir
             public string Dir;
+            public string Sig;   // signature from Syntax section (for arg-count validation)
         }
 
         // Markdown skill: skills/general/<name>/SKILL.md (cc-haha style, name + description + when_to_use frontmatter)
@@ -48,10 +50,12 @@ namespace TrioAI.MPPlugIn
             try
             {
                 if (!Directory.Exists(SkillsDir)) return _index;
+                // 文档语言：默认英文，开关开启用中文。每个库按 {lib}/{lang}/ 组织。
+                var lang = _useChineseDocs ? "zh" : "en";
                 // 加载所有库子目录（triobasic / iec / plcopen），每条 entry 的 Dir 标识来源。
                 foreach (var lib in new[] { "triobasic", "iec", "plcopen" })
                 {
-                    var libDir = Path.Combine(SkillsDir, lib);
+                    var libDir = Path.Combine(SkillsDir, lib, lang);
                     var idxFile = Path.Combine(libDir, "index.json");
                     if (!File.Exists(idxFile)) continue;
                     var text = File.ReadAllText(idxFile);
@@ -63,8 +67,10 @@ namespace TrioAI.MPPlugIn
                             Name = GetStr(item, "name") ?? "",
                             Type = GetStr(item, "type") ?? "",
                             Desc = GetStr(item, "desc") ?? "",
+                            Lib = lib,
                             File = GetStr(item, "file"),
-                            Dir = libDir
+                            Dir = libDir,
+                            Sig = GetStr(item, "sig")
                         });
                 }
                 _indexLoadTime = DateTime.Now;
@@ -222,7 +228,7 @@ namespace TrioAI.MPPlugIn
                 var byLib = new Dictionary<string, List<SkillIndexEntry>>(StringComparer.OrdinalIgnoreCase);
                 foreach (var e in index)
                 {
-                    var lib = Path.GetFileName(e.Dir ?? "");
+                    var lib = e.Lib ?? "";
                     if (!byLib.ContainsKey(lib)) byLib[lib] = new List<SkillIndexEntry>();
                     byLib[lib].Add(e);
                 }
@@ -434,7 +440,7 @@ namespace TrioAI.MPPlugIn
             {
                 var libLower = library.ToLowerInvariant().Trim();
                 searchSet = index.Where(e =>
-                    Path.GetFileName(e.Dir ?? "").Equals(libLower, StringComparison.OrdinalIgnoreCase));
+                    (e.Lib ?? "").Equals(libLower, StringComparison.OrdinalIgnoreCase));
             }
             if (!searchSet.Any())
                 return new { error = string.IsNullOrEmpty(library)
@@ -484,7 +490,7 @@ namespace TrioAI.MPPlugIn
                         name = m.Name,
                         signature = sigText,
                         description = m.Desc ?? "",
-                        library = Path.GetFileName(m.Dir ?? "")
+                        library = m.Lib ?? ""
                     });
                 }
                 return new

@@ -1,0 +1,6 @@
+<h1 id=d_gain>D_GAIN</h1><h2 id=_1>类型</h2><p><em><strong>轴参数</strong></em><h2 id=_2>描述</h2><p>作为闭环控制的一部分，向系统添加微分增益可能会产生更平滑的响应，并允许使用比其他方法更高的比例增益。<p>较高的值可能导致振荡。对于导数项Kd和以下误差de的变化，对输出Od信号的贡献为:<h2 id=_3>值</h2><p>导数增益是一个常数,为乘以跟随误差的变化。默认值= 0<h2 id=_4>例</h2><p>将增益值设置为STARTUP程序的一部分<div class="language-BASIC highlight"><pre><span></span><code><span id=__span-0-1><a href=#__codelineno-0-1 id=__codelineno-0-1 name=__codelineno-0-1></a><span class=vg>P_GAIN</span><span class=o>=</span><span class=il>1</span>
+</span><span id=__span-0-2><a href=#__codelineno-0-2 id=__codelineno-0-2 name=__codelineno-0-2></a><span class=vg>I_GAIN</span><span class=o>=</span><span class=il>0</span>
+</span><span id=__span-0-3><a href=#__codelineno-0-3 id=__codelineno-0-3 name=__codelineno-0-3></a><span class=vg>D_GAIN</span><span class=o>=</span><span class=mf>0.25</span>
+</span><span id=__span-0-4><a href=#__codelineno-0-4 id=__codelineno-0-4 name=__codelineno-0-4></a><span class=vg>OV_GAIN</span><span class=o>=</span><span class=il>0</span>
+</span><span id=__span-0-5><a href=#__codelineno-0-5 id=__codelineno-0-5 name=__codelineno-0-5></a><span class=err>…</span>
+</span></code></pre></div><nav class=md-tags><span class=md-tag>轴参数</span></nav>
