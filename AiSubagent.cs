@@ -135,6 +135,29 @@ namespace TrioAI.MPPlugIn
         }
 
         /// <summary>
+        /// 子 agent 方言上下文：子 agent 拿不到主线 BuildDynamicContext（不知当前项目方言），需显式告知，
+        /// 否则 IEC 项目里 verify/review 不知用 library=iec、且无 IEC 防漂移锚点（与主线方言切换不对齐的盲区）。
+        /// 只注入精炼锚点（方言感知 + library 指向 + 关键防漂移），不重复主线全套 20KB 规则 ——
+        /// 子 agent 靠 lookup_command 查证，不需全套规则强化。dialect 未知则返回 null（保持旧行为）。
+        /// 时序：RunSubagent 由主线工具执行阶段调用，此时 _activeDialect 已被本轮 CallApiStream 开头刷新。
+        /// </summary>
+        private string BuildSubagentDialectHint()
+        {
+            var dialect = string.IsNullOrEmpty(_activeDialect) ? "" : _activeDialect;
+            if (dialect == "triobasic")
+                return "## Current dialect: TrioBASIC\n\n" +
+                       "You are working on TrioBASIC programs. Verify/research with lookup_command(query, library=\"triobasic\"). " +
+                       "TrioBASIC is a niche BASIC dialect — it drifts to VB/VB.NET/QBasic/PowerBASIC. " +
+                       "Do NOT trust your memory of \"BASIC\"; verify every command/declaration (DIM...AS type, motion MOVE/MOVEABS/CONNECT/WAITS, axis params SPEED/ACCEL/WDOG) against the reference.";
+            if (dialect == "iec")
+                return "## Current dialect: IEC ST\n\n" +
+                       "You are working on IEC ST programs. Verify/research with lookup_command(query, library=\"iec\") and get_iec_task_detail. " +
+                       "Trio IEC uses its OWN TC_* motion blocks (TC_MOVEABS, TC_MOVECIRC, TC_CONNECT, TC_CAM...) — NEVER PLCOpen MC_* (MC_MoveAbsolute etc.). " +
+                       "Domain FBs (PID, RAMP, ALARM_A, AVERAGE...) have exact pins — verify each via lookup.";
+            return null;
+        }
+
+        /// <summary>
         /// 子 agent 主循环（agentType = research/review/debug/explore）。
         /// 三类差异：prompt（GetSubagentPrompt）+ schema 工具池（BuildSubagentToolDefinitions(agentType)）+
         /// thinking（review/debug 跟随全局开关；research/explore 始终关）。
@@ -164,6 +187,17 @@ namespace TrioAI.MPPlugIn
                     { "cache_control", new { type = "ephemeral" } }
                 }
             };
+            // 方言上下文注入：告知当前方言 + library 指向 + 关键防漂移锚点（补全子 agent 盲区）。
+            // 放在 prompt 块之后、不加 cache_control —— _activeDialect 变化只影响本块及之后，prompt 块前缀缓存保留（同 memory 块）。
+            var dialectHint = BuildSubagentDialectHint();
+            if (!string.IsNullOrEmpty(dialectHint))
+            {
+                subSystem.Add(new Dictionary<string, object>
+                {
+                    { "type", "text" },
+                    { "text", dialectHint }
+                });
+            }
             // 注入持久化记忆：子 agent 拿不到主线历史/项目上下文/task 清单，memory 是它了解用户偏好
             // （语言、注释风格等）与项目约定的唯一补充来源。与主线一致（CallApiStream 的 memory 块）。
             // 放在 prompt 块之后且不加 cache_control——prompt 块保留前缀缓存断点，memory 变化不影响其缓存。

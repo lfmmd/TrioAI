@@ -7,6 +7,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.34] — 2026-06-21
+
+Completes 0.3.33's dialect switching: subagents (research / review / debug / explore / verify) are now also aware of the current project dialect, aligning with the main agent.
+
+### Fixed
+
+- **Subagent dialect awareness** — 0.3.33's dialect prompt switch covered only the main agent's system prompt; the subagent system prompt is fixed text and has no access to the main agent's `BuildDynamicContext` (project context), so in IEC projects verify/review didn't know to query with `library="iec"` and lacked IEC anti-drift anchors. A lightweight dialect-context block is now injected into the subagent system: current dialect + the `lookup_command` library to use + key anti-drift anchors (TrioBASIC: avoid VB/VB.NET drift; IEC: use TC_* not PLCOpen, verify domain-FB pins individually). Unknown dialect → no injection (unchanged behavior). The block has no cache_control, handled like the memory block so it doesn't break the prompt block's prefix cache.
+
 ## [0.3.33] — 2026-06-21
 
 The system prompt now switches dynamically by programming dialect (TrioBASIC / IEC ST). IEC projects get a dedicated prompt of the same depth as TrioBASIC for the first time, suppressing PLCOpen drift at the source.

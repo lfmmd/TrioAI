@@ -6,6 +6,14 @@
 
 ## [Unreleased]
 
+## [0.3.34] — 2026-06-21
+
+补全 0.3.33 的方言切换：子 agent（research / review / debug / explore / verify）现在也感知当前项目方言，与主线对齐。
+
+### 修复
+
+- **子 agent 方言感知** —— 0.3.33 的方言提示词切换只覆盖主线 system prompt，子 agent 的 system prompt 是固定文本、且拿不到主线 `BuildDynamicContext`（项目上下文），导致 IEC 项目里 verify/review 不知用 `library="iec"` 查证、且缺 IEC 防漂移锚点。现给子 agent system 注入一段轻量方言上下文块：告知当前方言 + `lookup_command` 的 library 指向 + 关键防漂移锚点（TrioBASIC：防 VB/VB.NET 漂移；IEC：用 TC_* 非 PLCOpen、域 FB 逐引脚查证）。dialect 未知则不注入（保持旧行为）。该块不打 cache_control，与 memory 块同处理，不打断 prompt 块前缀缓存。
+
 ## [0.3.33] — 2026-06-21
 
 系统提示词按编程方言（TrioBASIC / IEC ST）动态切换。IEC 项目首次获得与 TrioBASIC 同等深度的专属提示词，从源头抑制向 PLCOpen 漂移。
