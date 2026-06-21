@@ -10,7 +10,8 @@ namespace TrioAI.MPPlugIn
     {
         // ---- System Prompt ----
 
-        // PromptPath moved to AiService.cs (must be initialized after DataDir to avoid null).
+        // DefaultPrompt 现为通用兜底：当 skills/prompts/{dialect}.md 读不到时由 LoadDialectPrompt 回退使用。
+        // 方言专属真源是打包资源 skills/prompts/triobasic.md 与 iec.md。
 
         private static readonly string DefaultPrompt = @"# AI Instructions
 
@@ -200,11 +201,11 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
 
         // Stable prompt: AI instructions + skills catalog + memory instructions + language.
         // Changes very rarely — high cache hit rate.
-        internal static string BuildStablePrompt()
+        internal string BuildStablePrompt()
         {
             try
             {
-                var prompt = File.Exists(PromptPath) ? File.ReadAllText(PromptPath) : DefaultPrompt;
+                var prompt = LoadDialectPrompt();
                 var skills = BuildSkillsCatalog();
                 var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
                 var langInstruction = GetLanguageInstruction(lang);
@@ -229,6 +230,52 @@ TrioBASIC reserves system variables (e.g. `VR`, `TABLE`, `AXIS`, `OP`, `DP`, `DP
             }
             catch { }
             return DefaultPrompt;
+        }
+
+        // 按生效方言 _activeDialect 读对应提示词（{dir}/{dialect}.md）。
+        // 三层兜底：DataDir/skills/prompts（用户可编辑覆盖）→ DLL 同级打包源（EnsureSkills 未跑时兜底）
+        // → 内嵌 DefaultPrompt（两者皆无时，不崩但失方言针对性）。
+        private string LoadDialectPrompt()
+        {
+            var dialect = string.IsNullOrEmpty(_activeDialect) ? "triobasic" : _activeDialect;
+            var fname = dialect + ".md";
+            foreach (var dir in new[] { PromptsDir, BundledPromptsDir })
+            {
+                var path = Path.Combine(dir, fname);
+                try { if (File.Exists(path)) return File.ReadAllText(path); } catch { }
+            }
+            return DefaultPrompt;
+        }
+
+        // 扫描项目所有程序的 dialect 推断主导方言（auto 模式用）。
+        // 规则：纯 IEC（有 IEC 且无任何 BASIC）→ iec；其余（混合/空/全 BASIC/全 unknown）→ triobasic。
+        // 复用 Handlers.GetProgramDialect；UI 线程遍历 proj.Items（同 BuildProjectContext）。
+        private static string InferProjectDialect()
+        {
+            var result = "triobasic";
+            try
+            {
+                DispatcherHelper.Invoke(() =>
+                {
+                    var proj = Trio.SharedLibrary.MPSingletons.MainWindow?.Project;
+                    if (proj == null || !proj.IsProject) return;
+                    var items = proj.Items;
+                    if (items == null) return;
+                    var list = items.ToList();
+                    if (list.Count == 0) return;
+
+                    bool anyIec = false, anyBasic = false;
+                    foreach (var item in list)
+                    {
+                        var d = Handlers.GetProgramDialect(item.ItemName);
+                        if (d == "iec") anyIec = true;
+                        else if (d == "triobasic") anyBasic = true;
+                    }
+                    result = (anyIec && !anyBasic) ? "iec" : "triobasic";
+                });
+            }
+            catch { }
+            return result;
         }
 
         // 子 agent 专属 system prompt：按 agentType 选定位 / 结论格式。4 种（research/review/debug/explore）

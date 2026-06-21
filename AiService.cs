@@ -19,7 +19,10 @@ namespace TrioAI.MPPlugIn
         private static readonly string HistoryDir = Path.Combine(DataDir, "chat_history");
         private static readonly string BackupDir = Path.Combine(DataDir, "backups");
         private static readonly string SkillsDir = Path.Combine(DataDir, "skills");
-        private static readonly string PromptPath = Path.Combine(DataDir, "AI_INSTRUCTIONS.md");
+        private static readonly string PromptsDir = Path.Combine(SkillsDir, "prompts");
+        // 打包源提示词目录（DLL 同级 skills/prompts）—— DataDir 未部署时兜底，保证开箱即用。
+        private static readonly string BundledPromptsDir = Path.Combine(
+            Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "", "skills", "prompts");
 
         private static readonly JavaScriptSerializer _json = new JavaScriptSerializer();
 
@@ -27,6 +30,10 @@ namespace TrioAI.MPPlugIn
 
         private readonly HttpClient _http;
         private static string _lastCompileError;
+
+        // 生效方言（"triobasic"/"iec"）：每轮 CallApiStream 开头由 ResolveActiveDialect 刷新。
+        // auto 模式按项目主导方言推断；手动模式直接用 _dialectMode。决定 LoadDialectPrompt 选哪份提示词。
+        private string _activeDialect = "triobasic";
 
         private const int DefaultMaxTokens = 8192;
         private const int EscalatedMaxTokens = 64000;
@@ -56,7 +63,7 @@ namespace TrioAI.MPPlugIn
         {
             try
             {
-                var dir = Path.GetDirectoryName(PromptPath);
+                var dir = DataDir;
                 Directory.CreateDirectory(dir);
                 File.AppendAllText(
                     Path.Combine(dir, "perf_error.txt"),
@@ -98,9 +105,6 @@ namespace TrioAI.MPPlugIn
             Directory.CreateDirectory(BackupDir);
             Directory.CreateDirectory(DataDir);
             try { Directory.CreateDirectory(MemoryDir); } catch { }
-            // 首次创建提示词文件 — 用户手动修改后不会被覆盖。
-            // 想恢复默认：删除文件，或在 UI 点击「初始化 Skills」。
-            try { if (!File.Exists(PromptPath)) File.WriteAllText(PromptPath, DefaultPrompt); } catch { }
             SubscribeCompileEvents();
         }
 
@@ -558,8 +562,18 @@ namespace TrioAI.MPPlugIn
 
         // ---- API Call (Streaming SSE) ----
 
+        // 生效方言决策：手动模式（triobasic/iec）直接用；auto 模式推断项目主导方言。
+        private string ResolveActiveDialect()
+        {
+            if (_dialectMode == "iec") return "iec";
+            if (_dialectMode == "triobasic") return "triobasic";
+            return InferProjectDialect();
+        }
+
         private StreamResult CallApiStream(CancellationToken ct)
         {
+            // 刷新生效方言：auto 模式每轮重算（跟随项目程序变化），手动模式恒定。
+            _activeDialect = ResolveActiveDialect();
             // Prompt caching（前缀匹配）：稳定内容放前面，动态内容放后面。
             // Block 1: AI 指令 + skills + 记忆指令 + 语言 — 几乎不变，缓存命中率高
             // Block 2: 记忆内容 — 仅在用户要求记住时才变

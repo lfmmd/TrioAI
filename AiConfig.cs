@@ -23,6 +23,7 @@ namespace TrioAI.MPPlugIn
         private static bool _memoryEnabled = true;
         private static bool _localizeThinking = true;
         private static bool _useChineseDocs = false;   // skill 文档语言：false=英文（默认），true=中文
+        private string _dialectMode = "auto";   // 提示词方言：auto(按项目主导方言推断)/triobasic/iec
 
         // ---- Config ----
 
@@ -89,12 +90,17 @@ namespace TrioAI.MPPlugIn
                         bool b;
                         if (val != null && bool.TryParse(val.ToString(), out b)) _useChineseDocs = b;
                     }
+                    if (cfg.TryGetValue("dialectMode", out val))
+                    {
+                        var s = val?.ToString();
+                        if (s == "auto" || s == "triobasic" || s == "iec") _dialectMode = s;
+                    }
                 }
             }
             catch { }
         }
 
-        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null, bool? enableControllerValidation = null, bool? enableThinking = null, int? budgetTokens = null, bool? showThinking = null, bool? memoryEnabled = null, bool? localizeThinking = null, bool? useChineseDocs = null, string lightModel = null)
+        public void SaveConfig(string apiKey, string model, string apiUrl, bool? showToolStatus = null, bool? includeSkillImages = null, bool? enableControllerValidation = null, bool? enableThinking = null, int? budgetTokens = null, bool? showThinking = null, bool? memoryEnabled = null, bool? localizeThinking = null, bool? useChineseDocs = null, string lightModel = null, string dialectMode = null)
         {
             _apiKey = apiKey;
             if (!string.IsNullOrEmpty(model)) _model = model;
@@ -119,7 +125,9 @@ namespace TrioAI.MPPlugIn
                 _skillDetailCache.Clear();      // cached HTML is language-specific
                 _validationIndexBuilt = false;  // _triobasicIds/_signatures reflect the lang dir's files
             }
-            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, lightModel = _lightModel ?? "", apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled, localizeThinking = _localizeThinking, useChineseDocs = _useChineseDocs });
+            if (dialectMode != null && (dialectMode == "auto" || dialectMode == "triobasic" || dialectMode == "iec"))
+                _dialectMode = dialectMode;
+            var json = _json.Serialize(new { apiKey = _apiKey, model = _model, lightModel = _lightModel ?? "", apiUrl = _apiUrl, showToolStatus = _showToolStatus, skillsInitialized = _skillsInitialized, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled, localizeThinking = _localizeThinking, useChineseDocs = _useChineseDocs, dialectMode = _dialectMode });
             File.WriteAllText(ConfigPath, json);
         }
 
@@ -143,6 +151,7 @@ namespace TrioAI.MPPlugIn
         public bool ShowToolStatus => _showToolStatus;
         public bool SkillsInitialized => _skillsInitialized;
         public bool IncludeSkillImages => _includeSkillImages;
+        public string DialectMode => _dialectMode;
         public static bool EnableControllerValidation => _enableControllerValidation;
 
         public string InitializeSkills()
@@ -164,13 +173,9 @@ namespace TrioAI.MPPlugIn
                 CopyDirectory(dir, dest);
             }
 
-            // Deploy AI_INSTRUCTIONS.md (always overwrite to keep rules up-to-date)
-            Directory.CreateDirectory(DataDir);
-            File.WriteAllText(PromptPath, DefaultPrompt);
-
             _skillsInitialized = true;
             _index = null; // force reload
-            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", lightModel = _lightModel ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled, localizeThinking = _localizeThinking, useChineseDocs = _useChineseDocs });
+            var json = _json.Serialize(new { apiKey = _apiKey ?? "", model = _model ?? "", lightModel = _lightModel ?? "", apiUrl = _apiUrl ?? "", showToolStatus = _showToolStatus, skillsInitialized = true, includeSkillImages = _includeSkillImages, enableControllerValidation = _enableControllerValidation, enableThinking = _enableThinking, budgetTokens = _budgetTokens, showThinking = _showThinking, memoryEnabled = _memoryEnabled, localizeThinking = _localizeThinking, useChineseDocs = _useChineseDocs, dialectMode = _dialectMode });
             File.WriteAllText(ConfigPath, json);
             return null;
         }

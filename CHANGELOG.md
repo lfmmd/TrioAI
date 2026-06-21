@@ -6,6 +6,22 @@
 
 ## [Unreleased]
 
+## [0.3.33] — 2026-06-21
+
+系统提示词按编程方言（TrioBASIC / IEC ST）动态切换。IEC 项目首次获得与 TrioBASIC 同等深度的专属提示词，从源头抑制向 PLCOpen 漂移。
+
+### 新增
+
+- **方言专属系统提示词动态切换** —— 此前系统提示词以 TrioBASIC 为主、IEC 段仅简略数行，导致 IEC ST 项目漂移到 PLCOpen（`MC_MoveAbsolute` 等）。现内置两份自包含精炼提示词（`skills/prompts/triobasic.md`、`skills/prompts/iec.md`），运行时按「生效方言」选用。生效方言每轮解析：手动模式直接锁定；Auto 模式扫描项目程序推断主导方言（纯 IEC 项目用 IEC，混合 / 纯 TrioBASIC / 空项目默认 TrioBASIC）。
+- **设置面板方言选择** —— 新增「提示词方言」下拉（Auto / TrioBASIC / IEC ST），可手动覆盖自动推断。配置持久化（`dialectMode`，默认 Auto）。
+- **三层兜底读取** —— 提示词读取顺序：用户可编辑的 `DataDir/skills/prompts/{dialect}.md` → 插件打包源（DLL 同级 `skills/prompts/`）→ 内嵌通用 `DefaultPrompt`。确保新版本开箱即用（未点「初始化 Skills」也能读对），且部署异常不崩。
+
+### 变更
+
+- **提示词真源迁移** —— 单一 `DefaultPrompt`（C# 常量，偏 TrioBASIC）降级为通用兜底；方言真源改为打包资源 `skills/prompts/*.md`，随插件发布。
+- **移除 `AI_INSTRUCTIONS.md` 落盘机制** —— 不再随部署用单一提示词覆盖写该文件（已废弃）。
+- **缓存** —— 方言在会话内稳定，Block1 缓存大部分命中；仅手动切换方言那一轮 cache miss。
+
 ## [0.3.32] — 2026-06-18
 
 用 Motion Perfect V5.7 自带的中英双语帮助文件替换三个参考库（TrioBASIC / IEC / PLCopen），并新增「使用中文帮助文档」开关（默认英文）。

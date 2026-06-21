@@ -1135,6 +1135,30 @@ namespace TrioAI.MPPlugIn
             };
             panel.Children.Add(useChineseDocsCheck);
 
+            // Dialect mode: which prompt variant to use (Auto infers from project, else force TrioBASIC/IEC)
+            var dialectLabel = new TextBlock
+            {
+                Text = Lang.S("DialectMode"),
+                Foreground = Brushes.White,
+                Margin = new Thickness(0, 0, 0, 4)
+            };
+            panel.Children.Add(dialectLabel);
+            var dialectBox = new ComboBox
+            {
+                Margin = new Thickness(0, 0, 0, 14),
+                ToolTip = Lang.S("DialectModeDesc")
+            };
+            dialectBox.Items.Add(new ComboBoxItem { Content = Lang.S("DialectAuto"), Tag = "auto" });
+            dialectBox.Items.Add(new ComboBoxItem { Content = "TrioBASIC", Tag = "triobasic" });
+            dialectBox.Items.Add(new ComboBoxItem { Content = "IEC ST", Tag = "iec" });
+            var curDialect = _ai.DialectMode ?? "auto";
+            for (int i = 0; i < dialectBox.Items.Count; i++)
+            {
+                if (((ComboBoxItem)dialectBox.Items[i]).Tag as string == curDialect) { dialectBox.SelectedIndex = i; break; }
+            }
+            if (dialectBox.SelectedIndex < 0) dialectBox.SelectedIndex = 0;
+            panel.Children.Add(dialectBox);
+
             // Buttons
             var btnRow = new DockPanel { LastChildFill = false };
 
@@ -1220,7 +1244,7 @@ namespace TrioAI.MPPlugIn
                 }
                 int budget = AiService.BudgetTokens;
                 int.TryParse(budgetBox.Text, out budget);
-                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked, enableThinkingCheck.IsChecked, budget, showThinkingCheck.IsChecked, memoryEnabledCheck.IsChecked, localizeThinkingCheck.IsChecked, useChineseDocsCheck.IsChecked, lightModel);
+                _ai.SaveConfig(key, model, url, showStatusCheck.IsChecked, includeImagesCheck.IsChecked, controllerValidationCheck.IsChecked, enableThinkingCheck.IsChecked, budget, showThinkingCheck.IsChecked, memoryEnabledCheck.IsChecked, localizeThinkingCheck.IsChecked, useChineseDocsCheck.IsChecked, lightModel, ((ComboBoxItem)dialectBox.SelectedItem)?.Tag as string);
                 _messages.Add(new ChatMessage("System", Lang.S("SettingsSaved")));
                 _scrollViewer.ScrollToEnd();
                 win.DialogResult = true;
@@ -1819,6 +1843,9 @@ namespace TrioAI.MPPlugIn
                 { "LocalizeThinkingDesc", "启用后 AI 的扩展思考（推理过程）会跟随 MotionPerfect 系统语言，而非默认英文" },
                 { "UseChineseDocs", "使用中文帮助文档" },
                 { "UseChineseDocsDesc", "启用后命令查询返回中文文档（默认关闭=英文）" },
+                { "DialectMode", "提示词方言" },
+                { "DialectModeDesc", "选择 AI 系统提示词的方言版本。Auto=按项目程序自动推断（纯 IEC 项目用 IEC，其余用 TrioBASIC）；也可手动锁定。" },
+                { "DialectAuto", "自动（按项目推断）" },
             },
             ["en"] = new Dictionary<string, string>
             {
@@ -1877,6 +1904,9 @@ namespace TrioAI.MPPlugIn
                 { "LocalizeThinkingDesc", "When enabled, AI's extended thinking (reasoning) follows MotionPerfect's system language instead of defaulting to English" },
                 { "UseChineseDocs", "Use Chinese Documentation" },
                 { "UseChineseDocsDesc", "When enabled, command lookups return Chinese docs (off by default = English)" },
+                { "DialectMode", "Prompt Dialect" },
+                { "DialectModeDesc", "Which dialect variant of the AI system prompt to use. Auto = infer from project programs (IEC-only projects use IEC, others use TrioBASIC); or lock manually." },
+                { "DialectAuto", "Auto (by project)" },
             },
             ["de"] = new Dictionary<string, string>
             {
@@ -1935,6 +1965,9 @@ namespace TrioAI.MPPlugIn
                 { "LocalizeThinkingDesc", "Wenn aktiviert, folgt das erweiterte Denken der Sprache von MotionPerfect statt standardmaessig Englisch" },
                 { "UseChineseDocs", "Chinesische Dokumentation verwenden" },
                 { "UseChineseDocsDesc", "Wenn aktiviert, liefern Befehlsabfragen chinesische Doku (standardmaessig aus = Englisch)" },
+                { "DialectMode", "Prompt-Dialekt" },
+                { "DialectModeDesc", "Welche Dialektvariante des KI-System-Prompts verwendet wird. Auto = aus Projekt ableiten (nur-IEC-Projekte verwenden IEC, sonst TrioBASIC); oder manuell festlegen." },
+                { "DialectAuto", "Auto (nach Projekt)" },
             },
             ["fr"] = new Dictionary<string, string>
             {
@@ -1993,6 +2026,9 @@ namespace TrioAI.MPPlugIn
                 { "LocalizeThinkingDesc", "Si activé, la réflexion étendue de l'IA suit la langue système de MotionPerfect au lieu de l'anglais par défaut" },
                 { "UseChineseDocs", "Utiliser la documentation chinoise" },
                 { "UseChineseDocsDesc", "Si activé, les recherches de commandes renvoient la documentation chinoise (désactivé par défaut = anglais)" },
+                { "DialectMode", "Dialecte de prompt" },
+                { "DialectModeDesc", "Quelle variante dialectale du prompt système IA utiliser. Auto = déduire du projet (projets IEC uniquement utilisent IEC, sinon TrioBASIC) ; ou verrouiller manuellement." },
+                { "DialectAuto", "Auto (selon projet)" },
             },
         };
 

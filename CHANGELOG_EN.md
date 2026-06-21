@@ -7,6 +7,22 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.33] — 2026-06-21
+
+The system prompt now switches dynamically by programming dialect (TrioBASIC / IEC ST). IEC projects get a dedicated prompt of the same depth as TrioBASIC for the first time, suppressing PLCOpen drift at the source.
+
+### Added
+
+- **Dynamic dialect-specific system prompt** — Previously the system prompt was TrioBASIC-centric with only a brief IEC section, causing IEC ST projects to drift to PLCOpen (`MC_MoveAbsolute`, etc.). Two self-contained refined prompts are now bundled (`skills/prompts/triobasic.md`, `skills/prompts/iec.md`) and selected at runtime by the "active dialect". The active dialect is resolved every turn: manual mode locks it; Auto mode scans the project's programs to infer the dominant dialect (IEC-only projects use IEC; mixed / TrioBASIC-only / empty projects default to TrioBASIC).
+- **Dialect selector in Settings** — New "Prompt Dialect" dropdown (Auto / TrioBASIC / IEC ST) to override the auto inference. Persisted as `dialectMode` (defaults to Auto).
+- **Three-tier fallback** — Prompt read order: user-editable `DataDir/skills/prompts/{dialect}.md` → bundled source (DLL-side `skills/prompts/`) → embedded generic `DefaultPrompt`. Ensures out-of-the-box correctness (works even before clicking "Initialize Skills") and never crashes on deploy anomalies.
+
+### Changed
+
+- **Prompt source-of-truth migrated** — The single `DefaultPrompt` (C# const, TrioBASIC-leaning) is demoted to a generic fallback; dialect sources of truth are now the bundled `skills/prompts/*.md`, shipped with the plugin.
+- **`AI_INSTRUCTIONS.md` write mechanism removed** — No longer overwritten with a single prompt on deploy (deprecated).
+- **Caching** — The dialect is stable within a session, so Block1 cache hits most turns; only the turn where the user manually switches dialect takes a cache miss.
+
 ## [0.3.32] — 2026-06-18
 
 Replaces the three reference libraries (TrioBASIC / IEC / PLCopen) with the bilingual (en/zh) help shipped with Motion Perfect V5.7, and adds a "Use Chinese Documentation" toggle (defaults to English).
