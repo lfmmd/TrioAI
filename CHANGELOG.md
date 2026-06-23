@@ -6,6 +6,22 @@
 
 ## [Unreleased]
 
+## [0.3.35] — 2026-06-23
+
+修复 `patch_source` 的 `old_string` 匹配过严：TrioBASIC 编译器大小写不敏感，但匹配层此前用 `StringComparison.Ordinal`（大小写敏感），导致 AI 记成全小写/全大写时 `old_string not found`，反复重试。顺带修掉 TrimEnd 模糊分支的偏移 bug。
+
+### 修复
+
+- **`patch_source` 匹配改为大小写不敏感（TrioBASIC 语义）** —— 此前 `FindText` 用 `IndexOf(Ordinal)` 严格比较，而 TrioBASIC 编译器对 `cVR_x` / `cvr_x` / `CVR_X` 一视同仁。AI 读完源码后凭语义记忆重写 `old_string`，常把混合大小写的标识符（如 `cVR_bakdecelper`）记成全小写（`cvr_bakdecelper`）—— 在 TrioBASIC 里这完全合法且等价，但被大小写敏感的匹配层判成「字符串不同」→ `old_string not found` → AI 反复重试（见 `chat_history/20260621_202830.json` msg#68-70 连续 3 次失败）。现 `FindText` 在精确匹配失败后追加一层 `OrdinalIgnoreCase` 回退，与目标语言语义对齐。`CountOccurrences`（唯一性检查）同步改用 `OrdinalIgnoreCase`，杜绝「查找命中但计数为 0」的语义割裂。
+- **修 `FindText` 的 TrimEnd 分支偏移 bug** —— 旧实现 `source.IndexOf(srcLines[i], source.Length - source.Length)` 中 `length - length` 恒为 0，等价于「从文件开头找该行文本的首次出现位置」。当 `old_string` 是多行块、且块内某行文本在文件中重复出现时，返回的偏移指向另一处相同行 → 替换错位置。改为手动累加行长度计算真实偏移。
+- **`FindText` 返回 `(pos, length)` 元组，替换用实际匹配长度切片** —— Trim 模糊分支下源码行可能带尾随/前导空白，实际匹配块比 `old_string` 长。旧实现用 `op.oldString.Length` 切片会切在匹配块中间，留下半截残留。现返回匹配块的真实长度，调用方据此切片。
+
+### 行为影响
+
+- AI 记错标识符大小写 → 此前必失败重试，现直接命中替换。
+- 精确匹配仍优先（大小写正确时不走回退层，行为不变）。
+- **唯一性保护未放宽**：重复出现的片段（如多个子程序里的 `VR(cvr_hmibtn0)=0` 清零模式）仍要求 AI 提供更多上下文才能定位，这是合理的安全拦截。
+
 ## [0.3.34] — 2026-06-21
 
 补全 0.3.33 的方言切换：子 agent（research / review / debug / explore / verify）现在也感知当前项目方言，与主线对齐。

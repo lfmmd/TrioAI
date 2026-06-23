@@ -7,6 +7,22 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 
 ## [Unreleased]
 
+## [0.3.35] — 2026-06-23
+
+Fixes `patch_source` over-strict `old_string` matching: the TrioBASIC compiler is case-insensitive, but the matcher used `StringComparison.Ordinal` (case-sensitive), so when the AI remembered identifiers in all-lower/upper case, `old_string not found` was returned and it retried repeatedly. Also fixes an offset bug in the TrimEnd fuzzy branch.
+
+### Fixed
+
+- **`patch_source` matching is now case-insensitive (TrioBASIC semantics)** — `FindText` previously used `IndexOf(Ordinal)` for strict comparison, while the TrioBASIC compiler treats `cVR_x` / `cvr_x` / `CVR_X` as identical. After reading source, the AI rewrites `old_string` from semantic memory and frequently lowercases mixed-case identifiers (e.g. `cVR_bakdecelper` → `cvr_bakdecelper`) — legal and equivalent in TrioBASIC, but rejected as "different strings" by the case-sensitive matcher → `old_string not found` → repeated retries (see `chat_history/20260621_202830.json` msg#68-70: 3 consecutive failures). `FindText` now adds an `OrdinalIgnoreCase` fallback after the exact match, aligning with the target language's semantics. `CountOccurrences` (the uniqueness check) is switched to `OrdinalIgnoreCase` as well, eliminating the "match found but count is 0" semantic split.
+- **Fixed offset bug in `FindText`'s TrimEnd branch** — The old `source.IndexOf(srcLines[i], source.Length - source.Length)` had `length - length` always equal to 0, equivalent to "find the line text's first occurrence from the file start". When `old_string` was a multi-line block and a line inside it recurred elsewhere in the file, the returned offset pointed to a different identical line → replacement at the wrong location. Now computes the true offset by summing line lengths.
+- **`FindText` returns a `(pos, length)` tuple; replacement slices by the actual match length** — In the Trim fuzzy branch, source lines may carry trailing/leading whitespace, making the real matched block longer than `old_string`. The old code sliced with `op.oldString.Length`, cutting in the middle of the block and leaving a half-residue. Now returns the block's true length and the caller slices accordingly.
+
+### Behavioral impact
+
+- AI mis-remembering identifier case → previously always failed and retried; now matches and replaces directly.
+- Exact match still takes priority (when case is correct the fallback layer is not reached — behavior unchanged).
+- **Uniqueness protection is NOT relaxed**: fragments that recur (e.g. the `VR(cvr_hmibtn0)=0` clear-to-zero pattern across multiple subroutines) still require the AI to supply more context to locate — this remains a reasonable safety guard.
+
 ## [0.3.34] — 2026-06-21
 
 Completes 0.3.33's dialect switching: subagents (research / review / debug / explore / verify) are now also aware of the current project dialect, aligning with the main agent.

@@ -638,8 +638,10 @@ namespace TrioAI.MPPlugIn
                     continue;
                 }
 
-                // 在源码中查找 old_string（trim 后模糊匹配）
-                int pos = FindText(currentSource, op.oldString);
+                // 在源码中查找 old_string（精确 → 大小写不敏感 → Trim 逐行模糊）
+                var found = FindText(currentSource, op.oldString);
+                int pos = found.pos;
+                int matchLen = found.length;
                 if (pos < 0)
                 {
                     appliedOps.Add(new { status = "skipped", reason = "old_string not found" });
@@ -654,7 +656,9 @@ namespace TrioAI.MPPlugIn
                     continue;
                 }
 
-                currentSource = currentSource.Substring(0, pos) + op.newString + currentSource.Substring(pos + op.oldString.Length);
+                // 用 matchLen 而非 op.oldString.Length 切片：Trim 模糊分支下源码行可能带
+                // 尾随/前导空白，实际匹配块比 old_string 长，用 oldString.Length 会切在中间留残留。
+                currentSource = currentSource.Substring(0, pos) + op.newString + currentSource.Substring(pos + matchLen);
                 appliedOps.Add(new { status = "replaced" });
             }
 
@@ -686,51 +690,80 @@ namespace TrioAI.MPPlugIn
             return result ?? Error("Patch failed");
         }
 
-        private static int FindText(string source, string search)
+        // 在 source 中查找 search，返回 (起始偏移, 匹配块的实际长度)。
+        // matchLength 与 search.Length 可能不同：Trim 模糊分支下源码行带尾随/前导空白时
+        // 实际匹配块更长。调用方必须用 matchLength 切片，否则会切在匹配块中间留下残留。
+        // 未找到返回 (-1, 0)。
+        private static (int pos, int length) FindText(string source, string search)
         {
-            // 1) 精确匹配
+            // 1) 精确匹配（含 \r\n 已规范化为 \n）
             int idx = source.IndexOf(search, StringComparison.Ordinal);
-            if (idx >= 0) return idx;
+            if (idx >= 0) return (idx, search.Length);
 
-            // 2) Trim 后逐行模糊匹配（处理行尾空白差异）
+            // 2) 大小写不敏感匹配（TrioBASIC 语义）：TrioBASIC 编译器大小写不敏感，
+            //    AI 记成全小写/全大写都合法。若此处仍用 Ordinal，会把 cVR_ vs cvr_ 判成不同
+            //    字符串 → old_string 永远 not found → AI 反复重试（见 chat_history 20260621_202830
+            //    msg#68-70 连续 3 次失败根因）。CountOccurrences 必须同步用 OrdinalIgnoreCase，
+            //    否则唯一性检查会与查找语义割裂。长度与 search 相同（仅大小写不同）。
+            idx = source.IndexOf(search, StringComparison.OrdinalIgnoreCase);
+            if (idx >= 0) return (idx, search.Length);
+
+            // 3) Trim 后逐行模糊匹配（处理行尾/行首空白差异）
             var srcLines = source.Split('\n');
             var searchLines = search.Split('\n');
-            for (int i = 0; i <= srcLines.Length - searchLines.Length; i++)
+
+            // 计算第 i 行在 source 中的起始偏移 + 第 i..i+n 行块的总长度（含中间 \n，不含末尾 \n）
+            int LineOffset(int i) { int p = 0; for (int k = 0; k < i; k++) p += srcLines[k].Length + 1; return p; }
+            int BlockLength(int i, int n)
             {
-                bool match = true;
-                for (int j = 0; j < searchLines.Length; j++)
-                {
-                    if (srcLines[i + j].TrimEnd() != searchLines[j].TrimEnd())
-                    { match = false; break; }
-                }
-                if (match) return source.IndexOf(srcLines[i], source.Length - source.Length); // recalc from line start
+                int len = 0;
+                for (int k = 0; k < n; k++) len += srcLines[i + k].Length + 1;  // +1 为 \n
+                return len > 0 ? len - 1 : 0;  // 去掉末尾多算的 \n
             }
 
-            // 重新用 Trim 逐行匹配
+            // 3a) TrimEnd 逐行（仅容忍行尾空白）
             for (int i = 0; i <= srcLines.Length - searchLines.Length; i++)
             {
                 bool match = true;
                 for (int j = 0; j < searchLines.Length; j++)
                 {
-                    if (srcLines[i + j].Trim() != searchLines[j].Trim())
+                    if (!string.Equals(srcLines[i + j].TrimEnd(), searchLines[j].TrimEnd(), StringComparison.OrdinalIgnoreCase))
                     { match = false; break; }
                 }
                 if (match)
                 {
-                    // 计算原始 source 中的字符偏移
-                    int pos = 0;
-                    for (int k = 0; k < i; k++) pos += srcLines[k].Length + 1;
-                    return pos;
+                    // 旧实现 source.IndexOf(srcLines[i], source.Length - source.Length) 是 bug：
+                    // length-length 恒为 0，等价于「从文件开头找该行文本首次出现位置」，
+                    // 多行 old_string 且该行文本在文件中重复出现时会返回错误偏移 → 替换错位置。
+                    return (LineOffset(i), BlockLength(i, searchLines.Length));
                 }
             }
 
-            return -1;
+            // 3b) Trim 逐行（两端都 trim，容忍缩进差异）
+            for (int i = 0; i <= srcLines.Length - searchLines.Length; i++)
+            {
+                bool match = true;
+                for (int j = 0; j < searchLines.Length; j++)
+                {
+                    if (!string.Equals(srcLines[i + j].Trim(), searchLines[j].Trim(), StringComparison.OrdinalIgnoreCase))
+                    { match = false; break; }
+                }
+                if (match)
+                {
+                    return (LineOffset(i), BlockLength(i, searchLines.Length));
+                }
+            }
+
+            return (-1, 0);
         }
 
+        // 计数 old_string 在 source 中出现的次数（用于唯一性检查）。
+        // 必须与 FindText 用同一套比较语义：OrdinalIgnoreCase，否则会出现
+        // 「FindText 找到 → pos>=0，但 CountOccurrences=0」的不一致。
         private static int CountOccurrences(string source, string search)
         {
             int count = 0, pos = 0;
-            while ((pos = source.IndexOf(search, pos, StringComparison.Ordinal)) >= 0)
+            while ((pos = source.IndexOf(search, pos, StringComparison.OrdinalIgnoreCase)) >= 0)
             {
                 count++;
                 pos += search.Length;
